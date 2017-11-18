@@ -120,6 +120,9 @@ abstract class WidgetItem implements VisualItemInterface
             case 'select':
                 return new WidgetItemSelect();
 
+            case 'select2':
+                return new WidgetItemSelect2();
+
             case 'radio':
                 return new WidgetItemRadio();
 

@@ -49,3 +49,64 @@ input:invalid,
 input:required:invalid {
     border: 1px solid red;
 }
+
+/**
+ * At this time there is not Select2 BootStrap v4 theme completed,
+ * this will become unneeded in the future, at this time is a workarround.
+ * https://gist.github.com/DaleMckeown/82995dcc482650f130a708f11a66a2a6
+ */
+span.select2.select2-container:not([size]):not([multiple]),
+span.select2-selection:not([size]):not([multiple]),
+span.select2-selection__arrow
+{
+    height: calc(2.25rem + 2px);
+    line-height: calc(2.25rem + 2px);
+}
+
+span.select2-selection__arrow
+{
+    height: calc(2rem) !important;
+    position: absolute;
+}
+
+span.select2-selection__rendered:not([size]):not([multiple]) {
+    height: calc(2.25rem);
+    line-height: calc(2.25rem);
+}
+
+span.select2-selection.select2-selection--single{
+    background: aliceblue;
+    border: 1px solid #ced4da !important;
+    padding-left: .50rem;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+span.select2-container--default,
+span.select2.select2-container.select2-container--default.select2-container--below.select2-container--focus {
+    width: 100% !important;
+    display: block;
+    font-size: 1rem;
+    line-height: 1.5;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border-color: #555 transparent transparent transparent;
+    border-style: solid;
+    border-width: 6px 3px 0px 3px;
+    height: 0;
+    left: 50%;
+    margin-left: -0.5px;
+    margin-top: -1px;
+    position: absolute;
+    top: 50%;
+    width: 0;
+}
+
+.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+    border-color: transparent transparent #555 transparent;
+    border-width: 0px 3px 6px 3px;
+}

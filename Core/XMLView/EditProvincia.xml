@@ -34,7 +34,7 @@
                 <widget type="text" fieldname="codpostal2d" icon="fa-globe" required="true" />
             </column>
             <column name="country" numcolumns="2" order="130" titleurl="https://es.wikipedia.org/wiki/ISO_4217">
-                <widget type="select" fieldname="codpais" icon="fa-globe" required="true">
+                <widget type="select2" fieldname="codpais" icon="fa-globe" required="true">
                     <values source="paises" fieldcode="codpais" fieldtitle="nombre"></values>
                 </widget>
             </column>

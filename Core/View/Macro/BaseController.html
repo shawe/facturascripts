@@ -397,6 +397,22 @@
 </div>
 {% endmacro %}
 
+<!--
+    Generates the code for a Select filter in a ListController
+-->
+{% macro filterForSelect2Input(context, key, filter) %}
+{% set any = context.i18n.trans('any') %}
+
+<div class="col-md-2">
+    <select name="{{ key }}" class="form-control select2" onchange="this.form.submit()">
+        {% for key2, data in context.fsc.optionlist(key, filter.options) %}
+        {% if (context.indexView == context.fsc.active) and (filter.options.value != '') and (key2 == filter.options.value) %}
+        <option value="{{ key2 }}" selected="">{{ data }}</option>
+        {% endif %}
+        {% endfor %}
+    </select>
+</div>
+{% endmacro %}
 
 <!--
     Generates the code for a Checkbox filter in a ListController
@@ -462,4 +478,15 @@
                autocomplete="off" onchange="this.form.submit()" {{ filter.getKeyboardFilter()|raw }}/>
     </div>
 </div>
+{% endmacro %}
+
+<!--
+    Generate the jQuery code required by some Widgets
+-->
+{% macro getJQuery(view, model) %}
+    {% for group in view.getColumns() %}
+    {% for column in group.columns %}
+    {{ attribute(column, getjQuery) is defined ? column.getjQuery(model)|raw : '// Method getjQuery doesn\'t exists' }}
+    {% endfor %}
+    {% endfor %}
 {% endmacro %}

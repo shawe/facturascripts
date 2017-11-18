@@ -121,6 +121,7 @@ class ListFilter
     {
         switch ($this->type) {
             case 'select':
+            case 'select2':
                 if ($this->options['value'] != '') {
                     // we use the key value because the field value indicate is the text field of the source data
                     $where[] = new DataBase\DataBaseWhere($key, $this->options['value']);
@@ -157,6 +158,7 @@ class ListFilter
         $result = '';
         switch ($this->type) {
             case 'select':
+            case 'select2':
             case 'checkbox':
                 if ($this->options['value'] !== '') {
                     $result .= '&' . $key . '=' . $this->options['value'];
@@ -192,6 +194,20 @@ class ListFilter
         return new ListFilter('select', $options);
     }
 
+    /**
+     * Creates and returns a select type filter with autocomplete support
+     *
+     * @param string $field
+     * @param string $value
+     * @param string $table
+     * @param string $where
+     * @return ListFilter
+     */
+    public static function newSelect2Filter($field, $value, $table, $where)
+    {
+        $options = ['field' => $field, 'value' => $value, 'table' => $table, 'where' => $where];
+        return new ListFilter('select2', $options);
+    }
     /**
      * Creates and returns a checkbox type filter
      *

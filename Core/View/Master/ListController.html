@@ -100,6 +100,7 @@
 {% from 'Macro/BaseController.html' import buttonOrderBy as buttonOrderBy %}
 {% from 'Macro/BaseController.html' import columnsForListView as columnsForListView %}
 {% from 'Macro/BaseController.html' import filterForSelectInput as filterForSelectInput %}
+{% from 'Macro/BaseController.html' import filterForSelec2tInput as filterForSelect2Input %}
 {% from 'Macro/BaseController.html' import filterForCheckBoxInput as filterForCheckBoxInput %}
 {% from 'Macro/BaseController.html' import filterForTextInput as filterForTextInput %}
 
@@ -202,6 +203,8 @@
                         <!-- Add new column filter -->
                         {% if filter.type == 'select' %}
                         {{ filterForSelectInput(_context, key1, filter) }}
+                        {% elseif filter.type == 'select2' %}
+                        {{ filterForSelect2Input(_context, key1, filter) }}
                         {% elseif filter.type == 'checkbox' %}
                         {{ filterForCheckBoxInput(_context, key1, filter) }}
                         {% else %}

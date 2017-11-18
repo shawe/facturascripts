@@ -333,6 +333,21 @@ abstract class ListController extends Base\Controller
     }
 
     /**
+     * Add a select type filter with autocomplete support to a table
+     *
+     * @param string $indexView
+     * @param string $key      (Filter field name identifier)
+     * @param string $table    (Table name)
+     * @param string $where    (Where condition for table)
+     * @param string $field    (Field of the table with the data to show)
+     */
+    protected function addFilterSelect2($indexView, $key, $table, $where = '', $field = '')
+    {
+        $value = $this->request->get($key);
+        $this->views[$indexView]->addFilter($key, ListFilter::newSelect2Filter($field, $value, $table, $where));
+    }
+
+    /**
      * Adds a boolean condition type filter
      *
      * @param string $indexView

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="Core/Assets/CSS/extendedcontroller.css" />
 {% endblock %}
 
+{% from 'Macro/BaseController.html' import getJQuery as getJQuery %}
 
 {% block javascript %}
 {{ parent() }}
@@ -38,6 +39,8 @@
 
     $(document).ready(function () {
         $('#main_row :text:first').focus();
+        {% set model = fsc.view.getModel() %}
+        {{ getJQuery(fsc.view, model) }}
     });
 </script>
 {% endblock %}
@@ -143,7 +146,7 @@
 
                         <!-- Main Form -->
                         <div id="main_row" class="row">
-                            {% set model = fsc.view.getModel() %}                            
+                            {% set model = fsc.view.getModel() %}
                             {{ columnsForEditView(_context, fsc.view, model, FALSE) }}
                         </div>
                     </div>

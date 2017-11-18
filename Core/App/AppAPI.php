@@ -85,13 +85,18 @@ class AppAPI extends App
         }
 
         $modelName = "FacturaScripts\\Dinamic\\Model\\" . $map[$resourceName];
-        $cod = $this->request->get('cod', '');
 
-        if ($cod == '') {
-            return $this->processResource($modelName);
+        $cod = $this->request->get('cod', '');
+        if ($cod != '') {
+            return $this->processResourceParam($modelName, $cod);
         }
 
-        return $this->processResourceParam($modelName, $cod);
+        $search = $this->request->get('search', '');
+        if ($search != '') {
+            return $this->processResourceParam($modelName, $search, 'search');
+        }
+
+        return $this->processResource($modelName);
     }
 
     /**
@@ -145,7 +150,7 @@ class AppAPI extends App
      *
      * @return bool
      */
-    private function processResourceParam($modelName, $cod)
+    private function processResourceParam($modelName, $cod, $action = 'get')
     {
         try {
             $model = new $modelName();
@@ -165,7 +170,14 @@ class AppAPI extends App
                     break;
 
                 default:
-                    $data = $model->get($cod);
+                    if ($action === 'get') {
+                        $data = $model->get($cod);
+                    } elseif ($action === 'search') {
+                        $data = ["error" => "This method doesn't exists for " . $model->tableName() .  "."];
+                        if (method_exists($modelName,'search') ) {
+                            $data = $model->search($cod);
+                        }
+                    }
                     break;
             }
 
