@@ -405,6 +405,7 @@
 
 <div class="col-md-2">
     <select name="{{ key }}" id="{{ key }}" class="form-control select2" onchange="this.form.submit()">
+        <option>{{ context.i18n.trans('any') }} {{ key }}</option>
         {% for key2, data in context.fsc.optionlist(key, filter.options) %}
         {% if (context.indexView == context.fsc.active) and (filter.options.value != '') and (key2 == filter.options.value) %}
         <option value="{{ key2 }}" selected="">{{ data }}</option>
@@ -483,23 +484,25 @@
 <!--
     Generate the jQuery code required by Widget Select2 Autocomplete
 -->
-{% macro selectAutocomplete(model, fieldcode, fieldtitle) %}
+{% macro selectAutocomplete(context, model, fieldcode, fieldtitle) %}
     /* Code needed to use Select2 */
     var apiUrl = "api.php?v=3&resource={{model}}";
 
     $("#{{fieldcode}}").select2({
-        tags: "true",
-        placeholder: "select-an-option",
+        placeholder: "{{ context.i18n.trans('any') }} {{ fieldcode }}",
         minimumInputLength: 1,
-        allowClear: false,
+        allowClear: true,
         ajax: {
             url: apiUrl,
             dataType: "json",
             quietMillis: 250,
             data: function (params) {
-                /* Query parameters will be ?where=[term]&offset=[page] */
+                /* Query parameters will be ?filter[{{fieldtitle}}]=term&offset=[page] */
                 return {
-                    where: params.term,
+                    filter: {
+                        {{fieldtitle}}: params.term,
+                        {{fieldcode}}: params.term
+                        },
                     offset: params.page || 0
                 };
             },
@@ -536,6 +539,10 @@
             }
         },
         templateSelection: function(reply) {
+            if (reply.id === '' || reply == false) {
+                return "{{ context.i18n.trans('any') }} {{ fieldcode }}";
+            }
+
             return reply.text || reply.{{fieldtitle}};
         }
     });
@@ -544,7 +551,7 @@
 <!--
     Generate the jQuery code required by some Widgets on edit view
 -->
-{% macro editGetJQuery(view, model) %}
+{% macro editGetJQuery(context, view, model) %}
     {% from 'Macro/BaseController.html' import selectAutocomplete as selectAutocomplete %}
     {% for group in view.getColumns() %}
         {% for column in group.columns %}
@@ -554,7 +561,7 @@
                     {% set valuesArray = valuesArray|merge({ (key) : value }) %}
                 {% endfor %}
                 {% set cod = context.fsc.getFieldValue(model, column.widget.fieldName) %}
-                {{ selectAutocomplete(valuesArray.model, valuesArray.fieldcode, valuesArray.fieldtitle) }}
+                {{ selectAutocomplete(context, valuesArray.model, valuesArray.fieldcode, valuesArray.fieldtitle) }}
             {% endif %}
         {% endfor %}
     {% endfor %}
@@ -563,13 +570,13 @@
 <!--
     Generate the jQuery code required by some Widgets on edit view
 -->
-{% macro listGetJQuery(views, model) %}
+{% macro listGetJQuery(context, views, model) %}
 // TODO: listGetJQuery
     {% from 'Macro/BaseController.html' import selectAutocomplete as selectAutocomplete %}
     {% for view in views %}
         {% for fieldcode, filter in view.getFilters() %}
             {% if filter.type == 'select2' %}
-                {{ selectAutocomplete(filter.options.table, fieldcode, filter.options.field) }}
+                {{ selectAutocomplete(context, filter.options.table, fieldcode, filter.options.field) }}
             {% endif %}
         {% endfor %}
     {% endfor %}

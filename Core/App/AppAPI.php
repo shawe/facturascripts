@@ -112,7 +112,7 @@ class AppAPI extends App
             $filter = is_string($filter) ? [] : $filter; /// if is string has bad format
             $where = [];
             foreach ($filter as $key => $value) {
-                $where[] = new DataBaseWhere($key, $value, 'LIKE');
+                $where[] = new DataBaseWhere($key, $value, 'LIKE', 'OR');
             }
 
             /// &sort[field1]=value1&sort[field2]=value2

@@ -68,7 +68,7 @@
             var checked = $(this).prop('checked');
             $('.listDelete').prop('checked', checked);
         });
-        {{ listGetJQuery(fsc.views, view.getModel()) }}
+        {{ listGetJQuery(_context, fsc.views, view.getModel()) }}
     });</script>
 {% endblock %}
 
