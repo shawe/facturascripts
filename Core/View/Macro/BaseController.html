@@ -398,13 +398,13 @@
 {% endmacro %}
 
 <!--
-    Generates the code for a Select filter in a ListController
+    Generates the code for a Select2 filter in a ListController
 -->
 {% macro filterForSelect2Input(context, key, filter) %}
 {% set any = context.i18n.trans('any') %}
 
 <div class="col-md-2">
-    <select name="{{ key }}" class="form-control select2" onchange="this.form.submit()">
+    <select name="{{ key }}" id="{{ key }}" class="form-control select2" onchange="this.form.submit()">
         {% for key2, data in context.fsc.optionlist(key, filter.options) %}
         {% if (context.indexView == context.fsc.active) and (filter.options.value != '') and (key2 == filter.options.value) %}
         <option value="{{ key2 }}" selected="">{{ data }}</option>
@@ -481,9 +481,71 @@
 {% endmacro %}
 
 <!--
-    Generate the jQuery code required by some Widgets
+    Generate the jQuery code required by Widget Select2 Autocomplete
 -->
-{% macro getJQuery(view, model) %}
+{% macro selectAutocomplete(model, fieldcode, fieldtitle) %}
+    /* Code needed to use Select2 */
+    var apiUrl = "api.php?v=3&resource={{model}}";
+
+    $("#{{fieldcode}}").select2({
+        tags: "true",
+        placeholder: "select-an-option",
+        minimumInputLength: 1,
+        allowClear: false,
+        ajax: {
+            url: apiUrl,
+            dataType: "json",
+            quietMillis: 250,
+            data: function (params) {
+                /* Query parameters will be ?where=[term]&offset=[page] */
+                return {
+                    where: params.term,
+                    offset: params.page || 0
+                };
+            },
+            processResults: function(data, params) {
+                params.page = params.page || 1;
+                var items = [];
+                data.forEach(function(element) {
+                    item = {
+                        id: element.{{fieldcode}},
+                        text: element.{{fieldtitle}}
+                    };
+                    items.push(item);
+                });
+
+                return {
+                    results: items,
+                    pagination : {
+                        more: (params.page * 10) < data.count_filtered
+                    }
+                };
+            },
+            cache: false
+        },
+        initSelection: function(element, callback) {
+            /* The input tag has a value attribute preloaded that points to a preselected repository\'s id
+            * this function resolves that id attribute to an object that select2 can render
+            * using its formatResult renderer - that way the repository name is shown preselected
+            */
+            var id = $(element).val();
+            if (id !== "" && id != null) {
+                $.ajax(apiUrl + "&cod=" + id, {
+                    dataType: "json"
+                }).done(function(data) { callback(data); });
+            }
+        },
+        templateSelection: function(reply) {
+            return reply.text || reply.{{fieldtitle}};
+        }
+    });
+{% endmacro %}
+
+<!--
+    Generate the jQuery code required by some Widgets on edit view
+-->
+{% macro editGetJQuery(view, model) %}
+    {% from 'Macro/BaseController.html' import selectAutocomplete as selectAutocomplete %}
     {% for group in view.getColumns() %}
         {% for column in group.columns %}
             {% if column.requireJQuery() %}
@@ -492,68 +554,22 @@
                     {% set valuesArray = valuesArray|merge({ (key) : value }) %}
                 {% endfor %}
                 {% set cod = context.fsc.getFieldValue(model, column.widget.fieldName) %}
+                {{ selectAutocomplete(valuesArray.model, valuesArray.fieldcode, valuesArray.fieldtitle) }}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+{% endmacro %}
 
-                /* Code needed to use Select2 */
-                var apiUrl = "api.php?v=3&resource={{valuesArray.model}}";
-
-                $("#{{valuesArray.fieldcode}}").select2({
-                    tags: "true",
-                    placeholder: "select-an-option",
-                    minimumInputLength: 1,
-                    allowClear: false,
-                    ajax: {
-                        url: apiUrl,
-                        dataType: "json",
-                        quietMillis: 250,
-                        data: function (params) {
-                            /* Query parameters will be ?search=[term]&page=[page] */
-                            return {
-                                search: params.term,
-                                page: params.page || 1
-                            };
-                        },
-                        processResults: formatProcessResults,
-                        cache: false
-                    },
-                    initSelection: formatInitSelection,
-                    templateSelection: formatTemplateSelection
-                });
-
-                function formatProcessResults (data, params) {
-                    params.page = params.page || 1;
-                    var items = [];
-                    data.forEach(function(element) {
-                        item = {
-                            id: element.{{valuesArray.fieldcode}},
-                            text: element.{{valuesArray.fieldtitle}}
-                        };
-                        items.push(item);
-                    });
-
-                    return {
-                        results: items,
-                        pagination : {
-                            more: (params.page * 10) < data.count_filtered
-                        }
-                    };
-                }
-
-                function formatInitSelection(element, callback) {
-                    /* The input tag has a value attribute preloaded that points to a preselected repository\'s id
-                     * this function resolves that id attribute to an object that select2 can render
-                     * using its formatResult renderer - that way the repository name is shown preselected
-                     */
-                    var id = $(element).val();
-                    if (id !== "") {
-                        $.ajax(apiUrl + "&cod=" + id, {
-                            dataType: "json"
-                        }).done(function(data) { callback(data); });
-                    }
-                }
-
-                function formatTemplateSelection (reply) {
-                    return reply.text || reply.{{valuesArray.fieldtitle}};
-                }
+<!--
+    Generate the jQuery code required by some Widgets on edit view
+-->
+{% macro listGetJQuery(views, model) %}
+// TODO: listGetJQuery
+    {% from 'Macro/BaseController.html' import selectAutocomplete as selectAutocomplete %}
+    {% for view in views %}
+        {% for fieldcode, filter in view.getFilters() %}
+            {% if filter.type == 'select2' %}
+                {{ selectAutocomplete(filter.options.table, fieldcode, filter.options.field) }}
             {% endif %}
         {% endfor %}
     {% endfor %}

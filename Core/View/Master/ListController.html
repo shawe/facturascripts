@@ -1,5 +1,7 @@
 {% extends "Master/MenuTemplate.html" %}
 
+{% from 'Macro/BaseController.html' import listGetJQuery as listGetJQuery %}
+
 {% block javascript %}
 {{ parent() }}
 
@@ -66,6 +68,7 @@
             var checked = $(this).prop('checked');
             $('.listDelete').prop('checked', checked);
         });
+        {{ listGetJQuery(fsc.views, view.getModel()) }}
     });</script>
 {% endblock %}
 
@@ -100,7 +103,7 @@
 {% from 'Macro/BaseController.html' import buttonOrderBy as buttonOrderBy %}
 {% from 'Macro/BaseController.html' import columnsForListView as columnsForListView %}
 {% from 'Macro/BaseController.html' import filterForSelectInput as filterForSelectInput %}
-{% from 'Macro/BaseController.html' import filterForSelec2tInput as filterForSelect2Input %}
+{% from 'Macro/BaseController.html' import filterForSelect2Input as filterForSelect2Input %}
 {% from 'Macro/BaseController.html' import filterForCheckBoxInput as filterForCheckBoxInput %}
 {% from 'Macro/BaseController.html' import filterForTextInput as filterForTextInput %}
 
