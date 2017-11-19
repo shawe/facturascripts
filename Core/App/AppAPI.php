@@ -93,7 +93,8 @@ class AppAPI extends App
 
         $search = $this->request->get('search', '');
         if ($search != '') {
-            return $this->processResourceParam($modelName, $search, 'search');
+            $offset = (int) $this->request->get('offset', '0');
+            return $this->processResourceParam($modelName, $search, 'search', $offset);
         }
 
         return $this->processResource($modelName);
@@ -150,7 +151,7 @@ class AppAPI extends App
      *
      * @return bool
      */
-    private function processResourceParam($modelName, $cod, $action = 'get')
+    private function processResourceParam($modelName, $cod, $action = 'get', $offset = 0)
     {
         try {
             $model = new $modelName();
@@ -175,7 +176,7 @@ class AppAPI extends App
                     } elseif ($action === 'search') {
                         $data = ["error" => "This method doesn't exists for " . $model->tableName() .  "."];
                         if (method_exists($modelName,'search') ) {
-                            $data = $model->search($cod);
+                            $data = $model->search($cod, $offset);
                         }
                     }
                     break;

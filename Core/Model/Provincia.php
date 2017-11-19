@@ -103,6 +103,36 @@ class Provincia
     }
 
     /**
+     * Devuelve un array con las combinaciones que contienen $query en codpais, codisoprov y
+     * provincia y codpostal2d.
+     *
+     * @param string $query
+     * @param int    $offset
+     *
+     * @return self[]
+     */
+    public function search($query, $offset = 0)
+    {
+        $list = [];
+        $query = mb_strtolower(self::noHtml($query), 'UTF8');
+        $sql = 'SELECT * FROM ' . $this->tableName() .
+            " WHERE lower(codpais) LIKE '" . $query . "%'" .
+            " OR lower(codisoprov) LIKE '%" . $query . "%'" .
+            " OR lower(provincia) LIKE '%" . $query . "%'" .
+            " OR lower(codpostal2d) LIKE '%" . $query . "%'" .
+            ' ORDER BY codisoprov ASC';
+
+        $data = $this->dataBase->selectLimit($sql, FS_ITEM_LIMIT, $offset);
+        if (!empty($data)) {
+            foreach ($data as $c) {
+                $list[] = new self($c);
+            }
+        }
+
+        return $list;
+    }
+
+    /**
      * Esta función es llamada al crear la tabla del modelo. Devuelve el SQL
      * que se ejecutará tras la creación de la tabla. útil para insertar valores
      * por defecto.

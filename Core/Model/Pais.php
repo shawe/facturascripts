@@ -109,8 +109,8 @@ class Pais
     }
 
     /**
-     * Devuelve un array con las combinaciones que contienen $query en su descripción
-     * o que coincide con su código de cuenta.
+     * Devuelve un array con las combinaciones que contienen $query en codpais, codiso y
+     * nombre.
      *
      * @param string $query
      * @param int    $offset
@@ -119,21 +119,22 @@ class Pais
      */
     public function search($query, $offset = 0)
     {
-        $cuenlist = [];
+        $list = [];
         $query = mb_strtolower(self::noHtml($query), 'UTF8');
         $sql = 'SELECT * FROM ' . $this->tableName() .
-            " WHERE lower(codpais) LIKE '" . $query . "%' OR lower(codiso) LIKE '%" . $query . "%'" .
+            " WHERE lower(codpais) LIKE '" . $query . "%'" .
+            " OR lower(codiso) LIKE '%" . $query . "%'" .
             " OR lower(nombre) LIKE '%" . $query . "%'" .
             ' ORDER BY codpais ASC';
 
         $data = $this->dataBase->selectLimit($sql, FS_ITEM_LIMIT, $offset);
         if (!empty($data)) {
             foreach ($data as $c) {
-                $cuenlist[] = new self($c);
+                $list[] = new self($c);
             }
         }
 
-        return $cuenlist;
+        return $list;
     }
     /**
      * Crea la consulta necesaria para crear los paises en la base de datos.
