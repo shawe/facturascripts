@@ -186,21 +186,13 @@ class ColumnItem extends VisualItem implements VisualItemInterface
     }
 
     /**
-     * Generates the JQuery code to display the model data for the List controllers
-     *
-     * @param string $value
-     * @param string $fieldName
-     * @param string $fieldTitle
+     * Return true if require jQuery code, otherwise return false
      *
      * @return string
      */
-    public function getJQuery($model, $widget)
+    public function requireJQuery()
     {
-        if ($this->widget instanceof WidgetItemSelect2) {
-            return $this->widget->getJQuery($model, $widget->values[0]);
-        }
-
-        return '';
+        return $this->widget instanceof WidgetItemSelect2;
     }
 
     /**

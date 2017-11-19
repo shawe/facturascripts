@@ -486,7 +486,74 @@
 {% macro getJQuery(view, model) %}
     {% for group in view.getColumns() %}
         {% for column in group.columns %}
-            {{ column.getJQuery(model, column.widget) |raw }}
+            {% if column.requireJQuery() %}
+                {% set valuesArray = {} %}
+                {% for key, value in column.widget.values.0 %}
+                    {% set valuesArray = valuesArray|merge({ (key) : value }) %}
+                {% endfor %}
+
+                /* Code needed to use Select2 */
+                var apiUrl = "api.php?v=3&resource={{valuesArray.class}}";
+
+                $("#{{valuesArray.fieldcode}}").select2({
+                    tags: "true",
+                    placeholder: "select-an-option",
+                    minimumInputLength: 1,
+                    allowClear: true,
+                    ajax: {
+                        url: apiUrl,
+                        dataType: "json",
+                        quietMillis: 250,
+                        data: function (params) {
+                            /* Query parameters will be ?search=[term]&page=[page] */
+                            return {
+                                search: params.term,
+                                page: params.page || 1
+                            };
+                        },
+                        processResults: formatProcessResults,
+                        cache: false
+                    },
+                    initSelection: formatInitSelection,
+                    templateSelection: formatTemplateSelection
+                });
+
+                function formatProcessResults (data, params) {
+                    params.page = params.page || 1;
+                    var items = [];
+                    data.forEach(function(element) {
+                        item = {
+                            id: element.{{valuesArray.fieldcode}},
+                            text: element.{{valuesArray.fieldtitle}}
+                        };
+                        items.push(item);
+                    });
+
+                    return {
+                        results: items,
+                        pagination : {
+                            more: (params.page * 10) < data.count_filtered
+                        }
+                    };
+                }
+
+                function formatInitSelection(element, callback) {
+                    /* The input tag has a value attribute preloaded that points to a preselected repository\'s id
+                     * this function resolves that id attribute to an object that select2 can render
+                     * using its formatResult renderer - that way the repository name is shown preselected
+                     */
+                    var id = $(element).val();
+                    if (id !== "") {
+                        $.ajax(apiUrl + "&cod=" + id, {
+                            dataType: "json"
+                        }).done(function(data) { callback(data); });
+                    }
+                }
+
+                function formatTemplateSelection (reply) {
+                    return reply.{{valuesArray.fieldtitle}};
+                }
+            {% endif %}
         {% endfor %}
     {% endfor %}
 {% endmacro %}

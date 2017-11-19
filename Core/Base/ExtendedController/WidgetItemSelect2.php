@@ -25,7 +25,7 @@ namespace FacturaScripts\Core\Base\ExtendedController;
  * @author Artex Trading sa <jcuello@artextrading.com>
  * @author Francesc Pineda Segarra <francesc.pineda.segarra@gmail.com>
  */
-class WidgetItemSelect2 extends WidgetItem implements WidgetItemJQueryInterface
+class WidgetItemSelect2 extends WidgetItem
 {
 
     /**
@@ -146,7 +146,9 @@ class WidgetItemSelect2 extends WidgetItem implements WidgetItemJQueryInterface
 
         foreach ($this->values as $selectValue) {
             if ($selectValue['value'] == $value) {
-                $html .= '<option value="' . $selectValue['value'] . '" selected="selected" >' . $selectValue['title'] . '</option>';
+                $html .= '<option value="' . $selectValue['value'] . '" selected="selected" >'
+                    . $selectValue['title']
+                    . '</option>';
             }
         }
         $html .= '</select>';
@@ -156,81 +158,5 @@ class WidgetItemSelect2 extends WidgetItem implements WidgetItemJQueryInterface
         }
 
         return $html;
-    }
-
-    /**
-     * Generates the jQuery required code
-     *
-     * @return string
-     */
-    public function getJQuery($model, $values)
-    {
-        $modelName = $values['source'];
-        $fieldName = $values['fieldcode'];
-        $fieldTitle = $values['fieldtitle'];
-
-        $jquery = '        /* Code needed to use Select2 */'. "\n" .
-        'var apiUrl = "api.php?v=3&resource=' . $modelName . '";'. "\n" .
-        "\n\n" .
-        '$("#' . $fieldName . '").select2({'. "\n" .
-        '    tags: "true",'. "\n" .
-        '    placeholder: "select-an-option",'. "\n" .
-        '    minimumInputLength: 1,'. "\n" .
-        '    allowClear: true,'. "\n" .
-        '    ajax: {'. "\n" .
-        '        url: apiUrl,'. "\n" .
-        '        dataType: "json",'. "\n" .
-        '        quietMillis: 250,'. "\n" .
-        '        data: function (params) {'. "\n" .
-        '            /* Query parameters will be ?search=[term]&page=[page] */'. "\n" .
-        '            return {'. "\n" .
-        '                search: params.term,'. "\n" .
-        '                page: params.page || 1'. "\n" .
-        '            };'. "\n" .
-        '        },'. "\n" .
-        '        processResults: formatProcessResults,'. "\n" .
-        '        cache: false'. "\n" .
-        '    },'. "\n" .
-        '    initSelection: formatInitSelection,'. "\n" .
-        '    templateSelection: formatTemplateSelection'. "\n" .
-        '});'. "\n" .
-        "\n\n" .
-        'function formatProcessResults (data, params) {'. "\n" .
-        '    params.page = params.page || 1;'. "\n" .
-        '    var items = [];'. "\n" .
-        '    data.forEach(function(element) {'. "\n" .
-        '        item = {'. "\n" .
-        '            id: element.' . $fieldName . ','. "\n" .
-        '            text: element.' . $fieldTitle . ''. "\n" .
-        '        };'. "\n" .
-        '        items.push(item);'. "\n" .
-        '    });'. "\n" .
-        ''. "\n" .
-        '    return {'. "\n" .
-        '        results: items,'. "\n" .
-        '        pagination : {'. "\n" .
-        '            more: (params.page * 10) < data.count_filtered'. "\n" .
-        '        }'. "\n" .
-        '    };'. "\n" .
-        '}'. "\n" .
-        "\n\n" .
-        'function formatInitSelection(element, callback) {'. "\n" .
-        '    /* The input tag has a value attribute preloaded that points to a preselected repository\'s id'. "\n" .
-        '     * this function resolves that id attribute to an object that select2 can render'. "\n" .
-        '     * using its formatResult renderer - that way the repository name is shown preselected'. "\n" .
-        '     */'. "\n" .
-        '    var id = $(element).val();'. "\n" .
-        '    if (id !== "") {'. "\n" .
-        '        $.ajax(apiUrl + "&cod=" + id, {'. "\n" .
-        '            dataType: "json"'. "\n" .
-        '        }).done(function(data) { callback(data); });'. "\n" .
-        '    }'. "\n" .
-        '}'. "\n" .
-        "\n\n" .
-        'function formatTemplateSelection (reply) {'. "\n" .
-        '    return reply.' . $fieldTitle . ';'. "\n" .
-        '}'. "\n";
-
-        return $jquery;
     }
 }
