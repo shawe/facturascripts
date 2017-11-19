@@ -170,66 +170,67 @@ class WidgetItemSelect2 extends WidgetItem implements WidgetItemJQueryInterface
         $fieldCode = 'codpais'; // TODO: codpais must be fieldcode in XML View in singular
         $fieldTitle = 'nombre'; // TODO: nombre must be fieldtitle in XML View in singular
 
-        $jquery = '        // Code needed to use Select2
-        var apiUrl = "api.php?v=3&resource="' . $modelName . ';
-
-        $("#' . $fieldName . '").select2({
-            tags: "true",
-            placeholder: "{{ i18n.trans(\'select-an-option\') }}",
-            minimumInputLength: 1,
-            allowClear: true,
-            ajax: {
-                url: apiUrl,
-                dataType: "json",
-                quietMillis: 250,
-                data: function (params) {
-                    // Query parameters will be ?search=[term]&page=[page]
-                    return {
-                        search: params.term,
-                        page: params.page || 1
-                    };
-                },
-                processResults: formatProcessResults,
-                cache: false
-            },
-            initSelection: formatInitSelection,
-            templateSelection: formatTemplateSelection
-        });
-
-        function formatProcessResults (data, params) {
-            params.page = params.page || 1;
-            var items = [];
-            data.forEach(function(element) {
-                item = {
-                    id: element.' . $fieldCode . ',
-                    text: element.' . $fieldTitle . '
-                };
-                items.push(item);
-            });
-
-            return {
-                results: items,
-                pagination : {
-                    more: (params.page * 10) < data.count_filtered
-                }
-            };
-        }
-
-        function formatInitSelection(element, callback) {
-            // the input tag has a value attribute preloaded that points to a preselected repository\'s id
-            // this function resolves that id attribute to an object that select2 can render
-            // using its formatResult renderer - that way the repository name is shown preselected
-            var id = $(element).val();
-            if (id !== "") {
-                $.ajax(apiUrl + "&cod=" + id, {
-                    dataType: "json"
-                }).done(function(data) { callback(data); });
-            }
-        }
-
-        function formatTemplateSelection (reply) {
-            return reply.' . $fieldTitle . ';
-        }';
+        $jquery = '        /* Code needed to use Select2 */'. "\n" .
+        'var apiUrl = "api.php?v=3&resource="' . $modelName . ';'. "\n" .
+        "\n\n" .
+        '$("#' . $fieldName . '").select2({'. "\n" .
+        '    tags: "true",'. "\n" .
+        '    placeholder: "{{ i18n.trans(\'select-an-option\') }}",'. "\n" .
+        '    minimumInputLength: 1,'. "\n" .
+        '    allowClear: true,'. "\n" .
+        '    ajax: {'. "\n" .
+        '        url: apiUrl,'. "\n" .
+        '        dataType: "json",'. "\n" .
+        '        quietMillis: 250,'. "\n" .
+        '        data: function (params) {'. "\n" .
+        '            /* Query parameters will be ?search=[term]&page=[page] */'. "\n" .
+        '            return {'. "\n" .
+        '                search: params.term,'. "\n" .
+        '                page: params.page || 1'. "\n" .
+        '            };'. "\n" .
+        '        },'. "\n" .
+        '        processResults: formatProcessResults,'. "\n" .
+        '        cache: false'. "\n" .
+        '    },'. "\n" .
+        '    initSelection: formatInitSelection,'. "\n" .
+        '    templateSelection: formatTemplateSelection'. "\n" .
+        '});'. "\n" .
+        "\n\n" .
+        'function formatProcessResults (data, params) {'. "\n" .
+        '    params.page = params.page || 1;'. "\n" .
+        '    var items = [];'. "\n" .
+        '    data.forEach(function(element) {'. "\n" .
+        '        item = {'. "\n" .
+        '            id: element.' . $fieldCode . ','. "\n" .
+        '            text: element.' . $fieldTitle . ''. "\n" .
+        '        };'. "\n" .
+        '        items.push(item);'. "\n" .
+        '    });'. "\n" .
+        ''. "\n" .
+        '    return {'. "\n" .
+        '        results: items,'. "\n" .
+        '        pagination : {'. "\n" .
+        '            more: (params.page * 10) < data.count_filtered'. "\n" .
+        '        }'. "\n" .
+        '    };'. "\n" .
+        '}'. "\n" .
+        "\n\n" .
+        'function formatInitSelection(element, callback) {'. "\n" .
+        '    /* The input tag has a value attribute preloaded that points to a preselected repository\'s id'. "\n" .
+        '     * this function resolves that id attribute to an object that select2 can render'. "\n" .
+        '     * using its formatResult renderer - that way the repository name is shown preselected'. "\n" .
+        '     */'. "\n" .
+        '    var id = $(element).val();'. "\n" .
+        '    if (id !== "") {'. "\n" .
+        '        $.ajax(apiUrl + "&cod=" + id, {'. "\n" .
+        '            dataType: "json"'. "\n" .
+        '        }).done(function(data) { callback(data); });'. "\n" .
+        '    }'. "\n" .
+        '}'. "\n" .
+        "\n\n" .
+        'function formatTemplateSelection (reply) {'. "\n" .
+        '    return reply.' . $fieldTitle . ';'. "\n" .
+        '}'. "\n";
 
         return $jquery;
     }
