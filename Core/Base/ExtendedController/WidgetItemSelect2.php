@@ -163,19 +163,18 @@ class WidgetItemSelect2 extends WidgetItem implements WidgetItemJQueryInterface
      *
      * @return string
      */
-    public function getJQuery($model)
+    public function getJQuery($model, $values)
     {
-        $modelName = 'pais';    // TODO: source in XML View in singular
-        $fieldName = 'codpais'; // TODO: #codpais => #(fieldname of XML)
-        $fieldCode = 'codpais'; // TODO: codpais must be fieldcode in XML View in singular
-        $fieldTitle = 'nombre'; // TODO: nombre must be fieldtitle in XML View in singular
+        $modelName = $values['source'];
+        $fieldName = $values['fieldcode'];
+        $fieldTitle = $values['fieldtitle'];
 
         $jquery = '        /* Code needed to use Select2 */'. "\n" .
-        'var apiUrl = "api.php?v=3&resource="' . $modelName . ';'. "\n" .
+        'var apiUrl = "api.php?v=3&resource=' . $modelName . '";'. "\n" .
         "\n\n" .
         '$("#' . $fieldName . '").select2({'. "\n" .
         '    tags: "true",'. "\n" .
-        '    placeholder: "{{ i18n.trans(\'select-an-option\') }}",'. "\n" .
+        '    placeholder: "select-an-option",'. "\n" .
         '    minimumInputLength: 1,'. "\n" .
         '    allowClear: true,'. "\n" .
         '    ajax: {'. "\n" .
@@ -201,7 +200,7 @@ class WidgetItemSelect2 extends WidgetItem implements WidgetItemJQueryInterface
         '    var items = [];'. "\n" .
         '    data.forEach(function(element) {'. "\n" .
         '        item = {'. "\n" .
-        '            id: element.' . $fieldCode . ','. "\n" .
+        '            id: element.' . $fieldName . ','. "\n" .
         '            text: element.' . $fieldTitle . ''. "\n" .
         '        };'. "\n" .
         '        items.push(item);'. "\n" .

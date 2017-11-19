@@ -485,8 +485,8 @@
 -->
 {% macro getJQuery(view, model) %}
     {% for group in view.getColumns() %}
-    {% for column in group.columns %}
-    {{ attribute(column, getjQuery) is defined ? column.getjQuery(model)|raw : '// Method getjQuery doesn\'t exists' }}
-    {% endfor %}
+        {% for column in group.columns %}
+            {{ column.getJQuery(model, column.widget) |raw }}
+        {% endfor %}
     {% endfor %}
 {% endmacro %}

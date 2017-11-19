@@ -30,8 +30,9 @@ interface WidgetItemJQueryInterface
      * Generates the jQuery required code
      *
      * @param $model
+     * @param array $values
      *
      * @return string
      */
-    public function getJQuery($model);
+    public function getJQuery($model, $values);
 }
