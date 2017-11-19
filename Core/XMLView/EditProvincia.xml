@@ -35,7 +35,7 @@
             </column>
             <column name="country" numcolumns="2" order="130" titleurl="https://es.wikipedia.org/wiki/ISO_4217">
                 <widget type="select2" fieldname="codpais" icon="fa-globe" required="true">
-                    <values source="paises" class="pais" fieldcode="codpais" fieldtitle="nombre"></values>
+                    <values source="paises" model="pais" fieldcode="codpais" fieldtitle="nombre"></values>
                 </widget>
             </column>
             <column name="province" numcolumns="6" order="140">

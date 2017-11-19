@@ -36,6 +36,13 @@ class WidgetItemSelect2 extends WidgetItem
     public $values;
 
     /**
+     * Accepted field associated to the widget
+     *
+     * @var array
+     */
+    public $fields;
+
+    /**
      * Class constructor
      */
     public function __construct()
@@ -44,6 +51,7 @@ class WidgetItemSelect2 extends WidgetItem
 
         $this->type = 'select2';
         $this->values = [];
+        $this->fields = [];
     }
 
     /**
@@ -75,6 +83,7 @@ class WidgetItemSelect2 extends WidgetItem
      */
     public function setValuesFromCodeModel(&$rows)
     {
+        $this->fields = $this->values[0];
         $this->values = [];
         foreach ($rows as $codeModel) {
             $this->values[] = [

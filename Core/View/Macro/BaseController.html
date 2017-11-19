@@ -488,18 +488,19 @@
         {% for column in group.columns %}
             {% if column.requireJQuery() %}
                 {% set valuesArray = {} %}
-                {% for key, value in column.widget.values.0 %}
+                {% for key, value in column.widget.fields %}
                     {% set valuesArray = valuesArray|merge({ (key) : value }) %}
                 {% endfor %}
+                {% set cod = context.fsc.getFieldValue(model, column.widget.fieldName) %}
 
                 /* Code needed to use Select2 */
-                var apiUrl = "api.php?v=3&resource={{valuesArray.class}}";
+                var apiUrl = "api.php?v=3&resource={{valuesArray.model}}";
 
                 $("#{{valuesArray.fieldcode}}").select2({
                     tags: "true",
                     placeholder: "select-an-option",
                     minimumInputLength: 1,
-                    allowClear: true,
+                    allowClear: false,
                     ajax: {
                         url: apiUrl,
                         dataType: "json",
@@ -551,7 +552,7 @@
                 }
 
                 function formatTemplateSelection (reply) {
-                    return reply.{{valuesArray.fieldtitle}};
+                    return reply.text || reply.{{valuesArray.fieldtitle}};
                 }
             {% endif %}
         {% endfor %}

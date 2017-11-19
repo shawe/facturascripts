@@ -36,7 +36,7 @@ class GroupItem extends VisualItem implements VisualItemInterface
     /**
      * Define the columns that the group includes
      *
-     * @var array
+     * @var ColumnItem[]
      */
     public $columns;
 

@@ -74,7 +74,7 @@ class PageOption
      * Definición de las columnas. Se denomina columns pero contiene
      * siempre GroupItem, el cual contiene las columnas.
      *
-     * @var array
+     * @var ExtendedController\GroupItem[]
      */
     public $columns;
 
@@ -346,7 +346,7 @@ class PageOption
     {
         foreach ($this->columns as $group) {
             foreach ($group->columns as $column) {
-                if ($column->widget->type === 'select') {
+                if ($column->widget->type === 'select' || $column->widget->type === 'select2') {
                     if (isset($column->widget->values[0]['source'])) {
                         $tableName = $column->widget->values[0]['source'];
                         $fieldCode = $column->widget->values[0]['fieldcode'];
