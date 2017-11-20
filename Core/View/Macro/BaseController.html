@@ -405,12 +405,20 @@
 
 <div class="col-md-2">
     <select name="{{ key }}" id="{{ key }}" class="form-control select2" onchange="this.form.submit()">
-        <option>{{ context.i18n.trans('any') }} {{ key }}</option>
+        {% set default = '' %}
         {% for key2, data in context.fsc.optionlist(key, filter.options) %}
         {% if (context.indexView == context.fsc.active) and (filter.options.value != '') and (key2 == filter.options.value) %}
-        <option value="{{ key2 }}" selected="">{{ data }}</option>
+        {% set default %}
+        <option value='{{ key2 }}' selected=''>{{ data }}</option>
+        {% endset %}
         {% endif %}
         {% endfor %}
+
+        {% if text is empty %}
+        <option>{{ any }} {{ key }}</option>
+        {% else %}
+        {{ default }}
+        {% endif %}
     </select>
 </div>
 {% endmacro %}
@@ -532,6 +540,7 @@
             * using its formatResult renderer - that way the repository name is shown preselected
             */
             var id = $(element).val();
+
             if (id !== "" && id != null) {
                 $.ajax(apiUrl + "&cod=" + id, {
                     dataType: "json"
@@ -542,7 +551,6 @@
             if (reply.id === '' || reply == false) {
                 return "{{ context.i18n.trans('any') }} {{ fieldcode }}";
             }
-
             return reply.text || reply.{{fieldtitle}};
         }
     });

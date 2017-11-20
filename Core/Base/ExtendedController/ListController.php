@@ -343,7 +343,11 @@ abstract class ListController extends Base\Controller
      */
     protected function addFilterSelect2($indexView, $key, $table, $where = '', $field = '')
     {
-        $value = $this->request->get($key);
+        $value = $this->request->get($key, '');
+        // Select2 send default option without value with her text, ignore that case
+        if (strpos($value, $this->i18n->trans('any') . ' ' . $key ) !== false) {
+            $value = '';
+        }
         $this->views[$indexView]->addFilter($key, ListFilter::newSelect2Filter($field, $value, $table, $where));
     }
 
