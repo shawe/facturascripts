@@ -133,10 +133,10 @@ class Articulos extends AbstractRandom
     }
 
     /**
-     * TODO: Uncomplete documentation.
+     * Add more stock from this product.
      *
      * @param Model\Articulo $art
-     * @param float|int $quantity
+     * @param float|int      $quantity
      */
     private function sumStock($art, $quantity)
     {

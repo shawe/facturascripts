@@ -52,8 +52,8 @@ interface ExportInterface
     /**
      * Adds a new page with the model data.
      *
-     * @param mixed $model
-     * @param array $columns
+     * @param mixed  $model
+     * @param array  $columns
      * @param string $title
      */
     public function generateModelPage($model, $columns, $title = '');
@@ -61,12 +61,12 @@ interface ExportInterface
     /**
      * Adds a new page with a table listing the models data.
      *
-     * @param mixed $model
+     * @param mixed           $model
      * @param DataBaseWhere[] $where
-     * @param array $order
-     * @param int $offset
-     * @param array $columns
-     * @param string $title
+     * @param array           $order
+     * @param int             $offset
+     * @param array           $columns
+     * @param string          $title
      */
     public function generateListModelPage($model, $where, $order, $offset, $columns, $title = '');
 

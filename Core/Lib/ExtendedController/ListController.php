@@ -35,8 +35,6 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class ListController extends Base\Controller
 {
 
-    const DIR_MODEL = '\\FacturaScripts\\Dinamic\\Model\\';
-
     /**
      * Indicates the active view
      *
@@ -64,18 +62,21 @@ abstract class ListController extends Base\Controller
      * @var array
      */
     public $icons;
+
     /**
      * This string contains the text sent as a query parameter, used to filter the model data
      *
      * @var string
      */
     public $query;
+
     /**
      * List of views displayed by the controller
      *
      * @var ListView[]
      */
     public $views;
+
     /**
      * First row to select from the database
      *
@@ -86,10 +87,10 @@ abstract class ListController extends Base\Controller
     /**
      * Initializes all the objects and properties
      *
-     * @param Base\Cache $cache
+     * @param Base\Cache      $cache
      * @param Base\Translator $i18n
-     * @param Base\MiniLog $miniLog
-     * @param string $className
+     * @param Base\MiniLog    $miniLog
+     * @param string          $className
      */
     public function __construct(&$cache, &$i18n, &$miniLog, $className)
     {
@@ -145,8 +146,8 @@ abstract class ListController extends Base\Controller
     /**
      * Runs the controller's private logic.
      *
-     * @param Response $response
-     * @param User $user
+     * @param Response                   $response
+     * @param User                       $user
      * @param Base\ControllerPermissions $permissions
      */
     public function privateCore(&$response, $user, $permissions)
@@ -167,7 +168,7 @@ abstract class ListController extends Base\Controller
                 $orderKey = '';
 
                 // If processing the selected view, calculate order and filters
-                if ($this->active == $key) {
+                if ($this->active === $key) {
                     $orderKey = $this->request->get('order', '');
                     $where = $this->getWhere();
                 }
@@ -193,17 +194,17 @@ abstract class ListController extends Base\Controller
      * Add an autocomplete type filter to the ListView.
      *
      * @param string $indexView
-     * @param string $key (Filter identifier)
-     * @param string $label (Human reader description)
-     * @param string $field (Field of the model to apply filter)
-     * @param string $table (Table to search)
-     * @param string $fieldcode (Primary column of the table to search and match)
+     * @param string $key        (Filter identifier)
+     * @param string $label      (Human reader description)
+     * @param string $field      (Field of the model to apply filter)
+     * @param string $table      (Table to search)
+     * @param string $fieldcode  (Primary column of the table to search and match)
      * @param string $fieldtitle (Column to show name or description)
-     * @param array $where (Extra where conditions)
+     * @param array  $where      (Extra where conditions)
      */
-    protected function addFilterAutocomplete($indexView, $key, $label, $field, $table, $fieldcode, $fieldtitle, $where = [])
+    protected function addFilterAutocomplete($indexView, $key, $label, $field, $table, $fieldcode, $fieldtitle, array $where = [])
     {
-        $value = ($indexView == $this->active) ? $this->request->get($key, '') : '';
+        $value = ($indexView === $this->active) ? $this->request->get($key, '') : '';
         $this->views[$indexView]->addFilter($key, ListFilter::newAutocompleteFilter($label, $field, $table, $fieldcode, $fieldtitle, $value, $where));
     }
 
@@ -211,15 +212,15 @@ abstract class ListController extends Base\Controller
      * Adds a boolean condition type filter to the ListView.
      *
      * @param string $indexView
-     * @param string $key (Filter identifier)
-     * @param string $label (Human reader description)
-     * @param string $field (Field of the model to apply filter)
-     * @param bool $inverse (If you need to invert the selected value)
-     * @param mixed $matchValue (Value to match)
+     * @param string $key        (Filter identifier)
+     * @param string $label      (Human reader description)
+     * @param string $field      (Field of the model to apply filter)
+     * @param bool   $inverse    (If you need to invert the selected value)
+     * @param mixed  $matchValue (Value to match)
      */
     protected function addFilterCheckbox($indexView, $key, $label, $field, $inverse = false, $matchValue = true)
     {
-        $value = ($indexView == $this->active) ? $this->request->get($key, '') : '';
+        $value = ($indexView === $this->active) ? $this->request->get($key, '') : '';
         $this->views[$indexView]->addFilter($key, ListFilter::newCheckboxFilter($field, $value, $label, $inverse, $matchValue));
     }
 
@@ -227,7 +228,7 @@ abstract class ListController extends Base\Controller
      * Adds a date type filter
      *
      * @param string $indexView
-     * @param string $key (Filter identifier)
+     * @param string $key   (Filter identifier)
      * @param string $label (Human reader description)
      * @param string $field (Field of the table to apply filter)
      */
@@ -240,7 +241,7 @@ abstract class ListController extends Base\Controller
      * Adds a numeric type filter
      *
      * @param string $indexView
-     * @param string $key (Filter identifier)
+     * @param string $key   (Filter identifier)
      * @param string $label (Human reader description)
      * @param string $field (Field of the table to apply filter)
      */
@@ -253,14 +254,14 @@ abstract class ListController extends Base\Controller
      * Add a select type filter to a ListView.
      *
      * @param string $indexView
-     * @param string $key (Filter identifier)
-     * @param string $label (Human reader description)
-     * @param string $field (Field of the table to apply filter)
-     * @param array $values (Values to show)
+     * @param string $key    (Filter identifier)
+     * @param string $label  (Human reader description)
+     * @param string $field  (Field of the table to apply filter)
+     * @param array  $values (Values to show)
      */
-    protected function addFilterSelect($indexView, $key, $label, $field, $values = [])
+    protected function addFilterSelect($indexView, $key, $label, $field, array $values = [])
     {
-        $value = ($indexView == $this->active) ? $this->request->get($key, '') : '';
+        $value = ($indexView === $this->active) ? $this->request->get($key, '') : '';
         $this->views[$indexView]->addFilter($key, ListFilter::newSelectFilter($label, $field, $values, $value));
     }
 
@@ -268,7 +269,7 @@ abstract class ListController extends Base\Controller
      * Adds a text type filter
      *
      * @param string $indexView
-     * @param string $key (Filter identifier)
+     * @param string $key   (Filter identifier)
      * @param string $label (Human reader description)
      * @param string $field (Field of the table to apply filter)
      */
@@ -283,7 +284,7 @@ abstract class ListController extends Base\Controller
      * @param string $indexView
      * @param string $field
      * @param string $label
-     * @param int $default (0 = None, 1 = ASC, 2 = DESC)
+     * @param int    $default (0 = None, 1 = ASC, 2 = DESC)
      */
     protected function addOrderBy($indexView, $field, $label = '', $default = 0)
     {
@@ -294,7 +295,7 @@ abstract class ListController extends Base\Controller
      * Adds a list of fields (separated by "|") to the search fields list so that data can be filtered.
      * To use integer columns, use CAST(columnName AS CHAR(50)).
      *
-     * @param string $indexView
+     * @param string   $indexView
      * @param string[] $fields
      */
     protected function addSearchFields($indexView, $fields)
@@ -486,7 +487,7 @@ abstract class ListController extends Base\Controller
      * Adds a filter to a type of field.
      *
      * @param string $indexView
-     * @param string $key (Filter identifier)
+     * @param string $key   (Filter identifier)
      * @param string $label (Human reader description)
      * @param string $field (Field of the table to apply filter)
      * @param string $type
@@ -496,9 +497,9 @@ abstract class ListController extends Base\Controller
         $config = [
             'field' => $field,
             'label' => $label,
-            'valueFrom' => ($indexView == $this->active) ? $this->request->get($key . '-from', '') : '',
+            'valueFrom' => ($indexView === $this->active) ? $this->request->get($key . '-from', '') : '',
             'operatorFrom' => $this->request->get($key . '-from-operator', '>='),
-            'valueTo' => ($indexView == $this->active) ? $this->request->get($key . '-to', '') : '',
+            'valueTo' => ($indexView === $this->active) ? $this->request->get($key . '-to', '') : '',
             'operatorTo' => $this->request->get($key . '-to-operator', '<='),
         ];
 
@@ -547,7 +548,7 @@ abstract class ListController extends Base\Controller
      * Returns columns title for megaSearchAction function.
      *
      * @param ListView $view
-     * @param int $maxColumns
+     * @param int      $maxColumns
      *
      * @return array
      */

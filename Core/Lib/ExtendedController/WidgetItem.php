@@ -266,7 +266,7 @@ abstract class WidgetItem implements VisualItemInterface
      *
      * @return string
      */
-    public function getHintHTML($hint)
+    public function getHintHTML($hint): string
     {
         return empty($hint) ? '' : ' data-toggle="popover" data-placement="auto" data-trigger="hover" data-content="'
             . $hint . '" ';
@@ -275,7 +275,7 @@ abstract class WidgetItem implements VisualItemInterface
     /**
      * Loads the attribute dictionary for a widget's group of options or values
      *
-     * @param array $property
+     * @param array             $property
      * @param \SimpleXMLElement $group
      */
     protected function getAttributesGroup(&$property, $group)
@@ -289,35 +289,6 @@ abstract class WidgetItem implements VisualItemInterface
             $values['value'] = (string) $item;
             $property[] = $values;
         }
-    }
-
-    /**
-     * Indicates if the conditions to apply an Option Text are met
-     *
-     * @param string $optionValue
-     * @param string $valueItem
-     *
-     * @return bool
-     */
-    private function canApplyOptions($optionValue, $valueItem)
-    {
-        switch ($optionValue[0]) {
-            case '<':
-                $optionValue = substr($optionValue, 1) ?: '';
-                $result = ((float) $valueItem < (float) $optionValue);
-                break;
-
-            case '>':
-                $optionValue = substr($optionValue, 1) ?: '';
-                $result = ((float) $valueItem > (float) $optionValue);
-                break;
-
-            default:
-                $result = ($optionValue === $valueItem);
-                break;
-        }
-
-        return $result;
     }
 
     /**
@@ -430,5 +401,34 @@ abstract class WidgetItem implements VisualItemInterface
         $style = $this->getTextOptionsHTML($value);
         return empty($this->onClick) ? '<span' . $style . '>' . $text2 . '</span>' : '<a href="' . $this->onClick
             . '?code=' . $value . '" ' . $style . '>' . $text2 . '</a>';
+    }
+
+    /**
+     * Indicates if the conditions to apply an Option Text are met
+     *
+     * @param string $optionValue
+     * @param string $valueItem
+     *
+     * @return bool
+     */
+    private function canApplyOptions($optionValue, $valueItem): bool
+    {
+        switch ($optionValue[0]) {
+            case '<':
+                $option = substr($optionValue, 1) ?: '';
+                $result = ((float) $valueItem < (float) $option);
+                break;
+
+            case '>':
+                $option = substr($optionValue, 1) ?: '';
+                $result = ((float) $valueItem > (float) $option);
+                break;
+
+            default:
+                $result = ($optionValue === $valueItem);
+                break;
+        }
+
+        return $result;
     }
 }

@@ -90,7 +90,7 @@ class Clientes extends AbstractRandomPeople
      * Rellena cuentas bancarias de un cliente con datos aleatorios.
      *
      * @param Model\Cliente $cliente
-     * @param int $max
+     * @param int           $max
      */
     protected function cuentasBancoCliente($cliente, $max = 3)
     {
@@ -114,7 +114,7 @@ class Clientes extends AbstractRandomPeople
      * Rellena direcciones de un cliente con datos aleatorios.
      *
      * @param Model\Cliente $cliente
-     * @param int $max
+     * @param int           $max
      */
     protected function direccionesCliente($cliente, $max = 3)
     {

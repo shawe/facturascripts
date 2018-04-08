@@ -25,13 +25,13 @@
 <view>
     <columns>
         <column name="code" order="100">
-            <widget type="text" fieldname="codbalance" onclick="EditBalance"/>
+            <widget type="text" fieldname="codbalance" onclick="EditBalance" />
         </column>
         <column name="nature" order="110">
-            <widget type="text" fieldname="naturaleza"/>
+            <widget type="text" fieldname="naturaleza" />
         </column>
         <column name="description" order="120">
-            <widget type="text" fieldname="descripcion1"/>
+            <widget type="text" fieldname="descripcion1" />
         </column>
     </columns>
     <rows>

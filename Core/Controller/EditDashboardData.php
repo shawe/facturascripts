@@ -42,14 +42,14 @@ class EditDashboardData extends ExtendedController\EditController
      *
      * @return mixed
      */
-    public function getFieldValue($model, $field)
+    public function getViewModelValue($model, $field)
     {
-        $value = parent::getFieldValue($model, $field);
+        $value = parent::getViewModelValue($model, $field);
         if (isset($value)) {
             return $value;
         }
 
-        if (is_array($model->properties) && array_key_exists($field, $model->properties)) {
+        if (\is_array($model->properties) && array_key_exists($field, $model->properties)) {
             return $model->properties[$field];
         }
 
@@ -71,20 +71,20 @@ class EditDashboardData extends ExtendedController\EditController
      */
     public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'dashboard-card';
-        $pagedata['menu'] = 'reports';
-        $pagedata['icon'] = 'fa-dashboard';
-        $pagedata['showonmenu'] = false;
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'dashboard-card';
+        $pageData['menu'] = 'reports';
+        $pageData['icon'] = 'fa-dashboard';
+        $pageData['showonmenu'] = false;
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
      * Runs the controller's private logic.
      *
-     * @param Response $response
-     * @param User $user
+     * @param Response              $response
+     * @param User                  $user
      * @param ControllerPermissions $permissions
      */
     public function privateCore(&$response, $user, $permissions)
@@ -98,7 +98,7 @@ class EditDashboardData extends ExtendedController\EditController
     /**
      * Run the data edits
      *
-     * @param BaseView $view
+     * @param ExtendedController\BaseView $view
      *
      * @return bool
      */
@@ -108,7 +108,7 @@ class EditDashboardData extends ExtendedController\EditController
         $properties = array_keys($this->getPropertiesFields());
         $fields = array_keys($model->properties);
         foreach ($fields as $key) {
-            if (!in_array($key, $properties, false)) {
+            if (!\in_array($key, $properties, false)) {
                 unset($model->properties[$key]);
             }
         }
@@ -139,7 +139,7 @@ class EditDashboardData extends ExtendedController\EditController
         $fields = array_keys($this->getModel()->properties);
         $group = $this->views['EditDashboardData']->getColumns()['options']->columns;
         foreach ($group as $column) {
-            if (in_array($column->widget->fieldName, $fields, false)) {
+            if (\in_array($column->widget->fieldName, $fields, false)) {
                 continue;
             }
 

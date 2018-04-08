@@ -39,7 +39,7 @@ abstract class AbstractRandomAccounting extends AbstractRandom
     /**
      * AbstractRandomAccounting constructor.
      *
-     * @param $model
+     * @param mixed $model
      */
     public function __construct($model)
     {

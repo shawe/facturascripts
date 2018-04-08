@@ -103,7 +103,7 @@ class EstadoDocumento extends Base\ModelClass
     }
 
     /**
-     * TODO: Uncomplete documentation.
+     * Remove the model data from the database.
      *
      * @return boolean
      */
@@ -128,7 +128,7 @@ class EstadoDocumento extends Base\ModelClass
     }
 
     /**
-     * TODO: Uncomplete documentation.
+     * Stores the model data in the database.
      *
      * @return boolean
      */

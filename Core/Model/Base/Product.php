@@ -37,24 +37,28 @@ abstract class Product extends ModelClass
      * @var Impuesto[]
      */
     private static $impuestos;
+
     /**
      * Barcode. Maximum 20 characters.
      *
      * @var string
      */
     public $codbarras;
+
     /**
      * Tax identifier of the tax assigned.
      *
      * @var string
      */
     public $codimpuesto;
+
     /**
      * Description of the product.
      *
      * @var string
      */
     public $descripcion;
+
     /**
      * True -> do not control the stock.
      * Activating it implies putting True $controlstock;
@@ -62,24 +66,28 @@ abstract class Product extends ModelClass
      * @var bool
      */
     public $nostock;
+
     /**
      * Partnumber of the product. Maximum 40 characters.
      *
      * @var string
      */
     public $partnumber;
+
     /**
      * Product SKU. Maximum 30 characters.
      *
      * @var string
      */
     public $referencia;
+
     /**
      * Physical stock.
      *
      * @var float|int
      */
     public $stockfis;
+
     /**
      * VAT% of the assigned tax.
      *

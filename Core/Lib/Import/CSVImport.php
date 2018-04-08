@@ -103,7 +103,7 @@ class CSVImport
      * Returns a value to SQL format.
      *
      * @param DataBase $dataBase
-     * @param string $value
+     * @param string   $value
      *
      * @return string
      */

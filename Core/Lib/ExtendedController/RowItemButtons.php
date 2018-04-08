@@ -62,7 +62,7 @@ class RowItemButtons extends RowItem
     /**
      * Creates the attributes structure from a XML file
      *
-     * @param \SimpleXMLElement[] $row
+     * @param \SimpleXMLElement $row
      */
     public function loadFromXML($row)
     {

@@ -74,7 +74,7 @@ class Cache
      * Saves contents in the cache and associates them to $key
      *
      * @param string $key
-     * @param mixed $content
+     * @param mixed  $content
      *
      * @return bool
      */

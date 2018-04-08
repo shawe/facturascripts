@@ -156,7 +156,7 @@ class IPFilter
         $file = fopen($this->filePath, 'wb');
         if ($file) {
             foreach ($this->ipList as $line) {
-                fwrite($file, $line['ip'] . ';' . $line['count'] . ';' . $line['expire'] .  \PHP_EOL);
+                fwrite($file, $line['ip'] . ';' . $line['count'] . ';' . $line['expire'] . \PHP_EOL);
             }
 
             fclose($file);

@@ -47,7 +47,7 @@ class TasksComponent extends BaseComponent implements ComponentInterface
      * TasksComponent constructor.
      *
      * @param Model\DashboardData $data
-     * @param string $userNick
+     * @param string              $userNick
      */
     public function __construct($data, $userNick)
     {
@@ -96,6 +96,18 @@ class TasksComponent extends BaseComponent implements ComponentInterface
     }
 
     /**
+     * Return the URL to this component.
+     *
+     * @param string $id
+     *
+     * @return string
+     */
+    public function url($id): string
+    {
+        return 'EditDashboardData?code=' . $id;
+    }
+
+    /**
      * Data persists in the database, modifying if the record existed or inserting
      * in case the primary key does not exist.
      *
@@ -124,18 +136,6 @@ class TasksComponent extends BaseComponent implements ComponentInterface
         ];
 
         $newItem->save();
-    }
-
-    /**
-     * Return the URL to this component.
-     *
-     * @param string $id
-     *
-     * @return string
-     */
-    public function url($id): string
-    {
-        return 'EditDashboardData?code=' . $id;
     }
 
     /**

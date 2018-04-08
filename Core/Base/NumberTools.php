@@ -45,7 +45,7 @@ class NumberTools
      * Returns the number format with the number of decimals indicated.
      *
      * @param float|string $number
-     * @param int|string $decimals
+     * @param int|string   $decimals
      *
      * @return string
      */

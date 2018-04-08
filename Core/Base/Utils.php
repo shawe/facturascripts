@@ -84,8 +84,8 @@ class Utils
      *
      * @param double $f1
      * @param double $f2
-     * @param int $precision
-     * @param bool $round
+     * @param int    $precision
+     * @param bool   $round
      *
      * @return bool
      */
@@ -146,7 +146,7 @@ class Utils
      *
      * @param string $txt
      *
-     * @return string
+     * @return string|null
      */
     public static function noHtml($txt)
     {
@@ -155,7 +155,6 @@ class Utils
             ['&lt;', '&gt;', '&quot;', '&#39;'],
             $txt
         );
-
         return ($txt === null) ? null : trim($newt);
     }
 

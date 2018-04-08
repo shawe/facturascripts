@@ -189,7 +189,7 @@ class FormaPago extends Base\ModelClass
      * Aux recursive function to calcularVencimiento()
      *
      * @param string $fechaInicio
-     * @param int $diaDePago
+     * @param int    $diaDePago
      *
      * @return string
      */

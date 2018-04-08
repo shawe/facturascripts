@@ -35,7 +35,7 @@ class DownloadTools
      * Downloads and returns url content with curl or file_get_contents.
      *
      * @param string $url
-     * @param int $timeOut
+     * @param int    $timeOut
      *
      * @return string
      */
@@ -82,7 +82,7 @@ class DownloadTools
      *
      * @param string $url
      * @param string $fileName
-     * @param int $timeOut
+     * @param int    $timeOut
      *
      * @return bool
      */
@@ -104,8 +104,8 @@ class DownloadTools
      * Alternative function when followlocation fails.
      *
      * @param resource $ch
-     * @param int $redirects
-     * @param bool $curloptHeader
+     * @param int      $redirects
+     * @param bool     $curloptHeader
      *
      * @return string
      */

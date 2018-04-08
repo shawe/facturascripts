@@ -59,8 +59,8 @@ class PluginDeploy
      * with the autoloader, but following the priority system of FacturaScripts.
      *
      * @param string $pluginPath
-     * @param array $enabledPlugins
-     * @param bool $clean
+     * @param array  $enabledPlugins
+     * @param bool   $clean
      */
     public function deploy($pluginPath, $enabledPlugins, $clean = true)
     {

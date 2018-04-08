@@ -26,9 +26,7 @@ use FacturaScripts\Core\Base\Utils;
 use FacturaScripts\Dinamic\Lib\BusinessDocumentTools;
 use FacturaScripts\Dinamic\Lib\ExportManager;
 use FacturaScripts\Dinamic\Model\Base\BusinessDocumentLine;
-use FacturaScripts\Dinamic\Model\Cliente;
-use FacturaScripts\Dinamic\Model\EstadoDocumento;
-use FacturaScripts\Dinamic\Model\Proveedor;
+use FacturaScripts\Dinamic\Model;
 
 /**
  * Description of BusinessDocumentView
@@ -39,23 +37,26 @@ class BusinessDocumentView extends BaseView
 {
 
     /**
-     * TODO: Uncomplete documentation.
+     * List of document states.
      *
-     * @var array
+     * @var Model\EstadoDocumento[]
      */
     public $documentStates;
+
     /**
      * Lines of document, the body.
      *
      * @var BusinessDocumentLine[]
      */
     public $lines;
+
     /**
-     * TODO: Uncomplete documentation.
+     * Common tools to manipulate business documents.
      *
      * @var BusinessDocumentTools
      */
     private $documentTools;
+
     /**
      * Line columns from xmlview.
      *
@@ -88,7 +89,7 @@ class BusinessDocumentView extends BaseView
         $this->lines = [];
 
         // Loads document states
-        $estadoDocModel = new EstadoDocumento();
+        $estadoDocModel = new Model\EstadoDocumento();
         $modelClass = explode('\\', $modelName);
         $this->documentStates = $estadoDocModel->all([new DataBaseWhere('tipodoc', end($modelClass))], ['nombre' => 'ASC'], 0, 0);
     }
@@ -296,7 +297,7 @@ class BusinessDocumentView extends BaseView
             return 'OK';
         }
 
-        $cliente = new Cliente();
+        $cliente = new Model\Cliente();
         if ($cliente->loadFromCode($codcliente)) {
             $this->model->setSubject([$cliente]);
             return 'OK';
@@ -328,7 +329,7 @@ class BusinessDocumentView extends BaseView
             return 'OK';
         }
 
-        $proveedor = new Proveedor();
+        $proveedor = new Model\Proveedor();
         if ($proveedor->loadFromCode($codproveedor)) {
             $this->model->setSubject([$proveedor]);
             return 'OK';
@@ -378,7 +379,7 @@ class BusinessDocumentView extends BaseView
         /// add new lines
         $skip = true;
         foreach (array_reverse($newLines) as $fLine) {
-            if (empty($fLine['referencia']) && empty($fLine['descripcion']) && $skip) {
+            if ($skip && empty($fLine['referencia']) && empty($fLine['descripcion'])) {
                 continue;
             }
 

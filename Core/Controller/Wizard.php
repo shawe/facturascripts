@@ -54,8 +54,8 @@ class Wizard extends Controller
     /**
      * Runs the controller's private logic.
      *
-     * @param Response $response
-     * @param Model\User $user
+     * @param Response              $response
+     * @param Model\User            $user
      * @param ControllerPermissions $permissions
      */
     public function privateCore(&$response, $user, $permissions)
@@ -92,7 +92,7 @@ class Wizard extends Controller
     public function getSelectValues($modelName)
     {
         $values = [];
-        $modelName = '\FacturaScripts\Dinamic\Model\\' . $modelName;
+        $modelName = self::DIR_MODEL . $modelName;
         $model = new $modelName();
 
         if ($model instanceof Model\Base\ModelClass) {
@@ -122,7 +122,7 @@ class Wizard extends Controller
      * Save company default address.
      *
      * @param AppSettings $appSettings
-     * @param string $codpais
+     * @param string      $codpais
      */
     private function saveAddress(&$appSettings, $codpais)
     {

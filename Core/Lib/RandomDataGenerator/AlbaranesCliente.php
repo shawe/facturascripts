@@ -65,7 +65,7 @@ class AlbaranesCliente extends AbstractRandomDocuments
 
             $regimeniva = $this->randomizeDocumentVenta($alb, $eje, $clientes, $generated);
             if ($alb->save()) {
-                $this->randomLineas($alb, 'idalbaran', 'FacturaScripts\Dinamic\Model\LineaAlbaranCliente', $regimeniva, $recargo, -1);
+                $this->randomLineas($alb, 'idalbaran', self::DIR_MODEL . 'LineaAlbaranCliente', $regimeniva, $recargo, -1);
                 ++$generated;
             } else {
                 break;

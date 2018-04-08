@@ -39,23 +39,6 @@ class WidgetItemText extends WidgetItem
     }
 
     /**
-     * Formats text to a given maximum length
-     *
-     * @param string $txt
-     * @param int    $len
-     *
-     * @return string
-     */
-    private function getTextResume($txt, $len = 60): string
-    {
-        if (mb_strlen($txt) < $len) {
-            return $txt;
-        }
-
-        return mb_substr($txt, 0, $len - 3) . '...';
-    }
-
-    /**
      * Generates the HTML code to display the data in the List controller
      *
      * @param string $value
@@ -104,5 +87,22 @@ class WidgetItemText extends WidgetItem
         }
 
         return $html;
+    }
+
+    /**
+     * Formats text to a given maximum length
+     *
+     * @param string $txt
+     * @param int    $len
+     *
+     * @return string
+     */
+    private function getTextResume($txt, $len = 60): string
+    {
+        if (mb_strlen($txt) < $len) {
+            return $txt;
+        }
+
+        return mb_substr($txt, 0, $len - 3) . '...';
     }
 }

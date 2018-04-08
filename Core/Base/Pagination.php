@@ -173,10 +173,10 @@ class Pagination
     /**
      * Returns a paging item.
      *
-     * @param int $page
-     * @param int $offset
+     * @param int         $page
+     * @param int         $offset
      * @param string|bool $icon
-     * @param bool $active
+     * @param bool        $active
      *
      * @return array
      */

@@ -17,24 +17,24 @@
         $(document).ready(function () {
             document.fs_install.fs_timezone.value = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-            $('#db_type').on('change', function () {
-                $('#db_type option:selected').each(function () {
+            $("#db_type").on("change", function () {
+                $("#db_type option:selected").each(function () {
                     str = $(this).val();
                 });
-                if (str === 'mysql') {
-                    $('#db_port').val(3306);
-                    $('#db_user').val('root');
+                if (str === "mysql") {
+                    $("#db_port").val(3306);
+                    $("#db_user").val("root");
                     $("#mysql_socket_div").show();
-                } else if (str === 'postgresql') {
-                    $('#db_port').val(5432);
-                    $('#db_user').val('postgres');
+                } else if (str === "postgresql") {
+                    $("#db_port").val(5432);
+                    $("#db_user").val("postgres");
                     $("#mysql_socket_div").hide();
                 }
             });
 
-            $('#fs_lang').on('change', function () {
+            $("#fs_lang").on("change", function () {
                 var lang = $("#fs_lang option:selected").val();
-                window.location.href = location.pathname + '?fs_lang=' + lang;
+                window.location.href = location.pathname + "?fs_lang=" + lang;
             });
         });
     </script>

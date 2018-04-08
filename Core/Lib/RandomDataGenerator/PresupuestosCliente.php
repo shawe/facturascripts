@@ -62,7 +62,7 @@ class PresupuestosCliente extends AbstractRandomDocuments
             $regimeniva = $this->randomizeDocumentVenta($presu, $eje, $clientes, $generated);
             $presu->finoferta = date('d-m-Y', strtotime($presu->fecha . ' +' . random_int(1, 18) . ' months'));
             if ($presu->save()) {
-                $this->randomLineas($presu, 'idpresupuesto', 'FacturaScripts\Dinamic\Model\LineaPresupuestoCliente', $regimeniva, $recargo);
+                $this->randomLineas($presu, 'idpresupuesto', self::DIR_MODEL . 'LineaPresupuestoCliente', $regimeniva, $recargo);
                 ++$generated;
             } else {
                 break;

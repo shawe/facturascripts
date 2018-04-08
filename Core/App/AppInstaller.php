@@ -85,7 +85,7 @@ class AppInstaller
     /**
      * Check database connection and creates the database if needed.
      *
-     * @return boolean
+     * @return bool
      */
     private function createDataBase(): bool
     {
@@ -246,30 +246,32 @@ class AppInstaller
      */
     private function saveInstall(): bool
     {
+        $request = $this->request->request;
         $file = fopen(FS_FOLDER . '/config.php', 'wb');
         if (\is_resource($file)) {
-            fwrite($file, "<?php" . \PHP_EOL);
+            fwrite($file, '<?php' . \PHP_EOL);
             fwrite($file, "\define('FS_COOKIES_EXPIRE', 604800);" . \PHP_EOL);
             fwrite($file, "\define('FS_DEBUG', true);" . \PHP_EOL);
-            fwrite($file, "\define('FS_LANG', '" . $this->request->request->get('fs_lang') . "');" . \PHP_EOL);
+            fwrite($file, "\define('FS_LANG', '" . $request->get('fs_lang') . "');" . \PHP_EOL);
             fwrite($file, "\define('FS_ROUTE', '" . $this->getUri() . "');" . \PHP_EOL);
-            fwrite($file, "\define('FS_TIMEZONE', '" . $this->request->request->get('fs_timezone') . "');" . \PHP_EOL);
-            fwrite($file, "\define('FS_DB_TYPE', '" . $this->request->request->get('db_type') . "');" . \PHP_EOL);
-            fwrite($file, "\define('FS_DB_HOST', '" . $this->request->request->get('db_host') . "');" . \PHP_EOL);
-            fwrite($file, "\define('FS_DB_PORT', '" . $this->request->request->get('db_port') . "');" . \PHP_EOL);
-            fwrite($file, "\define('FS_DB_NAME', '" . $this->request->request->get('db_name') . "');" . \PHP_EOL);
-            fwrite($file, "\define('FS_DB_USER', '" . $this->request->request->get('db_user') . "');" . \PHP_EOL);
-            fwrite($file, "\define('FS_DB_PASS', '" . $this->request->request->get('db_pass') . "');" . \PHP_EOL);
+            fwrite($file, "\define('FS_TIMEZONE', '" . $request->get('fs_timezone') . "');" . \PHP_EOL);
+            fwrite($file, "\define('FS_DB_TYPE', '" . $request->get('db_type') . "');" . \PHP_EOL);
+            fwrite($file, "\define('FS_DB_HOST', '" . $request->get('db_host') . "');" . \PHP_EOL);
+            fwrite($file, "\define('FS_DB_PORT', '" . $request->get('db_port') . "');" . \PHP_EOL);
+            fwrite($file, "\define('FS_DB_NAME', '" . $request->get('db_name') . "');" . \PHP_EOL);
+            fwrite($file, "\define('FS_DB_USER', '" . $request->get('db_user') . "');" . \PHP_EOL);
+            fwrite($file, "\define('FS_DB_PASS', '" . $request->get('db_pass') . "');" . \PHP_EOL);
             fwrite($file, "\define('FS_DB_FOREIGN_KEYS', true);" . \PHP_EOL);
             fwrite($file, "\define('FS_DB_INTEGER', 'INTEGER');" . \PHP_EOL);
             fwrite($file, "\define('FS_DB_TYPE_CHECK', true);" . \PHP_EOL);
-            fwrite($file, "\define('FS_CACHE_HOST', '" . $this->request->request->get('memcache_host') . "');" . \PHP_EOL);
-            fwrite($file, "\define('FS_CACHE_PORT', '" . $this->request->request->get('memcache_port') . "');" . \PHP_EOL);
-            fwrite($file, "\define('FS_CACHE_PREFIX', '" . $this->request->request->get('memcache_prefix') . "');" . \PHP_EOL);
-            if ($this->request->request->get('db_type') === 'MYSQL' && $this->request->request->get('mysql_socket') !== '') {
-                fwrite($file, \PHP_EOL . "ini_set('mysqli.default_socket', '" . $this->request->request->get('mysql_socket') . "');" . \PHP_EOL);
+            fwrite($file, "\define('FS_CACHE_HOST', '" . $request->get('memcache_host') . "');" . \PHP_EOL);
+            fwrite($file, "\define('FS_CACHE_PORT', '" . $request->get('memcache_port') . "');" . \PHP_EOL);
+            fwrite($file, "\define('FS_CACHE_PREFIX', '" . $request->get('memcache_prefix') . "');" . \PHP_EOL);
+            if ($request->get('db_type') === 'MYSQL' && $request->get('mysql_socket') !== '') {
+                fwrite($file, \PHP_EOL . "ini_set('mysqli.default_socket', '" . $request->get('mysql_socket')
+                    . "');" . \PHP_EOL);
             }
-            fwrite($file,  \PHP_EOL);
+            fwrite($file, \PHP_EOL);
             fclose($file);
             return true;
         }
@@ -355,7 +357,9 @@ class AppInstaller
     private function testPostgreSql($dbData): bool
     {
         $connectionStr = 'host=' . $dbData['host'] . ' port=' . $dbData['port'];
-        $connection = @\pg_connect($connectionStr . ' dbname=postgres user=' . $dbData['user'] . ' password=' . $dbData['pass']);
+        $connection = @\pg_connect(
+            $connectionStr . ' dbname=postgres user=' . $dbData['user'] . ' password=' . $dbData['pass']
+        );
         if (\is_resource($connection)) {
             // Check that the DB exists, if it doesn't, we try to create a new one
             $sqlExistsBD = "SELECT 1 AS result FROM pg_database WHERE datname = '" . $dbData['name'] . "';";

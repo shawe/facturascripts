@@ -81,7 +81,7 @@ class EditView extends BaseView implements DataViewInterface
      * Establishes the column edit state
      *
      * @param string $columnName
-     * @param bool $disabled
+     * @param bool   $disabled
      */
     public function disableColumn($columnName, $disabled)
     {
@@ -94,11 +94,11 @@ class EditView extends BaseView implements DataViewInterface
     /**
      * Load the data in the model property, according to the code specified.
      *
-     * @param mixed $code
+     * @param mixed           $code
      * @param DataBaseWhere[] $where
-     * @param array $order
-     * @param int $offset
-     * @param int $limit
+     * @param array           $order
+     * @param int             $offset
+     * @param int             $limit
      */
     public function loadData($code = false, array $where = [], array $order = [], $offset = 0, $limit = FS_ITEM_LIMIT)
     {

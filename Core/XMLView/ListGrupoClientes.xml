@@ -32,7 +32,7 @@
         </column>
         <column name="parent-group" order="120">
             <widget type="select" fieldname="parent" onclick="EditGrupoClientes">
-                <values source="gruposclientes" fieldcode="codgrupo" fieldtitle="nombre"></values>
+                <values source="gruposclientes" fieldcode="codgrupo" fieldtitle="nombre" />
             </widget>
         </column>
     </columns>

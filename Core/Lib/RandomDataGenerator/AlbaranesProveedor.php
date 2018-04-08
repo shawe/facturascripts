@@ -61,7 +61,7 @@ class AlbaranesProveedor extends AbstractRandomDocuments
             $recargo = (random_int(0, 4) === 0);
             $regimeniva = $this->randomizeDocumentCompra($alb, $eje, $proveedores, $generated);
             if ($alb->save()) {
-                $this->randomLineas($alb, 'idalbaran', 'FacturaScripts\Dinamic\Model\LineaAlbaranProveedor', $regimeniva, $recargo, 1);
+                $this->randomLineas($alb, 'idalbaran', self::DIR_MODEL . 'LineaAlbaranProveedor', $regimeniva, $recargo, 1);
                 ++$generated;
             } else {
                 break;

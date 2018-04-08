@@ -31,13 +31,15 @@ class DivisaTools extends NumberTools
 {
 
     /**
-     * TODO: Uncomplete documentation.
+     * List of currencies.
+     *
      * @var Divisa[]
      */
     private static $divisas;
 
     /**
-     * TODO: Uncomplete documentation.
+     * The selected currency.
+     *
      * @var Divisa
      */
     private static $selectedDivisa;
@@ -70,8 +72,8 @@ class DivisaTools extends NumberTools
      * Returns the value of the formatted currency.
      *
      * @param float|string $number
-     * @param int|string $decimals
-     * @param string $decoration
+     * @param int|string   $decimals
+     * @param string       $decoration
      *
      * @return string
      */

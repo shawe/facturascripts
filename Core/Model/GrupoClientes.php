@@ -147,15 +147,17 @@ class GrupoClientes extends Base\ModelClass
 
         $subgroups = [$this->codgrupo];
         $group = $this->get($this->parent);
-        while ($group->parent !== null) {
-            if (in_array($group->parent, $subgroups)) {
-                self::$miniLog->alert(self::$i18n->trans('parent-group-loop', ['%parentGroup%' => $group->codgrupo]));
-                return true;
-            }
+        if ($group instanceof self) {
+            while ($group->parent !== null) {
+                if (\in_array($group->parent, $subgroups)) {
+                    self::$miniLog->alert(self::$i18n->trans('parent-group-loop', ['%parentGroup%' => $group->codgrupo]));
+                    return true;
+                }
 
-            $subgroups[] = $group->parent;
-            if (!$group->loadFromCode($group->parent)) {
-                break;
+                $subgroups[] = $group->parent;
+                if (!$group->loadFromCode($group->parent)) {
+                    break;
+                }
             }
         }
 

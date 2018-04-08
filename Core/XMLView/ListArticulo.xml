@@ -35,12 +35,12 @@
         </column>
         <column name="manufacturer" order="130">
             <widget type="select" fieldname="codfabricante" onclick="EditFabricante">
-                <values source="fabricantes" fieldcode="codfabricante" fieldtitle="nombre"></values>
+                <values source="fabricantes" fieldcode="codfabricante" fieldtitle="nombre" />
             </widget>
         </column>
         <column name="family" order="140">
             <widget type="select" fieldname="codfamilia" onclick="EditFamilia">
-                <values source="familias" fieldcode="codfamilia" fieldtitle="descripcion"></values>
+                <values source="familias" fieldcode="codfamilia" fieldtitle="descripcion" />
             </widget>
         </column>
         <column name="price" title="pvp" display="right" order="150">

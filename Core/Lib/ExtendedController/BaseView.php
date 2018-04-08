@@ -37,18 +37,21 @@ class BaseView
      * @var Base\Translator
      */
     protected static $i18n;
+
     /**
      * View title
      *
      * @var string
      */
     public $title;
+
     /**
      * Total count of read rows
      *
      * @var int
      */
     public $count;
+
     /**
      * Needed model to for the model method calls.
      * In the scope of EditController it contains the view data.
@@ -56,12 +59,14 @@ class BaseView
      * @var Model\Base\PurchaseDocument|Model\Base\SalesDocument
      */
     protected $model;
+
     /**
      * Stores the new code from the save() procedure, to use in loadData().
      *
      * @var string
      */
     protected $newCode;
+
     /**
      * Columns and filters configuration
      *
@@ -94,7 +99,7 @@ class BaseView
     {
         $fieldKey = $this->model->primaryColumn();
         $fieldValue = $data[$fieldKey];
-        if ($fieldValue !== $this->model->primaryColumnValue() && $fieldValue !== '') {
+        if ($fieldValue !== '' && $fieldValue !== $this->model->primaryColumnValue()) {
             $this->model->loadFromCode($fieldValue);
         }
 
@@ -207,7 +212,7 @@ class BaseView
      *
      * @param string $key
      *
-     * @return RowItem
+     * @return RowItem|null
      */
     public function getRow(string $key)
     {

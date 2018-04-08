@@ -27,8 +27,8 @@ function beforeChange(changes, source) {
         for (var i = 0; i < autocompleteColumns.length; i++) {
             if (changes[0][1] === autocompleteColumns[i]) {
                 // aply for autocomplete columns
-                if (typeof changes[0][3] === 'string') {
-                    changes[0][3] = changes[0][3].split(' - ', 1)[0];
+                if (typeof changes[0][3] === "string") {
+                    changes[0][3] = changes[0][3].split(" - ", 1)[0];
                 }
             }
         }
@@ -42,7 +42,7 @@ function documentRecalculate() {
     });
     data.action = "recalculate-document";
     data.lines = getGridData();
-    console.log('data', data);
+    console.log("data", data);
 
     $.ajax({
         type: "POST",
@@ -60,7 +60,7 @@ function documentRecalculate() {
             });
 
             hsTable.render();
-            console.log('results', results);
+            console.log("results", results);
         },
         error: function (xhr, status, error) {
             alert(xhr.responseText);
@@ -69,7 +69,8 @@ function documentRecalculate() {
 }
 
 function documentSave() {
-    $("#btn-document-save").prop("disabled", true);
+    var saveButton = $("#btn-document-save");
+    saveButton.prop("disabled", true);
 
     var data = {};
     $.each($("form[name=f_document_primary]").serializeArray(), function (key, value) {
@@ -92,7 +93,7 @@ function documentSave() {
         }
     });
 
-    $("#btn-document-save").prop("disabled", false);
+    saveButton.prop("disabled", false);
 }
 
 function getGridData() {
@@ -112,16 +113,13 @@ function setAutocompletes(columns) {
     for (var key = 0; key < columns.length; key++) {
         if (columns[key].type === "autocomplete") {
             autocompleteColumns.push(columns[key].data);
-            var source = columns[key].source["source"];
-            var field = columns[key].source["fieldcode"];
-            var title = columns[key].source["fieldtitle"];
             columns[key].source = function (query, process) {
                 var ajaxData = {
                     term: query,
                     action: "autocomplete",
-                    source: source,
-                    field: field,
-                    title: title
+                    source: columns[key].source["source"],
+                    field: columns[key].source["fieldcode"],
+                    title: columns[key].source["fieldtitle"]
                 };
                 $.ajax({
                     type: "POST",
@@ -164,8 +162,8 @@ $(document).ready(function () {
         enterMoves: {row: 0, col: 1}
     });
 
-    Handsontable.hooks.add('beforeChange', beforeChange);
-    Handsontable.hooks.add('afterChange', documentRecalculate);
+    Handsontable.hooks.add("beforeChange", beforeChange);
+    Handsontable.hooks.add("afterChange", documentRecalculate);
 
     $("#doc_codserie").change(function () {
         documentRecalculate();

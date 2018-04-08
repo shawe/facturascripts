@@ -70,10 +70,10 @@ class DataBaseWhere
     /**
      * DataBaseWhere constructor.
      *
-     * @param string $fields
+     * @param string      $fields
      * @param string|bool $value
-     * @param string $operator
-     * @param string $operation
+     * @param string      $operator
+     * @param string      $operation
      */
     public function __construct($fields, $value, $operator = '=', $operation = 'AND')
     {

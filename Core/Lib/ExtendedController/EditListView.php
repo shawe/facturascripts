@@ -104,7 +104,7 @@ class EditListView extends BaseView implements DataViewInterface
      * Establishes the column's edit state
      *
      * @param string $columnName
-     * @param bool $disabled
+     * @param bool   $disabled
      */
     public function disableColumn($columnName, $disabled)
     {
@@ -118,11 +118,11 @@ class EditListView extends BaseView implements DataViewInterface
      * Load the data in the cursor property, according to the where filter specified.
      * Adds an empty row/model at the end of the loaded data.
      *
-     * @param mixed $code
+     * @param mixed           $code
      * @param DataBaseWhere[] $where
-     * @param array $order
-     * @param int $offset
-     * @param int $limit
+     * @param array           $order
+     * @param int             $offset
+     * @param int             $limit
      */
     public function loadData($code = false, array $where = [], array $order = [], $offset = 0, $limit = FS_ITEM_LIMIT)
     {
@@ -146,7 +146,12 @@ class EditListView extends BaseView implements DataViewInterface
     {
         if ($this->count > 0) {
             $exportManager->generateListModelPage(
-                $this->model, $this->where, $this->order, $this->offset, $this->getColumns(), $this->title
+                $this->model,
+                $this->where,
+                $this->order,
+                $this->offset,
+                $this->getColumns(),
+                $this->title
             );
         }
     }
@@ -162,9 +167,11 @@ class EditListView extends BaseView implements DataViewInterface
 
         $maxColumns = 5;
         $group = reset($this->pageOption->columns);
-        foreach ($group->columns as $col) {
-            if ($col->display !== 'none') {
-                --$maxColumns;
+        if ($group instanceof GroupItem) {
+            foreach ($group->columns as $col) {
+                if ($col->display !== 'none') {
+                    --$maxColumns;
+                }
             }
         }
 

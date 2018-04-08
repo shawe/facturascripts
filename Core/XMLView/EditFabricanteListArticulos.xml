@@ -33,14 +33,13 @@
         <column name="partnumber" order="120">
             <widget type="text" fieldname="partnumber" />
         </column>
-
-        <column name="family" order="140">
+        <column name="family" order="130">
             <widget type="text" fieldname="codfamilia" />
         </column>
-        <column name="price" title="pvp" display="right" order="150">
+        <column name="price" title="pvp" display="right" order="140">
             <widget type="money" fieldname="pvp" />
         </column>
-        <column name="stock" display="right" order="160">
+        <column name="stock" display="right" order="150">
             <widget type="number" fieldname="stockfis">
                 <option color="red">&lt;0</option>
             </widget>

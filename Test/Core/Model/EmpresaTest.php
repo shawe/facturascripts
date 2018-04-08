@@ -48,6 +48,7 @@ final class EmpresaTest extends TestCase
 
         $model->administrador = 'Test name admin';
         $model->ciudad = 'Test city';
+        $model->cifnif = '22222222J';
         $model->codpostal = 22222;
         $model->direccion = 'Test address';
         $model->nombre = 'A long text for name';

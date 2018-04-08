@@ -53,6 +53,53 @@ class GroupItem extends VisualItem implements VisualItemInterface
     }
 
     /**
+     * Create and load the group structure from the database
+     *
+     * @param array $group
+     *
+     * @return GroupItem
+     */
+    public static function newFromJSON($group): GroupItem
+    {
+        $result = new self();
+        $result->loadFromJSON($group);
+
+        return $result;
+    }
+
+    /**
+     * Create and load the group structure from a XML file
+     *
+     * @param \SimpleXMLElement $group
+     *
+     * @return GroupItem
+     */
+    public static function newFromXML($group): GroupItem
+    {
+        $result = new self();
+        $result->loadFromXML($group);
+
+        return $result;
+    }
+
+    /**
+     * Sorts the columns
+     *
+     * @param ColumnItem $column1
+     * @param ColumnItem $column2
+     *
+     * @return int
+     */
+    public static function sortColumns($column1, $column2): int
+    {
+        if ($column1->order === $column2->order) {
+            return 0;
+        }
+
+        return ($column1->order < $column2->order) ? -1 : 1;
+    }
+
+    /**
      * Check and apply special operations on the group
      */
     public function applySpecialOperations()
@@ -122,53 +169,6 @@ class GroupItem extends VisualItem implements VisualItemInterface
             }
             uasort($this->columns, ['self', 'sortColumns']);
         }
-    }
-
-    /**
-     * Create and load the group structure from the database
-     *
-     * @param array $group
-     *
-     * @return GroupItem
-     */
-    public static function newFromJSON($group): GroupItem
-    {
-        $result = new self();
-        $result->loadFromJSON($group);
-
-        return $result;
-    }
-
-    /**
-     * Create and load the group structure from a XML file
-     *
-     * @param \SimpleXMLElement $group
-     *
-     * @return GroupItem
-     */
-    public static function newFromXML($group): GroupItem
-    {
-        $result = new self();
-        $result->loadFromXML($group);
-
-        return $result;
-    }
-
-    /**
-     * Sorts the columns
-     *
-     * @param ColumnItem $column1
-     * @param ColumnItem $column2
-     *
-     * @return int
-     */
-    public static function sortColumns($column1, $column2): int
-    {
-        if ($column1->order === $column2->order) {
-            return 0;
-        }
-
-        return ($column1->order < $column2->order) ? -1 : 1;
     }
 
     /**

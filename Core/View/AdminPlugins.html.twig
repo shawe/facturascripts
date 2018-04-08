@@ -44,21 +44,25 @@
         <div class="row">
             <div class="col-sm-7 col-6">
                 <div class="btn-group d-xs-none">
-                    <a class="btn btn-sm btn-outline-secondary" href="{{ fsc.url() }}" {{ popoverTitle(refresh, 'bottom') }}>
+                    <a class="btn btn-sm btn-outline-secondary"
+                       href="{{ fsc.url() }}" {{ popoverTitle(refresh, 'bottom') }}>
                         <i class="fa fa-refresh" aria-hidden="true"></i>
                     </a>
                     {% if fsc.getPageData()['name'] == fsc.user.homepage %}
-                        <a class="btn btn-sm btn-outline-secondary active" href="{{ fsc.url() }}?defaultPage=FALSE" {{ popoverTitle(defaultF, 'bottom') }}>
+                        <a class="btn btn-sm btn-outline-secondary active"
+                           href="{{ fsc.url() }}?defaultPage=FALSE" {{ popoverTitle(defaultF, 'bottom') }}>
                             <i class="fa fa-bookmark" aria-hidden="true"></i>
                         </a>
                     {% else %}
-                        <a class="btn btn-sm btn-outline-secondary" href="{{ fsc.url() }}?defaultPage=TRUE" {{ popoverTitle(defaultT, 'bottom') }}>
+                        <a class="btn btn-sm btn-outline-secondary"
+                           href="{{ fsc.url() }}?defaultPage=TRUE" {{ popoverTitle(defaultT, 'bottom') }}>
                             <i class="fa fa-bookmark-o" aria-hidden="true"></i>
                         </a>
                     {% endif %}
                 </div>
                 <div class="btn-group d-xs-none">
-                    <button class="btn btn-sm btn-success" type="button" data-toggle="modal" data-target="#modalAddPlugin">
+                    <button class="btn btn-sm btn-success" type="button" data-toggle="modal"
+                            data-target="#modalAddPlugin">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                         <span class="d-none d-sm-inline-block">&nbsp;{{ add }}</span>
                     </button>
@@ -96,16 +100,19 @@
                     <td class="text-right">
                             <span class="btn-group d-xs-none">
                                 {% if plugin.enabled %}
-                                    <a class="btn btn-sm btn-secondary" href="{{ fsc.url() }}?action=disable&amp;plugin={{ plugin.name }}" {{ popoverTitle(disable, 'bottom') }}>
+                                    <a class="btn btn-sm btn-secondary"
+                                       href="{{ fsc.url() }}?action=disable&amp;plugin={{ plugin.name }}" {{ popoverTitle(disable, 'bottom') }}>
                                         <i class="fa fa-close" aria-hidden="true"></i>
                                         <span class="d-none d-sm-inline-block">&nbsp;{{ disable }}</span>
                                     </a>
                                 {% elseif plugin.compatible %}
-                                    <a class="btn btn-sm btn-success" href="{{ fsc.url() }}?action=enable&amp;plugin={{ plugin.name }}" {{ popoverTitle(enable, 'bottom') }}>
+                                    <a class="btn btn-sm btn-success"
+                                       href="{{ fsc.url() }}?action=enable&amp;plugin={{ plugin.name }}" {{ popoverTitle(enable, 'bottom') }}>
                                         <i class="fa fa-check" aria-hidden="true"></i>
                                         <span class="d-none d-sm-inline-block">&nbsp;{{ enable }}</span>
                                     </a>
-                                    <a class="btn btn-sm btn-danger" href="{{ fsc.url() }}?action=remove&amp;plugin={{ plugin.name }}" {{ popoverTitle(delete, 'bottom') }}>
+                                    <a class="btn btn-sm btn-danger"
+                                       href="{{ fsc.url() }}?action=remove&amp;plugin={{ plugin.name }}" {{ popoverTitle(delete, 'bottom') }}>
                                         <i class="fa fa-trash" aria-hidden="true"></i>
                                         <span class="d-none d-sm-inline-block">&nbsp;{{ delete }}</span>
                                     </a>
@@ -142,7 +149,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ i18n.trans('cancel') }}</button>
+                        <button type="button" class="btn btn-secondary"
+                                data-dismiss="modal">{{ i18n.trans('cancel') }}</button>
                         <button type="submit" class="btn btn-primary">{{ i18n.trans('continue') }}</button>
                     </div>
                 </div>

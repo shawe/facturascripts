@@ -44,7 +44,7 @@ abstract class BusinessDocumentController extends PanelController
     public function getSelectValues($modelName)
     {
         $values = [];
-        $modelName = '\FacturaScripts\Dinamic\Model\\' . $modelName;
+        $modelName = self::DIR_MODEL . $modelName;
         $model = new $modelName();
 
         if ($model instanceof ModelClass) {
@@ -69,7 +69,7 @@ abstract class BusinessDocumentController extends PanelController
      */
     protected function createViews()
     {
-        $modelName = '\\FacturaScripts\\Dinamic\\Model\\' . $this->getModelClassName();
+        $modelName = self::DIR_MODEL . $this->getModelClassName();
         $view = new BusinessDocumentView('new', $modelName, $this->getLineXMLView(), $this->user->nick);
         $this->addView('Document', $view, 'fa-file');
 
@@ -80,7 +80,7 @@ abstract class BusinessDocumentController extends PanelController
      * Run the actions that alter data before reading it.
      *
      * @param BusinessDocumentView $view
-     * @param string $action
+     * @param string               $action
      *
      * @return bool
      */
@@ -112,7 +112,7 @@ abstract class BusinessDocumentController extends PanelController
      * Run the controller after actions
      *
      * @param EditView $view
-     * @param string $action
+     * @param string   $action
      */
     protected function execAfterAction($view, $action)
     {
@@ -132,7 +132,7 @@ abstract class BusinessDocumentController extends PanelController
     /**
      * Load view data procedure
      *
-     * @param string $keyView
+     * @param string               $keyView
      * @param BusinessDocumentView $view
      */
     protected function loadData($keyView, $view)

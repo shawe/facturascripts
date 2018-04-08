@@ -88,7 +88,7 @@ class Translator
      * Translate the text into the default language.
      *
      * @param string $txt
-     * @param array $parameters
+     * @param array  $parameters
      *
      * @return string
      */
@@ -106,7 +106,7 @@ class Translator
      *
      * @param string $lang
      * @param string $txt
-     * @param array $parameters
+     * @param array  $parameters
      *
      * @return string
      */

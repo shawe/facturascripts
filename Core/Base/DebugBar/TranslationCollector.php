@@ -38,6 +38,7 @@ class TranslationCollector extends DataCollector implements Renderable, AssetPro
      * @var Translator
      */
     protected static $i18n;
+
     /**
      * Array containing the translations
      *

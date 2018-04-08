@@ -74,9 +74,9 @@ class DataBaseTools
     /**
      * Checks to the database table
      *
-     * @param $tableName
-     * @param $xmlCols
-     * @param $xmlCons
+     * @param string $tableName
+     * @param \SimpleXMLElement $xmlCols
+     * @param \SimpleXMLElement $xmlCons
      *
      * @return string
      */
@@ -115,8 +115,8 @@ class DataBaseTools
      * Create the table with the structure received.
      *
      * @param string $tableName
-     * @param array $xmlCols
-     * @param array $xmlCons
+     * @param array  $xmlCols
+     * @param array  $xmlCons
      *
      * @return bool
      */
@@ -129,8 +129,8 @@ class DataBaseTools
      * Extract columns and restrictions form the XML definition file of a Table.
      *
      * @param string $tableName
-     * @param array $columns
-     * @param array $constraints
+     * @param array  $columns
+     * @param array  $constraints
      *
      * @return bool
      */
@@ -166,9 +166,9 @@ class DataBaseTools
      * Compare two arrays with restrictions, return a SQL statement if founded differencies.
      *
      * @param string $tableName
-     * @param array $xmlCons
-     * @param array $dbCons
-     * @param bool $deleteOnly
+     * @param array  $xmlCons
+     * @param array  $dbCons
+     * @param bool   $deleteOnly
      *
      * @return string
      */
@@ -204,7 +204,7 @@ class DataBaseTools
     /**
      * Look for a column with a value by his name in array.
      *
-     * @param array $items
+     * @param array  $items
      * @param string $index
      * @param string $value
      *
@@ -227,8 +227,8 @@ class DataBaseTools
      * Compare two arrays of columns, return a SQL statement if founded differencies.
      *
      * @param string $tableName
-     * @param array $xmlCols
-     * @param array $dbCols
+     * @param array  $xmlCols
+     * @param array  $dbCols
      *
      * @return string
      */
@@ -312,8 +312,8 @@ class DataBaseTools
     /**
      * Update the name and type foreach column from the XML
      *
-     * @param $columns
-     * @param $xml
+     * @param array $columns
+     * @param \SimpleXMLElement $xml
      */
     private function checkXmlColumns(&$columns, $xml)
     {
@@ -340,7 +340,7 @@ class DataBaseTools
     /**
      * Update the name and constraint foreach constraint from the XML
      *
-     * @param array $constraints
+     * @param array             $constraints
      * @param \SimpleXMLElement $xml
      */
     private function checkXmlConstraints(&$constraints, $xml)

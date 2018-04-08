@@ -56,8 +56,8 @@ class MegaSearch extends Base\Controller
     /**
      * Runs the controller's private logic.
      *
-     * @param Response $response
-     * @param Model\User $user
+     * @param Response                   $response
+     * @param Model\User                 $user
      * @param Base\ControllerPermissions $permissions
      */
     public function privateCore(&$response, $user, $permissions)

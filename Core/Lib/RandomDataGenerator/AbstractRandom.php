@@ -31,11 +31,17 @@ abstract class AbstractRandom
 {
 
     /**
+     * Constant for dinamic models.
+     */
+    const DIR_MODEL = '\\FacturaScripts\\Dinamic\\Model\\';
+
+    /**
      * Contains the model to generate random data.
      *
      * @var mixed
      */
     protected $model;
+
     /**
      * Link with the active database
      *
@@ -46,7 +52,7 @@ abstract class AbstractRandom
     /**
      * AbstractRandom constructor.
      *
-     * @param $model
+     * @param mixed $model
      */
     public function __construct($model)
     {
@@ -168,7 +174,7 @@ abstract class AbstractRandom
     /**
      * Return one random item from given array.
      *
-     * @param $array
+     * @param array $array
      *
      * @return mixed
      */
@@ -245,7 +251,7 @@ abstract class AbstractRandom
         if (random_int(0, 9) === 0) {
             $precio = random_int($min, $max2);
         } elseif ($precio < $max1 && random_int(0, 2) === 0) {
-            $precio += round(random_int(1, 5) / random_int(1, 10), (int) FS_NF0);
+            $precio += round(random_int(1, 5) / random_int(1, 10), FS_NF0);
             $precio = min([$max1, $precio]);
         }
 
@@ -255,7 +261,7 @@ abstract class AbstractRandom
     /**
      * Suffle all items from $model and put it to $variable.
      *
-     * @param array $variable
+     * @param array                 $variable
      * @param Model\Base\ModelClass $model
      */
     public function shuffle(&$variable, $model)
@@ -270,7 +276,7 @@ abstract class AbstractRandom
      * Devuelve el string acortado.
      *
      * @param string $txt
-     * @param int $len
+     * @param int    $len
      *
      * @return string
      */
@@ -319,7 +325,7 @@ abstract class AbstractRandom
      * @param string $modelName
      * @param string $tableName
      * @param string $functionName
-     * @param bool $recursivo
+     * @param bool   $recursivo
      *
      * @return array
      */
@@ -352,7 +358,7 @@ abstract class AbstractRandom
      */
     protected function randomClientes($recursivo = true): array
     {
-        return $this->randomModel('\FacturaScripts\Dinamic\Model\Cliente', 'clientes', 'clientes', $recursivo);
+        return $this->randomModel(self::DIR_MODEL . 'Cliente', 'clientes', 'clientes', $recursivo);
     }
 
     /**
@@ -364,7 +370,7 @@ abstract class AbstractRandom
      */
     protected function randomProveedores($recursivo = true): array
     {
-        return $this->randomModel('\FacturaScripts\Dinamic\Model\Proveedor', 'proveedores', 'proveedores', $recursivo);
+        return $this->randomModel(self::DIR_MODEL . 'Proveedor', 'proveedores', 'proveedores', $recursivo);
     }
 
     /**
@@ -376,7 +382,7 @@ abstract class AbstractRandom
      */
     protected function randomAgentes($recursivo = true): array
     {
-        return $this->randomModel('\FacturaScripts\Dinamic\Model\Agente', 'agentes', 'agentes', $recursivo);
+        return $this->randomModel(self::DIR_MODEL . 'Agente', 'agentes', 'agentes', $recursivo);
     }
 
     /**
@@ -388,6 +394,6 @@ abstract class AbstractRandom
      */
     protected function randomArticulos($recursivo = true): array
     {
-        return $this->randomModel('\FacturaScripts\Dinamic\Model\Articulo', 'articulos', 'articulos', $recursivo);
+        return $this->randomModel(self::DIR_MODEL . 'Articulo', 'articulos', 'articulos', $recursivo);
     }
 }

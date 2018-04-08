@@ -28,19 +28,23 @@ use FacturaScripts\Core\Model\Base\BusinessDocument;
  */
 class BusinessDocumentGenerator
 {
+    /**
+     * Constant for dinamic models.
+     */
+    const DIR_MODEL = '\\FacturaScripts\\Dinamic\\Model\\';
 
     /**
-     * TODO: Uncomplete documentation.
+     * Generates a new business document.
      *
      * @param BusinessDocument $prototype
-     * @param string $newClass
+     * @param string           $newClass
      *
      * @return bool
      */
     public function generate(BusinessDocument $prototype, string $newClass): bool
     {
         $exclude = ['idestado', 'fecha', 'hora'];
-        $newDocClass = '\\FacturaScripts\\Dinamic\\Model\\' . $newClass;
+        $newDocClass = self::DIR_MODEL . $newClass;
         $newDoc = new $newDocClass();
         if ($newDoc instanceof BusinessDocument) {
             foreach ($prototype->getModelFields() as $field => $value) {
@@ -56,7 +60,7 @@ class BusinessDocumentGenerator
     }
 
     /**
-     * TODO: Uncomplete documentation.
+     * Clone lines between two documents.
      *
      * @param BusinessDocument $prototype
      * @param BusinessDocument $newDoc

@@ -148,7 +148,7 @@ class SubcuentaSaldo extends Base\ModelClass
     /**
      * Update account balance for a month
      *
-     * @param int $month
+     * @param int   $month
      * @param float $debit
      * @param float $credit
      *
@@ -171,7 +171,7 @@ class SubcuentaSaldo extends Base\ModelClass
      * Load in an array "detail" the monthly balances of a sub-account
      * and return the sum of them.
      *
-     * @param int $idSubAccount
+     * @param int   $idSubAccount
      * @param array $detail
      *
      * @return float
@@ -185,6 +185,6 @@ class SubcuentaSaldo extends Base\ModelClass
             $result += $values->saldo;
         }
 
-        return round($result, (int) FS_NF0);
+        return round($result, FS_NF0);
     }
 }

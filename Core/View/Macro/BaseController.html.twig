@@ -56,7 +56,7 @@
 
                 <div class="form-group col text-right">
                     <div class="d-xs-none"><br/></div>
-                        {% if keyValue is not empty %}
+                    {% if keyValue is not empty %}
                         <a class="btn btn-sm btn-danger" onclick="deleteRecord('{{ formName }}');" href="#" {{ popoverTitle(remove_title, 'bottom') }}>
                             <i class="fa fa-trash fa-fw" aria-hidden="true"></i>
                         </a>
@@ -93,7 +93,7 @@
         {% else %}
             {{ columnsForEditView(context, view, model, TRUE) }}
         {% endif %}
-        <hr />
+        <hr/>
     {% endfor %}
 
     {% set newModel = view.newEmptyModel() %}
@@ -119,64 +119,64 @@
 
     {% if withForm == TRUE %}
         <form name="{{ formName }}" action="{{ context.fsc.getURL('edit') }}" method="post" enctype="multipart/form-data" class="form" role="form">
-            <input type="hidden" name="action" value="save">
-            <input type="hidden" name="active" value="{{ context.indexView }}">
-            <div class="row">
-            {% endif %}
+        <input type="hidden" name="action" value="save">
+        <input type="hidden" name="active" value="{{ context.indexView }}">
+        <div class="row">
+    {% endif %}
 
-            {% for group in view.getColumns() %}
-                <div class="{{ group.numColumns == 0 ? 'col' : 'col-md-' ~ group.numColumns }}">
-                    <div class="form-row">
-                        {% if group.title is not empty %}
-                            <legend>{{ group.getHeaderHTML(group.title)|raw }}</legend>
+    {% for group in view.getColumns() %}
+        <div class="{{ group.numColumns == 0 ? 'col' : 'col-md-' ~ group.numColumns }}">
+            <div class="form-row">
+                {% if group.title is not empty %}
+                    <legend>{{ group.getHeaderHTML(group.title)|raw }}</legend>
+                {% endif %}
+                {% for column in group.columns %}
+                    {% set value = attribute(model, column.widget.fieldName) %}
+                    {% if column.display == 'none' %}
+                        <input type="hidden" name="{{ column.widget.fieldName }}" value="{{ value }}">
+                    {% else %}
+                        {% if column.level <= context.fsc.user.level %}
+                            {{ column.getEditHTML(value, TRUE, formName)|raw }}
                         {% endif %}
-                        {% for column in group.columns %}
-                            {% set value = attribute(model, column.widget.fieldName) %}
-                            {% if column.display == 'none' %}
-                                <input type="hidden" name="{{ column.widget.fieldName }}" value="{{ value }}">
-                            {% else %}
-                                {% if column.level <= context.fsc.user.level %}
-                                    {{ column.getEditHTML(value, TRUE, formName)|raw }}
-                                {% endif %}
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endfor %}
-
-            {% if withForm == TRUE %}
+                    {% endif %}
+                {% endfor %}
             </div>
-            {% if withButtons %}
-                {% from 'Macro/BaseController.html.twig' import rowActionsForEditView as rowActionsForEditView %}
-                {% from 'Macro/Utils.html.twig' import popoverTitle as popoverTitle %}
-                {% set save, save_title = context.i18n.trans('save'), context.i18n.trans('save-data') %}
-                {% set undo, undo_title = context.i18n.trans('undo'), context.i18n.trans('restore-data') %}
-                <div class="row">
-                    <div class="col">&nbsp;</div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        {% if view.count > 0 %}
-                            {% set remove, remove_title = context.i18n.trans('delete'), context.i18n.trans('delete-record') %}
-                            <a class="btn btn-sm btn-danger" onclick="deleteRecord('{{ formName }}');" href="#" {{ popoverTitle(remove_title, 'bottom') }}>
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                <span class="d-none d-sm-inline-block">&nbsp;{{ remove }}</span>
-                            </a>
-                        {% endif %}
-                    </div>
+        </div>
+    {% endfor %}
 
-                    {{ rowActionsForEditView(context, view, formName) }}
-
-                    <div class="col text-right">
-                        <button class="btn btn-sm btn btn-secondary" type="reset" {{ popoverTitle(undo_title, 'bottom') }}>
-                            <i class="fa fa-undo" aria-hidden="true"></i>&nbsp; {{ undo }}
-                        </button>
-                        <button class="btn btn-sm btn-primary" id="submit-{{ formName }}" type="submit" {{ popoverTitle(save_title, 'bottom') }}>
-                            <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp; {{ save }}
-                        </button>
-                    </div>
+    {% if withForm == TRUE %}
+        </div>
+        {% if withButtons %}
+            {% from 'Macro/BaseController.html.twig' import rowActionsForEditView as rowActionsForEditView %}
+            {% from 'Macro/Utils.html.twig' import popoverTitle as popoverTitle %}
+            {% set save, save_title = context.i18n.trans('save'), context.i18n.trans('save-data') %}
+            {% set undo, undo_title = context.i18n.trans('undo'), context.i18n.trans('restore-data') %}
+            <div class="row">
+                <div class="col">&nbsp;</div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {% if view.count > 0 %}
+                        {% set remove, remove_title = context.i18n.trans('delete'), context.i18n.trans('delete-record') %}
+                        <a class="btn btn-sm btn-danger" onclick="deleteRecord('{{ formName }}');" href="#" {{ popoverTitle(remove_title, 'bottom') }}>
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                            <span class="d-none d-sm-inline-block">&nbsp;{{ remove }}</span>
+                        </a>
+                    {% endif %}
                 </div>
-            {% endif %}
+
+                {{ rowActionsForEditView(context, view, formName) }}
+
+                <div class="col text-right">
+                    <button class="btn btn-sm btn btn-secondary" type="reset" {{ popoverTitle(undo_title, 'bottom') }}>
+                        <i class="fa fa-undo" aria-hidden="true"></i>&nbsp; {{ undo }}
+                    </button>
+                    <button class="btn btn-sm btn-primary" id="submit-{{ formName }}" type="submit" {{ popoverTitle(save_title, 'bottom') }}>
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp; {{ save }}
+                    </button>
+                </div>
+            </div>
+        {% endif %}
         </form>
     {% endif %}
 {% endmacro %}
@@ -191,62 +191,62 @@
     {% set cols = (view.getColumns()|length)+1 %}
     <table class="table table-hover">
         <thead>
-            <tr>
-                {% for column in view.getColumns() %}
-                    {% if (column.display != 'none') and (column.level <= context.fsc.user.level) %}
-                        <th class="text-{{ column.display }}">{{ column.getHeaderHTML(column.title)|raw }}</th>
-                    {% endif %}
-                {% endfor %}
-                {% if actionCheckboxes and view.getCursor() is not empty %}
-                    <th class="text-right">
-                        <div class="form-check form-check-inline mb-2 mr-sm-2 mb-sm-0">
-                            <label>
-                                <input class="form-check-input listActionCB" type="checkbox" />
-                            </label>
-                        </div>
-                    </th>
+        <tr>
+            {% for column in view.getColumns() %}
+                {% if (column.display != 'none') and (column.level <= context.fsc.user.level) %}
+                    <th class="text-{{ column.display }}">{{ column.getHeaderHTML(column.title)|raw }}</th>
                 {% endif %}
-            </tr>
+            {% endfor %}
+            {% if actionCheckboxes and view.getCursor() is not empty %}
+                <th class="text-right">
+                    <div class="form-check form-check-inline mb-2 mr-sm-2 mb-sm-0">
+                        <label>
+                            <input class="form-check-input listActionCB" type="checkbox"/>
+                        </label>
+                    </div>
+                </th>
+            {% endif %}
+        </tr>
         </thead>
         <tbody class="tab{{ context.indexView }}">
-            {% for model in view.getCursor() %}
-                {# Set background status #}
-                {% set rowClass = 'table-light' %}
-                {% set rowStatus = view.getRow('status') %}
-                {% if rowStatus is not empty %}
-                    {% set rowClass = rowStatus.getStatus( attribute(model, rowStatus.fieldName) ) %}
-                {% endif %}
+        {% for model in view.getCursor() %}
+            {# Set background status #}
+            {% set rowClass = 'table-light' %}
+            {% set rowStatus = view.getRow('status') %}
+            {% if rowStatus is not empty %}
+                {% set rowClass = rowStatus.getStatus( attribute(model, rowStatus.fieldName) ) %}
+            {% endif %}
 
-                {# checks model url #}
-                {% set rowDataHref = view.getClickEvent(model) %}
-                {% if rowDataHref is not empty %}
-                    {% set rowClass = rowClass ~ ' clickableRow' %}
-                {% endif %}
+            {# checks model url #}
+            {% set rowDataHref = view.getClickEvent(model) %}
+            {% if rowDataHref is not empty %}
+                {% set rowClass = rowClass ~ ' clickableRow' %}
+            {% endif %}
 
-                {# checks model currency #}
-                {{ view.divisaTools.findDivisa(model) }}
+            {# checks model currency #}
+            {{ view.divisaTools.findDivisa(model) }}
 
-                <tr class="{{ rowClass }}" data-href="{{ rowDataHref }}">
-                    {# Print data columns for row #}
-                    {% for column in view.getColumns() %}
-                        {% if (column.display != 'none') and (column.level <= context.fsc.user.level) %}
-                            {% set value = attribute(model, column.widget.fieldName) %}
-                            <td class="text-{{ column.display }}">{{ column.getListHTML(value)|raw }}</td>
-                        {% endif %}
-                    {% endfor %}
-                    {% if actionCheckboxes %}
-                        <td class="text-right cancelClickable">
-                            <div class="form-check form-check-inline mb-2 mr-sm-2 mb-sm-0">
-                                <input class="form-check-input listAction" type="checkbox" name="code[]" value="{{ model.primaryColumnValue() }}" />
-                            </div>
-                        </td>
+            <tr class="{{ rowClass }}" data-href="{{ rowDataHref }}">
+                {# Print data columns for row #}
+                {% for column in view.getColumns() %}
+                    {% if (column.display != 'none') and (column.level <= context.fsc.user.level) %}
+                        {% set value = attribute(model, column.widget.fieldName) %}
+                        <td class="text-{{ column.display }}">{{ column.getListHTML(value)|raw }}</td>
                     {% endif %}
-                </tr>
-            {% else %}
-                <tr class="table-warning">
-                    <td colspan="{{ cols }}"><b>{{ context.i18n.trans('no-data') }}</b></td>
-                </tr>
-            {% endfor %}
+                {% endfor %}
+                {% if actionCheckboxes %}
+                    <td class="text-right cancelClickable">
+                        <div class="form-check form-check-inline mb-2 mr-sm-2 mb-sm-0">
+                            <input class="form-check-input listAction" type="checkbox" name="code[]" value="{{ model.primaryColumnValue() }}"/>
+                        </div>
+                    </td>
+                {% endif %}
+            </tr>
+        {% else %}
+            <tr class="table-warning">
+                <td colspan="{{ cols }}"><b>{{ context.i18n.trans('no-data') }}</b></td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 {% endmacro %}
@@ -338,7 +338,7 @@
     {% if cards is not empty %}
         {% from 'Macro/Utils.html.twig' import popoverTitle as popoverTitle %}
 
-        <br />
+        <br/>
         <div id="{{ type }}" class="row mb-2">
             {% for panel in cards.panels %}
                 <div class="col">
@@ -356,8 +356,8 @@
                             {% if buttons|length > 0 %}
                                 {% set formName = panel.name ~ '_form' %}
                                 <form action="{{ context.fsc.getURL('edit') }}" method="post" name="{{ formName }}" enctype="multipart/form-data">
-                                    <input type="hidden" name="active" value="{{ context.indexView }}" />
-                                    <input type="hidden" name="action" />
+                                    <input type="hidden" name="active" value="{{ context.indexView }}"/>
+                                    <input type="hidden" name="action"/>
                                     {% for button in buttons %}
                                         {% set label = context.i18n.trans(button.label) %}
                                         {% set hint = context.i18n.trans(button.hint) %}
@@ -375,7 +375,7 @@
                         {% endif %}
                     </div>
                     {% if not loop.last %}
-                        <br />
+                        <br/>
                     {% endif %}
                 </div>
             {% endfor %}

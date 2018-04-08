@@ -211,7 +211,7 @@ class Postgresql implements DataBaseEngine
      * Runs a SELECT SQL statement
      *
      * @param resource $link
-     * @param string $sql
+     * @param string   $sql
      *
      * @return array
      */
@@ -227,7 +227,7 @@ class Postgresql implements DataBaseEngine
      * (inserts, updates or deletes)
      *
      * @param resource $link
-     * @param string $sql
+     * @param string   $sql
      *
      * @return bool
      */
@@ -240,7 +240,7 @@ class Postgresql implements DataBaseEngine
      * Escapes quotes from a text string
      *
      * @param resource $link
-     * @param string $str
+     * @param string   $str
      *
      * @return string
      */
@@ -303,9 +303,9 @@ class Postgresql implements DataBaseEngine
      * sequence exists. If it can't find it, i will create one.
      *
      * @param resource $link
-     * @param string $tableName
-     * @param string $default
-     * @param string $colname
+     * @param string   $tableName
+     * @param string   $default
+     * @param string   $colname
      */
     public function checkSequence($link, $tableName, $default, $colname)
     {
@@ -323,8 +323,8 @@ class Postgresql implements DataBaseEngine
      * Runs extra checks in the table
      *
      * @param resource $link
-     * @param string $tableName
-     * @param string $error
+     * @param string   $tableName
+     * @param string   $error
      *
      * @return bool
      */
@@ -366,8 +366,8 @@ class Postgresql implements DataBaseEngine
      * or an empty array if it fails.
      *
      * @param resource $link
-     * @param string $sql
-     * @param bool $selectRows
+     * @param string   $sql
+     * @param bool     $selectRows
      *
      * @return array|bool
      */

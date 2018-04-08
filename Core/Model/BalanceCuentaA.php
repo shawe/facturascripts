@@ -82,8 +82,8 @@ class BalanceCuentaA extends Base\ModelClass
      * Returns the balance of an exercise.
      *
      * @param ejercicio $ejercicio
-     * @param bool $desde
-     * @param bool $hasta
+     * @param bool      $desde
+     * @param bool      $hasta
      *
      * @return float|int
      */

@@ -30,9 +30,9 @@ interface ComponentInterface
     /**
      * Sets the special fields for the component and their initial values.
      *
-     * @return mixed
+     * @return array
      */
-    public static function getPropertiesFields();
+    public static function getPropertiesFields(): array;
 
     /**
      * Load data of component for user to put into dashboard.

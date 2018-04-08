@@ -70,7 +70,7 @@ class EditAlbaranCliente extends ExtendedController\BusinessDocumentController
     /**
      * Load data view procedure
      *
-     * @param string $keyView
+     * @param string                                  $keyView
      * @param ExtendedController\BusinessDocumentView $view
      */
     protected function loadData($keyView, $view)

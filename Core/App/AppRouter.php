@@ -105,10 +105,10 @@ class AppRouter
     }
 
     /**
-     * TODO: Uncomplete documentation.
+     * Set new route for a controller.
      *
-     * @param $newRoute
-     * @param $controllerName
+     * @param        $newRoute
+     * @param        $controllerName
      * @param string $optionalId
      */
     public function setRoute($newRoute, $controllerName, $optionalId = '')
@@ -133,7 +133,7 @@ class AppRouter
     /**
      * Return the mime type from given file.
      *
-     * @param $filePath
+     * @param string $filePath
      *
      * @return string
      */

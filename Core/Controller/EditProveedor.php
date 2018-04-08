@@ -96,7 +96,7 @@ class EditProveedor extends ExtendedController\PanelController
     /**
      * Load view data
      *
-     * @param string $keyView
+     * @param string                      $keyView
      * @param ExtendedController\EditView $view
      */
     protected function loadData($keyView, $view)

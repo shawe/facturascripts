@@ -28,6 +28,20 @@ interface VisualItemInterface
 {
 
     /**
+     * Create and load element structure from JSON file
+     *
+     * @param array $item
+     */
+    public static function newFromJSON($item);
+
+    /**
+     * Create and load element structure from XML file
+     *
+     * @param \SimpleXMLElement $item
+     */
+    public static function newFromXML($item);
+
+    /**
      * Generates the HTML code to display the header for the visual element
      *
      * @param string $value
@@ -47,18 +61,4 @@ interface VisualItemInterface
      * @param \SimpleXMLElement $items
      */
     public function loadFromXML($items);
-
-    /**
-     * Create and load element structure from JSON file
-     *
-     * @param array $item
-     */
-    public static function newFromJSON($item);
-
-    /**
-     * Create and load element structure from XML file
-     *
-     * @param \SimpleXMLElement $item
-     */
-    public static function newFromXML($item);
 }

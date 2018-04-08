@@ -91,9 +91,7 @@ class WidgetItemNumber extends WidgetItem
      */
     public function getEditHTML($value): string
     {
-        $specialAttributes = $this->specialAttributes();
-
-        return $this->standardEditHTMLWidget($value, $specialAttributes);
+        return $this->standardEditHTMLWidget($value, $this->specialAttributes());
     }
 
 
@@ -164,5 +162,4 @@ class WidgetItemNumber extends WidgetItem
 
         return $base . $step . $min . $max;
     }
-
 }

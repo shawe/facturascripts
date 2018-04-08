@@ -253,7 +253,7 @@ class MenuManager
      * Returns if the page should be saved.
      *
      * @param Model\Page $pageModel
-     * @param array $pageData
+     * @param array      $pageData
      *
      * @return bool
      */
@@ -305,8 +305,8 @@ class MenuManager
     /**
      * Sorts menu and submenus by title.
      *
-     * @param array $sortMenu
-     * @param array $result
+     * @param MenuItem[] $sortMenu
+     * @param MenuItem[] $result
      *
      * @return array
      */

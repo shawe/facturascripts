@@ -28,39 +28,39 @@
         <column name="id" display="none" order="100">
             <widget type="number" decimal="0" fieldname="id" readonly="true" required="true" />
         </column>
-        <column name="codprovider" display="none" order="100">
+        <column name="codprovider" display="none" order="110">
             <widget type="text" fieldname="codproveedor" readonly="true" required="true" />
         </column>
-        <column name="reference" numcolumns="4" order="110">
-            <widget type="select" fieldname="referencia" >
-                <values source="articulos" fieldcode="referencia" fieldtitle="descripcion"></values>
+        <column name="reference" numcolumns="4" order="120">
+            <widget type="select" fieldname="referencia" onclick="EditArticulo">
+                <values source="articulos" fieldcode="referencia" fieldtitle="descripcion" />
             </widget>
         </column>
-        <column name="provider-reference" order="120" numcolumns="2">
-            <widget type="text" fieldname="refproveedor"  required="true" />
-        </column>
-        <column name="codbarras" order="130" numcolumns="2">
-            <widget type="text" fieldname="codbarras"   />
-        </column>
-        <column name="partnumber" order="140" numcolumns="2">
-            <widget type="text" fieldname="partnumber"   />
-        </column>
-        <column name="precio" numcolumns="2" order="110">
+        <column name="precio" numcolumns="2" order="130">
             <widget type="number" fieldname="precio" />
         </column>
-        <column name="dto" order="120" numcolumns="2">
-            <widget type="number" fieldname="dto"/>
-        </column>
-        <column name="tax" numcolumns="4" order="110">
-            <widget type="select" fieldname="codimpuesto" >
-                <values source="impuestos" fieldcode="codimpuesto" fieldtitle="descripcion"></values>
+        <column name="tax" numcolumns="4" order="140">
+            <widget type="select" fieldname="codimpuesto" onclick="EditImpuesto">
+                <values source="impuestos" fieldcode="codimpuesto" fieldtitle="descripcion" />
             </widget>
         </column>
-        <column name="no-stock" order="130" numcolumns="2">
-            <widget type="checkbox" fieldname="nostock"   />
+        <column name="provider-reference" order="150" numcolumns="2">
+            <widget type="text" fieldname="refproveedor" required="true" />
         </column>
-        <column name="stock" order="140" numcolumns="2">
-            <widget type="text" fieldname="stock"   />
+        <column name="dto" order="160" numcolumns="2">
+            <widget type="number" fieldname="dto" />
+        </column>
+        <column name="codbarras" order="170" numcolumns="2">
+            <widget type="text" fieldname="codbarras" />
+        </column>
+        <column name="no-stock" order="180" numcolumns="2">
+            <widget type="checkbox" fieldname="nostock" />
+        </column>
+        <column name="partnumber" order="190" numcolumns="2">
+            <widget type="text" fieldname="partnumber" />
+        </column>
+        <column name="stock" order="200" numcolumns="2">
+            <widget type="text" fieldname="stock" />
         </column>
     </columns>
 </view>

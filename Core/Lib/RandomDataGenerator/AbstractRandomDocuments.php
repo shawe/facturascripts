@@ -76,7 +76,7 @@ abstract class AbstractRandomDocuments extends AbstractRandomPeople
     /**
      * AbstractRandomDocuments constructor.
      *
-     * @param $model
+     * @param mixed $model
      */
     public function __construct($model)
     {
@@ -146,10 +146,10 @@ abstract class AbstractRandomDocuments extends AbstractRandomPeople
     /**
      * Generates a random purchase document
      *
-     * @param Model\Base\PurchaseDocument$doc
-     * @param Model\Ejercicio $eje
-     * @param Model\Proveedor[] $proveedores
-     * @param int $num
+     * @param Model\Base\PurchaseDocument $doc
+     * @param Model\Ejercicio             $eje
+     * @param Model\Proveedor[]           $proveedores
+     * @param int                         $num
      *
      * @return string
      */
@@ -174,9 +174,9 @@ abstract class AbstractRandomDocuments extends AbstractRandomPeople
      * Generates a random sale document
      *
      * @param Model\Base\SalesDocument $doc
-     * @param Model\Ejercicio $eje
-     * @param Model\Cliente[] $clientes
-     * @param int $num
+     * @param Model\Ejercicio          $eje
+     * @param Model\Cliente[]          $clientes
+     * @param int                      $num
      *
      * @return string
      */
@@ -200,12 +200,12 @@ abstract class AbstractRandomDocuments extends AbstractRandomPeople
     /**
      * Generates random document lines
      *
-     * @param mixed $doc
+     * @param mixed  $doc
      * @param string $iddoc
      * @param string $lineaClass
      * @param string $regimeniva
-     * @param bool $recargo
-     * @param int $modStock
+     * @param bool   $recargo
+     * @param int    $modStock
      */
     protected function randomLineas(&$doc, $iddoc, $lineaClass, $regimeniva, $recargo, $modStock = 0)
     {

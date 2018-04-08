@@ -105,7 +105,7 @@ class WidgetButton implements VisualItemInterface
      *
      * @return WidgetButton
      */
-    public static function newFromXML($button)
+    public static function newFromXML($button): WidgetButton
     {
         $widget = new self();
         $widget->loadFromXML($button);
@@ -120,7 +120,7 @@ class WidgetButton implements VisualItemInterface
      *
      * @return WidgetButton
      */
-    public static function newFromJSON($button)
+    public static function newFromJSON($button): WidgetButton
     {
         $widget = new self();
         $widget->loadFromJSON($button);
@@ -169,7 +169,7 @@ class WidgetButton implements VisualItemInterface
      *
      * @return string
      */
-    public function getHeaderHTML($value)
+    public function getHeaderHTML($value): string
     {
         return '';
     }
@@ -177,7 +177,7 @@ class WidgetButton implements VisualItemInterface
     /**
      * Array with list of personalization functions of the column
      */
-    public function columnFunction()
+    public function columnFunction(): array
     {
         return ['ColumnClass', 'ColumnHint', 'ColumnDescription'];
     }
@@ -192,7 +192,7 @@ class WidgetButton implements VisualItemInterface
      *
      * @return string
      */
-    public function getHTML($label, $value = '', $hint = '', $class = 'col-sm-auto')
+    public function getHTML($label, $value = '', $hint = '', $class = 'col-sm-auto'): string
     {
         switch ($this->type) {
             case 'calculate':
@@ -216,7 +216,7 @@ class WidgetButton implements VisualItemInterface
      *
      * @return string
      */
-    public function getHintHTML($hint)
+    public function getHintHTML($hint): string
     {
         return empty($hint) ? '' : ' data-toggle="popover" data-placement="auto" data-trigger="hover" data-content="'
             . $hint . '" ';
@@ -227,7 +227,7 @@ class WidgetButton implements VisualItemInterface
      *
      * @param string $field
      * @param mixed  $atributes
-     * 
+     *
      * @return string
      */
     private function getOptionalAtribute($field, &$atributes): string
@@ -263,9 +263,10 @@ class WidgetButton implements VisualItemInterface
      *
      * @param string $onclick
      * @param string $addParam
+     *
      * @return string
      */
-    private function getOnClickHTML($onclick, $addParam = '')
+    private function getOnClickHTML($onclick, $addParam = ''): string
     {
         if (empty($onclick)) {
             return '';
@@ -276,7 +277,7 @@ class WidgetButton implements VisualItemInterface
         }
 
         $pos = strpos($onclick, ')');
-        if ($pos === FALSE) {
+        if ($pos === false) {
             return ' onclick="' . $onclick . '(' . $addParam . ')" ';
         }
 

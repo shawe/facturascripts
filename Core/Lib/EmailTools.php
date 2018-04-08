@@ -138,7 +138,7 @@ class EmailTools
      * @param string $txt
      * @param string $sign
      *
-     * @return mixed
+     * @return string
      */
     public function getHtml($companyName, $title, $txt, $sign)
     {
@@ -156,7 +156,7 @@ class EmailTools
             $sign,
         ];
 
-        return str_replace($search, $replace, $html);
+        return (string) str_replace($search, $replace, $html);
     }
 
     /**

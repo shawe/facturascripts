@@ -219,7 +219,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      * Generates the HTML code to display the data from the model for Edit controllers
      *
      * @param string $value
-     * @param bool $withLabel
+     * @param bool   $withLabel
      * @param string $formName
      *
      * @return string
@@ -316,7 +316,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
     /**
      * Returns the HTML code to display a button
      *
-     * @param array $data
+     * @param array  $data
      * @param string $formName
      *
      * @return string
@@ -334,7 +334,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @param string $header
      * @param string $value
-     * @param array $data
+     * @param array  $data
      *
      * @return string
      */
@@ -374,7 +374,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      * Returns the HTML code to display a list of options
      *
      * @param string $header
-     * @param array $data
+     * @param array  $data
      * @param string $value
      *
      * @return string
@@ -411,7 +411,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @param string $header
      * @param string $value
-     * @param array $data
+     * @param array  $data
      *
      * @return string
      */

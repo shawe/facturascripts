@@ -27,52 +27,52 @@
     <columns>
         <group name="supplier" numcolumns="12">
             <column name="code" display="none" order="100">
-                <widget type="text" fieldname="idpresupuesto" required="true"/>
+                <widget type="text" fieldname="idpresupuesto" required="true" />
             </column>
-            <column name="date" title="date" numcolumns="2" order="100">
-                <widget type="datepicker" fieldname="fecha" required="true"/>
+            <column name="date" title="date" numcolumns="2" order="110">
+                <widget type="datepicker" fieldname="fecha" required="true" />
             </column>
-            <column name="hour" title="hour" numcolumns="2" order="110">
-                <widget type="text" fieldname="hora" required="true"/>
+            <column name="hour" title="hour" numcolumns="2" order="120">
+                <widget type="text" fieldname="hora" required="true" />
             </column>
-            <column name="numsupplier" numcolumns="3" order="120">
-                <widget type="text" fieldname="numproveedor"/>
+            <column name="numsupplier" numcolumns="3" order="130">
+                <widget type="text" fieldname="numproveedor" />
             </column>
-            <column name="supplier" numcolumns="3" order="130">
-                <widget type="text" fieldname="nombre" required="true"/>
+            <column name="supplier" numcolumns="3" order="140">
+                <widget type="text" fieldname="nombre" required="true" />
             </column>
-            <column name="cifnif" title="cifnif" numcolumns="2" order="140">
-                <widget type="text" fieldname="cifnif"/>
+            <column name="cifnif" title="cifnif" numcolumns="2" order="150">
+                <widget type="text" fieldname="cifnif" />
             </column>
         </group>
         <group name="codattributes" title="attributes" numcolumns="12">
-            <column name="warehouse" numcolumns="3">
-                <widget type="select" fieldname="codalmacen">
-                    <values source="almacenes" fieldcode="codalmacen" fieldtitle="nombre"/>
+            <column name="warehouse" numcolumns="3" order="100">
+                <widget type="select" fieldname="codalmacen" onclick="EditAlmacen">
+                    <values source="almacenes" fieldcode="codalmacen" fieldtitle="nombre" />
                 </widget>
             </column>
-            <column name="serie" numcolumns="2" order="100">
-                <widget type="select" fieldname="codserie">
-                    <values source="series" fieldcode="codserie" fieldtitle="descripcion"/>
+            <column name="serie" numcolumns="2" order="110">
+                <widget type="select" fieldname="codserie" onclick="EditSerie">
+                    <values source="series" fieldcode="codserie" fieldtitle="descripcion" />
                 </widget>
             </column>
             <column name="payment" title="method-payment" numcolumns="3" titleurl="ListFormaPago" order="120">
-                <widget type="select" fieldname="codpago">
-                    <values source="formaspago" fieldcode="codpago" fieldtitle="descripcion"/>
+                <widget type="select" fieldname="codpago" onclick="EditPago">
+                    <values source="formaspago" fieldcode="codpago" fieldtitle="descripcion" />
                 </widget>
             </column>
-            <column name="currency" title="currency" numcolumns="2" titleurl="ListDivisa" order="120">
-                <widget type="select" fieldname="coddivisa">
-                    <values source="divisas" fieldcode="coddivisa" fieldtitle="descripcion"/>
+            <column name="currency" title="currency" numcolumns="2" titleurl="ListDivisa" order="130">
+                <widget type="select" fieldname="coddivisa" onclick="EditDivisa">
+                    <values source="divisas" fieldcode="coddivisa" fieldtitle="descripcion" />
                 </widget>
             </column>
-            <column name="tasaconv" numcolumns="2" order="150">
-                <widget type="number" fieldname="tasaconv"/>
+            <column name="tasaconv" numcolumns="2" order="140">
+                <widget type="number" fieldname="tasaconv" />
             </column>
         </group>
         <group name="notes" numcolumns="12">
-            <column name="observations" numcolumns="12" order="110">
-                <widget type="textarea" fieldname="observaciones"/>
+            <column name="observations" numcolumns="12" order="100">
+                <widget type="textarea" fieldname="observaciones" />
             </column>
         </group>
     </columns>

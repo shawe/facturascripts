@@ -1,4 +1,4 @@
-/*
+/**
  * This file is part of FacturaScripts
  * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
  *
@@ -16,14 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 var documentUrl = location.href;
 var documentLineData = [];
-var gridObject = null;               // TODO: convert to POO
+// TODO: convert to POO
+var gridObject = null;
 var autocompleteColumns = [];
 var eventManager = {};
 
-/* Generate a single source function for autocomplete columns
+/**
+ * Generate a single source function for autocomplete columns
  *
  * @param {Object} data
  * @returns {Function}
@@ -34,13 +35,13 @@ function assignSource(data) {
     var title = data.title.slice(0);
 
     return function (query, process) {
-        query = query.split(' -- ', 1)[0];
+        query = query.split(" -- ", 1)[0];
         $.ajax({
             url: data.url,
-            dataType: 'json',
+            dataType: "json",
             data: {
                 term: query,
-                action: 'autocomplete',
+                action: "autocomplete",
                 source: source,
                 field: field,
                 title: title
@@ -62,13 +63,13 @@ function configureAutocompleteColumns(columns) {
     var keys = Object.keys(columns);
     for (var i = 0, max = keys.length; i < max; i++) {
         column = columns[keys[i]];
-        if (column['type'] === 'autocomplete') {
+        if (column["type"] === "autocomplete") {
             // Add column to list of columns to control
-            autocompleteColumns.push(column['data']);
+            autocompleteColumns.push(column["data"]);
 
             // assing calculate function to column
-            column['source'] = assignSource(column['data-source']);
-            delete column['data-source'];
+            column["source"] = assignSource(column["data-source"]);
+            delete column["data-source"];
         }
     }
 }
@@ -82,7 +83,7 @@ function configureAutocompleteColumns(columns) {
  * @returns {Array}
  */
 function getGridData(fieldOrder) {
-    var fieldOrder = fieldOrder || null;
+    fieldOrder = fieldOrder || null;
     var rowIndex, lines = [];
     for (var i = 0, max = documentLineData.rows.length; i < max; i++) {
         rowIndex = gridObject.toVisualRow(i);
@@ -100,20 +101,20 @@ function getGridData(fieldOrder) {
 /* Return column value */
 function getGridFieldData(row, fieldName) {
     var physicalRow = gridObject.toPhysicalRow(row);
-    return documentLineData['rows'][physicalRow][fieldName];
+    return documentLineData["rows"][physicalRow][fieldName];
 }
 
 /* Return row values */
 function getGridRowValues(row) {
     var physicalRow = gridObject.toPhysicalRow(row);
-    return documentLineData['rows'][physicalRow];
+    return documentLineData["rows"][physicalRow];
 }
 
 /* Set row value */
 function setGridRowValues(row, values) {
     var physicalRow = gridObject.toPhysicalRow(row);
     for (var i = 0, max = values.length; i < max; i++) {
-        documentLineData['rows'][physicalRow][values[i].field] = values[i].value;
+        documentLineData["rows"][physicalRow][values[i].field] = values[i].value;
     }
     gridObject.render();
 }
@@ -121,7 +122,7 @@ function setGridRowValues(row, values) {
 /* Return field name for a column */
 function getGridColumnName(col) {
     var physicalColumn = gridObject.toPhysicalColumn(col);
-    return documentLineData['columns'][physicalColumn]['data'];
+    return documentLineData["columns"][physicalColumn]["data"];
 }
 
 /* Select cell range */
@@ -146,14 +147,14 @@ function getColumnSelected() {
     return selected.length > 0 ? gridObject.getSelected()[0][1] : null;
 }
 
-/*
+/**
  * EVENT MANAGER
  */
 function addEvent(name, fn) {
     switch (name) {
-        case 'afterSelection':
-        case 'beforeChange':
-        case 'enterMoves':
+        case "afterSelection":
+        case "beforeChange":
+        case "enterMoves":
             eventManager[name] = fn;
             break;
 
@@ -172,8 +173,8 @@ function eventAfterSelection(row1, col1, row2, col2, preventScrolling) {
 
     // Call to children event
     var events = Object.keys(eventManager);
-    if (events.includes('afterSelection')) {
-        eventManager['afterSelection'](row1, col1, row2, col2, preventScrolling);
+    if (events.includes("afterSelection")) {
+        eventManager["afterSelection"](row1, col1, row2, col2, preventScrolling);
     }
 }
 
@@ -183,7 +184,7 @@ function eventBeforeChange(changes, source) {
     if (autocompleteColumns.length > 0) {
         for (var i = 0, max = changes.length; i < max; i++) {
             if (autocompleteColumns.includes(changes[i][1])) {
-                var values = changes[i][3].split(' -- ');
+                var values = changes[i][3].split(" -- ");
                 changes[i][3] = values[0];
                 isAutoComplete = (values.length > 1);
             }
@@ -192,8 +193,8 @@ function eventBeforeChange(changes, source) {
 
     // Call to children event
     var events = Object.keys(eventManager);
-    if (events.includes('beforeChange')) {
-        eventManager['beforeChange'](changes, source, isAutoComplete);
+    if (events.includes("beforeChange")) {
+        eventManager["beforeChange"](changes, source, isAutoComplete);
     }
 }
 
@@ -204,9 +205,10 @@ function eventEnterMoves() {
 
     // Call to children event
     var events = Object.keys(eventManager);
-    if (events.includes('enterMoves')) {
+    if (events.includes("enterMoves")) {
         var fieldName = getGridColumnName(selected[1]);
-        jump = eventManager['enterMoves'](result, fieldName);    // parameters to children: (move, fieldName)
+        // parameters to children: (move, fieldName)
+        jump = eventManager["enterMoves"](result, fieldName);
     }
 
     // if there is a column jump, we control that you do not exceed the number of existing columns
@@ -220,7 +222,7 @@ function eventEnterMoves() {
     return {row: 0, col: 0};      // no jump
 }
 
-/*
+/**
  * User Interface Events
  */
 /**
@@ -230,22 +232,22 @@ function eventEnterMoves() {
  * @returns {Boolean}
  */
 function saveDocument(mainFormName) {
-    var submitButton = document.getElementById('save-document');
+    var submitButton = document.getElementById("save-document");
     submitButton.disabled = true;
     try {
         var data = {
             action: "save-document",
-            lines: getGridData('orden'),
+            lines: getGridData("orden"),
             document: {}
         };
 
         var mainForm = $("form[name='" + mainFormName + "']");
         $.each(mainForm.serializeArray(), function (key, value) {
             switch (value.name) {
-                case 'action':
+                case "action":
                     break;
 
-                case 'active':
+                case "active":
                     data[value.name] = value.value;
                     break;
 
@@ -266,13 +268,14 @@ function saveDocument(mainFormName) {
                 location.reload();
             });
     } finally {
+        // noinspection UnreachableCodeJS
         submitButton.disabled = false;
         // noinspection ReturnInsideFinallyBlockJS
         return false;
     }
 }
 
-/*
+/**
  * Document Ready. Create and configure Grid Object.
  */
 $(document).ready(function () {
@@ -280,7 +283,7 @@ $(document).ready(function () {
     var container = document.getElementById("document-lines");
     if (container) {
         // Prepare autocomplete columns
-        configureAutocompleteColumns(documentLineData['columns']);
+        configureAutocompleteColumns(documentLineData["columns"]);
 
         // Create Grid Object
         gridObject = new Handsontable(container, {
@@ -302,7 +305,7 @@ $(document).ready(function () {
             }
         });
 
-        Handsontable.hooks.add('afterSelection', eventAfterSelection);
-        Handsontable.hooks.add('beforeChange', eventBeforeChange);
+        Handsontable.hooks.add("afterSelection", eventAfterSelection);
+        Handsontable.hooks.add("beforeChange", eventBeforeChange);
     }
 });

@@ -61,17 +61,17 @@ class ListEstadoDocumento extends ExtendedController\ListController
         $generateTypes = $this->codeModel::all('estados_documentos', 'generadoc', 'generadoc');
         $this->addFilterSelect('ListEstadoDocumento', 'generadoc', 'generate-doc-type', 'generadoc', $generateTypes);
 
-        $this->addFilterSelect('ListEstadoDocumento', 'actualizastock', 'update-stock', 'actualizastock', $this->getActualizaStockValues());
+        $this->addFilterSelect('ListEstadoDocumento', 'actualizastock', 'update-stock', 'actualizastock', $this->getactualizastockValues());
         $this->addFilterCheckbox('ListEstadoDocumento', 'predeterminado', 'default', 'predeterminado');
         $this->addFilterCheckbox('ListEstadoDocumento', 'editable', 'editable', 'editable');
     }
 
     /**
-     * TODO: Uncomplete documentation.
+     * Return a list of values to update stock values.
      *
      * @return array
      */
-    private function getActualizaStockValues(): array
+    private function getactualizastockValues(): array
     {
         return [
             ['code' => null, 'description' => '------'],

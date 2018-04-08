@@ -68,7 +68,7 @@ class EditUser extends ExtendedController\PanelController
     /**
      * Load view data proedure
      *
-     * @param string $keyView
+     * @param string                      $keyView
      * @param ExtendedController\EditView $view
      */
     protected function loadData($keyView, $view)

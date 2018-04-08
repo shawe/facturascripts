@@ -27,38 +27,38 @@
     <columns>
         <group name="supplier-data" tittle="supplier-data" numcolumns="12">
             <column name="id" numcolumns="1" order="100" display="none">
-                <widget type="text" fieldname="id" onclick=""/>
+                <widget type="text" fieldname="id" onclick="" />
             </column>
             <column name="supplier-reference" numcolumns="2" order="110">
-                <widget type="text" fieldname="refproveedor" onclick="" icon="fa-barcode" required="true"/>
+                <widget type="text" fieldname="refproveedor" onclick="" icon="fa-barcode" required="true" />
             </column>
             <column name="description" numcolumns="6" order="120">
-                <widget type="text" fieldname="descripcion" required="true"/>
+                <widget type="text" fieldname="descripcion" required="true" />
             </column>
             <column name="supplier" title="supplier" numcolumns="4" titleurl="ListProveedor" order="130">
-                <widget type="autocomplete" fieldname="codproveedor" required="true">
-                    <values source="proveedores" fieldcode="codproveedor" fieldtitle="nombre"/>
+                <widget type="autocomplete" fieldname="codproveedor" required="true" onclick="EditProveedor">
+                    <values source="proveedores" fieldcode="codproveedor" fieldtitle="nombre" />
                 </widget>
             </column>
         </group>
         <group name="product-data" tittle="produt-data" numcolumns="12">
             <column name="reference" numcolumns="2" order="100">
-                <widget type="text" fieldname="referencia" onclick="" icon="" required="true"/>
+                <widget type="text" fieldname="referencia" onclick="" icon="" required="true" />
             </column>
             <column name="partnumber" numcolumns="2" order="110">
-                <widget type="text" fieldname="partnumber" onclick=""/>
+                <widget type="text" fieldname="partnumber" onclick="" />
             </column>
             <column name="price" numcolumns="2" order="120">
-                <widget type="number" fieldname="precio" onclick="" required="true"/>
+                <widget type="number" fieldname="precio" onclick="" required="true" />
             </column>
             <column name="discount" numcolumns="2" order="130">
-                <widget type="number" fieldname="dto" onclick="" required=""/>
+                <widget type="number" fieldname="dto" onclick="" required="" />
             </column>
             <column name="stock" numcolumns="2" order="140">
-                <widget type="number" fieldname="stockfis" onclick="" required=""/>
+                <widget type="number" fieldname="stockfis" onclick="" required="" />
             </column>
             <column name="nostock" numcolumns="1" order="150">
-                <widget type="checkbox" fieldname="nostock" onclick=""/>
+                <widget type="checkbox" fieldname="nostock" onclick="" />
             </column>
         </group>
     </columns>

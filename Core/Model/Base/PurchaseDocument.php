@@ -53,11 +53,11 @@ abstract class PurchaseDocument extends BusinessDocument
     public $numproveedor;
 
     /**
-     * TODO: Uncomplete documentation.
+     * Returns an array with the column for identify the subject(s),
      *
-     * @return array|BusinessDocumentLine
+     * @return array
      */
-    public function getSubjectColumns()
+    public function getSubjectColumns(): array
     {
         return ['codproveedor'];
     }

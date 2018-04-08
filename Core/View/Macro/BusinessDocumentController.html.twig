@@ -131,7 +131,7 @@
             <input type="{{ type }}" id="{{ id }}" name="{{ name }}" value="{{ value }}"
                 {% if attributes.class is not defined %} class="form-control"{% endif %}
                 {% for attribute,attrValue in attributes %}
-                {{ attribute }}="{{ attrValue }}"
+                    {{ attribute }}="{{ attrValue }}"
                 {% endfor %}
             /> {# end input #}
 

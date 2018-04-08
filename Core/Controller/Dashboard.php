@@ -43,10 +43,10 @@ class Dashboard extends Base\Controller
     /**
      * Dashboard constructor.
      *
-     * @param Base\Cache $cache
+     * @param Base\Cache      $cache
      * @param Base\Translator $i18n
-     * @param Base\MiniLog $miniLog
-     * @param string $className
+     * @param Base\MiniLog    $miniLog
+     * @param string          $className
      */
     public function __construct(&$cache, &$i18n, &$miniLog, $className)
     {
@@ -58,8 +58,8 @@ class Dashboard extends Base\Controller
     /**
      * Runs the controller's private logic.
      *
-     * @param Response $response
-     * @param Model\User $user
+     * @param Response                   $response
+     * @param Model\User                 $user
      * @param Base\ControllerPermissions $permissions
      */
     public function privateCore(&$response, $user, $permissions)
@@ -88,7 +88,7 @@ class Dashboard extends Base\Controller
     /**
      * Get the list of components to this user.
      *
-     * @param $userNick
+     * @param string $userNick
      */
     private function getListComponents($userNick)
     {

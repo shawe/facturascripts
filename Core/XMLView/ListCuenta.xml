@@ -27,16 +27,16 @@
         <column name="id" order="100" display="none">
             <widget type="text" fieldname="idcuenta" onclick="EditCuenta" />
         </column>
-        <column name="fiscal-exercise" order="100">
+        <column name="fiscal-exercise" order="110">
             <widget type="text" fieldname="codejercicio" />
         </column>
-        <column name="account" order="110">
+        <column name="account" order="120">
             <widget type="text" fieldname="codcuenta" />
         </column>
-        <column name="description" order="120">
+        <column name="description" order="130">
             <widget type="text" fieldname="descripcion" />
         </column>
-        <column name="parent-account" order="130">
+        <column name="parent-account" order="140">
             <widget type="text" fieldname="parent_codcuenta" />
         </column>
     </columns>

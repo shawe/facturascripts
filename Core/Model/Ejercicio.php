@@ -225,7 +225,7 @@ class Ejercicio extends Base\ModelClass
      * Returns the date closest to $date that is within the range of this exercise.
      *
      * @param string $fecha
-     * @param bool $showError
+     * @param bool   $showError
      *
      * @return string
      */
@@ -257,8 +257,8 @@ class Ejercicio extends Base\ModelClass
      *      * If it does not exist, create it.
      *
      * @param string $fecha
-     * @param bool $soloAbierto
-     * @param bool $crear
+     * @param bool   $soloAbierto
+     * @param bool   $crear
      *
      * @return bool|Ejercicio
      */

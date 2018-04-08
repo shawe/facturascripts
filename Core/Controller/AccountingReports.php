@@ -52,8 +52,8 @@ class AccountingReports extends Controller
     /**
      * Runs the controller's private logic.
      *
-     * @param Response $response
-     * @param User $user
+     * @param Response              $response
+     * @param User                  $user
      * @param ControllerPermissions $permissions
      */
     public function privateCore(&$response, $user, $permissions)
@@ -103,7 +103,7 @@ class AccountingReports extends Controller
     /**
      * Execute main actions.
      *
-     * @param $action
+     * @param string $action
      */
     private function execAction($action)
     {
@@ -148,7 +148,7 @@ class AccountingReports extends Controller
     /**
      * Exports data to PDF.
      *
-     * @param array $pages
+     * @param array  $pages
      * @param string $format
      */
     private function exportData(&$pages, $format)

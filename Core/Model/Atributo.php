@@ -92,7 +92,7 @@ class Atributo extends Base\ModelClass
      * Get attribute by name.
      *
      * @param string $nombre
-     * @param bool $minusculas
+     * @param bool   $minusculas
      *
      * @return Atributo|bool
      */

@@ -40,19 +40,22 @@ class BusinessDocumentTools
 {
 
     /**
-     * TODO: Uncomplete documentation.
+     * Default IRPF value to use on the document.
+     *
      * @var float
      */
     private $irpf = 0.0;
 
     /**
-     * TODO: Uncomplete documentation.
+     * If has a surcharge.
+     *
      * @var bool
      */
     private $recargo = false;
 
     /**
-     * TODO: Uncomplete documentation.
+     * If is without taxes.
+     *
      * @var bool
      */
     private $siniva = false;
@@ -74,14 +77,14 @@ class BusinessDocumentTools
             $doc->totalrecargo += $subt['totalrecargo'];
         }
 
-        $doc->total = round($doc->neto + $doc->totaliva + $doc->totalrecargo - $doc->totalirpf, (int) FS_NF0);
+        $doc->total = round($doc->neto + $doc->totaliva + $doc->totalrecargo - $doc->totalirpf, FS_NF0);
     }
 
     /**
      * Calculate document totals from form data and returns the new total and document lines.
      *
      * @param BusinessDocument $doc
-     * @param array $formLines
+     * @param array            $formLines
      *
      * @return string
      */
@@ -101,7 +104,7 @@ class BusinessDocumentTools
             $doc->totalrecargo += $subt['totalrecargo'];
         }
 
-        $doc->total = round($doc->neto + $doc->totaliva + $doc->totalrecargo - $doc->totalirpf, (int) FS_NF0);
+        $doc->total = round($doc->neto + $doc->totaliva + $doc->totalrecargo - $doc->totalirpf, FS_NF0);
         $json = [
             'total' => $doc->total,
             'lines' => $lines
@@ -111,7 +114,7 @@ class BusinessDocumentTools
     }
 
     /**
-     * TODO: Uncomplete documentation.
+     * Clear the totals of the document.
      *
      * @param BusinessDocument $doc
      */
@@ -193,19 +196,19 @@ class BusinessDocumentTools
 
         /// rounding totals
         foreach ($subtotals as $key => $value) {
-            $subtotals[$key]['neto'] = round($value['neto'], (int) FS_NF0);
-            $subtotals[$key]['totaliva'] = round($value['totaliva'], (int) FS_NF0);
-            $subtotals[$key]['totalrecargo'] = round($value['totalrecargo'], (int) FS_NF0);
-            $subtotals[$key]['totalirpf'] = round($value['totalirpf'], (int) FS_NF0);
+            $subtotals[$key]['neto'] = round($value['neto'], FS_NF0);
+            $subtotals[$key]['totaliva'] = round($value['totaliva'], FS_NF0);
+            $subtotals[$key]['totalrecargo'] = round($value['totalrecargo'], FS_NF0);
+            $subtotals[$key]['totalirpf'] = round($value['totalirpf'], FS_NF0);
         }
 
         return $subtotals;
     }
 
     /**
-     * TODO: Uncomplete documentation.
+     * Recalculate line values.
      *
-     * @param array $fLine
+     * @param array            $fLine
      * @param BusinessDocument $doc
      *
      * @return BusinessDocumentLine
@@ -246,7 +249,7 @@ class BusinessDocumentTools
     }
 
     /**
-     * TODO: Uncomplete documentation.
+     * Sets product data to a line.
      *
      * @param array $fLine
      */

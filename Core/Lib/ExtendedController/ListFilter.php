@@ -56,7 +56,7 @@ class ListFilter
      * ListFilter constructor.
      *
      * @param string $type
-     * @param array $options
+     * @param array  $options
      */
     public function __construct($type, $options)
     {
@@ -77,11 +77,11 @@ class ListFilter
      * @param string $fieldcode
      * @param string $fieldtitle
      * @param string $value
-     * @param array $where
+     * @param array  $where
      *
      * @return ListFilter
      */
-    public static function newAutocompleteFilter($label, $field, $table, $fieldcode, $fieldtitle, $value, $where = []): ListFilter
+    public static function newAutocompleteFilter($label, $field, $table, $fieldcode, $fieldtitle, $value, array $where = []): ListFilter
     {
         $options = [
             'label' => $label,
@@ -102,8 +102,8 @@ class ListFilter
      * @param string $field
      * @param string $value
      * @param string $label
-     * @param bool $inverse
-     * @param mixed $matchValue
+     * @param bool   $inverse
+     * @param mixed  $matchValue
      *
      * @return ListFilter
      */
@@ -125,7 +125,7 @@ class ListFilter
      *
      * @param string $label
      * @param string $field
-     * @param array $values
+     * @param array  $values
      * @param string $value
      *
      * @return ListFilter
@@ -145,8 +145,8 @@ class ListFilter
     /**
      * Creates and returns a filter of the specified type [text|number|datepicker]
      *
-     * @param string $type ('text' | 'datepicker' | 'number')
-     * @param array $options (['field', 'label', 'valueFrom', 'operatorFrom', 'valueTo', 'operatorTo'])
+     * @param string $type    ('text' | 'datepicker' | 'number')
+     * @param array  $options (['field', 'label', 'valueFrom', 'operatorFrom', 'valueTo', 'operatorTo'])
      *
      * @return ListFilter
      */
@@ -203,21 +203,25 @@ class ListFilter
             default:
                 if ($this->hasValue('valueFrom')) {
                     $where[] = new DataBaseWhere(
-                        $this->options['field'], $this->options['valueFrom'], $this->options['operatorFrom']
+                        $this->options['field'],
+                        $this->options['valueFrom'],
+                        $this->options['operatorFrom']
                     );
                 }
                 if ($this->hasValue('valueTo')) {
                     $where[] = new DataBaseWhere(
-                        $this->options['field'], $this->options['valueTo'], $this->options['operatorTo']
+                        $this->options['field'],
+                        $this->options['valueTo'],
+                        $this->options['operatorTo']
                     );
                 }
         }
     }
 
     /**
-     * TODO: Uncomplete documentation.
+     * Return the current value.
      *
-     * @return mixed|string
+     * @return string
      */
     public function getCurrentValue()
     {
@@ -226,7 +230,7 @@ class ListFilter
                 return self::$codeModel->getDescription($this->options['table'], $this->options['fieldcode'], $this->options['value'], $this->options['fieldtitle']);
 
             default:
-                return $this->options['value'] ?? '';
+                return (string) ($this->options['value'] ?? '');
         }
     }
 

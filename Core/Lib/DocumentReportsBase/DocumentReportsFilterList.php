@@ -37,18 +37,21 @@ class DocumentReportsFilterList
      * @var string
      */
     public $selectedValue;
+
     /**
      * Icon for select input
      *
      * @var string
      */
     public $icon;
+
     /**
      * List of posibles values
      *
      * @var array
      */
     public $listValues;
+
     /**
      * Structure data from
      * @var Model\Base\ModelClass
@@ -61,7 +64,7 @@ class DocumentReportsFilterList
      * @param string $modelName
      * @param string $selectedValue
      * @param string $icon
-     * @param bool $allowEmpty
+     * @param bool   $allowEmpty
      */
     public function __construct($modelName, $selectedValue = '', $icon = 'fa-list', $allowEmpty = true)
     {

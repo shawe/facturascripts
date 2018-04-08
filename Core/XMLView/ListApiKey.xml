@@ -25,24 +25,24 @@
 <view>
     <columns>
         <column name="code" order="100">
-            <widget type="text" fieldname="id" onclick="EditApiKey"/>
+            <widget type="text" fieldname="id" onclick="EditApiKey" />
         </column>
         <column name="description" order="110">
-            <widget type="text" fieldname="description"/>
+            <widget type="text" fieldname="description" />
         </column>
         <column name="api-key" order="120">
-            <widget type="text" fieldname="apikey"/>
+            <widget type="text" fieldname="apikey" />
         </column>
         <column name="created" order="130">
-            <widget type="date" fieldname="creationdate"/>
+            <widget type="date" fieldname="creationdate" />
         </column>
         <column name="nick" order="140">
             <widget type="select" fieldname="nick" required="true">
-                <values source="users" fieldcode="nick" fieldtitle="nick"/>
+                <values source="users" fieldcode="nick" fieldtitle="nick" />
             </widget>
         </column>
         <column name="enabled" order="150">
-            <widget type="checkbox" fieldname="enabled"/>
+            <widget type="checkbox" fieldname="enabled" />
         </column>
     </columns>
 </view>

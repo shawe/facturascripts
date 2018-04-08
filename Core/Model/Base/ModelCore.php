@@ -42,24 +42,28 @@ abstract class ModelCore
      * @var Cache
      */
     protected static $cache;
+
     /**
      * It provides direct access to the database.
      *
      * @var DataBase
      */
     protected static $dataBase;
+
     /**
      * Multi-language translator.
      *
      * @var Translator
      */
     protected static $i18n;
+
     /**
      * Manage the log of all controllers, models and database.
      *
      * @var MiniLog
      */
     protected static $miniLog;
+
     /**
      * List of already tested tables.
      *
@@ -163,7 +167,7 @@ abstract class ModelCore
 
             // We check if it is a varchar (with established length) or another type of data
             $field = $fields[$key];
-            $type = (strpos($field['type'], '(') === false) ? $field['type'] : substr($field['type'], 0, strpos($field['type'], '('));
+            $type = strpos($field['type'], '(') === false ? $field['type'] : substr($field['type'], 0, strpos($field['type'], '('));
 
             switch ($type) {
                 case 'tinyint':
@@ -206,7 +210,7 @@ abstract class ModelCore
      * Loads table fields if is necessary.
      *
      * @param DataBase $dataBase
-     * @param string $tableName
+     * @param string   $tableName
      */
     abstract protected function loadModelFields(DataBase $dataBase, string $tableName);
 
@@ -249,7 +253,7 @@ abstract class ModelCore
     /**
      * Returns the integer value by controlling special cases for the PK and FK.
      *
-     * @param array $field
+     * @param array  $field
      * @param string $value
      *
      * @return integer|NULL

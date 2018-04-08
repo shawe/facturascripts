@@ -27,6 +27,11 @@ namespace FacturaScripts\Core\Base;
 class MiniLog
 {
     /**
+     *
+     */
+    const LEVELS = ['info', 'notice', 'warning', 'error', 'critical', 'alert', 'emergency'];
+
+    /**
      * Contains the log data.
      *
      * @var array
@@ -47,7 +52,7 @@ class MiniLog
      * System is unusable.
      *
      * @param string $message
-     * @param array $context
+     * @param array  $context
      */
     public function emergency($message, array $context = [])
     {
@@ -61,7 +66,7 @@ class MiniLog
      * trigger the SMS alerts and wake you up.
      *
      * @param string $message
-     * @param array $context
+     * @param array  $context
      */
     public function alert($message, array $context = [])
     {
@@ -74,7 +79,7 @@ class MiniLog
      * Example: Application component unavailable, unexpected exception.
      *
      * @param string $message
-     * @param array $context
+     * @param array  $context
      */
     public function critical($message, array $context = [])
     {
@@ -86,7 +91,7 @@ class MiniLog
      * be logged and monitored.
      *
      * @param string $message
-     * @param array $context
+     * @param array  $context
      */
     public function error($message, array $context = [])
     {
@@ -100,7 +105,7 @@ class MiniLog
      * that are not necessarily wrong.
      *
      * @param string $message
-     * @param array $context
+     * @param array  $context
      */
     public function warning($message, array $context = [])
     {
@@ -111,7 +116,7 @@ class MiniLog
      * Normal but significant events.
      *
      * @param string $message
-     * @param array $context
+     * @param array  $context
      */
     public function notice($message, array $context = [])
     {
@@ -124,7 +129,7 @@ class MiniLog
      * Example: User logs in, SQL logs.
      *
      * @param string $message
-     * @param array $context
+     * @param array  $context
      */
     public function info($message, array $context = [])
     {
@@ -135,7 +140,7 @@ class MiniLog
      * Detailed debug information.
      *
      * @param string $message
-     * @param array $context
+     * @param array  $context
      */
     public function debug($message, array $context = [])
     {
@@ -146,7 +151,7 @@ class MiniLog
      * SQL history.
      *
      * @param string $message
-     * @param array $context
+     * @param array  $context
      */
     public function sql($message, array $context = [])
     {
@@ -158,7 +163,7 @@ class MiniLog
      *
      * @param string $level
      * @param string $message
-     * @param array $context
+     * @param array  $context
      */
     public function log($level, $message, array $context = [])
     {
@@ -177,12 +182,12 @@ class MiniLog
      *
      * @return array
      */
-    public function read(array $levels = ['info', 'notice', 'warning', 'error', 'critical', 'alert', 'emergency']): array
+    public function read(array $levels = self::LEVELS): array
     {
         $messages = [];
 
         foreach (self::$dataLog as $data) {
-            if (\in_array($data['level'], $levels, false) && $data['message'] !== '') {
+            if ($data['message'] !== '' && \in_array($data['level'], $levels, false)) {
                 $messages[] = $data;
             }
         }

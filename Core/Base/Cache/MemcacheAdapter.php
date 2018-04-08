@@ -112,8 +112,8 @@ class MemcacheAdapter implements AdaptorInterface
      * Put content into the cache.
      *
      * @param string $key
-     * @param mixed $content the the content you want to store
-     * @param int $expire time to expire
+     * @param mixed  $content the the content you want to store
+     * @param int    $expire  time to expire
      *
      * @return bool whether if the operation was successful or not
      */

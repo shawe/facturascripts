@@ -194,7 +194,6 @@ class Empresa extends Base\Contact
         if (empty($this->idempresa)) {
             $this->idempresa = $this->newCode();
         }
-
         return parent::test();
     }
 }

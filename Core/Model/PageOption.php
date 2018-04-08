@@ -21,6 +21,7 @@ namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Lib\ExtendedController;
+use FacturaScripts\Core\Lib\ExtendedController\GroupItem;
 
 /**
  * Visual configuration of the FacturaScripts views,
@@ -37,7 +38,7 @@ class PageOption extends Base\ModelClass
      * Definition of the columns. It is called columns but it always
      * contains GroupItem, which contains the columns.
      *
-     * @var array
+     * @var GroupItem[]
      */
     public $columns;
 

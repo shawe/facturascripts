@@ -78,10 +78,10 @@ class DocumentReports extends Controller
     /**
      * Initializes all the objects and properties
      *
-     * @param Cache $cache
+     * @param Cache      $cache
      * @param Translator $i18n
-     * @param MiniLog $miniLog
-     * @param string $className
+     * @param MiniLog    $miniLog
+     * @param string     $className
      */
     public function __construct(&$cache, &$i18n, &$miniLog, $className)
     {
@@ -96,18 +96,18 @@ class DocumentReports extends Controller
         ];
 
         $this->filters = [
-            'employee' => new DRB\DocumentReportsFilterList('\FacturaScripts\Dinamic\Model\Agente', '', 'fa-users'),
-            'serie' => new DRB\DocumentReportsFilterList('\FacturaScripts\Dinamic\Model\Serie', AppSettings::get('default', 'codserie')),
-            'currency' => new DRB\DocumentReportsFilterList('\FacturaScripts\Dinamic\Model\Divisa', AppSettings::get('default', 'coddivisa')),
-            'payment-method' => new DRB\DocumentReportsFilterList('\FacturaScripts\Dinamic\Model\FormaPago'),
+            'employee' => new DRB\DocumentReportsFilterList(self::DIR_MODEL . 'Agente', '', 'fa-users'),
+            'serie' => new DRB\DocumentReportsFilterList(self::DIR_MODEL . 'Serie', AppSettings::get('default', 'codserie')),
+            'currency' => new DRB\DocumentReportsFilterList(self::DIR_MODEL . 'Divisa', AppSettings::get('default', 'coddivisa')),
+            'payment-method' => new DRB\DocumentReportsFilterList(self::DIR_MODEL . 'FormaPago'),
         ];
     }
 
     /**
      * Runs the controller's private logic.
      *
-     * @param Response $response
-     * @param Model\User $user
+     * @param Response              $response
+     * @param Model\User            $user
      * @param ControllerPermissions $permissions
      */
     public function privateCore(&$response, $user, $permissions)
@@ -150,7 +150,7 @@ class DocumentReports extends Controller
     /**
      * Return a comma separated list of keys.
      *
-     * @param $sourceKey
+     * @param string $sourceKey
      *
      * @return string
      */
@@ -180,7 +180,7 @@ class DocumentReports extends Controller
     /**
      * Execute main actions.
      *
-     * @param $action
+     * @param string $action
      */
     protected function execAction($action)
     {
@@ -212,7 +212,7 @@ class DocumentReports extends Controller
             $data = $this->populateTable($source, $step, $format);
             $this->dataTable[$source->source] = $data;
             /**
-             * Perhaps array_merge/array_replace can be used instead.
+             * FIXME: Perhaps array_merge/array_replace can be used instead.
              * Feel free to disable the inspection if '+' is intended.
              * https://github.com/kalessil/phpinspectionsea/blob/master/docs/probable-bugs.md#addition-operator-applied-to-arrays
              */
@@ -226,7 +226,7 @@ class DocumentReports extends Controller
     /**
      * Set values selected by the user to source.
      *
-     * @param int $index
+     * @param int                       $index
      * @param DRB\DocumentReportsSource $source
      */
     private function setDefaultToSource($index, &$source)
@@ -239,8 +239,8 @@ class DocumentReports extends Controller
     /**
      * Set the better result to use for step and format.
      *
-     * @param $step
-     * @param $format
+     * @param string $step
+     * @param string $format
      */
     private function getStepFormat(&$step, &$format)
     {
@@ -278,19 +278,16 @@ class DocumentReports extends Controller
         $options = explode('-', $format);
 
         switch (true) {
-            /** @noinspection PhpMissingBreakStatementInspection */
             case \in_array('d', $options, false):
                 $concat[] = 'LPAD(CAST(EXTRACT(DAY FROM fecha) AS CHAR(10)), 2, \'0\')';
                 $concat[] = ' \'-\' ';
                 // no break
 
-            /** @noinspection PhpMissingBreakStatementInspection */
             case \in_array('m', $options, false):
                 $concat[] = 'LPAD(CAST(EXTRACT(MONTH FROM fecha) AS CHAR(10)), 2, \'0\')';
                 $concat[] = ' \'-\' ';
                 // no break
 
-            /** @noinspection PhpMissingBreakStatementInspection */
             case \in_array('Y', $options, false):
                 $concat[] = 'CAST(EXTRACT(YEAR FROM fecha) AS CHAR(10))';
                 // no break
@@ -329,8 +326,8 @@ class DocumentReports extends Controller
      * Populate the result with the parameters.
      *
      * @param DRB\DocumentReportsSource $source
-     * @param string $step
-     * @param string $format
+     * @param string                    $step
+     * @param string                    $format
      *
      * @return array
      */

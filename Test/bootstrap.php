@@ -25,7 +25,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 define('FS_FOLDER', getcwd());
 
 $config = FS_FOLDER . '/config.php';
-if (__DIR__ === '/home/scrutinizer/build/Test') {
+if (!\file_exists($config) || __DIR__ === '/home/scrutinizer/build/Test') {
     echo 'Executing on scrutinizer ...' . "\n\n";
     $config = FS_FOLDER . '/Test/config-scrutinizer.php';
 } elseif (strpos(__DIR__, '/home/travis/build/') !== false) {

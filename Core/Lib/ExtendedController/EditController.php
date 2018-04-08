@@ -33,10 +33,10 @@ abstract class EditController extends PanelController
     /**
      * Starts all the objects and properties
      *
-     * @param Base\Cache $cache
+     * @param Base\Cache      $cache
      * @param Base\Translator $i18n
-     * @param Base\MiniLog $miniLog
-     * @param string $className
+     * @param Base\MiniLog    $miniLog
+     * @param string          $className
      */
     public function __construct(&$cache, &$i18n, &$miniLog, $className)
     {
@@ -75,7 +75,7 @@ abstract class EditController extends PanelController
     /**
      * Loads the data to display
      *
-     * @param string $keyView
+     * @param string   $keyView
      * @param EditView $view
      */
     protected function loadData($keyView, $view)

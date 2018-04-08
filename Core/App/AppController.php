@@ -172,7 +172,7 @@ class AppController extends App
     /**
      * Load and process the $pageName controller.
      *
-     * @param string $pageName
+     * @param string     $pageName
      * @param User|false $user
      */
     private function loadController($pageName, $user)
@@ -270,7 +270,7 @@ class AppController extends App
     /**
      * User authentication, returns the user when successful, or false when not.
      *
-     * @return User|false
+     * @return User|bool
      */
     private function userAuth()
     {

@@ -25,25 +25,25 @@
 <view>
     <columns>
         <column name="code" order="100">
-            <widget type="text" fieldname="idempresa" onclick="EditEmpresa"/>
+            <widget type="text" fieldname="idempresa" onclick="EditEmpresa" />
         </column>
         <column name="name" order="110">
-            <widget type="text" fieldname="nombre"/>
+            <widget type="text" fieldname="nombre" />
         </column>
         <column name="short-name" order="120">
-            <widget type="text" fieldname="nombrecorto"/>
+            <widget type="text" fieldname="nombrecorto" />
         </column>
         <column name="phone" order="130">
-            <widget type="text" fieldname="telefono1"/>
+            <widget type="text" fieldname="telefono1" />
         </column>
         <column name="email" order="140">
-            <widget type="text" fieldname="email"/>
+            <widget type="text" fieldname="email" />
         </column>
         <column name="web" order="150">
-            <widget type="text" fieldname="web"/>
+            <widget type="text" fieldname="web" />
         </column>
         <column name="notes" order="160">
-            <widget type="text" fieldname="observaciones"/>
+            <widget type="text" fieldname="observaciones" />
         </column>
     </columns>
 </view>

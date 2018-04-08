@@ -64,7 +64,7 @@ class PedidosCliente extends AbstractRandomDocuments
                 $ped->fechasalida = date('d-m-Y', strtotime($ped->fecha . ' +' . random_int(1, 3) . ' months'));
             }
             if ($ped->save()) {
-                $this->randomLineas($ped, 'idpedido', 'FacturaScripts\Dinamic\Model\LineaPedidoCliente', $regimeniva, $recargo);
+                $this->randomLineas($ped, 'idpedido', self::DIR_MODEL . 'LineaPedidoCliente', $regimeniva, $recargo);
                 ++$generated;
             } else {
                 break;

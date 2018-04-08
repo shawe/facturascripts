@@ -71,7 +71,7 @@ class EditPresupuestoProveedor extends ExtendedController\BusinessDocumentContro
     /**
      * Load data view procedure
      *
-     * @param string $keyView
+     * @param string                                  $keyView
      * @param ExtendedController\BusinessDocumentView $view
      */
     protected function loadData($keyView, $view)

@@ -23,7 +23,7 @@ $(document).ready(function () {
     });
 
     // Adds a delay to help messages
-    $('[data-toggle="popover"]').popover({
+    $("[data-toggle='popover']").popover({
         delay: {"show": 1000, "hide": 100}
     });
 

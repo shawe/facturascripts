@@ -47,7 +47,7 @@ class EditAsiento extends ExtendedController\PanelController
     /**
      * Load data view procedure
      *
-     * @param string $keyView
+     * @param string                      $keyView
      * @param ExtendedController\EditView $view
      */
     protected function loadData($keyView, $view)
@@ -73,7 +73,7 @@ class EditAsiento extends ExtendedController\PanelController
      * Run the actions that alter data before reading it
      *
      * @param ExtendedController\BaseView $view
-     * @param string $action
+     * @param string                      $action
      *
      * @return bool
      */
@@ -126,7 +126,7 @@ class EditAsiento extends ExtendedController\PanelController
      *
      * @return array
      */
-    private function getVATDetaill($idVAT): array
+    private function getVATDetail($idVAT): array
     {
         $result = [];
         if (!empty($idVAT)) {
@@ -160,7 +160,7 @@ class EditAsiento extends ExtendedController\PanelController
             'detail' => [0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00]
         ];
 
-        if (empty($exercise) or empty($codeSubAccount)) {
+        if (empty($exercise) || empty($codeSubAccount)) {
             return $result;
         }
 
@@ -174,7 +174,7 @@ class EditAsiento extends ExtendedController\PanelController
             $balance = new Model\SubcuentaSaldo();
 
             $result['description'] = $subAccount->descripcion;
-            $result['vat'] = $this->getVatDetaill($subAccount->codimpuesto);
+            $result['vat'] = $this->getVATDetail($subAccount->codimpuesto);
             $result['balance'] = $balance->setSubAccountBalance($subAccount->idsubcuenta, $result['detail']);
         }
 

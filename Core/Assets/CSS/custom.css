@@ -63,10 +63,8 @@
     float: right;
     width: 0;
     height: 0;
-    border-color: transparent;
-    border-style: solid;
-    border-left-width: 0.3em;
-    border-left-color: inherit;
+    border: solid transparent;
+    border-left: 0.3em inherit;
     margin-right: -0.6em;
     margin-top: 0.6em;
 }

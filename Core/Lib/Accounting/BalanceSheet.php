@@ -86,9 +86,9 @@ class BalanceSheet extends AccountingBase
             . ' SUM(CASE WHEN asto.fecha BETWEEN ' . $dateFromPrev . ' AND ' . $dateToPrev . ' THEN pa.debe - pa.haber ELSE 0 END) saldoprev'
             . ' FROM co_cuentascbba ccb '
             . ' INNER JOIN co_codbalances08 cb ON ccb.codbalance = cb.codbalance '
-            . ' INNER JOIN partidas pa ON substr(pa.codsubcuenta, 1, 1) BETWEEN \'1\' AND \'5\' AND pa.codsubcuenta LIKE CONCAT(ccb.codcuenta,\'%\')'
+            . " INNER JOIN partidas pa ON substr(pa.codsubcuenta, 1, 1) BETWEEN '1' AND '5' AND pa.codsubcuenta LIKE CONCAT(ccb.codcuenta,'%')"
             . ' INNER JOIN asientos asto ON asto.idasiento = pa.idasiento and asto.fecha BETWEEN ' . $dateFromPrev . ' AND ' . $dateTo
-            . ' WHERE cb.naturaleza IN (\'A\', \'P\')'
+            . " WHERE cb.naturaleza IN ('A', 'P')"
             . ' GROUP BY 1, 2, 3, 4, 5, 6, 7 '
             . ' ORDER BY cb.naturaleza, cb.nivel1, cb.nivel2, cb.orden3, cb.nivel4';
 
@@ -98,8 +98,8 @@ class BalanceSheet extends AccountingBase
     /**
      * Process a balance values.
      *
-     * @param array $linea
-     * @param array $balance
+     * @param array  $linea
+     * @param array  $balance
      * @param string $description
      */
     protected function processDescription(&$linea, &$balance, $description)
@@ -149,7 +149,10 @@ class BalanceSheet extends AccountingBase
         $balanceCalculado = [];
         foreach ($data as $lineaBalance) {
             if (!array_key_exists($lineaBalance['naturaleza'], $balanceCalculado)) {
-                $balanceCalculado[$lineaBalance['naturaleza']] = ['descripcion' => $lineaBalance['naturaleza'] = 'A' ? 'ACTIVO' : 'PASIVO', 'saldo' => $lineaBalance['saldo'], 'saldoprev' => $lineaBalance['saldoprev']];
+                $balanceCalculado[$lineaBalance['naturaleza']] = [
+                    'descripcion' => $lineaBalance['naturaleza'] = 'A' ? 'ACTIVO' : 'PASIVO',
+                    'saldo' => $lineaBalance['saldo'], 'saldoprev' => $lineaBalance['saldoprev']
+                ];
             } else {
                 $balanceCalculado[$lineaBalance['naturaleza']]['saldo'] += $lineaBalance['saldo'];
                 $balanceCalculado[$lineaBalance['naturaleza']]['saldoprev'] += $lineaBalance['saldoprev'];

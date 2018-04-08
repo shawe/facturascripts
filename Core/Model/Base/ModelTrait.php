@@ -73,7 +73,7 @@ trait ModelTrait
      * Loads table fields if is necessary.
      *
      * @param DataBase $dataBase
-     * @param string $tableName
+     * @param string   $tableName
      */
     protected function loadModelFields(DataBase $dataBase, string $tableName)
     {

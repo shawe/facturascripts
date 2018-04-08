@@ -203,8 +203,8 @@ class Subcuenta extends Base\ModelClass
      * Update account balance
      *
      * @param string $date
-     * @param float $debit
-     * @param float $credit
+     * @param float  $debit
+     * @param float  $credit
      *
      * @return bool
      */

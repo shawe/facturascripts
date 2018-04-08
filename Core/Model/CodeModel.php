@@ -77,8 +77,8 @@ class CodeModel
      * @param string $tableName
      * @param string $fieldCode
      * @param string $fieldDescription
-     * @param bool $addEmpty
-     * @param array $where
+     * @param bool   $addEmpty
+     * @param array  $where
      *
      * @return self[]
      */

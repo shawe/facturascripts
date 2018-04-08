@@ -36,12 +36,13 @@ class Updater extends Controller
 {
 
     /**
-     * TODO: Uncomplete documentation.
+     * Remote URL for update FacturaScripts Core
      */
     const UPDATE_CORE_URL = 'https://s3.eu-west-2.amazonaws.com/facturascripts/2018.zip';
 
     /**
-     * TODO: Uncomplete documentation.
+     * List of items to be updated.
+     *
      * @var array
      */
     public $updaterItems = [];
@@ -65,8 +66,8 @@ class Updater extends Controller
     /**
      * Runs the controller's private logic.
      *
-     * @param Response $response
-     * @param User $user
+     * @param Response              $response
+     * @param User                  $user
      * @param ControllerPermissions $permissions
      */
     public function privateCore(&$response, $user, $permissions)
@@ -162,7 +163,7 @@ class Updater extends Controller
             if (is_dir($dir)) {
                 $directories[] = $dir;
                 /**
-                 * 'array_merge(...)' is used in a loop and is a resources greedy construction.
+                 * FIXME: 'array_merge(...)' is used in a loop and is a resources greedy construction.
                  * https://github.com/kalessil/phpinspectionsea/blob/master/docs/performance.md#slow-array-function-used-in-loop
                  */
                 /** @noinspection SlowArrayOperationsInLoopInspection */
@@ -181,15 +182,13 @@ class Updater extends Controller
     private function notWritablefolders(): array
     {
         $notWritable = [];
-        $count = 0;
         foreach ($this->foldersFrom(FS_FOLDER) as $dir) {
-            if (!is_writable($dir) && !$this->fixWritable($dir)) {
+            if (!is_writable($dir)) {
                 $notWritable[] = $dir;
-                $count++;
             }
         }
 
-        if ($count > 0) {
+        if (count($notWritable) > 0) {
             $this->showSolution();
         }
 
@@ -219,7 +218,7 @@ class Updater extends Controller
      * Returns default permissions for file or folder.
      * If not correctOwner or realFileOwner received, readed from execution.
      *
-     * @param bool $isFile
+     * @param bool   $isFile
      * @param string $correctOwner
      * @param string $realFileOwner
      *
@@ -242,60 +241,6 @@ class Updater extends Controller
         }
         return $string;
     }
-
-    /**
-     * Try to fix not writable folder.
-     *
-     * @param string $dir
-     *
-     * @return bool
-     */
-    private function fixWritable(string $dir): bool
-    {
-        // Apache user/group setted
-        $correctOwner = \posix_getpwuid(\posix_geteuid())['name'];
-        $correctGroup = \posix_getgrgid(\posix_getgid())['name'];
-        // Owner user/group
-        $realFileOwner = \posix_getpwuid(\fileowner($dir))['name'];
-        $realFileGroup = \posix_getgrgid(\filegroup($dir))['name'];
-
-        $allowedOwners = ['root', 'www-data', 'http', $correctOwner];
-        $allowedGroups = ['root', 'www-data', 'http', $correctGroup];
-
-        if (!$this->chModR($dir)) {
-            if ($realFileGroup !== $correctGroup && !\in_array($realFileGroup, $allowedGroups, true)) {
-                if ($this->chGrpR($dir, $correctGroup)) {
-                    return is_writable($dir);
-                }
-                if ($this->chOwnR($dir, $correctOwner)) {
-                    return is_writable($dir);
-                }
-                return false;
-            }
-            if ($realFileOwner !== $correctOwner && !\in_array($realFileOwner, $allowedOwners, true)) {
-                if ($this->chOwnR($dir, $correctOwner)) {
-                    return is_writable($dir);
-                }
-                if ($this->chOwnR($dir, $correctOwner)) {
-                    return is_writable($dir);
-                }
-                return false;
-            }
-        }
-
-        return is_writable($dir);
-    }
-
-    /**
-     * Return a list of disabled php functions.
-     *
-     * @return array
-     */
-    private function getPhpDisabledFunctions(): array
-    {
-        return explode(',', ini_get('disable_functions'));
-    }
-
     /**
      * Copy all files and folders from $src to $dst
      *
@@ -354,160 +299,5 @@ class Updater extends Controller
 
         $this->delTree(FS_FOLDER . DIRECTORY_SEPARATOR . 'facturascripts');
         return true;
-    }
-
-    /**
-     * Calls to chgrp recursively.
-     *
-     * @param string $path
-     * @param string $group
-     *
-     * @return bool
-     */
-    private function chGrpR(string $path, string $group): bool
-    {
-        if (\in_array('chgrp', $this->getPhpDisabledFunctions(), true)) {
-            $this->miniLog->critical(
-                'chgrp is a disabled function.'
-            );
-            return false;
-        }
-
-        if (!is_dir($path)) {
-            return @chgrp($path, $group);
-        }
-
-        $dh = opendir($path);
-        while (($file = readdir($dh)) !== false) {
-            if ($file !== '.' && $file !== '..') {
-                $fullPath = $path . '/' . $file;
-                if (is_link($fullPath)) {
-                    return false;
-                }
-                if (!is_dir($fullPath) && !@chgrp($fullPath, $group)) {
-                    return false;
-                }
-                if (!$this->chGrpR($fullPath, $group)) {
-                    return false;
-                }
-            }
-        }
-
-        closedir($dh);
-
-        return @chgrp($path, $group);
-    }
-
-    /**
-     * Calls to chmod recursively.
-     *
-     * @param string $path
-     * @param string $fileMode
-     *
-     * @return bool
-     */
-    private function chModR(string $path, string $fileMode = ''): bool
-    {
-        if (\in_array('chmod', $this->getPhpDisabledFunctions(), true)) {
-            $this->miniLog->critical(
-                'chmod is a disabled function.'
-            );
-            return false;
-        }
-
-        if ($fileMode === '') {
-            $fileMode = $this->getDefaultPerms(is_file($path));
-        }
-
-        if ($this->isOctal($fileMode)) {
-            if (!is_dir($path)) {
-                return @chmod($path, $fileMode);
-            }
-
-            $dh = opendir($path);
-            while (($file = readdir($dh)) !== false) {
-                if ($file !== '.' && $file !== '..') {
-                    $fullPath = $path . '/' . $file;
-                    if (is_link($fullPath)) {
-                        return false;
-                    }
-                    if (!is_dir($fullPath) && !@chmod($fullPath, $fileMode)) {
-                        return false;
-                    }
-                    if (!$this->chModR($fullPath, $fileMode)) {
-                        return false;
-                    }
-                }
-            }
-
-            closedir($dh);
-
-            return @chmod($path, $fileMode);
-        }
-
-        $this->miniLog->critical(
-            '"' . $fileMode . '" : Is not an octal file mode.'
-        );
-        return false;
-    }
-
-    /**
-     * Returns if is octal file mode.
-     *
-     * @param string $fileMode
-     *
-     * @return bool
-     */
-    private function isOctal($fileMode): bool
-    {
-        $formatted = \str_pad(
-            decoct(octdec($fileMode)),
-            4,
-            0,
-            \STR_PAD_LEFT
-        );
-        return $formatted === $fileMode;
-    }
-
-    /**
-     * Calls to chown recursively.
-     *
-     * @param string $path
-     * @param string $owner
-     *
-     * @return bool
-     */
-    private function chOwnR(string $path, string $owner): bool
-    {
-        if (\in_array('chown', $this->getPhpDisabledFunctions(), true)) {
-            $this->miniLog->critical(
-                'chmod is a disabled function.'
-            );
-            return false;
-        }
-
-        if (!is_dir($path)) {
-            return @chown($path, $owner);
-        }
-
-        $dh = opendir($path);
-        while (($file = readdir($dh)) !== false) {
-            if ($file !== '.' && $file !== '..') {
-                $fullPath = $path . '/' . $file;
-                if (is_link($fullPath)) {
-                    return false;
-                }
-                if (!is_dir($fullPath) && !@chown($fullPath, $owner)) {
-                    return false;
-                }
-                if (!$this->chOwnR($fullPath, $owner)) {
-                    return false;
-                }
-            }
-        }
-
-        closedir($dh);
-
-        return @chown($path, $owner);
     }
 }

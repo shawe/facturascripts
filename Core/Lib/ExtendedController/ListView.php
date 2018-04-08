@@ -38,42 +38,49 @@ class ListView extends BaseView implements DataViewInterface
      */
     const ICON_ASC = 'fa-sort-amount-asc';
     const ICON_DESC = 'fa-sort-amount-desc';
+
     /**
      * Tools to work with currencies.
      *
      * @var DivisaTools
      */
     public $divisaTools;
+
     /**
      * Selected element in the Order By list
      *
      * @var string
      */
     public $selectedOrderBy;
+
     /**
      * Cursor with data from the model display
      *
      * @var ModelClass[]
      */
     private $cursor;
+
     /**
      * Filter configuration preset by the user
      *
      * @var ListFilter[]
      */
     private $filters;
+
     /**
      * Stores the offset for the cursor
      *
      * @var int
      */
     private $offset;
+
     /**
      * Stores the order for the cursor
      *
      * @var array
      */
     private $order;
+
     /**
      * List of fields available to order by
      * Example: orderby[key] = ["label" => "Etiqueta", "icon" => ICON_ASC]
@@ -82,12 +89,14 @@ class ListView extends BaseView implements DataViewInterface
      * @var array
      */
     private $orderBy;
+
     /**
      * List of fields where to search in when a search is made
      *
      * @var array
      */
     private $searchIn;
+
     /**
      * Stores the where parameters for the cursor
      *
@@ -121,7 +130,7 @@ class ListView extends BaseView implements DataViewInterface
     /**
      * Defines a new option to filter the data with
      *
-     * @param string $key
+     * @param string     $key
      * @param ListFilter $filter
      */
     public function addFilter(string $key, ListFilter $filter)
@@ -134,7 +143,7 @@ class ListView extends BaseView implements DataViewInterface
      *
      * @param string $field
      * @param string $label
-     * @param int $default (0 = None, 1 = ASC, 2 = DESC)
+     * @param int    $default (0 = None, 1 = ASC, 2 = DESC)
      */
     public function addOrderBy($field, $label = '', $default = 0)
     {
@@ -170,7 +179,7 @@ class ListView extends BaseView implements DataViewInterface
     {
         if (\is_array($fields)) {
             /**
-             * Perhaps array_merge/array_replace can be used instead.
+             * FIXME: Perhaps array_merge/array_replace can be used instead.
              * Feel free to disable the inspection if '+' is intended.
              * https://github.com/kalessil/phpinspectionsea/blob/master/docs/probable-bugs.md#addition-operator-applied-to-arrays
              * $this->searchIn = array_merge($this->searchIn, $fields);
@@ -184,7 +193,7 @@ class ListView extends BaseView implements DataViewInterface
      * Establishes a column's display state
      *
      * @param string $columnName
-     * @param bool $disabled
+     * @param bool   $disabled
      */
     public function disableColumn($columnName, $disabled)
     {
@@ -233,11 +242,11 @@ class ListView extends BaseView implements DataViewInterface
     /**
      * Load the data in the cursor property, according to the where filter specified.
      *
-     * @param mixed $code
+     * @param mixed           $code
      * @param DataBaseWhere[] $where
-     * @param array $order
-     * @param int $offset
-     * @param int $limit
+     * @param array           $order
+     * @param int             $offset
+     * @param int             $limit
      */
     public function loadData($code = false, array $where = [], array $order = [], $offset = 0, $limit = FS_ITEM_LIMIT)
     {
@@ -257,7 +266,7 @@ class ListView extends BaseView implements DataViewInterface
     /**
      * Returns the link text for a given model
      *
-     * @param $data
+     * @param mixed $data
      *
      * @return string
      */

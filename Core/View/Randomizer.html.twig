@@ -8,6 +8,7 @@
             function pageReload() {
                 window.location.href = '{{ fsc.urlReload|raw }}';
             }
+
             $(document).ready(function () {
                 setTimeout(pageReload, 10000);
             });

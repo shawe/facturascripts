@@ -77,7 +77,7 @@ class Proveedores extends AbstractRandomPeople
      * Rellena cuentas bancarias de un proveedor con datos aleatorios.
      *
      * @param Model\Proveedor $proveedor
-     * @param int $max
+     * @param int             $max
      */
     protected function cuentasBancoProveedor($proveedor, $max = 3)
     {
@@ -104,7 +104,7 @@ class Proveedores extends AbstractRandomPeople
      * Rellena direcciones de un proveedor con datos aleatorios.
      *
      * @param Model\Proveedor $proveedor
-     * @param int $max
+     * @param int             $max
      */
     protected function direccionesProveedor($proveedor, $max = 3)
     {

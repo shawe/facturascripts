@@ -30,19 +30,19 @@ class WidgetItemAutocomplete extends WidgetItem
 {
 
     /**
-     * Model to use with select and autocomplete filters.
-     *
-     * @var Model\CodeModel
-     */
-    private $codeModel;
-
-    /**
      * Accepted values for the field associated to the widget.
      * Values are loaded from Model\PageOption::getForUser()
      *
      * @var array
      */
     public $values;
+
+    /**
+     * Model to use with select and autocomplete filters.
+     *
+     * @var Model\CodeModel
+     */
+    private $codeModel;
 
     /**
      * WidgetItemAutocomplete constructor.
@@ -112,22 +112,6 @@ class WidgetItemAutocomplete extends WidgetItem
     }
 
     /**
-     * Get the text for the given value
-     *
-     * @param string $value
-     *
-     * @return string
-     */
-    public function getTextValue($value): string
-    {
-        $tableName = $this->values[0]['source'];
-        $fieldCode = $this->values[0]['fieldcode'];
-        $fieldDesc = $this->values[0]['fieldtitle'];
-
-        return $this->codeModel->getDescription($tableName, $fieldCode, $value, $fieldDesc);
-    }
-
-    /**
      * Loads the attributes structure from a JSON file
      *
      * @param array $widget
@@ -147,5 +131,21 @@ class WidgetItemAutocomplete extends WidgetItem
     {
         parent::loadFromXML($column);
         $this->getAttributesGroup($this->values, $column->widget->values);
+    }
+
+    /**
+     * Get the text for the given value
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    public function getTextValue($value): string
+    {
+        $tableName = $this->values[0]['source'];
+        $fieldCode = $this->values[0]['fieldcode'];
+        $fieldDesc = $this->values[0]['fieldtitle'];
+
+        return $this->codeModel->getDescription($tableName, $fieldCode, $value, $fieldDesc);
     }
 }

@@ -20,9 +20,9 @@
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base;
-use FacturaScripts\Dinamic\Lib\ExportManager;
 use FacturaScripts\Core\Model\CodeModel;
 use FacturaScripts\Core\Model\User;
+use FacturaScripts\Dinamic\Lib\ExportManager;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -33,8 +33,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 abstract class PanelController extends Base\Controller
 {
-
-    const DIR_MODEL = '\\FacturaScripts\\Dinamic\\Model\\';
 
     /**
      * Indicates the active view
@@ -85,11 +83,11 @@ abstract class PanelController extends Base\Controller
     /**
      * Starts all the objects and properties
      *
-     * @param Base\Cache $cache
+     * @param Base\Cache      $cache
      * @param Base\Translator $i18n
-     * @param Base\MiniLog $miniLog
-     * @param string $className
-     * @param string $uri
+     * @param Base\MiniLog    $miniLog
+     * @param string          $className
+     * @param string          $uri
      */
     public function __construct(&$cache, &$i18n, &$miniLog, $className, $uri = '')
     {
@@ -132,8 +130,8 @@ abstract class PanelController extends Base\Controller
     /**
      * Runs the controller's private logic.
      *
-     * @param Response $response
-     * @param User $user
+     * @param Response                   $response
+     * @param User                       $user
      * @param Base\ControllerPermissions $permissions
      */
     public function privateCore(&$response, $user, $permissions)
@@ -196,7 +194,7 @@ abstract class PanelController extends Base\Controller
     {
         $model = $this->views[$viewName]->getModel();
 
-        return isset($model->{$fieldName}) ? $model->{$fieldName} : null;
+        return $model->{$fieldName} ?? null;
     }
 
     /**
@@ -247,7 +245,7 @@ abstract class PanelController extends Base\Controller
     /**
      * Loads the data to display
      *
-     * @param string $keyView
+     * @param string   $keyView
      * @param BaseView $view
      */
     abstract protected function loadData($keyView, $view);
@@ -256,7 +254,7 @@ abstract class PanelController extends Base\Controller
      * Run the actions that alter data before reading it
      *
      * @param BaseView $view
-     * @param string $action
+     * @param string   $action
      *
      * @return bool
      */
@@ -301,7 +299,7 @@ abstract class PanelController extends Base\Controller
      * Run the controller after actions
      *
      * @param EditView $view
-     * @param string $action
+     * @param string   $action
      */
     protected function execAfterAction($view, $action)
     {
@@ -404,7 +402,7 @@ abstract class PanelController extends Base\Controller
      * Check if the view should be active
      *
      * @param BaseView $view
-     * @param bool $mainViewHasData
+     * @param bool     $mainViewHasData
      *
      * @return bool
      */
@@ -416,9 +414,9 @@ abstract class PanelController extends Base\Controller
     /**
      * Adds a view to the controller and loads its data
      *
-     * @param string $keyView
+     * @param string   $keyView
      * @param BaseView $view
-     * @param string $icon
+     * @param string   $icon
      */
     protected function addView($keyView, $view, $icon)
     {
@@ -475,10 +473,10 @@ abstract class PanelController extends Base\Controller
     /**
      * Adds a Grid type view to the controller
      *
-     * @param $parentView
-     * @param $modelName
-     * @param $viewName
-     * @param $viewTitle
+     * @param        $parentView
+     * @param        $modelName
+     * @param        $viewName
+     * @param        $viewTitle
      * @param string $viewIcon
      */
     protected function addGridView($parentView, $modelName, $viewName, $viewTitle, $viewIcon = 'fa-list')
@@ -506,7 +504,7 @@ abstract class PanelController extends Base\Controller
     }
 
     /**
-     * TODO: Uncomplete documentation.
+     * Search on GridView.
      *
      * @return string
      */

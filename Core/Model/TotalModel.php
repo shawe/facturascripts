@@ -71,10 +71,10 @@ class TotalModel
     /**
      * Load a list of TotalModel (code and fields of statistics) for the indicated table.
      *
-     * @param string $tableName
+     * @param string                   $tableName
      * @param DataBase\DataBaseWhere[] $where
-     * @param array $fieldList (['key' => 'SUM(total)', 'key2' => 'MAX(total)' ...])
-     * @param string $fieldCode (for multiples rows agruped by field code)
+     * @param array                    $fieldList (['key' => 'SUM(total)', 'key2' => 'MAX(total)' ...])
+     * @param string                   $fieldCode (for multiples rows agruped by field code)
      *
      * @return self[]
      */
@@ -111,7 +111,7 @@ class TotalModel
      * Returns the / fields as part of the SQL query.
      *
      * @param string $fieldCode
-     * @param array $fieldList
+     * @param array  $fieldList
      *
      * @return string
      */

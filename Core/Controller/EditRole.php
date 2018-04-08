@@ -64,7 +64,7 @@ class EditRole extends ExtendedController\PanelController
     /**
      * Load view data
      *
-     * @param string $keyView
+     * @param string                      $keyView
      * @param ExtendedController\EditView $view
      */
     protected function loadData($keyView, $view)
@@ -93,7 +93,7 @@ class EditRole extends ExtendedController\PanelController
      * Run the actions that alter data before reading it
      *
      * @param ExtendedController\BaseView $view
-     * @param string $action
+     * @param string                      $action
      *
      * @return bool
      */
@@ -127,7 +127,7 @@ class EditRole extends ExtendedController\PanelController
      * Add the indicated page list to the Role group
      * and all users who are in that group
      *
-     * @param string $codrole
+     * @param string       $codrole
      * @param Model\Page[] $pages
      *
      * @throws \Exception

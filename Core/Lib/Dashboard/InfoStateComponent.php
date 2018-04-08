@@ -47,7 +47,7 @@ class InfoStateComponent extends BaseComponent implements ComponentInterface
      * InfoStateComponent constructor.
      *
      * @param Model\DashboardData $data
-     * @param string $userNick
+     * @param string              $userNick
      */
     public function __construct($data, $userNick)
     {
@@ -102,6 +102,18 @@ class InfoStateComponent extends BaseComponent implements ComponentInterface
     }
 
     /**
+     * Returns the url where to see/modify the data.
+     *
+     * @param string $id
+     *
+     * @return string
+     */
+    public function url($id): string
+    {
+        return $this->group[$id]['url'];
+    }
+
+    /**
      * Data persists in the database, modifying if the record existed or inserting
      * in case the primary key does not exist.
      *
@@ -128,23 +140,11 @@ class InfoStateComponent extends BaseComponent implements ComponentInterface
     }
 
     /**
-     * Returns the url where to see/modify the data.
-     *
-     * @param string $id
-     *
-     * @return string
-     */
-    public function url($id): string
-    {
-        return $this->group[$id]['url'];
-    }
-
-    /**
      * Add details to component.
      *
-     * @param $group
-     * @param $values
-     * @param $totalModel
+     * @param string $group
+     * @param array $values
+     * @param Model\TotalModel $totalModel
      */
     private function addDetail($group, $values, &$totalModel)
     {
@@ -160,7 +160,7 @@ class InfoStateComponent extends BaseComponent implements ComponentInterface
     /**
      * Return the model info table and url list.
      *
-     * @param $modelName
+     * @param string $modelName
      *
      * @return array
      */
@@ -178,8 +178,8 @@ class InfoStateComponent extends BaseComponent implements ComponentInterface
     /**
      * Get summary data from total model.
      *
-     * @param $table
-     * @param $values
+     * @param string $table
+     * @param array $values
      *
      * @return Model\TotalModel
      */

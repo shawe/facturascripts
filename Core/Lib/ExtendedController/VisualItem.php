@@ -30,13 +30,6 @@ abstract class VisualItem
 {
 
     /**
-     * Translation engine
-     *
-     * @var Base\Translator
-     */
-    protected $i18n;
-
-    /**
      * Column identifier
      *
      * @var string
@@ -73,9 +66,11 @@ abstract class VisualItem
     public $order;
 
     /**
-     * Check and apply special operations on the items
+     * Translation engine
+     *
+     * @var Base\Translator
      */
-    abstract public function applySpecialOperations();
+    protected $i18n;
 
     /**
      * Class construct and initialization
@@ -89,6 +84,11 @@ abstract class VisualItem
         $this->title = '';
         $this->titleURL = '';
     }
+
+    /**
+     * Check and apply special operations on the items
+     */
+    abstract public function applySpecialOperations();
 
     /**
      * Generates the HTML code to display the header for the visual element

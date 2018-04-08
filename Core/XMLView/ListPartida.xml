@@ -26,20 +26,20 @@
 <view>
     <columns>
         <column name="id" order="100" display="none">
-            <widget type="text" fieldname="idpartida"/>
+            <widget type="text" fieldname="idpartida" />
         </column>
-        <column name="subaccount" order="100">
-            <widget type="text" fieldname="codsubcuenta"/>
+        <column name="subaccount" order="110">
+            <widget type="text" fieldname="codsubcuenta" />
         </column>
-        <column name="description" order="110">
-            <widget type="text" fieldname="concepto"/>
+        <column name="description" order="120">
+            <widget type="text" fieldname="concepto" />
         </column>
-        <column name="debit" display="right" order="120">
+        <column name="debit" display="right" order="130">
             <widget type="money" fieldname="debe">
                 <option color="red">&lt;0</option>
             </widget>
         </column>
-        <column name="credit" display="right" order="130">
+        <column name="credit" display="right" order="140">
             <widget type="money" fieldname="haber">
                 <option color="red">&lt;0</option>
             </widget>

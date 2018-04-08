@@ -33,30 +33,35 @@ class BaseComponent
     const DIR_MODEL = 'FacturaScripts\\Core\\Model\\';
     const DIR_COMPONENTS = 'FacturaScripts\\Core\\Lib\\Dashboard\\';
     const SUFIX_COMPONENTS = 'Component';
+
     /**
      * Name of visual component.
      *
      * @var string
      */
     public $component;
+
     /**
      * The component version.
      *
      * @var string
      */
     public $version;
+
     /**
      * The location of component on screen.
      *
      * @var string
      */
     public $location;
+
     /**
      * Nick of the user to whom the card is addressed.
      *
      * @var string
      */
     public $nick;
+
     /**
      * To create some random data or not.
      *
@@ -68,7 +73,7 @@ class BaseComponent
      * BaseComponent constructor.
      *
      * @param Model\DashboardData $data
-     * @param string $userNick
+     * @param string              $userNick
      */
     public function __construct($data, $userNick)
     {
@@ -109,6 +114,16 @@ class BaseComponent
     }
 
     /**
+     * Data persists in the database, modifying if the record existed or inserting
+     * in case the primary key does not exist.
+     *
+     * @param array $data
+     */
+    public function saveData($data)
+    {
+    }
+
+    /**
      * Get the default filter to obtain dashboard components.
      *
      * @return DataBase\DataBaseWhere[]
@@ -140,8 +155,8 @@ class BaseComponent
     /**
      * Generate some random data.
      *
-     * @param $numRecords
-     * @param $maxWord
+     * @param int $numRecords
+     * @param int $maxWord
      */
     protected function generateRandomData($numRecords, $maxWord)
     {
@@ -166,7 +181,7 @@ class BaseComponent
      *
      * @param int $maxWord
      *
-     * @return mixed|string
+     * @return string
      */
     private function getRandomText($maxWord = 20)
     {
@@ -183,16 +198,6 @@ class BaseComponent
             }
         }
 
-        return $txt;
-    }
-
-    /**
-     * Data persists in the database, modifying if the record existed or inserting
-     * in case the primary key does not exist.
-     *
-     * @param array $data
-     */
-    public function saveData($data)
-    {
+        return (string) $txt;
     }
 }

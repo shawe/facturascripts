@@ -38,54 +38,63 @@ abstract class ComercialContact extends Contact
      * @var IDFiscal
      */
     private static $idFiscal;
+
     /**
      * Type of VAT regime
      *
      * @var RegimenIVA
      */
     private static $regimenIVA;
+
     /**
      * Identifier code of the customer.
      *
      * @var string
      */
     public $codcliente;
+
     /**
      * Default payment method for this customer.
      *
      * @var string
      */
     public $codpago;
+
     /**
      * Identifier code of the supplier.
      *
      * @var string
      */
     public $codproveedor;
+
     /**
      * Default series for this customer.
      *
      * @var string
      */
     public $codserie;
+
     /**
      * Accounting code.
      *
      * @var string
      */
     public $codsubcuenta;
+
     /**
      * True -> the customer no longer buys us or we do not want anything with him.
      *
      * @var boolean
      */
     public $debaja;
+
     /**
      * Date on which the customer was discharged.
      *
      * @var string
      */
     public $fechabaja;
+
     /**
      * % IRPF retention of the document. It is obtained from the series.
      * Each line can have a different%.
@@ -93,18 +102,21 @@ abstract class ComercialContact extends Contact
      * @var float|int
      */
     public $irpf;
+
     /**
      * Social reason of the client, that is, the official name. The one that appears on the invoices.
      *
      * @var string
      */
     public $razonsocial;
+
     /**
      * Taxation regime of the provider. For now they are only implemented general and exempt.
      *
      * @var string
      */
     public $regimeniva;
+
     /**
      * Type of tax identification of the client.
      * Examples: CIF, NIF, CUIT ...

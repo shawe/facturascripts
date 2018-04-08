@@ -68,8 +68,8 @@ class AdminPlugins extends Base\Controller
     /**
      * Runs the controller's private logic.
      *
-     * @param Response $response
-     * @param User $user
+     * @param Response                   $response
+     * @param User                       $user
      * @param Base\ControllerPermissions $permissions
      */
     public function privateCore(&$response, $user, $permissions)
@@ -124,7 +124,7 @@ class AdminPlugins extends Base\Controller
     /**
      * Execute main actions.
      *
-     * @param $action
+     * @param string $action
      */
     private function execAction($action)
     {

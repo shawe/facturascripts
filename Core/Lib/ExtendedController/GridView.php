@@ -56,10 +56,10 @@ class GridView extends BaseView
      * EditView constructor and initialization.
      *
      * @param BaseView $parent
-     * @param string $title
-     * @param string $modelName
-     * @param string $viewName
-     * @param string $userNick
+     * @param string   $title
+     * @param string   $modelName
+     * @param string   $viewName
+     * @param string   $userNick
      */
     public function __construct(&$parent, $title, $modelName, $viewName, $userNick)
     {
@@ -88,7 +88,7 @@ class GridView extends BaseView
      * Adds an empty row/model at the end of the loaded data.
      *
      * @param DataBase\DataBaseWhere[] $where
-     * @param array $order
+     * @param array                    $order
      */
     public function loadData(array $where = [], array $order = [])
     {
@@ -119,6 +119,7 @@ class GridView extends BaseView
             'error' => false,
             'message' => ''
         ];
+        $dataBase = new DataBase();
 
         try {
             // load master document data and test it's ok
@@ -132,7 +133,6 @@ class GridView extends BaseView
             $linesOld = $this->model->all([new DataBase\DataBaseWhere($parentPK, $parentValue)]);
 
             // start transaction
-            $dataBase = new DataBase();
             $dataBase->beginTransaction();
 
             // delete old lines not used
@@ -273,15 +273,17 @@ class GridView extends BaseView
     /**
      * Load data of master document and set data from array
      *
-     * @param $fieldPK
+     * @param       $fieldPK
      * @param array $data
      *
      * @return bool
      */
     private function loadDocumentDataFromArray($fieldPK, &$data): bool
     {
-        if ($this->parentModel->loadFromCode($data[$fieldPK])) {    // old data
-            $this->parentModel->loadFromData($data);                // new data (the web form may not have all the fields)
+        // old data
+        if ($this->parentModel->loadFromCode($data[$fieldPK])) {
+            // new data (the web form may not have all the fields)
+            $this->parentModel->loadFromData($data);
             return $this->parentModel->test();
         }
         return false;

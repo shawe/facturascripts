@@ -30,6 +30,17 @@ class EditApiKey extends ExtendedController\EditController
 {
 
     /**
+     * Load views
+     */
+    protected function createViews()
+    {
+        $this->addEditView('ApiKey', 'EditApiKey', 'api-key', 'fa-cubes');
+
+        $columnCodFamilia = $this->views['EditApiKey']->columnForName('nick');
+        $columnCodFamilia->widget->loadValuesFromModel();
+    }
+
+    /**
      * Returns the model name
      *
      * @return string

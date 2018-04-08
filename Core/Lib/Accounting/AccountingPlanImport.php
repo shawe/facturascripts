@@ -39,12 +39,14 @@ class AccountingPlanImport
      * @var Translator
      */
     private static $i18n;
+
     /**
      * Manage the log of the entire application.
      *
      * @var MiniLog
      */
     private static $miniLog;
+
     /**
      * Exercise related to the accounting plan.
      *
@@ -86,8 +88,7 @@ class AccountingPlanImport
     public function importCSV($filePath, $codejercicio)
     {
         /**
-         * TODO: read CSV file and import GrupoEpigrafe, Epigrafe, Cuenta and Subcuenta
-         * data.
+         * TODO: read CSV file and import GrupoEpigrafe, Epigrafe, Cuenta and Subcuenta data.
          */
     }
 
@@ -155,7 +156,7 @@ class AccountingPlanImport
                     new DataBaseWhere('codcuenta', $epigrafeElement['codgrupo'])
                 ];
                 $epigrafeGroup = new Model\Cuenta();
-                $epigrafeGroup->loadfromCode('', $wherePadre);
+                $epigrafeGroup->loadFromCode('', $wherePadre);
 
                 if (empty($epigrafeGroup)) {
                     self::$miniLog->alert(self::$i18n->trans('epigrafe-group-error'));

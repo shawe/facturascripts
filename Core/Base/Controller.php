@@ -32,6 +32,10 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class Controller
 {
+    /**
+     * Constant for dinamic models.
+     */
+    const DIR_MODEL = '\\FacturaScripts\\Dinamic\\Model\\';
 
     /**
      * Contains a list of extra files to load: javascript, css, etc.
@@ -39,28 +43,6 @@ class Controller
      * @var array
      */
     public $assets;
-
-    /**
-     * Cache access manager.
-     *
-     * @var Cache
-     */
-    protected $cache;
-
-    /**
-     * Name of the class of the controller (although its in inheritance from this class,
-     * the name of the final class we will have here)
-     *
-     * @var string __CLASS__
-     */
-    private $className;
-
-    /**
-     * It provides direct access to the database.
-     *
-     * @var DataBase
-     */
-    protected $dataBase;
 
     /**
      * Tools to work with currencies.
@@ -75,20 +57,6 @@ class Controller
      * @var Model\Empresa|false
      */
     public $empresa;
-
-    /**
-     * Translator engine.
-     *
-     * @var Translator
-     */
-    protected $i18n;
-
-    /**
-     * App log manager.
-     *
-     * @var MiniLog
-     */
-    protected $miniLog;
 
     /**
      * Tools to work with numbers.
@@ -112,20 +80,6 @@ class Controller
     public $request;
 
     /**
-     * HTTP Response object.
-     *
-     * @var Response
-     */
-    protected $response;
-
-    /**
-     * Name of the file for the template.
-     *
-     * @var string|false nombre_archivo.html.twig
-     */
-    private $template;
-
-    /**
      * Title of the page.
      *
      * @var string título de la página.
@@ -147,13 +101,63 @@ class Controller
     public $user;
 
     /**
+     * Cache access manager.
+     *
+     * @var Cache
+     */
+    protected $cache;
+
+    /**
+     * It provides direct access to the database.
+     *
+     * @var DataBase
+     */
+    protected $dataBase;
+
+    /**
+     * Translator engine.
+     *
+     * @var Translator
+     */
+    protected $i18n;
+
+    /**
+     * App log manager.
+     *
+     * @var MiniLog
+     */
+    protected $miniLog;
+
+    /**
+     * HTTP Response object.
+     *
+     * @var Response
+     */
+    protected $response;
+
+    /**
+     * Name of the class of the controller (although its in inheritance from this class,
+     * the name of the final class we will have here)
+     *
+     * @var string __CLASS__
+     */
+    private $className;
+
+    /**
+     * Name of the file for the template.
+     *
+     * @var string|false nombre_archivo.html.twig
+     */
+    private $template;
+
+    /**
      * Initialize all objects and properties.
      *
-     * @param Cache $cache
+     * @param Cache      $cache
      * @param Translator $i18n
-     * @param MiniLog $miniLog
-     * @param string $className
-     * @param string $uri
+     * @param MiniLog    $miniLog
+     * @param string     $className
+     * @param string     $uri
      */
     public function __construct(&$cache, &$i18n, &$miniLog, $className, $uri = '')
     {
@@ -171,16 +175,6 @@ class Controller
 
         $pageData = $this->getPageData();
         $this->title = empty($pageData) ? $this->className : $pageData['title'];
-    }
-
-    /**
-     * Return the name of the controller.
-     *
-     * @return string
-     */
-    protected function getClassName()
-    {
-        return $this->className;
     }
 
     /**
@@ -232,21 +226,6 @@ class Controller
     }
 
     /**
-     * Return array with parameters values
-     *
-     * @param array $keys
-     * @return array
-     */
-    protected function requestGet($keys): array
-    {
-        $result = [];
-        foreach ($keys as $value) {
-            $result[$value] = $this->request->get($value);
-        }
-        return $result;
-    }
-
-    /**
      * Return the URL of the actual controller.
      *
      * @return string
@@ -270,8 +249,8 @@ class Controller
     /**
      * Runs the controller's private logic.
      *
-     * @param Response $response
-     * @param Model\User $user
+     * @param Response              $response
+     * @param Model\User            $user
      * @param ControllerPermissions $permissions
      */
     public function privateCore(&$response, $user, $permissions)
@@ -286,14 +265,41 @@ class Controller
 
         /// This user have default page setted?
         $defaultPage = $this->request->query->get('defaultPage', '');
+        $cookie = new Cookie('fsHomepage', $this->user->homepage, time() + FS_COOKIES_EXPIRE);
         if ($defaultPage === 'TRUE') {
             $this->user->homepage = $this->className;
-            $this->response->headers->setCookie(new Cookie('fsHomepage', $this->user->homepage, time() + FS_COOKIES_EXPIRE));
+            $this->response->headers->setCookie($cookie);
             $this->user->save();
         } elseif ($defaultPage === 'FALSE') {
             $this->user->homepage = null;
-            $this->response->headers->setCookie(new Cookie('fsHomepage', $this->user->homepage, time() - FS_COOKIES_EXPIRE));
+            $this->response->headers->setCookie($cookie);
             $this->user->save();
         }
+    }
+
+    /**
+     * Return the name of the controller.
+     *
+     * @return string
+     */
+    protected function getClassName(): string
+    {
+        return $this->className;
+    }
+
+    /**
+     * Return array with parameters values
+     *
+     * @param array $keys
+     *
+     * @return array
+     */
+    protected function requestGet($keys): array
+    {
+        $result = [];
+        foreach ($keys as $value) {
+            $result[$value] = $this->request->get($value);
+        }
+        return $result;
     }
 }

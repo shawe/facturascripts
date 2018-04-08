@@ -142,8 +142,8 @@ class MysqlSQL implements DataBaseSQL
      * Returns the SQL needed to create a table with the given structure
      *
      * @param string $tableName
-     * @param array $columns
-     * @param array $constraints
+     * @param array  $columns
+     * @param array  $constraints
      *
      * @return string
      */
@@ -165,7 +165,7 @@ class MysqlSQL implements DataBaseSQL
      * Returns the SQL needed to add a column to a table
      *
      * @param string $tableName
-     * @param array $colData
+     * @param array  $colData
      *
      * @return string
      */
@@ -181,7 +181,7 @@ class MysqlSQL implements DataBaseSQL
      * Returns the SQL needed to alter a column in a table
      *
      * @param string $tableName
-     * @param array $colData
+     * @param array  $colData
      *
      * @return string
      */
@@ -198,7 +198,7 @@ class MysqlSQL implements DataBaseSQL
      * Returns the needed SQL to alter a column default constraint
      *
      * @param string $tableName
-     * @param array $colData
+     * @param array  $colData
      *
      * @return string
      */
@@ -216,7 +216,7 @@ class MysqlSQL implements DataBaseSQL
      * SQL statement to alter a null constraint in a table column
      *
      * @param string $tableName
-     * @param array $colData
+     * @param array  $colData
      *
      * @return string
      */
@@ -229,7 +229,7 @@ class MysqlSQL implements DataBaseSQL
      * Returns the SQL needed to remove a constraint from a table
      *
      * @param string $tableName
-     * @param array $colData
+     * @param array  $colData
      *
      * @return string
      */

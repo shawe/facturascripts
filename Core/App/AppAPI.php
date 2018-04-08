@@ -138,8 +138,8 @@ class AppAPI extends App
     /**
      * Returns the where clauses.
      *
-     * @param array $filter
-     * @param array $operation
+     * @param array  $filter
+     * @param array  $operation
      * @param string $defaultOperation
      *
      * @return DataBaseWhere[]
@@ -167,6 +167,7 @@ class AppAPI extends App
     private function processResource($modelName)
     {
         try {
+            $data = [];
             $model = new $modelName();
             if ($model instanceof ModelClass) {
                 $offset = (int) $this->request->get('offset', 0);
@@ -221,6 +222,7 @@ class AppAPI extends App
     private function processResourceParam($modelName, $cod)
     {
         try {
+            $data = [];
             $model = new $modelName();
             if ($model instanceof ModelClass) {
                 switch ($this->request->getMethod()) {

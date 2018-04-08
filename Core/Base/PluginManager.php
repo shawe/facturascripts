@@ -27,7 +27,7 @@ use ZipArchive;
  *
  * @package FacturaScripts\Core\Base
  *
- * @author Carlos García Gómez <carlos@facturascripts.com>
+ * @author  Carlos García Gómez <carlos@facturascripts.com>
  */
 class PluginManager
 {
@@ -172,7 +172,8 @@ class PluginManager
 
             if (!class_exists($controllerNamespace)) {
                 /// we force the loading of the file because at this point the autoloader will not find it
-                require FS_FOLDER . \DIRECTORY_SEPARATOR . 'Dinamic' . \DIRECTORY_SEPARATOR . 'Controller' . \DIRECTORY_SEPARATOR . $controllerName . '.php';
+                require FS_FOLDER . \DIRECTORY_SEPARATOR . 'Dinamic' . \DIRECTORY_SEPARATOR . 'Controller'
+                    . \DIRECTORY_SEPARATOR . $controllerName . '.php';
             }
 
             try {
@@ -182,7 +183,9 @@ class PluginManager
                 }
                 $pageNames[] = $controllerName;
             } catch (Exception $exc) {
-                self::$minilog->critical(self::$i18n->trans('cant-load-controller', ['%controllerName%' => $controllerName]));
+                self::$minilog->critical(
+                    self::$i18n->trans('cant-load-controller', ['%controllerName%' => $controllerName])
+                );
             }
         }
 
@@ -304,8 +307,8 @@ class PluginManager
     /**
      * Return plugin information.
      *
-     * @param $pluginName
-     * @param $iniContent
+     * @param string $pluginName
+     * @param string $iniContent
      *
      * @return array
      */

@@ -141,7 +141,7 @@ class WebRender
      * Returns the data into the standard output.
      *
      * @param string $template
-     * @param array $params
+     * @param array  $params
      *
      * @return string
      */

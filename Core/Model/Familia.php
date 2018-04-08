@@ -161,7 +161,7 @@ class Familia extends Base\ModelClass
     /**
      * Complete the data in the list of families with the level.
      *
-     * @param array $familias
+     * @param array  $familias
      * @param string $madre
      * @param string $nivel
      *

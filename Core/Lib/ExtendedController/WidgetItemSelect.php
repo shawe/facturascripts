@@ -64,6 +64,10 @@ class WidgetItemSelect extends WidgetItem
             return $this->standardEditHTMLWidget($value, $specialAttributes, '', 'text');
         }
 
+        if (empty($this->values)) {
+            $this->loadValuesFromModel();
+        }
+
         if (!$this->required) {
             array_unshift($this->values, ['value' => '---null---', 'title' => '------']);
         }

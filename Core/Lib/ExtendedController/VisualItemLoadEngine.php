@@ -32,9 +32,9 @@ class VisualItemLoadEngine
     /**
      * Load the column structure from the JSON
      *
-     * @param string (JSON)    $columns
-     * @param string (JSON)    $modals
-     * @param string (JSON)    $rows
+     * @param array            $columns
+     * @param array            $modals
+     * @param array            $rows
      * @param Model\PageOption $model
      */
     public static function loadJSON($columns, $modals, $rows, &$model)
@@ -58,9 +58,9 @@ class VisualItemLoadEngine
      * @param string           $name
      * @param Model\PageOption $model
      *
-     * @return boolean
+     * @return bool
      */
-    public static function installXML($name, &$model)
+    public static function installXML($name, &$model): bool
     {
         $fileName = FS_FOLDER . '/Dinamic/XMLView/' . $name . '.xml';
         if (FS_DEBUG && !file_exists($fileName)) {
@@ -124,7 +124,7 @@ class VisualItemLoadEngine
      * Load the column structure from the XML
      *
      * @param \SimpleXMLElement $columns
-     * @param array $target
+     * @param array             $target
      */
     private static function getXMLGroupsColumns($columns, &$target)
     {
@@ -152,7 +152,7 @@ class VisualItemLoadEngine
      * Load the special conditions for the rows from XML file
      *
      * @param \SimpleXMLElement $rows
-     * @param array $target
+     * @param array             $target
      */
     private static function getXMLRows($rows, &$target)
     {

@@ -73,8 +73,8 @@ class XLSExport implements ExportInterface
     /**
      * Adds a new page with the model data.
      *
-     * @param mixed $model
-     * @param array $columns
+     * @param mixed  $model
+     * @param array  $columns
      * @param string $title
      */
     public function generateModelPage($model, $columns, $title = '')
@@ -92,12 +92,12 @@ class XLSExport implements ExportInterface
     /**
      * Adds a new page with a table listing all models data.
      *
-     * @param mixed $model
+     * @param mixed                         $model
      * @param Base\DataBase\DataBaseWhere[] $where
-     * @param array $order
-     * @param int $offset
-     * @param array $columns
-     * @param string $title
+     * @param array                         $order
+     * @param int                           $offset
+     * @param array                         $columns
+     * @param string                        $title
      */
     public function generateListModelPage($model, $where, $order, $offset, $columns, $title = '')
     {
@@ -158,9 +158,9 @@ class XLSExport implements ExportInterface
     /**
      * Set the table content.
      *
-     * @param $columns
-     * @param $tableCols
-     * @param $sheetHeaders
+     * @param array array$columns
+     * @param array $tableCols
+     * @param array $sheetHeaders
      */
     private function setTableColumns(&$columns, &$tableCols, &$sheetHeaders)
     {
@@ -192,6 +192,11 @@ class XLSExport implements ExportInterface
         /// Get the data
         foreach ($cursor as $key => $row) {
             foreach ($tableCols as $col) {
+                /**
+                 * FIXME: It seems like 'null === $row->{$col}' is already covered by 'isset(...)'.
+                 * Analyzes if/elseif conditions. Inspection will generate hints to review conditions with suboptimal
+                 * order, duplicates, or boolean constants.
+                 */
                 if (!isset($row->{$col}) || null === $row->{$col}) {
                     $tableData[$key][$col] = '';
                     continue;

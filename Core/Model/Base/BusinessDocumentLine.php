@@ -38,110 +38,128 @@ abstract class BusinessDocumentLine extends ModelClass
      * @var int
      */
     public $actualizastock;
+
     /**
      * Quantity.
      *
      * @var float|int
      */
     public $cantidad;
+
     /**
      * Code of the selected combination, in the case of articles with attributes.
      *
      * @var string
      */
     public $codcombinacion;
+
     /**
      * Code of the related tax.
      *
      * @var string
      */
     public $codimpuesto;
+
     /**
      * Description of the line.
      *
      * @var string
      */
     public $descripcion;
+
     /**
      * % of the related tax.
      *
      * @var float|int
      */
     public $iva;
+
     /**
      * % off.
      *
      * @var float|int
      */
     public $dtopor;
+
     /**
      * Primary key.
      *
      * @var int
      */
     public $idlinea;
+
     /**
      * % of IRPF of the line.
      *
      * @var float|int
      */
     public $irpf;
+
     /**
      * Position of the line in the document. The higher down.
      *
      * @var int
      */
     public $orden;
+
     /**
      * Net amount without discounts.
      *
      * @var float|int
      */
     public $pvpsindto;
+
     /**
      * Net amount of the line, without taxes.
      *
      * @var float|int
      */
     public $pvptotal;
+
     /**
      * Price of the item, one unit.
      *
      * @var float|int
      */
     public $pvpunitario;
+
     /**
      * % surcharge of line equivalence.
      *
      * @var float|int
      */
     public $recargo;
+
     /**
      * Reference of the article.
      *
      * @var string
      */
     public $referencia;
+
     /**
-     * TODO: Uncomplete documentation.
+     * Previous actualizastock value.
+     *
      * @var int
      */
-    private $actualizastockAnt;
+    private $actualizaStockAnt;
+
     /**
-     * TODO: Uncomplete documentation.
+     * Previous quantity value.
+     *
      * @var float|int
      */
     private $cantidadAnt;
 
     /**
-     * TODO: Uncomplete documentation.
+     * BusinessDocumentLine constructor.
      *
      * @param array $data
      */
     public function __construct(array $data = [])
     {
         parent::__construct($data);
-        $this->actualizastockAnt = $this->actualizastock ?? 0;
+        $this->actualizaStockAnt = $this->actualizastock ?? 0;
         $this->cantidadAnt = $this->cantidad ?? 0;
     }
 
@@ -165,7 +183,7 @@ abstract class BusinessDocumentLine extends ModelClass
     }
 
     /**
-     * TODO: Uncomplete documentation.
+     * Remove the model data from the database.
      *
      * @return bool
      */
@@ -204,7 +222,7 @@ abstract class BusinessDocumentLine extends ModelClass
     }
 
     /**
-     * TODO: Uncomplete documentation.
+     * Update stock from warehouse.
      *
      * @param string $codalmacen
      *
@@ -212,7 +230,7 @@ abstract class BusinessDocumentLine extends ModelClass
      */
     public function updateStock(string $codalmacen): bool
     {
-        if ($this->actualizastock === $this->actualizastockAnt && $this->cantidad === $this->cantidadAnt) {
+        if ($this->actualizastock === $this->actualizaStockAnt && $this->cantidad === $this->cantidadAnt) {
             return true;
         }
 
@@ -228,9 +246,9 @@ abstract class BusinessDocumentLine extends ModelClass
                 $stock->referencia = $this->referencia;
             }
 
-            $this->applyStockChanges($this->actualizastockAnt, $this->cantidadAnt * -1, $stock);
+            $this->applyStockChanges($this->actualizaStockAnt, $this->cantidadAnt * -1, $stock);
             $this->applyStockChanges($this->actualizastock, $this->cantidad, $stock);
-            $this->actualizastockAnt = $this->actualizastock;
+            $this->actualizaStockAnt = $this->actualizastock;
             $this->cantidadAnt = $this->cantidad;
             return $stock->save();
         }
@@ -241,7 +259,7 @@ abstract class BusinessDocumentLine extends ModelClass
     /**
      * TODO: Uncomplete documentation.
      *
-     * @param int $mode
+     * @param int   $mode
      * @param float $quantity
      * @param Stock $stock
      */

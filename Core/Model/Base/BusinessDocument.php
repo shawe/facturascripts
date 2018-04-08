@@ -20,11 +20,10 @@
 namespace FacturaScripts\Core\Model\Base;
 
 use FacturaScripts\Core\App\AppSettings;
+use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Base\Utils;
 use FacturaScripts\Core\Lib\BusinessDocumentGenerator;
-use FacturaScripts\Dinamic\Model\Ejercicio;
-use FacturaScripts\Dinamic\Model\EstadoDocumento;
-use FacturaScripts\Dinamic\Model\Serie;
+use FacturaScripts\Dinamic\Model;
 
 /**
  * Description of BusinessDocument
@@ -35,58 +34,68 @@ abstract class BusinessDocument extends ModelClass
 {
 
     /**
-     * TODO: Uncomplete documentation.
-     * @var EstadoDocumento[]
+     * States of the document.
+     *
+     * @var Model\EstadoDocumento[]
      */
     private static $estados;
+
     /**
      * VAT number of the supplier.
      *
      * @var string
      */
     public $cifnif;
+
     /**
      * Warehouse in which the merchandise enters.
      *
      * @var string
      */
     public $codalmacen;
+
     /**
      * Currency of the document.
      *
      * @var string
      */
     public $coddivisa;
+
     /**
      * Related exercise. The one that corresponds to the date.
      *
      * @var string
      */
     public $codejercicio;
+
     /**
      * Unique identifier for humans.
      *
      * @var string
      */
     public $codigo;
+
     /**
      * Payment method associated.
      *
      * @var string
      */
     public $codpago;
+
     /**
      * Related serie.
      *
      * @var string
      */
     public $codserie;
+
     /**
      * indicates whether the document can be modified
      *
      * @var bool
      */
     public $editable;
+
     /**
      * Date of the document.
      *
@@ -121,6 +130,7 @@ abstract class BusinessDocument extends ModelClass
      * @var int
      */
     public $idestado;
+
     /**
      * % IRPF retention of the document. It is obtained from the series.
      * Each line can have a different%.
@@ -128,12 +138,14 @@ abstract class BusinessDocument extends ModelClass
      * @var float|int
      */
     public $irpf;
+
     /**
      * Sum of the pvptotal of lines. Total of the document before taxes.
      *
      * @var float|int
      */
     public $neto;
+
     /**
      * Number of the document.
      * Unique within the series + exercise.
@@ -141,30 +153,35 @@ abstract class BusinessDocument extends ModelClass
      * @var string
      */
     public $numero;
+
     /**
      * Notes of the document.
      *
      * @var string
      */
     public $observaciones;
+
     /**
      * Rate of conversion to Euros of the selected currency.
      *
      * @var float|int
      */
     public $tasaconv;
+
     /**
      * Total sum of the document, with taxes.
      *
      * @var float|int
      */
     public $total;
+
     /**
      * Sum of the VAT of the lines.
      *
      * @var float|int
      */
     public $totaliva;
+
     /**
      * Total expressed in euros, if it were not the currency of the document.
      * totaleuros = total / tasaconv
@@ -173,26 +190,30 @@ abstract class BusinessDocument extends ModelClass
      * @var float|int
      */
     public $totaleuros;
+
     /**
      * Total sum of the IRPF withholdings of the lines.
      *
      * @var float|int
      */
     public $totalirpf;
+
     /**
      * Total sum of the equivalence surcharge of the lines.
      *
      * @var float|int
      */
     public $totalrecargo;
+
     /**
-     * TODO: Uncomplete documentation.
+     * Previous document status id.
+     *
      * @var int
      */
     private $idestadoAnt;
 
     /**
-     * TODO: Uncomplete documentation.
+     * BusinessDocument constructor.
      *
      * @param array $data
      */
@@ -221,14 +242,14 @@ abstract class BusinessDocument extends ModelClass
     /**
      * Returns an array with the column for identify the subject(s),
      *
-     * @return BusinessDocumentLine
+     * @return array
      */
-    abstract public function getSubjectColumns();
+    abstract public function getSubjectColumns(): array;
 
     /**
      * Sets subjects for this document.
      *
-     * @param $subjects
+     * @param Model\Cliente|Model\Proveedor $subjects
      *
      * @return mixed
      */
@@ -258,13 +279,13 @@ abstract class BusinessDocument extends ModelClass
         $this->totalrecargo = 0.0;
 
         if (!isset(self::$estados)) {
-            $estadoDocModel = new EstadoDocumento();
+            $estadoDocModel = new Model\EstadoDocumento();
             self::$estados = $estadoDocModel->all([], [], 0, 0);
         }
 
         /// select default status
         foreach (self::$estados as $estado) {
-            if ($estado->tipodoc === $this->modelClassName() && $estado->predeterminado) {
+            if ($estado->predeterminado && $estado->tipodoc === $this->modelClassName()) {
                 $this->idestado = $estado->idestado;
                 $this->editable = $estado->editable;
                 break;
@@ -273,7 +294,7 @@ abstract class BusinessDocument extends ModelClass
     }
 
     /**
-     * TODO: Uncomplete documentation.
+     * Remove the model data from the database.
      *
      * @return bool
      */
@@ -301,18 +322,23 @@ abstract class BusinessDocument extends ModelClass
      */
     public function install(): string
     {
-        new Serie();
-        new Ejercicio();
+        new Model\Serie();
+        new Model\Ejercicio();
 
         return '';
     }
 
     /**
-     * TODO: Uncomplete documentation.
+     * Fill the class with the registry values
+     * whose primary column corresponds to the value $cod, or according to the condition
+     * where indicated, if value is not reported in $cod.
+     * Initializes the values of the class if there is no record that
+     * meet the above conditions.
+     * Returns True if the record exists and False otherwise.
      *
-     * @param string $cod
-     * @param null $where
-     * @param array $orderBy
+     * @param string                   $cod
+     * @param DataBaseWhere[] $where
+     * @param array                    $orderBy
      *
      * @return bool
      */
@@ -370,12 +396,13 @@ abstract class BusinessDocument extends ModelClass
          * many decimals.
          */
         $this->totaleuros = round($this->total / $this->tasaconv, 5);
-        if (!Utils::floatcmp($this->total, $this->neto + $this->totaliva - $this->totalirpf + $this->totalrecargo, FS_NF0, true)) {
+        $total = $this->neto + $this->totaliva - $this->totalirpf + $this->totalrecargo;
+        if (!Utils::floatcmp($this->total, $total, FS_NF0, true)) {
             self::$miniLog->alert(self::$i18n->trans('bad-total-error'));
             return false;
         }
 
-        $estadoDoc = new EstadoDocumento();
+        $estadoDoc = new Model\EstadoDocumento();
         if ($estadoDoc->loadFromCode($this->idestado)) {
             $this->editable = $estadoDoc->editable;
         }
@@ -384,11 +411,11 @@ abstract class BusinessDocument extends ModelClass
     }
 
     /**
-     * TODO: Uncomplete documentation.
+     * Return the state setted to document.
      *
-     * @return EstadoDocumento
+     * @return Model\EstadoDocumento
      */
-    public function getState(): EstadoDocumento
+    public function getState(): Model\EstadoDocumento
     {
         foreach (self::$estados as $state) {
             if ($state->idestado === $this->idestado) {
@@ -396,7 +423,7 @@ abstract class BusinessDocument extends ModelClass
             }
         }
 
-        return new EstadoDocumento();
+        return new Model\EstadoDocumento();
     }
 
     /**
@@ -407,7 +434,7 @@ abstract class BusinessDocument extends ModelClass
      */
     public function setDate(string $date, string $hour)
     {
-        $ejercicioModel = new Ejercicio();
+        $ejercicioModel = new Model\Ejercicio();
         $ejercicio = $ejercicioModel->getByFecha($date);
         if ($ejercicio) {
             $this->codejercicio = $ejercicio->codejercicio;
@@ -417,7 +444,7 @@ abstract class BusinessDocument extends ModelClass
     }
 
     /**
-     * TODO: Uncomplete documentation.
+     * Check if state was changed.
      *
      * @return bool
      */

@@ -100,7 +100,6 @@ class PDFExport implements ExportInterface
      */
     public function newDoc()
     {
-        ;
     }
 
     /**
@@ -117,8 +116,8 @@ class PDFExport implements ExportInterface
     /**
      * Adds a new page with the model data.
      *
-     * @param mixed $model
-     * @param array $columns
+     * @param mixed  $model
+     * @param array  $columns
      * @param string $title
      */
     public function generateModelPage($model, $columns, $title = '')
@@ -163,12 +162,12 @@ class PDFExport implements ExportInterface
     /**
      * Adds a new page with a table listing the models data.
      *
-     * @param mixed $model
+     * @param mixed                         $model
      * @param Base\DataBase\DataBaseWhere[] $where
-     * @param array $order
-     * @param int $offset
-     * @param array $columns
-     * @param string $title
+     * @param array                         $order
+     * @param int                           $offset
+     * @param array                         $columns
+     * @param string                        $title
      */
     public function generateListModelPage($model, $where, $order, $offset, $columns, $title = '')
     {
@@ -230,7 +229,7 @@ class PDFExport implements ExportInterface
             'total' => $this->i18n->trans('total'),
         ];
         $tableData = [];
-        foreach ($model->getlines() as $line) {
+        foreach ($model->getLines() as $line) {
             $tableData[] = [
                 'reference' => Base\Utils::fixHtml($line->referencia . ' - ' . $line->descripcion),
                 'quantity' => $this->numberTools::format($line->cantidad),
@@ -330,10 +329,10 @@ class PDFExport implements ExportInterface
     /**
      * Set the table content.
      *
-     * @param $columns
-     * @param $tableCols
-     * @param $tableColsTitle
-     * @param $tableOptions
+     * @param array $columns
+     * @param array $tableCols
+     * @param array $tableColsTitle
+     * @param array $tableOptions
      */
     private function setTableColumns(&$columns, &$tableCols, &$tableColsTitle, &$tableOptions)
     {
@@ -423,8 +422,8 @@ class PDFExport implements ExportInterface
     /**
      * Remove the empty columns to save space.
      *
-     * @param $tableData
-     * @param $tableColsTitle
+     * @param array $tableData
+     * @param array $tableColsTitle
      */
     private function removeEmptyCols(&$tableData, &$tableColsTitle)
     {
@@ -446,7 +445,7 @@ class PDFExport implements ExportInterface
     /**
      * Returns a new table with 2 columns. Each column with colName1: colName2
      *
-     * @param array $table
+     * @param array  $table
      * @param string $colName1
      * @param string $colName2
      * @param string $finalColName1

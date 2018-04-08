@@ -61,7 +61,7 @@ class PresupuestosProveedor extends AbstractRandomDocuments
             $recargo = (random_int(0, 4) === 0);
             $regimeniva = $this->randomizeDocumentCompra($pre, $eje, $proveedores, $generated);
             if ($pre->save()) {
-                $this->randomLineas($pre, 'idpresupuesto', 'FacturaScripts\Dinamic\Model\LineaPresupuestoProveedor', $regimeniva, $recargo, 1);
+                $this->randomLineas($pre, 'idpresupuesto', self::DIR_MODEL . 'LineaPresupuestoProveedor', $regimeniva, $recargo, 1);
                 ++$generated;
             } else {
                 break;

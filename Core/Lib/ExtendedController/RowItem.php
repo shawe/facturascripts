@@ -151,7 +151,7 @@ abstract class RowItem implements VisualItemInterface
     /**
      * Return a list of WidgetButtons from the XML.
      *
-     * @param \SimpleXMLElement|\SimpleXMLElement[] $buttonsXML
+     * @param \SimpleXMLElement $buttonsXML
      *
      * @return WidgetButton[]
      */
@@ -170,7 +170,7 @@ abstract class RowItem implements VisualItemInterface
     /**
      * Returns a list of WidgetButton loaded from JSON.
      *
-     * @param $buttonsJSON
+     * @param array $buttonsJSON
      *
      * @return WidgetButton[]
      */

@@ -34,7 +34,6 @@ use Symfony\Component\HttpFoundation\Response;
 class Randomizer extends Base\Controller
 {
 
-    const DINAMIC_MODEL = '\FacturaScripts\Dinamic\Model\\';
     /**
      * URL where reload.
      *
@@ -52,8 +51,8 @@ class Randomizer extends Base\Controller
     /**
      * Runs the controller's private logic.
      *
-     * @param Response $response
-     * @param User $user
+     * @param Response                   $response
+     * @param User                       $user
      * @param Base\ControllerPermissions $permissions
      */
     public function privateCore(&$response, $user, $permissions)
@@ -195,23 +194,23 @@ class Randomizer extends Base\Controller
         $this->totalCounter = [];
 
         $models = [
-            'agentes' => self::DINAMIC_MODEL . 'Agente',
-            'albaranescli' => self::DINAMIC_MODEL . 'AlbaranCliente',
-            'albaranesprov' => self::DINAMIC_MODEL . 'AlbaranProveedor',
-            'asientos' => self::DINAMIC_MODEL . 'Asiento',
-            'articulos' => self::DINAMIC_MODEL . 'Articulo',
-            'articulosprov' => self::DINAMIC_MODEL . 'ArticuloProveedor',
-            'clientes' => self::DINAMIC_MODEL . 'Cliente',
-            'cuentas' => self::DINAMIC_MODEL . 'Cuenta',
-            'grupos' => self::DINAMIC_MODEL . 'GrupoClientes',
-            'fabricantes' => self::DINAMIC_MODEL . 'Fabricante',
-            'familias' => self::DINAMIC_MODEL . 'Familia',
-            'pedidoscli' => self::DINAMIC_MODEL . 'PedidoCliente',
-            'pedidosprov' => self::DINAMIC_MODEL . 'PedidoProveedor',
-            'presupuestoscli' => self::DINAMIC_MODEL . 'PresupuestoCliente',
-            'presupuestosprov' => self::DINAMIC_MODEL . 'PresupuestoProveedor',
-            'proveedores' => self::DINAMIC_MODEL . 'Proveedor',
-            'subcuentas' => self::DINAMIC_MODEL . 'Subcuenta'
+            'agentes' => self::DIR_MODEL . 'Agente',
+            'albaranescli' => self::DIR_MODEL . 'AlbaranCliente',
+            'albaranesprov' => self::DIR_MODEL . 'AlbaranProveedor',
+            'asientos' => self::DIR_MODEL . 'Asiento',
+            'articulos' => self::DIR_MODEL . 'Articulo',
+            'articulosprov' => self::DIR_MODEL . 'ArticuloProveedor',
+            'clientes' => self::DIR_MODEL . 'Cliente',
+            'cuentas' => self::DIR_MODEL . 'Cuenta',
+            'grupos' => self::DIR_MODEL . 'GrupoClientes',
+            'fabricantes' => self::DIR_MODEL . 'Fabricante',
+            'familias' => self::DIR_MODEL . 'Familia',
+            'pedidoscli' => self::DIR_MODEL . 'PedidoCliente',
+            'pedidosprov' => self::DIR_MODEL . 'PedidoProveedor',
+            'presupuestoscli' => self::DIR_MODEL . 'PresupuestoCliente',
+            'presupuestosprov' => self::DIR_MODEL . 'PresupuestoProveedor',
+            'proveedores' => self::DIR_MODEL . 'Proveedor',
+            'subcuentas' => self::DIR_MODEL . 'Subcuenta'
         ];
 
         foreach ($models as $tag => $modelName) {

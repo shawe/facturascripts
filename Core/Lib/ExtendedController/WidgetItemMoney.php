@@ -59,8 +59,7 @@ class WidgetItemMoney extends WidgetItem
      */
     public function getEditHTML($value): string
     {
-        $specialAttributes = $this->specialAttributes();
-        return $this->standardEditHTMLWidget($value, $specialAttributes);
+        return $this->standardEditHTMLWidget($value, $this->specialAttributes());
     }
 
     /**

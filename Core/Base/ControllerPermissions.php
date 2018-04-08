@@ -54,7 +54,7 @@ class ControllerPermissions
     /**
      * ControllerPermissions constructor.
      *
-     * @param User|bool $user
+     * @param User|bool   $user
      * @param string|null $pageName
      */
     public function __construct($user = false, $pageName = null)
@@ -79,7 +79,7 @@ class ControllerPermissions
     /**
      * Load permissions from $user
      *
-     * @param User $user
+     * @param User   $user
      * @param string $pageName
      */
     public function loadFromUser($user, $pageName)
