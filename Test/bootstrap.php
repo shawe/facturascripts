@@ -25,12 +25,16 @@ require_once __DIR__ . '/../vendor/autoload.php';
 define('FS_FOLDER', getcwd());
 
 $config = FS_FOLDER . '/config.php';
-if (!\file_exists($config) || __DIR__ === '/home/scrutinizer/build/Test') {
+if (__DIR__ === '/home/scrutinizer/build/Test') {
     echo 'Executing on scrutinizer ...' . "\n\n";
     $config = FS_FOLDER . '/Test/config-scrutinizer.php';
 } elseif (strpos(__DIR__, '/home/travis/build/') !== false) {
     echo 'Executing on travis ...' . "\n\n";
     $config = FS_FOLDER . '/Test/config-travis.php';
+}
+
+if (!file_exists($config)) {
+    $config = FS_FOLDER . '/Test/config-scrutinizer.php';
 }
 
 echo 'Edit "Test/bootstrap.php" if you want to use another config.php file.' . "\n";
