@@ -331,7 +331,6 @@ abstract class ModelClass extends ModelCore
 
         $sql = 'INSERT INTO ' . static::tableName()
             . ' (' . implode(',', $insertFields) . ') VALUES (' . implode(',', $insertValues) . ');';
-        \var_dump($sql);
         if (self::$dataBase->exec($sql)) {
             if ($this->primaryColumnValue() === null) {
                 $this->{static::primaryColumn()} = self::$dataBase->lastval();

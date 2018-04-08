@@ -71,7 +71,7 @@ class DocumentReports extends Controller
     /**
      * List of index labels for data
      *
-     * @var []
+     * @var array
      */
     private $labels;
 

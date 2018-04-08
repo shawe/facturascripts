@@ -188,10 +188,8 @@ class PostgresqlSQL implements DataBaseSQL
             }
         }
 
-        $sql = 'CREATE TABLE ' . $tableName . ' (' . substr($fields, 2)
+        return 'CREATE TABLE ' . $tableName . ' (' . substr($fields, 2)
             . $this->sqlTableConstraints($constraints) . ');';
-
-        return $sql;
     }
 
     /**

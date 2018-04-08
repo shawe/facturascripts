@@ -90,7 +90,7 @@ abstract class ModelCore
             }
         }
 
-        if (static::tableName() !== '' && !\in_array(static::tableName(), self::$checkedTables, false) && $this->checkTable()) {
+        if (!\in_array(static::tableName(), self::$checkedTables, false) && $this->checkTable() && static::tableName() !== '') {
             self::$miniLog->debug(self::$i18n->trans('table-checked', ['%tableName%' => static::tableName()]));
             self::$checkedTables[] = static::tableName();
             self::$cache->set('fs_checked_tables', self::$checkedTables);

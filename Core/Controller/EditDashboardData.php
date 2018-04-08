@@ -42,11 +42,10 @@ class EditDashboardData extends ExtendedController\EditController
      *
      * @return mixed
      */
-    public function getViewModelValue($model, $field)
+    public function getFieldValue($model, $field)
     {
-        $value = parent::getViewModelValue($model, $field);
-        if (isset($value)) {
-            return $value;
+        if (isset($model->{$field})) {
+            return $model->{$field};
         }
 
         if (\is_array($model->properties) && array_key_exists($field, $model->properties)) {

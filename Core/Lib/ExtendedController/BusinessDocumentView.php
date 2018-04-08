@@ -379,7 +379,7 @@ class BusinessDocumentView extends BaseView
         /// add new lines
         $skip = true;
         foreach (array_reverse($newLines) as $fLine) {
-            if ($skip && empty($fLine['referencia']) && empty($fLine['descripcion'])) {
+            if (empty($fLine['referencia']) && empty($fLine['descripcion']) && $skip) {
                 continue;
             }
 

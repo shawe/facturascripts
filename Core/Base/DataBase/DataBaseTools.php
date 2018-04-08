@@ -118,9 +118,9 @@ class DataBaseTools
      * @param array  $xmlCols
      * @param array  $xmlCons
      *
-     * @return bool
+     * @return string
      */
-    public function generateTable($tableName, $xmlCols, $xmlCons): bool
+    public function generateTable($tableName, $xmlCols, $xmlCons): string
     {
         return self::$sql->sqlCreateTable($tableName, $xmlCols, $xmlCons);
     }

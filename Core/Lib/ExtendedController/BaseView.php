@@ -99,7 +99,7 @@ class BaseView
     {
         $fieldKey = $this->model->primaryColumn();
         $fieldValue = $data[$fieldKey];
-        if ($fieldValue !== '' && $fieldValue !== $this->model->primaryColumnValue()) {
+        if ($fieldValue !== $this->model->primaryColumnValue() && $fieldValue !== '') {
             $this->model->loadFromCode($fieldValue);
         }
 
