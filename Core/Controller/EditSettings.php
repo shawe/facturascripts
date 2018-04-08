@@ -33,6 +33,82 @@ class EditSettings extends ExtendedController\PanelController
     const KEY_SETTINGS = 'Settings';
 
     /**
+     * Returns the configuration property value for a specified $field
+     *
+     * @param mixed  $model
+     * @param string $field
+     *
+     * @return mixed
+     */
+    public function getFieldValue($model, $field)
+    {
+        $value = parent::getFieldValue($model, $field);
+        if (isset($value)) {
+            return $value;
+        }
+
+        if (is_array($model->properties) && array_key_exists($field, $model->properties)) {
+            return $model->properties[$field];
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns basic page attributes
+     *
+     * @return array
+     */
+    public function getPageData(): array
+    {
+        $pagedata = parent::getPageData();
+        $pagedata['title'] = 'app-preferences';
+        $pagedata['icon'] = 'fa-cogs';
+        $pagedata['menu'] = 'admin';
+        $pagedata['submenu'] = 'control-panel';
+
+        return $pagedata;
+    }
+
+    /**
+     * Returns the url for a specified $type
+     *
+     * @param string $type
+     *
+     * @return string
+     */
+    public function getURL($type): string
+    {
+        switch ($type) {
+            case 'list':
+                return 'AdminPlugins';
+
+            case 'edit':
+                return 'EditSettings';
+        }
+
+        return FS_ROUTE;
+    }
+
+    /**
+     * Return a list of all XML view files on XMLView folder.
+     *
+     * @return array
+     */
+    private function allSettingsXMLViews(): array
+    {
+        $names = [];
+        $files = array_diff(scandir(FS_FOLDER . '/Dinamic/XMLView', SCANDIR_SORT_ASCENDING), ['.', '..']);
+        foreach ($files as $fileName) {
+            if (0 === strpos($fileName, self::KEY_SETTINGS)) {
+                $names[] = substr($fileName, 0, -4);
+            }
+        }
+
+        return $names;
+    }
+
+    /**
      * Load views
      */
     protected function createViews()
@@ -46,28 +122,6 @@ class EditSettings extends ExtendedController\PanelController
 
         $this->addHtmlView('Block/About.html', null, 'about', 'about');
         $this->testViews();
-    }
-
-    /**
-     * Load view data
-     *
-     * @param string $keyView
-     * @param ExtendedController\EditView $view
-     */
-    protected function loadData($keyView, $view)
-    {
-        if (empty($view->getModel())) {
-            return;
-        }
-
-        $code = $this->getKeyFromViewName($keyView);
-        $view->loadData($code);
-
-        $model = $view->getModel();
-        if ($model->name === null) {
-            $model->name = strtolower(substr($keyView, 8));
-            $model->save();
-        }
     }
 
     /**
@@ -96,61 +150,29 @@ class EditSettings extends ExtendedController\PanelController
     }
 
     /**
-     * Returns basic page attributes
-     *
-     * @return array
+     * Exports data from views.
      */
-    public function getPageData(): array
+    private function exportAction()
     {
-        $pageData = parent::getPageData();
-        $pageData['title'] = 'app-preferences';
-        $pageData['icon'] = 'fa-cogs';
-        $pageData['menu'] = 'admin';
-        $pageData['submenu'] = 'control-panel';
+        $this->exportManager->newDoc($this->request->get('option'));
+        foreach ($this->views as $view) {
+            $model = $view->getModel();
+            if ($model === null || !isset($model->properties)) {
+                continue;
+            }
 
-        return $pageData;
-    }
+            $headers = ['key' => 'key', 'value' => 'value'];
+            $rows = [];
+            foreach ($model->properties as $key => $value) {
+                $rows[] = ['key' => $key, 'value' => $value];
+            }
 
-    /**
-     * Returns the url for a specified $type
-     *
-     * @param string $type
-     *
-     * @return string
-     */
-    public function getURL($type): string
-    {
-        switch ($type) {
-            case 'list':
-                return 'AdminPlugins';
-
-            case 'edit':
-                return 'EditSettings';
+            if (count($rows) > 0) {
+                $this->exportManager->generateTablePage($headers, $rows);
+            }
         }
 
-        return FS_ROUTE;
-    }
-
-    /**
-     * Returns the configuration property value for a specified $field
-     *
-     * @param mixed $model
-     * @param string $field
-     *
-     * @return mixed
-     */
-    public function getFieldValue($model, $field)
-    {
-        $value = parent::getFieldValue($model, $field);
-        if (isset($value)) {
-            return $value;
-        }
-
-        if (\is_array($model->properties) && array_key_exists($field, $model->properties)) {
-            return $model->properties[$field];
-        }
-
-        return null;
+        $this->exportManager->show($this->response);
     }
 
     /**
@@ -166,21 +188,25 @@ class EditSettings extends ExtendedController\PanelController
     }
 
     /**
-     * Return a list of all XML view files on XMLView folder.
+     * Load view data
      *
-     * @return array
+     * @param string $keyView
+     * @param ExtendedController\EditView $view
      */
-    private function allSettingsXMLViews(): array
+    protected function loadData($keyView, $view)
     {
-        $names = [];
-        $files = array_diff(scandir(FS_FOLDER . '/Dinamic/XMLView', SCANDIR_SORT_ASCENDING), ['.', '..']);
-        foreach ($files as $fileName) {
-            if (0 === strpos($fileName, self::KEY_SETTINGS)) {
-                $names[] = substr($fileName, 0, -4);
-            }
+        if (empty($view->getModel())) {
+            return;
         }
 
-        return $names;
+        $code = $this->getKeyFromViewName($keyView);
+        $view->loadData($code);
+
+        $model = $view->getModel();
+        if ($model->name === null) {
+            $model->name = strtolower(substr($keyView, 8));
+            $model->save();
+        }
     }
 
     /**
@@ -213,31 +239,5 @@ class EditSettings extends ExtendedController\PanelController
                 $this->miniLog->critical($this->i18n->trans('error-no-name-in-settings', ['%viewName%' => $viewName]));
             }
         }
-    }
-
-    /**
-     * Exports data from views.
-     */
-    private function exportAction()
-    {
-        $this->exportManager->newDoc($this->request->get('option'));
-        foreach ($this->views as $view) {
-            $model = $view->getModel();
-            if ($model === null || !isset($model->properties)) {
-                continue;
-            }
-
-            $headers = ['key' => 'key', 'value' => 'value'];
-            $rows = [];
-            foreach ($model->properties as $key => $value) {
-                $rows[] = ['key' => $key, 'value' => $value];
-            }
-
-            if (count($rows) > 0) {
-                $this->exportManager->generateTablePage($headers, $rows);
-            }
-        }
-
-        $this->exportManager->show($this->response);
     }
 }

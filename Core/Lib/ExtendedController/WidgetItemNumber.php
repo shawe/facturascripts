@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -71,16 +71,31 @@ class WidgetItemNumber extends WidgetItem
     {
         parent::__construct();
 
-        $this->type = 'number';
         $this->decimal = 0;
-        $this->step = 'any';
         $this->max = '';
         $this->min = '';
+        $this->step = 'any';
+        $this->type = 'number';
 
         if (!isset(self::$numberTools)) {
             self::$numberTools = new NumberTools();
         }
     }
+
+    /**
+     * Generates the HTML code to display and edit  the data in the Edit / EditList controller
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    public function getEditHTML($value): string
+    {
+        $specialAttributes = $this->specialAttributes();
+
+        return $this->standardEditHTMLWidget($value, $specialAttributes);
+    }
+
 
     /**
      * Loads the attributes structure from a XML file
@@ -114,24 +129,6 @@ class WidgetItemNumber extends WidgetItem
     }
 
     /**
-     * Generates the HTML code for widget special attributes such as:
-     *  - 'step': difference to increase/decrease
-     *  - 'max': maximum value
-     *  - 'min': minimum value
-     *
-     * @return string
-     */
-    protected function specialAttributes(): string
-    {
-        $base = parent::specialAttributes();
-        $step = empty($this->step) ? ' step="any"' : ' step="' . $this->step . '"';
-        $min = empty($this->min) ? '' : ' min="' . $this->min . '"';
-        $max = empty($this->max) ? '' : ' max="' . $this->max . '"';
-
-        return $base . $step . $min . $max;
-    }
-
-    /**
      * Generates the HTML code to display the data in the List controller
      *
      * @param string $value
@@ -151,16 +148,21 @@ class WidgetItemNumber extends WidgetItem
     }
 
     /**
-     * Generates the HTML code to display and edit  the data in the Edit / EditList controller
-     *
-     * @param string $value
+     * Generates the HTML code for widget special attributes such as:
+     *  - 'step': difference to increase/decrease
+     *  - 'max': maximum value
+     *  - 'min': minimum value
      *
      * @return string
      */
-    public function getEditHTML($value): string
+    protected function specialAttributes(): string
     {
-        $specialAttributes = $this->specialAttributes();
+        $base = parent::specialAttributes();
+        $step = empty($this->step) ? ' step="any"' : ' step="' . $this->step . '"';
+        $min = empty($this->min) ? '' : ' min="' . $this->min . '"';
+        $max = empty($this->max) ? '' : ' max="' . $this->max . '"';
 
-        return $this->standardEditHTMLWidget($value, $specialAttributes);
+        return $base . $step . $min . $max;
     }
+
 }

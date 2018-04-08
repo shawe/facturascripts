@@ -29,7 +29,8 @@ abstract class WidgetItem implements VisualItemInterface
 {
 
     /**
-     * TODO: Uncomplete documentation.
+     * To put the focus on the first editable input.
+     *
      * @var bool
      */
     private static $autofocus = true;
@@ -104,12 +105,12 @@ abstract class WidgetItem implements VisualItemInterface
     {
         $this->fieldName = '';
         $this->hint = '';
-        $this->readOnly = false;
-        $this->required = false;
-        $this->maxLength = 0;
         $this->icon = null;
+        $this->maxLength = 0;
         $this->onClick = '';
         $this->options = [];
+        $this->readOnly = false;
+        $this->required = false;
     }
 
     /**
@@ -265,7 +266,7 @@ abstract class WidgetItem implements VisualItemInterface
      *
      * @return string
      */
-    public function getHintHTML($hint): string
+    public function getHintHTML($hint)
     {
         return empty($hint) ? '' : ' data-toggle="popover" data-placement="auto" data-trigger="hover" data-content="'
             . $hint . '" ';
@@ -288,6 +289,35 @@ abstract class WidgetItem implements VisualItemInterface
             $values['value'] = (string) $item;
             $property[] = $values;
         }
+    }
+
+    /**
+     * Indicates if the conditions to apply an Option Text are met
+     *
+     * @param string $optionValue
+     * @param string $valueItem
+     *
+     * @return bool
+     */
+    private function canApplyOptions($optionValue, $valueItem)
+    {
+        switch ($optionValue[0]) {
+            case '<':
+                $optionValue = substr($optionValue, 1) ?: '';
+                $result = ((float) $valueItem < (float) $optionValue);
+                break;
+
+            case '>':
+                $optionValue = substr($optionValue, 1) ?: '';
+                $result = ((float) $valueItem > (float) $optionValue);
+                break;
+
+            default:
+                $result = ($optionValue === $valueItem);
+                break;
+        }
+
+        return $result;
     }
 
     /**
@@ -398,38 +428,7 @@ abstract class WidgetItem implements VisualItemInterface
 
         $text2 = empty($text) ? $value : $text;
         $style = $this->getTextOptionsHTML($value);
-        $html = empty($this->onClick) ? '<span' . $style . '>' . $text2 . '</span>' : '<a href="' . $this->onClick
+        return empty($this->onClick) ? '<span' . $style . '>' . $text2 . '</span>' : '<a href="' . $this->onClick
             . '?code=' . $value . '" ' . $style . '>' . $text2 . '</a>';
-
-        return $html;
-    }
-
-    /**
-     * Indicates if the conditions to apply an Option Text are met
-     *
-     * @param string $optionValue
-     * @param string $valueItem
-     *
-     * @return bool
-     */
-    private function canApplyOptions($optionValue, $valueItem): bool
-    {
-        switch ($optionValue[0]) {
-            case '<':
-                $option = substr($optionValue, 1) ?: '';
-                $result = ((float) $valueItem < (float) $option);
-                break;
-
-            case '>':
-                $option = substr($optionValue, 1) ?: '';
-                $result = ((float) $valueItem > (float) $option);
-                break;
-
-            default:
-                $result = ($optionValue === $valueItem);
-                break;
-        }
-
-        return $result;
     }
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -140,11 +140,10 @@ abstract class RowItem implements VisualItemInterface
      */
     protected function getAttributesFromXML($item): array
     {
-        $result = [];
+        $result['value'] = trim((string) $item);
         foreach ($item->attributes() as $key => $value) {
             $result[$key] = (string) $value;
         }
-        $result['value'] = trim((string) $item);
 
         return $result;
     }

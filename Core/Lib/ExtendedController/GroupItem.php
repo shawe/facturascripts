@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -28,18 +28,18 @@ class GroupItem extends VisualItem implements VisualItemInterface
 {
 
     /**
-     * Icon used as the value or accompaining the group title
-     *
-     * @var string
-     */
-    public $icon;
-
-    /**
      * Define the columns that the group includes
      *
      * @var ColumnItem[]
      */
     public $columns;
+
+    /**
+     * Icon used as the value or accompaining the group title
+     *
+     * @var string
+     */
+    public $icon;
 
     /**
      * Class construct and initialization
@@ -53,81 +53,27 @@ class GroupItem extends VisualItem implements VisualItemInterface
     }
 
     /**
-     * Create and load the group structure from a XML file
-     *
-     * @param \SimpleXMLElement $group
-     *
-     * @return GroupItem
+     * Check and apply special operations on the group
      */
-    public static function newFromXML($group): GroupItem
+    public function applySpecialOperations()
     {
-        $result = new self();
-        $result->loadFromXML($group);
-
-        return $result;
-    }
-
-    /**
-     * Create and load the group structure from the database
-     *
-     * @param array $group
-     *
-     * @return GroupItem
-     */
-    public static function newFromJSON($group): GroupItem
-    {
-        $result = new self();
-        $result->loadFromJSON($group);
-
-        return $result;
-    }
-
-    /**
-     * Sorts the columns
-     *
-     * @param ColumnItem $column1
-     * @param ColumnItem $column2
-     *
-     * @return int
-     */
-    public static function sortColumns($column1, $column2): int
-    {
-        if ($column1->order === $column2->order) {
-            return 0;
-        }
-
-        return ($column1->order < $column2->order) ? -1 : 1;
-    }
-
-    /**
-     * Loads the groups from the columns
-     *
-     * @param \SimpleXMLElement $group
-     */
-    public function loadFromXMLColumns($group)
-    {
-        if (isset($group->column)) {
-            foreach ($group->column as $column) {
-                $columnItem = ColumnItem::newFromXML($column);
-                $this->columns[$columnItem->name] = $columnItem;
-                unset($columnItem);
+        foreach ($this->columns as $column) {
+            if ($column instanceof self) {
+                $column->applySpecialOperations();
             }
-            uasort($this->columns, ['self', 'sortColumns']);
         }
     }
 
     /**
-     * Loads the attributes structure from a XML file
+     * Generates the HTML code to display the visual element's header
      *
-     * @param \SimpleXMLElement $group
+     * @param string $value
+     *
+     * @return string
      */
-    public function loadFromXML($group)
+    public function getHeaderHTML($value): string
     {
-        parent::loadFromXML($group);
-
-        $group_atributes = $group->attributes();
-        $this->icon = (string) $group_atributes->icon;
-        $this->loadFromXMLColumns($group);
+        return $this->getIconHTML() . parent::getHeaderHTML($value);
     }
 
     /**
@@ -149,27 +95,80 @@ class GroupItem extends VisualItem implements VisualItemInterface
     }
 
     /**
-     * Generates the HTML code to display the visual element's header
+     * Loads the attributes structure from a XML file
      *
-     * @param string $value
-     *
-     * @return string
+     * @param \SimpleXMLElement $group
      */
-    public function getHeaderHTML($value): string
+    public function loadFromXML($group)
     {
-        return $this->getIconHTML() . parent::getHeaderHTML($value);
+        parent::loadFromXML($group);
+
+        $group_atributes = $group->attributes();
+        $this->icon = (string) $group_atributes->icon;
+        $this->loadFromXMLColumns($group);
     }
 
     /**
-     * Check and apply special operations on the group
+     * Loads the groups from the columns
+     *
+     * @param \SimpleXMLElement $group
      */
-    public function applySpecialOperations()
+    public function loadFromXMLColumns($group)
     {
-        foreach ($this->columns as $column) {
-            if ($column instanceof self) {
-                $column->applySpecialOperations();
+        if (isset($group->column)) {
+            foreach ($group->column as $column) {
+                $columnItem = ColumnItem::newFromXML($column);
+                $this->columns[$columnItem->name] = $columnItem;
             }
+            uasort($this->columns, ['self', 'sortColumns']);
         }
+    }
+
+    /**
+     * Create and load the group structure from the database
+     *
+     * @param array $group
+     *
+     * @return GroupItem
+     */
+    public static function newFromJSON($group): GroupItem
+    {
+        $result = new self();
+        $result->loadFromJSON($group);
+
+        return $result;
+    }
+
+    /**
+     * Create and load the group structure from a XML file
+     *
+     * @param \SimpleXMLElement $group
+     *
+     * @return GroupItem
+     */
+    public static function newFromXML($group): GroupItem
+    {
+        $result = new self();
+        $result->loadFromXML($group);
+
+        return $result;
+    }
+
+    /**
+     * Sorts the columns
+     *
+     * @param ColumnItem $column1
+     * @param ColumnItem $column2
+     *
+     * @return int
+     */
+    public static function sortColumns($column1, $column2): int
+    {
+        if ($column1->order === $column2->order) {
+            return 0;
+        }
+
+        return ($column1->order < $column2->order) ? -1 : 1;
     }
 
     /**

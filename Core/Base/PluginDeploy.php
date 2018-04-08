@@ -152,7 +152,7 @@ class PluginDeploy
             if (is_dir($path . self::DS . $fileName)) {
                 $this->createFolder(FS_FOLDER . self::DS . 'Dinamic' . self::DS . $folder . self::DS . $fileName);
             } elseif ($infoFile['filename'] !== '' && is_file($path . self::DS . $fileName)) {
-                if ($infoFile['extension'] === 'php') {
+                if (isset($infoFile['extension']) && $infoFile['extension'] === 'php') {
                     $this->linkClassFile($fileName, $folder, $place, $pluginName);
                 } else {
                     $filePath = $path . self::DS . $fileName;
@@ -188,13 +188,14 @@ class PluginDeploy
             }
 
             $className = basename($fileName, '.php');
-            $txt = '<?php namespace ' . $newNamespace . ";" . \PHP_EOL . \PHP_EOL
+            $txt = '<?php namespace ' . $newNamespace . ';' . \PHP_EOL . \PHP_EOL
                 . '/**' . \PHP_EOL
                 . ' * Class created by Core/Base/PluginManager' . \PHP_EOL
                 . ' * @package ' . $newNamespace . \PHP_EOL
                 . ' * @author Carlos García Gómez <carlos@facturascripts.com>' . \PHP_EOL
                 . ' */' . \PHP_EOL
-                . 'class ' . $className . ' extends \\' . $namespace . '\\' . $className . \PHP_EOL . '{' . \PHP_EOL . '}' . \PHP_EOL;
+                . 'class ' . $className . ' extends \\' . $namespace . '\\' . $className . \PHP_EOL
+                . '{' . \PHP_EOL . '}' . \PHP_EOL;
 
             file_put_contents(FS_FOLDER . self::DS . 'Dinamic' . self::DS . $folder . self::DS . $fileName, $txt);
         }

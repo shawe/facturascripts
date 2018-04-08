@@ -113,11 +113,7 @@ class GrupoClientes extends Base\ModelClass
     {
         $this->nombre = Utils::noHtml($this->nombre);
 
-        if ($this->checkCircularRelationGroup()) {
-            return false;
-        }
-
-        return true;
+        return !$this->checkCircularRelation();
     }
 
     /**
@@ -138,33 +134,29 @@ class GrupoClientes extends Base\ModelClass
      *
      * @return bool
      */
-    private function checkCircularRelationGroup(): bool
+    private function checkCircularRelation(): bool
     {
         if ($this->parent === null) {
             return false;
         }
+
         if ($this->codgrupo === $this->parent) {
             self::$miniLog->alert(self::$i18n->trans('parent-group-cant-be-the-same-group'));
-            $this->parent = null;
             return true;
         }
 
-        $subgroups = [];
-        $group = $this;
-        if ($group instanceof self) {
-            do {
-                if (\in_array($group->parent, $subgroups, true)) {
-                    $group = $group->get($this->parent);
-                    if ($group instanceof self) {
-                        self::$miniLog->alert(self::$i18n->trans('parent-group-invalid', ['%parentGroup%' => $group->nombre]));
-                        $this->parent = null;
-                        return true;
-                    }
-                }
-                $subgroups[] = $group->codgrupo;
-                $groupNext = new self();
-                $group = $groupNext->get($group->parent);
-            } while ($group->parent !== null);
+        $subgroups = [$this->codgrupo];
+        $group = $this->get($this->parent);
+        while ($group->parent !== null) {
+            if (in_array($group->parent, $subgroups)) {
+                self::$miniLog->alert(self::$i18n->trans('parent-group-loop', ['%parentGroup%' => $group->codgrupo]));
+                return true;
+            }
+
+            $subgroups[] = $group->parent;
+            if (!$group->loadFromCode($group->parent)) {
+                break;
+            }
         }
 
         return false;

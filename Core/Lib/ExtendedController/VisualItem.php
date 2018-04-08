@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -30,37 +30,6 @@ abstract class VisualItem
 {
 
     /**
-     * Column identifier
-     *
-     * @var string
-     */
-    public $name;
-    /**
-     * Group tag or title
-     *
-     * @var string
-     */
-    public $title;
-    /**
-     * Title link URL
-     *
-     * @var string
-     */
-    public $titleURL;
-    /**
-     * Number of columns that it occupies on display
-     * ([1, 2, 4, 6, 8, 10, 12])
-     *
-     * @var int
-     */
-    public $numColumns;
-    /**
-     * Position to render ( from lowes to highest )
-     *
-     * @var int
-     */
-    public $order;
-    /**
      * Translation engine
      *
      * @var Base\Translator
@@ -68,22 +37,91 @@ abstract class VisualItem
     protected $i18n;
 
     /**
-     * Class construct and initialization
+     * Column identifier
+     *
+     * @var string
      */
-    public function __construct()
-    {
-        $this->name = 'root';
-        $this->title = '';
-        $this->titleURL = '';
-        $this->numColumns = 0;
-        $this->order = 100;
-        $this->i18n = new Base\Translator();
-    }
+    public $name;
+
+    /**
+     * Group tag or title
+     *
+     * @var string
+     */
+    public $title;
+
+    /**
+     * Title link URL
+     *
+     * @var string
+     */
+    public $titleURL;
+
+    /**
+     * Number of columns that it occupies on display
+     * ([1, 2, 4, 6, 8, 10, 12])
+     *
+     * @var int
+     */
+    public $numColumns;
+
+    /**
+     * Position to render ( from lowes to highest )
+     *
+     * @var int
+     */
+    public $order;
 
     /**
      * Check and apply special operations on the items
      */
     abstract public function applySpecialOperations();
+
+    /**
+     * Class construct and initialization
+     */
+    public function __construct()
+    {
+        $this->i18n = new Base\Translator();
+        $this->name = 'root';
+        $this->numColumns = 0;
+        $this->order = 100;
+        $this->title = '';
+        $this->titleURL = '';
+    }
+
+    /**
+     * Generates the HTML code to display the header for the visual element
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    public function getHeaderHTML($value): string
+    {
+        $html = $this->i18n->trans($value);
+
+        if (!empty($this->titleURL)) {
+            $target = ($this->titleURL[0] !== '?') ? "target='_blank'" : '';
+            $html = '<a href="' . $this->titleURL . '" ' . $target . '>' . $html . '</a>';
+        }
+
+        return $html;
+    }
+
+    /**
+     * Loads the attributes structure from a JSON file
+     *
+     * @param array $items
+     */
+    public function loadFromJSON($items)
+    {
+        $this->name = (string) $items['name'];
+        $this->title = (string) $items['title'];
+        $this->titleURL = (string) $items['titleURL'];
+        $this->numColumns = (int) $items['numColumns'];
+        $this->order = (int) $items['order'];
+    }
 
     /**
      * Loads the attributes structure from a XML file
@@ -106,38 +144,5 @@ abstract class VisualItem
         if (!empty($items_atributes->order)) {
             $this->order = (int) $items_atributes->order;
         }
-    }
-
-    /**
-     * Loads the attributes structure from a JSON file
-     *
-     * @param array $items
-     */
-    public function loadFromJSON($items)
-    {
-        $this->name = (string) $items['name'];
-        $this->title = (string) $items['title'];
-        $this->titleURL = (string) $items['titleURL'];
-        $this->numColumns = (int) $items['numColumns'];
-        $this->order = (int) $items['order'];
-    }
-
-    /**
-     * Generates the HTML code to display the header for the visual element
-     *
-     * @param string $value
-     *
-     * @return string
-     */
-    public function getHeaderHTML($value): string
-    {
-        $html = $this->i18n->trans($value);
-
-        if (!empty($this->titleURL)) {
-            $target = ($this->titleURL[0] !== '?') ? "target='_blank'" : '';
-            $html = '<a href="' . $this->titleURL . '" ' . $target . '>' . $html . '</a>';
-        }
-
-        return $html;
     }
 }

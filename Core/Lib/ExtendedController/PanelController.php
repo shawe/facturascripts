@@ -196,7 +196,7 @@ abstract class PanelController extends Base\Controller
     {
         $model = $this->views[$viewName]->getModel();
 
-        return $this->getFieldValue($model, $fieldName);
+        return isset($model->{$fieldName}) ? $model->{$fieldName} : null;
     }
 
     /**

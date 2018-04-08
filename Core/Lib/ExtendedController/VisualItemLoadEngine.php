@@ -55,17 +55,18 @@ class VisualItemLoadEngine
     /**
      * Add to the configuration of a controller
      *
-     * @param string $name
+     * @param string           $name
      * @param Model\PageOption $model
      *
-     * @return bool
+     * @return boolean
      */
-    public static function installXML($name, &$model): bool
+    public static function installXML($name, &$model)
     {
         $fileName = FS_FOLDER . '/Dinamic/XMLView/' . $name . '.xml';
         if (FS_DEBUG && !file_exists($fileName)) {
             $fileName = FS_FOLDER . '/Core/XMLView/' . $name . '.xml';
         }
+
         $xml = simplexml_load_string(file_get_contents($fileName));
         if ($xml === false) {
             return false;
@@ -115,7 +116,6 @@ class VisualItemLoadEngine
             foreach ($columns as $item) {
                 $groupItem = GroupItem::newFromJSON($item);
                 $target[$groupItem->name] = $groupItem;
-                unset($groupItem);
             }
         }
     }
@@ -137,7 +137,6 @@ class VisualItemLoadEngine
         if (!isset($columns->group)) {
             $groupItem = GroupItem::newFromXML($columns);
             $target[$groupItem->name] = $groupItem;
-            unset($groupItem);
 
             return;
         }
@@ -146,7 +145,6 @@ class VisualItemLoadEngine
         foreach ($columns->group as $group) {
             $groupItem = GroupItem::newFromXML($group);
             $target[$groupItem->name] = $groupItem;
-            unset($groupItem);
         }
     }
 
@@ -163,7 +161,6 @@ class VisualItemLoadEngine
                 $rowItem = RowItem::newFromXML($row);
                 /** @noinspection NullPointerExceptionInspection */
                 $target[$rowItem->type] = $rowItem;
-                unset($rowItem);
             }
         }
     }

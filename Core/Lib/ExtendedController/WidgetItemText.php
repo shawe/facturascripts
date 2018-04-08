@@ -35,8 +35,24 @@ class WidgetItemText extends WidgetItem
     public function __construct($type)
     {
         parent::__construct();
-
         $this->type = $type;
+    }
+
+    /**
+     * Formats text to a given maximum length
+     *
+     * @param string $txt
+     * @param int    $len
+     *
+     * @return string
+     */
+    private function getTextResume($txt, $len = 60): string
+    {
+        if (mb_strlen($txt) < $len) {
+            return $txt;
+        }
+
+        return mb_substr($txt, 0, $len - 3) . '...';
     }
 
     /**
@@ -88,22 +104,5 @@ class WidgetItemText extends WidgetItem
         }
 
         return $html;
-    }
-
-    /**
-     * Formats text to a given maximum length
-     *
-     * @param string $txt
-     * @param int $len
-     *
-     * @return string
-     */
-    private function getTextResume($txt, $len = 60): string
-    {
-        if (mb_strlen($txt) < $len) {
-            return $txt;
-        }
-
-        return mb_substr($txt, 0, $len - 3) . '...';
     }
 }
