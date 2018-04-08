@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\Utils;
@@ -72,13 +73,6 @@ class Empresa extends Base\Contact
      * @var string
      */
     public $direccion;
-
-    /**
-     * Physical person.
-     *
-     * @var int
-     */
-    public $personafisica;
 
     /**
      * Primary key. Integer.
@@ -140,9 +134,9 @@ class Empresa extends Base\Contact
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
-        $num = mt_rand(1, 9999);
+        $num = random_int(1, 9999);
 
         return 'INSERT INTO ' . static::tableName() . ' (idempresa,recequivalencia,web,email,fax,telefono1,codpais,apartado,'
             . 'provincia,ciudad,codpostal,direccion,administrador,cifnif,nombre,nombrecorto,personafisica)'
@@ -156,7 +150,7 @@ class Empresa extends Base\Contact
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idempresa';
     }
@@ -166,7 +160,7 @@ class Empresa extends Base\Contact
      *
      * @return string
      */
-    public function primaryDescriptionColumn()
+    public function primaryDescriptionColumn(): string
     {
         return 'nombrecorto';
     }
@@ -176,7 +170,7 @@ class Empresa extends Base\Contact
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'empresas';
     }
@@ -186,7 +180,7 @@ class Empresa extends Base\Contact
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->administrador = Utils::noHtml($this->administrador);
         $this->apartado = Utils::noHtml($this->apartado);

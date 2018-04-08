@@ -16,9 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\App;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
+use FacturaScripts\Core\Model\Base\ModelClass;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -34,7 +36,7 @@ class AppAPI extends App
      *
      * @return bool
      */
-    public function run()
+    public function run(): bool
     {
         $this->response->headers->set('Access-Control-Allow-Origin', '*');
         $this->response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
@@ -71,7 +73,7 @@ class AppAPI extends App
      */
     private function isDisabled()
     {
-        return $this->settings->get('default', 'enable_api', false) !== 'true';
+        return $this->settings::get('default', 'enable_api', false) !== 'true';
     }
 
     /**
@@ -79,7 +81,7 @@ class AppAPI extends App
      *
      * @return bool
      */
-    private function selectVersion()
+    private function selectVersion(): bool
     {
         if ($this->getUriParam(1) === '3') {
             return $this->selectResource();
@@ -96,7 +98,7 @@ class AppAPI extends App
      *
      * @return bool
      */
-    private function selectResource()
+    private function selectResource(): bool
     {
         $map = $this->getResourcesMap();
 
@@ -126,23 +128,23 @@ class AppAPI extends App
      *
      * @return array
      */
-    private function getRequestArray($key, $default = '')
+    private function getRequestArray($key, $default = ''): array
     {
         $array = $this->request->get($key, $default);
 
-        return is_array($array) ? $array : []; /// if is string has bad format
+        return \is_array($array) ? $array : []; /// if is string has bad format
     }
 
     /**
      * Returns the where clauses.
      *
-     * @param array  $filter
-     * @param array  $operation
+     * @param array $filter
+     * @param array $operation
      * @param string $defaultOperation
      *
      * @return DataBaseWhere[]
      */
-    private function getWhereValues($filter, $operation, $defaultOperation = 'AND')
+    private function getWhereValues($filter, $operation, $defaultOperation = 'AND'): array
     {
         $where = [];
         foreach ($filter as $key => $value) {
@@ -166,33 +168,35 @@ class AppAPI extends App
     {
         try {
             $model = new $modelName();
-            $offset = (int) $this->request->get('offset', 0);
-            $limit = (int) $this->request->get('limit', 50);
-            $operation = $this->getRequestArray('operation');
-            $filter = $this->getRequestArray('filter');
-            $order = $this->getRequestArray('sort');
-            $where = $this->getWhereValues($filter, $operation);
+            if ($model instanceof ModelClass) {
+                $offset = (int) $this->request->get('offset', 0);
+                $limit = (int) $this->request->get('limit', 50);
+                $operation = $this->getRequestArray('operation');
+                $filter = $this->getRequestArray('filter');
+                $order = $this->getRequestArray('sort');
+                $where = $this->getWhereValues($filter, $operation);
 
-            switch ($this->request->getMethod()) {
-                case 'POST':
-                    foreach($this->request->request->all() as $key => $value) {
-                        $model->{$key} = $value;
-                    }
-                    if($model->save()) {
-                        $data = (array) $model;
-                    } else {
-                        $this->response->setStatusCode(Response::HTTP_BAD_REQUEST);
-
-                        $data = [];
-                        foreach($this->miniLog->read() as $msg) {
-                            $data['error'] = $msg;
+                switch ($this->request->getMethod()) {
+                    case 'POST':
+                        foreach ($this->request->request->all() as $key => $value) {
+                            $model->{$key} = $value;
                         }
-                    }
-                    break;
+                        if ($model->save()) {
+                            $data = (array) $model;
+                        } else {
+                            $this->response->setStatusCode(Response::HTTP_BAD_REQUEST);
 
-                default:
-                    $data = $model->all($where, $order, $offset, $limit);
-                    break;
+                            $data = [];
+                            foreach ($this->miniLog->read() as $msg) {
+                                $data['error'] = $msg;
+                            }
+                        }
+                        break;
+
+                    default:
+                        $data = $model->all($where, $order, $offset, $limit);
+                        break;
+                }
             }
 
             $this->response->setContent(json_encode($data));
@@ -218,33 +222,34 @@ class AppAPI extends App
     {
         try {
             $model = new $modelName();
-
-            switch ($this->request->getMethod()) {
-                case 'PUT':
-                    $model = $model->get($cod);
-                    foreach($this->request->request->all() as $key => $value) {
-                        $model->{$key} = $value;
-                    }
-                    if($model->save()) {
-                        $data = $model;
-                    } else {
-                        $this->response->setStatusCode(Response::HTTP_BAD_REQUEST);
-
-                        $data = [];
-                        foreach($this->miniLog->read() as $msg) {
-                            $data['error'] = $msg;
+            if ($model instanceof ModelClass) {
+                switch ($this->request->getMethod()) {
+                    case 'PUT':
+                        $model = $model->get($cod);
+                        foreach ($this->request->request->all() as $key => $value) {
+                            $model->{$key} = $value;
                         }
-                    }
-                    break;
+                        if ($model->save()) {
+                            $data = $model;
+                        } else {
+                            $this->response->setStatusCode(Response::HTTP_BAD_REQUEST);
 
-                case 'DELETE':
-                    $object = $model->get($cod);
-                    $data = $object->delete();
-                    break;
+                            $data = [];
+                            foreach ($this->miniLog->read() as $msg) {
+                                $data['error'] = $msg;
+                            }
+                        }
+                        break;
 
-                default:
-                    $data = $model->get($cod);
-                    break;
+                    case 'DELETE':
+                        $object = $model->get($cod);
+                        $data = $object->delete();
+                        break;
+
+                    default:
+                        $data = $model->get($cod);
+                        break;
+                }
             }
 
             $this->response->setContent(json_encode($data));
@@ -263,7 +268,7 @@ class AppAPI extends App
      *
      * @return array
      */
-    private function getResourcesMap()
+    private function getResourcesMap(): array
     {
         $resources = [];
         foreach (scandir(FS_FOLDER . '/Dinamic/Model', SCANDIR_SORT_ASCENDING) as $fName) {
@@ -275,7 +280,7 @@ class AppAPI extends App
                     $plural = strtolower($modelName);
                 } elseif (substr($modelName, -3) === 'ser' || substr($modelName, -4) === 'tion') {
                     $plural = strtolower($modelName) . 's';
-                } elseif (in_array(substr($modelName, -1), ['a', 'e', 'i', 'o', 'u', 'k'], false)) {
+                } elseif (\in_array(substr($modelName, -1), ['a', 'e', 'i', 'o', 'u', 'k'], false)) {
                     $plural = strtolower($modelName) . 's';
                 } else {
                     $plural = strtolower($modelName) . 'es';

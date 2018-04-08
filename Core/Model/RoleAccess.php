@@ -72,7 +72,7 @@ class RoleAccess extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'roles_access';
     }
@@ -82,7 +82,7 @@ class RoleAccess extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'id';
     }
@@ -95,7 +95,7 @@ class RoleAccess extends Base\ModelClass
      *
      * @return bool
      */
-    public static function addPagesToRole($codrole, $pages)
+    public static function addPagesToRole($codrole, $pages): bool
     {
         $where = [new DataBaseWhere('codrole', $codrole)];
         $roleAccess = new self();

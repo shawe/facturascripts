@@ -16,10 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
-use FacturaScripts\Core\Lib\ExtendedController;
 use FacturaScripts\Core\Lib\EmailTools;
+use FacturaScripts\Core\Lib\ExtendedController;
 
 /**
  * Controller to edit main settings
@@ -50,7 +51,7 @@ class EditSettings extends ExtendedController\PanelController
     /**
      * Load view data
      *
-     * @param string                      $keyView
+     * @param string $keyView
      * @param ExtendedController\EditView $view
      */
     protected function loadData($keyView, $view)
@@ -73,7 +74,7 @@ class EditSettings extends ExtendedController\PanelController
      * Run the controller after actions
      *
      * @param ExtendedController\EditView $view
-     * @param string                      $action
+     * @param string $action
      */
     protected function execAfterAction($view, $action)
     {
@@ -99,15 +100,15 @@ class EditSettings extends ExtendedController\PanelController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'app-preferences';
-        $pagedata['icon'] = 'fa-cogs';
-        $pagedata['menu'] = 'admin';
-        $pagedata['submenu'] = 'control-panel';
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'app-preferences';
+        $pageData['icon'] = 'fa-cogs';
+        $pageData['menu'] = 'admin';
+        $pageData['submenu'] = 'control-panel';
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
@@ -117,7 +118,7 @@ class EditSettings extends ExtendedController\PanelController
      *
      * @return string
      */
-    public function getURL($type)
+    public function getURL($type): string
     {
         switch ($type) {
             case 'list':
@@ -133,7 +134,7 @@ class EditSettings extends ExtendedController\PanelController
     /**
      * Returns the configuration property value for a specified $field
      *
-     * @param mixed  $model
+     * @param mixed $model
      * @param string $field
      *
      * @return mixed
@@ -145,7 +146,7 @@ class EditSettings extends ExtendedController\PanelController
             return $value;
         }
 
-        if (is_array($model->properties) && array_key_exists($field, $model->properties)) {
+        if (\is_array($model->properties) && array_key_exists($field, $model->properties)) {
             return $model->properties[$field];
         }
 
@@ -159,9 +160,9 @@ class EditSettings extends ExtendedController\PanelController
      *
      * @return string
      */
-    private function getKeyFromViewName($viewName)
+    private function getKeyFromViewName($viewName): string
     {
-        return strtolower(substr($viewName, strlen(self::KEY_SETTINGS)));
+        return strtolower(substr($viewName, \strlen(self::KEY_SETTINGS)));
     }
 
     /**
@@ -169,7 +170,7 @@ class EditSettings extends ExtendedController\PanelController
      *
      * @return array
      */
-    private function allSettingsXMLViews()
+    private function allSettingsXMLViews(): array
     {
         $names = [];
         $files = array_diff(scandir(FS_FOLDER . '/Dinamic/XMLView', SCANDIR_SORT_ASCENDING), ['.', '..']);

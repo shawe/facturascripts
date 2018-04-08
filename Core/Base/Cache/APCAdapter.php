@@ -79,12 +79,12 @@ class APCAdapter implements AdaptorInterface
      * Put content into the cache.
      *
      * @param string $key
-     * @param mixed  $content the the content you want to store
-     * @param int    $expire  time to expire
+     * @param mixed $content the the content you want to store
+     * @param int $expire time to expire
      *
      * @return bool whether if the operation was successful or not
      */
-    public function set($key, $content, $expire = 5400)
+    public function set($key, $content, $expire = 5400): bool
     {
         $this->minilog->debug($this->i18n->trans('apc-set-key-item', ['%item%' => $key]));
 
@@ -98,7 +98,7 @@ class APCAdapter implements AdaptorInterface
      *
      * @return bool true if the data was removed successfully
      */
-    public function delete($key)
+    public function delete($key): bool
     {
         $this->minilog->debug($this->i18n->trans('apc-delete-key-item', ['%item%' => $key]));
 
@@ -110,7 +110,7 @@ class APCAdapter implements AdaptorInterface
      *
      * @return bool always true
      */
-    public function clear()
+    public function clear(): bool
     {
         $this->minilog->debug($this->i18n->trans('apc-clear'));
         /**

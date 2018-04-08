@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Base;
 
 use FacturaScripts\Core\Lib\AssetManager;
@@ -38,14 +39,84 @@ class Controller
      * @var array
      */
     public $assets;
-
+    /**
+     * Tools to work with currencies.
+     *
+     * @var DivisaTools
+     */
+    public $divisaTools;
+    /**
+     * Selected company.
+     *
+     * @var Model\Empresa|false
+     */
+    public $empresa;
+    /**
+     * Tools to work with numbers.
+     *
+     * @var NumberTools
+     */
+    public $numberTools;
+    /**
+     * User permissions on this controller.
+     *
+     * @var ControllerPermissions
+     */
+    public $permissions;
+    /**
+     * Request on which we can get data.
+     *
+     * @var Request
+     */
+    public $request;
+    /**
+     * Title of the page.
+     *
+     * @var string título de la página.
+     */
+    public $title;
+    /**
+     * Given uri, default is empty.
+     *
+     * @var string
+     */
+    public $uri;
+    /**
+     * User logged in.
+     *
+     * @var Model\User
+     */
+    public $user;
     /**
      * Cache access manager.
      *
      * @var Cache
      */
     protected $cache;
-
+    /**
+     * It provides direct access to the database.
+     *
+     * @var DataBase
+     */
+    protected $dataBase;
+    /**
+     * Translator engine.
+     *
+     * @var Translator
+     */
+    protected $i18n;
+    /**
+     * App log manager.
+     *
+     * @var MiniLog
+     */
+    protected $miniLog;
+    /**
+     * HTTP Response object.
+     *
+     * @var Response
+     */
+    protected $response;
     /**
      * Name of the class of the controller (although its in inheritance from this class,
      * the name of the final class we will have here)
@@ -53,70 +124,6 @@ class Controller
      * @var string __CLASS__
      */
     private $className;
-
-    /**
-     * It provides direct access to the database.
-     *
-     * @var DataBase
-     */
-    protected $dataBase;
-
-    /**
-     * Tools to work with currencies.
-     *
-     * @var DivisaTools
-     */
-    public $divisaTools;
-
-    /**
-     * Selected company.
-     *
-     * @var Model\Empresa|false
-     */
-    public $empresa;
-
-    /**
-     * Translator engine.
-     *
-     * @var Translator
-     */
-    protected $i18n;
-
-    /**
-     * App log manager.
-     *
-     * @var MiniLog
-     */
-    protected $miniLog;
-
-    /**
-     * Tools to work with numbers.
-     *
-     * @var NumberTools
-     */
-    public $numberTools;
-
-    /**
-     * User permissions on this controller.
-     *
-     * @var ControllerPermissions
-     */
-    public $permissions;
-
-    /**
-     * Request on which we can get data.
-     *
-     * @var Request
-     */
-    public $request;
-
-    /**
-     * HTTP Response object.
-     *
-     * @var Response
-     */
-    protected $response;
-
     /**
      * Name of the file for the template.
      *
@@ -125,34 +132,13 @@ class Controller
     private $template;
 
     /**
-     * Title of the page.
-     *
-     * @var string título de la página.
-     */
-    public $title;
-
-    /**
-     * Given uri, default is empty.
-     *
-     * @var string
-     */
-    public $uri;
-
-    /**
-     * User logged in.
-     *
-     * @var Model\User
-     */
-    public $user;
-
-    /**
      * Initialize all objects and properties.
      *
-     * @param Cache      $cache
+     * @param Cache $cache
      * @param Translator $i18n
-     * @param MiniLog    $miniLog
-     * @param string     $className
-     * @param string     $uri
+     * @param MiniLog $miniLog
+     * @param string $className
+     * @param string $uri
      */
     public function __construct(&$cache, &$i18n, &$miniLog, $className, $uri = '')
     {
@@ -173,16 +159,6 @@ class Controller
     }
 
     /**
-     * Return the name of the controller.
-     *
-     * @return string
-     */
-    protected function getClassName()
-    {
-        return $this->className;
-    }
-
-    /**
      * Return the template to use for this controller.
      *
      * @return string|false
@@ -195,7 +171,7 @@ class Controller
     /**
      * Returns a field value for the loaded data model
      *
-     * @param mixed  $model
+     * @param mixed $model
      * @param string $fieldName
      *
      * @return mixed
@@ -216,7 +192,7 @@ class Controller
      *
      * @return bool
      */
-    public function setTemplate($template)
+    public function setTemplate($template): bool
     {
         if ($template === false) {
             $this->template = false;
@@ -234,7 +210,7 @@ class Controller
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
         return [
             'name' => $this->className,
@@ -248,26 +224,11 @@ class Controller
     }
 
     /**
-     * Return array with parameters values
-     *
-     * @param array $keys
-     * @return array
-     */
-    protected function requestGet($keys): array
-    {
-        $result = [];
-        foreach ($keys as $value) {
-            $result[$value] = $this->request->get($value);
-        }
-        return $result;
-    }
-
-    /**
      * Return the URL of the actual controller.
      *
      * @return string
      */
-    public function url()
+    public function url(): string
     {
         return $this->className;
     }
@@ -286,8 +247,8 @@ class Controller
     /**
      * Runs the controller's private logic.
      *
-     * @param Response              $response
-     * @param Model\User            $user
+     * @param Response $response
+     * @param Model\User $user
      * @param ControllerPermissions $permissions
      */
     public function privateCore(&$response, $user, $permissions)
@@ -311,5 +272,31 @@ class Controller
             $this->response->headers->setCookie(new Cookie('fsHomepage', $this->user->homepage, time() - FS_COOKIES_EXPIRE));
             $this->user->save();
         }
+    }
+
+    /**
+     * Return the name of the controller.
+     *
+     * @return string
+     */
+    protected function getClassName(): string
+    {
+        return $this->className;
+    }
+
+    /**
+     * Return array with parameters values
+     *
+     * @param array $keys
+     *
+     * @return array
+     */
+    protected function requestGet($keys): array
+    {
+        $result = [];
+        foreach ($keys as $value) {
+            $result[$value] = $this->request->get($value);
+        }
+        return $result;
     }
 }

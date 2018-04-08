@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base;
@@ -31,47 +32,42 @@ class BaseView
 {
 
     /**
-     * Needed model to for the model method calls.
-     * In the scope of EditController it contains the view data.
-     *
-     * @var mixed
-     */
-    protected $model;
-
-    /**
-     * Stores the new code from the save() procedure, to use in loadData().
-     *
-     * @var string
-     */
-    protected $newCode;
-
-    /**
-     * Columns and filters configuration
-     *
-     * @var Model\PageOption
-     */
-    protected $pageOption;
-
-    /**
      * Contains the translator
      *
      * @var Base\Translator
      */
     protected static $i18n;
-
     /**
      * View title
      *
      * @var string
      */
     public $title;
-
     /**
      * Total count of read rows
      *
      * @var int
      */
     public $count;
+    /**
+     * Needed model to for the model method calls.
+     * In the scope of EditController it contains the view data.
+     *
+     * @var Model\Base\PurchaseDocument|Model\Base\SalesDocument
+     */
+    protected $model;
+    /**
+     * Stores the new code from the save() procedure, to use in loadData().
+     *
+     * @var string
+     */
+    protected $newCode;
+    /**
+     * Columns and filters configuration
+     *
+     * @var Model\PageOption
+     */
+    protected $pageOption;
 
     /**
      * Construct and initialize the class
@@ -111,7 +107,7 @@ class BaseView
      *
      * @return bool
      */
-    public function save()
+    public function save(): bool
     {
         if ($this->model->save()) {
             $this->newCode = $this->model->primaryColumnValue();
@@ -137,7 +133,7 @@ class BaseView
      *
      * @return bool
      */
-    public function delete(string $code)
+    public function delete(string $code): bool
     {
         if ($this->model->loadFromCode($code)) {
             return $this->model->delete();
@@ -163,7 +159,7 @@ class BaseView
      *
      * @return ColumnItem
      */
-    public function columnForName(string $columnName)
+    public function columnForName(string $columnName): ColumnItem
     {
         $result = null;
         foreach ($this->pageOption->columns as $group) {
@@ -188,7 +184,7 @@ class BaseView
      *
      * @return ColumnItem
      */
-    public function columnForField(string $fieldName)
+    public function columnForField(string $fieldName): ColumnItem
     {
         $result = null;
         foreach ($this->pageOption->columns as $group) {
@@ -215,7 +211,7 @@ class BaseView
      */
     public function getRow(string $key)
     {
-        return isset($this->pageOption->rows[$key]) ? $this->pageOption->rows[$key] : null;
+        return $this->pageOption->rows[$key] ?? null;
     }
 
     /**
@@ -223,7 +219,7 @@ class BaseView
      *
      * @return array
      */
-    public function getModals()
+    public function getModals(): array
     {
         return $this->pageOption->modals;
     }
@@ -235,7 +231,7 @@ class BaseView
      *
      * @return string
      */
-    public function getURL(string $type)
+    public function getURL(string $type): string
     {
         return empty($this->model) ? '' : $this->model->url($type);
     }
@@ -245,7 +241,7 @@ class BaseView
      *
      * @return string
      */
-    public function getModelID()
+    public function getModelID(): string
     {
         return empty($this->model) ? '' : $this->model->modelClassName();
     }
@@ -255,7 +251,7 @@ class BaseView
      *
      * @return string
      */
-    public function getViewName()
+    public function getViewName(): string
     {
         return $this->pageOption->name;
     }

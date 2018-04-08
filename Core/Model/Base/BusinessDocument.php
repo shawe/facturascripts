@@ -16,14 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model\Base;
 
 use FacturaScripts\Core\App\AppSettings;
 use FacturaScripts\Core\Base\Utils;
+use FacturaScripts\Core\Lib\BusinessDocumentGenerator;
 use FacturaScripts\Dinamic\Model\Ejercicio;
 use FacturaScripts\Dinamic\Model\EstadoDocumento;
 use FacturaScripts\Dinamic\Model\Serie;
-use FacturaScripts\Core\Lib\BusinessDocumentGenerator;
 
 /**
  * Description of BusinessDocument
@@ -34,67 +35,58 @@ abstract class BusinessDocument extends ModelClass
 {
 
     /**
+     * TODO: Uncomplete documentation.
+     * @var EstadoDocumento[]
+     */
+    private static $estados;
+    /**
      * VAT number of the supplier.
      *
      * @var string
      */
     public $cifnif;
-
     /**
      * Warehouse in which the merchandise enters.
      *
      * @var string
      */
     public $codalmacen;
-
     /**
      * Currency of the document.
      *
      * @var string
      */
     public $coddivisa;
-
     /**
      * Related exercise. The one that corresponds to the date.
      *
      * @var string
      */
     public $codejercicio;
-
     /**
      * Unique identifier for humans.
      *
      * @var string
      */
     public $codigo;
-
     /**
      * Payment method associated.
      *
      * @var string
      */
     public $codpago;
-
     /**
      * Related serie.
      *
      * @var string
      */
     public $codserie;
-
     /**
      * indicates whether the document can be modified
      *
      * @var bool
      */
     public $editable;
-
-    /**
-     *
-     * @var EstadoDocumento[]
-     */
-    private static $estados;
-
     /**
      * Date of the document.
      *
@@ -129,13 +121,6 @@ abstract class BusinessDocument extends ModelClass
      * @var int
      */
     public $idestado;
-
-    /**
-     *
-     * @var int
-     */
-    private $idestadoAnt;
-
     /**
      * % IRPF retention of the document. It is obtained from the series.
      * Each line can have a different%.
@@ -143,14 +128,12 @@ abstract class BusinessDocument extends ModelClass
      * @var float|int
      */
     public $irpf;
-
     /**
      * Sum of the pvptotal of lines. Total of the document before taxes.
      *
      * @var float|int
      */
     public $neto;
-
     /**
      * Number of the document.
      * Unique within the series + exercise.
@@ -158,35 +141,30 @@ abstract class BusinessDocument extends ModelClass
      * @var string
      */
     public $numero;
-
     /**
      * Notes of the document.
      *
      * @var string
      */
     public $observaciones;
-
     /**
      * Rate of conversion to Euros of the selected currency.
      *
      * @var float|int
      */
     public $tasaconv;
-
     /**
      * Total sum of the document, with taxes.
      *
      * @var float|int
      */
     public $total;
-
     /**
      * Sum of the VAT of the lines.
      *
      * @var float|int
      */
     public $totaliva;
-
     /**
      * Total expressed in euros, if it were not the currency of the document.
      * totaleuros = total / tasaconv
@@ -195,51 +173,27 @@ abstract class BusinessDocument extends ModelClass
      * @var float|int
      */
     public $totaleuros;
-
     /**
      * Total sum of the IRPF withholdings of the lines.
      *
      * @var float|int
      */
     public $totalirpf;
-
     /**
      * Total sum of the equivalence surcharge of the lines.
      *
      * @var float|int
      */
     public $totalrecargo;
+    /**
+     * TODO: Uncomplete documentation.
+     * @var int
+     */
+    private $idestadoAnt;
 
     /**
-     * Returns the lines associated with the document.
+     * TODO: Uncomplete documentation.
      *
-     * @return mixed
-     */
-    abstract public function getLines();
-
-    /**
-     * Returns a new line for this business document.
-     * 
-     * @param array $data
-     * 
-     * @return BusinessDocumentLine[]
-     */
-    abstract public function getNewLine(array $data = []);
-
-    /**
-     * Returns an array with the column for identify the subject(s),
-     * 
-     * @return BusinessDocumentLine
-     */
-    abstract public function getSubjectColumns();
-
-    /**
-     * Sets subjects for this document.
-     */
-    abstract public function setSubject($subjects);
-
-    /**
-     * 
      * @param array $data
      */
     public function __construct(array $data = [])
@@ -247,6 +201,38 @@ abstract class BusinessDocument extends ModelClass
         parent::__construct($data);
         $this->idestadoAnt = $this->idestado;
     }
+
+    /**
+     * Returns the lines associated with the document.
+     *
+     * @return BusinessDocumentLine[]
+     */
+    abstract public function getLines(): array;
+
+    /**
+     * Returns a new line for this business document.
+     *
+     * @param array $data
+     *
+     * @return BusinessDocumentLine
+     */
+    abstract public function getNewLine(array $data = []);
+
+    /**
+     * Returns an array with the column for identify the subject(s),
+     *
+     * @return BusinessDocumentLine
+     */
+    abstract public function getSubjectColumns();
+
+    /**
+     * Sets subjects for this document.
+     *
+     * @param $subjects
+     *
+     * @return mixed
+     */
+    abstract public function setSubject($subjects);
 
     /**
      * Reset the values of all model properties.
@@ -286,7 +272,12 @@ abstract class BusinessDocument extends ModelClass
         }
     }
 
-    public function delete()
+    /**
+     * TODO: Uncomplete documentation.
+     *
+     * @return bool
+     */
+    public function delete(): bool
     {
         $lines = $this->getLines();
         if (parent::delete()) {
@@ -302,28 +293,13 @@ abstract class BusinessDocument extends ModelClass
     }
 
     /**
-     * 
-     * @return EstadoDocumento
-     */
-    public function getState()
-    {
-        foreach (self::$estados as $state) {
-            if ($state->idestado === $this->idestado) {
-                return $state;
-            }
-        }
-
-        return new EstadoDocumento();
-    }
-
-    /**
      * This function is called when creating the model table. Returns the SQL
      * that will be executed after the creation of the table. Useful to insert values
      * default.
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         new Serie();
         new Ejercicio();
@@ -331,9 +307,18 @@ abstract class BusinessDocument extends ModelClass
         return '';
     }
 
-    public function loadFromCode($cod, $where = null, array $orderby = [])
+    /**
+     * TODO: Uncomplete documentation.
+     *
+     * @param string $cod
+     * @param null $where
+     * @param array $orderBy
+     *
+     * @return bool
+     */
+    public function loadFromCode($cod, $where = null, array $orderBy = []): bool
     {
-        if (parent::loadFromCode($cod, $where, $orderby)) {
+        if (parent::loadFromCode($cod, $where, $orderBy)) {
             $this->idestadoAnt = $this->idestado;
             return true;
         }
@@ -346,7 +331,7 @@ abstract class BusinessDocument extends ModelClass
      *
      * @return string
      */
-    public function primaryDescriptionColumn()
+    public function primaryDescriptionColumn(): string
     {
         return 'codigo';
     }
@@ -356,7 +341,7 @@ abstract class BusinessDocument extends ModelClass
      *
      * @return bool
      */
-    public function save()
+    public function save(): bool
     {
         if ($this->test()) {
             if ($this->exists()) {
@@ -371,28 +356,11 @@ abstract class BusinessDocument extends ModelClass
     }
 
     /**
-     * Assign the date and find an accounting exercise.
-     * 
-     * @param string $date
-     * @param string $hour
-     */
-    public function setDate(string $date, string $hour)
-    {
-        $ejercicioModel = new Ejercicio();
-        $ejercicio = $ejercicioModel->getByFecha($date);
-        if ($ejercicio) {
-            $this->codejercicio = $ejercicio->codejercicio;
-            $this->fecha = $date;
-            $this->hora = $hour;
-        }
-    }
-
-    /**
      * Returns True if there is no errors on properties values.
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->observaciones = Utils::noHtml($this->observaciones);
 
@@ -415,9 +383,47 @@ abstract class BusinessDocument extends ModelClass
         return true;
     }
 
-    private function checkState()
+    /**
+     * TODO: Uncomplete documentation.
+     *
+     * @return EstadoDocumento
+     */
+    public function getState(): EstadoDocumento
     {
-        if ($this->idestado == $this->idestadoAnt) {
+        foreach (self::$estados as $state) {
+            if ($state->idestado === $this->idestado) {
+                return $state;
+            }
+        }
+
+        return new EstadoDocumento();
+    }
+
+    /**
+     * Assign the date and find an accounting exercise.
+     *
+     * @param string $date
+     * @param string $hour
+     */
+    public function setDate(string $date, string $hour)
+    {
+        $ejercicioModel = new Ejercicio();
+        $ejercicio = $ejercicioModel->getByFecha($date);
+        if ($ejercicio) {
+            $this->codejercicio = $ejercicio->codejercicio;
+            $this->fecha = $date;
+            $this->hora = $hour;
+        }
+    }
+
+    /**
+     * TODO: Uncomplete documentation.
+     *
+     * @return bool
+     */
+    private function checkState(): bool
+    {
+        if ($this->idestado === $this->idestadoAnt) {
             return true;
         }
 
@@ -446,9 +452,9 @@ abstract class BusinessDocument extends ModelClass
     {
         $this->numero = '1';
 
-        $sql = "SELECT MAX(" . self::$dataBase->sql2Int('numero') . ") as num FROM " . static::tableName()
-            . " WHERE codejercicio = " . self::$dataBase->var2str($this->codejercicio)
-            . " AND codserie = " . self::$dataBase->var2str($this->codserie) . ";";
+        $sql = 'SELECT MAX(' . self::$dataBase->sql2Int('numero') . ') as num FROM ' . static::tableName()
+            . ' WHERE codejercicio = ' . self::$dataBase->var2str($this->codejercicio)
+            . ' AND codserie = ' . self::$dataBase->var2str($this->codserie) . ';';
 
         $data = self::$dataBase->select($sql);
         if (!empty($data)) {

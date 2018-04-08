@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base;
@@ -29,33 +30,23 @@ abstract class VisualItem
 {
 
     /**
-     * Translation engine
-     *
-     * @var Base\Translator
-     */
-    protected $i18n;
-
-    /**
      * Column identifier
      *
      * @var string
      */
     public $name;
-
     /**
      * Group tag or title
      *
      * @var string
      */
     public $title;
-
     /**
      * Title link URL
      *
      * @var string
      */
     public $titleURL;
-
     /**
      * Number of columns that it occupies on display
      * ([1, 2, 4, 6, 8, 10, 12])
@@ -63,18 +54,18 @@ abstract class VisualItem
      * @var int
      */
     public $numColumns;
-
     /**
      * Position to render ( from lowes to highest )
      *
      * @var int
      */
     public $order;
-
     /**
-     * Check and apply special operations on the items
+     * Translation engine
+     *
+     * @var Base\Translator
      */
-    abstract public function applySpecialOperations();
+    protected $i18n;
 
     /**
      * Class construct and initialization
@@ -88,6 +79,11 @@ abstract class VisualItem
         $this->order = 100;
         $this->i18n = new Base\Translator();
     }
+
+    /**
+     * Check and apply special operations on the items
+     */
+    abstract public function applySpecialOperations();
 
     /**
      * Loads the attributes structure from a XML file
@@ -133,7 +129,7 @@ abstract class VisualItem
      *
      * @return string
      */
-    public function getHeaderHTML($value)
+    public function getHeaderHTML($value): string
     {
         $html = $this->i18n->trans($value);
 

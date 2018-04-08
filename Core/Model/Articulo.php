@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\Utils;
@@ -166,7 +167,7 @@ class Articulo extends Base\Product
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         /**
          * The articles table has several foreign keys, so we must force the checking of those tables.
@@ -183,9 +184,43 @@ class Articulo extends Base\Product
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'referencia';
+    }
+
+    /**
+     * Returns the name of the table that uses this model.
+     *
+     * @return string
+     */
+    public static function tableName(): string
+    {
+        return 'articulos';
+    }
+
+    /**
+     * Returns True if the article's data is correct.
+     *
+     * @return bool
+     */
+    public function test(): bool
+    {
+        $this->observaciones = Utils::noHtml($this->observaciones);
+
+        if ($this->equivalencia === '') {
+            $this->equivalencia = null;
+        }
+
+        if ($this->nostock) {
+            $this->ventasinstock = true;
+        }
+
+        if ($this->bloqueado) {
+            $this->publico = false;
+        }
+
+        return parent::test();
     }
 
     /**
@@ -210,39 +245,5 @@ class Articulo extends Base\Product
     public function setPvpIva($pvp)
     {
         $this->setPvp((100 * $pvp) / (100 + $this->getIva()));
-    }
-
-    /**
-     * Returns the name of the table that uses this model.
-     *
-     * @return string
-     */
-    public static function tableName()
-    {
-        return 'articulos';
-    }
-
-    /**
-     * Returns True if the article's data is correct.
-     *
-     * @return bool
-     */
-    public function test()
-    {
-        $this->observaciones = Utils::noHtml($this->observaciones);
-
-        if ($this->equivalencia === '') {
-            $this->equivalencia = null;
-        }
-
-        if ($this->nostock) {
-            $this->ventasinstock = true;
-        }
-
-        if ($this->bloqueado) {
-            $this->publico = false;
-        }
-
-        return parent::test();
     }
 }

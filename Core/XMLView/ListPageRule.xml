@@ -29,16 +29,16 @@
             <widget type="text" fieldname="id"/>
         </column>
         <column name="nick" order="100">
-            <widget type="text" fieldname="nick" />
+            <widget type="text" fieldname="nick"/>
         </column>
         <column name="pagename" order="110">
-            <widget type="text" fieldname="pagename" />
+            <widget type="text" fieldname="pagename"/>
         </column>
         <column name="allow-update" order="110">
-            <widget type="checkbox" fieldname="allowupdate" />
+            <widget type="checkbox" fieldname="allowupdate"/>
         </column>
         <column name="allow-delete" order="110">
-            <widget type="checkbox" fieldname="allowdelete" />
+            <widget type="checkbox" fieldname="allowdelete"/>
         </column>
     </columns>
 </view>

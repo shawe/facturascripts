@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Export;
 
 use FacturaScripts\Core\Base;
@@ -89,7 +90,7 @@ class CSVExport implements ExportInterface
      *
      * @return string
      */
-    public function getSeparator()
+    public function getSeparator(): string
     {
         return $this->separator;
     }
@@ -99,7 +100,7 @@ class CSVExport implements ExportInterface
      *
      * @return string
      */
-    public function getDelimiter()
+    public function getDelimiter(): string
     {
         return $this->delimiter;
     }
@@ -109,7 +110,7 @@ class CSVExport implements ExportInterface
      *
      * @return string
      */
-    public function getDoc()
+    public function getDoc(): string
     {
         return \implode(PHP_EOL, $this->csv);
     }
@@ -137,15 +138,15 @@ class CSVExport implements ExportInterface
     /**
      * Adds a new page with the model data.
      *
-     * @param mixed  $model
-     * @param array  $columns
+     * @param mixed $model
+     * @param array $columns
      * @param string $title
      */
     public function generateModelPage($model, $columns, $title = '')
     {
         $tableData = [];
         foreach ((array) $model as $key => $value) {
-            if (is_string($value)) {
+            if (\is_string($value)) {
                 $tableData[] = [
                     'key' => $this->delimiter . $key . $this->delimiter,
                     'value' => $this->delimiter . $value . $this->delimiter,
@@ -159,12 +160,12 @@ class CSVExport implements ExportInterface
     /**
      * Adds a new page with a table listing the models data.
      *
-     * @param mixed                         $model
+     * @param mixed $model
      * @param Base\DataBase\DataBaseWhere[] $where
-     * @param array                         $order
-     * @param int                           $offset
-     * @param array                         $columns
-     * @param string                        $title
+     * @param array $order
+     * @param int $offset
+     * @param array $columns
+     * @param string $title
      */
     public function generateListModelPage($model, $where, $order, $offset, $columns, $title = '')
     {
@@ -201,7 +202,7 @@ class CSVExport implements ExportInterface
     {
         $tableData = [];
         foreach ((array) $model as $key => $value) {
-            if (is_string($value)) {
+            if (\is_string($value)) {
                 $tableData[] = [
                     'key' => $this->delimiter . $key . $this->delimiter,
                     'value' => $this->delimiter . $value . $this->delimiter,
@@ -233,36 +234,6 @@ class CSVExport implements ExportInterface
     }
 
     /**
-     * Returns the table data
-     *
-     * @param array $cursor
-     * @param array $tableCols
-     *
-     * @return array
-     */
-    private function getTableData($cursor, $tableCols)
-    {
-        $tableData = [];
-
-        /// Get the data
-        foreach ($cursor as $key => $row) {
-            foreach ($tableCols as $col) {
-                $value = '';
-                if (isset($row->{$col})) {
-                    $value = $row->{$col};
-                    if (null === $value) {
-                        $value = '';
-                    }
-                }
-
-                $tableData[$key][$col] = $this->delimiter . $value . $this->delimiter;
-            }
-        }
-
-        return $tableData;
-    }
-
-    /**
      * Fills an array with the CSV data
      *
      * @param $tableData
@@ -283,5 +254,35 @@ class CSVExport implements ExportInterface
             $body[] = \implode($this->separator, $line);
         }
         $this->csv[] = \implode(PHP_EOL, $body);
+    }
+
+    /**
+     * Returns the table data
+     *
+     * @param array $cursor
+     * @param array $tableCols
+     *
+     * @return array
+     */
+    private function getTableData($cursor, $tableCols): array
+    {
+        $tableData = [];
+
+        /// Get the data
+        foreach ($cursor as $key => $row) {
+            foreach ($tableCols as $col) {
+                $value = '';
+                if (isset($row->{$col})) {
+                    $value = $row->{$col};
+                    if (null === $value) {
+                        $value = '';
+                    }
+                }
+
+                $tableData[$key][$col] = $this->delimiter . $value . $this->delimiter;
+            }
+        }
+
+        return $tableData;
     }
 }

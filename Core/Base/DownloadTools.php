@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Base;
 
-use FacturaScripts\Core\Base\MiniLog;
 use Exception;
 
 /**
@@ -33,41 +33,41 @@ class DownloadTools
 
     /**
      * Downloads and returns url content with curl or file_get_contents.
-     * 
+     *
      * @param string $url
-     * @param int    $timeout
-     * 
+     * @param int $timeOut
+     *
      * @return string
      */
-    public function getContents(string $url, int $timeout = 30): string
+    public function getContents(string $url, int $timeOut = 30): string
     {
-        if (function_exists('curl_init')) {
+        if (\function_exists('curl_init')) {
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+            curl_setopt($ch, CURLOPT_TIMEOUT, $timeOut);
             curl_setopt($ch, CURLOPT_USERAGENT, self::USERAGENT);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            if (ini_get('open_basedir') === NULL) {
+            if (ini_get('open_basedir') === null) {
                 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
             }
 
             $data = curl_exec($ch);
             $info = curl_getinfo($ch);
-            if ($info['http_code'] == 200) {
+            if ($info['http_code'] === 200) {
                 curl_close($ch);
                 return $data;
             }
 
-            if ($info['http_code'] == 301 || $info['http_code'] == 302) {
+            if ($info['http_code'] === 301 || $info['http_code'] === 302) {
                 $redirs = 0;
                 return $this->curlRedirectExec($ch, $redirs);
             }
 
             /// guardamos en el log
-            if ($info['http_code'] != 404) {
+            if ($info['http_code'] !== 404) {
                 $error = (curl_error($ch) === '') ? 'ERROR ' . $info['http_code'] : curl_error($ch);
-                $minilog = new MiniLog();
-                $minilog->alert($error);
+                $miniLog = new MiniLog();
+                $miniLog->alert($error);
             }
 
             curl_close($ch);
@@ -78,57 +78,19 @@ class DownloadTools
     }
 
     /**
-     * Alternative function when followlocation fails.
-     * 
-     * @param resource $ch
-     * @param int      $redirects
-     * @param bool     $curlopt_header
-     * 
-     * @return string
-     */
-    private function curlRedirectExec($ch, &$redirects, $curlopt_header = false): string
-    {
-        curl_setopt($ch, CURLOPT_HEADER, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $data = curl_exec($ch);
-        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        if ($http_code == 301 || $http_code == 302) {
-            list($header) = explode("\r\n\r\n", $data, 2);
-            $matches = [];
-            preg_match("/(Location:|URI:)[^(\n)]*/", $header, $matches);
-            $url = trim(str_replace($matches[1], "", $matches[0]));
-            $url_parsed = parse_url($url);
-            if (isset($url_parsed)) {
-                curl_setopt($ch, CURLOPT_URL, $url);
-                $redirects++;
-                return $this->curlRedirectExec($ch, $redirects, $curlopt_header);
-            }
-        }
-
-        if ($curlopt_header) {
-            curl_close($ch);
-            return $data;
-        }
-
-        list(, $body) = explode("\r\n\r\n", $data, 2);
-        curl_close($ch);
-        return $body;
-    }
-
-    /**
      * Downloads file from selected url.
-     * 
+     *
      * @param string $url
-     * @param string $filename
-     * @param int    $timeout
-     * 
+     * @param string $fileName
+     * @param int $timeOut
+     *
      * @return bool
      */
-    public function download(string $url, string $filename, int $timeout = 30): bool
+    public function download(string $url, string $fileName, int $timeOut = 30): bool
     {
         try {
-            $data = $this->getContents($url, $timeout);
-            if ($data && $data != 'ERROR' && file_put_contents($filename, $data) !== FALSE) {
+            $data = $this->getContents($url, $timeOut);
+            if ($data && $data !== 'ERROR' && file_put_contents($fileName, $data) !== false) {
                 return true;
             }
         } catch (Exception $exc) {
@@ -136,5 +98,43 @@ class DownloadTools
         }
 
         return false;
+    }
+
+    /**
+     * Alternative function when followlocation fails.
+     *
+     * @param resource $ch
+     * @param int $redirects
+     * @param bool $curloptHeader
+     *
+     * @return string
+     */
+    private function curlRedirectExec($ch, &$redirects, $curloptHeader = false): string
+    {
+        curl_setopt($ch, CURLOPT_HEADER, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $data = curl_exec($ch);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        if ($http_code === 301 || $http_code === 302) {
+            list($header) = explode("\r\n\r\n", $data, 2);
+            $matches = [];
+            preg_match("/(Location:|URI:)[^(\n)]*/", $header, $matches);
+            $url = trim(str_replace($matches[1], '', $matches[0]));
+            $urlParsed = parse_url($url);
+            if (isset($urlParsed)) {
+                curl_setopt($ch, CURLOPT_URL, $url);
+                $redirects++;
+                return $this->curlRedirectExec($ch, $redirects, $curloptHeader);
+            }
+        }
+
+        if ($curloptHeader) {
+            curl_close($ch);
+            return $data;
+        }
+
+        list(, $body) = explode("\r\n\r\n", $data, 2);
+        curl_close($ch);
+        return $body;
     }
 }

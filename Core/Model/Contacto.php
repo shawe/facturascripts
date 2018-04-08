@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\App\AppSettings;
@@ -140,38 +141,21 @@ class Contacto extends Base\Contact
     }
 
     /**
-     * Generates a new login key for the user. It also updates lastactivity
-     * ans last IP.
-     *
-     * @param string $ipAddress
-     *
-     * @return string
-     */
-    public function newLogkey($ipAddress)
-    {
-        $this->lastactivity = date('d-m-Y H:i:s');
-        $this->lastip = $ipAddress;
-        $this->logkey = Utils::randomString(99);
-
-        return $this->logkey;
-    }
-
-    /**
      * Returns the name of the column that is the model's primary key.
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idcontacto';
     }
 
     /**
      * Returns the name of the column used to describe this item.
-     * 
+     *
      * @return string
      */
-    public function primaryDescriptionColumn()
+    public function primaryDescriptionColumn(): string
     {
         return 'email';
     }
@@ -181,7 +165,7 @@ class Contacto extends Base\Contact
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'contactos';
     }
@@ -191,7 +175,7 @@ class Contacto extends Base\Contact
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         parent::test();
         $this->apellidos = Utils::noHtml($this->apellidos);
@@ -205,13 +189,30 @@ class Contacto extends Base\Contact
     }
 
     /**
+     * Generates a new login key for the user. It also updates lastactivity
+     * ans last IP.
+     *
+     * @param string $ipAddress
+     *
+     * @return string
+     */
+    public function newLogkey($ipAddress): string
+    {
+        $this->lastactivity = date('d-m-Y H:i:s');
+        $this->lastip = $ipAddress;
+        $this->logkey = Utils::randomString(99);
+
+        return $this->logkey;
+    }
+
+    /**
      * Verifies the login key.
      *
      * @param string $value
      *
      * @return bool
      */
-    public function verifyLogkey($value)
+    public function verifyLogkey($value): bool
     {
         return $this->logkey === $value;
     }

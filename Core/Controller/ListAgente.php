@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController;
@@ -34,14 +35,14 @@ class ListAgente extends ExtendedController\ListController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'agents';
-        $pagedata['icon'] = 'fa-id-badge';
-        $pagedata['menu'] = 'admin';
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'agents';
+        $pageData['icon'] = 'fa-id-badge';
+        $pageData['menu'] = 'admin';
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
@@ -56,10 +57,10 @@ class ListAgente extends ExtendedController\ListController
         $this->addOrderBy('ListAgente', 'concat(nombre,apellidos)', 'name', 1);
         $this->addOrderBy('ListAgente', 'provincia', 'province');
 
-        $selectValues = $this->codeModel->all('agentes', 'cargo', 'cargo');
+        $selectValues = $this->codeModel::all('agentes', 'cargo', 'cargo');
         $this->addFilterSelect('ListAgente', 'cargo', 'position', 'cargo', $selectValues);
 
-        $cityValues = $this->codeModel->all('agentes', 'ciudad', 'ciudad');
+        $cityValues = $this->codeModel::all('agentes', 'ciudad', 'ciudad');
         $this->addFilterSelect('ListAgente', 'ciudad', 'city', 'ciudad', $cityValues);
 
         $this->addFilterCheckbox('ListAgente', 'debaja', 'suspended', 'debaja');

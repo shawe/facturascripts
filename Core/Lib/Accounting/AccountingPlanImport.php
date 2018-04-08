@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Accounting;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -33,25 +34,23 @@ class AccountingPlanImport
 {
 
     /**
-     * Exercise related to the accounting plan.
-     *
-     * @var Model\Ejercicio
-     */
-    private $ejercicio;
-
-    /**
      * System translator.
      *
      * @var Translator
      */
     private static $i18n;
-
     /**
      * Manage the log of the entire application.
      *
      * @var MiniLog
      */
     private static $miniLog;
+    /**
+     * Exercise related to the accounting plan.
+     *
+     * @var Model\Ejercicio
+     */
+    private $ejercicio;
 
     /**
      * Import data from XML file.
@@ -76,6 +75,20 @@ class AccountingPlanImport
             $this->importCuenta($data->cuenta);
             $this->importSubcuenta($data->subcuenta);
         }
+    }
+
+    /**
+     * Import data from CSV file.
+     *
+     * @param string $filePath
+     * @param string $codejercicio
+     */
+    public function importCSV($filePath, $codejercicio)
+    {
+        /**
+         * TODO: read CSV file and import GrupoEpigrafe, Epigrafe, Cuenta and Subcuenta
+         * data.
+         */
     }
 
     /**
@@ -167,7 +180,6 @@ class AccountingPlanImport
     private function importCuenta($data)
     {
         $account = new Model\Cuenta();
-        $accountElement = [];
 
         $epigrafe = new Model\Cuenta();
         foreach ($data as $xmlAccount) {
@@ -207,7 +219,6 @@ class AccountingPlanImport
     private function importSubcuenta($data)
     {
         $subaccount = new Model\Subcuenta();
-        $subaccountElement = [];
 
         foreach ($data as $xmlSubaccountElement) {
             $subaccountElement = (array) $xmlSubaccountElement;
@@ -237,19 +248,5 @@ class AccountingPlanImport
                 }
             }
         }
-    }
-
-    /**
-     * Import data from CSV file.
-     *
-     * @param string $filePath
-     * @param string $codejercicio
-     */
-    public function importCSV($filePath, $codejercicio)
-    {
-        /**
-         * TODO: read CSV file and import GrupoEpigrafe, Epigrafe, Cuenta and Subcuenta
-         * data.
-         */
     }
 }

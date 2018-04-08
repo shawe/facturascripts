@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base;
@@ -62,21 +63,10 @@ class EditPageOption extends Base\Controller
     public $backPage;
 
     /**
-     * Load and initialize the parameters sent by the form
-     */
-    private function getParams()
-    {
-        $this->selectedViewName = $this->request->get('code', '');
-        $this->backPage = $this->request->get('url') ? : $this->selectedViewName;
-
-        $this->selectedUser = $this->user->admin ? $this->request->get('nick', '') : $this->user->nick;
-    }
-
-    /**
      * Runs the controller's private logic.
      *
-     * @param Response                   $response
-     * @param Model\User                 $user
+     * @param Response $response
+     * @param Model\User $user
      * @param Base\ControllerPermissions $permissions
      */
     public function privateCore(&$response, $user, $permissions)
@@ -100,13 +90,81 @@ class EditPageOption extends Base\Controller
     }
 
     /**
+     * Returns basic page attributes
+     *
+     * @return array
+     */
+    public function getPageData(): array
+    {
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'page-configuration';
+        $pageData['menu'] = 'admin';
+        $pageData['icon'] = 'fa-wrench';
+        $pageData['showonmenu'] = false;
+
+        return $pageData;
+    }
+
+    /**
+     * Returns the text for the data main panel header
+     *
+     * @return string
+     */
+    public function getPanelHeader(): string
+    {
+        return $this->i18n->trans('configure-columns');
+    }
+
+    /**
+     * Returns the text for the data main panel footer
+     *
+     * @return string
+     */
+    public function getPanelFooter(): string
+    {
+        return '<strong>'
+            . $this->i18n->trans('page') . ':&nbsp;' . $this->selectedViewName . '<br>'
+            . $this->i18n->trans('user') . ':&nbsp;' . $this->selectedUser
+            . '</strong>';
+    }
+
+    /**
+     * Get the list of users, excluding the user admin
+     *
+     * @return array
+     */
+    public function getUserList(): array
+    {
+        $result = [];
+        $users = Model\CodeModel::all(Model\User::tableName(), 'nick', 'nick', false);
+        foreach ($users as $codeModel) {
+            if ($codeModel->code !== 'admin') {
+                $result[$codeModel->code] = $codeModel->description;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Load and initialize the parameters sent by the form
+     */
+    private function getParams()
+    {
+        $this->selectedViewName = $this->request->get('code', '');
+        $this->backPage = $this->request->get('url') ?: $this->selectedViewName;
+
+        $this->selectedUser = $this->user->admin ? $this->request->get('nick', '') : $this->user->nick;
+    }
+
+    /**
      * Checking the value of the nick field.
      * It determines if we edit a configuration for all the users or one,
      * and if there is already configuration for the nick
      */
     private function checkNickAndID()
     {
-        if ($this->model->nick != $this->selectedUser) {
+        if ($this->model->nick !== $this->selectedUser) {
             $this->model->id = null;
             $this->model->nick = empty($this->selectedUser) ? null : $this->selectedUser;
         }
@@ -161,62 +219,5 @@ class EditPageOption extends Base\Controller
         } else {
             $this->miniLog->alert($this->i18n->trans('default-not-deletable'));
         }
-    }
-
-    /**
-     * Returns basic page attributes
-     *
-     * @return array
-     */
-    public function getPageData()
-    {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'page-configuration';
-        $pagedata['menu'] = 'admin';
-        $pagedata['icon'] = 'fa-wrench';
-        $pagedata['showonmenu'] = false;
-
-        return $pagedata;
-    }
-
-    /**
-     * Returns the text for the data main panel header
-     *
-     * @return string
-     */
-    public function getPanelHeader()
-    {
-        return $this->i18n->trans('configure-columns');
-    }
-
-    /**
-     * Returns the text for the data main panel footer
-     *
-     * @return string
-     */
-    public function getPanelFooter()
-    {
-        return '<strong>'
-            . $this->i18n->trans('page') . ':&nbsp;' . $this->selectedViewName . '<br>'
-            . $this->i18n->trans('user') . ':&nbsp;' . $this->selectedUser
-            . '</strong>';
-    }
-
-    /**
-     * Get the list of users, excluding the user admin
-     *
-     * @return Array
-     */
-    public function getUserList()
-    {
-        $result = [];
-        $users = Model\CodeModel::all(Model\User::tableName(), 'nick', 'nick', false);
-        foreach ($users as $codeModel) {
-            if ($codeModel->code != 'admin') {
-                $result[$codeModel->code] = $codeModel->description;
-            }
-        }
-
-        return $result;
     }
 }

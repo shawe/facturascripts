@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
 use FacturaScripts\Core\Model;
@@ -43,7 +44,7 @@ class Asientos extends AbstractRandomAccounting
      *
      * @return int
      */
-    public function generate($num = 25)
+    public function generate($num = 25): int
     {
         $asiento = $this->model;
         $partida = new Model\Partida();
@@ -59,17 +60,17 @@ class Asientos extends AbstractRandomAccounting
             $asiento->clear();
             $asiento->codejercicio = $ejercicio->codejercicio;
             $asiento->concepto = $this->descripcion();
-            $asiento->fecha = date('d-m-Y', strtotime($ejercicio->fechainicio . ' +' . mt_rand(1, 360) . ' days'));
+            $asiento->fecha = date('d-m-Y', strtotime($ejercicio->fechainicio . ' +' . random_int(1, 360) . ' days'));
             $asiento->importe = $this->precio(-999, 150, 99999);
             if ($asiento->save()) {
                 shuffle($subcuentas);
-                $lineas = mt_rand(1, 20) * 2;
+                $lines = random_int(1, 20) * 2;
                 $debe = true;
-                for ($linea = 0; $linea < $lineas; ++$linea) {
+                foreach ($subcuentas as $pos => $lineaValue) {
                     $partida->clear();
                     $partida->idasiento = $asiento->idasiento;
-                    $partida->idsubcuenta = $subcuentas[$linea]->idsubcuenta;
-                    $partida->codsubcuenta = $subcuentas[$linea]->codsubcuenta;
+                    $partida->idsubcuenta = $lineaValue->idsubcuenta;
+                    $partida->codsubcuenta = $lineaValue->codsubcuenta;
                     $partida->concepto = $asiento->concepto;
                     if ($debe) {
                         $partida->debe = $asiento->importe;
@@ -79,6 +80,10 @@ class Asientos extends AbstractRandomAccounting
 
                     if ($partida->save()) {
                         $debe = !$debe;
+                    }
+
+                    if ($lines === $pos) {
+                        break;
                     }
                 }
                 continue;

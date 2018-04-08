@@ -16,12 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base;
 use FacturaScripts\Core\Model\User;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * AdminPlugins.
@@ -43,7 +44,7 @@ class AdminPlugins extends Base\Controller
      *
      * @return float
      */
-    public function getMaxFileUpload()
+    public function getMaxFileUpload(): float
     {
         return UploadedFile::getMaxFilesize() / 1024 / 1024;
     }
@@ -53,7 +54,7 @@ class AdminPlugins extends Base\Controller
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
         $pageData = parent::getPageData();
         $pageData['menu'] = 'admin';
@@ -67,9 +68,9 @@ class AdminPlugins extends Base\Controller
     /**
      * Runs the controller's private logic.
      *
-     * @param Response                      $response
-     * @param User                          $user
-     * @param Base\ControllerPermissions    $permissions
+     * @param Response $response
+     * @param User $user
+     * @param Base\ControllerPermissions $permissions
      */
     public function privateCore(&$response, $user, $permissions)
     {
@@ -91,7 +92,7 @@ class AdminPlugins extends Base\Controller
      *
      * @return bool
      */
-    private function disablePlugin($pluginName)
+    private function disablePlugin($pluginName): bool
     {
         if (!$this->permissions->allowUpdate) {
             $this->miniLog->alert($this->i18n->trans('not-allowed-modify'));
@@ -109,7 +110,7 @@ class AdminPlugins extends Base\Controller
      *
      * @return bool
      */
-    private function enablePlugin($pluginName)
+    private function enablePlugin($pluginName): bool
     {
         if (!$this->permissions->allowUpdate) {
             $this->miniLog->alert($this->i18n->trans('not-allowed-modify'));
@@ -153,7 +154,7 @@ class AdminPlugins extends Base\Controller
      *
      * @return bool
      */
-    private function removePlugin($pluginName)
+    private function removePlugin($pluginName): bool
     {
         if (!$this->permissions->allowDelete) {
             $this->miniLog->alert($this->i18n->trans('not-allowed-delete'));

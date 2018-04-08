@@ -70,10 +70,10 @@ class DataBaseWhere
     /**
      * DataBaseWhere constructor.
      *
-     * @param string      $fields
+     * @param string $fields
      * @param string|bool $value
-     * @param string      $operator
-     * @param string      $operation
+     * @param string $operator
+     * @param string $operation
      */
     public function __construct($fields, $value, $operator = '=', $operation = 'AND')
     {
@@ -85,13 +85,95 @@ class DataBaseWhere
     }
 
     /**
+     * Given a DataBaseWhere array, it returns the full WHERE clause
+     *
+     * @param DataBaseWhere[] $whereItems
+     *
+     * @return string
+     */
+    public static function getSQLWhere($whereItems): string
+    {
+        $result = '';
+        $join = false;
+        foreach ($whereItems as $item) {
+            if (isset($item)) {
+                $result .= $item->getSQLWhereItem($join);
+                $join = true;
+            }
+        }
+
+        if ($result !== '') {
+            $result = ' WHERE ' . $result;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Given a DataBaseWhere array, it returns the field list with  with their values
+     * that will be applied as a filter. (It only returns filters with the '=' operator)
+     *
+     * @param array $whereItems
+     *
+     * @return array
+     */
+    public static function getFieldsFilter(array $whereItems): array
+    {
+        $result = [];
+        foreach ($whereItems as $item) {
+            if ($item->operator === '=') {
+                $fields = explode('|', $item->fields);
+                foreach ($fields as $field) {
+                    $result[$field] = $item->value;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Returns a string to apply to the WHERE clause
+     *
+     * @param bool $applyOperation
+     *
+     * @return string
+     */
+    public function getSQLWhereItem($applyOperation = false): string
+    {
+        $result = '';
+        $union = '';
+        $value = $this->getValue();
+        $fields = explode('|', $this->fields);
+        foreach ($fields as $field) {
+            if ($this->operator === 'LIKE') {
+                $field = 'LOWER(' . $field . ')';
+            }
+            $result .= $union . $field . ' ' . $this->dataBase->getOperator($this->operator) . ' ' . $value;
+            $union = ' OR ';
+        }
+
+        if ($result !== '') {
+            if (count($fields) > 1) {
+                $result = '(' . $result . ')';
+            }
+
+            if ($applyOperation) {
+                $result = ' ' . $this->operation . ' ' . $result;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Formats the date value with the database format
      *
      * @param bool $addTime
      *
      * @return string
      */
-    private function format2Date($addTime = false)
+    private function format2Date($addTime = false): string
     {
         $time = $addTime ? ' H:i:s' : '';
 
@@ -103,11 +185,11 @@ class DataBaseWhere
      *
      * @return string
      */
-    private function getValueFromOperator()
+    private function getValueFromOperator(): string
     {
         switch ($this->operator) {
             case 'LIKE':
-                if (is_bool($this->value)) {
+                if (\is_bool($this->value)) {
                     $result = $this->value ? 'TRUE' : 'FALSE';
                 } else {
                     $result = "LOWER('%" . $this->dataBase->escapeString($this->value) . "%')";
@@ -149,7 +231,7 @@ class DataBaseWhere
      *
      * @return string
      */
-    private function getValueFromType()
+    private function getValueFromType(): string
     {
         switch (gettype($this->value)) {
             case 'boolean':
@@ -178,94 +260,12 @@ class DataBaseWhere
      *
      * @return string
      */
-    private function getValue()
+    private function getValue(): string
     {
         if ($this->value === null) {
             return 'NULL';
         }
 
-        return in_array($this->operator, ['LIKE', 'IS', 'IS NOT', 'IN', 'REGEXP'], false) ? $this->getValueFromOperator() : $this->getValueFromType();
-    }
-
-    /**
-     * Returns a string to apply to the WHERE clause
-     *
-     * @param bool $applyOperation
-     *
-     * @return string
-     */
-    public function getSQLWhereItem($applyOperation = false)
-    {
-        $result = '';
-        $union = '';
-        $value = $this->getValue();
-        $fields = explode('|', $this->fields);
-        foreach ($fields as $field) {
-            if ($this->operator === 'LIKE') {
-                $field = 'LOWER(' . $field . ')';
-            }
-            $result .= $union . $field . ' ' . $this->dataBase->getOperator($this->operator) . ' ' . $value;
-            $union = ' OR ';
-        }
-
-        if ($result !== '') {
-            if (count($fields) > 1) {
-                $result = '(' . $result . ')';
-            }
-
-            if ($applyOperation) {
-                $result = ' ' . $this->operation . ' ' . $result;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * Given a DataBaseWhere array, it returns the full WHERE clause
-     *
-     * @param DataBaseWhere[] $whereItems
-     *
-     * @return string
-     */
-    public static function getSQLWhere($whereItems)
-    {
-        $result = '';
-        $join = false;
-        foreach ($whereItems as $item) {
-            if (isset($item)) {
-                $result .= $item->getSQLWhereItem($join);
-                $join = true;
-            }
-        }
-
-        if ($result !== '') {
-            $result = ' WHERE ' . $result;
-        }
-
-        return $result;
-    }
-
-    /**
-     * Given a DataBaseWhere array, it returns the field list with  with their values
-     * that will be applied as a filter. (It only returns filters with the '=' operator)
-     *
-     * @param array $whereItems
-     *
-     * @return array
-     */
-    public static function getFieldsFilter(array $whereItems)
-    {
-        $result = [];
-        foreach ($whereItems as $item) {
-            if ($item->operator === '=') {
-                $fields = explode('|', $item->fields);
-                foreach ($fields as $field) {
-                    $result[$field] = $item->value;
-                }
-            }
-        }
-
-        return $result;
+        return \in_array($this->operator, ['LIKE', 'IS', 'IS NOT', 'IN', 'REGEXP'], false) ? $this->getValueFromOperator() : $this->getValueFromType();
     }
 }

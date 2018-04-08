@@ -85,7 +85,7 @@ class MemcacheAdapter implements AdaptorInterface
      *
      * @return bool
      */
-    public function isConnected()
+    public function isConnected(): bool
     {
         return self::$connected;
     }
@@ -112,12 +112,12 @@ class MemcacheAdapter implements AdaptorInterface
      * Put content into the cache.
      *
      * @param string $key
-     * @param mixed  $content the the content you want to store
-     * @param int    $expire  time to expire
+     * @param mixed $content the the content you want to store
+     * @param int $expire time to expire
      *
      * @return bool whether if the operation was successful or not
      */
-    public function set($key, $content, $expire = 5400)
+    public function set($key, $content, $expire = 5400): bool
     {
         $this->minilog->debug($this->i18n->trans('memcache-set-key-item', ['%item%' => $key]));
         if (self::$connected) {
@@ -136,7 +136,7 @@ class MemcacheAdapter implements AdaptorInterface
      *
      * @return bool true if the data was removed successfully
      */
-    public function delete($key)
+    public function delete($key): bool
     {
         $this->minilog->debug($this->i18n->trans('memcache-delete-key-item', ['%item%' => $key]));
 
@@ -152,7 +152,7 @@ class MemcacheAdapter implements AdaptorInterface
      *
      * @return bool always true
      */
-    public function clear()
+    public function clear(): bool
     {
         $this->minilog->debug($this->i18n->trans('memcache-clear'));
         if (self::$connected) {

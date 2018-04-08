@@ -89,6 +89,8 @@
     </constraint>
     <constraint>
         <name>ca_lineaspresupuestosprov_presupuestosprov</name>
-        <type>FOREIGN KEY (idpresupuesto) REFERENCES presupuestosprov (idpresupuesto) ON DELETE CASCADE ON UPDATE CASCADE</type>
+        <type>FOREIGN KEY (idpresupuesto) REFERENCES presupuestosprov (idpresupuesto) ON DELETE CASCADE ON UPDATE
+            CASCADE
+        </type>
     </constraint>
 </table>

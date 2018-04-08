@@ -16,10 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
-use FacturaScripts\Core\Lib\ExportManager;
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
+use FacturaScripts\Core\Lib\ExportManager;
 
 /**
  * View definition for its use in ExtendedControllers
@@ -51,7 +52,7 @@ class EditView extends BaseView implements DataViewInterface
      *
      * @return string
      */
-    public function getPanelHeader()
+    public function getPanelHeader(): string
     {
         return $this->title;
     }
@@ -61,7 +62,7 @@ class EditView extends BaseView implements DataViewInterface
      *
      * @return string
      */
-    public function getPanelFooter()
+    public function getPanelFooter(): string
     {
         return '';
     }
@@ -71,7 +72,7 @@ class EditView extends BaseView implements DataViewInterface
      *
      * @return GroupItem[]
      */
-    public function getColumns()
+    public function getColumns(): array
     {
         return $this->pageOption->columns;
     }
@@ -80,7 +81,7 @@ class EditView extends BaseView implements DataViewInterface
      * Establishes the column edit state
      *
      * @param string $columnName
-     * @param bool   $disabled
+     * @param bool $disabled
      */
     public function disableColumn($columnName, $disabled)
     {
@@ -93,19 +94,19 @@ class EditView extends BaseView implements DataViewInterface
     /**
      * Load the data in the model property, according to the code specified.
      *
-     * @param mixed           $code
+     * @param mixed $code
      * @param DataBaseWhere[] $where
-     * @param array           $order
-     * @param int             $offset
-     * @param int             $limit
+     * @param array $order
+     * @param int $offset
+     * @param int $limit
      */
-    public function loadData($code = false, $where = [], $order = [], $offset = 0, $limit = FS_ITEM_LIMIT)
+    public function loadData($code = false, array $where = [], array $order = [], $offset = 0, $limit = FS_ITEM_LIMIT)
     {
         if ($this->newCode !== null) {
             $code = $this->newCode;
         }
 
-        if (is_array($code)) {
+        if (\is_array($code)) {
             $where = [];
             foreach ($code as $fieldName => $value) {
                 $where[] = new DataBaseWhere($fieldName, $value);

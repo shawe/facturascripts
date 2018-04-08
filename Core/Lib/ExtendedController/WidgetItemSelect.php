@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Model;
@@ -55,7 +56,7 @@ class WidgetItemSelect extends WidgetItem
      *
      * @return string
      */
-    public function getEditHTML($value)
+    public function getEditHTML($value): string
     {
         $specialAttributes = $this->specialAttributes();
 
@@ -73,6 +74,7 @@ class WidgetItemSelect extends WidgetItem
 
         foreach ($this->values as $option) {
             /// don't use strict comparation (===)
+            /** @noinspection TypeUnsafeComparisonInspection */
             $selected = ($option['value'] == $value) ? ' selected="selected" ' : '';
             $html .= '<option value="' . $option['value'] . '" ' . $selected . '>' . $option['title']
                 . '</option>';
@@ -93,7 +95,7 @@ class WidgetItemSelect extends WidgetItem
      *
      * @return string
      */
-    public function getListHTML($value)
+    public function getListHTML($value): string
     {
         if ($value === null || $value === '') {
             return '';
@@ -101,6 +103,7 @@ class WidgetItemSelect extends WidgetItem
 
         foreach ($this->values as $option) {
             /// don't use strict comparation (===)
+            /** @noinspection TypeUnsafeComparisonInspection */
             if ($option['value'] == $value) {
                 return '<span>' . $option['title'] . '</span>';
             }
@@ -168,7 +171,7 @@ class WidgetItemSelect extends WidgetItem
     {
         $this->values = [];
         foreach ($values as $value) {
-            if (is_array($value)) {
+            if (\is_array($value)) {
                 $this->values[] = ['title' => $value['title'], 'value' => $value['value']];
                 continue;
             }

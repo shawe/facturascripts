@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib;
 
 use FacturaScripts\Core\Model\Base\BusinessDocument;
@@ -28,27 +29,41 @@ use FacturaScripts\Core\Model\Base\BusinessDocument;
 class BusinessDocumentGenerator
 {
 
-    public function generate(BusinessDocument $prototype, string $newClass)
+    /**
+     * TODO: Uncomplete documentation.
+     *
+     * @param BusinessDocument $prototype
+     * @param string $newClass
+     *
+     * @return bool
+     */
+    public function generate(BusinessDocument $prototype, string $newClass): bool
     {
         $exclude = ['idestado', 'fecha', 'hora'];
         $newDocClass = '\\FacturaScripts\\Dinamic\\Model\\' . $newClass;
         $newDoc = new $newDocClass();
-        foreach ($prototype->getModelFields() as $field => $value) {
-            if (in_array($field, $exclude)) {
-                continue;
+        if ($newDoc instanceof BusinessDocument) {
+            foreach ($prototype->getModelFields() as $field => $value) {
+                if (\in_array($field, $exclude, false)) {
+                    continue;
+                }
+
+                $newDoc->{$field} = $prototype->{$field};
             }
-
-            $newDoc->{$field} = $prototype->{$field};
         }
 
-        if ($newDoc->save() && $this->cloneLines($prototype, $newDoc)) {
-            return true;
-        }
-
-        return false;
+        return $newDoc->save() && $this->cloneLines($prototype, $newDoc);
     }
 
-    private function cloneLines(BusinessDocument $prototype, $newDoc)
+    /**
+     * TODO: Uncomplete documentation.
+     *
+     * @param BusinessDocument $prototype
+     * @param BusinessDocument $newDoc
+     *
+     * @return bool
+     */
+    private function cloneLines(BusinessDocument $prototype, $newDoc): bool
     {
         foreach ($prototype->getLines() as $line) {
             $arrayLine = [];

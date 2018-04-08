@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\App\AppSettings;
@@ -86,7 +87,7 @@ class FormaPago extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'formaspago';
     }
@@ -96,7 +97,7 @@ class FormaPago extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'codpago';
     }
@@ -116,21 +117,11 @@ class FormaPago extends Base\ModelClass
     }
 
     /**
-     * Returns True if is the default payment method for the company.
-     *
-     * @return bool
-     */
-    public function isDefault()
-    {
-        return $this->codpago === AppSettings::get('default', 'codpago');
-    }
-
-    /**
      * Returns True if there is no erros on properties values.
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->descripcion = Utils::noHtml($this->descripcion);
 
@@ -147,15 +138,25 @@ class FormaPago extends Base\ModelClass
     }
 
     /**
+     * Returns True if is the default payment method for the company.
+     *
+     * @return bool
+     */
+    public function isDefault(): bool
+    {
+        return $this->codpago === AppSettings::get('default', 'codpago');
+    }
+
+    /**
      * From a date returns the new due date based on this form of payment.
      * If $diasDePago is provided, they will be used for the new date.
      *
      * @param string $fechaInicio
-     * @param string $diasDePago  dias de pago específicos para el cliente (separados por comas).
+     * @param string $diasDePago dias de pago específicos para el cliente (separados por comas).
      *
      * @return string
      */
-    public function calcularVencimiento($fechaInicio, $diasDePago = '')
+    public function calcularVencimiento($fechaInicio, $diasDePago = ''): string
     {
         $fecha = $this->calcularVencimiento2($fechaInicio);
 
@@ -188,11 +189,11 @@ class FormaPago extends Base\ModelClass
      * Aux recursive function to calcularVencimiento()
      *
      * @param string $fechaInicio
-     * @param int    $diaDePago
+     * @param int $diaDePago
      *
      * @return string
      */
-    private function calcularVencimiento2($fechaInicio, $diaDePago = 0)
+    private function calcularVencimiento2($fechaInicio, $diaDePago = 0): string
     {
         if ($diaDePago === 0) {
             return date('d-m-Y', strtotime($fechaInicio . ' ' . $this->vencimiento));

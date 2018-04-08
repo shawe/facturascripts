@@ -84,7 +84,7 @@ class RegularizacionIva extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'co_regiva';
     }
@@ -94,9 +94,34 @@ class RegularizacionIva extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idregiva';
+    }
+
+    /**
+     * Deletes the regularization of VAT from the database.
+     *
+     * @return bool
+     */
+    public function delete(): bool
+    {
+        $sql = 'DELETE FROM ' . static::tableName()
+            . ' WHERE idregiva = ' . self::$dataBase->var2str($this->idregiva) . ';';
+        if (self::$dataBase->exec($sql)) {
+            /// si hay un asiento asociado lo eliminamos
+            if ($this->idasiento !== null) {
+                $asientoModel = new Asiento();
+                $asiento = $asientoModel->get($this->idasiento);
+                if ($asiento) {
+                    $asiento->delete();
+                }
+            }
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -117,10 +142,10 @@ class RegularizacionIva extends Base\ModelClass
 
     /**
      * Returns the VAT regularization corresponding to that date,
-          * that is, the regularization whose start date is earlier
-          * to the date provided and its end date is after the date
-          * provided. So you can know if the period is still open to be able
-          * check in.
+     *      * that is, the regularization whose start date is earlier
+     *      * to the date provided and its end date is after the date
+     *      * provided. So you can know if the period is still open to be able
+     *      * check in.
      *
      * @param string $fecha
      *
@@ -134,31 +159,6 @@ class RegularizacionIva extends Base\ModelClass
         $data = self::$dataBase->select($sql);
         if (!empty($data)) {
             return new self($data[0]);
-        }
-
-        return false;
-    }
-
-    /**
-     * Deletes the regularization of VAT from the database.
-     *
-     * @return bool
-     */
-    public function delete()
-    {
-        $sql = 'DELETE FROM ' . static::tableName()
-            . ' WHERE idregiva = ' . self::$dataBase->var2str($this->idregiva) . ';';
-        if (self::$dataBase->exec($sql)) {
-            /// si hay un asiento asociado lo eliminamos
-            if ($this->idasiento !== null) {
-                $asientoModel = new Asiento();
-                $asiento = $asientoModel->get($this->idasiento);
-                if ($asiento) {
-                    $asiento->delete();
-                }
-            }
-
-            return true;
         }
 
         return false;

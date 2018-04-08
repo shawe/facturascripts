@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController;
@@ -34,14 +35,14 @@ class ListEstadoDocumento extends ExtendedController\ListController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'document-states';
-        $pagedata['icon'] = 'fa-tags';
-        $pagedata['menu'] = 'admin';
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'document-states';
+        $pageData['icon'] = 'fa-tags';
+        $pageData['menu'] = 'admin';
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
@@ -54,18 +55,23 @@ class ListEstadoDocumento extends ExtendedController\ListController
         $this->addOrderBy('ListEstadoDocumento', 'idestado', 'id');
         $this->addOrderBy('ListEstadoDocumento', 'nombre', 'name');
 
-        $types = $this->codeModel->all('estados_documentos', 'tipodoc', 'tipodoc');
+        $types = $this->codeModel::all('estados_documentos', 'tipodoc', 'tipodoc');
         $this->addFilterSelect('ListEstadoDocumento', 'tipodoc', 'doc-type', 'tipodoc', $types);
 
-        $generateTypes = $this->codeModel->all('estados_documentos', 'generadoc', 'generadoc');
+        $generateTypes = $this->codeModel::all('estados_documentos', 'generadoc', 'generadoc');
         $this->addFilterSelect('ListEstadoDocumento', 'generadoc', 'generate-doc-type', 'generadoc', $generateTypes);
 
-        $this->addFilterSelect('ListEstadoDocumento', 'actualizastock', 'update-stock', 'actualizastock', $this->getActualizastockValues());
+        $this->addFilterSelect('ListEstadoDocumento', 'actualizastock', 'update-stock', 'actualizastock', $this->getActualizaStockValues());
         $this->addFilterCheckbox('ListEstadoDocumento', 'predeterminado', 'default', 'predeterminado');
         $this->addFilterCheckbox('ListEstadoDocumento', 'editable', 'editable', 'editable');
     }
 
-    private function getActualizastockValues()
+    /**
+     * TODO: Uncomplete documentation.
+     *
+     * @return array
+     */
+    private function getActualizaStockValues(): array
     {
         return [
             ['code' => null, 'description' => '------'],

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Export;
 
 use FacturaScripts\Core\Base;
@@ -43,7 +44,7 @@ class XLSExport implements ExportInterface
      *
      * @return string
      */
-    public function getDoc()
+    public function getDoc(): string
     {
         return (string) $this->writer->writeToString();
     }
@@ -72,15 +73,15 @@ class XLSExport implements ExportInterface
     /**
      * Adds a new page with the model data.
      *
-     * @param mixed  $model
-     * @param array  $columns
+     * @param mixed $model
+     * @param array $columns
      * @param string $title
      */
     public function generateModelPage($model, $columns, $title = '')
     {
         $tableData = [];
         foreach ((array) $model as $key => $value) {
-            if (is_string($value)) {
+            if (\is_string($value)) {
                 $tableData[] = ['key' => $key, 'value' => $value];
             }
         }
@@ -91,12 +92,12 @@ class XLSExport implements ExportInterface
     /**
      * Adds a new page with a table listing all models data.
      *
-     * @param mixed                         $model
+     * @param mixed $model
      * @param Base\DataBase\DataBaseWhere[] $where
-     * @param array                         $order
-     * @param int                           $offset
-     * @param array                         $columns
-     * @param string                        $title
+     * @param array $order
+     * @param int $offset
+     * @param array $columns
+     * @param string $title
      */
     public function generateListModelPage($model, $where, $order, $offset, $columns, $title = '')
     {
@@ -131,7 +132,7 @@ class XLSExport implements ExportInterface
     {
         $tableData = [];
         foreach ((array) $model as $key => $value) {
-            if (is_string($value)) {
+            if (\is_string($value)) {
                 $tableData[] = ['key' => $key, 'value' => $value];
             }
         }
@@ -184,7 +185,7 @@ class XLSExport implements ExportInterface
      *
      * @return array
      */
-    private function getTableData($cursor, $tableCols)
+    private function getTableData($cursor, $tableCols): array
     {
         $tableData = [];
 

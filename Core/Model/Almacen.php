@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\App\AppSettings;
@@ -58,7 +59,7 @@ class Almacen extends Base\Address
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'almacenes';
     }
@@ -68,7 +69,7 @@ class Almacen extends Base\Address
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'codalmacen';
     }
@@ -78,19 +79,9 @@ class Almacen extends Base\Address
      *
      * @return string
      */
-    public function primaryDescriptionColumn()
+    public function primaryDescriptionColumn(): string
     {
         return 'nombre';
-    }
-
-    /**
-     * Returns True if is the default wharehouse for the company.
-     *
-     * @return bool
-     */
-    public function isDefault()
-    {
-        return $this->codalmacen === AppSettings::get('default', 'codalmacen');
     }
 
     /**
@@ -98,12 +89,22 @@ class Almacen extends Base\Address
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         parent::test();
         $this->nombre = Utils::noHtml($this->nombre);
         $this->telefono = Utils::noHtml($this->telefono);
-        
+
         return !empty($this->codalmacen);
+    }
+
+    /**
+     * Returns True if is the default wharehouse for the company.
+     *
+     * @return bool
+     */
+    public function isDefault(): bool
+    {
+        return $this->codalmacen === AppSettings::get('default', 'codalmacen');
     }
 }

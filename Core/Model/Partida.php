@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\App\AppSettings;
@@ -193,7 +194,7 @@ class Partida extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'partidas';
     }
@@ -203,7 +204,7 @@ class Partida extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idpartida';
     }
@@ -215,7 +216,7 @@ class Partida extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         new Asiento();
         new Subcuenta();
@@ -245,40 +246,6 @@ class Partida extends Base\ModelClass
     }
 
     /**
-     * Load de ID for subaccount
-     *
-     * @param string $code
-     * @param string $exercise
-     *
-     * @return int|null
-     */
-    private function getIdSubAccount($code, $exercise)
-    {
-        if (empty($code) || empty($exercise)) {
-            return NULL;
-        }
-
-        $where = [
-            new DataBaseWhere('codejercicio', $exercise),
-            new DataBaseWhere('codsubcuenta', $code)
-        ];
-
-        $account = new Subcuenta();
-        $account->loadFromCode('', $where);
-        return $account->idsubcuenta;
-    }
-
-    /**
-     * Check if exists error in accounting entry
-     *
-     * @return bool
-     */
-    private function testErrorInData(): bool
-    {
-        return empty($this->idasiento) || empty($this->codsubcuenta) || empty($this->debe + $this->haber);
-    }
-
-    /**
      * Returns True if there is no erros on properties values.
      *
      * @return bool
@@ -293,7 +260,7 @@ class Partida extends Base\ModelClass
             return false;
         }
 
-        if (strlen($this->concepto) > 255) {
+        if (\strlen($this->concepto) > 255) {
             self::$miniLog->alert(self::$i18n->trans('concept-too-large'));
             return false;
         }
@@ -334,7 +301,7 @@ class Partida extends Base\ModelClass
      *
      * @return bool
      */
-    public function delete()
+    public function delete(): bool
     {
         $inTransaction = self::$dataBase->inTransaction();
         try {
@@ -354,7 +321,7 @@ class Partida extends Base\ModelClass
 
                 $account = new Subcuenta();
                 $account->idsubcuenta = $this->idsubcuenta;
-                $account->updateBalance($accounting->fecha, ($this->debe * -1), ($this->haber * -1));
+                $account->updateBalance($accounting->fecha, $this->debe * -1, $this->haber * -1);
             }
         } catch (\Exception $e) {
             self::$miniLog->error($e->getMessage());
@@ -363,9 +330,44 @@ class Partida extends Base\ModelClass
         } finally {
             if (!$inTransaction && self::$dataBase->inTransaction()) {
                 self::$dataBase->rollback();
+                /** @noinspection SuspiciousReturnInspection */
                 return false;
             }
         }
         return true;
+    }
+
+    /**
+     * Load de ID for subaccount
+     *
+     * @param string $code
+     * @param string $exercise
+     *
+     * @return int|null
+     */
+    private function getIdSubAccount($code, $exercise)
+    {
+        if (empty($code) || empty($exercise)) {
+            return null;
+        }
+
+        $where = [
+            new DataBaseWhere('codejercicio', $exercise),
+            new DataBaseWhere('codsubcuenta', $code)
+        ];
+
+        $account = new Subcuenta();
+        $account->loadFromCode('', $where);
+        return $account->idsubcuenta;
+    }
+
+    /**
+     * Check if exists error in accounting entry
+     *
+     * @return bool
+     */
+    private function testErrorInData(): bool
+    {
+        return empty($this->idasiento) || empty($this->codsubcuenta) || empty($this->debe + $this->haber);
     }
 }

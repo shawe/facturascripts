@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -47,7 +48,7 @@ class FacturaCliente extends Base\SalesDocument
      *
      * @return LineaFacturaCliente[]
      */
-    public function getLines()
+    public function getLines(): array
     {
         $lineaModel = new LineaFacturaCliente();
         $where = [new DataBaseWhere('idfactura', $this->idfactura)];
@@ -58,19 +59,19 @@ class FacturaCliente extends Base\SalesDocument
 
     /**
      * Returns a new line for the document.
-     * 
+     *
      * @param array $data
-     * 
+     *
      * @return LineaFacturaCliente
      */
-    public function getNewLine(array $data = [])
+    public function getNewLine(array $data = []): LineaFacturaCliente
     {
         $newLine = new LineaFacturaCliente($data);
         $newLine->idfactura = $this->idfactura;
-        
+
         $state = $this->getState();
         $newLine->actualizastock = $state->actualizastock;
-        
+
         return $newLine;
     }
 
@@ -81,7 +82,7 @@ class FacturaCliente extends Base\SalesDocument
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         parent::install();
         new Asiento();
@@ -94,7 +95,7 @@ class FacturaCliente extends Base\SalesDocument
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idfactura';
     }
@@ -104,7 +105,7 @@ class FacturaCliente extends Base\SalesDocument
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'facturascli';
     }

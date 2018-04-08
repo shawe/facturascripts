@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\Controller;
@@ -51,8 +52,8 @@ class AccountingReports extends Controller
     /**
      * Runs the controller's private logic.
      *
-     * @param Response              $response
-     * @param User                  $user
+     * @param Response $response
+     * @param User $user
      * @param ControllerPermissions $permissions
      */
     public function privateCore(&$response, $user, $permissions)
@@ -67,6 +68,36 @@ class AccountingReports extends Controller
         if ($action !== '') {
             $this->execAction($action);
         }
+    }
+
+    /**
+     * Return the basic data for this page.
+     *
+     * @return array
+     */
+    public function getPageData(): array
+    {
+        $pageData = parent::getPageData();
+        $pageData['menu'] = 'reports';
+        $pageData['title'] = 'accounting-reports';
+        $pageData['icon'] = 'fa-balance-scale';
+
+        return $pageData;
+    }
+
+    /**
+     * Return list of accounting documents
+     *
+     * @return array
+     */
+    public function getReports(): array
+    {
+        return [
+            'libro-mayor' => 'ledger',
+            'sumas-saldos' => 'balance-ammounts',
+            'situacion' => 'balance-sheet',
+            'pyg' => 'profit-and-loss-balance',
+        ];
     }
 
     /**
@@ -115,39 +146,9 @@ class AccountingReports extends Controller
     }
 
     /**
-     * Return list of accounting documents
-     *
-     * @return array
-     */
-    public function getReports()
-    {
-        return [
-            'libro-mayor' => 'ledger',
-            'sumas-saldos' => 'balance-ammounts',
-            'situacion' => 'balance-sheet',
-            'pyg' => 'profit-and-loss-balance',
-        ];
-    }
-
-    /**
-     * Return the basic data for this page.
-     *
-     * @return array
-     */
-    public function getPageData()
-    {
-        $pageData = parent::getPageData();
-        $pageData['menu'] = 'reports';
-        $pageData['title'] = 'accounting-reports';
-        $pageData['icon'] = 'fa-balance-scale';
-
-        return $pageData;
-    }
-
-    /**
      * Exports data to PDF.
      *
-     * @param array  $pages
+     * @param array $pages
      * @param string $format
      */
     private function exportData(&$pages, $format)

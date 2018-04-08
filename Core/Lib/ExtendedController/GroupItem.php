@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 /**
@@ -41,13 +42,24 @@ class GroupItem extends VisualItem implements VisualItemInterface
     public $columns;
 
     /**
+     * Class construct and initialization
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->icon = null;
+        $this->columns = [];
+    }
+
+    /**
      * Create and load the group structure from a XML file
      *
      * @param \SimpleXMLElement $group
      *
      * @return GroupItem
      */
-    public static function newFromXML($group)
+    public static function newFromXML($group): GroupItem
     {
         $result = new self();
         $result->loadFromXML($group);
@@ -62,7 +74,7 @@ class GroupItem extends VisualItem implements VisualItemInterface
      *
      * @return GroupItem
      */
-    public static function newFromJSON($group)
+    public static function newFromJSON($group): GroupItem
     {
         $result = new self();
         $result->loadFromJSON($group);
@@ -78,24 +90,13 @@ class GroupItem extends VisualItem implements VisualItemInterface
      *
      * @return int
      */
-    public static function sortColumns($column1, $column2)
+    public static function sortColumns($column1, $column2): int
     {
         if ($column1->order === $column2->order) {
             return 0;
         }
 
         return ($column1->order < $column2->order) ? -1 : 1;
-    }
-
-    /**
-     * Class construct and initialization
-     */
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->icon = null;
-        $this->columns = [];
     }
 
     /**
@@ -148,31 +149,13 @@ class GroupItem extends VisualItem implements VisualItemInterface
     }
 
     /**
-     * Returns the HTML code to display an icon
-     *
-     * @return string
-     */
-    private function getIconHTML()
-    {
-        if (empty($this->icon)) {
-            return '';
-        }
-
-        if (strpos($this->icon, 'fa-') === 0) {
-            return '<i class="fa ' . $this->icon . '" aria-hidden="true">&nbsp;&nbsp;</i></span>';
-        }
-
-        return '<i aria-hidden="true">' . $this->icon . '</i>&nbsp;&nbsp;</span>';
-    }
-
-    /**
      * Generates the HTML code to display the visual element's header
      *
      * @param string $value
      *
      * @return string
      */
-    public function getHeaderHTML($value)
+    public function getHeaderHTML($value): string
     {
         return $this->getIconHTML() . parent::getHeaderHTML($value);
     }
@@ -183,7 +166,27 @@ class GroupItem extends VisualItem implements VisualItemInterface
     public function applySpecialOperations()
     {
         foreach ($this->columns as $column) {
-            $column->applySpecialOperations();
+            if ($column instanceof self) {
+                $column->applySpecialOperations();
+            }
         }
+    }
+
+    /**
+     * Returns the HTML code to display an icon
+     *
+     * @return string
+     */
+    private function getIconHTML(): string
+    {
+        if (empty($this->icon)) {
+            return '';
+        }
+
+        if (strpos($this->icon, 'fa-') === 0) {
+            return '<i class="fa ' . $this->icon . '" aria-hidden="true">&nbsp;&nbsp;</i></span>';
+        }
+
+        return '<i aria-hidden="true">' . $this->icon . '</i>&nbsp;&nbsp;</span>';
     }
 }

@@ -16,10 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\DocumentReportsBase;
 
-use FacturaScripts\Core\Model;
 use FacturaScripts\Core\Base\DataBase;
+use FacturaScripts\Core\Model;
 
 /**
  * Description of DocumentReportsFilterList
@@ -31,30 +32,28 @@ class DocumentReportsFilterList
 {
 
     /**
-     * Structure data from
-     */
-    private $model;
-
-    /**
      * Code value selected from list
      *
      * @var string
      */
     public $selectedValue;
-
     /**
      * Icon for select input
      *
      * @var string
      */
     public $icon;
-
     /**
      * List of posibles values
      *
      * @var array
      */
     public $listValues;
+    /**
+     * Structure data from
+     * @var Model\Base\ModelClass
+     */
+    private $model;
 
     /**
      * DocumentReportsFilterList constructor.
@@ -70,6 +69,20 @@ class DocumentReportsFilterList
         $this->selectedValue = $selectedValue;
         $this->icon = $icon;
         $this->loadValuesFromModel($allowEmpty);
+    }
+
+    /**
+     * Return DataBaseWhere with needed filter.
+     *
+     * @return DataBase\DataBaseWhere|null
+     */
+    public function getWhere()
+    {
+        if (empty($this->selectedValue)) {
+            return null;
+        }
+
+        return new DataBase\DataBaseWhere($this->model->primaryColumn(), $this->selectedValue);
     }
 
     /**
@@ -89,19 +102,5 @@ class DocumentReportsFilterList
             $this->listValues[$data->code] = $data->description;
         }
         unset($rows);
-    }
-
-    /**
-     * Return DataBaseWhere with needed filter.
-     *
-     * @return DataBase\DataBaseWhere|null
-     */
-    public function getWhere()
-    {
-        if (empty($this->selectedValue)) {
-            return null;
-        }
-
-        return new DataBase\DataBaseWhere($this->model->primaryColumn(), $this->selectedValue);
     }
 }

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Accounting;
 
 use FacturaScripts\Core\Base\Utils;
@@ -37,7 +38,7 @@ class Ledger extends AccountingBase
      *
      * @return array
      */
-    public function generate($dateFrom, $dateTo)
+    public function generate($dateFrom, $dateTo): array
     {
         $this->dateFrom = $dateFrom;
         $this->dateTo = $dateTo;
@@ -53,8 +54,7 @@ class Ledger extends AccountingBase
         }
 
         /// every page is a table
-        $pages = [$ledger];
-        return $pages;
+        return [$ledger];
     }
 
     /**
@@ -62,7 +62,7 @@ class Ledger extends AccountingBase
      *
      * @return array
      */
-    protected function getData()
+    protected function getData(): array
     {
         $sql = 'SELECT asto.numero, asto.fecha, part.codsubcuenta, part.concepto, part.debe, part.haber'
             . ' FROM asientos as asto, partidas AS part WHERE asto.idasiento = part.idasiento '
@@ -80,12 +80,12 @@ class Ledger extends AccountingBase
      *
      * @return array
      */
-    protected function processLine($line)
+    protected function processLine($line): array
     {
         $line['fecha'] = date('d-m-Y', strtotime($line['fecha']));
         $line['concepto'] = Utils::fixHtml($line['concepto']);
-        $line['debe'] = $this->divisaTools->format($line['debe'], FS_NF0, '');
-        $line['haber'] = $this->divisaTools->format($line['haber'], FS_NF0, '');
+        $line['debe'] = $this->divisaTools::format($line['debe'], FS_NF0, '');
+        $line['haber'] = $this->divisaTools::format($line['haber'], FS_NF0, '');
 
         return $line;
     }

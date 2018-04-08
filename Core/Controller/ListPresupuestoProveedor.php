@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -35,14 +36,14 @@ class ListPresupuestoProveedor extends ExtendedController\ListController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'estimations';
-        $pagedata['icon'] = 'fa-files-o';
-        $pagedata['menu'] = 'purchases';
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'estimations';
+        $pageData['icon'] = 'fa-files-o';
+        $pageData['menu'] = 'purchases';
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
@@ -57,18 +58,18 @@ class ListPresupuestoProveedor extends ExtendedController\ListController
         $this->addFilterNumber('ListPresupuestoProveedor', 'total', 'total', 'total');
 
         $where = [new DataBaseWhere('tipodoc', 'PresupuestoProveedor')];
-        $stateValues = $this->codeModel->all('estados_documentos', 'idestado', 'nombre', true, $where);
+        $stateValues = $this->codeModel::all('estados_documentos', 'idestado', 'nombre', true, $where);
         $this->addFilterSelect('ListPresupuestoProveedor', 'idestado', 'state', 'idestado', $stateValues);
 
-        $warehouseValues = $this->codeModel->all('almacenes', 'codalmacen', 'nombre');
+        $warehouseValues = $this->codeModel::all('almacenes', 'codalmacen', 'nombre');
         $this->addFilterSelect('ListPresupuestoProveedor', 'codalmacen', 'warehouse', 'codalmacen', $warehouseValues);
-        
-        $serieValues = $this->codeModel->all('series', 'codserie', 'descripcion');
+
+        $serieValues = $this->codeModel::all('series', 'codserie', 'descripcion');
         $this->addFilterSelect('ListPresupuestoProveedor', 'codserie', 'series', 'codserie', $serieValues);
-        
-        $paymentValues = $this->codeModel->all('formaspago', 'codpago', 'descripcion');
+
+        $paymentValues = $this->codeModel::all('formaspago', 'codpago', 'descripcion');
         $this->addFilterSelect('ListPresupuestoProveedor', 'codpago', 'payment-method', 'codpago', $paymentValues);
-        
+
         $this->addFilterAutocomplete('ListPresupuestoProveedor', 'codproveedor', 'supplier', 'codproveedor', 'proveedores', 'codproveedor', 'nombre');
 
         $this->addOrderBy('ListPresupuestoProveedor', 'codigo', 'code');

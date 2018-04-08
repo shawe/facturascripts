@@ -16,14 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\App;
 
+use DebugBar\DebugBarException;
 use DebugBar\StandardDebugBar;
 use Exception;
-use FacturaScripts\Core\Base\DebugBar\DataBaseCollector;
-use FacturaScripts\Core\Base\DebugBar\TranslationCollector;
 use FacturaScripts\Core\Base\Controller;
 use FacturaScripts\Core\Base\ControllerPermissions;
+use FacturaScripts\Core\Base\DebugBar\DataBaseCollector;
+use FacturaScripts\Core\Base\DebugBar\TranslationCollector;
 use FacturaScripts\Core\Base\MenuManager;
 use FacturaScripts\Core\Model\User;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -37,6 +39,9 @@ use Symfony\Component\HttpFoundation\Response;
 class AppController extends App
 {
 
+    /**
+     * Time for generate new log key.
+     */
     const USER_UPDATE_ACTIVITY_PERIOD = 3600;
 
     /**
@@ -79,8 +84,11 @@ class AppController extends App
         $this->debugBar = new StandardDebugBar();
         if (FS_DEBUG) {
             $this->debugBar['time']->startMeasure('init', 'AppController::__construct()');
-            $this->debugBar->addCollector(new DataBaseCollector($this->miniLog));
-            $this->debugBar->addCollector(new TranslationCollector($this->i18n));
+            try {
+                $this->debugBar->addCollector(new DataBaseCollector($this->miniLog));
+                $this->debugBar->addCollector(new TranslationCollector($this->i18n));
+            } catch (DebugBarException $e) {
+            }
         }
 
         $this->menuManager = new MenuManager();
@@ -92,7 +100,7 @@ class AppController extends App
      *
      * @return bool
      */
-    public function run()
+    public function run(): bool
     {
         if (!$this->dataBase->connected()) {
             $this->response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -124,7 +132,7 @@ class AppController extends App
      *
      * @return string
      */
-    private function getControllerFullName($pageName)
+    private function getControllerFullName($pageName): string
     {
         $controllerName = "FacturaScripts\\Dinamic\\Controller\\{$pageName}";
         if (!class_exists($controllerName)) {
@@ -144,13 +152,13 @@ class AppController extends App
      *
      * @return string
      */
-    private function getPageName($user)
+    private function getPageName($user): string
     {
         if ($this->pageName !== '') {
             return $this->pageName;
         }
 
-        if ($this->getUriParam(0) !== 'index.php' && $this->getUriParam(0) !== '') {
+        if (!\in_array($this->getUriParam(0), ['index.php', ''], true)) {
             return $this->getUriParam(0);
         }
 
@@ -158,13 +166,13 @@ class AppController extends App
             return $user->homepage;
         }
 
-        return $this->settings->get('default', 'homepage', 'Wizard');
+        return $this->settings::get('default', 'homepage', 'Wizard');
     }
 
     /**
      * Load and process the $pageName controller.
      *
-     * @param string     $pageName
+     * @param string $pageName
      * @param User|false $user
      */
     private function loadController($pageName, $user)
@@ -220,7 +228,7 @@ class AppController extends App
      * Creates HTML with the selected template. The data will not be inserted in it
      * until render() is executed
      *
-     * @param string $template       html file to use
+     * @param string $template html file to use
      * @param string $controllerName
      */
     private function renderHtml($template, $controllerName = '')
@@ -297,7 +305,7 @@ class AppController extends App
      *
      * @return User|bool
      */
-    private function cookieAuth(User &$user)
+    private function cookieAuth(User $user)
     {
         $cookieNick = $this->request->cookies->get('fsNick', '');
         if ($cookieNick === '') {
@@ -326,7 +334,7 @@ class AppController extends App
      * @param User $user
      * @param bool $force
      */
-    private function updateCookies(User &$user, bool $force = false)
+    private function updateCookies(User $user, bool $force = false)
     {
         if ($force || \time() - \strtotime($user->lastactivity) > self::USER_UPDATE_ACTIVITY_PERIOD) {
             $user->newLogkey($this->request->getClientIp());

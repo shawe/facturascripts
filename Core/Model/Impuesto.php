@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\App\AppSettings;
@@ -65,7 +66,7 @@ class Impuesto extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'impuestos';
     }
@@ -75,7 +76,7 @@ class Impuesto extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'codimpuesto';
     }
@@ -91,34 +92,34 @@ class Impuesto extends Base\ModelClass
     }
 
     /**
-     * Returns True if is the default tax for the user.
-     *
-     * @return bool
-     */
-    public function isDefault()
-    {
-        return $this->codimpuesto === AppSettings::get('default', 'codimpuesto');
-    }
-
-    /**
      * Returns True if there is no erros on properties values.
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->codimpuesto = trim($this->codimpuesto);
-        if (empty($this->codimpuesto) || strlen($this->codimpuesto) > 10) {
+        if (empty($this->codimpuesto) || \strlen($this->codimpuesto) > 10) {
             self::$miniLog->alert(self::$i18n->trans('not-valid-tax-code-length'));
             return false;
         }
 
         $this->descripcion = Utils::noHtml($this->descripcion);
-        if (empty($this->descripcion) || strlen($this->descripcion) > 50) {
+        if (empty($this->descripcion) || \strlen($this->descripcion) > 50) {
             self::$miniLog->alert(self::$i18n->trans('not-valid-description-tax'));
             return false;
         }
 
         return true;
+    }
+
+    /**
+     * Returns True if is the default tax for the user.
+     *
+     * @return bool
+     */
+    public function isDefault(): bool
+    {
+        return $this->codimpuesto === AppSettings::get('default', 'codimpuesto');
     }
 }

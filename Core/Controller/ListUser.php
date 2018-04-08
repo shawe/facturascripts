@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController;
@@ -33,14 +34,14 @@ class ListUser extends ExtendedController\ListController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'users';
-        $pagedata['icon'] = 'fa-users';
-        $pagedata['menu'] = 'admin';
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'users';
+        $pageData['icon'] = 'fa-users';
+        $pageData['menu'] = 'admin';
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**

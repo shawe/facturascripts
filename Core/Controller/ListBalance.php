@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController;
@@ -34,14 +35,14 @@ class ListBalance extends ExtendedController\ListController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'balances';
-        $pagedata['icon'] = 'fa-clipboard';
-        $pagedata['menu'] = 'accounting';
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'balances';
+        $pageData['icon'] = 'fa-clipboard';
+        $pageData['menu'] = 'accounting';
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**

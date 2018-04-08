@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -37,15 +38,15 @@ class EditEjercicio extends ExtendedController\PanelController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'exercise';
-        $pagedata['menu'] = 'accounting';
-        $pagedata['icon'] = 'fa-calendar';
-        $pagedata['showonmenu'] = false;
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'exercise';
+        $pageData['menu'] = 'accounting';
+        $pageData['icon'] = 'fa-calendar';
+        $pageData['showonmenu'] = false;
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
@@ -65,7 +66,7 @@ class EditEjercicio extends ExtendedController\PanelController
     /**
      * Load view data procedure
      *
-     * @param string                      $keyView
+     * @param string $keyView
      * @param ExtendedController\EditView $view
      */
     protected function loadData($keyView, $view)
@@ -112,7 +113,7 @@ class EditEjercicio extends ExtendedController\PanelController
      *
      * @return bool
      */
-    private function importAccountingPlan()
+    private function importAccountingPlan(): bool
     {
         $accountingPlanImport = new AccountingPlanImport();
         $codejercicio = $this->getViewModelValue('EditEjercicio', 'codejercicio');
@@ -136,5 +137,6 @@ class EditEjercicio extends ExtendedController\PanelController
             default:
                 $this->miniLog->error($this->i18n->trans('file-not-supported'));
         }
+        return true;
     }
 }

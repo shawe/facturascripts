@@ -26,50 +26,50 @@
     <columns>
         <group name="data" numcolumns="12">
             <column name="code" numcolumns="4" order="100">
-                <widget type="text" fieldname="nick" icon="fa-user-circle-o" required="true" />
+                <widget type="text" fieldname="nick" icon="fa-user-circle-o" required="true"/>
             </column>
             <column name="new-password" numcolumns="4" order="100">
-                <widget type="password" fieldname="newPassword" icon="fa-key" />
+                <widget type="password" fieldname="newPassword" icon="fa-key"/>
             </column>
             <column name="repeat-new-password" numcolumns="4" order="100">
-                <widget type="password" fieldname="newPassword2" icon="fa-key" />
+                <widget type="password" fieldname="newPassword2" icon="fa-key"/>
             </column>
             <column name="email" numcolumns="5" order="100">
-                <widget type="email" fieldname="email" icon="fa-envelope" />
+                <widget type="email" fieldname="email" icon="fa-envelope"/>
             </column>
             <column name="level" numcolumns="2" order="100">
-                <widget type="number" step="1" min="1" max="99" fieldname="level" icon="fa-low-vision" />
+                <widget type="number" step="1" min="1" max="99" fieldname="level" icon="fa-low-vision"/>
             </column>
             <column name="is-admin" numcolumns="3" order="100">
                 <widget type="checkbox" fieldname="admin"/>
             </column>
             <column name="enabled" numcolumns="2" order="100">
-                <widget type="checkbox" fieldname="enabled" />
+                <widget type="checkbox" fieldname="enabled"/>
             </column>
         </group>
         <group name="other" numcolumns="12">
             <column name="homepage" numcolumns="4" order="100">
                 <widget type="select" fieldname="homepage">
-                    <values></values>
+                    <values/>
                 </widget>
             </column>
             <column name="company" numcolumns="4" order="100">
                 <widget type="select" fieldname="idempresa">
-                    <values source="empresas" fieldcode="idempresa" fieldtitle="nombre"></values>
+                    <values source="empresas" fieldcode="idempresa" fieldtitle="nombre"/>
                 </widget>
             </column>
             <column name="lang-code" numcolumns="4" order="100">
                 <widget type="select" fieldname="langcode">
-                    <values></values>
+                    <values/>
                 </widget>
             </column>
         </group>
         <group name="registry" numcolumns="12">
             <column name="last-activity" order="110">
-                <widget type="text" fieldname="lastactivity" readonly="true" />
+                <widget type="text" fieldname="lastactivity" readonly="true"/>
             </column>
             <column name="last-ip" order="120">
-                <widget type="text" fieldname="lastip" readonly="true" />
+                <widget type="text" fieldname="lastip" readonly="true"/>
             </column>
         </group>
     </columns>

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Base;
 
 /**
@@ -34,7 +35,7 @@ class Utils
      *
      * @return string
      */
-    public static function bin2str($val)
+    public static function bin2str($val): string
     {
         if ($val === null) {
             return 'NULL';
@@ -66,9 +67,9 @@ class Utils
      *
      * @param string $str
      *
-     * @return integer
+     * @return int
      */
-    public static function intval($str)
+    public static function intval($str): int
     {
         if ($str === null) {
             return null;
@@ -83,14 +84,14 @@ class Utils
      *
      * @param double $f1
      * @param double $f2
-     * @param int    $precision
-     * @param bool   $round
+     * @param int $precision
+     * @param bool $round
      *
      * @return bool
      */
-    public static function floatcmp($f1, $f2, $precision = 10, $round = false)
+    public static function floatcmp($f1, $f2, $precision = 10, $round = false): bool
     {
-        if ($round || !function_exists('bccomp')) {
+        if ($round || !\function_exists('bccomp')) {
             return abs($f1 - $f2) < 6 / 10 ** ($precision + 1);
         }
 
@@ -107,7 +108,7 @@ class Utils
      *
      * @return array
      */
-    public static function dateRange($first, $last, $step = '+1 day', $format = 'd-m-Y')
+    public static function dateRange($first, $last, $step = '+1 day', $format = 'd-m-Y'): array
     {
         $dates = [];
         $start = strtotime($first);
@@ -128,7 +129,7 @@ class Utils
      *
      * @return string
      */
-    public static function randomString($length = 10)
+    public static function randomString($length = 10): string
     {
         return mb_substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, $length);
     }
@@ -150,7 +151,9 @@ class Utils
     public static function noHtml($txt)
     {
         $newt = str_replace(
-            ['<', '>', '"', "'"], ['&lt;', '&gt;', '&quot;', '&#39;'], $txt
+            ['<', '>', '"', "'"],
+            ['&lt;', '&gt;', '&quot;', '&#39;'],
+            $txt
         );
 
         return ($txt === null) ? null : trim($newt);
@@ -161,7 +164,7 @@ class Utils
      *
      * @param string $txt
      *
-     * @return string
+     * @return string|null
      */
     public static function fixHtml($txt)
     {
@@ -180,9 +183,9 @@ class Utils
      *
      * @return bool
      */
-    public static function str2bool($val)
+    public static function str2bool($val): bool
     {
-        return in_array(strtolower($val), ['true', 't', '1'], false);
+        return \in_array(strtolower($val), ['true', 't', '1'], false);
     }
 
     /**
@@ -192,7 +195,7 @@ class Utils
      *
      * @return string
      */
-    public static function bool2str($val)
+    public static function bool2str($val): string
     {
         switch ($val) {
             case true:

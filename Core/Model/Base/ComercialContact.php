@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model\Base;
 
 use FacturaScripts\Core\App\AppSettings;
@@ -32,90 +33,78 @@ abstract class ComercialContact extends Contact
 {
 
     /**
-     * Identifier code of the customer.
-     *
-     * @var string
-     */
-    public $codcliente;
-
-    /**
-     * Default payment method for this customer.
-     *
-     * @var string
-     */
-    public $codpago;
-
-    /**
-     * Identifier code of the supplier.
-     *
-     * @var string
-     */
-    public $codproveedor;
-
-    /**
-     * Default series for this customer.
-     *
-     * @var string
-     */
-    public $codserie;
-
-    /**
-     * Accounting code.
-     *
-     * @var string
-     */
-    public $codsubcuenta;
-
-    /**
-     * True -> the customer no longer buys us or we do not want anything with him.
-     *
-     * @var boolean
-     */
-    public $debaja;
-
-    /**
-     * Date on which the customer was discharged.
-     *
-     * @var string
-     */
-    public $fechabaja;
-
-    /**
      * Type of fiscal identifier.
      *
      * @var IDFiscal
      */
     private static $idFiscal;
-
-    /**
-     * % IRPF retention of the document. It is obtained from the series.
-     * Each line can have a different%.
-     * 
-     * @var float|int
-     */
-    public $irpf;
-
-    /**
-     * Social reason of the client, that is, the official name. The one that appears on the invoices.
-     *
-     * @var string
-     */
-    public $razonsocial;
-
-    /**
-     * Taxation regime of the provider. For now they are only implemented general and exempt.
-     *
-     * @var string
-     */
-    public $regimeniva;
-
     /**
      * Type of VAT regime
      *
      * @var RegimenIVA
      */
     private static $regimenIVA;
-
+    /**
+     * Identifier code of the customer.
+     *
+     * @var string
+     */
+    public $codcliente;
+    /**
+     * Default payment method for this customer.
+     *
+     * @var string
+     */
+    public $codpago;
+    /**
+     * Identifier code of the supplier.
+     *
+     * @var string
+     */
+    public $codproveedor;
+    /**
+     * Default series for this customer.
+     *
+     * @var string
+     */
+    public $codserie;
+    /**
+     * Accounting code.
+     *
+     * @var string
+     */
+    public $codsubcuenta;
+    /**
+     * True -> the customer no longer buys us or we do not want anything with him.
+     *
+     * @var boolean
+     */
+    public $debaja;
+    /**
+     * Date on which the customer was discharged.
+     *
+     * @var string
+     */
+    public $fechabaja;
+    /**
+     * % IRPF retention of the document. It is obtained from the series.
+     * Each line can have a different%.
+     *
+     * @var float|int
+     */
+    public $irpf;
+    /**
+     * Social reason of the client, that is, the official name. The one that appears on the invoices.
+     *
+     * @var string
+     */
+    public $razonsocial;
+    /**
+     * Taxation regime of the provider. For now they are only implemented general and exempt.
+     *
+     * @var string
+     */
+    public $regimeniva;
     /**
      * Type of tax identification of the client.
      * Examples: CIF, NIF, CUIT ...
@@ -130,13 +119,6 @@ abstract class ComercialContact extends Contact
      * @var string
      */
     public $web;
-
-    /**
-     * Return address from this contact.
-     *
-     * @return mixed
-     */
-    abstract public function getDirecciones();
 
     /**
      * ComercialContact constructor.
@@ -154,6 +136,13 @@ abstract class ComercialContact extends Contact
     }
 
     /**
+     * Return address from this contact.
+     *
+     * @return mixed
+     */
+    abstract public function getDirecciones();
+
+    /**
      * Reset the values of all model properties.
      */
     public function clear()
@@ -161,8 +150,8 @@ abstract class ComercialContact extends Contact
         parent::clear();
         $this->codpago = AppSettings::get('default', 'codpago');
         $this->debaja = false;
-        $this->regimeniva = self::$regimenIVA->defaultValue();
-        $this->tipoidfiscal = self::$idFiscal->defaultValue();
+        $this->regimeniva = self::$regimenIVA::defaultValue();
+        $this->tipoidfiscal = self::$idFiscal::defaultValue();
     }
 
     /**
@@ -170,7 +159,7 @@ abstract class ComercialContact extends Contact
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         parent::test();
         $this->razonsocial = Utils::noHtml($this->razonsocial);

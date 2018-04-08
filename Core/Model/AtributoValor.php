@@ -57,7 +57,7 @@ class AtributoValor extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'atributos_valores';
     }
@@ -67,7 +67,7 @@ class AtributoValor extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'id';
     }
@@ -79,7 +79,7 @@ class AtributoValor extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         new Atributo();
 
@@ -91,7 +91,7 @@ class AtributoValor extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->valor = Utils::noHtml($this->valor);
 
@@ -105,7 +105,7 @@ class AtributoValor extends Base\ModelClass
      *
      * @return self[]
      */
-    public function allFromAtributo($cod)
+    public function allFromAtributo($cod): array
     {
         $where = [new DataBaseWhere('codatributo', $cod)];
         $order = ['valor' => 'ASC'];

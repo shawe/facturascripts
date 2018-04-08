@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base;
@@ -59,7 +60,7 @@ class CodeModel
      *
      * @param array $data
      */
-    public function __construct($data = [])
+    public function __construct(array $data = [])
     {
         if (empty($data)) {
             $this->code = '';
@@ -76,12 +77,12 @@ class CodeModel
      * @param string $tableName
      * @param string $fieldCode
      * @param string $fieldDescription
-     * @param bool   $addEmpty
-     * @param array  $where
+     * @param bool $addEmpty
+     * @param array $where
      *
      * @return self[]
      */
-    public static function all($tableName, $fieldCode, $fieldDescription, $addEmpty = true, $where = [])
+    public static function all($tableName, $fieldCode, $fieldDescription, $addEmpty = true, array $where = []): array
     {
         $result = [];
         if ($addEmpty) {
@@ -113,7 +114,7 @@ class CodeModel
      *
      * @return self[]
      */
-    public static function search($tableName, $fieldCode, $fieldDescription, $search)
+    public static function search($tableName, $fieldCode, $fieldDescription, $search): array
     {
         $fields = $fieldCode . '|' . $fieldDescription;
         $where = [new DataBaseWhere($fields, mb_strtolower($search), 'LIKE')];
@@ -130,7 +131,7 @@ class CodeModel
      *
      * @return self
      */
-    public function get($tableName, $fieldCode, $code, $fieldDescription)
+    public function get($tableName, $fieldCode, $code, $fieldDescription): self
     {
         if (self::$dataBase === null) {
             self::$dataBase = new Base\DataBase();
@@ -158,10 +159,8 @@ class CodeModel
      *
      * @return string
      */
-    public function getDescription($tableName, $fieldCode, $code, $fieldDescription)
+    public function getDescription($tableName, $fieldCode, $code, $fieldDescription): string
     {
-        $model = $this->get($tableName, $fieldCode, $code, $fieldDescription);
-
-        return $model->description;
+        return $this->get($tableName, $fieldCode, $code, $fieldDescription)->description;
     }
 }

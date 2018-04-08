@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -65,7 +66,7 @@ class PresupuestoCliente extends Base\SalesDocument
      *
      * @return LineaPresupuestoCliente[]
      */
-    public function getLines()
+    public function getLines(): array
     {
         $lineaModel = new LineaPresupuestoCliente();
         $where = [new DataBaseWhere('idpresupuesto', $this->idpresupuesto)];
@@ -76,27 +77,34 @@ class PresupuestoCliente extends Base\SalesDocument
 
     /**
      * Returns a new line for this document.
-     * 
+     *
      * @param array $data
-     * 
+     *
      * @return LineaPresupuestoCliente
      */
-    public function getNewLine(array $data = [])
+    public function getNewLine(array $data = []): LineaPresupuestoCliente
     {
         $newLine = new LineaPresupuestoCliente($data);
         $newLine->idpresupuesto = $this->idpresupuesto;
-        
+
         $state = $this->getState();
         $newLine->actualizastock = $state->actualizastock;
-        
+
         return $newLine;
     }
-    
-    public function install()
+
+    /**
+     * This function is called when creating the model table. Returns the SQL
+     * that will be executed after the creation of the table. Useful to insert values
+     * default.
+     *
+     * @return string
+     */
+    public function install(): string
     {
         parent::install();
         new PedidoCliente();
-        
+
         return '';
     }
 
@@ -105,7 +113,7 @@ class PresupuestoCliente extends Base\SalesDocument
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idpresupuesto';
     }
@@ -115,7 +123,7 @@ class PresupuestoCliente extends Base\SalesDocument
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'presupuestoscli';
     }

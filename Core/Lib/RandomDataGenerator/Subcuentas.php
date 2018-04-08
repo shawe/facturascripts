@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
 use FacturaScripts\Core\Model;
@@ -44,7 +45,7 @@ class Subcuentas extends AbstractRandomAccounting
      *
      * @return int
      */
-    public function generate($num = 50)
+    public function generate($num = 50): int
     {
         $subcuenta = $this->model;
         $this->shuffle($cuentas, new Model\Cuenta());
@@ -55,7 +56,7 @@ class Subcuentas extends AbstractRandomAccounting
             $subcuenta->clear();
             $subcuenta->codcuenta = $cuenta->codcuenta;
             $subcuenta->codejercicio = $cuenta->codejercicio;
-            $subcuenta->codsubcuenta = str_pad($cuenta->codcuenta . mt_rand(0, 9999), $ejercicioDetails->longsubcuenta, 0);
+            $subcuenta->codsubcuenta = str_pad($cuenta->codcuenta . random_int(0, 9999), $ejercicioDetails->longsubcuenta, 0);
             $subcuenta->descripcion = $this->descripcion();
             $subcuenta->idcuenta = $cuenta->idcuenta;
             if (!$subcuenta->save()) {

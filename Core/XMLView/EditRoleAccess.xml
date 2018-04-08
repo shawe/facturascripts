@@ -30,26 +30,26 @@
             </column>
             <column name="role" display="none" order="110">
                 <widget type="select" fieldname="codrole" required="true">
-                    <values source="roles" fieldcode="codrole" fieldtitle="descripcion"></values>
+                    <values source="roles" fieldcode="codrole" fieldtitle="descripcion"/>
                 </widget>
             </column>
             <column name="pagename" order="120">
                 <widget type="select" fieldname="pagename" required="true">
-                    <values source="pages" fieldcode="name" fieldtitle="name"></values>
+                    <values source="pages" fieldcode="name" fieldtitle="name"/>
                 </widget>
             </column>
             <column name="allow-update" order="130">
-                <widget type="checkbox" fieldname="allowupdate" />
+                <widget type="checkbox" fieldname="allowupdate"/>
             </column>
             <column name="allow-delete" order="140">
-                <widget type="checkbox" fieldname="allowdelete" />
+                <widget type="checkbox" fieldname="allowdelete"/>
             </column>
         </group>
     </columns>
     <rows>
         <row type="footer">
             <group name="footer_actions" footer="specials-actions">
-                <button type="modal" label="add" color="info" action="add-rol-access" icon="fa-user-plus" />
+                <button type="modal" label="add" color="info" action="add-rol-access" icon="fa-user-plus"/>
             </group>
         </row>
     </rows>
@@ -57,7 +57,7 @@
         <group name="add-rol-access" icon="fa-user-plus">
             <column name="select-menu" title="menu">
                 <widget type="select" fieldname="menu">
-                    <values source="pages" fieldcode="menu" fieldtitle="menu"></values>
+                    <values source="pages" fieldcode="menu" fieldtitle="menu"/>
                 </widget>
             </column>
         </group>

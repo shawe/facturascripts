@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Base;
 
 use FacturaScripts\Core\App\AppSettings;
@@ -30,13 +31,13 @@ class DivisaTools extends NumberTools
 {
 
     /**
-     *
+     * TODO: Uncomplete documentation.
      * @var Divisa[]
      */
     private static $divisas;
 
     /**
-     *
+     * TODO: Uncomplete documentation.
      * @var Divisa
      */
     private static $selectedDivisa;
@@ -47,8 +48,8 @@ class DivisaTools extends NumberTools
     public function __construct()
     {
         parent::__construct();
-        if (!defined('FS_CURRENCY_POS')) {
-            define('FS_CURRENCY_POS', 'right');
+        if (!\defined('FS_CURRENCY_POS')) {
+            \define('FS_CURRENCY_POS', 'right');
         }
 
         if (!isset(self::$divisas)) {
@@ -57,24 +58,7 @@ class DivisaTools extends NumberTools
 
             $coddivisa = AppSettings::get('default', 'coddivisa');
             foreach (self::$divisas as $div) {
-                if ($div->coddivisa == $coddivisa) {
-                    self::$selectedDivisa = $div;
-                    break;
-                }
-            }
-        }
-    }
-
-    /**
-     * Finds a coddivisa and uses it as selected currency.
-     * 
-     * @param mixed $model
-     */
-    public function findDivisa($model)
-    {
-        if (isset($model->coddivisa)) {
-            foreach (self::$divisas as $div) {
-                if ($div->coddivisa == $model->coddivisa) {
+                if ($div->coddivisa === $coddivisa) {
                     self::$selectedDivisa = $div;
                     break;
                 }
@@ -86,12 +70,12 @@ class DivisaTools extends NumberTools
      * Returns the value of the formatted currency.
      *
      * @param float|string $number
-     * @param int|string   $decimals
-     * @param string       $decoration
+     * @param int|string $decimals
+     * @param string $decoration
      *
      * @return string
      */
-    public static function format($number, $decimals = FS_NF0, $decoration = 'symbol')
+    public static function format($number, $decimals = FS_NF0, $decoration = 'symbol'): string
     {
         $txt = parent::format($number, $decimals);
 
@@ -115,10 +99,10 @@ class DivisaTools extends NumberTools
      * Return format mask for edit grid
      *
      * @param int $decimals
-     * 
+     *
      * @return array
      */
-    public static function gridMoneyFormat($decimals = FS_NF0)
+    public static function gridMoneyFormat($decimals = FS_NF0): array
     {
         $moneyFormat = '0.';
         for ($num = 0; $num < $decimals; $num++) {
@@ -126,5 +110,22 @@ class DivisaTools extends NumberTools
         }
 
         return ['pattern' => $moneyFormat];
+    }
+
+    /**
+     * Finds a coddivisa and uses it as selected currency.
+     *
+     * @param mixed $model
+     */
+    public function findDivisa($model)
+    {
+        if (isset($model->coddivisa)) {
+            foreach (self::$divisas as $div) {
+                if ($div->coddivisa === $model->coddivisa) {
+                    self::$selectedDivisa = $div;
+                    break;
+                }
+            }
+        }
     }
 }

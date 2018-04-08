@@ -25,14 +25,14 @@
 <view>
     <columns>
         <column name="code" order="100">
-            <widget type="text" fieldname="codgrupo" onclick="EditGrupoClientes" />
+            <widget type="text" fieldname="codgrupo" onclick="EditGrupoClientes"/>
         </column>
         <column name="name" order="110">
-            <widget type="text" fieldname="nombre" />
+            <widget type="text" fieldname="nombre"/>
         </column>
         <column name="parent-group" order="120">
             <widget type="select" fieldname="parent">
-                <values source="gruposclientes" fieldcode="codgrupo" fieldtitle="nombre"></values>
+                <values source="gruposclientes" fieldcode="codgrupo" fieldtitle="nombre"/>
             </widget>
         </column>
     </columns>

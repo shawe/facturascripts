@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\Utils;
@@ -97,7 +98,7 @@ class Tarifa extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'codtarifa';
     }
@@ -107,7 +108,7 @@ class Tarifa extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'tarifas';
     }
@@ -117,14 +118,14 @@ class Tarifa extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->codtarifa = trim($this->codtarifa);
         $this->nombre = Utils::noHtml($this->nombre);
 
-        if (empty($this->codtarifa) || strlen($this->codtarifa) > 6) {
+        if (empty($this->codtarifa) || \strlen($this->codtarifa) > 6) {
             self::$miniLog->alert(self::$i18n->trans('invalid-column-lenght', ['%column%' => 'codtarifa', '%min%' => '1', '%max%' => '6']));
-        } elseif (empty($this->nombre) || strlen($this->nombre) > 50) {
+        } elseif (empty($this->nombre) || \strlen($this->nombre) > 50) {
             self::$miniLog->alert(self::$i18n->trans('invalid-column-lenght', ['%column%' => 'nombre', '%min%' => '1', '%max%' => '50']));
         } else {
             return true;

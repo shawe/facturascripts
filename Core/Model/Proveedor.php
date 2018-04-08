@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\App\AppSettings;
@@ -37,7 +38,7 @@ class Proveedor extends Base\ComercialContact
      * @var bool
      */
     public $acreedor;
-    
+
     /**
      * Transport tax.
      *
@@ -50,7 +51,7 @@ class Proveedor extends Base\ComercialContact
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'proveedores';
     }
@@ -60,7 +61,7 @@ class Proveedor extends Base\ComercialContact
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'codproveedor';
     }
@@ -70,7 +71,7 @@ class Proveedor extends Base\ComercialContact
      *
      * @return string
      */
-    public function primaryDescriptionColumn()
+    public function primaryDescriptionColumn(): string
     {
         return 'nombre';
     }
@@ -90,7 +91,7 @@ class Proveedor extends Base\ComercialContact
      *
      * @return DireccionProveedor[]
      */
-    public function getDirecciones()
+    public function getDirecciones(): array
     {
         $dirModel = new DireccionProveedor();
 
@@ -102,7 +103,7 @@ class Proveedor extends Base\ComercialContact
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         parent::test();
         $this->codproveedor = empty($this->codproveedor) ? (string) $this->newCode() : trim($this->codproveedor);

@@ -154,7 +154,8 @@
     </constraint>
     <constraint>
         <name>ca_albaranesprov_ejercicios2</name>
-        <type>FOREIGN KEY (codejercicio) REFERENCES ejercicios (codejercicio) ON DELETE RESTRICT ON UPDATE CASCADE</type>
+        <type>FOREIGN KEY (codejercicio) REFERENCES ejercicios (codejercicio) ON DELETE RESTRICT ON UPDATE CASCADE
+        </type>
     </constraint>
     <constraint>
         <name>ca_albaranesprov_facturas</name>

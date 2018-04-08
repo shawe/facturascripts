@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Dashboard;
 
 use FacturaScripts\Core\Model;
@@ -40,7 +41,7 @@ class MessagesComponent extends BaseComponent implements ComponentInterface
      * MessagesComponent constructor.
      *
      * @param Model\DashboardData $data
-     * @param string              $userNick
+     * @param string $userNick
      */
     public function __construct($data, $userNick)
     {
@@ -53,7 +54,7 @@ class MessagesComponent extends BaseComponent implements ComponentInterface
      *
      * @return array
      */
-    public static function getPropertiesFields()
+    public static function getPropertiesFields(): array
     {
         return [
             'description' => '',
@@ -98,7 +99,7 @@ class MessagesComponent extends BaseComponent implements ComponentInterface
         }
 
         if ($this->randomData) {
-            $data['link'] = (mt_rand(0, 3) === 0) ? 'https://www.' . mt_rand(999, 99999) . '.com' : '';
+            $data['link'] = (random_int(0, 3) === 0) ? 'https://www.' . random_int(999, 99999) . '.com' : '';
         }
 
         $newItem->properties = [
@@ -111,24 +112,24 @@ class MessagesComponent extends BaseComponent implements ComponentInterface
     }
 
     /**
-     * Return the number of columns to display width this component.
-     *
-     * @return string
-     */
-    public function getNumColumns()
-    {
-        return 'col-5';
-    }
-
-    /**
      * Return the URL to this component.
      *
      * @param string $id
      *
      * @return string
      */
-    public function url($id)
+    public function url($id): string
     {
         return 'EditDashboardData?code=' . $id;
+    }
+
+    /**
+     * Return the number of columns to display width this component.
+     *
+     * @return string
+     */
+    public function getNumColumns(): string
+    {
+        return 'col-5';
     }
 }

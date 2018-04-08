@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController;
@@ -33,14 +34,14 @@ class ListArticulo extends ExtendedController\ListController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'products';
-        $pagedata['icon'] = 'fa-cubes';
-        $pagedata['menu'] = 'warehouse';
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'products';
+        $pageData['icon'] = 'fa-cubes';
+        $pageData['menu'] = 'warehouse';
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
@@ -58,10 +59,10 @@ class ListArticulo extends ExtendedController\ListController
         $this->addView('ListArticulo', 'Articulo', 'products');
         $this->addSearchFields('ListArticulo', ['referencia', 'descripcion']);
 
-        $selectValues = $this->codeModel->all('fabricantes', 'codfabricante', 'nombre');
+        $selectValues = $this->codeModel::all('fabricantes', 'codfabricante', 'nombre');
         $this->addFilterSelect('ListArticulo', 'codfabricante', 'manufacturer', 'codfabricante', $selectValues);
 
-        $familyValues = $this->codeModel->all('familias', 'codfamilia', 'descripcion');
+        $familyValues = $this->codeModel::all('familias', 'codfamilia', 'descripcion');
         $this->addFilterSelect('ListArticulo', 'codfamilia', 'family', 'codfamilia', $familyValues);
 
         $this->addFilterCheckbox('ListArticulo', 'bloqueado', 'locked', 'bloqueado');
@@ -91,7 +92,7 @@ class ListArticulo extends ExtendedController\ListController
         $this->addView('ListStock', 'Stock', 'stock', 'fa-tasks');
         $this->addSearchFields('ListStock', ['referencia', 'ubicacion']);
 
-        $selectValues = $this->codeModel->all('almacenes', 'codalmacen', 'nombre');
+        $selectValues = $this->codeModel::all('almacenes', 'codalmacen', 'nombre');
         $this->addFilterSelect('ListStock', 'codalmacen', 'warehouse', 'codalmacen', $selectValues);
 
         $this->addOrderBy('ListStock', 'referencia', 'reference');

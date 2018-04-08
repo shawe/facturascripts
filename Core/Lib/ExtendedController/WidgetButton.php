@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 /**
@@ -83,36 +84,6 @@ class WidgetButton implements VisualItemInterface
     public $id;
 
     /**
-     * Create and load the structure of attributes from a XML file.
-     *
-     * @param \SimpleXMLElement $button
-     *
-     * @return WidgetButton
-     */
-    public static function newFromXML($button)
-    {
-        $widget = new self();
-        $widget->loadFromXML($button);
-
-        return $widget;
-    }
-
-    /**
-     * Create and load element structure from JSON file
-     *
-     * @param array $button
-     *
-     * @return WidgetButton
-     */
-    public static function newFromJSON($button)
-    {
-        $widget = new self();
-        $widget->loadFromJSON($button);
-
-        return $widget;
-    }
-
-    /**
      * WidgetButton constructor.
      */
     public function __construct()
@@ -128,27 +99,33 @@ class WidgetButton implements VisualItemInterface
     }
 
     /**
-     * Array with list of personalization functions of the column
+     * Create and load the structure of attributes from a XML file.
+     *
+     * @param \SimpleXMLElement $button
+     *
+     * @return WidgetButton
      */
-    public function columnFunction()
+    public static function newFromXML($button): WidgetButton
     {
-        return ['ColumnClass', 'ColumnHint', 'ColumnDescription'];
+        $widget = new self();
+        $widget->loadFromXML($button);
+
+        return $widget;
     }
 
     /**
-     * Return optional atribute value
+     * Create and load element structure from JSON file
      *
-     * @param string $field
-     * @param mixed  $atributes
-     * 
-     * @return string
+     * @param array $button
+     *
+     * @return WidgetButton
      */
-    private function getOptionalAtribute($field, &$atributes): string
+    public static function newFromJSON($button): WidgetButton
     {
-        if (!empty($atributes->{$field})) {
-            return (string) $atributes->{$field};
-        }
-        return '';
+        $widget = new self();
+        $widget->loadFromJSON($button);
+
+        return $widget;
     }
 
     /**
@@ -186,6 +163,82 @@ class WidgetButton implements VisualItemInterface
     }
 
     /**
+     * Generate the html code to visualize the visual element header
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    public function getHeaderHTML($value): string
+    {
+        return '';
+    }
+
+    /**
+     * Array with list of personalization functions of the column
+     */
+    public function columnFunction(): array
+    {
+        return ['ColumnClass', 'ColumnHint', 'ColumnDescription'];
+    }
+
+    /**
+     * Returns the HTML code to display a button
+     *
+     * @param string $label
+     * @param string $value
+     * @param string $hint
+     * @param string $class
+     *
+     * @return string
+     */
+    public function getHTML($label, $value = '', $hint = '', $class = 'col-sm-auto'): string
+    {
+        switch ($this->type) {
+            case 'calculate':
+                return $this->getCalculateHTML($label, $value, $hint);
+
+            case 'action':
+                return $this->getActionHTML($label, $hint, $value, $class);
+
+            case 'modal':
+                return $this->getModalHTML($label, $class);
+
+            default:
+                return '';
+        }
+    }
+
+    /**
+     * Returns the HTML code to show a popover with the received text.
+     *
+     * @param string $hint
+     *
+     * @return string
+     */
+    public function getHintHTML($hint): string
+    {
+        return empty($hint) ? '' : ' data-toggle="popover" data-placement="auto" data-trigger="hover" data-content="'
+            . $hint . '" ';
+    }
+
+    /**
+     * Return optional atribute value
+     *
+     * @param string $field
+     * @param mixed $atributes
+     *
+     * @return string
+     */
+    private function getOptionalAtribute($field, &$atributes): string
+    {
+        if (!empty($atributes->{$field})) {
+            return (string) $atributes->{$field};
+        }
+        return '';
+    }
+
+    /**
      * Returns the HTML code for the icon
      *
      * @return string
@@ -210,9 +263,10 @@ class WidgetButton implements VisualItemInterface
      *
      * @param string $onclick
      * @param string $addParam
+     *
      * @return string
      */
-    private function getOnClickHTML($onclick, $addParam = '')
+    private function getOnClickHTML($onclick, $addParam = ''): string
     {
         if (empty($onclick)) {
             return '';
@@ -223,7 +277,7 @@ class WidgetButton implements VisualItemInterface
         }
 
         $pos = strpos($onclick, ')');
-        if ($pos === FALSE) {
+        if ($pos === false) {
             return ' onclick="' . $onclick . '(' . $addParam . ')" ';
         }
 
@@ -242,7 +296,7 @@ class WidgetButton implements VisualItemInterface
      *
      * @return string
      */
-    private function getCalculateHTML($label, $value, $hint)
+    private function getCalculateHTML($label, $value, $hint): string
     {
         $html = '<button type="button" class="btn btn-' . $this->color . '" '
             . $this->getIdHTML()
@@ -263,14 +317,14 @@ class WidgetButton implements VisualItemInterface
      *
      * @return string
      */
-    private function getActionHTML($label, $hint, $formName = 'main_form', $class = 'col-sm-auto')
+    private function getActionHTML($label, $hint, $formName = 'main_form', $class = 'col-sm-auto'): string
     {
         $onclick = empty($this->onClick) ? 'execActionForm()' : $this->onClick;
         $param = '\'' . $formName . '\',\'' . $this->action . '\'';
 
-        $html = '<button type="button" class="' . $class . ' btn btn-' . $this->color . '"'
+        $html = '<button type="button" class="' . $class . ' btn btn-' . $this->color . '" '
             . $this->getIdHTML()
-            . $this->getOnClickHTML($onclick, $param) . $hint . '>'
+            . $this->getOnClickHTML($onclick, $param) . $hint . ' >'
             . $this->getIconHTML()
             . $label
             . '</button>';
@@ -286,67 +340,15 @@ class WidgetButton implements VisualItemInterface
      *
      * @return string
      */
-    private function getModalHTML($label, $class = 'col-sm-auto')
+    private function getModalHTML($label, $class = 'col-sm-auto'): string
     {
-        $html = '<button type="button" class="' . $class . ' btn btn-' . $this->color . '"'
+        $html = '<button type="button" class="' . $class . ' btn btn-' . $this->color . '" '
             . $this->getIdHTML()
-            . ' data-toggle="modal" data-target="#' . $this->action . '">'
+            . ' data-toggle="modal" data-target="#' . $this->action . '" >'
             . $this->getIconHTML()
             . $label
             . '</button>';
 
         return $html;
-    }
-
-    /**
-     * Returns the HTML code to display a button
-     *
-     * @param string $label
-     * @param string $value
-     * @param string $hint
-     * @param string $class
-     *
-     * @return string
-     */
-    public function getHTML($label, $value = '', $hint = '', $class = 'col-sm-auto')
-    {
-        switch ($this->type) {
-            case 'calculate':
-                return $this->getCalculateHTML($label, $value, $hint);
-
-            case 'action':
-                return $this->getActionHTML($label, $hint, $value, $class);
-
-            case 'modal':
-                return $this->getModalHTML($label, $class);
-
-            default:
-                return '';
-        }
-    }
-
-    /**
-     * Generate the html code to visualize the visual element header
-     *
-     * @param string $value
-     *
-     * @return string
-     */
-    public function getHeaderHTML($value)
-    {
-        return '';
-    }
-
-    /**
-     * Returns the HTML code to show a popover with the received text.
-     *
-     * @param string $hint
-     *
-     * @return string
-     */
-    public function getHintHTML($hint)
-    {
-        return empty($hint) ? '' : ' data-toggle="popover" data-placement="auto" data-trigger="hover" data-content="'
-            . $hint . '" ';
     }
 }

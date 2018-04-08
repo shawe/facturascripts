@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -49,7 +50,7 @@ class PresupuestoProveedor extends Base\PurchaseDocument
      *
      * @return LineaPresupuestoProveedor[]
      */
-    public function getLines()
+    public function getLines(): array
     {
         $lineaModel = new LineaPresupuestoProveedor();
         $where = [new DataBaseWhere('idpresupuesto', $this->idpresupuesto)];
@@ -65,14 +66,14 @@ class PresupuestoProveedor extends Base\PurchaseDocument
      *
      * @return LineaPresupuestoProveedor
      */
-    public function getNewLine(array $data = [])
+    public function getNewLine(array $data = []): LineaPresupuestoProveedor
     {
         $newLine = new LineaPresupuestoProveedor($data);
         $newLine->idpresupuesto = $this->idpresupuesto;
-        
+
         $state = $this->getState();
         $newLine->actualizastock = $state->actualizastock;
-        
+
         return $newLine;
     }
 
@@ -83,7 +84,7 @@ class PresupuestoProveedor extends Base\PurchaseDocument
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         parent::install();
         new PedidoProveedor();
@@ -96,7 +97,7 @@ class PresupuestoProveedor extends Base\PurchaseDocument
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idpresupuesto';
     }
@@ -106,7 +107,7 @@ class PresupuestoProveedor extends Base\PurchaseDocument
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'presupuestosprov';
     }

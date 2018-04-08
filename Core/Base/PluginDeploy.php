@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Base;
 
 /**
@@ -25,6 +26,10 @@ namespace FacturaScripts\Core\Base;
  */
 class PluginDeploy
 {
+    /**
+     * The directory separator.
+     */
+    const DS = \DIRECTORY_SEPARATOR;
 
     /**
      * System translator.
@@ -53,29 +58,29 @@ class PluginDeploy
      * Deploy all the necessary files in the Dinamic folder to be able to use plugins
      * with the autoloader, but following the priority system of FacturaScripts.
      *
-     * @param string    $pluginPath
-     * @param array     $enabledPlugins
-     * @param bool      $clean
+     * @param string $pluginPath
+     * @param array $enabledPlugins
+     * @param bool $clean
      */
     public function deploy($pluginPath, $enabledPlugins, $clean = true)
     {
         $folders = ['Assets', 'Controller', 'Model', 'Lib', 'Table', 'View', 'XMLView'];
         foreach ($folders as $folder) {
             if ($clean) {
-                $this->cleanFolder(FS_FOLDER . DIRECTORY_SEPARATOR . 'Dinamic' . DIRECTORY_SEPARATOR . $folder);
+                $this->cleanFolder(FS_FOLDER . self::DS . 'Dinamic' . self::DS . $folder);
             }
 
-            $this->createFolder(FS_FOLDER . DIRECTORY_SEPARATOR . 'Dinamic' . DIRECTORY_SEPARATOR . $folder);
+            $this->createFolder(FS_FOLDER . self::DS . 'Dinamic' . self::DS . $folder);
 
             /// examine the plugins
             foreach ($enabledPlugins as $pluginName) {
-                if (file_exists($pluginPath . $pluginName . DIRECTORY_SEPARATOR . $folder)) {
+                if (file_exists($pluginPath . $pluginName . self::DS . $folder)) {
                     $this->linkFiles($folder, 'Plugins', $pluginName);
                 }
             }
 
             /// examine the core
-            if (file_exists(FS_FOLDER . DIRECTORY_SEPARATOR . 'Core' . DIRECTORY_SEPARATOR . $folder)) {
+            if (file_exists(FS_FOLDER . self::DS . 'Core' . self::DS . $folder)) {
                 $this->linkFiles($folder);
             }
         }
@@ -88,7 +93,7 @@ class PluginDeploy
      *
      * @return bool
      */
-    private function cleanFolder($folder)
+    private function cleanFolder($folder): bool
     {
         $done = true;
 
@@ -98,10 +103,10 @@ class PluginDeploy
 
             /// Ahora recorremos y eliminamos lo que encontramos
             foreach ($items as $item) {
-                if (is_dir($folder . DIRECTORY_SEPARATOR . $item)) {
-                    $done = $this->cleanFolder($folder . DIRECTORY_SEPARATOR . $item . DIRECTORY_SEPARATOR);
+                if (is_dir($folder . self::DS . $item)) {
+                    $done = $this->cleanFolder($folder . self::DS . $item . self::DS);
                 } else {
-                    $done = unlink($folder . DIRECTORY_SEPARATOR . $item);
+                    $done = unlink($folder . self::DS . $item);
                 }
             }
         }
@@ -116,9 +121,9 @@ class PluginDeploy
      *
      * @return bool
      */
-    private function createFolder($folder)
+    private function createFolder($folder): bool
     {
-        if (!file_exists($folder) && !@mkdir($folder, 0775, true)) {
+        if (!file_exists($folder) && !@mkdir($folder, 0775, true) && !is_dir($folder)) {
             $this->minilog->critical($this->i18n->trans('cant-create-folder', ['%folderName%' => $folder]));
 
             return false;
@@ -137,20 +142,20 @@ class PluginDeploy
     private function linkFiles($folder, $place = 'Core', $pluginName = '')
     {
         if (empty($pluginName)) {
-            $path = FS_FOLDER . DIRECTORY_SEPARATOR . $place . DIRECTORY_SEPARATOR . $folder;
+            $path = FS_FOLDER . self::DS . $place . self::DS . $folder;
         } else {
-            $path = FS_FOLDER . DIRECTORY_SEPARATOR . 'Plugins' . DIRECTORY_SEPARATOR . $pluginName . DIRECTORY_SEPARATOR . $folder;
+            $path = FS_FOLDER . self::DS . 'Plugins' . self::DS . $pluginName . self::DS . $folder;
         }
 
         foreach ($this->scanFolders($path) as $fileName) {
             $infoFile = pathinfo($fileName);
-            if (is_dir($path . DIRECTORY_SEPARATOR . $fileName)) {
-                $this->createFolder(FS_FOLDER . DIRECTORY_SEPARATOR . 'Dinamic' . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR . $fileName);
-            } elseif ($infoFile['filename'] !== '' && is_file($path . DIRECTORY_SEPARATOR . $fileName)) {
+            if (is_dir($path . self::DS . $fileName)) {
+                $this->createFolder(FS_FOLDER . self::DS . 'Dinamic' . self::DS . $folder . self::DS . $fileName);
+            } elseif ($infoFile['filename'] !== '' && is_file($path . self::DS . $fileName)) {
                 if ($infoFile['extension'] === 'php') {
                     $this->linkClassFile($fileName, $folder, $place, $pluginName);
                 } else {
-                    $filePath = $path . DIRECTORY_SEPARATOR . $fileName;
+                    $filePath = $path . self::DS . $fileName;
                     $this->linkFile($fileName, $folder, $filePath);
                 }
             }
@@ -167,7 +172,7 @@ class PluginDeploy
      */
     private function linkClassFile($fileName, $folder, $place, $pluginName)
     {
-        if (!file_exists(FS_FOLDER . DIRECTORY_SEPARATOR . 'Dinamic' . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR . $fileName)) {
+        if (!file_exists(FS_FOLDER . self::DS . 'Dinamic' . self::DS . $folder . self::DS . $fileName)) {
             if (empty($pluginName)) {
                 $namespace = 'FacturaScripts\\' . $place . '\\' . $folder;
                 $newNamespace = 'FacturaScripts\\Dinamic\\' . $folder;
@@ -176,22 +181,22 @@ class PluginDeploy
                 $newNamespace = "FacturaScripts\Dinamic\\" . $folder;
             }
 
-            $paths = explode(DIRECTORY_SEPARATOR, $fileName);
+            $paths = explode(self::DS, $fileName);
             for ($key = 0; $key < count($paths) - 1; ++$key) {
                 $namespace .= '\\' . $paths[$key];
                 $newNamespace .= '\\' . $paths[$key];
             }
 
             $className = basename($fileName, '.php');
-            $txt = '<?php namespace ' . $newNamespace . ";\n\n"
-                . '/**' . "\n"
-                . ' * Class created by Core/Base/PluginManager' . "\n"
-                . ' * @package ' . $newNamespace . "\n"
-                . ' * @author Carlos García Gómez <carlos@facturascripts.com>' . "\n"
-                . ' */' . "\n"
-                . 'class ' . $className . ' extends \\' . $namespace . '\\' . $className . "\n{\n}\n";
+            $txt = '<?php namespace ' . $newNamespace . ";" . \PHP_EOL . \PHP_EOL
+                . '/**' . \PHP_EOL
+                . ' * Class created by Core/Base/PluginManager' . \PHP_EOL
+                . ' * @package ' . $newNamespace . \PHP_EOL
+                . ' * @author Carlos García Gómez <carlos@facturascripts.com>' . \PHP_EOL
+                . ' */' . \PHP_EOL
+                . 'class ' . $className . ' extends \\' . $namespace . '\\' . $className . \PHP_EOL . '{' . \PHP_EOL . '}' . \PHP_EOL;
 
-            file_put_contents(FS_FOLDER . DIRECTORY_SEPARATOR . 'Dinamic' . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR . $fileName, $txt);
+            file_put_contents(FS_FOLDER . self::DS . 'Dinamic' . self::DS . $folder . self::DS . $fileName, $txt);
         }
     }
 
@@ -204,8 +209,8 @@ class PluginDeploy
      */
     private function linkFile($fileName, $folder, $filePath)
     {
-        if (!file_exists(FS_FOLDER . DIRECTORY_SEPARATOR . 'Dinamic' . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR . $fileName)) {
-            @copy($filePath, FS_FOLDER . DIRECTORY_SEPARATOR . 'Dinamic' . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR . $fileName);
+        if (!file_exists(FS_FOLDER . self::DS . 'Dinamic' . self::DS . $folder . self::DS . $fileName)) {
+            @copy($filePath, FS_FOLDER . self::DS . 'Dinamic' . self::DS . $folder . self::DS . $fileName);
         }
     }
 
@@ -217,19 +222,19 @@ class PluginDeploy
      *
      * @return array $result
      */
-    private function scanFolders($folder)
+    private function scanFolders($folder): array
     {
         $result = [];
         $rootFolder = array_diff(scandir($folder, SCANDIR_SORT_ASCENDING), ['.', '..']);
         foreach ($rootFolder as $item) {
-            $newItem = $folder . DIRECTORY_SEPARATOR . $item;
+            $newItem = $folder . self::DS . $item;
             if (is_file($newItem)) {
                 $result[] = $item;
                 continue;
             }
             $result[] = $item;
             foreach ($this->scanFolders($newItem) as $item2) {
-                $result[] = $item . DIRECTORY_SEPARATOR . $item2;
+                $result[] = $item . self::DS . $item2;
             }
         }
 

@@ -41,7 +41,7 @@ class LineaPresupuestoCliente extends Base\SalesDocumentLine
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'lineaspresupuestoscli';
     }

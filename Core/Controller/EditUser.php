@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -53,21 +54,21 @@ class EditUser extends ExtendedController\PanelController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'user';
-        $pagedata['icon'] = 'fa-user';
-        $pagedata['menu'] = 'admin';
-        $pagedata['showonmenu'] = false;
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'user';
+        $pageData['icon'] = 'fa-user';
+        $pageData['menu'] = 'admin';
+        $pageData['showonmenu'] = false;
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
      * Load view data proedure
      *
-     * @param string                      $keyView
+     * @param string $keyView
      * @param ExtendedController\EditView $view
      */
     protected function loadData($keyView, $view)
@@ -112,7 +113,7 @@ class EditUser extends ExtendedController\PanelController
      *
      * @return array
      */
-    private function getUserPages($user)
+    private function getUserPages($user): array
     {
         $pageList = [];
         if ($user->admin) {
@@ -130,8 +131,10 @@ class EditUser extends ExtendedController\PanelController
 
         $roleUserModel = new Model\RoleUser();
         foreach ($roleUserModel->all([new DataBaseWhere('nick', $user->nick)]) as $roleUser) {
-            foreach ($roleUser->getRoleAccess() as $roleAccess) {
-                $pageList[] = ['value' => $roleAccess->pagename, 'title' => $roleAccess->pagename];
+            if ($roleUser instanceof Model\RoleUser) {
+                foreach ($roleUser->getRoleAccess() as $roleAccess) {
+                    $pageList[] = ['value' => $roleAccess->pagename, 'title' => $roleAccess->pagename];
+                }
             }
         }
 

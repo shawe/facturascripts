@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 /**
@@ -32,6 +33,77 @@ abstract class RowItem implements VisualItemInterface
      * @var string
      */
     public $type;
+
+    /**
+     * RowItem constructor.
+     *
+     * @param string $type
+     */
+    public function __construct($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * Creates and loads the row structure from an XML file
+     *
+     * @param \SimpleXMLElement $row
+     *
+     * @return RowItem|null
+     */
+    public static function newFromXML($row)
+    {
+        $rowAtributes = $row->attributes();
+        $type = (string) $rowAtributes->type;
+        $result = self::rowItemFromType($type);
+        /** @noinspection NullPointerExceptionInspection */
+        $result->loadFromXML($row);
+
+        return $result;
+    }
+
+    /**
+     * Creates and loads the row structure from the database
+     *
+     * @param array $row
+     *
+     * @return RowItem|null
+     */
+    public static function newFromJSON($row)
+    {
+        $type = (string) $row['type'];
+        $result = self::rowItemFromType($type);
+        /** @noinspection NullPointerExceptionInspection */
+        $result->loadFromJSON($row);
+
+        return $result;
+    }
+
+    /**
+     * Creates and loads the attributes structure from a XML file
+     *
+     * @param \SimpleXMLElement $row
+     */
+    abstract public function loadFromXML($row);
+
+    /**
+     * Creates and loads the attributes structure from JSON file
+     *
+     * @param array $row
+     */
+    abstract public function loadFromJSON($row);
+
+    /**
+     * Generates the HTML code to display the header for the visual element
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    public function getHeaderHTML($value): string
+    {
+        return $value;
+    }
 
     /**
      * Dynamic class constructor. Creates a RowItem objec of the given type.
@@ -60,56 +132,13 @@ abstract class RowItem implements VisualItemInterface
     }
 
     /**
-     * Creates and loads the row structure from an XML file
-     *
-     * @param \SimpleXMLElement $row
-     *
-     * @return RowItem
-     */
-    public static function newFromXML($row)
-    {
-        $rowAtributes = $row->attributes();
-        $type = (string) $rowAtributes->type;
-        $result = self::rowItemFromType($type);
-        $result->loadFromXML($row);
-
-        return $result;
-    }
-
-    /**
-     * Creates and loads the row structure from the database
-     *
-     * @param array $row
-     *
-     * @return RowItem
-     */
-    public static function newFromJSON($row)
-    {
-        $type = (string) $row['type'];
-        $result = self::rowItemFromType($type);
-        $result->loadFromJSON($row);
-
-        return $result;
-    }
-
-    /**
-     * RowItem constructor.
-     *
-     * @param string $type
-     */
-    public function __construct($type)
-    {
-        $this->type = $type;
-    }
-
-    /**
      * Return the attributes of an element from the XML.
      *
      * @param \SimpleXMLElement $item
      *
      * @return array
      */
-    protected function getAttributesFromXML($item)
+    protected function getAttributesFromXML($item): array
     {
         $result = [];
         foreach ($item->attributes() as $key => $value) {
@@ -127,7 +156,7 @@ abstract class RowItem implements VisualItemInterface
      *
      * @return WidgetButton[]
      */
-    protected function loadButtonsFromXML($buttonsXML)
+    protected function loadButtonsFromXML($buttonsXML): array
     {
         $buttons = [];
         foreach ($buttonsXML->button as $item) {
@@ -146,7 +175,7 @@ abstract class RowItem implements VisualItemInterface
      *
      * @return WidgetButton[]
      */
-    protected function loadButtonsFromJSON($buttonsJSON)
+    protected function loadButtonsFromJSON($buttonsJSON): array
     {
         $buttons = [];
         foreach ($buttonsJSON as $button) {
@@ -156,31 +185,5 @@ abstract class RowItem implements VisualItemInterface
         }
 
         return $buttons;
-    }
-
-    /**
-     * Creates and loads the attributes structure from a XML file
-     *
-     * @param \SimpleXMLElement $row
-     */
-    abstract public function loadFromXML($row);
-
-    /**
-     * Creates and loads the attributes structure from JSON file
-     *
-     * @param array $row
-     */
-    abstract public function loadFromJSON($row);
-
-    /**
-     * Generates the HTML code to display the header for the visual element
-     *
-     * @param string $value
-     *
-     * @return string
-     */
-    public function getHeaderHTML($value)
-    {
-        return $value;
     }
 }

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase;
@@ -95,39 +96,13 @@ class PageOption extends Base\ModelClass
     }
 
     /**
-     * Get the settings for the driver and user
-     *
-     * @param string $name
-     * @param string $nick
-     */
-    public function getForUser(string $name, string $nick)
-    {
-        $where = $this->getPageFilter($name, $nick);
-        $orderby = ['nick' => 'ASC'];
-
-        // Load data from database, if not exist install xmlview
-        if (!$this->loadFromCode('', $where, $orderby)) {
-            $this->name = $name;
-
-            if (!ExtendedController\VisualItemLoadEngine::installXML($name, $this)) {
-                self::$miniLog->critical(self::$i18n->trans('error-processing-xmlview', ['%fileName%' => $name]));
-
-                return;
-            }
-        }
-
-        /// Apply values to dynamic Select widgets
-        ExtendedController\VisualItemLoadEngine::applyDynamicSelectValues($this);
-    }
-
-    /**
      * This function is called when creating the model table.
      * Returns the SQL that will be executed after the creation of the table,
      * useful to insert default values.
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         new Page();
         new User();
@@ -157,7 +132,7 @@ class PageOption extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'id';
     }
@@ -167,9 +142,58 @@ class PageOption extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'pages_options';
+    }
+
+    /**
+     * Insert the model data in the database.
+     *
+     * @param array $values
+     *
+     * @return bool
+     */
+    protected function saveInsert(array $values = []): bool
+    {
+        return parent::saveInsert($this->getEncodeValues());
+    }
+
+    /**
+     * Update the model data in the database.
+     *
+     * @param array $values
+     *
+     * @return bool
+     */
+    protected function saveUpdate(array $values = []): bool
+    {
+        return parent::saveUpdate($this->getEncodeValues());
+    }
+
+    /**
+     * Get the settings for the driver and user
+     *
+     * @param string $name
+     * @param string $nick
+     */
+    public function getForUser(string $name, string $nick)
+    {
+        $where = $this->getPageFilter($name, $nick);
+        $orderBy = ['nick' => 'ASC'];
+
+        // Load data from database, if not exist install xmlview
+        if (!$this->loadFromCode('', $where, $orderBy)) {
+            $this->name = $name;
+            if (!ExtendedController\VisualItemLoadEngine::installXML($name, $this)) {
+                self::$miniLog->critical(self::$i18n->trans('error-processing-xmlview', ['%fileName%' => $name]));
+
+                return;
+            }
+        }
+
+        /// Apply values to dynamic Select widgets
+        ExtendedController\VisualItemLoadEngine::applyDynamicSelectValues($this);
     }
 
     /**
@@ -177,7 +201,7 @@ class PageOption extends Base\ModelClass
      *
      * @return array
      */
-    private function getEncodeValues()
+    private function getEncodeValues(): array
     {
         return [
             'columns' => json_encode($this->columns),
@@ -195,7 +219,7 @@ class PageOption extends Base\ModelClass
      *
      * @return Database\DataBaseWhere[]
      */
-    private function getPageFilter(string $name, string $nick)
+    private function getPageFilter(string $name, string $nick): array
     {
         return [
             new DataBase\DataBaseWhere('nick', $nick),
@@ -203,29 +227,5 @@ class PageOption extends Base\ModelClass
             new DataBase\DataBaseWhere('nick', 'NULL', 'IS', 'OR'),
             new DataBase\DataBaseWhere('name', $name),
         ];
-    }
-
-    /**
-     * Insert the model data in the database.
-     *
-     * @param array $values
-     *
-     * @return bool
-     */
-    protected function saveInsert(array $values = [])
-    {
-        return parent::saveInsert($this->getEncodeValues());
-    }
-
-    /**
-     * Update the model data in the database.
-     *
-     * @param array $values
-     *
-     * @return bool
-     */
-    protected function saveUpdate(array $values = [])
-    {
-        return parent::saveUpdate($this->getEncodeValues());
     }
 }

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 /**
@@ -80,7 +81,7 @@ class ArticuloProveedor extends Base\Product
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         /// force the verification of the provider table
         new Proveedor();
@@ -93,7 +94,7 @@ class ArticuloProveedor extends Base\Product
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'id';
     }
@@ -103,7 +104,7 @@ class ArticuloProveedor extends Base\Product
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'articulosprov';
     }
@@ -116,7 +117,7 @@ class ArticuloProveedor extends Base\Product
      *
      * @return string
      */
-    public function url(string $type = 'auto', string $list = 'List')
+    public function url(string $type = 'auto', string $list = 'List'): string
     {
         return parent::url($type, 'ListArticulo?active=List');
     }

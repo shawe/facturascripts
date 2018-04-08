@@ -41,7 +41,7 @@ class LineaPedidoProveedor extends Base\BusinessDocumentLine
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'lineaspedidosprov';
     }

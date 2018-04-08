@@ -20,8 +20,8 @@
 namespace FacturaScripts\Core\Base\DataBase;
 
 use Exception;
-use mysqli;
 use FacturaScripts\Core\Base\Translator;
+use mysqli;
 
 /**
  * Class to connect with MySQL.
@@ -79,40 +79,13 @@ class Mysql implements DataBaseEngine
     }
 
     /**
-     * Rollback all active transactions
-     */
-    private function rollbackTransactions()
-    {
-        foreach ($this->transactions as $link) {
-            $this->rollback($link);
-        }
-    }
-
-    /**
-     * Delete from the list the specified transaction
-     *
-     * @param \mysqli $link
-     */
-    private function unsetTransaction($link)
-    {
-        $count = 0;
-        foreach ($this->transactions as $trans) {
-            if ($trans === $link) {
-                array_splice($this->transactions, $count, 1);
-                break;
-            }
-            ++$count;
-        }
-    }
-
-    /**
      * Returns the database engine and its version
      *
      * @param \mysqli $link
      *
      * @return string
      */
-    public function version($link)
+    public function version($link): string
     {
         return 'MYSQL ' . $link->server_version;
     }
@@ -158,7 +131,7 @@ class Mysql implements DataBaseEngine
      *
      * @return bool
      */
-    public function close($link)
+    public function close($link): bool
     {
         $this->rollbackTransactions();
 
@@ -172,7 +145,7 @@ class Mysql implements DataBaseEngine
      *
      * @return string
      */
-    public function errorMessage($link)
+    public function errorMessage($link): string
     {
         return ($link->error !== '') ? $link->error : $this->lastErrorMsg;
     }
@@ -184,7 +157,7 @@ class Mysql implements DataBaseEngine
      *
      * @return bool
      */
-    public function beginTransaction($link)
+    public function beginTransaction($link): bool
     {
         $result = $this->exec($link, 'START TRANSACTION;');
         if ($result) {
@@ -201,10 +174,10 @@ class Mysql implements DataBaseEngine
      *
      * @return bool
      */
-    public function commit($link)
+    public function commit($link): bool
     {
         $result = $this->exec($link, 'COMMIT;');
-        if ($result && in_array($link, $this->transactions, false)) {
+        if ($result && \in_array($link, $this->transactions, false)) {
             $this->unsetTransaction($link);
         }
 
@@ -218,10 +191,10 @@ class Mysql implements DataBaseEngine
      *
      * @return bool
      */
-    public function rollback($link)
+    public function rollback($link): bool
     {
         $result = $this->exec($link, 'ROLLBACK;');
-        if (in_array($link, $this->transactions, false)) {
+        if (\in_array($link, $this->transactions, false)) {
             $this->unsetTransaction($link);
         }
 
@@ -235,9 +208,9 @@ class Mysql implements DataBaseEngine
      *
      * @return bool
      */
-    public function inTransaction($link)
+    public function inTransaction($link): bool
     {
-        return in_array($link, $this->transactions, false);
+        return \in_array($link, $this->transactions, false);
     }
 
     /**
@@ -245,11 +218,11 @@ class Mysql implements DataBaseEngine
      * or an empty array when it fails.
      *
      * @param \mysqli $link
-     * @param string  $sql
+     * @param string $sql
      *
      * @return array
      */
-    public function select($link, $sql)
+    public function select($link, $sql): array
     {
         $result = [];
         try {
@@ -274,11 +247,11 @@ class Mysql implements DataBaseEngine
      * (inserts, updates or deletes)
      *
      * @param \mysqli $link
-     * @param string  $sql
+     * @param string $sql
      *
      * @return bool
      */
-    public function exec($link, $sql)
+    public function exec($link, $sql): bool
     {
         try {
             if ($link->multi_query($sql)) {
@@ -299,11 +272,11 @@ class Mysql implements DataBaseEngine
      * Escapes quotes from a text string
      *
      * @param \mysqli $link
-     * @param string  $str
+     * @param string $str
      *
      * @return string
      */
-    public function escapeString($link, $str)
+    public function escapeString($link, $str): string
     {
         return $link->escape_string($str);
     }
@@ -313,41 +286,9 @@ class Mysql implements DataBaseEngine
      *
      * @return string
      */
-    public function dateStyle()
+    public function dateStyle(): string
     {
         return 'Y-m-d';
-    }
-
-    /**
-     * Compares the data types from a numeric column
-     *
-     * @param string $dbType
-     * @param string $xmlType
-     *
-     * @return bool
-     */
-    private function compareDataTypeNumeric($dbType, $xmlType)
-    {
-        return (0 === strpos($dbType, 'int(') && $xmlType === 'INTEGER') ||
-            (0 === strpos($dbType, 'double') && $xmlType === 'double precision');
-    }
-
-    /**
-     * Compares the data types from an alphanumeric column
-     *
-     * @param string $dbType
-     * @param string $xmlType
-     *
-     * @return bool
-     */
-    private function compareDataTypeChar($dbType, $xmlType)
-    {
-        $result = 0 === strpos($xmlType, 'character varying(');
-        if ($result) {
-            $result = (0 === strpos($dbType, 'varchar(')) || (0 === strpos($dbType, 'char('));
-        }
-
-        return $result;
     }
 
     /**
@@ -358,7 +299,7 @@ class Mysql implements DataBaseEngine
      *
      * @return bool
      */
-    public function compareDataTypes($dbType, $xmlType)
+    public function compareDataTypes($dbType, $xmlType): bool
     {
         $result = (
             ($dbType === $xmlType) ||
@@ -385,7 +326,7 @@ class Mysql implements DataBaseEngine
      *
      * @return array
      */
-    public function listTables($link)
+    public function listTables($link): array
     {
         $tables = [];
         $aux = $this->select($link, 'SHOW TABLES;');
@@ -407,13 +348,13 @@ class Mysql implements DataBaseEngine
      * sequence exists. If it can't find it, i will create one.
      *
      * @param \mysqli $link
-     * @param string  $tableName
-     * @param string  $default
-     * @param string  $colname
+     * @param string $tableName
+     * @param string $default
+     * @param string $colname
      *
      * @return bool
      */
-    public function checkSequence($link, $tableName, $default, $colname)
+    public function checkSequence($link, $tableName, $default, $colname): bool
     {
         return true;
     }
@@ -422,12 +363,12 @@ class Mysql implements DataBaseEngine
      * Runs extra checks in the table
      *
      * @param \mysqli $link
-     * @param string  $tableName
-     * @param string  $error
+     * @param string $tableName
+     * @param string $error
      *
      * @return bool
      */
-    public function checkTableAux($link, $tableName, &$error)
+    public function checkTableAux($link, $tableName, &$error): bool
     {
         $result = true;
 
@@ -450,7 +391,7 @@ class Mysql implements DataBaseEngine
      *
      * @return array
      */
-    public function columnFromData($colData)
+    public function columnFromData($colData): array
     {
         $result = array_change_key_case($colData);
         $result['is_nullable'] = $result['null'];
@@ -466,7 +407,7 @@ class Mysql implements DataBaseEngine
      *
      * @return DataBaseSQL
      */
-    public function getSQL()
+    public function getSQL(): DataBaseSQL
     {
         return $this->utilsSQL;
     }
@@ -475,9 +416,70 @@ class Mysql implements DataBaseEngine
      * Indicates the operator for the database engine
      *
      * @param string $operator
+     *
+     * @return string
      */
-    public function getOperator($operator)
+    public function getOperator($operator): string
     {
         return $operator;
+    }
+
+    /**
+     * Rollback all active transactions
+     */
+    private function rollbackTransactions()
+    {
+        foreach ($this->transactions as $link) {
+            $this->rollback($link);
+        }
+    }
+
+    /**
+     * Delete from the list the specified transaction
+     *
+     * @param \mysqli $link
+     */
+    private function unsetTransaction($link)
+    {
+        $count = 0;
+        foreach ($this->transactions as $trans) {
+            if ($trans === $link) {
+                array_splice($this->transactions, $count, 1);
+                break;
+            }
+            ++$count;
+        }
+    }
+
+    /**
+     * Compares the data types from a numeric column
+     *
+     * @param string $dbType
+     * @param string $xmlType
+     *
+     * @return bool
+     */
+    private function compareDataTypeNumeric($dbType, $xmlType): bool
+    {
+        return (0 === strpos($dbType, 'int(') && $xmlType === 'INTEGER') ||
+            (0 === strpos($dbType, 'double') && $xmlType === 'double precision');
+    }
+
+    /**
+     * Compares the data types from an alphanumeric column
+     *
+     * @param string $dbType
+     * @param string $xmlType
+     *
+     * @return bool
+     */
+    private function compareDataTypeChar($dbType, $xmlType): bool
+    {
+        $result = 0 === strpos($xmlType, 'character varying(');
+        if ($result) {
+            $result = (0 === strpos($dbType, 'varchar(')) || (0 === strpos($dbType, 'char('));
+        }
+
+        return $result;
     }
 }

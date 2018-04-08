@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\Utils;
@@ -65,7 +66,7 @@ class GrupoClientes extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         /// As there is a key outside of tariffs, we have to check that table before
         new Tarifa();
@@ -78,7 +79,7 @@ class GrupoClientes extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'codgrupo';
     }
@@ -88,7 +89,7 @@ class GrupoClientes extends Base\ModelClass
      *
      * @return string
      */
-    public function primaryDescriptionColumn()
+    public function primaryDescriptionColumn(): string
     {
         return 'nombre';
     }
@@ -98,7 +99,7 @@ class GrupoClientes extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'gruposclientes';
     }
@@ -108,7 +109,7 @@ class GrupoClientes extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->nombre = Utils::noHtml($this->nombre);
 
@@ -127,7 +128,7 @@ class GrupoClientes extends Base\ModelClass
      *
      * @return string
      */
-    public function url(string $type = 'auto', string $list = 'List')
+    public function url(string $type = 'auto', string $list = 'List'): string
     {
         return parent::url($type, 'ListCliente?active=List');
     }
@@ -137,7 +138,7 @@ class GrupoClientes extends Base\ModelClass
      *
      * @return bool
      */
-    private function checkCircularRelationGroup()
+    private function checkCircularRelationGroup(): bool
     {
         if ($this->parent === null) {
             return false;
@@ -150,18 +151,21 @@ class GrupoClientes extends Base\ModelClass
 
         $subgroups = [];
         $group = $this;
-
-        do {
-            if (\in_array($group->parent, $subgroups, true)) {
-                $group = $group->get($this->parent);
-                self::$miniLog->alert(self::$i18n->trans('parent-group-invalid', ['%parentGroup%' => $group->nombre]));
-                $this->parent = null;
-                return true;
-            }
-            $subgroups[] = $group->codgrupo;
-            $groupNext = new GrupoClientes();
-            $group = $groupNext->get($group->parent);
-        } while ($group->parent !== null);
+        if ($group instanceof self) {
+            do {
+                if (\in_array($group->parent, $subgroups, true)) {
+                    $group = $group->get($this->parent);
+                    if ($group instanceof self) {
+                        self::$miniLog->alert(self::$i18n->trans('parent-group-invalid', ['%parentGroup%' => $group->nombre]));
+                        $this->parent = null;
+                        return true;
+                    }
+                }
+                $subgroups[] = $group->codgrupo;
+                $groupNext = new self();
+                $group = $groupNext->get($group->parent);
+            } while ($group->parent !== null);
+        }
 
         return false;
     }

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
 use FacturaScripts\Core\Model;
@@ -43,7 +44,7 @@ class Agentes extends AbstractRandomPeople
      *
      * @return int
      */
-    public function generate($num = 50)
+    public function generate($num = 50): int
     {
         $agente = $this->model;
         for ($generated = 0; $generated < $num; ++$generated) {
@@ -56,15 +57,15 @@ class Agentes extends AbstractRandomPeople
             $agente->provincia = $this->provincia();
             $agente->ciudad = $this->ciudad();
             $agente->direccion = $this->direccion();
-            $agente->codpostal = (string) mt_rand(11111, 99999);
-            $agente->fechabaja = (mt_rand(0, 24) == 0) ? date('d-m-Y') : null;
-            $agente->telefono1 = (mt_rand(0, 1) == 0) ? $this->telefono() : '';
-            $agente->telefono2 = (mt_rand(0, 1) == 0) ? $this->telefono() : '';
-            $agente->email = (mt_rand(0, 2) > 0) ? $this->email() : '';
-            $agente->cargo = (mt_rand(0, 2) > 0) ? $this->cargo() : '';
-            $agente->seg_social = (mt_rand(0, 1) == 0) ? $this->seguridadSocial() : '';
+            $agente->codpostal = (string) random_int(11111, 99999);
+            $agente->fechabaja = (random_int(0, 24) === 0) ? date('d-m-Y') : null;
+            $agente->telefono1 = (random_int(0, 1) === 0) ? $this->telefono() : '';
+            $agente->telefono2 = (random_int(0, 1) === 0) ? $this->telefono() : '';
+            $agente->email = (random_int(0, 2) > 0) ? $this->email() : '';
+            $agente->cargo = (random_int(0, 2) > 0) ? $this->cargo() : '';
+            $agente->seg_social = (random_int(0, 1) === 0) ? $this->seguridadSocial() : '';
             $agente->porcomision = $this->cantidad(0, 5, 20);
-            $agente->banco = mt_rand(0, 5) ? $this->iban() : '';
+            $agente->banco = random_int(0, 5) ? $this->iban() : '';
             if (!$agente->save()) {
                 break;
             }

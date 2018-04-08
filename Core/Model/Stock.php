@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\Utils;
@@ -123,7 +124,7 @@ class Stock extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         new Almacen();
         new Articulo();
@@ -136,12 +137,17 @@ class Stock extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idstock';
     }
 
-    public function save()
+    /**
+     * Stores the model data in the database.
+     *
+     * @return bool
+     */
+    public function save(): bool
     {
         if (parent::save()) {
             $articulo = new Articulo();
@@ -161,7 +167,7 @@ class Stock extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'stocks';
     }
@@ -171,7 +177,7 @@ class Stock extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->cantidad = round($this->cantidad, self::MAX_DECIMALS);
 
@@ -192,13 +198,26 @@ class Stock extends Base\ModelClass
     }
 
     /**
+     * Returns the url where to see / modify the data.
+     *
+     * @param string $type
+     * @param string $list
+     *
+     * @return string
+     */
+    public function url(string $type = 'auto', string $list = 'List'): string
+    {
+        return parent::url($type, 'ListArticulo?active=List');
+    }
+
+    /**
      * Returns the total stock by reference.
      *
      * @param string $ref
      *
      * @return float
      */
-    public function totalFromArticulo($ref)
+    public function totalFromArticulo($ref): float
     {
         $sql = 'SELECT SUM(cantidad) AS total FROM ' . static::tableName()
             . ' WHERE referencia = ' . self::$dataBase->var2str($ref);
@@ -209,18 +228,5 @@ class Stock extends Base\ModelClass
         }
 
         return 0.0;
-    }
-
-    /**
-     * Returns the url where to see / modify the data.
-     *
-     * @param string $type
-     * @param string $list
-     *
-     * @return string
-     */
-    public function url(string $type = 'auto', string $list = 'List')
-    {
-        return parent::url($type, 'ListArticulo?active=List');
     }
 }

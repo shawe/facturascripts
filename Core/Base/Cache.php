@@ -43,7 +43,7 @@ class Cache
     public function __construct()
     {
         if (self::$engine === null) {
-            if (extension_loaded('apc') && ini_get('apc.enabled') && ini_get('apc.enable_cli')) {
+            if (\extension_loaded('apc') && ini_get('apc.enabled') && ini_get('apc.enable_cli')) {
                 self::$engine = new APCAdapter();
             } elseif (FS_CACHE_HOST !== '' && \class_exists('Memcache')) {
                 self::$engine = new MemcacheAdapter();
@@ -74,11 +74,11 @@ class Cache
      * Saves contents in the cache and associates them to $key
      *
      * @param string $key
-     * @param mixed  $content
+     * @param mixed $content
      *
      * @return bool
      */
-    public function set($key, $content)
+    public function set($key, $content): bool
     {
         return self::$engine->set($key, $content);
     }
@@ -90,7 +90,7 @@ class Cache
      *
      * @return bool
      */
-    public function delete($key)
+    public function delete($key): bool
     {
         return self::$engine->delete($key);
     }
@@ -100,7 +100,7 @@ class Cache
      *
      * @return bool
      */
-    public function clear()
+    public function clear(): bool
     {
         return self::$engine->clear();
     }

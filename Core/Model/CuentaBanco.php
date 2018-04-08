@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 /**
@@ -40,7 +41,7 @@ class CuentaBanco extends Base\BankAccount
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'codcuenta';
     }
@@ -50,7 +51,7 @@ class CuentaBanco extends Base\BankAccount
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'cuentasbanco';
     }
@@ -63,7 +64,7 @@ class CuentaBanco extends Base\BankAccount
      *
      * @return string
      */
-    public function url(string $type = 'auto', string $list = 'List')
+    public function url(string $type = 'auto', string $list = 'List'): string
     {
         return parent::url($type, 'ListFormaPago?active=List');
     }

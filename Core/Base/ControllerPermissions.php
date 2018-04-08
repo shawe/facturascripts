@@ -20,8 +20,8 @@
 namespace FacturaScripts\Core\Base;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
-use FacturaScripts\Core\Model\User;
 use FacturaScripts\Core\Model\RoleUser;
+use FacturaScripts\Core\Model\User;
 
 /**
  * Description of ControllerPermissions
@@ -54,7 +54,7 @@ class ControllerPermissions
     /**
      * ControllerPermissions constructor.
      *
-     * @param User|bool   $user
+     * @param User|bool $user
      * @param string|null $pageName
      */
     public function __construct($user = false, $pageName = null)
@@ -79,7 +79,7 @@ class ControllerPermissions
     /**
      * Load permissions from $user
      *
-     * @param User   $user
+     * @param User $user
      * @param string $pageName
      */
     public function loadFromUser($user, $pageName)
@@ -94,10 +94,12 @@ class ControllerPermissions
         $roleUserModel = new RoleUser();
         $filter = [new DataBaseWhere('nick', $user->nick)];
         foreach ($roleUserModel->all($filter) as $roleUser) {
-            foreach ($roleUser->getRoleAccess($pageName) as $roleAccess) {
-                $this->allowAccess = true;
-                $this->allowDelete = $roleAccess->allowdelete ? true : $this->allowDelete;
-                $this->allowUpdate = $roleAccess->allowupdate ? true : $this->allowUpdate;
+            if ($roleUser instanceof RoleUser) {
+                foreach ($roleUser->getRoleAccess($pageName) as $roleAccess) {
+                    $this->allowAccess = true;
+                    $this->allowDelete = $roleAccess->allowdelete ? true : $this->allowDelete;
+                    $this->allowUpdate = $roleAccess->allowupdate ? true : $this->allowUpdate;
+                }
             }
         }
     }

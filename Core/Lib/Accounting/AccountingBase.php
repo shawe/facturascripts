@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Accounting;
 
 use FacturaScripts\Core\Base\DataBase;
@@ -59,11 +60,13 @@ abstract class AccountingBase
     protected $dateTo;
 
     /**
-     * Obtains the balances for each one of the sections of the balance sheet according to their assigned accounts.
-     *
-     * @return array
+     * AccountingBase constructor.
      */
-    abstract protected function getData();
+    public function __construct()
+    {
+        $this->dataBase = new DataBase();
+        $this->divisaTools = new DivisaTools();
+    }
 
     /**
      * Generate the balance ammounts between two dates.
@@ -76,13 +79,11 @@ abstract class AccountingBase
     abstract public function generate($dateFrom, $dateTo);
 
     /**
-     * AccountingBase constructor.
+     * Obtains the balances for each one of the sections of the balance sheet according to their assigned accounts.
+     *
+     * @return array
      */
-    public function __construct()
-    {
-        $this->dataBase = new DataBase();
-        $this->divisaTools = new DivisaTools();
-    }
+    abstract protected function getData(): array;
 
     /**
      * Returns a new date.
@@ -92,7 +93,7 @@ abstract class AccountingBase
      *
      * @return string
      */
-    protected function addToDate($date, $add)
+    protected function addToDate($date, $add): string
     {
         return \date('d-m-Y', strtotime($add, strtotime($date)));
     }

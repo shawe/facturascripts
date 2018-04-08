@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
 use FacturaScripts\Core\Model;
@@ -43,7 +44,7 @@ class PresupuestosProveedor extends AbstractRandomDocuments
      *
      * @return int
      */
-    public function generate($num = 50)
+    public function generate($num = 50): int
     {
         $pre = $this->model;
         $this->shuffle($proveedores, new Model\Proveedor());

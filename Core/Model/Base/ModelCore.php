@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model\Base;
 
 use FacturaScripts\Core\Base\Cache;
@@ -41,63 +42,30 @@ abstract class ModelCore
      * @var Cache
      */
     protected static $cache;
-
-    /**
-     * List of already tested tables.
-     *
-     * @var array
-     */
-    private static $checkedTables;
-
     /**
      * It provides direct access to the database.
      *
      * @var DataBase
      */
     protected static $dataBase;
-
     /**
      * Multi-language translator.
      *
      * @var Translator
      */
     protected static $i18n;
-
     /**
      * Manage the log of all controllers, models and database.
      *
      * @var MiniLog
      */
     protected static $miniLog;
-
     /**
-     * Returns the list of fields in the table.
+     * List of already tested tables.
      *
-     * @return array
+     * @var array
      */
-    abstract protected function getModelFields();
-
-    /**
-     * Loads table fields if is necessary.
-     *
-     * @param DataBase  $dataBase
-     * @param string    $tableName
-     */
-    abstract protected function loadModelFields(DataBase &$dataBase, string $tableName);
-
-    /**
-     * Returns the name of the column that is the model's primary key.
-     *
-     * @return string
-     */
-    abstract public static function primaryColumn();
-
-    /**
-     * Returns the name of the table that uses this model.
-     *
-     * @return string
-     */
-    abstract public static function tableName();
+    private static $checkedTables;
 
     /**
      * ModelClass constructor.
@@ -118,7 +86,7 @@ abstract class ModelCore
             }
         }
 
-        if (static::tableName() !== '' && !in_array(static::tableName(), self::$checkedTables, false) && $this->checkTable()) {
+        if (static::tableName() !== '' && !\in_array(static::tableName(), self::$checkedTables, false) && $this->checkTable()) {
             self::$miniLog->debug(self::$i18n->trans('table-checked', ['%tableName%' => static::tableName()]));
             self::$checkedTables[] = static::tableName();
             self::$cache->set('fs_checked_tables', self::$checkedTables);
@@ -131,6 +99,27 @@ abstract class ModelCore
             $this->loadFromData($data);
         }
     }
+
+    /**
+     * Returns the name of the column that is the model's primary key.
+     *
+     * @return string
+     */
+    abstract public static function primaryColumn(): string;
+
+    /**
+     * Returns the name of the table that uses this model.
+     *
+     * @return string
+     */
+    abstract public static function tableName(): string;
+
+    /**
+     * Returns the list of fields in the table.
+     *
+     * @return array
+     */
+    abstract public function getModelFields(): array;
 
     /**
      * Reset the values of all model properties.
@@ -149,7 +138,7 @@ abstract class ModelCore
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         return CSVImport::importTableSQL(static::tableName());
     }
@@ -164,9 +153,10 @@ abstract class ModelCore
     {
         $fields = $this->getModelFields();
         foreach ($data as $key => $value) {
-            if (in_array($key, $exclude)) {
+            if (\in_array($key, $exclude, false)) {
                 continue;
-            } elseif (!isset($fields[$key])) {
+            }
+            if (!isset($fields[$key])) {
                 $this->{$key} = $value;
                 continue;
             }
@@ -213,11 +203,19 @@ abstract class ModelCore
     }
 
     /**
+     * Loads table fields if is necessary.
+     *
+     * @param DataBase $dataBase
+     * @param string $tableName
+     */
+    abstract protected function loadModelFields(DataBase $dataBase, string $tableName);
+
+    /**
      * Check and update the structure of the table if necessary.
      *
      * @return bool
      */
-    private function checkTable()
+    private function checkTable(): bool
     {
         $dbTools = new DataBaseTools();
         $sql = '';
@@ -251,7 +249,7 @@ abstract class ModelCore
     /**
      * Returns the integer value by controlling special cases for the PK and FK.
      *
-     * @param array  $field
+     * @param array $field
      * @param string $value
      *
      * @return integer|NULL

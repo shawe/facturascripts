@@ -26,48 +26,48 @@
     <columns>
         <group name="default" numcolumns="12">
             <column name="name" display="none" order="0">
-                <widget type="text" fieldname="name" readonly="true" required="true" />
+                <widget type="text" fieldname="name" readonly="true" required="true"/>
             </column>
             <column name="country" numcolumns="3" order="100">
                 <widget type="select" fieldname="codpais" required="true">
-                    <values source="paises" fieldcode="codpais" fieldtitle="nombre"></values>
+                    <values source="paises" fieldcode="codpais" fieldtitle="nombre"/>
                 </widget>
             </column>
             <column name="currency" numcolumns="3" order="100">
                 <widget type="select" fieldname="coddivisa" required="true">
-                    <values source="divisas" fieldcode="coddivisa" fieldtitle="descripcion"></values>
+                    <values source="divisas" fieldcode="coddivisa" fieldtitle="descripcion"/>
                 </widget>
             </column>
             <column name="company" numcolumns="3" order="100">
                 <widget type="select" fieldname="idempresa" required="true">
-                    <values source="empresas" fieldcode="idempresa" fieldtitle="nombre"></values>
+                    <values source="empresas" fieldcode="idempresa" fieldtitle="nombre"/>
                 </widget>
             </column>
             <column name="warehouse" numcolumns="3" order="100">
                 <widget type="select" fieldname="codalmacen" required="true">
-                    <values source="almacenes" fieldcode="codalmacen" fieldtitle="nombre"></values>
+                    <values source="almacenes" fieldcode="codalmacen" fieldtitle="nombre"/>
                 </widget>
             </column>
             <column name="serie" numcolumns="3" order="110">
                 <widget type="select" fieldname="codserie" required="true">
-                    <values source="series" fieldcode="codserie" fieldtitle="descripcion"></values>
+                    <values source="series" fieldcode="codserie" fieldtitle="descripcion"/>
                 </widget>
             </column>
             <column name="payment-method" numcolumns="3" order="120">
                 <widget type="select" fieldname="codpago" required="true">
-                    <values source="formaspago" fieldcode="codpago" fieldtitle="descripcion"></values>
+                    <values source="formaspago" fieldcode="codpago" fieldtitle="descripcion"/>
                 </widget>
             </column>
             <column name="codimpuesto" title="default-tax" numcolumns="3" order="130">
                 <widget type="select" fieldname="codimpuesto" required="true">
-                    <values source="impuestos" fieldcode="codimpuesto" fieldtitle="descripcion"></values>
+                    <values source="impuestos" fieldcode="codimpuesto" fieldtitle="descripcion"/>
                 </widget>
             </column>
         </group>
         <group name="numericformat" title="numeric-formats" numcolumns="12" icon="fa-info-circle fa-lg">
             <column name="decimals" numcolumns="3" order="100">
                 <widget type="select" fieldname="decimals" required="true" icon="fa-sort-numeric-asc">
-                    <values start="0" end="6" step="1"></values>
+                    <values start="0" end="6" step="1"/>
                 </widget>
             </column>
             <column name="decimal_separator" title="decimal" numcolumns="3" order="120">
@@ -80,7 +80,7 @@
                 <widget type="select" fieldname="thousands_separator" required="true" icon="fa-calculator">
                     <values title=",">,</values>
                     <values title=".">.</values>
-                    <values title=" "> </values>
+                    <values title=" "/>
                 </widget>
             </column>
             <column name="currency_position" title="currency-position" numcolumns="3" order="120">
@@ -92,20 +92,20 @@
         </group>
         <group name="advanced" title="advanced" numcolumns="12" icon="fa-database fa-lg">
             <column name="name" display="none" order="0">
-                <widget type="text" fieldname="name" readonly="true" required="true" />
+                <widget type="text" fieldname="name" readonly="true" required="true"/>
             </column>
             <column name="homepage" numcolumns="3" order="100">
                 <widget type="select" fieldname="homepage">
-                    <values source="pages" fieldcode="name" fieldtitle="name"></values>
+                    <values source="pages" fieldcode="name" fieldtitle="name"/>
                 </widget>
             </column>
             <column name="item_limit" numcolumns="3" order="100">
-                <widget type="number" fieldname="item_limit" required="true" />
+                <widget type="number" fieldname="item_limit" required="true"/>
             </column>
         </group>
         <group name="api" title="api" numcolumns="12" icon="fa-universal-access fa-lg">
             <column name="name" display="none" order="0">
-                <widget type="text" fieldname="name" readonly="true" required="true" />
+                <widget type="text" fieldname="name" readonly="true" required="true"/>
             </column>
             <column name="enable-api" numcolumns="3" order="100">
                 <widget type="checkbox" fieldname="enable_api"/>

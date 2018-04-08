@@ -55,7 +55,7 @@ class TotalModel
      *
      * @param array $data
      */
-    public function __construct($data = [])
+    public function __construct(array $data = [])
     {
         $this->code = '';
         $this->totals = [];
@@ -69,54 +69,16 @@ class TotalModel
     }
 
     /**
-     * Reset the totals to 0.
-     *
-     * @param array $totalFields
-     */
-    private function clearTotals($totalFields)
-    {
-        foreach ($totalFields as $fieldName) {
-            $this->totals[$fieldName] = 0;
-        }
-    }
-
-    /**
-     * Returns the / fields as part of the SQL query.
-     *
-     * @param string $fieldCode
-     * @param array  $fieldList
-     *
-     * @return string
-     */
-    private static function getFieldSQL($fieldCode, $fieldList)
-    {
-        $result = '';
-        $comma = '';
-
-        if (!empty($fieldCode)) {
-            $result .= $fieldCode . ' AS code';
-            $comma = ', ';
-        }
-
-        foreach ($fieldList as $fieldName => $fieldSQL) {
-            $result .= $comma . $fieldSQL . ' AS ' . $fieldName;
-            $comma = ', ';
-        }
-
-        return $result;
-    }
-
-    /**
      * Load a list of TotalModel (code and fields of statistics) for the indicated table.
      *
-     * @param string                   $tableName
+     * @param string $tableName
      * @param DataBase\DataBaseWhere[] $where
-     * @param array                    $fieldList (['key' => 'SUM(total)', 'key2' => 'MAX(total)' ...])
-     * @param string                   $fieldCode (for multiples rows agruped by field code)
+     * @param array $fieldList (['key' => 'SUM(total)', 'key2' => 'MAX(total)' ...])
+     * @param string $fieldCode (for multiples rows agruped by field code)
      *
      * @return self[]
      */
-    public static function all($tableName, $where, $fieldList, $fieldCode = '')
+    public static function all($tableName, $where, $fieldList, $fieldCode = ''): array
     {
         $result = [];
 
@@ -143,5 +105,43 @@ class TotalModel
         }
 
         return $result;
+    }
+
+    /**
+     * Returns the / fields as part of the SQL query.
+     *
+     * @param string $fieldCode
+     * @param array $fieldList
+     *
+     * @return string
+     */
+    private static function getFieldSQL($fieldCode, $fieldList): string
+    {
+        $result = '';
+        $comma = '';
+
+        if (!empty($fieldCode)) {
+            $result .= $fieldCode . ' AS code';
+            $comma = ', ';
+        }
+
+        foreach ($fieldList as $fieldName => $fieldSQL) {
+            $result .= $comma . $fieldSQL . ' AS ' . $fieldName;
+            $comma = ', ';
+        }
+
+        return $result;
+    }
+
+    /**
+     * Reset the totals to 0.
+     *
+     * @param array $totalFields
+     */
+    private function clearTotals($totalFields)
+    {
+        foreach ($totalFields as $fieldName) {
+            $this->totals[$fieldName] = 0;
+        }
     }
 }

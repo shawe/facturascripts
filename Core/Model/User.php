@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\App\AppSettings;
@@ -149,7 +150,7 @@ class User extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         /// we need this models to be checked before
         new Page();
@@ -163,40 +164,13 @@ class User extends Base\ModelClass
     }
 
     /**
-     * Generates a new login key for the user. It also updates lastactivity
-     * ans last IP.
-     *
-     * @param string $ipAddress
-     *
-     * @return string
-     */
-    public function newLogkey($ipAddress)
-    {
-        $this->lastactivity = date('d-m-Y H:i:s');
-        $this->lastip = $ipAddress;
-        $this->logkey = Utils::randomString(99);
-
-        return $this->logkey;
-    }
-
-    /**
      * Returns the name of the column that is the model's primary key.
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'nick';
-    }
-
-    /**
-     * Asigns the new password to the user.
-     *
-     * @param string $value
-     */
-    public function setPassword($value)
-    {
-        $this->password = password_hash($value, PASSWORD_DEFAULT);
     }
 
     /**
@@ -204,7 +178,7 @@ class User extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'users';
     }
@@ -215,7 +189,7 @@ class User extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->checkEmptyValues();
         $this->nick = trim($this->nick);
@@ -240,13 +214,40 @@ class User extends Base\ModelClass
     }
 
     /**
+     * Generates a new login key for the user. It also updates lastactivity
+     * ans last IP.
+     *
+     * @param string $ipAddress
+     *
+     * @return string
+     */
+    public function newLogkey($ipAddress): string
+    {
+        $this->lastactivity = date('d-m-Y H:i:s');
+        $this->lastip = $ipAddress;
+        $this->logkey = Utils::randomString(99);
+
+        return $this->logkey;
+    }
+
+    /**
+     * Asigns the new password to the user.
+     *
+     * @param string $value
+     */
+    public function setPassword($value)
+    {
+        $this->password = password_hash($value, PASSWORD_DEFAULT);
+    }
+
+    /**
      * Verifies the login key.
      *
      * @param string $value
      *
      * @return bool
      */
-    public function verifyLogkey($value)
+    public function verifyLogkey($value): bool
     {
         return $this->logkey === $value;
     }
@@ -258,7 +259,7 @@ class User extends Base\ModelClass
      *
      * @return bool
      */
-    public function verifyPassword($value)
+    public function verifyPassword($value): bool
     {
         if (password_verify($value, $this->password)) {
             if (password_needs_rehash($this->password, PASSWORD_DEFAULT)) {

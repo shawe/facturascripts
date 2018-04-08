@@ -16,7 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
+
+use FacturaScripts\Core\Base;
 
 /**
  * Controller to manage the data editing
@@ -28,17 +31,12 @@ abstract class EditController extends PanelController
 {
 
     /**
-     * Returns the class name of the model to use in the editView.
-     */
-    abstract public function getModelClassName();
-
-    /**
      * Starts all the objects and properties
      *
-     * @param Base\Cache      $cache
+     * @param Base\Cache $cache
      * @param Base\Translator $i18n
-     * @param Base\MiniLog    $miniLog
-     * @param string          $className
+     * @param Base\MiniLog $miniLog
+     * @param string $className
      */
     public function __construct(&$cache, &$i18n, &$miniLog, $className)
     {
@@ -47,9 +45,23 @@ abstract class EditController extends PanelController
     }
 
     /**
-     * Create the view to display
+     * Returns the class name of the model to use in the editView.
+     */
+    abstract public function getModelClassName();
+
+    /**
+     * Pointer to the data model
      *
-     * @return EditView
+     * @return mixed
+     */
+    public function getModel()
+    {
+        $viewKey = array_keys($this->views)[0];
+        return $this->views[$viewKey]->getModel();
+    }
+
+    /**
+     * Create the view to display
      */
     protected function createViews()
     {
@@ -63,23 +75,12 @@ abstract class EditController extends PanelController
     /**
      * Loads the data to display
      *
-     * @param string   $keyView
-     * @param BaseView $view
+     * @param string $keyView
+     * @param EditView $view
      */
     protected function loadData($keyView, $view)
     {
         $code = $this->request->get('code');
         $view->loadData($code);
-    }
-
-    /**
-     * Pointer to the data model
-     *
-     * @return mixed
-     */
-    public function getModel()
-    {
-        $viewKey = array_keys($this->views)[0];
-        return $this->views[$viewKey]->getModel();
     }
 }

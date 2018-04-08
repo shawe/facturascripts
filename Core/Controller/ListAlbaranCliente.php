@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -35,14 +36,14 @@ class ListAlbaranCliente extends ExtendedController\ListController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'delivery-notes';
-        $pagedata['icon'] = 'fa-files-o';
-        $pagedata['menu'] = 'sales';
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'delivery-notes';
+        $pageData['icon'] = 'fa-files-o';
+        $pageData['menu'] = 'sales';
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
@@ -55,20 +56,20 @@ class ListAlbaranCliente extends ExtendedController\ListController
 
         $this->addFilterDatePicker('ListAlbaranCliente', 'fecha', 'date', 'fecha');
         $this->addFilterNumber('ListAlbaranCliente', 'total', 'total', 'total');
-        
+
         $where = [new DataBaseWhere('tipodoc', 'AlbaranCliente')];
-        $stateValues = $this->codeModel->all('estados_documentos', 'idestado', 'nombre', true, $where);
+        $stateValues = $this->codeModel::all('estados_documentos', 'idestado', 'nombre', true, $where);
         $this->addFilterSelect('ListAlbaranCliente', 'idestado', 'state', 'idestado', $stateValues);
-        
-        $warehouseValues = $this->codeModel->all('almacenes', 'codalmacen', 'nombre');
+
+        $warehouseValues = $this->codeModel::all('almacenes', 'codalmacen', 'nombre');
         $this->addFilterSelect('ListAlbaranCliente', 'codalmacen', 'warehouse', 'codalmacen', $warehouseValues);
-        
-        $serieValues = $this->codeModel->all('series', 'codserie', 'descripcion');
+
+        $serieValues = $this->codeModel::all('series', 'codserie', 'descripcion');
         $this->addFilterSelect('ListAlbaranCliente', 'codserie', 'series', 'codserie', $serieValues);
-        
-        $paymentValues = $this->codeModel->all('formaspago', 'codpago', 'descripcion');
+
+        $paymentValues = $this->codeModel::all('formaspago', 'codpago', 'descripcion');
         $this->addFilterSelect('ListAlbaranCliente', 'codpago', 'payment-method', 'codpago', $paymentValues);
-        
+
         $this->addFilterAutocomplete('ListAlbaranCliente', 'codcliente', 'customer', 'codcliente', 'clientes', 'codcliente', 'nombre');
 
         $this->addOrderBy('ListAlbaranCliente', 'codigo', 'code');

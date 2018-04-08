@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -45,7 +46,7 @@ class EditCuenta extends ExtendedController\PanelController
     /**
      * Load view data procedure
      *
-     * @param string                      $keyView
+     * @param string $keyView
      * @param ExtendedController\EditView $view
      */
     protected function loadData($keyView, $view)
@@ -75,14 +76,14 @@ class EditCuenta extends ExtendedController\PanelController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'accounts';
-        $pagedata['menu'] = 'accounting';
-        $pagedata['icon'] = 'fa-bar-chart';
-        $pagedata['showonmenu'] = false;
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'accounts';
+        $pageData['menu'] = 'accounting';
+        $pageData['icon'] = 'fa-bar-chart';
+        $pageData['showonmenu'] = false;
 
-        return $pagedata;
+        return $pageData;
     }
 }

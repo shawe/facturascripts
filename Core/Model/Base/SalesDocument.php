@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model\Base;
 
 use FacturaScripts\Core\Base\Utils;
@@ -192,7 +193,12 @@ abstract class SalesDocument extends BusinessDocument
         $this->direccion = '';
         $this->porcomision = 0.0;
     }
-    
+
+    /**
+     * TODO: Uncomplete documentation.
+     *
+     * @return array|BusinessDocumentLine
+     */
     public function getSubjectColumns()
     {
         return ['codcliente'];
@@ -205,10 +211,10 @@ abstract class SalesDocument extends BusinessDocument
      */
     public function setSubject($subjects)
     {
-        if(!isset($subjects[0]->codcliente)) {
+        if (!isset($subjects[0]->codcliente)) {
             return;
         }
-        
+
         $this->codcliente = $subjects[0]->codcliente;
         $this->nombrecliente = $subjects[0]->razonsocial;
         $this->cifnif = $subjects[0]->cifnif;
@@ -231,7 +237,7 @@ abstract class SalesDocument extends BusinessDocument
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->apartado = Utils::noHtml($this->apartado);
         $this->apartadoenv = Utils::noHtml($this->apartadoenv);

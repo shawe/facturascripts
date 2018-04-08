@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\Utils;
@@ -106,7 +107,7 @@ class Ejercicio extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'ejercicios';
     }
@@ -116,7 +117,7 @@ class Ejercicio extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'codejercicio';
     }
@@ -136,11 +137,53 @@ class Ejercicio extends Base\ModelClass
     }
 
     /**
+     * Check the exercise data, return True if they are correct
+     *
+     * @return bool
+     */
+    public function test(): bool
+    {
+        /// TODO: Change dates verify to $this->inRange() call
+        $this->codejercicio = trim($this->codejercicio);
+        $this->nombre = Utils::noHtml($this->nombre);
+
+        if (!preg_match('/^[A-Z0-9_]{1,4}$/i', $this->codejercicio)) {
+            self::$miniLog->alert(self::$i18n->trans('invalid-column-lenght', ['%column%' => 'codejercicio', '%min%' => '1', '%max%' => '4']));
+        } elseif (!(\strlen($this->nombre) > 1) && !(\strlen($this->nombre) < 100)) {
+            self::$miniLog->alert(self::$i18n->trans('invalid-column-lenght', ['%column%' => 'nombre', '%min%' => '1', '%max%' => '100']));
+        } elseif (strtotime($this->fechainicio) > strtotime($this->fechafin)) {
+            $params = ['%endDate%' => $this->fechainicio, '%startDate%' => $this->fechafin];
+            self::$miniLog->alert(self::$i18n->trans('start-date-later-end-date', $params));
+        } elseif (strtotime($this->fechainicio) < 1) {
+            self::$miniLog->alert(self::$i18n->trans('date-invalid'));
+        } else {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * This function is called when creating the model table. Returns the SQL
+     * that will be executed after the creation of the table. Useful to insert values
+     * default.
+     *
+     * @return string
+     */
+    public function install(): string
+    {
+        return 'INSERT INTO ' . static::tableName() . ' (codejercicio,nombre,fechainicio,fechafin,'
+            . 'estado,longsubcuenta,plancontable,idasientoapertura,idasientopyg,idasientocierre) '
+            . "VALUES ('" . date('Y') . "','" . date('Y') . "'," . self::$dataBase->var2str(date('01-01-Y'))
+            . ', ' . self::$dataBase->var2str(date('31-12-Y')) . ",'ABIERTO',10,'08',null,null,null);";
+    }
+
+    /**
      * Returns the state of the exercise ABIERTO -> true | CLOSED -> false
      *
      * @return bool
      */
-    public function abierto()
+    public function abierto(): bool
     {
         return $this->estado === 'ABIERTO';
     }
@@ -150,7 +193,7 @@ class Ejercicio extends Base\ModelClass
      *
      * @return string en formato año
      */
-    public function year()
+    public function year(): string
     {
         return date('Y', strtotime($this->fechainicio));
     }
@@ -162,7 +205,7 @@ class Ejercicio extends Base\ModelClass
      *
      * @return string
      */
-    public function newCodigo($cod = '0001')
+    public function newCodigo($cod = '0001'): string
     {
         $sql = 'SELECT * FROM ' . static::tableName() . ' WHERE codejercicio = ' . self::$dataBase->var2str($cod) . ';';
         if (!self::$dataBase->select($sql)) {
@@ -182,11 +225,11 @@ class Ejercicio extends Base\ModelClass
      * Returns the date closest to $date that is within the range of this exercise.
      *
      * @param string $fecha
-     * @param bool   $showError
+     * @param bool $showError
      *
      * @return string
      */
-    public function getBestFecha($fecha, $showError = false)
+    public function getBestFecha($fecha, $showError = false): string
     {
         $fecha2 = strtotime($fecha);
 
@@ -211,11 +254,11 @@ class Ejercicio extends Base\ModelClass
 
     /**
      * Returns the exercise for the indicated date.
-           * If it does not exist, create it.
+     *      * If it does not exist, create it.
      *
      * @param string $fecha
-     * @param bool   $soloAbierto
-     * @param bool   $crear
+     * @param bool $soloAbierto
+     * @param bool $crear
      *
      * @return bool|Ejercicio
      */
@@ -245,51 +288,10 @@ class Ejercicio extends Base\ModelClass
     }
 
     /**
-     * Check the exercise data, return True if they are correct
-     *
-     * @return bool
-     */
-    public function test()
-    {
-        /// TODO: Change dates verify to $this->inRange() call
-        $this->codejercicio = trim($this->codejercicio);
-        $this->nombre = Utils::noHtml($this->nombre);
-
-        if (!preg_match('/^[A-Z0-9_]{1,4}$/i', $this->codejercicio)) {
-            self::$miniLog->alert(self::$i18n->trans('invalid-column-lenght', ['%column%' => 'codejercicio', '%min%' => '1', '%max%' => '4']));
-        } elseif (!(strlen($this->nombre) > 1) && !(strlen($this->nombre) < 100)) {
-            self::$miniLog->alert(self::$i18n->trans('invalid-column-lenght', ['%column%' => 'nombre', '%min%' => '1', '%max%' => '100']));
-        } elseif (strtotime($this->fechainicio) > strtotime($this->fechafin)) {
-            $params = ['%endDate%' => $this->fechainicio, '%startDate%' => $this->fechafin];
-            self::$miniLog->alert(self::$i18n->trans('start-date-later-end-date', $params));
-        } elseif (strtotime($this->fechainicio) < 1) {
-            self::$miniLog->alert(self::$i18n->trans('date-invalid'));
-        } else {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * This function is called when creating the model table. Returns the SQL
-     * that will be executed after the creation of the table. Useful to insert values
-     * default.
-     *
-     * @return string
-     */
-    public function install()
-    {
-        return 'INSERT INTO ' . static::tableName() . ' (codejercicio,nombre,fechainicio,fechafin,'
-            . 'estado,longsubcuenta,plancontable,idasientoapertura,idasientopyg,idasientocierre) '
-            . "VALUES ('" . date('Y') . "','" . date('Y') . "'," . self::$dataBase->var2str(date('01-01-Y'))
-            . ', ' . self::$dataBase->var2str(date('31-12-Y')) . ",'ABIERTO',10,'08',null,null,null);";
-    }
-
-    /**
      * Check if the indicated date is within the period of the exercise dates
      *
-     * @param string $dateToCheck        (string with date format)
+     * @param string $dateToCheck (string with date format)
+     *
      * @return bool
      */
     public function inRange($dateToCheck): bool

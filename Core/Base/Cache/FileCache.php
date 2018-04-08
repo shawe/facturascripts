@@ -79,22 +79,10 @@ class FileCache implements AdaptorInterface
     }
 
     /**
-     * Get a route to the file associated to that key.
-     *
-     * @param string $key
-     *
-     * @return string the filename of the php file
-     */
-    private function getRoute($key)
-    {
-        return self::$config['cache_path'] . '/' . md5($key) . '.php';
-    }
-
-    /**
      * Get the data associated with a key.
      *
-     * @param string   $key
-     * @param bool     $raw
+     * @param string $key
+     * @param bool $raw
      * @param int|null $custom_time
      *
      * @return mixed the content you put in, or null if expired or not found
@@ -105,10 +93,11 @@ class FileCache implements AdaptorInterface
         if (!$this->fileExpired($file = $this->getRoute($key), $custom_time)) {
             $content = file_get_contents($file);
             /**
-             * Perhaps it's possible to exploit the unserialize via: file_get_contents(...).
+             * FIXME: Perhaps it's possible to exploit the unserialize via: file_get_contents(...).
              * Documentation can be found here:
              * https://github.com/kalessil/phpinspectionsea/blob/master/docs/security.md#exploiting-unserialize
              */
+            /** @noinspection UnserializeExploitsInspection */
             return $raw ? $content : unserialize($content);
         }
 
@@ -119,12 +108,12 @@ class FileCache implements AdaptorInterface
      * Put content into the cache.
      *
      * @param string $key
-     * @param mixed  $content the the content you want to store
-     * @param bool   $raw     whether if you want to store raw data or not. If it is true, $content *must* be a string
+     * @param mixed $content the the content you want to store
+     * @param bool $raw whether if you want to store raw data or not. If it is true, $content *must* be a string
      *
      * @return bool whether if the operation was successful or not
      */
-    public function set($key, $content, $raw = false)
+    public function set($key, $content, $raw = false): bool
     {
         $this->minilog->debug($this->i18n->trans('filecache-set-key-item', ['%item%' => $key]));
         $dest_file_name = $this->getRoute($key);
@@ -146,7 +135,7 @@ class FileCache implements AdaptorInterface
      *
      * @return bool true if the data was removed successfully
      */
-    public function delete($key)
+    public function delete($key): bool
     {
         $this->minilog->debug($this->i18n->trans('filecache-delete-key-item', ['%item%' => $key]));
         $ruta = $this->getRoute($key);
@@ -162,7 +151,7 @@ class FileCache implements AdaptorInterface
      *
      * @return bool always true
      */
-    public function clear()
+    public function clear(): bool
     {
         $this->minilog->debug($this->i18n->trans('filecache-clear'));
         foreach (scandir(self::$config['cache_path'], SCANDIR_SORT_ASCENDING) as $fileName) {
@@ -175,14 +164,26 @@ class FileCache implements AdaptorInterface
     }
 
     /**
+     * Get a route to the file associated to that key.
+     *
+     * @param string $key
+     *
+     * @return string the filename of the php file
+     */
+    private function getRoute($key): string
+    {
+        return self::$config['cache_path'] . '/' . md5($key) . '.php';
+    }
+
+    /**
      * Check if a file has expired or not.
      *
      * @param string $file the rout to the file
-     * @param int    $time the number of minutes it was set to expire
+     * @param int $time the number of minutes it was set to expire
      *
      * @return bool if the file has expired or not
      */
-    private function fileExpired($file, $time = null)
+    private function fileExpired($file, $time = null): bool
     {
         if (file_exists($file)) {
             return time() > (filemtime($file) + 60 * ($time ?: self::$config['expires']));

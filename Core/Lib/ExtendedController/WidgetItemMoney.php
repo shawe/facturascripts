@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base\DivisaTools;
@@ -56,7 +57,7 @@ class WidgetItemMoney extends WidgetItem
      *
      * @return string
      */
-    public function getListHTML($value)
+    public function getListHTML($value): string
     {
         if ($value === null || $value === '') {
             return '';
@@ -64,7 +65,7 @@ class WidgetItemMoney extends WidgetItem
 
         $style = $this->getTextOptionsHTML($value);
 
-        return '<span' . $style . '>' . self::$divisaTools->format($value) . '</span>';
+        return '<span' . $style . '>' . self::$divisaTools::format($value) . '</span>';
     }
 
     /**
@@ -74,7 +75,7 @@ class WidgetItemMoney extends WidgetItem
      *
      * @return string
      */
-    public function getEditHTML($value)
+    public function getEditHTML($value): string
     {
         $specialAttributes = $this->specialAttributes();
 

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 /**
@@ -86,7 +87,7 @@ class RowItemStatus extends RowItem
      *
      * @return string
      */
-    public function getStatus($value)
+    public function getStatus($value): string
     {
         foreach ($this->options as $option) {
             switch ($option['value'][0]) {
@@ -104,6 +105,7 @@ class RowItemStatus extends RowItem
 
                 default:
                     /// don't use strict comparation (===)
+                    /** @noinspection TypeUnsafeComparisonInspection */
                     if ($option['value'] == $value) {
                         return $option['color'];
                     }

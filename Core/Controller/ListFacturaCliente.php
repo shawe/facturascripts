@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -35,14 +36,14 @@ class ListFacturaCliente extends ExtendedController\ListController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'invoices';
-        $pagedata['icon'] = 'fa-files-o';
-        $pagedata['menu'] = 'sales';
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'invoices';
+        $pageData['icon'] = 'fa-files-o';
+        $pageData['menu'] = 'sales';
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
@@ -57,16 +58,16 @@ class ListFacturaCliente extends ExtendedController\ListController
         $this->addFilterNumber('ListFacturaCliente', 'total', 'total', 'total');
 
         $where = [new DataBaseWhere('tipodoc', 'FacturaCliente')];
-        $stateValues = $this->codeModel->all('estados_documentos', 'idestado', 'nombre', true, $where);
+        $stateValues = $this->codeModel::all('estados_documentos', 'idestado', 'nombre', true, $where);
         $this->addFilterSelect('ListFacturaCliente', 'idestado', 'state', 'idestado', $stateValues);
 
-        $warehouseValues = $this->codeModel->all('almacenes', 'codalmacen', 'nombre');
+        $warehouseValues = $this->codeModel::all('almacenes', 'codalmacen', 'nombre');
         $this->addFilterSelect('ListFacturaCliente', 'codalmacen', 'warehouse', 'codalmacen', $warehouseValues);
 
-        $serieValues = $this->codeModel->all('series', 'codserie', 'descripcion');
+        $serieValues = $this->codeModel::all('series', 'codserie', 'descripcion');
         $this->addFilterSelect('ListFacturaCliente', 'codserie', 'series', 'codserie', $serieValues);
 
-        $paymentValues = $this->codeModel->all('formaspago', 'codpago', 'descripcion');
+        $paymentValues = $this->codeModel::all('formaspago', 'codpago', 'descripcion');
         $this->addFilterSelect('ListFacturaCliente', 'codpago', 'payment-method', 'codpago', $paymentValues);
 
         $this->addFilterAutocomplete('ListFacturaCliente', 'codcliente', 'customer', 'codcliente', 'clientes', 'codcliente', 'nombre');

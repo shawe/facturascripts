@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -35,13 +36,13 @@ interface DataViewInterface
      *
      * @return GroupItem[]
      */
-    public function getColumns();
+    public function getColumns(): array;
 
     /**
      * Establishes de view/edit state of a column
      *
      * @param string $columnName
-     * @param bool   $disabled
+     * @param bool $disabled
      */
     public function disableColumn($columnName, $disabled);
 
@@ -49,13 +50,13 @@ interface DataViewInterface
      * Load the data in the cursor property, according to the where filter specified.
      * Adds an empty row/model at the end of the loaded data.
      *
-     * @param mixed           $code
+     * @param mixed $code
      * @param DataBaseWhere[] $where
-     * @param array           $order
-     * @param int             $offset
-     * @param int             $limit
+     * @param array $order
+     * @param int $offset
+     * @param int $limit
      */
-    public function loadData($code = false, $where = [], $order = [], $offset = 0, $limit = FS_ITEM_LIMIT);
+    public function loadData($code = false, array $where = [], array $order = [], $offset = 0, $limit = FS_ITEM_LIMIT);
 
     /**
      * Method to export the view data

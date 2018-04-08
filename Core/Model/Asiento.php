@@ -16,11 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
-use FacturaScripts\Core\Lib\ExtendedController\GridDocumentInterface;
 use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Base\Utils;
+use FacturaScripts\Core\Lib\ExtendedController\GridDocumentInterface;
 
 /**
  * The accounting entry. It is related to an exercise and consists of games.
@@ -96,7 +97,15 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
      */
     public function accumulateAmounts(array &$detail)
     {
-        $this->importe += round(floatval($detail['haber']), (int) FS_NF0);
+        $this->importe += round((float) $detail['haber'], (int) FS_NF0);
+    }
+
+    /**
+     * Initializes the total fields
+     */
+    public function initTotals()
+    {
+        $this->importe = 0.00;
     }
 
     /**
@@ -111,41 +120,11 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
     }
 
     /**
-     * Execute a task with cron
-     */
-    public function cronJob()
-    {
-        /**
-         * We block closed exercise accounting entry or within regularizations.
-         */
-        $eje0 = new Ejercicio();
-        $regiva0 = new RegularizacionIva();
-        foreach ($eje0->all() as $ej) {
-            if ($ej instanceof Ejercicio && $ej->abierto()) {
-                foreach ($regiva0->all([new DataBase\DataBaseWhere('codejercicio', $ej->codejercicio)]) as $reg) {
-                    $sql = 'UPDATE ' . static::tableName() . ' SET editable = false WHERE editable = true'
-                        . ' AND codejercicio = ' . self::$dataBase->var2str($ej->codejercicio)
-                        . ' AND fecha >= ' . self::$dataBase->var2str($reg->fechainicio)
-                        . ' AND fecha <= ' . self::$dataBase->var2str($reg->fechafin) . ';';
-                    self::$dataBase->exec($sql);
-                }
-            } else {
-                $sql = 'UPDATE ' . static::tableName() . ' SET editable = false WHERE editable = true'
-                    . ' AND codejercicio = ' . self::$dataBase->var2str($ej->codejercicio) . ';';
-                self::$dataBase->exec($sql);
-            }
-        }
-
-        echo self::$i18n->trans('renumber-accounting');
-        $this->renumber();
-    }
-
-    /**
      * Remove the accounting entry.
      *
      * @return bool
      */
-    public function delete()
+    public function delete(): bool
     {
         $error = $this->deleteErrorDataExercise();
         if (!empty($error)) {
@@ -181,7 +160,7 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
             $account = new Subcuenta();
             foreach ($lines as $row) {
                 $account->idsubcuenta = $row->idsubcuenta;
-                $account->updateBalance($this->fecha, ($row->debe * -1), ($row->haber * -1));
+                $account->updateBalance($this->fecha, $row->debe * -1, $row->haber * -1);
             }
 
             /// save transaction
@@ -195,19 +174,12 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
         } finally {
             if (!$inTransaction && self::$dataBase->inTransaction()) {
                 self::$dataBase->rollback();
+                /** @noinspection SuspiciousReturnInspection */
                 return false;
             }
         }
 
         return true;
-    }
-
-    /**
-     * Initializes the total fields
-     */
-    public function initTotals()
-    {
-        $this->importe = 0.00;
     }
 
     /**
@@ -217,7 +189,7 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         new Ejercicio();
         new SubcuentaSaldo();
@@ -252,7 +224,7 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idasiento';
     }
@@ -262,9 +234,91 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
      *
      * @return string
      */
-    public function primaryDescriptionColumn()
+    public function primaryDescriptionColumn(): string
     {
         return 'numero';
+    }
+
+    /**
+     * Returns the name of the table that uses this model.
+     *
+     * @return string
+     */
+    public static function tableName(): string
+    {
+        return 'asientos';
+    }
+
+    /**
+     * Returns True if there is no errors on properties values.
+     *
+     * @return bool
+     */
+    public function test(): bool
+    {
+        $this->concepto = Utils::noHtml($this->concepto);
+        $this->documento = Utils::noHtml($this->documento);
+
+        if ($this->testErrorInData()) {
+            self::$miniLog->alert(self::$i18n->trans('accounting-data-missing'));
+            return false;
+        }
+
+        $error = $this->testErrorInExercise();
+        if (!empty($error)) {
+            self::$miniLog->alert(self::$i18n->trans($error));
+            return false;
+        }
+
+        if (\strlen($this->concepto) > 255) {
+            self::$miniLog->alert(self::$i18n->trans('concept-too-large'));
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Insert the model data in the database.
+     *
+     * @param array $values
+     *
+     * @return bool
+     */
+    protected function saveInsert(array $values = []): bool
+    {
+        $this->numero = $this->newCode('numero');
+        return parent::saveInsert($values);
+    }
+
+    /**
+     * Execute a task with cron
+     */
+    public function cronJob()
+    {
+        /**
+         * We block closed exercise accounting entry or within regularizations.
+         */
+        $eje0 = new Ejercicio();
+        $regiva0 = new RegularizacionIva();
+        foreach ($eje0->all() as $ej) {
+            if ($ej instanceof Ejercicio && $ej->abierto()) {
+                foreach ($regiva0->all([new DataBase\DataBaseWhere('codejercicio', $ej->codejercicio)]) as $reg) {
+                    $sql = 'UPDATE ' . static::tableName() . ' SET editable = false WHERE editable = true'
+                        . ' AND codejercicio = ' . self::$dataBase->var2str($ej->codejercicio)
+                        . ' AND fecha >= ' . self::$dataBase->var2str($reg->fechainicio)
+                        . ' AND fecha <= ' . self::$dataBase->var2str($reg->fechafin) . ';';
+                    self::$dataBase->exec($sql);
+                }
+            } else {
+                $sql = 'UPDATE ' . static::tableName() . ' SET editable = false WHERE editable = true'
+                    . ' AND codejercicio = ' . self::$dataBase->var2str($ej->codejercicio) . ';';
+                self::$dataBase->exec($sql);
+            }
+        }
+
+        echo self::$i18n->trans('renumber-accounting');
+        $this->renumber();
     }
 
     /**
@@ -272,7 +326,7 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
      *
      * @return bool
      */
-    public function renumber()
+    public function renumber(): bool
     {
         $continuar = false;
         $ejercicio = new Ejercicio();
@@ -310,45 +364,6 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
         }
 
         return $continuar;
-    }
-
-    /**
-     * Returns the name of the table that uses this model.
-     *
-     * @return string
-     */
-    public static function tableName()
-    {
-        return 'asientos';
-    }
-
-    /**
-     * Returns True if there is no errors on properties values.
-     *
-     * @return bool
-     */
-    public function test(): bool
-    {
-        $this->concepto = Utils::noHtml($this->concepto);
-        $this->documento = Utils::noHtml($this->documento);
-
-        if ($this->testErrorInData()) {
-            self::$miniLog->alert(self::$i18n->trans('accounting-data-missing'));
-            return false;
-        }
-
-        $error = $this->testErrorInExercise();
-        if (!empty($error)) {
-            self::$miniLog->alert(self::$i18n->trans($error));
-            return false;
-        }
-
-        if (strlen($this->concepto) > 255) {
-            self::$miniLog->alert(self::$i18n->trans('concept-too-large'));
-            return false;
-        }
-
-        return true;
     }
 
     /**
@@ -404,18 +419,5 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
         // All Ok, get exercise code
         $this->codejercicio = $exercise->codejercicio;
         return '';
-    }
-
-    /**
-     * Insert the model data in the database.
-     *
-     * @param array $values
-     *
-     * @return bool
-     */
-    protected function saveInsert(array $values = []): bool
-    {
-        $this->numero = $this->newCode('numero');
-        return parent::saveInsert($values);
     }
 }

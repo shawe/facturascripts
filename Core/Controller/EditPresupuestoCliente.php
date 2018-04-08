@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController;
@@ -34,15 +35,15 @@ class EditPresupuestoCliente extends ExtendedController\BusinessDocumentControll
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'estimation';
-        $pagedata['menu'] = 'sales';
-        $pagedata['icon'] = 'fa-files-o';
-        $pagedata['showonmenu'] = false;
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'estimation';
+        $pageData['menu'] = 'sales';
+        $pageData['icon'] = 'fa-files-o';
+        $pageData['showonmenu'] = false;
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
@@ -62,7 +63,7 @@ class EditPresupuestoCliente extends ExtendedController\BusinessDocumentControll
      *
      * @return string
      */
-    protected function getModelClassName()
+    protected function getModelClassName(): string
     {
         return 'PresupuestoCliente';
     }
@@ -70,8 +71,8 @@ class EditPresupuestoCliente extends ExtendedController\BusinessDocumentControll
     /**
      * Load data view procedure
      *
-     * @param string                      $keyView
-     * @param ExtendedController\EditView $view
+     * @param string $keyView
+     * @param ExtendedController\BusinessDocumentView $view
      */
     protected function loadData($keyView, $view)
     {

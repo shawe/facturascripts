@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model\Base;
 
 use FacturaScripts\Core\Base\Utils;
@@ -107,7 +108,7 @@ abstract class Contact extends ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->cifnif = Utils::noHtml($this->cifnif);
         $this->email = Utils::noHtml($this->email);

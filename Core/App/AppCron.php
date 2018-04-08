@@ -31,7 +31,7 @@ class AppCron extends App
      *
      * @return bool
      */
-    public function run()
+    public function run(): bool
     {
         $this->response->headers->set('Content-Type', 'text/plain');
         if ($this->dataBase->connected()) {

@@ -68,7 +68,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return string
      */
-    public function version($link)
+    public function version($link): string
     {
         return 'POSTGRESQL ' . pg_version($link)['server'];
     }
@@ -80,7 +80,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return array
      */
-    public function columnFromData($colData)
+    public function columnFromData($colData): array
     {
         $colData['extra'] = null;
 
@@ -100,7 +100,7 @@ class Postgresql implements DataBaseEngine
      */
     public function connect(&$error)
     {
-        if (!function_exists('pg_connect')) {
+        if (!\function_exists('pg_connect')) {
             $error = $this->i18n->trans('php-postgresql-not-found');
 
             return null;
@@ -127,7 +127,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return bool
      */
-    public function close($link)
+    public function close($link): bool
     {
         return pg_close($link);
     }
@@ -139,7 +139,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return string
      */
-    public function errorMessage($link)
+    public function errorMessage($link): string
     {
         $error = pg_last_error($link);
 
@@ -153,7 +153,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return bool
      */
-    public function beginTransaction($link)
+    public function beginTransaction($link): bool
     {
         return $this->exec($link, 'BEGIN TRANSACTION;');
     }
@@ -165,7 +165,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return bool
      */
-    public function commit($link)
+    public function commit($link): bool
     {
         return $this->exec($link, 'COMMIT;');
     }
@@ -177,7 +177,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return bool
      */
-    public function rollback($link)
+    public function rollback($link): bool
     {
         return $this->exec($link, 'ROLLBACK;');
     }
@@ -189,7 +189,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return bool
      */
-    public function inTransaction($link)
+    public function inTransaction($link): bool
     {
         $status = pg_transaction_status($link);
         switch ($status) {
@@ -208,12 +208,166 @@ class Postgresql implements DataBaseEngine
     }
 
     /**
+     * Runs a SELECT SQL statement
+     *
+     * @param resource $link
+     * @param string $sql
+     *
+     * @return array
+     */
+    public function select($link, $sql): array
+    {
+        $results = $this->runSql($link, $sql);
+
+        return \is_array($results) ? $results : [];
+    }
+
+    /**
+     * Runs SQL statement in the database
+     * (inserts, updates or deletes)
+     *
+     * @param resource $link
+     * @param string $sql
+     *
+     * @return bool
+     */
+    public function exec($link, $sql): bool
+    {
+        return $this->runSql($link, $sql, false) === true;
+    }
+
+    /**
+     * Escapes quotes from a text string
+     *
+     * @param resource $link
+     * @param string $str
+     *
+     * @return string
+     */
+    public function escapeString($link, $str): string
+    {
+        return pg_escape_string($link, $str);
+    }
+
+    /**
+     * Returns the date format from the database engine
+     *
+     * @return string
+     */
+    public function dateStyle(): string
+    {
+        return 'd-m-Y';
+    }
+
+    /**
+     * Compares the data types from a numeric column. Returns true if they are equal
+     *
+     * @param string $dbType
+     * @param string $xmlType
+     *
+     * @return bool
+     */
+    public function compareDataTypes($dbType, $xmlType): bool
+    {
+        return $dbType === $xmlType;
+    }
+
+    /**
+     * Returns an array with the database table names
+     *
+     * @param resource $link
+     *
+     * @return array
+     */
+    public function listTables($link): array
+    {
+        $tables = [];
+        $sql = 'SELECT tablename'
+            . ' FROM pg_catalog.pg_tables'
+            . " WHERE schemaname NOT IN ('pg_catalog','information_schema')"
+            . ' ORDER BY tablename ASC;';
+
+        $aux = $this->select($link, $sql);
+        if (\is_array($aux)) {
+            foreach ($aux as $a) {
+                $tables[] = $a['tablename'];
+            }
+        }
+
+        return $tables;
+    }
+
+    /**
+     * With the default field in a table
+     * it checks whether it refers to a sequence and if a
+     * sequence exists. If it can't find it, i will create one.
+     *
+     * @param resource $link
+     * @param string $tableName
+     * @param string $default
+     * @param string $colname
+     */
+    public function checkSequence($link, $tableName, $default, $colname)
+    {
+        $aux = explode("'", $default);
+        if (count($aux) === 3) {
+            $data = $this->select($link, $this->utilsSQL->sqlSequenceExists($aux[1]));
+            if (empty($data)) {             /// ¿Existe esa secuencia?
+                $data = $this->select($link, 'SELECT MAX(' . $colname . ')+1 as num FROM ' . $tableName . ';');
+                $this->exec($link, 'CREATE SEQUENCE ' . $aux[1] . ' START ' . $data[0]['num'] . ';');
+            }
+        }
+    }
+
+    /**
+     * Runs extra checks in the table
+     *
+     * @param resource $link
+     * @param string $tableName
+     * @param string $error
+     *
+     * @return bool
+     */
+    public function checkTableAux($link, $tableName, &$error): bool
+    {
+        return true;
+    }
+
+    /**
+     * Returns the link to the SQL class from the engine
+     *
+     * @return DataBaseSQL
+     */
+    public function getSQL(): DataBaseSQL
+    {
+        return $this->utilsSQL;
+    }
+
+    /**
+     * Indicates the operator for the database engine
+     *
+     * @param string $operator
+     *
+     * @return string
+     */
+    public function getOperator($operator): string
+    {
+        switch ($operator) {
+            case 'REGEXP':
+                return '~';
+
+            default:
+                return $operator;
+        }
+    }
+
+    /**
      * Runs a SELECT SQL statement, and returns an array with the results when $selectRows= true,
      * or an empty array if it fails.
      *
      * @param resource $link
-     * @param string   $sql
-     * @param bool     $selectRows
+     * @param string $sql
+     * @param bool $selectRows
      *
      * @return array|bool
      */
@@ -236,157 +390,5 @@ class Postgresql implements DataBaseEngine
         }
 
         return $result;
-    }
-
-    /**
-     * Runs a SELECT SQL statement
-     *
-     * @param resource $link
-     * @param string   $sql
-     *
-     * @return array
-     */
-    public function select($link, $sql)
-    {
-        $results = $this->runSql($link, $sql);
-
-        return is_array($results) ? $results : [];
-    }
-
-    /**
-     * Runs SQL statement in the database
-     * (inserts, updates or deletes)
-     *
-     * @param resource $link
-     * @param string   $sql
-     *
-     * @return bool
-     */
-    public function exec($link, $sql)
-    {
-        return $this->runSql($link, $sql, false) === true;
-    }
-
-    /**
-     * Escapes quotes from a text string
-     *
-     * @param resource $link
-     * @param string   $str
-     *
-     * @return string
-     */
-    public function escapeString($link, $str)
-    {
-        return pg_escape_string($link, $str);
-    }
-
-    /**
-     * Returns the date format from the database engine
-     *
-     * @return string
-     */
-    public function dateStyle()
-    {
-        return 'd-m-Y';
-    }
-
-    /**
-     * Compares the data types from a numeric column. Returns true if they are equal
-     *
-     * @param string $dbType
-     * @param string $xmlType
-     *
-     * @return bool
-     */
-    public function compareDataTypes($dbType, $xmlType)
-    {
-        return $dbType === $xmlType;
-    }
-
-    /**
-     * Returns an array with the database table names
-     *
-     * @param resource $link
-     *
-     * @return array
-     */
-    public function listTables($link)
-    {
-        $tables = [];
-        $sql = 'SELECT tablename'
-            . ' FROM pg_catalog.pg_tables'
-            . " WHERE schemaname NOT IN ('pg_catalog','information_schema')"
-            . ' ORDER BY tablename ASC;';
-
-        $aux = $this->select($link, $sql);
-        if (is_array($aux)) {
-            foreach ($aux as $a) {
-                $tables[] = $a['tablename'];
-            }
-        }
-
-        return $tables;
-    }
-
-    /**
-     * With the default field in a table
-     * it checks whether it refers to a sequence and if a
-     * sequence exists. If it can't find it, i will create one.
-     *
-     * @param resource $link
-     * @param string   $tableName
-     * @param string   $default
-     * @param string   $colname
-     */
-    public function checkSequence($link, $tableName, $default, $colname)
-    {
-        $aux = explode("'", $default);
-        if (count($aux) === 3) {
-            $data = $this->select($link, $this->utilsSQL->sqlSequenceExists($aux[1]));
-            if (empty($data)) {             /// ¿Existe esa secuencia?
-                $data = $this->select($link, 'SELECT MAX(' . $colname . ')+1 as num FROM ' . $tableName . ';');
-                $this->exec($link, 'CREATE SEQUENCE ' . $aux[1] . ' START ' . $data[0]['num'] . ';');
-            }
-        }
-    }
-
-    /**
-     * Runs extra checks in the table
-     *
-     * @param resource $link
-     * @param string   $tableName
-     * @param string   $error
-     *
-     * @return bool
-     */
-    public function checkTableAux($link, $tableName, &$error)
-    {
-        return true;
-    }
-
-    /**
-     * Returns the link to the SQL class from the engine
-     *
-     * @return DataBaseSQL
-     */
-    public function getSQL()
-    {
-        return $this->utilsSQL;
-    }
-
-    /**
-     * Indicates the operator for the database engine
-     *
-     * @param string $operator
-     */
-    public function getOperator($operator)
-    {
-        switch ($operator) {
-            case 'REGEXP':
-                return '~';
-
-            default:
-                return $operator;
-        }
     }
 }

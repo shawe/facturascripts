@@ -33,18 +33,17 @@ use FacturaScripts\Core\Base\Translator;
 class TranslationCollector extends DataCollector implements Renderable, AssetProvider
 {
     /**
-     * Array containing the translations
-     *
-     * @var array
-     */
-    protected $translations;
-
-    /**
      * Translation engine
      *
      * @var Translator
      */
     protected static $i18n;
+    /**
+     * Array containing the translations
+     *
+     * @var array
+     */
+    protected $translations;
 
     /**
      * TranslationCollector constructor.
@@ -62,9 +61,24 @@ class TranslationCollector extends DataCollector implements Renderable, AssetPro
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'translations';
+    }
+
+    /**
+     * Called by the DebugBar when data needs to be collected
+     *
+     * @return array Collected data
+     */
+    public function collect(): array
+    {
+        $this->addTranslations();
+
+        return [
+            'nb_statements' => count($this->translations),
+            'translations' => $this->translations,
+        ];
     }
 
     /**
@@ -73,7 +87,7 @@ class TranslationCollector extends DataCollector implements Renderable, AssetPro
      *
      * @return array
      */
-    public function getWidgets()
+    public function getWidgets(): array
     {
         return [
             'translations' => [
@@ -95,7 +109,7 @@ class TranslationCollector extends DataCollector implements Renderable, AssetPro
      *
      * @return array
      */
-    public function getAssets()
+    public function getAssets(): array
     {
         $basePath = '../../../../../../';
 
@@ -116,20 +130,5 @@ class TranslationCollector extends DataCollector implements Renderable, AssetPro
                 'value' => $value,
             ];
         }
-    }
-
-    /**
-     * Called by the DebugBar when data needs to be collected
-     *
-     * @return array Collected data
-     */
-    public function collect()
-    {
-        $this->addTranslations();
-
-        return [
-            'nb_statements' => count($this->translations),
-            'translations' => $this->translations,
-        ];
     }
 }

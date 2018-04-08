@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -35,15 +36,15 @@ class EditRole extends ExtendedController\PanelController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'role';
-        $pagedata['menu'] = 'admin';
-        $pagedata['icon'] = 'fa-id-card-o';
-        $pagedata['showonmenu'] = false;
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'role';
+        $pageData['menu'] = 'admin';
+        $pageData['icon'] = 'fa-id-card-o';
+        $pageData['showonmenu'] = false;
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
@@ -63,7 +64,7 @@ class EditRole extends ExtendedController\PanelController
     /**
      * Load view data
      *
-     * @param string                      $keyView
+     * @param string $keyView
      * @param ExtendedController\EditView $view
      */
     protected function loadData($keyView, $view)
@@ -75,9 +76,11 @@ class EditRole extends ExtendedController\PanelController
                 $view->loadData($code);
                 break;
 
+            /** @noinspection PhpMissingBreakStatementInspection */
             case 'EditRoleAccess':
                 $order['pagename'] = 'ASC';
-                /// no break
+                // no break
+
             case 'EditRoleUser':
                 $codrole = $this->getViewModelValue('EditRole', 'codrole');
                 $where = [new DataBaseWhere('codrole', $codrole)];
@@ -87,50 +90,14 @@ class EditRole extends ExtendedController\PanelController
     }
 
     /**
-     * Add the indicated page list to the Role group
-     * and all users who are in that group
-     *
-     * @param string       $codrole
-     * @param Model\Page[] $pages
-     *
-     * @throws \Exception
-     */
-    private function addRoleAccess($codrole, $pages)
-    {
-        // add Pages to Rol
-        if (!Model\RoleAccess::addPagesToRole($codrole, $pages)) {
-            throw new \Exception(self::$i18n->trans('cancel-process'));
-        }
-    }
-
-    /**
-     * List of all the pages included in a menu option
-     * and, optionally, included in a submenu option
-     *
-     * @return Model\Page[]
-     */
-    private function getPages()
-    {
-        $menu = $this->request->get('menu', '---null---');
-        if ($menu === '---null---') {
-            return [];
-        }
-
-        $page = new Model\Page();
-        $where = [new DataBaseWhere('menu', $menu)];
-
-        return $page->all($where);
-    }
-
-    /**
      * Run the actions that alter data before reading it
      *
-     * @param BaseView $view
-     * @param string   $action
+     * @param ExtendedController\BaseView $view
+     * @param string $action
      *
      * @return bool
      */
-    protected function execPreviousAction($view, $action)
+    protected function execPreviousAction($view, $action): bool
     {
         switch ($action) {
             case 'add-rol-access':
@@ -154,5 +121,41 @@ class EditRole extends ExtendedController\PanelController
             default:
                 return parent::execPreviousAction($view, $action);
         }
+    }
+
+    /**
+     * Add the indicated page list to the Role group
+     * and all users who are in that group
+     *
+     * @param string $codrole
+     * @param Model\Page[] $pages
+     *
+     * @throws \Exception
+     */
+    private function addRoleAccess($codrole, $pages)
+    {
+        // add Pages to Rol
+        if (!Model\RoleAccess::addPagesToRole($codrole, $pages)) {
+            throw new \Exception($this->i18n->trans('cancel-process'));
+        }
+    }
+
+    /**
+     * List of all the pages included in a menu option
+     * and, optionally, included in a submenu option
+     *
+     * @return Model\Page[]
+     */
+    private function getPages(): array
+    {
+        $menu = $this->request->get('menu', '---null---');
+        if ($menu === '---null---') {
+            return [];
+        }
+
+        $page = new Model\Page();
+        $where = [new DataBaseWhere('menu', $menu)];
+
+        return $page->all($where);
     }
 }

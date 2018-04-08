@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -46,7 +47,7 @@ class EditArticulo extends ExtendedController\PanelController
     /**
      * Load view data procedure
      *
-     * @param string                      $keyView
+     * @param string $keyView
      * @param ExtendedController\EditView $view
      */
     protected function loadData($keyView, $view)
@@ -62,9 +63,11 @@ class EditArticulo extends ExtendedController\PanelController
                 $view->loadData($code);
                 break;
 
+            /** @noinspection PhpMissingBreakStatementInspection */
             case 'EditStock':
                 $limit = 0;
-                /// no break
+                // no break
+
             case 'ListArticuloProveedor':
                 $referencia = $this->getViewModelValue('EditArticulo', 'referencia');
                 $where = [new DataBaseWhere('referencia', $referencia)];
@@ -78,13 +81,13 @@ class EditArticulo extends ExtendedController\PanelController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'product';
-        $pagedata['icon'] = 'fa-cube';
-        $pagedata['showonmenu'] = false;
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'product';
+        $pageData['icon'] = 'fa-cube';
+        $pageData['showonmenu'] = false;
 
-        return $pagedata;
+        return $pageData;
     }
 }

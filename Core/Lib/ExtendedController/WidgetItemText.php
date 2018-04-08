@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 /**
@@ -39,30 +40,13 @@ class WidgetItemText extends WidgetItem
     }
 
     /**
-     * Formats text to a given maximum length
-     *
-     * @param string $txt
-     * @param int    $len
-     *
-     * @return string
-     */
-    private function getTextResume($txt, $len = 60)
-    {
-        if (mb_strlen($txt) < $len) {
-            return $txt;
-        }
-
-        return mb_substr($txt, 0, $len - 3) . '...';
-    }
-
-    /**
      * Generates the HTML code to display the data in the List controller
      *
      * @param string $value
      *
      * @return string
      */
-    public function getListHTML($value)
+    public function getListHTML($value): string
     {
         if ($value === null || $value === '') {
             return '';
@@ -79,7 +63,7 @@ class WidgetItemText extends WidgetItem
      *
      * @return string
      */
-    public function getEditHTML($value)
+    public function getEditHTML($value): string
     {
         $specialAttributes = $this->specialAttributes();
 
@@ -88,7 +72,7 @@ class WidgetItemText extends WidgetItem
                 $html = '<textarea name="' . $this->fieldName . '" class="form-control bbcode" rows="10" '
                     . $specialAttributes . '>' . $value . '</textarea>';
                 break;
-            
+
             case 'html':
                 $html = '<textarea name="' . $this->fieldName . '" class="form-control htmleditor" rows="10" '
                     . $specialAttributes . '>' . $value . '</textarea>';
@@ -104,5 +88,22 @@ class WidgetItemText extends WidgetItem
         }
 
         return $html;
+    }
+
+    /**
+     * Formats text to a given maximum length
+     *
+     * @param string $txt
+     * @param int $len
+     *
+     * @return string
+     */
+    private function getTextResume($txt, $len = 60): string
+    {
+        if (mb_strlen($txt) < $len) {
+            return $txt;
+        }
+
+        return mb_substr($txt, 0, $len - 3) . '...';
     }
 }

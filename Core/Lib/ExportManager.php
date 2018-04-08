@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -62,7 +63,7 @@ class ExportManager
      *
      * @return string
      */
-    public function defaultOption()
+    public function defaultOption(): string
     {
         $keys = array_keys(self::$options);
 
@@ -74,7 +75,7 @@ class ExportManager
      *
      * @return array
      */
-    public function options()
+    public function options(): array
     {
         return self::$options;
     }
@@ -82,7 +83,7 @@ class ExportManager
     /**
      * Create a new doc and set headers.
      *
-     * @param string   $option
+     * @param string $option
      */
     public function newDoc($option)
     {
@@ -105,8 +106,8 @@ class ExportManager
     /**
      * Adds a new page with the model data.
      *
-     * @param mixed  $model
-     * @param array  $columns
+     * @param mixed $model
+     * @param array $columns
      * @param string $title
      */
     public function generateModelPage($model, $columns, $title = '')
@@ -117,12 +118,12 @@ class ExportManager
     /**
      * Adds a new page with a table listing the models data.
      *
-     * @param mixed           $model
+     * @param mixed $model
      * @param DataBaseWhere[] $where
-     * @param array           $order
-     * @param int             $offset
-     * @param array           $columns
-     * @param string          $title
+     * @param array $order
+     * @param int $offset
+     * @param array $columns
+     * @param string $title
      */
     public function generateListModelPage($model, $where, $order, $offset, $columns, $title = '')
     {
@@ -163,7 +164,7 @@ class ExportManager
      *
      * @return string
      */
-    private function getExportClassName($option)
+    private function getExportClassName($option): string
     {
         $className = 'FacturaScripts\\Dinamic\\Lib\\Export\\' . $option . 'Export';
         if (!class_exists($className)) {

@@ -26,24 +26,24 @@
 <view>
     <columns>
         <column name="id" order="100" display="none">
-            <widget type="text" fieldname="idstock" />
+            <widget type="text" fieldname="idstock"/>
         </column>
         <column name="reference" display="none" order="110">
-            <widget type="text" fieldname="referencia" onclick="EditArticulo" />
+            <widget type="text" fieldname="referencia" onclick="EditArticulo"/>
         </column>
         <column name="warehouse" display="left" order="120">
             <widget type="select" fieldname="codalmacen" required="true">
-                <values source="almacenes" fieldcode="codalmacen" fieldtitle="nombre"></values>
+                <values source="almacenes" fieldcode="codalmacen" fieldtitle="nombre"/>
             </widget>
         </column>
         <column name="quantity" display="right" order="130">
-            <widget type="number" fieldname="cantidad" />
+            <widget type="number" fieldname="cantidad"/>
         </column>
         <column name="stockmin" display="right" order="140">
-            <widget type="number" fieldname="stockmin" />
+            <widget type="number" fieldname="stockmin"/>
         </column>
         <column name="stockmax" display="right" order="150">
-            <widget type="number" fieldname="stockmax" />
+            <widget type="number" fieldname="stockmax"/>
         </column>
         <column name="reserved" display="right" order="160">
             <widget type="number" fieldname="reservada" readonly="true"/>

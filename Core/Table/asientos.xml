@@ -52,6 +52,7 @@
         <name>ca_asientos_ejercicios</name>
         <type>FOREIGN KEY (codejercicio)
             REFERENCES ejercicios (codejercicio)
-            ON DELETE RESTRICT ON UPDATE CASCADE</type>
+            ON DELETE RESTRICT ON UPDATE CASCADE
+        </type>
     </constraint>
 </table>

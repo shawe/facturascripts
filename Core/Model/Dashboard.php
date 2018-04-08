@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 /**
@@ -57,7 +58,7 @@ class Dashboard extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         return 'INSERT INTO ' . static::tableName() . " (component, version, location) VALUES ('Messages','1.0 (Beta)', 0);"
             . 'INSERT INTO ' . static::tableName() . " (component, version, location) VALUES ('Tasks','1.0 (Beta)', 0);"
@@ -69,7 +70,7 @@ class Dashboard extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'component';
     }
@@ -79,7 +80,7 @@ class Dashboard extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'dashboard';
     }
@@ -92,7 +93,7 @@ class Dashboard extends Base\ModelClass
      *
      * @return string
      */
-    public function url(string $type = 'auto', string $list = 'List')
+    public function url(string $type = 'auto', string $list = 'List'): string
     {
         return parent::url($type, '');
     }

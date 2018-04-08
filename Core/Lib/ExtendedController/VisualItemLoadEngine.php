@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Model;
@@ -27,23 +28,6 @@ use FacturaScripts\Core\Model;
  */
 class VisualItemLoadEngine
 {
-
-    /**
-     * Load the column structure from the JSON
-     *
-     * @param string $columns
-     * @param array  $target
-     */
-    private static function getJSONGroupsColumns($columns, &$target)
-    {
-        if (!empty($columns)) {
-            foreach ($columns as $item) {
-                $groupItem = GroupItem::newFromJSON($item);
-                $target[$groupItem->name] = $groupItem;
-                unset($groupItem);
-            }
-        }
-    }
 
     /**
      * Load the column structure from the JSON
@@ -61,8 +45,77 @@ class VisualItemLoadEngine
         if (!empty($rows)) {
             foreach ($rows as $item) {
                 $rowItem = RowItem::newFromJSON($item);
+                /** @noinspection NullPointerExceptionInspection */
                 $model->rows[$rowItem->type] = $rowItem;
                 unset($rowItem);
+            }
+        }
+    }
+
+    /**
+     * Add to the configuration of a controller
+     *
+     * @param string $name
+     * @param Model\PageOption $model
+     *
+     * @return bool
+     */
+    public static function installXML($name, &$model): bool
+    {
+        $fileName = FS_FOLDER . '/Dinamic/XMLView/' . $name . '.xml';
+        if (FS_DEBUG && !file_exists($fileName)) {
+            $fileName = FS_FOLDER . '/Core/XMLView/' . $name . '.xml';
+        }
+        $xml = simplexml_load_string(file_get_contents($fileName));
+        if ($xml === false) {
+            return false;
+        }
+
+        self::getXMLGroupsColumns($xml->columns, $model->columns);
+        self::getXMLGroupsColumns($xml->modals, $model->modals);
+        self::getXMLRows($xml->rows, $model->rows);
+
+        return true;
+    }
+
+    /**
+     * Load the list of values for a dynamic select type widget with
+     * a database model or a range of values
+     *
+     * @param Model\PageOption $model
+     */
+    public static function applyDynamicSelectValues(&$model)
+    {
+        // Apply values to dynamic Select widgets
+        foreach ($model->columns as $group) {
+            if ($group instanceof GroupItem) {
+                $group->applySpecialOperations();
+            }
+        }
+
+        // Apply values to dynamic Select widgets for modals forms
+        if (!empty($model->modals)) {
+            foreach ($model->modals as $group) {
+                if ($group instanceof GroupItem) {
+                    $group->applySpecialOperations();
+                }
+            }
+        }
+    }
+
+    /**
+     * Load the column structure from the JSON
+     *
+     * @param array $columns
+     * @param array $target
+     */
+    private static function getJSONGroupsColumns($columns, &$target)
+    {
+        if (!empty($columns)) {
+            foreach ($columns as $item) {
+                $groupItem = GroupItem::newFromJSON($item);
+                $target[$groupItem->name] = $groupItem;
+                unset($groupItem);
             }
         }
     }
@@ -71,7 +124,7 @@ class VisualItemLoadEngine
      * Load the column structure from the XML
      *
      * @param \SimpleXMLElement $columns
-     * @param array             $target
+     * @param array $target
      */
     private static function getXMLGroupsColumns($columns, &$target)
     {
@@ -101,63 +154,16 @@ class VisualItemLoadEngine
      * Load the special conditions for the rows from XML file
      *
      * @param \SimpleXMLElement $rows
-     * @param array             $target
+     * @param array $target
      */
     private static function getXMLRows($rows, &$target)
     {
         if (!empty($rows)) {
             foreach ($rows->row as $row) {
                 $rowItem = RowItem::newFromXML($row);
+                /** @noinspection NullPointerExceptionInspection */
                 $target[$rowItem->type] = $rowItem;
                 unset($rowItem);
-            }
-        }
-    }
-
-    /**
-     * Add to the configuration of a controller
-     *
-     * @param string           $name
-     * @param Model\PageOption $model
-     *
-     * @return boolean
-     */
-    public static function installXML($name, &$model)
-    {
-        $fileName = FS_FOLDER . '/Dinamic/XMLView/' . $name . '.xml';
-        if (FS_DEBUG && !file_exists($fileName)) {
-            $fileName = FS_FOLDER . '/Core/XMLView/' . $name . '.xml';
-        }
-
-        $xml = simplexml_load_string(file_get_contents($fileName));
-        if ($xml === false) {
-            return false;
-        }
-
-        self::getXMLGroupsColumns($xml->columns, $model->columns);
-        self::getXMLGroupsColumns($xml->modals, $model->modals);
-        self::getXMLRows($xml->rows, $model->rows);
-
-        return true;
-    }
-
-    /**
-     * Load the list of values for a dynamic select type widget with
-     * a database model or a range of values
-     *
-     * @param Model\PageOption $model
-     */
-    public static function applyDynamicSelectValues(&$model)
-    {
-        // Apply values to dynamic Select widgets
-        foreach ($model->columns as $group) {
-            $group->applySpecialOperations();
-        }
-
-        // Apply values to dynamic Select widgets for modals forms
-        if (!empty($model->modals)) {
-            foreach ($model->modals as $group) {
-                $group->applySpecialOperations();
             }
         }
     }

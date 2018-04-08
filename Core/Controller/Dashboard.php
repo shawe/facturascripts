@@ -16,11 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base;
-use FacturaScripts\Core\Model;
 use FacturaScripts\Core\Lib;
+use FacturaScripts\Core\Model;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -42,10 +43,10 @@ class Dashboard extends Base\Controller
     /**
      * Dashboard constructor.
      *
-     * @param Base\Cache      $cache
+     * @param Base\Cache $cache
      * @param Base\Translator $i18n
-     * @param Base\MiniLog    $miniLog
-     * @param string          $className
+     * @param Base\MiniLog $miniLog
+     * @param string $className
      */
     public function __construct(&$cache, &$i18n, &$miniLog, $className)
     {
@@ -57,8 +58,8 @@ class Dashboard extends Base\Controller
     /**
      * Runs the controller's private logic.
      *
-     * @param Response                   $response
-     * @param Model\User                 $user
+     * @param Response $response
+     * @param Model\User $user
      * @param Base\ControllerPermissions $permissions
      */
     public function privateCore(&$response, $user, $permissions)
@@ -74,7 +75,7 @@ class Dashboard extends Base\Controller
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
         $pageData = parent::getPageData();
         $pageData['title'] = 'dashboard';

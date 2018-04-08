@@ -88,11 +88,11 @@ class Translator
      * Translate the text into the default language.
      *
      * @param string $txt
-     * @param array  $parameters
+     * @param array $parameters
      *
      * @return string
      */
-    public function trans($txt, array $parameters = [])
+    public function trans($txt, array $parameters = []): string
     {
         if (empty($txt)) {
             return '';
@@ -106,13 +106,13 @@ class Translator
      *
      * @param string $lang
      * @param string $txt
-     * @param array  $parameters
+     * @param array $parameters
      *
      * @return string
      */
-    public function customTrans($lang, $txt, array $parameters = [])
+    public function customTrans($lang, $txt, array $parameters = []): string
     {
-        if (!in_array($lang, self::$languages)) {
+        if (!\in_array($lang, self::$languages, false)) {
             $this->locateFiles($lang);
         }
 
@@ -129,6 +129,55 @@ class Translator
         }
 
         return $this->customTrans(self::FALLBACK_LANG, $txt, $parameters);
+    }
+
+    /**
+     * Returns an array with the languages with available translations.
+     *
+     * @return array
+     */
+    public function getAvailableLanguages(): array
+    {
+        $languages = [];
+        $dir = FS_FOLDER . '/Core/Translation';
+        foreach (scandir($dir, SCANDIR_SORT_ASCENDING) as $fileName) {
+            if ($fileName !== '.' && $fileName !== '..' && !is_dir($fileName) && substr($fileName, -5) === '.json') {
+                $key = substr($fileName, 0, -5);
+                $languages[$key] = $this->trans('languages-' . substr($fileName, 0, -5));
+            }
+        }
+
+        return $languages;
+    }
+
+    /**
+     * Returns the language code in use.
+     *
+     * @return string
+     */
+    public function getLangCode(): string
+    {
+        return self::$defaultLang;
+    }
+
+    /**
+     * Returns the missing strings.
+     *
+     * @return array
+     */
+    public function getMissingStrings(): array
+    {
+        return self::$missingStrings;
+    }
+
+    /**
+     * Returns the strings used.
+     *
+     * @return array
+     */
+    public function getUsedStrings(): array
+    {
+        return self::$usedStrings;
     }
 
     /**
@@ -151,54 +200,5 @@ class Translator
                 self::$translator->addResource('json', $file, $lang);
             }
         }
-    }
-
-    /**
-     * Returns an array with the languages with available translations.
-     *
-     * @return array
-     */
-    public function getAvailableLanguages()
-    {
-        $languages = [];
-        $dir = FS_FOLDER . '/Core/Translation';
-        foreach (scandir($dir, SCANDIR_SORT_ASCENDING) as $fileName) {
-            if ($fileName !== '.' && $fileName !== '..' && !is_dir($fileName) && substr($fileName, -5) === '.json') {
-                $key = substr($fileName, 0, -5);
-                $languages[$key] = $this->trans('languages-' . substr($fileName, 0, -5));
-            }
-        }
-
-        return $languages;
-    }
-
-    /**
-     * Returns the language code in use.
-     *
-     * @return string
-     */
-    public function getLangCode()
-    {
-        return self::$defaultLang;
-    }
-
-    /**
-     * Returns the missing strings.
-     *
-     * @return array
-     */
-    public function getMissingStrings()
-    {
-        return self::$missingStrings;
-    }
-
-    /**
-     * Returns the strings used.
-     *
-     * @return array
-     */
-    public function getUsedStrings()
-    {
-        return self::$usedStrings;
     }
 }

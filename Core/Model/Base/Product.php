@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model\Base;
 
 use FacturaScripts\Core\App\AppSettings;
@@ -31,40 +32,29 @@ abstract class Product extends ModelClass
 {
 
     /**
+     * List of Tax.
+     *
+     * @var Impuesto[]
+     */
+    private static $impuestos;
+    /**
      * Barcode. Maximum 20 characters.
      *
      * @var string
      */
     public $codbarras;
-
     /**
      * Tax identifier of the tax assigned.
      *
      * @var string
      */
     public $codimpuesto;
-
     /**
      * Description of the product.
      *
      * @var string
      */
     public $descripcion;
-
-    /**
-     * List of Tax.
-     *
-     * @var Impuesto[]
-     */
-    private static $impuestos;
-
-    /**
-     * VAT% of the assigned tax.
-     *
-     * @var float|int
-     */
-    protected $iva;
-
     /**
      * True -> do not control the stock.
      * Activating it implies putting True $controlstock;
@@ -72,27 +62,30 @@ abstract class Product extends ModelClass
      * @var bool
      */
     public $nostock;
-
     /**
      * Partnumber of the product. Maximum 40 characters.
      *
      * @var string
      */
     public $partnumber;
-
     /**
      * Product SKU. Maximum 30 characters.
      *
      * @var string
      */
     public $referencia;
-
     /**
      * Physical stock.
      *
      * @var float|int
      */
     public $stockfis;
+    /**
+     * VAT% of the assigned tax.
+     *
+     * @var float|int
+     */
+    protected $iva;
 
     /**
      * Reset the values of all model properties.
@@ -103,6 +96,35 @@ abstract class Product extends ModelClass
         $this->codimpuesto = AppSettings::get('default', 'codimpuesto');
         $this->nostock = false;
         $this->stockfis = 0.0;
+    }
+
+    /**
+     * Returns the name of the column that describes the model, such as name, description...
+     *
+     * @return string
+     */
+    public function primaryDescriptionColumn(): string
+    {
+        return 'referencia';
+    }
+
+    /**
+     * Returns True if there is no errors on properties values.
+     *
+     * @return bool
+     */
+    public function test(): bool
+    {
+        $this->codbarras = Utils::noHtml($this->codbarras);
+        $this->descripcion = Utils::noHtml($this->descripcion);
+        $this->partnumber = Utils::noHtml($this->partnumber);
+        $this->referencia = Utils::noHtml($this->referencia);
+
+        if ($this->nostock) {
+            $this->stockfis = 0.0;
+        }
+
+        return true;
     }
 
     /**
@@ -151,16 +173,6 @@ abstract class Product extends ModelClass
     }
 
     /**
-     * Returns the name of the column that describes the model, such as name, description...
-     *
-     * @return string
-     */
-    public function primaryDescriptionColumn()
-    {
-        return 'referencia';
-    }
-
-    /**
      * Change the tax associated with the item.
      *
      * @param string $codimpuesto
@@ -179,24 +191,5 @@ abstract class Product extends ModelClass
                 self::$impuestos[$imp->codimpuesto] = $imp;
             }
         }
-    }
-
-    /**
-     * Returns True if there is no errors on properties values.
-     *
-     * @return bool
-     */
-    public function test()
-    {
-        $this->codbarras = Utils::noHtml($this->codbarras);
-        $this->descripcion = Utils::noHtml($this->descripcion);
-        $this->partnumber = Utils::noHtml($this->partnumber);
-        $this->referencia = Utils::noHtml($this->referencia);
-
-        if ($this->nostock) {
-            $this->stockfis = 0.0;
-        }
-
-        return true;
     }
 }

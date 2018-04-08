@@ -54,7 +54,7 @@ class CuentaBancoCliente extends Base\BankAccount
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'cuentasbcocli';
     }
@@ -64,7 +64,7 @@ class CuentaBancoCliente extends Base\BankAccount
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'codcuenta';
     }
@@ -83,7 +83,7 @@ class CuentaBancoCliente extends Base\BankAccount
      *
      * @return bool
      */
-    public function save()
+    public function save(): bool
     {
         if ($this->test()) {
             if ($this->exists()) {

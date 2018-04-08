@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\App\AppSettings;
@@ -40,7 +41,7 @@ class Wizard extends Controller
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
         $pageData = parent::getPageData();
         $pageData['menu'] = 'admin';
@@ -51,31 +52,10 @@ class Wizard extends Controller
     }
 
     /**
-     * Returns an array with all data from selected model.
-     *
-     * @param string $modelName
-     *
-     * @return mixed
-     */
-    public function getSelectValues($modelName)
-    {
-        $values = [];
-        $modelName = '\FacturaScripts\Dinamic\Model\\' . $modelName;
-        $model = new $modelName();
-
-        $order = [$model->primaryDescriptionColumn() => 'ASC'];
-        foreach ($model->all([], $order, 0, self::ITEM_SELECT_LIMIT) as $newModel) {
-            $values[$newModel->primaryColumnValue()] = $newModel->primaryDescription();
-        }
-
-        return $values;
-    }
-
-    /**
      * Runs the controller's private logic.
      *
-     * @param Response              $response
-     * @param Model\User            $user
+     * @param Response $response
+     * @param Model\User $user
      * @param ControllerPermissions $permissions
      */
     public function privateCore(&$response, $user, $permissions)
@@ -103,6 +83,29 @@ class Wizard extends Controller
     }
 
     /**
+     * Returns an array with all data from selected model.
+     *
+     * @param string $modelName
+     *
+     * @return mixed
+     */
+    public function getSelectValues($modelName)
+    {
+        $values = [];
+        $modelName = '\FacturaScripts\Dinamic\Model\\' . $modelName;
+        $model = new $modelName();
+
+        if ($model instanceof Model\Base\ModelClass) {
+            $order = [$model->primaryDescriptionColumn() => 'ASC'];
+            foreach ($model->all([], $order, 0, self::ITEM_SELECT_LIMIT) as $newModel) {
+                $values[$newModel->primaryColumnValue()] = $newModel->primaryDescription();
+            }
+        }
+
+        return $values;
+    }
+
+    /**
      * Initialize required models.
      */
     private function initModels()
@@ -119,7 +122,7 @@ class Wizard extends Controller
      * Save company default address.
      *
      * @param AppSettings $appSettings
-     * @param string      $codpais
+     * @param string $codpais
      */
     private function saveAddress(&$appSettings, $codpais)
     {

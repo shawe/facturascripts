@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -58,7 +59,7 @@ class RoleUser extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'roles_users';
     }
@@ -68,7 +69,7 @@ class RoleUser extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'id';
     }
@@ -80,7 +81,7 @@ class RoleUser extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         new Role();
 
@@ -92,7 +93,7 @@ class RoleUser extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         if (empty($this->nick)) {
             self::$miniLog->alert(self::$i18n->trans('nick-is-empty'));
@@ -118,7 +119,7 @@ class RoleUser extends Base\ModelClass
      *
      * @return RoleAccess[]
      */
-    public function getRoleAccess($pageName = '')
+    public function getRoleAccess($pageName = ''): array
     {
         $accesses = [];
         $roleAccessModel = new RoleAccess();

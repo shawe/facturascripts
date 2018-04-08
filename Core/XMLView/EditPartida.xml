@@ -25,24 +25,25 @@
 <view>
     <columns>
         <column name="idasiento" order="100" display="none">
-            <widget type="text" fieldname="idasiento" />
+            <widget type="text" fieldname="idasiento"/>
         </column>
         <column name="id" order="100" display="none">
-            <widget type="text" fieldname="idpartida" />
+            <widget type="text" fieldname="idpartida"/>
         </column>
         <column name="subaccount" order="105">
             <widget type="autocomplete" fieldname="codsubcuenta" required="true">
-                <values source="subcuentas" fieldcode="codsubcuenta" fieldtitle="descripcion"></values>
+                <values source="subcuentas" fieldcode="codsubcuenta" fieldtitle="descripcion"/>
             </widget>
         </column>
         <column name="offsetting" order="110">
             <widget type="autocomplete" fieldname="codcontrapartida" required="true">
-                <values source="subcuentas" fieldcode="codsubcuenta" fieldtitle="descripcion"></values>
+                <values source="subcuentas" fieldcode="codsubcuenta" fieldtitle="descripcion"/>
             </widget>
         </column>
         <column name="description" order="115">
             <widget type="autocomplete" fieldname="concepto" required="true">
-                <values source="conceptos_partidas" fieldcode="descripcion" fieldtitle="codconcepto" strict="false"></values>
+                <values source="conceptos_partidas" fieldcode="descripcion" fieldtitle="codconcepto"
+                        strict="false"/>
             </widget>
         </column>
         <column name="debit" display="right" order="120">
@@ -59,32 +60,34 @@
 
     <rows>
         <row type="actions">
-            <button type="action" id="vat-register-btn" label="vat-register" color="info" action="VAT-Register" onclick="showVATRegister" hint="hint-vat-register" icon="fa-book" />
-            <button type="action" label="clone" color="info" action="clone" hint="clone-account-entry" icon="fa-clone" />
-            <button type="action" label="lock-unlock" color="warning" action="lock" hint="lock-unlock-account-entry" icon="fa-lock" />
+            <button type="action" id="vat-register-btn" label="vat-register" color="info" action="VAT-Register"
+                    onclick="showVATRegister" hint="hint-vat-register" icon="fa-book"/>
+            <button type="action" label="clone" color="info" action="clone" hint="clone-account-entry" icon="fa-clone"/>
+            <button type="action" label="lock-unlock" color="warning" action="lock" hint="lock-unlock-account-entry"
+                    icon="fa-lock"/>
         </row>
     </rows>
 
     <modals>
         <group name="VAT-Register" title="VAT-Register" icon="fa-book">
             <column name="vat-document" numcolumns="6" description="desc-vat-document">
-                <widget type="text" fieldname="documento" required="true" />
+                <widget type="text" fieldname="documento" required="true"/>
             </column>
 
             <column name="vat-id" numcolumns="6" description="desc-vat-id">
-                <widget type="text" fieldname="cifnif" required="true" />
+                <widget type="text" fieldname="cifnif" required="true"/>
             </column>
 
             <column name="tax-base" numcolumns="6">
-                <widget type="money" decimal="2" fieldname="baseimponible" />
+                <widget type="money" decimal="2" fieldname="baseimponible"/>
             </column>
 
             <column name="pct-vat" numcolumns="3">
-                <widget type="number" decimal="2" fieldname="iva" />
+                <widget type="number" decimal="2" fieldname="iva"/>
             </column>
 
             <column name="pct-surcharge" numcolumns="3">
-                <widget type="number" decimal="2" fieldname="recargo" />
+                <widget type="number" decimal="2" fieldname="recargo"/>
             </column>
         </group>
     </modals>

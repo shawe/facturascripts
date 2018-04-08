@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -81,7 +82,7 @@ class Cuenta extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'cuentas';
     }
@@ -91,7 +92,7 @@ class Cuenta extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idcuenta';
     }
@@ -103,12 +104,37 @@ class Cuenta extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         /// force the parents tables
         new Ejercicio();
 
         return '';
+    }
+
+    /**
+     * Returns True if there is no erros on properties values.
+     *
+     * @return bool
+     */
+    public function test(): bool
+    {
+        $this->codcuenta = trim($this->codcuenta);
+        $this->descripcion = Utils::noHtml($this->descripcion);
+
+        if ($this->testErrorInAccount()) {
+            self::$miniLog->alert(self::$i18n->trans('account-data-missing'));
+            return false;
+        }
+
+        /// Check and load correct id parent account
+        $this->parent_idcuenta = null;
+        if (!empty($this->parent_codcuenta) && $this->testErrorInParentAccount()) {
+            self::$miniLog->alert(self::$i18n->trans('account-parent-error'));
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -140,30 +166,5 @@ class Cuenta extends Base\ModelClass
     private function testErrorInAccount(): bool
     {
         return empty($this->codcuenta) || empty($this->descripcion) || empty($this->codejercicio);
-    }
-
-    /**
-     * Returns True if there is no erros on properties values.
-     *
-     * @return bool
-     */
-    public function test()
-    {
-        $this->codcuenta = trim($this->codcuenta);
-        $this->descripcion = Utils::noHtml($this->descripcion);
-
-        if ($this->testErrorInAccount())  {
-            self::$miniLog->alert(self::$i18n->trans('account-data-missing'));
-            return false;
-        }
-
-        /// Check and load correct id parent account
-        $this->parent_idcuenta = null;
-        if (!empty($this->parent_codcuenta) && $this->testErrorInParentAccount()) {
-            self::$miniLog->alert(self::$i18n->trans('account-parent-error'));
-            return false;
-        }
-
-        return true;
     }
 }

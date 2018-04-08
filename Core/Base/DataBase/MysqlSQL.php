@@ -28,79 +28,13 @@ namespace FacturaScripts\Core\Base\DataBase;
 class MysqlSQL implements DataBaseSQL
 {
     /**
-     * Generates the SQL with the field type and the DEFAULT and null constraints
-     *
-     * @param array $colData
-     *
-     * @return string
-     */
-    private function getTypeAndConstraints($colData)
-    {
-        $type = stripos('integer,serial', $colData['type']) === false ? strtolower($colData['type']) : FS_DB_INTEGER;
-        switch (true) {
-            case $type === 'serial':
-            case stripos($colData['default'], 'nextval(') !== false:
-                $contraints = ' NOT NULL AUTO_INCREMENT';
-                break;
-
-            default:
-                $contraints = $this->getConstraints($colData);
-                break;
-        }
-
-        return ' ' . $type . $contraints;
-    }
-
-    /**
-     * Returns a string with the columns constraints
-     *
-     * @param array $colData
-     *
-     * @return string
-     */
-    private function getConstraints($colData)
-    {
-        $notNull = ($colData['null'] === 'NO');
-        $result = ' NULL';
-        if ($notNull) {
-            $result = ' NOT' . $result;
-        }
-
-        $defaultNull = ($colData['default'] === null);
-        if ($defaultNull && !$notNull) {
-            $result .= ' DEFAULT NULL';
-        } else {
-            if ($colData['default'] !== '') {
-                $result .= ' DEFAULT ' . $colData['default'];
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * Removes PostgreSQL's problematic code
-     *
-     * @param string $sql
-     *
-     * @return string
-     */
-    private function fixPostgresql($sql)
-    {
-        $search = ['::character varying', 'without time zone', 'now()', 'CURRENT_TIMESTAMP', 'CURRENT_DATE'];
-        $replace = ['', '', "'00:00'", "'" . date('Y-m-d') . " 00:00:00'", date("'Y-m-d'")];
-
-        return str_replace($search, $replace, $sql);
-    }
-
-    /**
      * Returns the needed SQL to convert a column to integer
      *
      * @param string $colName
      *
      * @return string
      */
-    public function sql2Int($colName)
+    public function sql2Int($colName): string
     {
         return 'CAST(' . $colName . ' as UNSIGNED)';
     }
@@ -110,7 +44,7 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlLastValue()
+    public function sqlLastValue(): string
     {
         return 'SELECT LAST_INSERT_ID() as num;';
     }
@@ -122,7 +56,7 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlColumns($tableName)
+    public function sqlColumns($tableName): string
     {
         return 'SHOW COLUMNS FROM `' . $tableName . '`;';
     }
@@ -134,7 +68,7 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlConstraints($tableName)
+    public function sqlConstraints($tableName): string
     {
         $sql = 'SELECT CONSTRAINT_NAME as name, CONSTRAINT_TYPE as type'
             . ' FROM information_schema.table_constraints '
@@ -151,7 +85,7 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlConstraintsExtended($tableName)
+    public function sqlConstraintsExtended($tableName): string
     {
         $sql = 'SELECT t1.constraint_name as name,'
             . ' t1.constraint_type as type,'
@@ -182,7 +116,7 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlTableConstraints($xmlCons)
+    public function sqlTableConstraints($xmlCons): string
     {
         $sql = '';
         foreach ($xmlCons as $res) {
@@ -199,7 +133,7 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlIndexes($tableName)
+    public function sqlIndexes($tableName): string
     {
         return 'SHOW INDEXES FROM ' . $tableName . ';';
     }
@@ -208,12 +142,12 @@ class MysqlSQL implements DataBaseSQL
      * Returns the SQL needed to create a table with the given structure
      *
      * @param string $tableName
-     * @param array  $columns
-     * @param array  $constraints
+     * @param array $columns
+     * @param array $constraints
      *
      * @return string
      */
-    public function sqlCreateTable($tableName, $columns, $constraints)
+    public function sqlCreateTable($tableName, $columns, $constraints): string
     {
         $fields = '';
         foreach ($columns as $col) {
@@ -231,11 +165,11 @@ class MysqlSQL implements DataBaseSQL
      * Returns the SQL needed to add a column to a table
      *
      * @param string $tableName
-     * @param array  $colData
+     * @param array $colData
      *
      * @return string
      */
-    public function sqlAlterAddColumn($tableName, $colData)
+    public function sqlAlterAddColumn($tableName, $colData): string
     {
         $sql = 'ALTER TABLE ' . $tableName . ' ADD `' . $colData['name'] . '` '
             . $this->getTypeAndConstraints($colData) . ';';
@@ -247,11 +181,11 @@ class MysqlSQL implements DataBaseSQL
      * Returns the SQL needed to alter a column in a table
      *
      * @param string $tableName
-     * @param array  $colData
+     * @param array $colData
      *
      * @return string
      */
-    public function sqlAlterModifyColumn($tableName, $colData)
+    public function sqlAlterModifyColumn($tableName, $colData): string
     {
         $sql = 'ALTER TABLE ' . $tableName
             . ' MODIFY `' . $colData['name'] . '` '
@@ -264,11 +198,11 @@ class MysqlSQL implements DataBaseSQL
      * Returns the needed SQL to alter a column default constraint
      *
      * @param string $tableName
-     * @param array  $colData
+     * @param array $colData
      *
      * @return string
      */
-    public function sqlAlterConstraintDefault($tableName, $colData)
+    public function sqlAlterConstraintDefault($tableName, $colData): string
     {
         $result = '';
         if ($colData['type'] !== 'serial') {
@@ -282,11 +216,11 @@ class MysqlSQL implements DataBaseSQL
      * SQL statement to alter a null constraint in a table column
      *
      * @param string $tableName
-     * @param array  $colData
+     * @param array $colData
      *
      * @return string
      */
-    public function sqlAlterConstraintNull($tableName, $colData)
+    public function sqlAlterConstraintNull($tableName, $colData): string
     {
         return $this->sqlAlterModifyColumn($tableName, $colData);
     }
@@ -295,11 +229,11 @@ class MysqlSQL implements DataBaseSQL
      * Returns the SQL needed to remove a constraint from a table
      *
      * @param string $tableName
-     * @param array  $colData
+     * @param array $colData
      *
      * @return string
      */
-    public function sqlDropConstraint($tableName, $colData)
+    public function sqlDropConstraint($tableName, $colData): string
     {
         $start = 'ALTER TABLE ' . $tableName . ' DROP';
         switch ($colData['type']) {
@@ -327,7 +261,7 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlAddConstraint($tableName, $constraintName, $sql)
+    public function sqlAddConstraint($tableName, $constraintName, $sql): string
     {
         return 'ALTER TABLE ' . $tableName
             . ' ADD CONSTRAINT ' . $constraintName . ' '
@@ -341,8 +275,74 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlSequenceExists($seqName)
+    public function sqlSequenceExists($seqName): string
     {
         return $seqName;
+    }
+
+    /**
+     * Generates the SQL with the field type and the DEFAULT and null constraints
+     *
+     * @param array $colData
+     *
+     * @return string
+     */
+    private function getTypeAndConstraints($colData): string
+    {
+        $type = stripos('integer,serial', $colData['type']) === false ? strtolower($colData['type']) : FS_DB_INTEGER;
+        switch (true) {
+            case $type === 'serial':
+            case stripos($colData['default'], 'nextval(') !== false:
+                $contraints = ' NOT NULL AUTO_INCREMENT';
+                break;
+
+            default:
+                $contraints = $this->getConstraints($colData);
+                break;
+        }
+
+        return ' ' . $type . $contraints;
+    }
+
+    /**
+     * Returns a string with the columns constraints
+     *
+     * @param array $colData
+     *
+     * @return string
+     */
+    private function getConstraints($colData): string
+    {
+        $notNull = ($colData['null'] === 'NO');
+        $result = ' NULL';
+        if ($notNull) {
+            $result = ' NOT' . $result;
+        }
+
+        $defaultNull = ($colData['default'] === null);
+        if ($defaultNull && !$notNull) {
+            $result .= ' DEFAULT NULL';
+        } else {
+            if ($colData['default'] !== '') {
+                $result .= ' DEFAULT ' . $colData['default'];
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Removes PostgreSQL's problematic code
+     *
+     * @param string $sql
+     *
+     * @return string
+     */
+    private function fixPostgresql($sql): string
+    {
+        $search = ['::character varying', 'without time zone', 'now()', 'CURRENT_TIMESTAMP', 'CURRENT_DATE'];
+        $replace = ['', '', "'00:00'", "'" . date('Y-m-d') . " 00:00:00'", date("'Y-m-d'")];
+
+        return str_replace($search, $replace, $sql);
     }
 }

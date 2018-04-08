@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\App;
 
 use FacturaScripts\Core\Base\MiniLog;
@@ -68,8 +69,8 @@ class WebRender
      */
     public function __construct()
     {
-        if (!defined('FS_DEBUG')) {
-            define('FS_DEBUG', true);
+        if (!\defined('FS_DEBUG')) {
+            \define('FS_DEBUG', true);
         }
 
         $this->i18n = new Translator();
@@ -84,7 +85,7 @@ class WebRender
      *
      * @return Twig_Environment
      */
-    public function getTwig()
+    public function getTwig(): Twig_Environment
     {
         $twig = new Twig_Environment($this->loader, $this->getOptions());
 
@@ -112,7 +113,11 @@ class WebRender
     public function loadPluginFolders()
     {
         /// Core namespace
-        $this->loader->addPath(FS_FOLDER . '/Core/View', 'Core');
+        try {
+            $this->loader->addPath(FS_FOLDER . '/Core/View', 'Core');
+        } catch (\Twig_Error_Loader $e) {
+            $this->miniLog->critical($this->i18n->trans('twig-error-loader', ['%error%' => $e->getMessage()]));
+        }
 
         foreach ($this->pluginManager->enabledPlugins() as $pluginName) {
             $pluginPath = FS_FOLDER . '/Plugins/' . $pluginName . '/View';
@@ -121,9 +126,13 @@ class WebRender
             }
 
             /// plugin namespace
-            $this->loader->addPath($pluginPath, 'Plugin' . $pluginName);
             if (FS_DEBUG) {
-                $this->loader->prependPath($pluginPath);
+                try {
+                    $this->loader->addPath($pluginPath, 'Plugin' . $pluginName);
+                    $this->loader->prependPath($pluginPath);
+                } catch (\Twig_Error_Loader $e) {
+                    $this->miniLog->critical($this->i18n->trans('twig-error-loader', ['%error%' => $e->getMessage()]));
+                }
             }
         }
     }
@@ -132,11 +141,11 @@ class WebRender
      * Returns the data into the standard output.
      *
      * @param string $template
-     * @param array  $params
+     * @param array $params
      *
      * @return string
      */
-    public function render($template, $params)
+    public function render($template, $params): string
     {
         $templateVars = [
             'i18n' => $this->i18n,
@@ -147,7 +156,18 @@ class WebRender
         }
 
         $twig = $this->getTwig();
-        return $twig->render($template, $templateVars);
+        try {
+            return $twig->render($template, $templateVars);
+        } catch (\Twig_Error_Loader $e) {
+            $this->miniLog->critical($this->i18n->trans('twig-error-loader', ['%error%' => $e->getMessage()]));
+            return '';
+        } catch (\Twig_Error_Runtime $e) {
+            $this->miniLog->critical($this->i18n->trans('twig-error-runtime', ['%error%' => $e->getMessage()]));
+            return '';
+        } catch (\Twig_Error_Syntax $e) {
+            $this->miniLog->critical($this->i18n->trans('twig-error-syntax', ['%error%' => $e->getMessage()]));
+            return '';
+        }
     }
 
     /**
@@ -155,7 +175,7 @@ class WebRender
      *
      * @return array
      */
-    private function getOptions()
+    private function getOptions(): array
     {
         return FS_DEBUG ? ['debug' => true] : ['cache' => FS_FOLDER . '/MyFiles/Cache/Twig'];
     }

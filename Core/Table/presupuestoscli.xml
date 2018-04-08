@@ -226,7 +226,8 @@
     </constraint>
     <constraint>
         <name>ca_presupuestoscli_ejercicios</name>
-        <type>FOREIGN KEY (codejercicio) REFERENCES ejercicios (codejercicio) ON DELETE RESTRICT ON UPDATE CASCADE</type>
+        <type>FOREIGN KEY (codejercicio) REFERENCES ejercicios (codejercicio) ON DELETE RESTRICT ON UPDATE CASCADE
+        </type>
     </constraint>
     <constraint>
         <name>ca_presupuestoscli_pedidos</name>

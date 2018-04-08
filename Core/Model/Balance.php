@@ -119,7 +119,7 @@ class Balance extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'co_codbalances08';
     }
@@ -129,7 +129,7 @@ class Balance extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'codbalance';
     }
@@ -139,7 +139,7 @@ class Balance extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->descripcion1 = Utils::noHtml($this->descripcion1);
         $this->descripcion2 = Utils::noHtml($this->descripcion2);

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Base;
 
 use FacturaScripts\Core\Model;
@@ -61,9 +62,9 @@ class MenuManager
     /**
      * Returns the user's menu, the set of pages to which he has access.
      *
-     * @return array
+     * @return MenuItem[]
      */
-    public function getMenu()
+    public function getMenu(): array
     {
         return self::$menu;
     }
@@ -90,7 +91,7 @@ class MenuManager
     public function removeOld($currentPageNames)
     {
         foreach (self::$pageModel->all([], [], 0, 0) as $page) {
-            if (!in_array($page->name, $currentPageNames)) {
+            if (!\in_array($page->name, $currentPageNames, false)) {
                 $page->delete();
             }
         }
@@ -105,23 +106,25 @@ class MenuManager
     public function selectPage($pageData)
     {
         $pageModel = self::$pageModel->get($pageData['name']);
-        if ($pageModel === false) {
-            $pageData['ordernum'] = 100;
-            $pageModel = new Model\Page($pageData);
-            $pageModel->save();
-        } elseif ($this->pageNeedSave($pageModel, $pageData)) {
-            $pageModel->menu = $pageData['menu'];
-            $pageModel->submenu = $pageData['submenu'];
-            $pageModel->showonmenu = $pageData['showonmenu'];
-            $pageModel->title = $pageData['title'];
-            $pageModel->icon = $pageData['icon'];
-            $pageModel->ordernum = $pageData['ordernum'];
-            $pageModel->save();
-        }
+        if ($pageModel instanceof Model\Page) {
+            if ($pageModel === false) {
+                $pageData['ordernum'] = 100;
+                $pageModel = new Model\Page($pageData);
+                $pageModel->save();
+            } elseif ($this->pageNeedSave($pageModel, $pageData)) {
+                $pageModel->menu = $pageData['menu'];
+                $pageModel->submenu = $pageData['submenu'];
+                $pageModel->showonmenu = $pageData['showonmenu'];
+                $pageModel->title = $pageData['title'];
+                $pageModel->icon = $pageData['icon'];
+                $pageModel->ordernum = $pageData['ordernum'];
+                $pageModel->save();
+            }
 
-        if (self::$menu !== null && self::$menuActive !== true) {
-            $this->setActiveMenu($pageModel);
-            self::$menuActive = true;
+            if (self::$menu !== null && self::$menuActive !== true) {
+                $this->setActiveMenu($pageModel);
+                self::$menuActive = true;
+            }
         }
     }
 
@@ -151,14 +154,16 @@ class MenuManager
      *
      * @return Model\RoleAccess[]
      */
-    private function getUserAccess($nick)
+    private function getUserAccess($nick): array
     {
         $access = [];
         $roleUserModel = new Model\RoleUser();
         $filter = [new DataBase\DataBaseWhere('nick', $nick)];
         foreach ($roleUserModel->all($filter) as $roleUser) {
-            foreach ($roleUser->getRoleAccess() as $roleAccess) {
-                $access[] = $roleAccess;
+            if ($roleUser instanceof Model\RoleUser) {
+                foreach ($roleUser->getRoleAccess() as $roleAccess) {
+                    $access[] = $roleAccess;
+                }
             }
         }
 
@@ -170,7 +175,7 @@ class MenuManager
      *
      * @return Model\Page[]
      */
-    private function loadPages()
+    private function loadPages(): array
     {
         $where = [new DataBase\DataBaseWhere('showonmenu', true)];
         $order = [
@@ -204,7 +209,7 @@ class MenuManager
      *
      * @return array
      */
-    private function loadUserMenu()
+    private function loadUserMenu(): array
     {
         $result = [];
         $menuValue = '';
@@ -248,17 +253,16 @@ class MenuManager
      * Returns if the page should be saved.
      *
      * @param Model\Page $pageModel
-     * @param array      $pageData
+     * @param array $pageData
      *
      * @return bool
      */
-    private function pageNeedSave($pageModel, $pageData)
+    private function pageNeedSave($pageModel, $pageData): bool
     {
         return
             ($pageModel->menu !== $pageData['menu']) || ($pageModel->submenu !== $pageData['submenu']) ||
             ($pageModel->title !== $pageData['title']) || ($pageModel->icon !== $pageData['icon']) ||
-            ($pageModel->showonmenu !== $pageData['showonmenu'])
-        ;
+            ($pageModel->showonmenu !== $pageData['showonmenu']);
     }
 
     /**
@@ -289,7 +293,8 @@ class MenuManager
             if ($menuItem->name === $pageModel->name) {
                 $menu[$key]->active = true;
                 break;
-            } elseif (!empty($pageModel->submenu) && !empty($menuItem->menu) && $menuItem->name === $pageModel->submenu) {
+            }
+            if (!empty($pageModel->submenu) && !empty($menuItem->menu) && $menuItem->name === $pageModel->submenu) {
                 $menu[$key]->active = true;
                 $this->setActiveMenuItem($menu[$key]->menu, $pageModel);
                 break;
@@ -305,7 +310,7 @@ class MenuManager
      *
      * @return array
      */
-    private function sortMenu(&$sortMenu, &$result)
+    private function sortMenu(&$sortMenu, &$result): array
     {
         /// Reorder menu by title
         array_multisort($sortMenu, SORT_ASC, $result);

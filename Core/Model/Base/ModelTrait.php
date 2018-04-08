@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model\Base;
 
 use FacturaScripts\Core\Base\DataBase;
@@ -41,7 +42,7 @@ trait ModelTrait
      *
      * @return array
      */
-    public function getModelFields()
+    public function getModelFields(): array
     {
         return static::$fields;
     }
@@ -51,7 +52,7 @@ trait ModelTrait
      *
      * @return string
      */
-    public function modelClassName()
+    public function modelClassName(): string
     {
         $result = explode('\\', $this->modelName());
 
@@ -63,18 +64,18 @@ trait ModelTrait
      *
      * @return string
      */
-    public function modelName()
+    public function modelName(): string
     {
-        return get_class($this);
+        return \get_class($this);
     }
 
     /**
      * Loads table fields if is necessary.
      *
-     * @param DataBase  $dataBase
-     * @param string    $tableName
+     * @param DataBase $dataBase
+     * @param string $tableName
      */
-    protected function loadModelFields(DataBase &$dataBase, string $tableName)
+    protected function loadModelFields(DataBase $dataBase, string $tableName)
     {
         if (empty(self::$fields)) {
             self::$fields = ($dataBase->tableExists($tableName) ? $dataBase->getColumns($tableName) : []);

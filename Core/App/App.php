@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\App;
 
 use FacturaScripts\Core\Base;
@@ -133,7 +134,7 @@ abstract class App
      *
      * @return bool
      */
-    public function connect()
+    public function connect(): bool
     {
         if ($this->dataBase->connect()) {
             $this->settings->load();
@@ -157,7 +158,7 @@ abstract class App
      *
      * @return bool
      */
-    abstract public function run();
+    abstract public function run(): bool;
 
     /**
      * Returns the data into the standard output.
@@ -174,10 +175,10 @@ abstract class App
      *
      * @return string
      */
-    protected function getUriParam($num)
+    protected function getUriParam($num): string
     {
         $params = explode('/', substr($this->uri, 1));
-        return isset($params[$num]) ? $params[$num] : '';
+        return $params[$num] ?? '';
     }
 
     /**
@@ -185,7 +186,7 @@ abstract class App
      *
      * @return bool
      */
-    protected function isIPBanned()
+    protected function isIPBanned(): bool
     {
         return $this->ipFilter->isBanned($this->request->getClientIp());
     }

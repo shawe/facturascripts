@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController;
@@ -34,14 +35,14 @@ class ListTarifa extends ExtendedController\ListController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'rates';
-        $pagedata['icon'] = 'fa-money';
-        $pagedata['menu'] = 'sales';
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'rates';
+        $pageData['icon'] = 'fa-money';
+        $pageData['menu'] = 'sales';
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**

@@ -138,7 +138,7 @@ function clearAccountData() {
     // Update graphic bars
     accountGraph.data.datasets.forEach((dataset) => {
         dataset.data.lenght = 0;
-        dataset.data = [0,0,0,0,0,0,0,0,0,0,0,0];
+        dataset.data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     });
     accountGraph.update();
 }
@@ -204,18 +204,18 @@ function valuesForNewAccount(hasVAT) {
 
         // Set initial values
         result.push({'field': 'concepto', 'value': values['concepto']});
-        result.push({'field': 'codcontrapartida', 'value': offsetting });
+        result.push({'field': 'codcontrapartida', 'value': offsetting});
 
         // Set VAT values
         if (hasVAT) {
-            result.push({'field': 'iva', 'value': accountData.vat.vat });
-            result.push({'field': 'recargo', 'value': accountData.vat.surcharge });
+            result.push({'field': 'iva', 'value': accountData.vat.vat});
+            result.push({'field': 'recargo', 'value': accountData.vat.surcharge});
             result.push({'field': 'baseimponible', 'value': values['debe'] + values['haber']});
-        };
-    };
+        }
+    }
 
-    result.push({ 'field': 'debe', 'value': debit });
-    result.push({ 'field': 'haber', 'value': credit });
+    result.push({'field': 'debe', 'value': debit});
+    result.push({'field': 'haber', 'value': credit});
     return result;
 }
 
@@ -234,14 +234,14 @@ function saveVATRegister() {
     var field = Number(getGridFieldData(selectedRow, 'debe')) > 0 ? 'haber' : 'debe';
 
     var values = [
-        {'field': 'documento', 'value': vatForm.find('.modal-body [name="documento"]').val() },
-        {'field': 'cifnif', 'value': vatForm.find('.modal-body [name="cifnif"]').val() },
-        {'field': 'baseimponible', 'value': taxBase },
-        {'field': 'iva', 'value': pctVat },
-        {'field': 'recargo', 'value': pctSurcharge },
-        {'field': 'debe', 'value': 0.00 },
-        {'field': 'haber', 'value': 0.00 },
-        {'field': field, 'value': taxVat }
+        {'field': 'documento', 'value': vatForm.find('.modal-body [name="documento"]').val()},
+        {'field': 'cifnif', 'value': vatForm.find('.modal-body [name="cifnif"]').val()},
+        {'field': 'baseimponible', 'value': taxBase},
+        {'field': 'iva', 'value': pctVat},
+        {'field': 'recargo', 'value': pctSurcharge},
+        {'field': 'debe', 'value': 0.00},
+        {'field': 'haber', 'value': 0.00},
+        {'field': field, 'value': taxVat}
     ];
     setGridRowValues(selectedRow, values);
     vatModal.modal('hide');
@@ -317,7 +317,7 @@ $(document).ready(function () {
                         borderColor: 'rgb(54, 162, 235)',
                         borderWidth: 1,
                         fill: false,
-                        data: [0,0,0,0,0,0,0,0,0,0,0,0]
+                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                     }]
                 },
                 options: {}

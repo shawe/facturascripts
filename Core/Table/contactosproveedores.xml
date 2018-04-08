@@ -27,7 +27,8 @@
     </constraint>
     <constraint>
         <name>ca_contactosproveedores_proveedores</name>
-        <type>FOREIGN KEY (codproveedor) REFERENCES proveedores (codproveedor) ON DELETE CASCADE ON UPDATE CASCADE</type>
+        <type>FOREIGN KEY (codproveedor) REFERENCES proveedores (codproveedor) ON DELETE CASCADE ON UPDATE CASCADE
+        </type>
     </constraint>
     <constraint>
         <name>ca_contactosproveedores_contactos</name>

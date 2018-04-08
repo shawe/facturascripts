@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
 use FacturaScripts\Core\Model;
@@ -44,11 +45,11 @@ class Cuentas extends AbstractRandomAccounting
      *
      * @return int
      */
-    public function generate($num = 25)
+    public function generate($num = 25): int
     {
         $cuenta = $this->model;
         for ($i = 0; $i < $num; ++$i) {
-            $codigo = mt_rand(1000, 9990);
+            $codigo = random_int(1000, 9990);
             $madre = floor($codigo / 10);
 
             $ejercicio = $this->getOneItem($this->ejercicios)->codejercicio;

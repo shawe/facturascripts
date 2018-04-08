@@ -76,7 +76,7 @@ class ApiKey extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'api_keys';
     }
@@ -86,7 +86,7 @@ class ApiKey extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'id';
     }

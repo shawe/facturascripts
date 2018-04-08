@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model\Base;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -37,126 +38,111 @@ abstract class BusinessDocumentLine extends ModelClass
      * @var int
      */
     public $actualizastock;
-
-    /**
-     *
-     * @var int
-     */
-    private $actualizastockAnt;
-
     /**
      * Quantity.
      *
      * @var float|int
      */
     public $cantidad;
-
-    /**
-     *
-     * @var float|int
-     */
-    private $cantidadAnt;
-
     /**
      * Code of the selected combination, in the case of articles with attributes.
      *
      * @var string
      */
     public $codcombinacion;
-
     /**
      * Code of the related tax.
      *
      * @var string
      */
     public $codimpuesto;
-
     /**
      * Description of the line.
      *
      * @var string
      */
     public $descripcion;
-
     /**
      * % of the related tax.
      *
      * @var float|int
      */
     public $iva;
-
     /**
      * % off.
      *
      * @var float|int
      */
     public $dtopor;
-
     /**
      * Primary key.
      *
      * @var int
      */
     public $idlinea;
-
     /**
      * % of IRPF of the line.
      *
      * @var float|int
      */
     public $irpf;
-
     /**
      * Position of the line in the document. The higher down.
      *
      * @var int
      */
     public $orden;
-
     /**
      * Net amount without discounts.
      *
      * @var float|int
      */
     public $pvpsindto;
-
     /**
      * Net amount of the line, without taxes.
      *
      * @var float|int
      */
     public $pvptotal;
-
     /**
      * Price of the item, one unit.
      *
      * @var float|int
      */
     public $pvpunitario;
-
     /**
      * % surcharge of line equivalence.
      *
      * @var float|int
      */
     public $recargo;
-
     /**
      * Reference of the article.
      *
      * @var string
      */
     public $referencia;
+    /**
+     * TODO: Uncomplete documentation.
+     * @var int
+     */
+    private $actualizastockAnt;
+    /**
+     * TODO: Uncomplete documentation.
+     * @var float|int
+     */
+    private $cantidadAnt;
 
     /**
-     * 
+     * TODO: Uncomplete documentation.
+     *
      * @param array $data
      */
     public function __construct(array $data = [])
     {
         parent::__construct($data);
-        $this->actualizastockAnt = isset($this->actualizastock) ? $this->actualizastock : 0;
-        $this->cantidadAnt = isset($this->cantidad) ? $this->cantidad : 0;
+        $this->actualizastockAnt = $this->actualizastock ?? 0;
+        $this->cantidadAnt = $this->cantidad ?? 0;
     }
 
     /**
@@ -178,7 +164,12 @@ abstract class BusinessDocumentLine extends ModelClass
         $this->recargo = 0.0;
     }
 
-    public function delete()
+    /**
+     * TODO: Uncomplete documentation.
+     *
+     * @return bool
+     */
+    public function delete(): bool
     {
         if (parent::delete()) {
             $this->cantidad = 0;
@@ -193,7 +184,7 @@ abstract class BusinessDocumentLine extends ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idlinea';
     }
@@ -203,7 +194,7 @@ abstract class BusinessDocumentLine extends ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->descripcion = Utils::noHtml($this->descripcion);
         $this->pvpsindto = $this->pvpunitario * $this->cantidad;
@@ -212,7 +203,14 @@ abstract class BusinessDocumentLine extends ModelClass
         return true;
     }
 
-    public function updateStock(string $codalmacen)
+    /**
+     * TODO: Uncomplete documentation.
+     *
+     * @param string $codalmacen
+     *
+     * @return bool
+     */
+    public function updateStock(string $codalmacen): bool
     {
         if ($this->actualizastock === $this->actualizastockAnt && $this->cantidad === $this->cantidadAnt) {
             return true;
@@ -240,6 +238,13 @@ abstract class BusinessDocumentLine extends ModelClass
         return true;
     }
 
+    /**
+     * TODO: Uncomplete documentation.
+     *
+     * @param int $mode
+     * @param float $quantity
+     * @param Stock $stock
+     */
     private function applyStockChanges(int $mode, float $quantity, Stock $stock)
     {
         switch ($mode) {

@@ -56,9 +56,9 @@ class AppSettings
     /**
      * Return the value of property in group.
      *
-     * @param string      $group
-     * @param string      $property
-     * @param mixed       $default
+     * @param string $group
+     * @param string $property
+     * @param mixed $default
      *
      * @return mixed
      */
@@ -137,8 +137,8 @@ class AppSettings
     private function setConstants($data)
     {
         foreach ($data as $key => $value) {
-            if (!defined($key)) {
-                define($key, static::get('default', $value['property'], $value['default']));
+            if (!\defined($key)) {
+                \define($key, static::get('default', $value['property'], $value['default']));
             }
         }
     }

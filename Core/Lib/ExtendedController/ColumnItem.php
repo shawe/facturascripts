@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 /**
@@ -68,6 +69,36 @@ class ColumnItem extends VisualItem implements VisualItemInterface
     }
 
     /**
+     * Create and load the structure of a column based on the database
+     *
+     * @param array $column
+     *
+     * @return ColumnItem
+     */
+    public static function newFromJSON($column): ColumnItem
+    {
+        $result = new self();
+        $result->loadFromJSON($column);
+
+        return $result;
+    }
+
+    /**
+     * Create and load the structure of a column based on an XML file
+     *
+     * @param \SimpleXMLElement $column
+     *
+     * @return GroupItem|ColumnItem
+     */
+    public static function newFromXML($column)
+    {
+        $result = new self();
+        $result->loadFromXML($column);
+
+        return $result;
+    }
+
+    /**
      * Check and apply special operations on the columns
      */
     public function applySpecialOperations()
@@ -86,69 +117,13 @@ class ColumnItem extends VisualItem implements VisualItemInterface
     }
 
     /**
-     * Loads a group of database columns from a JSON file
-     *
-     * @param array $columns
-     *
-     * @return ColumnItem[]
-     */
-    public function columnsFromJSON($columns)
-    {
-        $result = [];
-        foreach ($columns as $data) {
-            $columnItem = new self();
-            $columnItem->loadFromJSON($data);
-            $result[] = $columnItem;
-        }
-
-        return $result;
-    }
-
-    /**
-     * Generates the HTML code to display the data from the model for Edit controllers
-     *
-     * @param string $value
-     * @param bool   $withLabel
-     * @param string $formName
-     *
-     * @return string
-     */
-    public function getEditHTML($value, $withLabel = true, $formName = 'main_form')
-    {
-        $header = $withLabel ? $this->getHeaderHTML($this->title) : '';
-        $data = $this->getColumnData($this->widget->columnFunction());
-
-        switch ($this->widget->type) {
-            case 'checkbox':
-                $html = $this->checkboxHTMLColumn($header, $value, $data);
-                break;
-
-            case 'radio':
-                $html = $this->radioHTMLColumn($header, $data, $value);
-                break;
-
-            case 'calculate':
-            case 'action':
-            case 'modal':
-                $html = $this->buttonHTMLColumn($data, $formName);
-                break;
-
-            default:
-                $html = $this->standardHTMLColumn($header, $value, $data);
-                break;
-        }
-
-        return $html;
-    }
-
-    /**
      * Generates HTML code for the element's header display
      *
      * @param string $value
      *
      * @return string
      */
-    public function getHeaderHTML($value)
+    public function getHeaderHTML($value): string
     {
         $html = parent::getHeaderHTML($value);
 
@@ -157,18 +132,6 @@ class ColumnItem extends VisualItem implements VisualItemInterface
         }
 
         return $html;
-    }
-
-    /**
-     * Generates the HTML code to display the model data for the List controllers
-     *
-     * @param string $value
-     *
-     * @return string
-     */
-    public function getListHTML($value)
-    {
-        return $this->widget->getListHTML($value);
     }
 
     /**
@@ -234,72 +197,71 @@ class ColumnItem extends VisualItem implements VisualItemInterface
     }
 
     /**
-     * Create and load the structure of a column based on the database
+     * Loads a group of database columns from a JSON file
      *
-     * @param array $column
+     * @param array $columns
      *
-     * @return ColumnItem
+     * @return ColumnItem[]
      */
-    public static function newFromJSON($column)
+    public function columnsFromJSON($columns): array
     {
-        $result = new self();
-        $result->loadFromJSON($column);
+        $result = [];
+        foreach ($columns as $data) {
+            $columnItem = new self();
+            $columnItem->loadFromJSON($data);
+            $result[] = $columnItem;
+        }
 
         return $result;
     }
 
     /**
-     * Create and load the structure of a column based on an XML file
+     * Generates the HTML code to display the data from the model for Edit controllers
      *
-     * @param \SimpleXMLElement $column
-     *
-     * @return GroupItem|ColumnItem
-     */
-    public static function newFromXML($column)
-    {
-        $result = new self();
-        $result->loadFromXML($column);
-
-        return $result;
-    }
-
-    /**
-     * Returns the HTML code to display a button
-     *
-     * @param array  $data
+     * @param string $value
+     * @param bool $withLabel
      * @param string $formName
      *
      * @return string
      */
-    private function buttonHTMLColumn($data, $formName)
+    public function getEditHTML($value, $withLabel = true, $formName = 'main_form'): string
     {
-        return '<div class="form-group' . $data['ColumnClass'] . '"><label>&nbsp;</label>'
-            . $this->widget->getHTML($this->widget->label, $formName, $data['ColumnHint'], 'col')
-            . $data['ColumnDescription']
-            . '</div>';
+        $header = $withLabel ? $this->getHeaderHTML($this->title) : '';
+        $data = $this->getColumnData($this->widget->columnFunction());
+
+        switch ($this->widget->type) {
+            case 'checkbox':
+                $html = $this->checkboxHTMLColumn($header, $value, $data);
+                break;
+
+            case 'radio':
+                $html = $this->radioHTMLColumn($header, $data, $value);
+                break;
+
+            case 'calculate':
+            case 'action':
+            case 'modal':
+                $html = $this->buttonHTMLColumn($data, $formName);
+                break;
+
+            default:
+                $html = $this->standardHTMLColumn($header, $value, $data);
+                break;
+        }
+
+        return $html;
     }
 
     /**
-     * Returns the HTML code to display a checkbox field
+     * Generates the HTML code to display the model data for the List controllers
      *
-     * @param string $header
      * @param string $value
-     * @param array  $data
      *
      * @return string
      */
-    private function checkboxHTMLColumn($header, $value, $data)
+    public function getListHTML($value): string
     {
-        $input = $this->widget->getEditHTML($value);
-        $label = empty($header) ? $input : '<label class="form-check-label mb-2 mr-sm-2'
-            . ' mb-sm-0" ' . $data['ColumnHint'] . '>' . $input . '&nbsp;' . $header . '</label>';
-
-        $result = '<div class="' . $data['ColumnClass'] . '">'
-            . '<div class="form-check">' . $label . $data['ColumnDescription'] . '</div>'
-            . $data['ColumnRequired']
-            . '</div>';
-
-        return $result;
+        return $this->widget->getListHTML($value);
     }
 
     /**
@@ -307,27 +269,9 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @return string
      */
-    protected function getColumnClass()
+    protected function getColumnClass(): string
     {
         return ($this->numColumns > 0) ? (' col-md-' . $this->numColumns) : ' col';
-    }
-
-    /**
-     * Executes the function list ($properties) to get the column properties
-     *
-     * @param string[] $properties
-     *
-     * @return array
-     */
-    private function getColumnData($properties)
-    {
-        $result = [];
-        foreach ($properties as $value) {
-            $function = 'get' . $value;
-            $result[$value] = $this->$function();
-        }
-
-        return $result;
     }
 
     /**
@@ -335,7 +279,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @return string
      */
-    protected function getColumnDescription()
+    protected function getColumnDescription(): string
     {
         $description = '';
         if (!empty($this->description)) {
@@ -354,7 +298,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @return string
      */
-    protected function getColumnHint()
+    protected function getColumnHint(): string
     {
         return $this->widget->getHintHTML($this->i18n->trans($this->widget->hint));
     }
@@ -364,21 +308,78 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @return string
      */
-    protected function getColumnRequired()
+    protected function getColumnRequired(): string
     {
         return '';
+    }
+
+    /**
+     * Returns the HTML code to display a button
+     *
+     * @param array $data
+     * @param string $formName
+     *
+     * @return string
+     */
+    private function buttonHTMLColumn($data, $formName): string
+    {
+        return '<div class="form-group' . $data['ColumnClass'] . '"><label>&nbsp;</label>'
+            . $this->widget->getHTML($this->widget->label, $formName, $data['ColumnHint'], 'col')
+            . $data['ColumnDescription']
+            . '</div>';
+    }
+
+    /**
+     * Returns the HTML code to display a checkbox field
+     *
+     * @param string $header
+     * @param string $value
+     * @param array $data
+     *
+     * @return string
+     */
+    private function checkboxHTMLColumn($header, $value, $data): string
+    {
+        $input = $this->widget->getEditHTML($value);
+        $label = empty($header) ? $input : '<label class="form-check-label mb-2 mr-sm-2'
+            . ' mb-sm-0" ' . $data['ColumnHint'] . '>' . $input . '&nbsp;' . $header . '</label>';
+
+        $result = '<div class="' . $data['ColumnClass'] . '">'
+            . '<div class="form-check">' . $label . $data['ColumnDescription'] . '</div>'
+            . $data['ColumnRequired']
+            . '</div>';
+
+        return $result;
+    }
+
+    /**
+     * Executes the function list ($properties) to get the column properties
+     *
+     * @param string[] $properties
+     *
+     * @return array
+     */
+    private function getColumnData($properties): array
+    {
+        $result = [];
+        foreach ($properties as $value) {
+            $function = 'get' . $value;
+            $result[$value] = $this->$function();
+        }
+
+        return $result;
     }
 
     /**
      * Returns the HTML code to display a list of options
      *
      * @param string $header
-     * @param array  $data
+     * @param array $data
      * @param string $value
      *
      * @return string
      */
-    private function radioHTMLColumn($header, $data, $value)
+    private function radioHTMLColumn($header, $data, $value): string
     {
         $html = '';
         $index = 0;
@@ -410,11 +411,11 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @param string $header
      * @param string $value
-     * @param array  $data
+     * @param array $data
      *
      * @return string
      */
-    private function standardHTMLColumn($header, $value, $data)
+    private function standardHTMLColumn($header, $value, $data): string
     {
         $label = empty($header) ? '' : '<label for="' . $this->widget->fieldName . '" ' . $data['ColumnHint'] . '>'
             . $header . '</label>';

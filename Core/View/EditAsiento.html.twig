@@ -26,12 +26,12 @@
 
 {% extends "Master/GridController.html.twig" %}
 
-{% block javascript %}
-{{ parent() }}
-{% set masterView = fsc.views|keys|first %}
-{% if fsc.views[masterView].count > 0 %}
-<script src="node_modules/chart.js/dist/Chart.min.js"></script>
-{% endif %}
+{% block javascripts %}
+    {{ parent() }}
+    {% set masterView = fsc.views|keys|first %}
+    {% if fsc.views[masterView].count > 0 %}
+        <script src="node_modules/chart.js/dist/Chart.min.js"></script>
+    {% endif %}
 {% endblock %}
 
 {% block gridcard %}

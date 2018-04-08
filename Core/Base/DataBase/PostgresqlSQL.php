@@ -34,7 +34,7 @@ class PostgresqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sql2Int($colName)
+    public function sql2Int($colName): string
     {
         return 'CAST(' . $colName . ' as INTEGER)';
     }
@@ -44,7 +44,7 @@ class PostgresqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlLastValue()
+    public function sqlLastValue(): string
     {
         return 'SELECT lastval() as num;';
     }
@@ -56,7 +56,7 @@ class PostgresqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlColumns($tableName)
+    public function sqlColumns($tableName): string
     {
         $sql = 'SELECT column_name as name, data_type as type,'
             . 'character_maximum_length, column_default as default,'
@@ -76,7 +76,7 @@ class PostgresqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlConstraints($tableName)
+    public function sqlConstraints($tableName): string
     {
         $sql = 'SELECT tc.constraint_type as type, tc.constraint_name as name'
             . ' FROM information_schema.table_constraints AS tc'
@@ -94,7 +94,7 @@ class PostgresqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlConstraintsExtended($tableName)
+    public function sqlConstraintsExtended($tableName): string
     {
         $sql = 'SELECT tc.constraint_type as type, tc.constraint_name as name,'
             . 'kcu.column_name,'
@@ -128,7 +128,7 @@ class PostgresqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlTableConstraints($xmlCons)
+    public function sqlTableConstraints($xmlCons): string
     {
         $sql = '';
 
@@ -154,7 +154,7 @@ class PostgresqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlIndexes($tableName)
+    public function sqlIndexes($tableName): string
     {
         return "SELECT indexname as Key_name FROM pg_indexes WHERE tablename = '" . $tableName . "';";
     }
@@ -163,12 +163,12 @@ class PostgresqlSQL implements DataBaseSQL
      * Returns the SQL needed to create a table with the given structure
      *
      * @param string $tableName
-     * @param array  $columns
-     * @param array  $constraints
+     * @param array $columns
+     * @param array $constraints
      *
      * @return string
      */
-    public function sqlCreateTable($tableName, $columns, $constraints)
+    public function sqlCreateTable($tableName, $columns, $constraints): string
     {
         $serials = ['serial', 'bigserial'];
         $fields = '';
@@ -179,7 +179,7 @@ class PostgresqlSQL implements DataBaseSQL
                 $fields .= ' NOT NULL';
             }
 
-            if (in_array($col['type'], $serials, false)) {
+            if (\in_array($col['type'], $serials, false)) {
                 continue;
             }
 
@@ -198,11 +198,11 @@ class PostgresqlSQL implements DataBaseSQL
      * Returns the SQL needed to add a column to a table
      *
      * @param string $tableName
-     * @param array  $colData
+     * @param array $colData
      *
      * @return string
      */
-    public function sqlAlterAddColumn($tableName, $colData)
+    public function sqlAlterAddColumn($tableName, $colData): string
     {
         $sql = 'ALTER TABLE ' . $tableName
             . ' ADD COLUMN ' . $colData['name'] . ' ' . $colData['type'];
@@ -222,11 +222,11 @@ class PostgresqlSQL implements DataBaseSQL
      * Returns the SQL needed to alter a column in a table
      *
      * @param string $tableName
-     * @param array  $colData
+     * @param array $colData
      *
      * @return string
      */
-    public function sqlAlterModifyColumn($tableName, $colData)
+    public function sqlAlterModifyColumn($tableName, $colData): string
     {
         $sql = 'ALTER TABLE ' . $tableName
             . ' ALTER COLUMN ' . $colData['name'] . ' TYPE ' . $colData['type'];
@@ -238,11 +238,11 @@ class PostgresqlSQL implements DataBaseSQL
      * Returns the needed SQL to alter a column default constraint
      *
      * @param string $tableName
-     * @param array  $colData
+     * @param array $colData
      *
      * @return string
      */
-    public function sqlAlterConstraintDefault($tableName, $colData)
+    public function sqlAlterConstraintDefault($tableName, $colData): string
     {
         $action = ($colData['default'] !== '') ? ' SET DEFAULT ' . $colData['default'] : ' DROP DEFAULT';
 
@@ -253,11 +253,11 @@ class PostgresqlSQL implements DataBaseSQL
      * SQL statement to alter a null constraint in a table column
      *
      * @param string $tableName
-     * @param array  $colData
+     * @param array $colData
      *
      * @return string
      */
-    public function sqlAlterConstraintNull($tableName, $colData)
+    public function sqlAlterConstraintNull($tableName, $colData): string
     {
         $action = ($colData['null'] === 'YES') ? ' DROP ' : ' SET ';
 
@@ -268,11 +268,11 @@ class PostgresqlSQL implements DataBaseSQL
      * Returns the SQL needed to remove a constraint from a table
      *
      * @param string $tableName
-     * @param array  $colData
+     * @param array $colData
      *
      * @return string
      */
-    public function sqlDropConstraint($tableName, $colData)
+    public function sqlDropConstraint($tableName, $colData): string
     {
         return 'ALTER TABLE ' . $tableName . ' DROP CONSTRAINT ' . $colData['name'] . ';';
     }
@@ -286,7 +286,7 @@ class PostgresqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlAddConstraint($tableName, $constraintName, $sql)
+    public function sqlAddConstraint($tableName, $constraintName, $sql): string
     {
         return 'ALTER TABLE ' . $tableName . ' ADD CONSTRAINT ' . $constraintName . ' ' . $sql . ';';
     }
@@ -298,7 +298,7 @@ class PostgresqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlSequenceExists($seqName)
+    public function sqlSequenceExists($seqName): string
     {
         return "SELECT '" . $seqName . "' FROM pg_class where relname = '" . $seqName . "';";
     }

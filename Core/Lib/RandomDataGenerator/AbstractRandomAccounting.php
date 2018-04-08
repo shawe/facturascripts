@@ -16,13 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
 use FacturaScripts\Core\Model;
 
 /**
- * Abstract class that contains the methods that generate random data 
- * for accounting.
+ * Abstract class that contains the methods that generate random data for accounting.
  *
  * @author Rafael San José <info@rsanjoseo.com>
  */

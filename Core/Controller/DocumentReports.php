@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
-use FacturaScripts\Core\Lib\DocumentReportsBase;
 use FacturaScripts\Core\App\AppSettings;
 use FacturaScripts\Core\Base\Cache;
 use FacturaScripts\Core\Base\Controller;
@@ -27,6 +27,7 @@ use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Base\MiniLog;
 use FacturaScripts\Core\Base\Translator;
 use FacturaScripts\Core\Base\Utils;
+use FacturaScripts\Core\Lib\DocumentReportsBase as DRB;
 use FacturaScripts\Core\Model;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -49,7 +50,7 @@ class DocumentReports extends Controller
     /**
      * List of filters.
      *
-     * @var DocumentReportsBase\DocumentReportsFilterList[]
+     * @var DRB\DocumentReportsFilterList[]
      */
     public $filters;
 
@@ -63,24 +64,24 @@ class DocumentReports extends Controller
     /**
      * List of sources.
      *
-     * @var DocumentReportsBase\DocumentReportsSource[]
+     * @var DRB\DocumentReportsSource[]
      */
     public $sources;
 
     /**
      * List of index labels for data
      *
-     * @var Array
+     * @var []
      */
     private $labels;
 
     /**
      * Initializes all the objects and properties
      *
-     * @param Cache      $cache
+     * @param Cache $cache
      * @param Translator $i18n
-     * @param MiniLog    $miniLog
-     * @param string     $className
+     * @param MiniLog $miniLog
+     * @param string $className
      */
     public function __construct(&$cache, &$i18n, &$miniLog, $className)
     {
@@ -90,23 +91,23 @@ class DocumentReports extends Controller
         $this->labels = [];
 
         $this->sources = [
-            new DocumentReportsBase\DocumentReportsSource('customer-invoices', '181,225,174'),
-            new DocumentReportsBase\DocumentReportsSource('supplier-invoices', '154,206,223'),
+            new DRB\DocumentReportsSource('customer-invoices', '181,225,174'),
+            new DRB\DocumentReportsSource('supplier-invoices', '154,206,223'),
         ];
 
         $this->filters = [
-            'employee' => new DocumentReportsBase\DocumentReportsFilterList('\FacturaScripts\Dinamic\Model\Agente', '', 'fa-users'),
-            'serie' => new DocumentReportsBase\DocumentReportsFilterList('\FacturaScripts\Dinamic\Model\Serie', AppSettings::get('default', 'codserie')),
-            'currency' => new DocumentReportsBase\DocumentReportsFilterList('\FacturaScripts\Dinamic\Model\Divisa', AppSettings::get('default', 'coddivisa')),
-            'payment-method' => new DocumentReportsBase\DocumentReportsFilterList('\FacturaScripts\Dinamic\Model\FormaPago'),
+            'employee' => new DRB\DocumentReportsFilterList('\FacturaScripts\Dinamic\Model\Agente', '', 'fa-users'),
+            'serie' => new DRB\DocumentReportsFilterList('\FacturaScripts\Dinamic\Model\Serie', AppSettings::get('default', 'codserie')),
+            'currency' => new DRB\DocumentReportsFilterList('\FacturaScripts\Dinamic\Model\Divisa', AppSettings::get('default', 'coddivisa')),
+            'payment-method' => new DRB\DocumentReportsFilterList('\FacturaScripts\Dinamic\Model\FormaPago'),
         ];
     }
 
     /**
      * Runs the controller's private logic.
      *
-     * @param Response              $response
-     * @param Model\User            $user
+     * @param Response $response
+     * @param Model\User $user
      * @param ControllerPermissions $permissions
      */
     public function privateCore(&$response, $user, $permissions)
@@ -122,16 +123,58 @@ class DocumentReports extends Controller
     }
 
     /**
-     * Set values selected by the user to source.
+     * Return the basic data for this page.
      *
-     * @param int                                   $index
-     * @param DocumentReportsBase\DocumentReportsSource $source
+     * @return array
      */
-    private function setDefaultToSource($index, &$source)
+    public function getPageData(): array
     {
-        $source->source = $this->request->get('source' . $index, $source->source);
-        $source->dateFrom = new \DateTime($this->request->get('date-from' . $index, date('01-m-Y')));
-        $source->dateTo = new \DateTime($this->request->get('date-to' . $index, date('t-m-Y')));
+        $pageData = parent::getPageData();
+        $pageData['menu'] = 'reports';
+        $pageData['title'] = 'document-reports';
+        $pageData['icon'] = 'fa-area-chart';
+
+        return $pageData;
+    }
+
+    /**
+     * Return a comma separated list of labels.
+     *
+     * @return string
+     */
+    public function getLabels(): string
+    {
+        return '"' . implode('","', $this->labels) . '"';
+    }
+
+    /**
+     * Return a comma separated list of keys.
+     *
+     * @param $sourceKey
+     *
+     * @return string
+     */
+    public function getDataTable($sourceKey): string
+    {
+        return implode(',', $this->dataTable[$sourceKey]);
+    }
+
+    /**
+     * Return available document types.
+     *
+     * @return array
+     */
+    public function getDocumentTypes(): array
+    {
+        return [
+            'customer-estimations' => $this->i18n->trans('customer-estimations'),
+            'customer-orders' => $this->i18n->trans('customer-orders'),
+            'customer-delivery-notes' => $this->i18n->trans('customer-delivery-notes'),
+            'customer-invoices' => $this->i18n->trans('customer-invoices'),
+            'supplier-orders' => $this->i18n->trans('supplier-orders'),
+            'supplier-delivery-notes' => $this->i18n->trans('supplier-delivery-notes'),
+            'supplier-invoices' => $this->i18n->trans('supplier-invoices'),
+        ];
     }
 
     /**
@@ -152,6 +195,45 @@ class DocumentReports extends Controller
                 $filter->selectedValue = $this->request->get($key, $filter->selectedValue);
             }
         }
+    }
+
+    /**
+     * Generate daily data to show to user.
+     */
+    protected function generateResults()
+    {
+        $step = '+1 day';
+        $format = 'd-m-Y';
+        $this->grouped = 'daily';
+        $this->getStepFormat($step, $format);
+
+        $this->dataTable = [];
+        foreach ($this->sources as $source) {
+            $data = $this->populateTable($source, $step, $format);
+            $this->dataTable[$source->source] = $data;
+            /**
+             * Perhaps array_merge/array_replace can be used instead.
+             * Feel free to disable the inspection if '+' is intended.
+             * https://github.com/kalessil/phpinspectionsea/blob/master/docs/probable-bugs.md#addition-operator-applied-to-arrays
+             */
+            /** @noinspection AdditionOperationOnArraysInspection */
+            $this->labels += array_keys($data);
+            unset($data);
+        }
+        sort($this->labels);
+    }
+
+    /**
+     * Set values selected by the user to source.
+     *
+     * @param int $index
+     * @param DRB\DocumentReportsSource $source
+     */
+    private function setDefaultToSource($index, &$source)
+    {
+        $source->source = $this->request->get('source' . $index, $source->source);
+        $source->dateFrom = new \DateTime($this->request->get('date-from' . $index, date('01-m-Y')));
+        $source->dateTo = new \DateTime($this->request->get('date-to' . $index, date('t-m-Y')));
     }
 
     /**
@@ -190,24 +272,28 @@ class DocumentReports extends Controller
      *
      * @return string
      */
-    private function getDateSQL($format)
+    private function getDateSQL($format): string
     {
         $concat = [];
         $options = explode('-', $format);
 
         switch (true) {
-            case in_array('d', $options):
+            /** @noinspection PhpMissingBreakStatementInspection */
+            case \in_array('d', $options, false):
                 $concat[] = 'LPAD(CAST(EXTRACT(DAY FROM fecha) AS CHAR(10)), 2, \'0\')';
                 $concat[] = ' \'-\' ';
-            /// no break
+                // no break
 
-            case in_array('m', $options):
+            /** @noinspection PhpMissingBreakStatementInspection */
+            case \in_array('m', $options, false):
                 $concat[] = 'LPAD(CAST(EXTRACT(MONTH FROM fecha) AS CHAR(10)), 2, \'0\')';
                 $concat[] = ' \'-\' ';
-            /// no break
+                // no break
 
-            case in_array('Y', $options):
+            /** @noinspection PhpMissingBreakStatementInspection */
+            case \in_array('Y', $options, false):
                 $concat[] = 'CAST(EXTRACT(YEAR FROM fecha) AS CHAR(10))';
+                // no break
         }
 
         if (strtolower(FS_DB_TYPE) === 'mysql') {
@@ -221,11 +307,11 @@ class DocumentReports extends Controller
     /**
      * Establishes the WHERE clause according to the defined filters.
      *
-     * @param DocumentReportsBase\DocumentReportsSource $source
+     * @param DRB\DocumentReportsSource $source
      *
      * @return DataBase\DataBaseWhere[]
      */
-    private function getWhere($source)
+    private function getWhere($source): array
     {
         $where = [
             new DataBase\DataBaseWhere('fecha', $source->dateFrom->format('d-m-Y'), '>='),
@@ -242,17 +328,18 @@ class DocumentReports extends Controller
     /**
      * Populate the result with the parameters.
      *
-     * @param DocumentReportsBase\DocumentReportsSource $source
-     * @param string                                    $step
-     * @param string                                    $format
+     * @param DRB\DocumentReportsSource $source
+     * @param string $step
+     * @param string $format
      *
      * @return array
      */
-    private function populateTable(&$source, $step, $format)
+    private function populateTable(&$source, $step, $format): array
     {
         // Init data
         $result = [];
-        foreach (Utils::dateRange($source->dateFrom->format('d-m-Y'), $source->dateTo->format('d-m-Y'), $step, $format) as $index) {
+        $range = Utils::dateRange($source->dateFrom->format('d-m-Y'), $source->dateTo->format('d-m-Y'), $step, $format);
+        foreach ($range as $index) {
             $result[$index] = 0;
         }
 
@@ -271,80 +358,5 @@ class DocumentReports extends Controller
         }
 
         return $result;
-    }
-
-    /**
-     * Generate daily data to show to user.
-     */
-    protected function generateResults()
-    {
-        $step = '+1 day';
-        $format = 'd-m-Y';
-        $this->grouped = 'daily';
-        $this->getStepFormat($step, $format);
-
-        $this->dataTable = [];
-        foreach ($this->sources as $source) {
-            $data = $this->populateTable($source, $step, $format);
-            $this->dataTable[$source->source] = $data;
-            $this->labels += array_keys($data);
-            unset($data);
-        }
-        sort($this->labels);
-    }
-
-    /**
-     * Return a comma separated list of labels.
-     *
-     * @return string
-     */
-    public function getLabels()
-    {
-        return '"' . implode('","', $this->labels) . '"';
-    }
-
-    /**
-     * Return a comma separated list of keys.
-     *
-     * @param $sourceKey
-     *
-     * @return string
-     */
-    public function getDataTable($sourceKey)
-    {
-        return implode(',', $this->dataTable[$sourceKey]);
-    }
-
-    /**
-     * Return the basic data for this page.
-     *
-     * @return array
-     */
-    public function getPageData()
-    {
-        $pageData = parent::getPageData();
-        $pageData['menu'] = 'reports';
-        $pageData['title'] = 'document-reports';
-        $pageData['icon'] = 'fa-area-chart';
-
-        return $pageData;
-    }
-
-    /**
-     * Return available document types.
-     *
-     * @return array
-     */
-    public function getDocumentTypes()
-    {
-        return [
-            'customer-estimations' => $this->i18n->trans('customer-estimations'),
-            'customer-orders' => $this->i18n->trans('customer-orders'),
-            'customer-delivery-notes' => $this->i18n->trans('customer-delivery-notes'),
-            'customer-invoices' => $this->i18n->trans('customer-invoices'),
-            'supplier-orders' => $this->i18n->trans('supplier-orders'),
-            'supplier-delivery-notes' => $this->i18n->trans('supplier-delivery-notes'),
-            'supplier-invoices' => $this->i18n->trans('supplier-invoices'),
-        ];
     }
 }

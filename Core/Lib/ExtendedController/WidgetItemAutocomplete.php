@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Model;
@@ -29,19 +30,18 @@ class WidgetItemAutocomplete extends WidgetItem
 {
 
     /**
-     * Model to use with select and autocomplete filters.
-     *
-     * @var Model\CodeModel
-     */
-    private $codeModel;
-
-    /**
      * Accepted values for the field associated to the widget.
      * Values are loaded from Model\PageOption::getForUser()
      *
      * @var array
      */
     public $values;
+    /**
+     * Model to use with select and autocomplete filters.
+     *
+     * @var Model\CodeModel
+     */
+    private $codeModel;
 
     /**
      * WidgetItemAutocomplete constructor.
@@ -84,7 +84,7 @@ class WidgetItemAutocomplete extends WidgetItem
      *
      * @return string
      */
-    public function getListHTML($value)
+    public function getListHTML($value): string
     {
         if ($value === null || $value === '') {
             return '';
@@ -101,7 +101,7 @@ class WidgetItemAutocomplete extends WidgetItem
      *
      * @return string
      */
-    public function getEditHTML($value)
+    public function getEditHTML($value): string
     {
         $specialAttributes = $this->specialAttributes();
 
@@ -139,7 +139,7 @@ class WidgetItemAutocomplete extends WidgetItem
      *
      * @return string
      */
-    public function getTextValue($value)
+    public function getTextValue($value): string
     {
         $tableName = $this->values[0]['source'];
         $fieldCode = $this->values[0]['fieldcode'];

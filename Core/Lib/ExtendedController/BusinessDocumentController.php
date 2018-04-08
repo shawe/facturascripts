@@ -16,7 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
+
+use FacturaScripts\Core\Model\Base\ModelClass;
 
 /**
  * Description of BusinessDocumentController
@@ -32,13 +35,6 @@ abstract class BusinessDocumentController extends PanelController
     const ITEM_SELECT_LIMIT = 500;
 
     /**
-     * Return the document class name.
-     *
-     * @return string
-     */
-    abstract protected function getModelClassName();
-
-    /**
      * Returns an array with all data from selected model.
      *
      * @param string $modelName
@@ -51,13 +47,22 @@ abstract class BusinessDocumentController extends PanelController
         $modelName = '\FacturaScripts\Dinamic\Model\\' . $modelName;
         $model = new $modelName();
 
-        $order = [$model->primaryDescriptionColumn() => 'ASC'];
-        foreach ($model->all([], $order, 0, self::ITEM_SELECT_LIMIT) as $newModel) {
-            $values[$newModel->primaryColumnValue()] = $newModel->primaryDescription();
+        if ($model instanceof ModelClass) {
+            $order = [$model->primaryDescriptionColumn() => 'ASC'];
+            foreach ($model->all([], $order, 0, self::ITEM_SELECT_LIMIT) as $newModel) {
+                $values[$newModel->primaryColumnValue()] = $newModel->primaryDescription();
+            }
         }
 
         return $values;
     }
+
+    /**
+     * Return the document class name.
+     *
+     * @return string
+     */
+    abstract protected function getModelClassName(): string;
 
     /**
      * Load views and document.
@@ -74,12 +79,12 @@ abstract class BusinessDocumentController extends PanelController
     /**
      * Run the actions that alter data before reading it.
      *
-     * @param BaseView $view
-     * @param string   $action
+     * @param BusinessDocumentView $view
+     * @param string $action
      *
      * @return bool
      */
-    protected function execPreviousAction($view, $action)
+    protected function execPreviousAction($view, $action): bool
     {
         switch ($action) {
             case 'recalculate-document':
@@ -125,20 +130,10 @@ abstract class BusinessDocumentController extends PanelController
     }
 
     /**
-     * Return the name of the xml file with the column configuration por lines.
-     *
-     * @return string
-     */
-    protected function getLineXMLView()
-    {
-        return 'BusinessDocumentLine';
-    }
-
-    /**
      * Load view data procedure
      *
-     * @param string   $keyView
-     * @param BaseView $view
+     * @param string $keyView
+     * @param BusinessDocumentView $view
      */
     protected function loadData($keyView, $view)
     {
@@ -146,5 +141,15 @@ abstract class BusinessDocumentController extends PanelController
         if ($keyView === 'Document' && !empty($iddoc)) {
             $view->loadData($iddoc);
         }
+    }
+
+    /**
+     * Return the name of the xml file with the column configuration por lines.
+     *
+     * @return string
+     */
+    protected function getLineXMLView(): string
+    {
+        return 'BusinessDocumentLine';
     }
 }

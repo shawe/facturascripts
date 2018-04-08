@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 /**
@@ -75,7 +76,7 @@ class DireccionCliente extends Base\Address
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'dirclientes';
     }
@@ -85,7 +86,7 @@ class DireccionCliente extends Base\Address
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'id';
     }
@@ -107,7 +108,7 @@ class DireccionCliente extends Base\Address
      *
      * @return bool
      */
-    public function save()
+    public function save(): bool
     {
         /// update the modification date
         $this->fecha = date('d-m-Y');

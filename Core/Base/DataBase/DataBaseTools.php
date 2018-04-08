@@ -80,7 +80,7 @@ class DataBaseTools
      *
      * @return string
      */
-    public function checkTable($tableName, $xmlCols, $xmlCons)
+    public function checkTable($tableName, $xmlCols, $xmlCons): string
     {
         if (!self::$dataBase->checkTableAux($tableName)) {
             self::$miniLog->critical(self::$i18n->trans('error-to-innodb'));
@@ -115,27 +115,64 @@ class DataBaseTools
      * Create the table with the structure received.
      *
      * @param string $tableName
-     * @param array  $xmlCols
-     * @param array  $xmlCons
+     * @param array $xmlCols
+     * @param array $xmlCons
      *
      * @return bool
      */
-    public function generateTable($tableName, $xmlCols, $xmlCons)
+    public function generateTable($tableName, $xmlCols, $xmlCons): bool
     {
         return self::$sql->sqlCreateTable($tableName, $xmlCols, $xmlCons);
+    }
+
+    /**
+     * Extract columns and restrictions form the XML definition file of a Table.
+     *
+     * @param string $tableName
+     * @param array $columns
+     * @param array $constraints
+     *
+     * @return bool
+     */
+    public function getXmlTable($tableName, &$columns, &$constraints): bool
+    {
+        $return = false;
+        $filename = $this->getXmlTableLocation($tableName);
+
+        if (file_exists($filename)) {
+            $xml = simplexml_load_string(file_get_contents($filename, true));
+            if ($xml) {
+                if ($xml->column) {
+                    $this->checkXmlColumns($columns, $xml);
+
+                    /// columns must exists or function must return false
+                    $return = true;
+                }
+
+                if ($xml->constraint) {
+                    $this->checkXmlConstraints($constraints, $xml);
+                }
+            } else {
+                self::$miniLog->critical(self::$i18n->trans('error-reading-file', ['%fileName%' => $filename]));
+            }
+        } else {
+            self::$miniLog->critical(self::$i18n->trans('file-not-found', ['%fileName%' => $filename]));
+        }
+
+        return $return;
     }
 
     /**
      * Compare two arrays with restrictions, return a SQL statement if founded differencies.
      *
      * @param string $tableName
-     * @param array  $xmlCons
-     * @param array  $dbCons
-     * @param bool   $deleteOnly
+     * @param array $xmlCons
+     * @param array $dbCons
+     * @param bool $deleteOnly
      *
      * @return string
      */
-    private function compareConstraints($tableName, $xmlCons, $dbCons, $deleteOnly = false)
+    private function compareConstraints($tableName, $xmlCons, $dbCons, $deleteOnly = false): string
     {
         $result = '';
 
@@ -167,13 +204,13 @@ class DataBaseTools
     /**
      * Look for a column with a value by his name in array.
      *
-     * @param array  $items
+     * @param array $items
      * @param string $index
      * @param string $value
      *
      * @return array
      */
-    private function searchInArray($items, $index, $value)
+    private function searchInArray($items, $index, $value): array
     {
         $result = [];
         foreach ($items as $column) {
@@ -190,12 +227,12 @@ class DataBaseTools
      * Compare two arrays of columns, return a SQL statement if founded differencies.
      *
      * @param string $tableName
-     * @param array  $xmlCols
-     * @param array  $dbCols
+     * @param array $xmlCols
+     * @param array $dbCols
      *
      * @return string
      */
-    private function compareColumns($tableName, $xmlCols, $dbCols)
+    private function compareColumns($tableName, $xmlCols, $dbCols): string
     {
         $result = '';
         foreach ($xmlCols as $xml_col) {
@@ -237,7 +274,7 @@ class DataBaseTools
      *
      * @return bool
      */
-    private function compareDataTypes($dbType, $xmlType)
+    private function compareDataTypes($dbType, $xmlType): bool
     {
         $db0 = strtolower($dbType);
         $xml = strtolower($xmlType);
@@ -247,49 +284,12 @@ class DataBaseTools
             self::$dataBase->getEngine()->compareDataTypes($db0, $xml) ||
             ($xml === 'serial') ||
             (
-            strpos($db0, 'time') === 0 &&
-            strpos($xml, 'time') === 0
+                strpos($db0, 'time') === 0 &&
+                strpos($xml, 'time') === 0
             )
-            );
+        );
 
         return $result;
-    }
-
-    /**
-     * Extract columns and restrictions form the XML definition file of a Table.
-     *
-     * @param string $tableName
-     * @param array  $columns
-     * @param array  $constraints
-     *
-     * @return bool
-     */
-    public function getXmlTable($tableName, &$columns, &$constraints)
-    {
-        $return = false;
-        $filename = $this->getXmlTableLocation($tableName);
-
-        if (file_exists($filename)) {
-            $xml = simplexml_load_string(file_get_contents($filename, true));
-            if ($xml) {
-                if ($xml->column) {
-                    $this->checkXmlColumns($columns, $xml);
-
-                    /// columns must exists or function must return false
-                    $return = true;
-                }
-
-                if ($xml->constraint) {
-                    $this->checkXmlConstraints($constraints, $xml);
-                }
-            } else {
-                self::$miniLog->critical(self::$i18n->trans('error-reading-file', ['%fileName%' => $filename]));
-            }
-        } else {
-            self::$miniLog->critical(self::$i18n->trans('file-not-found', ['%fileName%' => $filename]));
-        }
-
-        return $return;
     }
 
     /**
@@ -299,7 +299,7 @@ class DataBaseTools
      *
      * @return string
      */
-    private function getXmlTableLocation($tableName)
+    private function getXmlTableLocation($tableName): string
     {
         $fileName = FS_FOLDER . '/Dinamic/Table/' . $tableName . '.xml';
         if (FS_DEBUG && !file_exists($fileName)) {
@@ -340,7 +340,7 @@ class DataBaseTools
     /**
      * Update the name and constraint foreach constraint from the XML
      *
-     * @param array             $constraints
+     * @param array $constraints
      * @param \SimpleXMLElement $xml
      */
     private function checkXmlConstraints(&$constraints, $xml)

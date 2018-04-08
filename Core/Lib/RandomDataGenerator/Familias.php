@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
 use FacturaScripts\Core\Model;
@@ -43,7 +44,7 @@ class Familias extends AbstractRandom
      *
      * @return int
      */
-    public function generate($num = 50)
+    public function generate($num = 50): int
     {
         $fam = $this->model;
         $codfamilia = null;
@@ -52,7 +53,7 @@ class Familias extends AbstractRandom
             $fam->clear();
             $fam->descripcion = $this->familia();
             $fam->codfamilia = $this->txt2codigo($fam->descripcion);
-            $fam->madre = (mt_rand(0, 4) == 0 && $fam->codfamilia != $codfamilia) ? $codfamilia : null;
+            $fam->madre = (random_int(0, 4) === 0 && $fam->codfamilia !== $codfamilia) ? $codfamilia : null;
             if (!$fam->save()) {
                 break;
             }

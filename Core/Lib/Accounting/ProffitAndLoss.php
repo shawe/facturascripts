@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Accounting;
 
 use FacturaScripts\Core\Base\Utils;
@@ -52,7 +53,7 @@ class ProffitAndLoss extends AccountingBase
      *
      * @return array
      */
-    public function generate($dateFrom, $dateTo)
+    public function generate($dateFrom, $dateTo): array
     {
         $this->dateFrom = $dateFrom;
         $this->dateTo = $dateTo;
@@ -65,33 +66,7 @@ class ProffitAndLoss extends AccountingBase
         }
 
         /// every page is a table
-        $pages = [$this->calcProffitAndLoss($data)];
-        return $pages;
-    }
-
-    /**
-     * Format de Proffit-Lost including then chapters.
-     *
-     * @param array $data
-     *
-     * @return array
-     */
-    private function calcProffitAndLoss($data)
-    {
-        $balanceCalculado = [];
-        foreach ($data as $lineaBalance) {
-            $this->processDescription($lineaBalance, $balanceCalculado, 'descripcion1');
-            $this->processDescription($lineaBalance, $balanceCalculado, 'descripcion2');
-            $this->processDescription($lineaBalance, $balanceCalculado, 'descripcion3');
-            $this->processDescription($lineaBalance, $balanceCalculado, 'descripcion4');
-        }
-
-        $balanceFinal = [];
-        foreach ($balanceCalculado as $lineaBalance) {
-            $balanceFinal[] = $this->processLine($lineaBalance);
-        }
-
-        return $balanceFinal;
+        return [$this->calcProffitAndLoss($data)];
     }
 
     /**
@@ -99,7 +74,7 @@ class ProffitAndLoss extends AccountingBase
      *
      * @return array
      */
-    protected function getData()
+    protected function getData(): array
     {
         $dateFrom = $this->dataBase->var2str($this->dateFrom);
         $dateTo = $this->dataBase->var2str($this->dateTo);
@@ -123,8 +98,8 @@ class ProffitAndLoss extends AccountingBase
     /**
      * Process a balance values.
      *
-     * @param array  $linea
-     * @param array  $balance
+     * @param array $linea
+     * @param array $balance
      * @param string $description
      */
     protected function processDescription(&$linea, &$balance, $description)
@@ -138,7 +113,8 @@ class ProffitAndLoss extends AccountingBase
             $balance[$index] = [
                 'descripcion' => $index,
                 'saldo' => $linea['saldo'],
-                'saldoprev' => $linea['saldoprev'],];
+                'saldoprev' => $linea['saldoprev'],
+            ];
         } else {
             $balance[$index]['saldo'] += $linea['saldo'];
             $balance[$index]['saldoprev'] += $linea['saldoprev'];
@@ -152,12 +128,37 @@ class ProffitAndLoss extends AccountingBase
      *
      * @return array
      */
-    protected function processLine($line)
+    protected function processLine($line): array
     {
         $line['descripcion'] = Utils::fixHtml($line['descripcion']);
-        $line['saldo'] = $this->divisaTools->format($line['saldo'], FS_NF0, '');
-        $line['saldoprev'] = $this->divisaTools->format($line['saldoprev'], FS_NF0, '');
+        $line['saldo'] = $this->divisaTools::format($line['saldo'], FS_NF0, '');
+        $line['saldoprev'] = $this->divisaTools::format($line['saldoprev'], FS_NF0, '');
 
         return $line;
+    }
+
+    /**
+     * Format de Proffit-Lost including then chapters.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    private function calcProffitAndLoss($data): array
+    {
+        $balanceCalculado = [];
+        foreach ($data as $lineaBalance) {
+            $this->processDescription($lineaBalance, $balanceCalculado, 'descripcion1');
+            $this->processDescription($lineaBalance, $balanceCalculado, 'descripcion2');
+            $this->processDescription($lineaBalance, $balanceCalculado, 'descripcion3');
+            $this->processDescription($lineaBalance, $balanceCalculado, 'descripcion4');
+        }
+
+        $balanceFinal = [];
+        foreach ($balanceCalculado as $lineaBalance) {
+            $balanceFinal[] = $this->processLine($lineaBalance);
+        }
+
+        return $balanceFinal;
     }
 }

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\App;
 
 use FacturaScripts\Core\Base\MiniLog;
@@ -60,7 +61,7 @@ class AppInstaller
     {
         $this->request = Request::createFromGlobals();
 
-        define('FS_LANG', $this->request->get('fs_lang', $this->getUserLanguage()));
+        \define('FS_LANG', $this->request->get('fs_lang', $this->getUserLanguage()));
         $this->i18n = new Translator();
         $this->miniLog = new MiniLog();
 
@@ -74,6 +75,7 @@ class AppInstaller
         if ($installed) {
             header('Location: ' . $this->getUri());
         } elseif ('TRUE' === $this->request->get('phpinfo', '')) {
+            /** @noinspection ForgottenDebugOutputInspection */
             phpinfo();
         } else {
             $this->render();
@@ -85,7 +87,7 @@ class AppInstaller
      *
      * @return boolean
      */
-    private function createDataBase()
+    private function createDataBase(): bool
     {
         $dbData = [
             'host' => $this->request->request->get('db_host'),
@@ -105,7 +107,7 @@ class AppInstaller
                 break;
 
             case 'postgresql':
-                if (function_exists('pg_connect')) {
+                if (\function_exists('pg_connect')) {
                     return $this->testPostgreSql($dbData);
                 }
 
@@ -124,7 +126,7 @@ class AppInstaller
      *
      * @return bool
      */
-    private function createFolders()
+    private function createFolders(): bool
     {
         // Check each needed folder to deploy
         foreach (['Plugins', 'Dinamic', 'MyFiles'] as $folder) {
@@ -145,7 +147,7 @@ class AppInstaller
      *
      * @return string
      */
-    private function getUri()
+    private function getUri(): string
     {
         $uri = $this->request->getBasePath();
         if ('/' === substr($uri, -1)) {
@@ -161,13 +163,13 @@ class AppInstaller
      *
      * @return string
      */
-    private function getUserLanguage()
+    private function getUserLanguage(): string
     {
         $dataLanguage = explode(';', filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE'));
         $userLanguage = str_replace('-', '_', explode(',', $dataLanguage[0])[0]);
         $translationExists = file_exists(FS_FOLDER . '/Core/Translation/' . $userLanguage . '.json');
 
-        return ($translationExists) ? $userLanguage : 'en_EN';
+        return $translationExists ? $userLanguage : 'en_EN';
     }
 
     /**
@@ -177,7 +179,7 @@ class AppInstaller
      *
      * @link http://stackoverflow.com/a/9328760
      */
-    private function getTimezoneList()
+    private function getTimezoneList(): array
     {
         $zonesArray = [];
         $timestamp = time();
@@ -227,7 +229,7 @@ class AppInstaller
      *
      * @return bool
      */
-    private function saveHtaccess()
+    private function saveHtaccess(): bool
     {
         if (!file_exists(FS_FOLDER . '/.htaccess')) {
             $txt = file_get_contents(FS_FOLDER . '/htaccess-sample');
@@ -242,32 +244,32 @@ class AppInstaller
      *
      * @return bool
      */
-    private function saveInstall()
+    private function saveInstall(): bool
     {
         $file = fopen(FS_FOLDER . '/config.php', 'wb');
         if (\is_resource($file)) {
-            fwrite($file, "<?php\n");
-            fwrite($file, "define('FS_COOKIES_EXPIRE', 604800);\n");
-            fwrite($file, "define('FS_DEBUG', true);\n");
-            fwrite($file, "define('FS_LANG', '" . $this->request->request->get('fs_lang') . "');\n");
-            fwrite($file, "define('FS_ROUTE', '" . $this->getUri() . "');\n");
-            fwrite($file, "define('FS_TIMEZONE', '" . $this->request->request->get('fs_timezone') . "');\n");
-            fwrite($file, "define('FS_DB_TYPE', '" . $this->request->request->get('db_type') . "');\n");
-            fwrite($file, "define('FS_DB_HOST', '" . $this->request->request->get('db_host') . "');\n");
-            fwrite($file, "define('FS_DB_PORT', '" . $this->request->request->get('db_port') . "');\n");
-            fwrite($file, "define('FS_DB_NAME', '" . $this->request->request->get('db_name') . "');\n");
-            fwrite($file, "define('FS_DB_USER', '" . $this->request->request->get('db_user') . "');\n");
-            fwrite($file, "define('FS_DB_PASS', '" . $this->request->request->get('db_pass') . "');\n");
-            fwrite($file, "define('FS_DB_FOREIGN_KEYS', true);\n");
-            fwrite($file, "define('FS_DB_INTEGER', 'INTEGER');\n");
-            fwrite($file, "define('FS_DB_TYPE_CHECK', true);\n");
-            fwrite($file, "define('FS_CACHE_HOST', '" . $this->request->request->get('memcache_host') . "');\n");
-            fwrite($file, "define('FS_CACHE_PORT', '" . $this->request->request->get('memcache_port') . "');\n");
-            fwrite($file, "define('FS_CACHE_PREFIX', '" . $this->request->request->get('memcache_prefix') . "');\n");
+            fwrite($file, "<?php" . \PHP_EOL);
+            fwrite($file, "\define('FS_COOKIES_EXPIRE', 604800);" . \PHP_EOL);
+            fwrite($file, "\define('FS_DEBUG', true);" . \PHP_EOL);
+            fwrite($file, "\define('FS_LANG', '" . $this->request->request->get('fs_lang') . "');" . \PHP_EOL);
+            fwrite($file, "\define('FS_ROUTE', '" . $this->getUri() . "');" . \PHP_EOL);
+            fwrite($file, "\define('FS_TIMEZONE', '" . $this->request->request->get('fs_timezone') . "');" . \PHP_EOL);
+            fwrite($file, "\define('FS_DB_TYPE', '" . $this->request->request->get('db_type') . "');" . \PHP_EOL);
+            fwrite($file, "\define('FS_DB_HOST', '" . $this->request->request->get('db_host') . "');" . \PHP_EOL);
+            fwrite($file, "\define('FS_DB_PORT', '" . $this->request->request->get('db_port') . "');" . \PHP_EOL);
+            fwrite($file, "\define('FS_DB_NAME', '" . $this->request->request->get('db_name') . "');" . \PHP_EOL);
+            fwrite($file, "\define('FS_DB_USER', '" . $this->request->request->get('db_user') . "');" . \PHP_EOL);
+            fwrite($file, "\define('FS_DB_PASS', '" . $this->request->request->get('db_pass') . "');" . \PHP_EOL);
+            fwrite($file, "\define('FS_DB_FOREIGN_KEYS', true);" . \PHP_EOL);
+            fwrite($file, "\define('FS_DB_INTEGER', 'INTEGER');" . \PHP_EOL);
+            fwrite($file, "\define('FS_DB_TYPE_CHECK', true);" . \PHP_EOL);
+            fwrite($file, "\define('FS_CACHE_HOST', '" . $this->request->request->get('memcache_host') . "');" . \PHP_EOL);
+            fwrite($file, "\define('FS_CACHE_PORT', '" . $this->request->request->get('memcache_port') . "');" . \PHP_EOL);
+            fwrite($file, "\define('FS_CACHE_PREFIX', '" . $this->request->request->get('memcache_prefix') . "');" . \PHP_EOL);
             if ($this->request->request->get('db_type') === 'MYSQL' && $this->request->request->get('mysql_socket') !== '') {
-                fwrite($file, "\nini_set('mysqli.default_socket', '" . $this->request->request->get('mysql_socket') . "');\n");
+                fwrite($file, \PHP_EOL . "ini_set('mysqli.default_socket', '" . $this->request->request->get('mysql_socket') . "');" . \PHP_EOL);
             }
-            fwrite($file, "\n");
+            fwrite($file,  \PHP_EOL);
             fclose($file);
             return true;
         }
@@ -281,7 +283,7 @@ class AppInstaller
      *
      * @return bool
      */
-    private function searchErrors()
+    private function searchErrors(): bool
     {
         $errors = false;
 
@@ -290,13 +292,13 @@ class AppInstaller
             $errors = true;
         }
 
-        if (!function_exists('mb_substr')) {
+        if (!\function_exists('mb_substr')) {
             $this->miniLog->critical($this->i18n->trans('mb-string-not-fount'));
             $errors = true;
         }
 
         foreach (['bcmath', 'curl', 'simplexml', 'openssl', 'zip'] as $extension) {
-            if (!extension_loaded($extension)) {
+            if (!\extension_loaded($extension)) {
                 $this->miniLog->critical($this->i18n->trans('php-extension-not-found', ['%extension%' => $extension]));
                 $errors = true;
             }
@@ -317,7 +319,7 @@ class AppInstaller
      *
      * @return bool
      */
-    private function testMysql($dbData)
+    private function testMysql($dbData): bool
     {
         if ($dbData['socket'] !== '') {
             ini_set('mysqli.default_socket', $dbData['socket']);
@@ -350,15 +352,15 @@ class AppInstaller
      *
      * @return bool
      */
-    private function testPostgreSql($dbData)
+    private function testPostgreSql($dbData): bool
     {
         $connectionStr = 'host=' . $dbData['host'] . ' port=' . $dbData['port'];
         $connection = @\pg_connect($connectionStr . ' dbname=postgres user=' . $dbData['user'] . ' password=' . $dbData['pass']);
-        if (is_resource($connection)) {
+        if (\is_resource($connection)) {
             // Check that the DB exists, if it doesn't, we try to create a new one
             $sqlExistsBD = "SELECT 1 AS result FROM pg_database WHERE datname = '" . $dbData['name'] . "';";
             $result = \pg_query($connection, $sqlExistsBD);
-            if (is_resource($result) && \pg_num_rows($result) > 0) {
+            if (\is_resource($result) && \pg_num_rows($result) > 0) {
                 return true;
             }
 
@@ -369,7 +371,7 @@ class AppInstaller
         }
 
         $this->miniLog->critical($this->i18n->trans('cant-connect-database'));
-        if (is_resource($connection) && \pg_last_error($connection) !== false) {
+        if (\is_resource($connection) && \pg_last_error($connection) !== false) {
             $this->miniLog->critical((string) \pg_last_error($connection));
         }
 

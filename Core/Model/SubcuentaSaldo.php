@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -85,7 +86,7 @@ class SubcuentaSaldo extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'subcuentas_saldos';
     }
@@ -95,7 +96,7 @@ class SubcuentaSaldo extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idsubcuenta';
     }
@@ -119,7 +120,7 @@ class SubcuentaSaldo extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         new Subcuenta();
         return '';
@@ -131,7 +132,7 @@ class SubcuentaSaldo extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $account = new Subcuenta();
         if (!$account->loadFromCode($this->idsubcuenta)) {
@@ -147,9 +148,10 @@ class SubcuentaSaldo extends Base\ModelClass
     /**
      * Update account balance for a month
      *
-     * @param int   $month
+     * @param int $month
      * @param float $debit
      * @param float $credit
+     *
      * @return bool
      */
     public function updateBalance($month, $debit, $credit): bool
@@ -171,6 +173,7 @@ class SubcuentaSaldo extends Base\ModelClass
      *
      * @param int $idSubAccount
      * @param array $detail
+     *
      * @return float
      */
     public function setSubAccountBalance($idSubAccount, &$detail): float

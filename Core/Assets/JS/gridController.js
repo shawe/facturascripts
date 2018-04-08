@@ -81,7 +81,8 @@ function configureAutocompleteColumns(columns) {
  * @param {string} fieldOrder
  * @returns {Array}
  */
-function getGridData(fieldOrder = null) {
+function getGridData(fieldOrder) {
+    var fieldOrder = fieldOrder || null;
     var rowIndex, lines = [];
     for (var i = 0, max = documentLineData.rows.length; i < max; i++) {
         rowIndex = gridObject.toVisualRow(i);
@@ -197,7 +198,7 @@ function eventBeforeChange(changes, source) {
 }
 
 function eventEnterMoves() {
-    var result = { row: 0, col: 1 };
+    var result = {row: 0, col: 1};
     var selected = gridObject.getSelected()[0];
     var jump = true;
 
@@ -212,11 +213,11 @@ function eventEnterMoves() {
     if (jump) {
         if ((selected[1] + result.col) >= gridObject.countCols()) {
             selectCell(selected[0] + 1, 0);
-            result = { row: 0, col: 0 };
+            result = {row: 0, col: 0};
         }
         return result;
     }
-    return { row: 0, col: 0 };      // no jump
+    return {row: 0, col: 0};      // no jump
 }
 
 /*
@@ -239,7 +240,7 @@ function saveDocument(mainFormName) {
         };
 
         var mainForm = $("form[name='" + mainFormName + "']");
-        $.each(mainForm.serializeArray(), function(key, value) {
+        $.each(mainForm.serializeArray(), function (key, value) {
             switch (value.name) {
                 case 'action':
                     break;
@@ -266,6 +267,7 @@ function saveDocument(mainFormName) {
             });
     } finally {
         submitButton.disabled = false;
+        // noinspection ReturnInsideFinallyBlockJS
         return false;
     }
 }
@@ -295,7 +297,7 @@ $(document).ready(function () {
             manualColumnMove: false,
             minSpareRows: 1,
             minRows: 7,
-            enterMoves: function() {
+            enterMoves: function () {
                 return eventEnterMoves();
             }
         });

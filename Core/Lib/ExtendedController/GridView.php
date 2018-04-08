@@ -16,8 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
+use Exception;
 use FacturaScripts\Core\Base;
 use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Model\Base\ModelClass;
@@ -82,9 +84,99 @@ class GridView extends BaseView
     }
 
     /**
+     * Load the data in the cursor property, according to the where filter specified.
+     * Adds an empty row/model at the end of the loaded data.
+     *
+     * @param DataBase\DataBaseWhere[] $where
+     * @param array $order
+     */
+    public function loadData(array $where = [], array $order = [])
+    {
+        // load columns configuration
+        $this->gridData = $this->getColumns();
+
+        // load model data
+        $this->gridData['rows'] = [];
+        $count = $this->model->count($where);
+        if ($count > 0) {
+            foreach ($this->model->all($where, $order, 0, 0) as $line) {
+                $this->gridData['rows'][] = (array) $line;
+            }
+        }
+    }
+
+    /**
+     * Data persists in the database, modifying if the record existed or inserting
+     * in case the primary key does not exist.
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    public function saveData($data): array
+    {
+        $result = [
+            'error' => false,
+            'message' => ''
+        ];
+
+        try {
+            // load master document data and test it's ok
+            $parentPK = $this->parentModel->primaryColumn();
+            if (!$this->loadDocumentDataFromArray($parentPK, $data['document'])) {
+                throw new Exception(self::$i18n->trans('parent-document-test-error'));
+            }
+
+            // load detail document data (old)
+            $parentValue = $this->parentModel->primaryColumnValue();
+            $linesOld = $this->model->all([new DataBase\DataBaseWhere($parentPK, $parentValue)]);
+
+            // start transaction
+            $dataBase = new DataBase();
+            $dataBase->beginTransaction();
+
+            // delete old lines not used
+            if (!$this->deleteLinesOld($linesOld, $data['lines'])) {
+                throw new Exception(self::$i18n->trans('lines-delete-error'));
+            }
+
+            // Proccess detail document data (new)
+            $this->parentModel->initTotals();
+            foreach ($data['lines'] as $newLine) {
+                $this->model->loadFromData($newLine);
+                if (empty($this->model->primaryColumnValue())) {
+                    $this->model->{$parentPK} = $parentValue;
+                }
+                if (!$this->model->save()) {
+                    throw new Exception(self::$i18n->trans('lines-save-error'));
+                }
+                $this->parentModel->accumulateAmounts($newLine);
+            }
+
+            // save master document
+            if (!$this->parentModel->save()) {
+                throw new Exception(self::$i18n->trans('parent-document-save-error'));
+            }
+
+            // confirm save data into database
+            $dataBase->commit();
+        } catch (Exception $e) {
+            $result['error'] = true;
+            $result['message'] = $e->getMessage();
+        } finally {
+            if ($dataBase->inTransaction()) {
+                $dataBase->rollback();
+            }
+            /** @noinspection SuspiciousReturnInspection */
+            return $result;
+        }
+    }
+
+    /**
      * Configure autocomplete column with data to Grid component
      *
      * @param array $values
+     *
      * @return array
      */
     private function getAutocompleteSource($values): array
@@ -105,6 +197,7 @@ class GridView extends BaseView
      * a value from the list of values
      *
      * @param array $values
+     *
      * @return bool
      */
     private function getAutocompeteStrict($values): bool
@@ -116,6 +209,7 @@ class GridView extends BaseView
      * Return grid column configuration
      *
      * @param ColumnItem $column
+     *
      * @return array
      */
     private function getItemForColumn($column): array
@@ -177,32 +271,11 @@ class GridView extends BaseView
     }
 
     /**
-     * Load the data in the cursor property, according to the where filter specified.
-     * Adds an empty row/model at the end of the loaded data.
-     *
-     * @param DataBaseWhere[] $where
-     * @param array           $order
-     */
-    public function loadData($where = [], $order = [])
-    {
-        // load columns configuration
-        $this->gridData = $this->getColumns();
-
-        // load model data
-        $this->gridData['rows'] = [];
-        $count = $this->model->count($where);
-        if ($count > 0) {
-            foreach ($this->model->all($where, $order, 0, 0) as $line) {
-                $this->gridData['rows'][] = (array) $line;
-            }
-        }
-    }
-
-    /**
      * Load data of master document and set data from array
      *
-     * @param ModelClass $model
+     * @param $fieldPK
      * @param array $data
+     *
      * @return bool
      */
     private function loadDocumentDataFromArray($fieldPK, &$data): bool
@@ -217,9 +290,9 @@ class GridView extends BaseView
     /**
      * Removes from the database the non-existent detail
      *
-     * @param ModelClass $model
      * @param array $linesOld
      * @param array $linesNew
+     *
      * @return bool
      */
     private function deleteLinesOld(&$linesOld, &$linesNew): bool
@@ -236,65 +309,5 @@ class GridView extends BaseView
             }
         }
         return true;
-    }
-
-    public function saveData($data):array
-    {
-        $result = [
-            'error' => false,
-            'message' => ''
-        ];
-
-        try {
-            // load master document data and test it's ok
-            $parentPK = $this->parentModel->primaryColumn();
-            if (!$this->loadDocumentDataFromArray($parentPK, $data['document'])) {
-                throw new Exception(self::$i18n->trans('parent-document-test-error'));
-            }
-
-            // load detail document data (old)
-            $parentValue = $this->parentModel->primaryColumnValue();
-            $linesOld = $this->model->all([new DataBase\DataBaseWhere($parentPK, $parentValue)]);
-
-            // start transaction
-            $dataBase = new DataBase();
-            $dataBase->beginTransaction();
-
-            // delete old lines not used
-            if (!$this->deleteLinesOld($linesOld, $data['lines'])) {
-                throw new Exception(self::$i18n->trans('lines-delete-error'));
-            }
-
-            // Proccess detail document data (new)
-            $this->parentModel->initTotals();
-            foreach ($data['lines'] as $newLine) {
-                $this->model->loadFromData($newLine);
-                if (empty($this->model->primaryColumnValue())) {
-                    $this->model->{$parentPK} = $parentValue;
-                }
-                if (!$this->model->save()) {
-                    throw new Exception(self::$i18n->trans('lines-save-error'));
-                }
-                $this->parentModel->accumulateAmounts($newLine);
-            }
-
-            // save master document
-            if (!$this->parentModel->save()) {
-                throw new Exception(self::$i18n->trans('parent-document-save-error'));
-            }
-
-            // confirm save data into database
-            $dataBase->commit();
-        }
-        catch (Exception $e) {
-            $result['error'] = true;
-            $result['message'] = $e->getMessage();
-        }
-        finally {
-            if ($dataBase->inTransaction()) {
-                $dataBase->rollback();
-            }
-            return $result;
-        }
     }
 }

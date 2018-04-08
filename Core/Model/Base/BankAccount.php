@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model\Base;
 
 use FacturaScripts\Core\Base\Utils;
@@ -65,12 +66,12 @@ abstract class BankAccount extends ModelClass
      *
      * @return string
      */
-    public function getIban(bool $espacios = false)
+    public function getIban(bool $espacios = false): string
     {
         $iban = str_replace(' ', '', $this->iban);
         if ($espacios) {
             $txt = '';
-            for ($i = 0; $i < $len = strlen($iban); $i += 4) {
+            for ($i = 0; $i < $len = \strlen($iban); $i += 4) {
                 $txt .= substr($iban, $i, 4) . ' ';
             }
 
@@ -85,7 +86,7 @@ abstract class BankAccount extends ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         parent::test();
         $this->descripcion = Utils::noHtml($this->descripcion);
@@ -104,18 +105,28 @@ abstract class BankAccount extends ModelClass
      *
      * @param string $iban
      *
-     * @return boolean
+     * @return bool
      */
-    public function verificarIBAN(string $iban)
+    public function verificarIBAN(string $iban): bool
     {
-        if (strlen($iban) != 24) {
+        if (\strlen($iban) !== 24) {
             return false;
         }
 
         $codpais = substr($iban, 0, 2);
         $ccc = substr($iban, -20);
 
-        return $iban == $this->calcularIBAN($ccc, $codpais);
+        return $iban === $this->calcularIBAN($ccc, $codpais);
+    }
+
+    /**
+     * Check the reported bank details.
+     *
+     * @return bool
+     */
+    protected function testBankAccount(): bool
+    {
+        return (empty($this->iban) || $this->verificarIBAN($this->iban));
     }
 
     /**
@@ -126,10 +137,11 @@ abstract class BankAccount extends ModelClass
      *
      * @return string
      */
-    private function calcularIBAN(string $ccc, string $codpais = '')
+    private function calcularIBAN(string $ccc, string $codpais = ''): string
     {
         $pais = substr($codpais, 0, 2);
-        $pesos = ['A' => '10', 'B' => '11', 'C' => '12', 'D' => '13', 'E' => '14', 'F' => '15',
+        $pesos = [
+            'A' => '10', 'B' => '11', 'C' => '12', 'D' => '13', 'E' => '14', 'F' => '15',
             'G' => '16', 'H' => '17', 'I' => '18', 'J' => '19', 'K' => '20', 'L' => '21', 'M' => '22',
             'N' => '23', 'O' => '24', 'P' => '25', 'Q' => '26', 'R' => '27', 'S' => '28', 'T' => '29',
             'U' => '30', 'V' => '31', 'W' => '32', 'X' => '33', 'Y' => '34', 'Z' => '35',
@@ -138,20 +150,10 @@ abstract class BankAccount extends ModelClass
         $dividendo = $ccc . $pesos[$pais[0]] . $pesos[$pais[1]] . '00';
         $digitoControl = 98 - \bcmod($dividendo, '97');
 
-        if (strlen($digitoControl) === 1) {
+        if (\strlen($digitoControl) === 1) {
             $digitoControl = '0' . $digitoControl;
         }
 
         return $pais . $digitoControl . $ccc;
-    }
-
-    /**
-     * Check the reported bank details.
-     *
-     * @return boolean
-     */
-    protected function testBankAccount()
-    {
-        return (empty($this->iban) || $this->verificarIBAN($this->iban));
     }
 }

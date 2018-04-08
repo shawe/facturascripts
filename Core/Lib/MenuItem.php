@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib;
 
 /**
@@ -88,36 +89,13 @@ class MenuItem
     }
 
     /**
-     * Returns the HTML for the icon of the item.
-     *
-     * @return string
-     */
-    private function getHTMLIcon()
-    {
-        return empty($this->icon) ? '<i class="fa fa-fw" aria-hidden="true"></i> ' : '<i class="fa ' . $this->icon
-            . ' fa-fw" aria-hidden="true"></i> ';
-    }
-
-    /**
-     * Returns the indintifier of the menu.
-     *
-     * @param string $parent
-     *
-     * @return string
-     */
-    private function getMenuId($parent)
-    {
-        return empty($parent) ? 'menu-' . $this->title : $parent . $this->name;
-    }
-
-    /**
      * Returns the html for the menu / submenu.
      *
      * @param string $parent
      *
      * @return string
      */
-    public function getHTML($parent = '')
+    public function getHTML($parent = ''): string
     {
         $active = $this->active ? ' active' : '';
         $menuId = $this->getMenuId($parent);
@@ -140,5 +118,28 @@ class MenuItem
         $html .= '</ul>';
 
         return $html;
+    }
+
+    /**
+     * Returns the HTML for the icon of the item.
+     *
+     * @return string
+     */
+    private function getHTMLIcon(): string
+    {
+        return empty($this->icon) ? '<i class="fa fa-fw" aria-hidden="true"></i> ' : '<i class="fa ' . $this->icon
+            . ' fa-fw" aria-hidden="true"></i> ';
+    }
+
+    /**
+     * Returns the indintifier of the menu.
+     *
+     * @param string $parent
+     *
+     * @return string
+     */
+    private function getMenuId($parent): string
+    {
+        return empty($parent) ? 'menu-' . $this->title : $parent . $this->name;
     }
 }

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base;
@@ -55,8 +56,8 @@ class MegaSearch extends Base\Controller
     /**
      * Runs the controller's private logic.
      *
-     * @param Response                   $response
-     * @param Model\User                 $user
+     * @param Response $response
+     * @param Model\User $user
      * @param Base\ControllerPermissions $permissions
      */
     public function privateCore(&$response, $user, $permissions)
@@ -77,7 +78,7 @@ class MegaSearch extends Base\Controller
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;

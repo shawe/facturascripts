@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\Utils;
@@ -136,7 +137,7 @@ class Agente extends Base\Contact
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'agentes';
     }
@@ -146,7 +147,7 @@ class Agente extends Base\Contact
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'codagente';
     }
@@ -156,7 +157,7 @@ class Agente extends Base\Contact
      *
      * @return string
      */
-    public function primaryDescriptionColumn()
+    public function primaryDescriptionColumn(): string
     {
         return 'nombre';
     }
@@ -166,7 +167,7 @@ class Agente extends Base\Contact
      *
      * @return string
      */
-    public function primaryDescription()
+    public function primaryDescription(): string
     {
         return $this->nombre . ' ' . $this->apellidos;
     }
@@ -185,7 +186,7 @@ class Agente extends Base\Contact
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         parent::test();
         $this->apellidos = Utils::noHtml($this->apellidos);

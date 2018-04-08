@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Base;
 
 /**
@@ -26,14 +27,17 @@ namespace FacturaScripts\Core\Base;
 class NumberTools
 {
 
+    /**
+     * NumberTools constructor.
+     */
     public function __construct()
     {
-        if (!defined('FS_NF1')) {
-            define('FS_NF1', ',');
+        if (!\defined('FS_NF1')) {
+            \define('FS_NF1', ',');
         }
 
-        if (!defined('FS_NF2')) {
-            define('FS_NF2', ' ');
+        if (!\defined('FS_NF2')) {
+            \define('FS_NF2', ' ');
         }
     }
 
@@ -41,11 +45,11 @@ class NumberTools
      * Returns the number format with the number of decimals indicated.
      *
      * @param float|string $number
-     * @param int|string   $decimals
+     * @param int|string $decimals
      *
      * @return string
      */
-    public static function format($number, $decimals = FS_NF0)
+    public static function format($number, $decimals = FS_NF0): string
     {
         return number_format((float) $number, (int) $decimals, FS_NF1, FS_NF2);
     }

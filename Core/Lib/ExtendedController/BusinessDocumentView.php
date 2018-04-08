@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -38,30 +39,29 @@ class BusinessDocumentView extends BaseView
 {
 
     /**
+     * TODO: Uncomplete documentation.
      *
      * @var array
      */
     public $documentStates;
-
-    /**
-     *
-     * @var BusinessDocumentTools
-     */
-    private $documentTools;
-
-    /**
-     * Line columns from xmlview.
-     *
-     * @var array
-     */
-    private $lineOptions;
-
     /**
      * Lines of document, the body.
      *
      * @var BusinessDocumentLine[]
      */
     public $lines;
+    /**
+     * TODO: Uncomplete documentation.
+     *
+     * @var BusinessDocumentTools
+     */
+    private $documentTools;
+    /**
+     * Line columns from xmlview.
+     *
+     * @var array
+     */
+    private $lineOptions;
 
     /**
      * DocumentView constructor and initialization.
@@ -98,7 +98,7 @@ class BusinessDocumentView extends BaseView
      *
      * @return string
      */
-    public function getLineData()
+    public function getLineData(): string
     {
         $data = [
             'headers' => [],
@@ -145,7 +145,7 @@ class BusinessDocumentView extends BaseView
      *
      * @param ExportManager $exportManager
      */
-    public function export(ExportManager &$exportManager)
+    public function export(ExportManager $exportManager)
     {
         $exportManager->generateDocumentPage($this->model);
     }
@@ -175,7 +175,7 @@ class BusinessDocumentView extends BaseView
      *
      * @return string
      */
-    public function recalculateDocument(array &$data)
+    public function recalculateDocument(array &$data): string
     {
         $newLines = isset($data['lines']) ? $this->processFormLines($data['lines']) : [];
         unset($data['lines']);
@@ -191,21 +191,21 @@ class BusinessDocumentView extends BaseView
      *
      * @return string
      */
-    public function saveDocument(array &$data)
+    public function saveDocument(array &$data): string
     {
         $result = 'OK';
-        $codcliente = isset($data['codcliente']) ? $data['codcliente'] : '';
-        $codproveedor = isset($data['codproveedor']) ? $data['codproveedor'] : '';
+        $codcliente = $data['codcliente'] ?? '';
+        $codproveedor = $data['codproveedor'] ?? '';
         $newLines = isset($data['lines']) ? $this->processFormLines($data['lines']) : [];
         unset($data['codcliente'], $data['codproveedor'], $data['lines']);
         $this->loadFromData($data);
         $this->model->setDate($this->model->fecha, $this->model->hora);
         $this->lines = empty($this->model->primaryColumnValue()) ? [] : $this->model->getLines();
 
-        if (in_array('codcliente', $this->model->getSubjectColumns())) {
+        if (\in_array('codcliente', $this->model->getSubjectColumns(), false)) {
             $result = $this->setCustomer($codcliente, $data['new_cliente'], $data['new_cifnif']);
         }
-        if (in_array('codproveedor', $this->model->getSubjectColumns())) {
+        if (\in_array('codproveedor', $this->model->getSubjectColumns(), false)) {
             $result = $this->setSupplier($codproveedor, $data['new_proveedor'], $data['new_cifnif']);
         }
 
@@ -234,6 +234,54 @@ class BusinessDocumentView extends BaseView
     }
 
     /**
+     * Updates oldLine with newLine data.
+     *
+     * @param mixed $oldLine
+     * @param array $newLine
+     *
+     * @return bool
+     */
+    protected function updateLine($oldLine, array $newLine): bool
+    {
+        foreach ($newLine as $key => $value) {
+            $oldLine->{$key} = $value;
+        }
+
+        $oldLine->pvpsindto = $oldLine->pvpunitario * $oldLine->cantidad;
+        $oldLine->pvptotal = $oldLine->pvpsindto * (100 - $oldLine->dtopor) / 100;
+
+        if ($oldLine->save()) {
+            return $oldLine->updateStock($this->model->codalmacen);
+        }
+
+        return false;
+    }
+
+    /**
+     * Process form lines to assign only configurated columns.
+     * Also adds order column.
+     *
+     * @param array $formLines
+     *
+     * @return array
+     */
+    protected function processFormLines(array $formLines): array
+    {
+        $newLines = [];
+        $order = count($formLines);
+        foreach ($formLines as $data) {
+            $line = ['orden' => $order];
+            foreach ($this->lineOptions as $col) {
+                $line[$col->widget->fieldName] = $data[$col->widget->fieldName] ?? null;
+            }
+            $newLines[] = $line;
+            $order--;
+        }
+
+        return $newLines;
+    }
+
+    /**
      * Set the customer for this model.
      *
      * @param string $codcliente
@@ -242,7 +290,7 @@ class BusinessDocumentView extends BaseView
      *
      * @return string
      */
-    private function setCustomer(string $codcliente, string $newCliente = '', string $newCifnif = '')
+    private function setCustomer(string $codcliente, string $newCliente = '', string $newCifnif = ''): string
     {
         if ($this->model->codcliente === $codcliente && !empty($this->model->codcliente)) {
             return 'OK';
@@ -274,7 +322,7 @@ class BusinessDocumentView extends BaseView
      *
      * @return string
      */
-    private function setSupplier(string $codproveedor, string $newProveedor = '', string $newCifnif = '')
+    private function setSupplier(string $codproveedor, string $newProveedor = '', string $newCifnif = ''): string
     {
         if ($this->model->codproveedor === $codproveedor && !empty($this->model->codproveedor)) {
             return 'OK';
@@ -304,7 +352,7 @@ class BusinessDocumentView extends BaseView
      *
      * @return string
      */
-    private function saveLines(array &$newLines)
+    private function saveLines(array &$newLines): string
     {
         $result = 'OK';
 
@@ -312,7 +360,7 @@ class BusinessDocumentView extends BaseView
         foreach ($this->lines as $oldLine) {
             $found = false;
             foreach ($newLines as $newLine) {
-                if ($newLine['idlinea'] == $oldLine->idlinea) {
+                if ($newLine['idlinea'] === $oldLine->idlinea) {
                     $found = true;
                     if (!$this->updateLine($oldLine, $newLine)) {
                         $result = 'ERROR ON LINE: ' . $oldLine->idlinea;
@@ -342,60 +390,12 @@ class BusinessDocumentView extends BaseView
                 if ($newDocLine->save()) {
                     $newDocLine->updateStock($this->model->codalmacen);
                 } else {
-                    $result = "ERROR ON NEW LINE";
+                    $result = 'ERROR ON NEW LINE';
                 }
                 $skip = false;
             }
         }
 
         return $result;
-    }
-
-    /**
-     * Updates oldLine with newLine data.
-     *
-     * @param mixed $oldLine
-     * @param array $newLine
-     *
-     * @return bool
-     */
-    protected function updateLine($oldLine, array $newLine)
-    {
-        foreach ($newLine as $key => $value) {
-            $oldLine->{$key} = $value;
-        }
-
-        $oldLine->pvpsindto = $oldLine->pvpunitario * $oldLine->cantidad;
-        $oldLine->pvptotal = $oldLine->pvpsindto * (100 - $oldLine->dtopor) / 100;
-
-        if ($oldLine->save()) {
-            return $oldLine->updateStock($this->model->codalmacen);
-        }
-
-        return false;
-    }
-
-    /**
-     * Process form lines to assign only configurated columns.
-     * Also adds order column.
-     *
-     * @param array $formLines
-     *
-     * @return array
-     */
-    protected function processFormLines(array $formLines)
-    {
-        $newLines = [];
-        $order = count($formLines);
-        foreach ($formLines as $data) {
-            $line = ['orden' => $order];
-            foreach ($this->lineOptions as $col) {
-                $line[$col->widget->fieldName] = isset($data[$col->widget->fieldName]) ? $data[$col->widget->fieldName] : null;
-            }
-            $newLines[] = $line;
-            $order--;
-        }
-
-        return $newLines;
     }
 }

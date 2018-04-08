@@ -25,11 +25,11 @@
 <view>
     <columns>
         <column name="code" order="100">
-            <widget type="text" fieldname="codcuentaesp" onclick="EditCuentaEspecial" />
+            <widget type="text" fieldname="codcuentaesp" onclick="EditCuentaEspecial"/>
         </column>
 
         <column name="description" order="130">
-            <widget type="text" fieldname="descripcion" />
+            <widget type="text" fieldname="descripcion"/>
         </column>
     </columns>
 </view>

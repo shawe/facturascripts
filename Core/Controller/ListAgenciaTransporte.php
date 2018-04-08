@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController;
@@ -34,14 +35,14 @@ class ListAgenciaTransporte extends ExtendedController\ListController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'carriers';
-        $pagedata['icon'] = 'fa-truck';
-        $pagedata['menu'] = 'warehouse';
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'carriers';
+        $pageData['icon'] = 'fa-truck';
+        $pageData['menu'] = 'warehouse';
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**

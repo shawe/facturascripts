@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base\NumberTools;
@@ -120,7 +121,7 @@ class WidgetItemNumber extends WidgetItem
      *
      * @return string
      */
-    protected function specialAttributes()
+    protected function specialAttributes(): string
     {
         $base = parent::specialAttributes();
         $step = empty($this->step) ? ' step="any"' : ' step="' . $this->step . '"';
@@ -137,14 +138,14 @@ class WidgetItemNumber extends WidgetItem
      *
      * @return string
      */
-    public function getListHTML($value)
+    public function getListHTML($value): string
     {
         if ($value === null || $value === '') {
             return '';
         }
 
         $style = $this->getTextOptionsHTML($value);
-        $html = '<span' . $style . '>' . self::$numberTools->format($value, $this->decimal) . '</span>';
+        $html = '<span' . $style . '>' . self::$numberTools::format($value, $this->decimal) . '</span>';
 
         return $html;
     }
@@ -156,7 +157,7 @@ class WidgetItemNumber extends WidgetItem
      *
      * @return string
      */
-    public function getEditHTML($value)
+    public function getEditHTML($value): string
     {
         $specialAttributes = $this->specialAttributes();
 

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\App\AppSettings;
@@ -59,7 +60,7 @@ class Pais extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'paises';
     }
@@ -69,7 +70,7 @@ class Pais extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'codpais';
     }
@@ -79,19 +80,9 @@ class Pais extends Base\ModelClass
      *
      * @return string
      */
-    public function primaryDescriptionColumn()
+    public function primaryDescriptionColumn(): string
     {
         return 'nombre';
-    }
-
-    /**
-     * Returns True if the country is the default of the company.
-     *
-     * @return bool
-     */
-    public function isDefault()
-    {
-        return $this->codpais === AppSettings::get('default', 'codpais');
     }
 
     /**
@@ -99,7 +90,7 @@ class Pais extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->codpais = trim($this->codpais);
         $this->nombre = Utils::noHtml($this->nombre);
@@ -110,12 +101,22 @@ class Pais extends Base\ModelClass
             return false;
         }
 
-        if (!(strlen($this->nombre) > 1) && !(strlen($this->nombre) < 100)) {
+        if (!(\strlen($this->nombre) > 1) && !(\strlen($this->nombre) < 100)) {
             self::$miniLog->alert(self::$i18n->trans('invalid-column-lenght', ['%column%' => 'nombre', '%min%' => '1', '%max%' => '100']));
 
             return false;
         }
 
         return true;
+    }
+
+    /**
+     * Returns True if the country is the default of the company.
+     *
+     * @return bool
+     */
+    public function isDefault(): bool
+    {
+        return $this->codpais === AppSettings::get('default', 'codpais');
     }
 }

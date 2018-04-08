@@ -56,7 +56,8 @@
                             <i class="fa fa-money fa-fw" aria-hidden="true"></i>
                         </span>
                     </span>
-                    <input type="text" id="doc_total" name="total" value="{{ model.total }}" class="form-control text-right" disabled="" />
+                    <label for="doc_total"></label>
+                    <input type="text" id="doc_total" name="total" value="{{ model.total }}" class="form-control text-right" disabled=""/>
                     <div class="input-group-append">
                         <button type="button" class="btn btn-primary" onclick="documentSave()">
                             <i class="fa fa-floppy-o" aria-hidden="true"></i>
@@ -103,6 +104,7 @@
         {% endfor %}
     {% else %}
         <div class="col">
+            <label for="{{ id }}"></label>
             <select id="{{ id }}" name="{{ name }}" class="form-control">
                 {% for key, option in allValues %}
                     <option value="{{ key }}"{% if value == key %} selected=""{% endif %}>
@@ -117,7 +119,7 @@
 {% macro customInput(id, name, value, type = "text", icon = NULL, attributes = NULL) %}
     <div class="col">
         {% if icon %}
-            <div class="input-group">
+        <div class="input-group">
                 <span class="input-group-prepend">
                     <span class="input-group-text">
                         <i class="fa {{ icon }} fa-fw" aria-hidden="true"></i>
@@ -125,17 +127,16 @@
                 </span>
             {% endif %}
 
+            <label for="{{ id }}"></label>
             <input type="{{ type }}" id="{{ id }}" name="{{ name }}" value="{{ value }}"
-                   {% if attributes.class is not defined %}
-                       class="form-control"
-                   {% endif %}
-
-                   {% for attribute,attrValue in attributes %}
-                       {{ attribute }}="{{ attrValue }}"
-                   {% endfor %} /> {# end input #}
+                {% if attributes.class is not defined %} class="form-control"{% endif %}
+                {% for attribute,attrValue in attributes %}
+                {{ attribute }}="{{ attrValue }}"
+                {% endfor %}
+            /> {# end input #}
 
             {% if icon %}
-            </div>
+        </div>
         {% endif %}
     </div>
 {% endmacro %}
@@ -149,9 +150,7 @@
                 </span>
             </span>
             <input type="hidden" id="{{ id }}Autocomplete" name="{{ name }}" value="{{ model.codcliente }}"/>
-            <input type="text" id="{{ id }}" value="{{ model.nombrecliente|raw }}" class="form-control autocomplete"
-                   data-source="clientes" data-field="codcliente" data-title="nombre"
-                   placeholder="{{ i18n.trans('new-customer') }}" autocomplete="off" autofocus=""/>
+            <input type="text" id="{{ id }}" value="{{ model.nombrecliente|raw }}" class="form-control autocomplete" data-source="clientes" data-field="codcliente" data-title="nombre" placeholder="{{ i18n.trans('new-customer') }}" autocomplete="off" autofocus=""/>
             <span class="input-group-append">
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#newCustomerModal">
                     <i class="fa fa-user-plus fa-fw" aria-hidden="true"></i>
@@ -197,9 +196,7 @@
                 </span>
             </span>
             <input type="hidden" id="{{ id }}Autocomplete" name="{{ name }}" value="{{ model.codproveedor }}"/>
-            <input type="text" id="{{ id }}" value="{{ model.nombre|raw }}" class="form-control autocomplete"
-                   data-source="proveedores" data-field="codproveedor" data-title="nombre"
-                   placeholder="{{ i18n.trans('new-supplier') }}" autocomplete="off" autofocus=""/>
+            <input type="text" id="{{ id }}" value="{{ model.nombre|raw }}" class="form-control autocomplete" data-source="proveedores" data-field="codproveedor" data-title="nombre" placeholder="{{ i18n.trans('new-supplier') }}" autocomplete="off" autofocus=""/>
             <span class="input-group-append">
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#newSupplierModal">
                     <i class="fa fa-user-plus fa-fw" aria-hidden="true"></i>

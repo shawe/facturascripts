@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Accounting;
 
 use FacturaScripts\Dinamic\Model\Subcuenta;
@@ -53,7 +54,7 @@ class BalanceAmmounts extends AccountingBase
      *
      * @return array
      */
-    public function generate($dateFrom, $dateTo)
+    public function generate($dateFrom, $dateTo): array
     {
         $this->dateFrom = $dateFrom;
         $this->dateTo = $dateTo;
@@ -69,8 +70,7 @@ class BalanceAmmounts extends AccountingBase
         }
 
         /// every page is a table
-        $pages = [$balance];
-        return $pages;
+        return [$balance];
     }
 
     /**
@@ -78,7 +78,7 @@ class BalanceAmmounts extends AccountingBase
      *
      * @return array
      */
-    protected function getData()
+    protected function getData(): array
     {
         $sql = 'SELECT partida.idsubcuenta, partida.codsubcuenta, SUM(partida.debe) AS debe, SUM(partida.haber) AS haber'
             . ' FROM partidas as partida, asientos as asiento'
@@ -97,16 +97,16 @@ class BalanceAmmounts extends AccountingBase
      *
      * @return array
      */
-    private function processLine($line)
+    private function processLine($line): array
     {
         $saldo = (float) $line['debe'] - (float) $line['haber'];
 
         return [
             'subcuenta' => $line['codsubcuenta'],
             'descripcion' => $this->getDescriptionSubcuenta($line['idsubcuenta']),
-            'debe' => $this->divisaTools->format($line['debe'], FS_NF0, ''),
-            'haber' => $this->divisaTools->format($line['haber'], FS_NF0, ''),
-            'saldo' => $this->divisaTools->format($saldo, FS_NF0, ''),
+            'debe' => $this->divisaTools::format($line['debe'], FS_NF0, ''),
+            'haber' => $this->divisaTools::format($line['haber'], FS_NF0, ''),
+            'saldo' => $this->divisaTools::format($saldo, FS_NF0, ''),
         ];
     }
 
@@ -117,10 +117,10 @@ class BalanceAmmounts extends AccountingBase
      *
      * @return string
      */
-    private function getDescriptionSubcuenta($idsubcuenta)
+    private function getDescriptionSubcuenta($idsubcuenta): string
     {
         $subcuenta = $this->subcuentaModel->get($idsubcuenta);
-        if ($subcuenta !== false) {
+        if ($subcuenta instanceof Subcuenta) {
             return $subcuenta->descripcion;
         }
 

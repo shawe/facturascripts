@@ -53,7 +53,7 @@ class DataBaseCollector extends DataCollector implements Renderable, AssetProvid
      *
      * @return array Collected data
      */
-    public function collect()
+    public function collect(): array
     {
         $queries = [];
         $totalExecTime = 0;
@@ -78,7 +78,7 @@ class DataBaseCollector extends DataCollector implements Renderable, AssetProvid
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'db';
     }
@@ -89,7 +89,7 @@ class DataBaseCollector extends DataCollector implements Renderable, AssetProvid
      *
      * @return array
      */
-    public function getWidgets()
+    public function getWidgets(): array
     {
         return [
             'database' => [
@@ -111,7 +111,7 @@ class DataBaseCollector extends DataCollector implements Renderable, AssetProvid
      *
      * @return array
      */
-    public function getAssets()
+    public function getAssets(): array
     {
         $basePath = '../../../../../../';
 

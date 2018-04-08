@@ -26,24 +26,24 @@
     <columns>
         <group name="data" numcolumns="12">
             <column name="code" numcolumns="3" order="100">
-                <widget type="text" fieldname="coddivisa" icon="fa-object-group" required="true" />
+                <widget type="text" fieldname="coddivisa" icon="fa-object-group" required="true"/>
             </column>
             <column name="symbol" numcolumns="3" order="100" description="symbol">
-                <widget type="text" fieldname="simbolo" />
+                <widget type="text" fieldname="simbolo"/>
             </column>
             <column name="description" numcolumns="6" order="100">
-                <widget type="text" fieldname="descripcion" required="true" />
+                <widget type="text" fieldname="descripcion" required="true"/>
             </column>
         </group>
         <group name="seccondary" numcolumns="12">
             <column name="iso-code-number" numcolumns="4" order="100">
-                <widget type="number" decimal="0" fieldname="codiso" />
+                <widget type="number" decimal="0" fieldname="codiso"/>
             </column>
             <column name="conversion-rate" numcolumns="4" order="100">
-                <widget type="text" fieldname="tasaconv" />
+                <widget type="text" fieldname="tasaconv"/>
             </column>
             <column name="purchase-conversion-rate" numcolumns="4" order="100">
-                <widget type="text" fieldname="tasaconvcompra" />
+                <widget type="text" fieldname="tasaconvcompra"/>
             </column>
         </group>
     </columns>

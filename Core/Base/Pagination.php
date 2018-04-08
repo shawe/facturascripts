@@ -67,61 +67,6 @@ class Pagination
     }
 
     /**
-     * Returns the offset for the first element of the margin specified for paging.
-     *
-     * @param int $offset
-     *
-     * @return int
-     */
-    private function getRecordMin($offset)
-    {
-        $result = $offset - (self::FS_ITEM_LIMIT * self::FS_PAGE_MARGIN);
-        if ($result < 0) {
-            $result = 0;
-        }
-
-        return $result;
-    }
-
-    /**
-     * Returns the offset for the last element of the margin specified for paging.
-     *
-     * @param int $offset
-     * @param int $count
-     *
-     * @return int
-     */
-    private function getRecordMax($offset, $count)
-    {
-        $result = $offset + (self::FS_ITEM_LIMIT * (self::FS_PAGE_MARGIN + 1));
-        if ($result > $count) {
-            $result = $count;
-        }
-
-        return $result;
-    }
-
-    /**
-     * Returns a paging item.
-     *
-     * @param int         $page
-     * @param int         $offset
-     * @param string|bool $icon
-     * @param bool        $active
-     *
-     * @return array
-     */
-    private function addPaginationItem($page, $offset, $icon = false, $active = false)
-    {
-        return [
-            'url' => $this->url . $this->join . 'offset=' . $offset . $this->urlID,
-            'icon' => $icon,
-            'page' => $page,
-            'active' => $active,
-        ];
-    }
-
-    /**
      * Calculate the browser between pages.
      * Lets jump to:
      *  - first,
@@ -132,15 +77,15 @@ class Pagination
      *  - back half
      *  - last
      *
-     * @param int    $count
-     * @param int    $offset
+     * @param int $count
+     * @param int $offset
      *
      * @return array
      *               icon   => specific bootstrap icon instead of num. page
      *               page   => page number
      *               active => indicate if it is the active indicator
      */
-    public function getPages($count, $offset = 0)
+    public function getPages($count, $offset = 0): array
     {
         $result = [];
         $recordMin = $this->getRecordMin($offset);
@@ -191,13 +136,68 @@ class Pagination
     }
 
     /**
+     * Returns the offset for the first element of the margin specified for paging.
+     *
+     * @param int $offset
+     *
+     * @return int
+     */
+    private function getRecordMin($offset): int
+    {
+        $result = $offset - (self::FS_ITEM_LIMIT * self::FS_PAGE_MARGIN);
+        if ($result < 0) {
+            $result = 0;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Returns the offset for the last element of the margin specified for paging.
+     *
+     * @param int $offset
+     * @param int $count
+     *
+     * @return int
+     */
+    private function getRecordMax($offset, $count): int
+    {
+        $result = $offset + (self::FS_ITEM_LIMIT * (self::FS_PAGE_MARGIN + 1));
+        if ($result > $count) {
+            $result = $count;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Returns a paging item.
+     *
+     * @param int $page
+     * @param int $offset
+     * @param string|bool $icon
+     * @param bool $active
+     *
+     * @return array
+     */
+    private function addPaginationItem($page, $offset, $icon = false, $active = false): array
+    {
+        return [
+            'url' => $this->url . $this->join . 'offset=' . $offset . $this->urlID,
+            'icon' => $icon,
+            'page' => $page,
+            'active' => $active,
+        ];
+    }
+
+    /**
      * Returns the offset for the page.
      *
      * @param float|int $page
      *
      * @return int
      */
-    private function offset($page)
+    private function offset($page): int
     {
         return $page * self::FS_ITEM_LIMIT;
     }

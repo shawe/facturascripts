@@ -63,7 +63,7 @@ class BalanceCuentaA extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'co_cuentascbba';
     }
@@ -73,7 +73,7 @@ class BalanceCuentaA extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'id';
     }
@@ -82,8 +82,8 @@ class BalanceCuentaA extends Base\ModelClass
      * Returns the balance of an exercise.
      *
      * @param ejercicio $ejercicio
-     * @param bool      $desde
-     * @param bool      $hasta
+     * @param bool $desde
+     * @param bool $hasta
      *
      * @return float|int
      */
@@ -134,7 +134,7 @@ class BalanceCuentaA extends Base\ModelClass
      *
      * @return self[]
      */
-    public function allFromCodbalance($cod)
+    public function allFromCodbalance($cod): array
     {
         $balist = [];
         $sql = 'SELECT * FROM ' . static::tableName()
@@ -157,7 +157,7 @@ class BalanceCuentaA extends Base\ModelClass
      *
      * @return self[]
      */
-    public function searchByCodbalance($cod)
+    public function searchByCodbalance($cod): array
     {
         $balist = [];
         $sql = 'SELECT * FROM ' . static::tableName()

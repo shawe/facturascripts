@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
 use FacturaScripts\Core\Model;
@@ -43,7 +44,7 @@ class AlbaranesCliente extends AbstractRandomDocuments
      *
      * @return int
      */
-    public function generate($num = 50)
+    public function generate($num = 50): int
     {
         $alb = $this->model;
         $clientes = $this->randomClientes();
@@ -58,7 +59,7 @@ class AlbaranesCliente extends AbstractRandomDocuments
             }
 
             $recargo = false;
-            if ($clientes[0]->recargo || mt_rand(0, 4) === 0) {
+            if ($clientes[0]->recargo || random_int(0, 4) === 0) {
                 $recargo = true;
             }
 

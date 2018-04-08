@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 /**
@@ -96,7 +97,7 @@ class Page extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         return 'INSERT INTO ' . static::tableName() . " (name,title) VALUES ('Wizard','Wizard');";
     }
@@ -106,7 +107,7 @@ class Page extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'name';
     }
@@ -116,7 +117,7 @@ class Page extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'pages';
     }
@@ -129,7 +130,7 @@ class Page extends Base\ModelClass
      *
      * @return string
      */
-    public function url(string $type = 'auto', string $list = 'List')
+    public function url(string $type = 'auto', string $list = 'List'): string
     {
         return $this->name;
     }

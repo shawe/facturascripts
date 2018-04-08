@@ -75,7 +75,8 @@
     </constraint>
     <constraint>
         <name>ca_articulosprov_proveedores</name>
-        <type>FOREIGN KEY (codproveedor) REFERENCES proveedores (codproveedor) ON DELETE CASCADE ON UPDATE CASCADE</type>
+        <type>FOREIGN KEY (codproveedor) REFERENCES proveedores (codproveedor) ON DELETE CASCADE ON UPDATE CASCADE
+        </type>
     </constraint>
     <constraint>
         <name>uniq_articulo_proveedor2</name>

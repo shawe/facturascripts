@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Dashboard;
 
 use FacturaScripts\Core\Model;
@@ -46,7 +47,7 @@ class TasksComponent extends BaseComponent implements ComponentInterface
      * TasksComponent constructor.
      *
      * @param Model\DashboardData $data
-     * @param string              $userNick
+     * @param string $userNick
      */
     public function __construct($data, $userNick)
     {
@@ -60,7 +61,7 @@ class TasksComponent extends BaseComponent implements ComponentInterface
      *
      * @return array
      */
-    public static function getPropertiesFields()
+    public static function getPropertiesFields(): array
     {
         return [
             'description' => '',
@@ -113,7 +114,7 @@ class TasksComponent extends BaseComponent implements ComponentInterface
         }
 
         if ($this->randomData) {
-            $data['enddate'] = (mt_rand(0, 2) == 0) ? date('Y-m-d') : null;
+            $data['enddate'] = (random_int(0, 2) === 0) ? date('Y-m-d') : null;
         }
 
         $newItem->properties = [
@@ -132,7 +133,7 @@ class TasksComponent extends BaseComponent implements ComponentInterface
      *
      * @return string
      */
-    public function url($id)
+    public function url($id): string
     {
         return 'EditDashboardData?code=' . $id;
     }
@@ -142,7 +143,7 @@ class TasksComponent extends BaseComponent implements ComponentInterface
      *
      * @return string
      */
-    public function getCardClass()
+    public function getCardClass(): string
     {
         return 'task-card';
     }

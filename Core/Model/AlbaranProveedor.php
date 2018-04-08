@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -52,7 +53,7 @@ class AlbaranProveedor extends Base\PurchaseDocument
      *
      * @return LineaAlbaranProveedor[]
      */
-    public function getLines()
+    public function getLines(): array
     {
         $lineaModel = new LineaAlbaranProveedor();
         $where = [new DataBaseWhere('idalbaran', $this->idalbaran)];
@@ -63,19 +64,19 @@ class AlbaranProveedor extends Base\PurchaseDocument
 
     /**
      * Returns a new line for the document.
-     * 
+     *
      * @param array $data
      *
      * @return LineaAlbaranProveedor
      */
-    public function getNewLine(array $data = [])
+    public function getNewLine(array $data = []): LineaAlbaranProveedor
     {
         $newLine = new LineaAlbaranProveedor($data);
         $newLine->idalbaran = $this->idalbaran;
-        
+
         $state = $this->getState();
         $newLine->actualizastock = $state->actualizastock;
-        
+
         return $newLine;
     }
 
@@ -86,7 +87,7 @@ class AlbaranProveedor extends Base\PurchaseDocument
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         parent::install();
         new FacturaProveedor();
@@ -99,7 +100,7 @@ class AlbaranProveedor extends Base\PurchaseDocument
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idalbaran';
     }
@@ -109,7 +110,7 @@ class AlbaranProveedor extends Base\PurchaseDocument
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'albaranesprov';
     }

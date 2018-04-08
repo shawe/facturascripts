@@ -16,10 +16,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base;
 use FacturaScripts\Core\Lib\RandomDataGenerator;
+use FacturaScripts\Core\Model\Base\ModelClass;
 use FacturaScripts\Core\Model\User;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -32,6 +34,7 @@ use Symfony\Component\HttpFoundation\Response;
 class Randomizer extends Base\Controller
 {
 
+    const DINAMIC_MODEL = '\FacturaScripts\Dinamic\Model\\';
     /**
      * URL where reload.
      *
@@ -49,8 +52,8 @@ class Randomizer extends Base\Controller
     /**
      * Runs the controller's private logic.
      *
-     * @param Response                   $response
-     * @param User                       $user
+     * @param Response $response
+     * @param User $user
      * @param Base\ControllerPermissions $permissions
      */
     public function privateCore(&$response, $user, $permissions)
@@ -71,7 +74,7 @@ class Randomizer extends Base\Controller
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
         $pageData = parent::getPageData();
         $pageData['menu'] = 'admin';
@@ -182,8 +185,6 @@ class Randomizer extends Base\Controller
         if (false !== $app) {
             $this->miniLog->info($this->i18n->trans($txt, ['%quantity%' => $app->generate()]));
         }
-
-        return;
     }
 
     /**
@@ -194,28 +195,30 @@ class Randomizer extends Base\Controller
         $this->totalCounter = [];
 
         $models = [
-            'agentes' => '\FacturaScripts\Dinamic\Model\Agente',
-            'albaranescli' => '\FacturaScripts\Dinamic\Model\AlbaranCliente',
-            'albaranesprov' => '\FacturaScripts\Dinamic\Model\AlbaranProveedor',
-            'asientos' => '\FacturaScripts\Dinamic\Model\Asiento',
-            'articulos' => '\FacturaScripts\Dinamic\Model\Articulo',
-            'articulosprov' => '\FacturaScripts\Dinamic\Model\ArticuloProveedor',
-            'clientes' => '\FacturaScripts\Dinamic\Model\Cliente',
-            'cuentas' => '\FacturaScripts\Dinamic\Model\Cuenta',
-            'grupos' => '\FacturaScripts\Dinamic\Model\GrupoClientes',
-            'fabricantes' => '\FacturaScripts\Dinamic\Model\Fabricante',
-            'familias' => '\FacturaScripts\Dinamic\Model\Familia',
-            'pedidoscli' => '\FacturaScripts\Dinamic\Model\PedidoCliente',
-            'pedidosprov' => '\FacturaScripts\Dinamic\Model\PedidoProveedor',
-            'presupuestoscli' => '\FacturaScripts\Dinamic\Model\PresupuestoCliente',
-            'presupuestosprov' => '\FacturaScripts\Dinamic\Model\PresupuestoProveedor',
-            'proveedores' => '\FacturaScripts\Dinamic\Model\Proveedor',
-            'subcuentas' => '\FacturaScripts\Dinamic\Model\Subcuenta'
+            'agentes' => self::DINAMIC_MODEL . 'Agente',
+            'albaranescli' => self::DINAMIC_MODEL . 'AlbaranCliente',
+            'albaranesprov' => self::DINAMIC_MODEL . 'AlbaranProveedor',
+            'asientos' => self::DINAMIC_MODEL . 'Asiento',
+            'articulos' => self::DINAMIC_MODEL . 'Articulo',
+            'articulosprov' => self::DINAMIC_MODEL . 'ArticuloProveedor',
+            'clientes' => self::DINAMIC_MODEL . 'Cliente',
+            'cuentas' => self::DINAMIC_MODEL . 'Cuenta',
+            'grupos' => self::DINAMIC_MODEL . 'GrupoClientes',
+            'fabricantes' => self::DINAMIC_MODEL . 'Fabricante',
+            'familias' => self::DINAMIC_MODEL . 'Familia',
+            'pedidoscli' => self::DINAMIC_MODEL . 'PedidoCliente',
+            'pedidosprov' => self::DINAMIC_MODEL . 'PedidoProveedor',
+            'presupuestoscli' => self::DINAMIC_MODEL . 'PresupuestoCliente',
+            'presupuestosprov' => self::DINAMIC_MODEL . 'PresupuestoProveedor',
+            'proveedores' => self::DINAMIC_MODEL . 'Proveedor',
+            'subcuentas' => self::DINAMIC_MODEL . 'Subcuenta'
         ];
 
         foreach ($models as $tag => $modelName) {
             $model = new $modelName();
-            $this->totalCounter[$tag] = $model->count();
+            if ($model instanceof ModelClass) {
+                $this->totalCounter[$tag] = $model->count();
+            }
         }
     }
 }

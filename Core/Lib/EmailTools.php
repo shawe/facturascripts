@@ -16,11 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib;
 
 use FacturaScripts\Core\Base\MiniLog;
 use FacturaScripts\Core\Base\Translator as i18n;
 use FacturaScripts\Core\Model\Settings;
+use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 
 /**
@@ -55,7 +57,7 @@ class EmailTools
     {
         $settingsModel = new Settings();
         $emailSettings = $settingsModel->get('email');
-        if ($emailSettings) {
+        if ($emailSettings instanceof Settings) {
             self::$settings = $emailSettings->properties;
         }
     }
@@ -65,7 +67,7 @@ class EmailTools
      *
      * @return PHPMailer
      */
-    public function newMail()
+    public function newMail(): PHPMailer
     {
         $mail = new PHPMailer();
         $mail->CharSet = 'UTF-8';
@@ -93,10 +95,13 @@ class EmailTools
      *
      * @return bool
      */
-    public function send($mail)
+    public function send($mail): bool
     {
-        if ($mail->smtpConnect($this->smtpOptions()) && $mail->send()) {
-            return true;
+        try {
+            if ($mail->smtpConnect($this->smtpOptions()) && $mail->send()) {
+                return true;
+            }
+        } catch (Exception $e) {
         }
 
         $i18n = new i18n();
@@ -111,12 +116,15 @@ class EmailTools
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         if (self::$settings['mailer'] === 'smtp') {
             $mail = $this->newMail();
 
-            return $mail->smtpConnect($this->smtpOptions());
+            try {
+                return $mail->smtpConnect($this->smtpOptions());
+            } catch (Exception $e) {
+            }
         }
 
         return true;
@@ -156,10 +164,10 @@ class EmailTools
      *
      * @return array
      */
-    private function smtpOptions()
+    private function smtpOptions(): array
     {
         $SMTPOptions = [];
-        if (isset(self::$settings['lowsecure']) && self::$settings['lowsecure']) {
+        if (!empty(self::$settings['lowsecure'])) {
             $SMTPOptions = [
                 'ssl' => [
                     'verify_peer' => false,

@@ -25,19 +25,19 @@
 <view>
     <columns>
         <column name="register-symbol" order="100">
-            <widget type="text" fieldname="idestado" onclick="EditEstadoDocumento" />
+            <widget type="text" fieldname="idestado" onclick="EditEstadoDocumento"/>
         </column>
         <column name="doc-type" order="110">
-            <widget type="text" fieldname="tipodoc" />
+            <widget type="text" fieldname="tipodoc"/>
         </column>
         <column name="name" order="120">
-            <widget type="text" fieldname="nombre" />
+            <widget type="text" fieldname="nombre"/>
         </column>
         <column name="default" display="center" order="130">
-            <widget type="checkbox" fieldname="predeterminado"></widget>
+            <widget type="checkbox" fieldname="predeterminado"/>
         </column>
         <column name="editable" display="center" order="140">
-            <widget type="checkbox" fieldname="editable"></widget>
+            <widget type="checkbox" fieldname="editable"/>
         </column>
         <column name="update-stock" display="center" order="150">
             <widget type="select" fieldname="actualizastock">
@@ -49,7 +49,7 @@
             </widget>
         </column>
         <column name="generate-doc-type" display="right" order="160">
-            <widget type="text" fieldname="generadoc" />
+            <widget type="text" fieldname="generadoc"/>
         </column>
     </columns>
     <rows>

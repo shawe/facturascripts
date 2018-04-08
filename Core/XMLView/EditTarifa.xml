@@ -26,10 +26,10 @@
     <columns>
         <group name="data" numcolumns="12" title="rates">
             <column name="codtarifa" title="code" numcolumns="3" order="100">
-                <widget type="text" fieldname="codtarifa" icon="fa-money" required="true" />
+                <widget type="text" fieldname="codtarifa" icon="fa-money" required="true"/>
             </column>
             <column name="nombre" title="name" numcolumns="6" order="110">
-                <widget type="text" fieldname="nombre" required="true" />
+                <widget type="text" fieldname="nombre" required="true"/>
             </column>
             <column name="aplicar" title="formula-to-apply" numcolumns="3" order="120">
                 <widget type="select" fieldname="aplicar">
@@ -40,10 +40,10 @@
         </group>
         <group name="check" numcolumns="12">
             <column name="mincoste" title="dont-sell-below-cost" numcolumns="4" order="130">
-                <widget type="checkbox" fieldname="mincoste" />
+                <widget type="checkbox" fieldname="mincoste"/>
             </column>
             <column name="maxpvp" title="dont-sell-above-pvp" numcolumns="4" order="140">
-                <widget type="checkbox" fieldname="maxpvp" />
+                <widget type="checkbox" fieldname="maxpvp"/>
             </column>
         </group>
     </columns>

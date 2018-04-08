@@ -147,7 +147,8 @@
     </constraint>
     <constraint>
         <name>ca_presupuestosprov_ejercicios</name>
-        <type>FOREIGN KEY (codejercicio) REFERENCES ejercicios (codejercicio) ON DELETE RESTRICT ON UPDATE CASCADE</type>
+        <type>FOREIGN KEY (codejercicio) REFERENCES ejercicios (codejercicio) ON DELETE RESTRICT ON UPDATE CASCADE
+        </type>
     </constraint>
     <constraint>
         <name>ca_presupuestosprov_pedidos</name>

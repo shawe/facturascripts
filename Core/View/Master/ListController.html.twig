@@ -26,7 +26,7 @@
 
 {% extends "Master/MenuTemplate.html.twig" %}
 
-{% block javascript %}
+{% block javascripts %}
     {{ parent() }}
 
     <script type="text/javascript">
@@ -186,7 +186,7 @@
                 </div>
             </div>
             <div class="col-sm-5 col-6 text-right">
-                <h2 style="margin-top: 0px;">
+                <h2 style="margin-top: 0;">
                     <i class="fa {{ fsc.getPageData()['icon'] }}" aria-hidden="true"></i> {{ title }}
                 </h2>
             </div>
@@ -217,7 +217,7 @@
                     {# Filters Row #}
                     <form name="form{{ indexView }}" id="form{{ indexView }}" action="{{ fsc.url() }}" method="post" class="form">
                         <input type="hidden" name="active" value="{{ indexView }}"/>
-                        <input type="hidden" name="order" value="{{ view.selectedOrderBy }}" />
+                        <input type="hidden" name="order" value="{{ view.selectedOrderBy }}"/>
                         <div class="container-fluid d-print-none" style="margin-top: 15px; margin-bottom: 10px;">
                             <div class="row align-items-center">
                                 {# Main filter #}
@@ -236,26 +236,26 @@
                                 {# Aditionals filters #}
                                 {% set columnsUsed = 2 %}
                                 {% for key1, filter in view.getFilters() %}
-                                    {# Add new column filter #}
-                                    {% if filter.type == 'autocomplete' %}
-                                        {{ ListFilter.filterAutocomplete(_context, key1, filter) }}
-                                    {% elseif filter.type == 'select' %}
-                                        {{ ListFilter.filterSelect(_context, key1, filter) }}
-                                    {% elseif filter.type == 'checkbox' %}
-                                        {{ ListFilter.filterCheckbox(_context, key1, filter) }}
-                                    {% else %}
-                                        {{ ListFilter.filterText(_context, key1, filter) }}
-                                        {% set columnsUsed = columnsUsed + 2 %}
-                                    {% endif %}
-
-                                    {# subtract the available space #}
+                                {# Add new column filter #}
+                                {% if filter.type == 'autocomplete' %}
+                                    {{ ListFilter.filterAutocomplete(_context, key1, filter) }}
+                                {% elseif filter.type == 'select' %}
+                                    {{ ListFilter.filterSelect(_context, key1, filter) }}
+                                {% elseif filter.type == 'checkbox' %}
+                                    {{ ListFilter.filterCheckbox(_context, key1, filter) }}
+                                {% else %}
+                                    {{ ListFilter.filterText(_context, key1, filter) }}
                                     {% set columnsUsed = columnsUsed + 2 %}
-                                    {# check if there is space available for columns #}
-                                    {% if (columnsUsed % 12) == 0 %}
-                                    </div>
-                                    <div class="row align-items-center" style="margin-top:5px; margin-bottom: 10px;">
-                                        {% set columnsUsed = 0 %}
-                                    {% endif %}
+                                {% endif %}
+
+                                {# subtract the available space #}
+                                {% set columnsUsed = columnsUsed + 2 %}
+                                {# check if there is space available for columns #}
+                                {% if (columnsUsed % 12) == 0 %}
+                            </div>
+                            <div class="row align-items-center" style="margin-top:5px; margin-bottom: 10px;">
+                                {% set columnsUsed = 0 %}
+                                {% endif %}
                                 {% endfor %}
 
                                 {# Order by selector #}

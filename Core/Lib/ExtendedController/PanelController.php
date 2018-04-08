@@ -16,10 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base;
-use FacturaScripts\Core\Lib\ExportManager;
+use FacturaScripts\Dinamic\Lib\ExportManager;
 use FacturaScripts\Core\Model\CodeModel;
 use FacturaScripts\Core\Model\User;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,7 +49,7 @@ abstract class PanelController extends Base\Controller
      * @var ExportManager
      */
     public $exportManager;
-    
+
     /**
      * Indicates if the main view has data or is empty.
      *
@@ -77,31 +78,18 @@ abstract class PanelController extends Base\Controller
     /**
      * List of views displayed by the controller
      *
-     * @var BaseView[]
+     * @var ListView[]|EditListView[]|EditView[]|GridView[]
      */
     public $views;
 
     /**
-     * Inserts the views to display
-     */
-    abstract protected function createViews();
-
-    /**
-     * Loads the data to display
-     *
-     * @param string   $keyView
-     * @param BaseView $view
-     */
-    abstract protected function loadData($keyView, $view);
-
-    /**
      * Starts all the objects and properties
      *
-     * @param Base\Cache      $cache
+     * @param Base\Cache $cache
      * @param Base\Translator $i18n
-     * @param Base\MiniLog    $miniLog
-     * @param string          $className
-     * @param string          $uri
+     * @param Base\MiniLog $miniLog
+     * @param string $className
+     * @param string $uri
      */
     public function __construct(&$cache, &$i18n, &$miniLog, $className, $uri = '')
     {
@@ -144,8 +132,8 @@ abstract class PanelController extends Base\Controller
     /**
      * Runs the controller's private logic.
      *
-     * @param Response                   $response
-     * @param User                       $user
+     * @param Response $response
+     * @param User $user
      * @param Base\ControllerPermissions $permissions
      */
     public function privateCore(&$response, $user, $permissions)
@@ -174,7 +162,7 @@ abstract class PanelController extends Base\Controller
                 $this->hasData = $dataView->count > 0;
                 continue;
             }
-            
+
             // check if the view should be active
             $this->settings[$keyView]['active'] = $this->checkActiveView($dataView, $this->hasData);
         }
@@ -194,23 +182,6 @@ abstract class PanelController extends Base\Controller
     public function getSettings($keyView, $property)
     {
         return $this->settings[$keyView][$property];
-    }
-
-    /**
-     * Returns a field value for the loaded data model
-     *
-     * @param mixed  $model
-     * @param string $fieldName
-     *
-     * @return mixed
-     */
-    public function getFieldValue($model, $fieldName)
-    {
-        if (isset($model->{$fieldName})) {
-            return $model->{$fieldName};
-        }
-
-        return null;
     }
 
     /**
@@ -235,7 +206,7 @@ abstract class PanelController extends Base\Controller
      *
      * @return string
      */
-    public function getURL($type)
+    public function getURL($type): string
     {
         $view = array_values($this->views)[0];
         return $view->getURL($type);
@@ -246,7 +217,7 @@ abstract class PanelController extends Base\Controller
      *
      * @return string
      */
-    public function getPrimaryDescription()
+    public function getPrimaryDescription(): string
     {
         $viewName = array_keys($this->views)[0];
         $model = $this->views[$viewName]->getModel();
@@ -254,27 +225,42 @@ abstract class PanelController extends Base\Controller
         return $model->primaryDescription();
     }
 
-    private function searchGridView(): string
+    /**
+     * Returns the view class
+     *
+     * @param string $view
+     *
+     * @return string
+     */
+    public function viewClass($view): string
     {
-        $result = '';
-        foreach ($this->views as $key => $value) {
-            if ($value instanceof GridView) {
-                $result = $key;
-                break;
-            }
-        }
-        return $result;
+        $result = explode('\\', \get_class($view));
+
+        return end($result);
     }
+
+    /**
+     * Inserts the views to display
+     */
+    abstract protected function createViews();
+
+    /**
+     * Loads the data to display
+     *
+     * @param string $keyView
+     * @param BaseView $view
+     */
+    abstract protected function loadData($keyView, $view);
 
     /**
      * Run the actions that alter data before reading it
      *
      * @param BaseView $view
-     * @param string   $action
+     * @param string $action
      *
      * @return bool
      */
-    protected function execPreviousAction($view, $action)
+    protected function execPreviousAction($view, $action): bool
     {
         $status = true;
         switch ($action) {
@@ -315,7 +301,7 @@ abstract class PanelController extends Base\Controller
      * Run the controller after actions
      *
      * @param EditView $view
-     * @param string   $action
+     * @param string $action
      */
     protected function execAfterAction($view, $action)
     {
@@ -340,13 +326,14 @@ abstract class PanelController extends Base\Controller
      * Returns a JSON string for the searched values.
      *
      * @param array $data
-     * @return array
+     *
+     * @return CodeModel[]
      */
     protected function autocompleteAction($data): array
     {
         $results = [];
         $codeModel = new CodeModel();
-        foreach ($codeModel->search($data['source'], $data['field'], $data['title'], $data['term']) as $value) {
+        foreach ($codeModel::search($data['source'], $data['field'], $data['title'], $data['term']) as $value) {
             $results[] = ['key' => $value->code, 'value' => $value->description];
         }
         return $results;
@@ -359,7 +346,7 @@ abstract class PanelController extends Base\Controller
      *
      * @return bool
      */
-    protected function deleteAction($view)
+    protected function deleteAction($view): bool
     {
         if (!$this->permissions->allowDelete) {
             $this->miniLog->alert($this->i18n->trans('not-allowed-delete'));
@@ -384,7 +371,7 @@ abstract class PanelController extends Base\Controller
      *
      * @return bool
      */
-    protected function editAction($view)
+    protected function editAction($view): bool
     {
         if (!$this->permissions->allowUpdate) {
             $this->miniLog->alert($this->i18n->trans('not-allowed-modify'));
@@ -417,11 +404,11 @@ abstract class PanelController extends Base\Controller
      * Check if the view should be active
      *
      * @param BaseView $view
-     * @param bool     $mainViewHasData
+     * @param bool $mainViewHasData
      *
      * @return bool
      */
-    protected function checkActiveView(&$view, $mainViewHasData)
+    protected function checkActiveView($view, $mainViewHasData): bool
     {
         return $mainViewHasData;
     }
@@ -429,9 +416,9 @@ abstract class PanelController extends Base\Controller
     /**
      * Adds a view to the controller and loads its data
      *
-     * @param string   $keyView
+     * @param string $keyView
      * @param BaseView $view
-     * @param string   $icon
+     * @param string $icon
      */
     protected function addView($keyView, $view, $icon)
     {
@@ -519,16 +506,17 @@ abstract class PanelController extends Base\Controller
     }
 
     /**
-     * Returns the view class
-     *
-     * @param string $view
+     * TODO: Uncomplete documentation.
      *
      * @return string
      */
-    public function viewClass($view)
+    private function searchGridView(): string
     {
-        $result = explode('\\', get_class($view));
-
-        return end($result);
+        $result = '';
+        foreach ($this->views as $key => $value) {
+            $result = $key;
+            break;
+        }
+        return $result;
     }
 }

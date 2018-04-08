@@ -26,10 +26,10 @@
     <columns>
         <group name="data" numcolumns="12">
             <column name="register-symbol" display="none" order="100">
-                <widget type="text" fieldname="idestado" onclick="EditEstadoDocumento" />
+                <widget type="text" fieldname="idestado" onclick="EditEstadoDocumento"/>
             </column>
             <column name="name" numcolumns="4" order="110">
-                <widget type="text" fieldname="nombre" required="true" />
+                <widget type="text" fieldname="nombre" required="true"/>
             </column>
             <column name="doc-type" numcolumns="4" order="120">
                 <widget type="select" fieldname="tipodoc" required="true">
@@ -65,10 +65,10 @@
                 </widget>
             </column>
             <column name="editable" order="150">
-                <widget type="checkbox" fieldname="editable"></widget>
+                <widget type="checkbox" fieldname="editable"/>
             </column>
             <column name="default" order="160">
-                <widget type="checkbox" fieldname="predeterminado"></widget>
+                <widget type="checkbox" fieldname="predeterminado"/>
             </column>
         </group>
     </columns>

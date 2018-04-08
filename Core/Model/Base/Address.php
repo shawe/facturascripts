@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model\Base;
 
 use FacturaScripts\Core\App\AppSettings;
@@ -85,7 +86,7 @@ abstract class Address extends ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->apartado = Utils::noHtml($this->apartado);
         $this->ciudad = Utils::noHtml($this->ciudad);

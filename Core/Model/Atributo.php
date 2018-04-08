@@ -49,7 +49,7 @@ class Atributo extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'atributos';
     }
@@ -59,9 +59,21 @@ class Atributo extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'codatributo';
+    }
+
+    /**
+     * Returns True if there is no errors on properties values.
+     *
+     * @return bool
+     */
+    public function test(): bool
+    {
+        $this->nombre = Utils::noHtml($this->nombre);
+
+        return true;
     }
 
     /**
@@ -69,7 +81,7 @@ class Atributo extends Base\ModelClass
      *
      * @return AtributoValor[]
      */
-    public function valores()
+    public function valores(): array
     {
         $valor0 = new AtributoValor();
 
@@ -80,7 +92,7 @@ class Atributo extends Base\ModelClass
      * Get attribute by name.
      *
      * @param string $nombre
-     * @param bool   $minusculas
+     * @param bool $minusculas
      *
      * @return Atributo|bool
      */
@@ -99,17 +111,5 @@ class Atributo extends Base\ModelClass
         }
 
         return false;
-    }
-
-    /**
-     * Returns True if there is no errors on properties values.
-     *
-     * @return bool
-     */
-    public function test()
-    {
-        $this->nombre = Utils::noHtml($this->nombre);
-        
-        return true;
     }
 }

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib;
 
 /**
@@ -73,30 +74,13 @@ class IPFilter
     }
 
     /**
-     * Load the IP addresses in the $ ipList array
-     *
-     * @param array $line
-     */
-    private function readIp($line)
-    {
-        /// si no ha expirado
-        if (count($line) === 3 && (int) $line[2] > time()) {
-            $this->ipList[] = [
-                'ip' => $line[0],
-                'count' => (int) $line[1],
-                'expire' => (int) $line[2],
-            ];
-        }
-    }
-
-    /**
      * Returns true if attempts to access from the IP address exceed the MAX_ATTEMPTS limit.
      *
      * @param string $ip
      *
      * @return bool
      */
-    public function isBanned($ip)
+    public function isBanned($ip): bool
     {
         $banned = false;
 
@@ -139,6 +123,32 @@ class IPFilter
     }
 
     /**
+     * Clean the list of IP addresses and save the data.
+     */
+    public function clear()
+    {
+        $this->ipList = [];
+        $this->save();
+    }
+
+    /**
+     * Load the IP addresses in the $ ipList array
+     *
+     * @param array $line
+     */
+    private function readIp($line)
+    {
+        /// si no ha expirado
+        if (count($line) === 3 && (int) $line[2] > time()) {
+            $this->ipList[] = [
+                'ip' => $line[0],
+                'count' => (int) $line[1],
+                'expire' => (int) $line[2],
+            ];
+        }
+    }
+
+    /**
      * Stores the list of IP addresses in the file.
      */
     private function save()
@@ -146,19 +156,10 @@ class IPFilter
         $file = fopen($this->filePath, 'wb');
         if ($file) {
             foreach ($this->ipList as $line) {
-                fwrite($file, $line['ip'] . ';' . $line['count'] . ';' . $line['expire'] . "\n");
+                fwrite($file, $line['ip'] . ';' . $line['count'] . ';' . $line['expire'] .  \PHP_EOL);
             }
 
             fclose($file);
         }
-    }
-
-    /**
-     * Clean the list of IP addresses and save the data.
-     */
-    public function clear()
-    {
-        $this->ipList = [];
-        $this->save();
     }
 }

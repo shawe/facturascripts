@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Dashboard;
 
 /**
@@ -58,14 +59,14 @@ interface ComponentInterface
      *
      * @return string
      */
-    public function getNumColumns();
+    public function getNumColumns(): string;
 
     /**
      * Return the class name to render this component.
      *
      * @return string
      */
-    public function getCardClass();
+    public function getCardClass(): string;
 
     /**
      * Return the URL to this component.
@@ -74,5 +75,5 @@ interface ComponentInterface
      *
      * @return string
      */
-    public function url($id);
+    public function url($id): string;
 }

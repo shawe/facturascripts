@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib;
 
 /**
@@ -63,29 +64,38 @@ class AssetManager
     {
         $txt = '';
         foreach ($fileList as $file) {
-            $content = file_get_contents(FS_FOLDER . DIRECTORY_SEPARATOR . $file) . "\n";
+            $content = file_get_contents(FS_FOLDER . DIRECTORY_SEPARATOR . $file) . \PHP_EOL;
             $txt .= static::fixCombineContent($content, FS_ROUTE . DIRECTORY_SEPARATOR . $file);
         }
 
         return $txt;
     }
 
+    /**
+     * TODO: Uncomplete documentation.
+     *
+     * @param string $data
+     * @param string $url
+     *
+     * @return string
+     */
     public static function fixCombineContent(string $data, string $url): string
     {
         // Replace relative paths
         $replace = [
-            'url(../' => "url(" . dirname($url, 2) . '/',
-            "url('../" => "url('" . dirname($url, 2) . '/',
+            'url(../' => 'url(' . \dirname($url, 2) . '/',
+            "url('../" => "url('" . \dirname($url, 2) . '/',
         ];
         $buffer = \str_replace(array_keys($replace), $replace, $data);
 
         // Remove comments
         $buffer = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $buffer);
-        
-        // Remove space after colons
-        $buffer = str_replace(': ', ':', $buffer);
-        
-        // Remove whitespace
-        return str_replace(["\r\n", "\r", "\n", "\t", '  ', '    ', '    '], '', $buffer);
+
+        // Remove space after colons & whitespace
+        return str_replace(
+            [': ', "\r\n", "\r", "\n", "\t", '  ', '    ', '    '],
+            [':', '', '', '', '', '', '', ''],
+            $buffer
+        );
     }
 }

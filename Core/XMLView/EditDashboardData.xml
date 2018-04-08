@@ -27,24 +27,24 @@
     <columns>
         <group name="data" numcolumns="12">
             <column name="id" display="none" order="100">
-                <widget type="text" fieldname="id" readonly="true" required="true" />
+                <widget type="text" fieldname="id" readonly="true" required="true"/>
             </column>
             <column name="creation-date" numcolumns="4" order="100">
-                <widget type="datepicker" fieldname="creationdate" readonly="true" />
+                <widget type="datepicker" fieldname="creationdate" readonly="true"/>
             </column>
             <column name="user" numcolumns="4" order="110">
                 <widget type="select" fieldname="nick" icon="fa-user" required="true">
-                    <values source="users" fieldcode="nick" fieldtitle="nick" ></values>
+                    <values source="users" fieldcode="nick" fieldtitle="nick"/>
                 </widget>
             </column>
             <column name="display-date" numcolumns="4" order="120">
-                <widget type="datepicker" fieldname="displaydate" required="true" />
+                <widget type="datepicker" fieldname="displaydate" required="true"/>
             </column>
         </group>
 
         <group name="options" numcolumns="12">
             <column name="description" order="130">
-                <widget type="textarea" fieldname="description" />
+                <widget type="textarea" fieldname="description"/>
             </column>
             <column name="color" numcolumns="2" order="140">
                 <widget type="select" fieldname="color">
@@ -55,10 +55,10 @@
                 </widget>
             </column>
             <column name="end-date" numcolumns="2" order="150">
-                <widget type="datepicker" fieldname="enddate" />
+                <widget type="datepicker" fieldname="enddate"/>
             </column>
             <column name="link" numcolumns="4" order="160">
-                <widget type="text" fieldname="link" />
+                <widget type="text" fieldname="link"/>
             </column>
         </group>
     </columns>

@@ -25,25 +25,25 @@
 <view>
     <columns>
         <column name="code" order="100">
-            <widget type="text" fieldname="codalmacen" onclick="EditAlmacen" />
+            <widget type="text" fieldname="codalmacen" onclick="EditAlmacen"/>
         </column>
         <column name="name" order="100">
-            <widget type="text" fieldname="nombre" />
+            <widget type="text" fieldname="nombre"/>
         </column>
         <column name="address" order="110">
-            <widget type="text" fieldname="direccion" />
+            <widget type="text" fieldname="direccion"/>
         </column>
         <column name="city" order="120">
-            <widget type="text" fieldname="ciudad" />
+            <widget type="text" fieldname="ciudad"/>
         </column>
         <column name="postal-code" order="130">
-            <widget type="text" fieldname="codpostal" />
+            <widget type="text" fieldname="codpostal"/>
         </column>
         <column name="province" display="center" order="140">
-            <widget type="text" fieldname="provincia" />
+            <widget type="text" fieldname="provincia"/>
         </column>
         <column name="phone" order="150">
-            <widget type="text" fieldname="telefono" />
+            <widget type="text" fieldname="telefono"/>
         </column>
     </columns>
     <filters>

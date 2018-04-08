@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
 use FacturaScripts\Core\Model;
@@ -43,7 +44,7 @@ class PresupuestosCliente extends AbstractRandomDocuments
      *
      * @return int
      */
-    public function generate($num = 50)
+    public function generate($num = 50): int
     {
         $presu = $this->model;
         $this->shuffle($clientes, new Model\Cliente());
@@ -57,9 +58,9 @@ class PresupuestosCliente extends AbstractRandomDocuments
                 break;
             }
 
-            $recargo = ($clientes[0]->recargo || mt_rand(0, 4) === 0);
+            $recargo = ($clientes[0]->recargo || random_int(0, 4) === 0);
             $regimeniva = $this->randomizeDocumentVenta($presu, $eje, $clientes, $generated);
-            $presu->finoferta = date('d-m-Y', strtotime($presu->fecha . ' +' . mt_rand(1, 18) . ' months'));
+            $presu->finoferta = date('d-m-Y', strtotime($presu->fecha . ' +' . random_int(1, 18) . ' months'));
             if ($presu->save()) {
                 $this->randomLineas($presu, 'idpresupuesto', 'FacturaScripts\Dinamic\Model\LineaPresupuestoCliente', $regimeniva, $recargo);
                 ++$generated;

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 /**
@@ -73,7 +74,7 @@ class WidgetItemRadio extends WidgetItem
      *
      * @return string
      */
-    public function getListHTML($value)
+    public function getListHTML($value): string
     {
         return $this->standardListHTMLWidget($value);
     }
@@ -85,7 +86,7 @@ class WidgetItemRadio extends WidgetItem
      *
      * @return string
      */
-    public function getEditHTML($value)
+    public function getEditHTML($value): string
     {
         $specialAttributes = $this->specialAttributes();
         $html = $this->getIconHTML()

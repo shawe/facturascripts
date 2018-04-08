@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
 use FacturaScripts\Core\Model;
@@ -75,7 +76,7 @@ class Articulos extends AbstractRandom
      *
      * @return int
      */
-    public function generate($num = 50)
+    public function generate($num = 50): int
     {
         $art = $this->model;
         for ($generated = 0; $generated < $num; ++$generated) {
@@ -85,7 +86,7 @@ class Articulos extends AbstractRandom
             $art->setPvpIva($this->precio(1, 49, 699));
             $art->costemedio = $art->preciocoste = $this->cantidad(0, $art->pvp, $art->pvp + 1);
 
-            switch (mt_rand(0, 2)) {
+            switch (random_int(0, 2)) {
                 case 0:
                     $art->referencia = $art->newCode();
                     break;
@@ -103,7 +104,7 @@ class Articulos extends AbstractRandom
                     $art->referencia = $this->randomString(10);
             }
 
-            if (mt_rand(0, 9) > 0) {
+            if (random_int(0, 9) > 0) {
                 $art->codfabricante = $this->getOneItem($this->fabricantes)->codfabricante;
                 $art->codfamilia = $this->getOneItem($this->familias)->codfamilia;
             } else {
@@ -111,26 +112,32 @@ class Articulos extends AbstractRandom
                 $art->codfamilia = null;
             }
 
-            $art->publico = (mt_rand(0, 3) == 0);
-            $art->bloqueado = (mt_rand(0, 9) == 0);
-            $art->nostock = (mt_rand(0, 9) == 0);
-            $art->secompra = (mt_rand(0, 9) != 0);
-            $art->sevende = (mt_rand(0, 9) != 0);
+            $art->publico = (random_int(0, 3) === 0);
+            $art->bloqueado = (random_int(0, 9) === 0);
+            $art->nostock = (random_int(0, 9) === 0);
+            $art->secompra = (random_int(0, 9) !== 0);
+            $art->sevende = (random_int(0, 9) !== 0);
 
             if (!$art->save()) {
                 break;
             }
 
-            if (mt_rand(0, 2) == 0) {
-                $this->sumStock($art, mt_rand(0, 1000));
+            if (random_int(0, 2) === 0) {
+                $this->sumStock($art, random_int(0, 1000));
             } else {
-                $this->sumStock($art, mt_rand(0, 20));
+                $this->sumStock($art, random_int(0, 20));
             }
         }
 
         return $generated;
     }
 
+    /**
+     * TODO: Uncomplete documentation.
+     *
+     * @param Model\Articulo $art
+     * @param float|int $quantity
+     */
     private function sumStock($art, $quantity)
     {
         $stock = new Model\Stock();

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 /**
@@ -44,7 +45,7 @@ class WidgetItemCheckBox extends WidgetItem
      *
      * @return string
      */
-    protected function specialAttributes()
+    protected function specialAttributes(): string
     {
         $readOnly = empty($this->readOnly) ? '' : ' disabled';
 
@@ -58,13 +59,13 @@ class WidgetItemCheckBox extends WidgetItem
      *
      * @return string
      */
-    public function getListHTML($value)
+    public function getListHTML($value): string
     {
         if ($value === null || $value === '') {
             return '';
         }
 
-        $checked = in_array($value, ['t', '1'], false);
+        $checked = \in_array($value, ['t', '1'], false);
         $icon = $checked ? 'fa-check' : 'fa-minus';
         $style = $this->getTextOptionsHTML($checked);
 
@@ -78,10 +79,10 @@ class WidgetItemCheckBox extends WidgetItem
      *
      * @return string
      */
-    public function getEditHTML($value)
+    public function getEditHTML($value): string
     {
         $specialAttributes = $this->specialAttributes();
-        $checked = in_array(strtolower($value), ['true', 't', '1'], false) ? ' checked="" ' : '';
+        $checked = \in_array(strtolower($value), ['true', 't', '1'], false) ? ' checked="" ' : '';
 
         $html = $this->getIconHTML()
             . '<input name="' . $this->fieldName . '" id="' . $this->fieldName

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -31,6 +32,7 @@ class ListFilter
 {
 
     /**
+     * Model to use with list filters.
      *
      * @var CodeModel
      */
@@ -54,7 +56,7 @@ class ListFilter
      * ListFilter constructor.
      *
      * @param string $type
-     * @param array  $options
+     * @param array $options
      */
     public function __construct($type, $options)
     {
@@ -64,6 +66,113 @@ class ListFilter
 
         $this->type = $type;
         $this->options = $options;
+    }
+
+    /**
+     * Creates and returns an autocomplete type filter.
+     *
+     * @param string $label
+     * @param string $field
+     * @param string $table
+     * @param string $fieldcode
+     * @param string $fieldtitle
+     * @param string $value
+     * @param array $where
+     *
+     * @return ListFilter
+     */
+    public static function newAutocompleteFilter($label, $field, $table, $fieldcode, $fieldtitle, $value, $where = []): ListFilter
+    {
+        $options = [
+            'label' => $label,
+            'field' => $field,
+            'fieldcode' => $fieldcode,
+            'fieldtitle' => $fieldtitle,
+            'table' => $table,
+            'value' => $value,
+            'where' => $where
+        ];
+
+        return new self('autocomplete', $options);
+    }
+
+    /**
+     * Creates and returns a checkbox type filter.
+     *
+     * @param string $field
+     * @param string $value
+     * @param string $label
+     * @param bool $inverse
+     * @param mixed $matchValue
+     *
+     * @return ListFilter
+     */
+    public static function newCheckboxFilter($field, $value, $label, $inverse, $matchValue): ListFilter
+    {
+        $options = [
+            'field' => $field,
+            'inverse' => $inverse,
+            'label' => $label,
+            'matchValue' => $matchValue,
+            'value' => $value,
+        ];
+
+        return new self('checkbox', $options);
+    }
+
+    /**
+     * Creates and returns a select type filter.
+     *
+     * @param string $label
+     * @param string $field
+     * @param array $values
+     * @param string $value
+     *
+     * @return ListFilter
+     */
+    public static function newSelectFilter($label, $field, $values, $value): ListFilter
+    {
+        $options = [
+            'field' => $field,
+            'label' => $label,
+            'value' => $value,
+            'values' => $values
+        ];
+
+        return new self('select', $options);
+    }
+
+    /**
+     * Creates and returns a filter of the specified type [text|number|datepicker]
+     *
+     * @param string $type ('text' | 'datepicker' | 'number')
+     * @param array $options (['field', 'label', 'valueFrom', 'operatorFrom', 'valueTo', 'operatorTo'])
+     *
+     * @return ListFilter
+     */
+    public static function newStandardFilter($type, $options): ListFilter
+    {
+        if ($type === 'number') {
+            $options['valueFrom'] = self::checkNumberValue($options['valueFrom']);
+            $options['valueTo'] = self::checkNumberValue($options['valueTo']);
+        }
+
+        return new self($type, $options);
+    }
+
+    /**
+     * If number is integer, return the number without decimal part.
+     * Else, return the number with decimal part.
+     *
+     * @param mixed $value
+     *
+     * @return string
+     */
+    private static function checkNumberValue($value): string
+    {
+        $values = explode('.', $value, 1);
+
+        return count($values) === 1 ? $values[0] : $values[0] . '.' . $values[1];
     }
 
     /**
@@ -105,6 +214,11 @@ class ListFilter
         }
     }
 
+    /**
+     * TODO: Uncomplete documentation.
+     *
+     * @return mixed|string
+     */
     public function getCurrentValue()
     {
         switch ($this->type) {
@@ -112,7 +226,7 @@ class ListFilter
                 return self::$codeModel->getDescription($this->options['table'], $this->options['fieldcode'], $this->options['value'], $this->options['fieldtitle']);
 
             default:
-                return isset($this->options['value']) ? $this->options['value'] : '';
+                return $this->options['value'] ?? '';
         }
     }
 
@@ -121,7 +235,7 @@ class ListFilter
      *
      * @return array
      */
-    public function getFilterOperators()
+    public function getFilterOperators(): array
     {
         return [
             'like-than' => '=',
@@ -210,117 +324,10 @@ class ListFilter
     }
 
     /**
-     * Creates and returns an autocomplete type filter.
-     * 
-     * @param string $label
-     * @param string $field
-     * @param string $table
-     * @param string $fieldcode
-     * @param string $fieldtitle
-     * @param string $value
-     * @param array  $where
-     * 
-     * @return ListFilter
-     */
-    public static function newAutocompleteFilter($label, $field, $table, $fieldcode, $fieldtitle, $value, $where = []): ListFilter
-    {
-        $options = [
-            'label' => $label,
-            'field' => $field,
-            'fieldcode' => $fieldcode,
-            'fieldtitle' => $fieldtitle,
-            'table' => $table,
-            'value' => $value,
-            'where' => $where
-        ];
-
-        return new self('autocomplete', $options);
-    }
-
-    /**
-     * Creates and returns a checkbox type filter.
-     *
-     * @param string $field
-     * @param string $value
-     * @param string $label
-     * @param bool   $inverse
-     * @param mixed  $matchValue
-     *
-     * @return ListFilter
-     */
-    public static function newCheckboxFilter($field, $value, $label, $inverse, $matchValue): ListFilter
-    {
-        $options = [
-            'field' => $field,
-            'inverse' => $inverse,
-            'label' => $label,
-            'matchValue' => $matchValue,
-            'value' => $value,
-        ];
-
-        return new self('checkbox', $options);
-    }
-
-    /**
-     * Creates and returns a select type filter.
-     * 
-     * @param string $label
-     * @param string $field
-     * @param array  $values
-     * @param string $value
-     * 
-     * @return ListFilter
-     */
-    public static function newSelectFilter($label, $field, $values, $value): ListFilter
-    {
-        $options = [
-            'field' => $field,
-            'label' => $label,
-            'value' => $value,
-            'values' => $values
-        ];
-
-        return new self('select', $options);
-    }
-
-    /**
-     * Creates and returns a filter of the specified type [text|number|datepicker]
-     *
-     * @param string $type    ('text' | 'datepicker' | 'number')
-     * @param array  $options (['field', 'label', 'valueFrom', 'operatorFrom', 'valueTo', 'operatorTo'])
-     *
-     * @return ListFilter
-     */
-    public static function newStandardFilter($type, $options): ListFilter
-    {
-        if ($type === 'number') {
-            $options['valueFrom'] = self::checkNumberValue($options['valueFrom']);
-            $options['valueTo'] = self::checkNumberValue($options['valueTo']);
-        }
-
-        return new self($type, $options);
-    }
-
-    /**
-     * If number is integer, return the number without decimal part.
-     * Else, return the number with decimal part.
-     *
-     * @param mixed $value
-     *
-     * @return string
-     */
-    private static function checkNumberValue($value): string
-    {
-        $values = explode('.', $value, 1);
-
-        return count($values) === 1 ? $values[0] : $values[0] . '.' . $values[1];
-    }
-
-    /**
      * Check if option value is not null or empty
      *
      * @param string $key
-     * 
+     *
      * @return bool
      */
     private function hasValue($key = 'value'): bool

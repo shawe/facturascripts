@@ -16,11 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib;
 
 use FacturaScripts\Core\Base\Utils;
 use FacturaScripts\Core\Model\Base\BusinessDocument;
 use FacturaScripts\Core\Model\Base\BusinessDocumentLine;
+use FacturaScripts\Core\Model\Base\PurchaseDocument;
+use FacturaScripts\Core\Model\Base\SalesDocument;
 use FacturaScripts\Dinamic\Model\Articulo;
 use FacturaScripts\Dinamic\Model\Cliente;
 use FacturaScripts\Dinamic\Model\Empresa;
@@ -37,19 +40,19 @@ class BusinessDocumentTools
 {
 
     /**
-     *
+     * TODO: Uncomplete documentation.
      * @var float
      */
     private $irpf = 0.0;
 
     /**
-     *
+     * TODO: Uncomplete documentation.
      * @var bool
      */
     private $recargo = false;
 
     /**
-     *
+     * TODO: Uncomplete documentation.
      * @var bool
      */
     private $siniva = false;
@@ -59,7 +62,7 @@ class BusinessDocumentTools
      *
      * @param BusinessDocument $doc
      */
-    public function recalculate(BusinessDocument &$doc)
+    public function recalculate(BusinessDocument $doc)
     {
         $this->clearTotals($doc);
         $lines = $doc->getLines();
@@ -78,11 +81,11 @@ class BusinessDocumentTools
      * Calculate document totals from form data and returns the new total and document lines.
      *
      * @param BusinessDocument $doc
-     * @param array            $formLines
+     * @param array $formLines
      *
      * @return string
      */
-    public function recalculateForm(BusinessDocument &$doc, array &$formLines)
+    public function recalculateForm(BusinessDocument $doc, array &$formLines): string
     {
         $this->clearTotals($doc);
         $lines = [];
@@ -107,7 +110,12 @@ class BusinessDocumentTools
         return json_encode($json);
     }
 
-    private function clearTotals(BusinessDocument &$doc)
+    /**
+     * TODO: Uncomplete documentation.
+     *
+     * @param BusinessDocument $doc
+     */
+    private function clearTotals(BusinessDocument $doc)
     {
         $this->irpf = $doc->irpf;
 
@@ -126,13 +134,13 @@ class BusinessDocumentTools
             return;
         }
 
-        if (isset($doc->codcliente)) {
+        if ($doc instanceof SalesDocument && isset($doc->codcliente)) {
             $cliente = new Cliente();
             if ($cliente->loadFromCode($doc->codcliente)) {
                 $this->irpf = $cliente->irpf;
                 $this->recargo = $cliente->recargo;
             }
-        } elseif (isset($doc->codproveedor)) {
+        } elseif ($doc instanceof PurchaseDocument && isset($doc->codproveedor)) {
             $proveedor = new Proveedor();
             if ($proveedor->loadFromCode($doc->codproveedor)) {
                 $this->irpf = $proveedor->irpf;
@@ -152,7 +160,7 @@ class BusinessDocumentTools
      *
      * @return array
      */
-    private function getSubtotals($lines)
+    private function getSubtotals($lines): array
     {
         $irpf = 0.0;
         $subtotals = [];
@@ -194,14 +202,22 @@ class BusinessDocumentTools
         return $subtotals;
     }
 
-    private function recalculateLine(array $fLine, BusinessDocument $doc)
+    /**
+     * TODO: Uncomplete documentation.
+     *
+     * @param array $fLine
+     * @param BusinessDocument $doc
+     *
+     * @return BusinessDocumentLine
+     */
+    private function recalculateLine(array $fLine, BusinessDocument $doc): BusinessDocumentLine
     {
         if (!empty($fLine['referencia']) && empty($fLine['descripcion'])) {
             $this->setProductData($fLine);
         } elseif (empty($fLine['iva'])) {
             $impuestoModel = new Impuesto();
             foreach ($impuestoModel->all() as $imp) {
-                if ($imp->isDefault()) {
+                if ($imp instanceof Impuesto && $imp->isDefault()) {
                     $fLine['iva'] = $imp->iva;
                     $fLine['recargo'] = $this->recargo ? $imp->recargo : $fLine['recargo'];
                     break;
@@ -229,6 +245,11 @@ class BusinessDocumentTools
         return $newLine;
     }
 
+    /**
+     * TODO: Uncomplete documentation.
+     *
+     * @param array $fLine
+     */
     private function setProductData(array &$fLine)
     {
         $articulo = new Articulo();

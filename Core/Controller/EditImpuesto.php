@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController;
@@ -32,8 +33,10 @@ class EditImpuesto extends ExtendedController\EditController
 
     /**
      * Returns the model name
+     *
+     * @return string
      */
-    public function getModelClassName()
+    public function getModelClassName(): string
     {
         return 'Impuesto';
     }
@@ -43,14 +46,14 @@ class EditImpuesto extends ExtendedController\EditController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'tax';
-        $pagedata['menu'] = 'accounting';
-        $pagedata['icon'] = 'fa-plus-square-o';
-        $pagedata['showonmenu'] = false;
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'tax';
+        $pageData['menu'] = 'accounting';
+        $pageData['icon'] = 'fa-plus-square-o';
+        $pageData['showonmenu'] = false;
 
-        return $pagedata;
+        return $pageData;
     }
 }

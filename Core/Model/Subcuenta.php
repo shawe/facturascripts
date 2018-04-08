@@ -16,8 +16,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
+use Exception;
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Base\Utils;
 
@@ -114,7 +116,7 @@ class Subcuenta extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'subcuentas';
     }
@@ -124,7 +126,7 @@ class Subcuenta extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idsubcuenta';
     }
@@ -136,7 +138,7 @@ class Subcuenta extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         new CuentaEspecial();
         new Cuenta();
@@ -152,6 +154,103 @@ class Subcuenta extends Base\ModelClass
         $this->debe = 0.0;
         $this->haber = 0.0;
         $this->saldo = 0.0;
+    }
+
+    /**
+     * Returns True if there is no erros on properties values.
+     *
+     * @return bool
+     */
+    public function test(): bool
+    {
+        $this->codcuenta = trim($this->codcuenta);
+        $this->codsubcuenta = trim($this->codsubcuenta);
+        $this->descripcion = Utils::noHtml($this->descripcion);
+
+        if ($this->testErrorInData()) {
+            self::$miniLog->alert(self::$i18n->trans('account-data-missing'));
+            return false;
+        }
+
+        if ($this->testErrorInLengthSubAccount()) {
+            self::$miniLog->alert(self::$i18n->trans('account-length-error'));
+            return false;
+        }
+
+        $this->idcuenta = $this->getIdAccount();
+        if (empty($this->idcuenta)) {
+            self::$miniLog->alert(self::$i18n->trans('account-data-error'));
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Returns the url where to see / modify the data.
+     *
+     * @param string $type
+     * @param string $list
+     *
+     * @return string
+     */
+    public function url(string $type = 'auto', string $list = 'List'): string
+    {
+        return parent::url($type, 'ListCuenta?active=List');
+    }
+
+    /**
+     * Update account balance
+     *
+     * @param string $date
+     * @param float $debit
+     * @param float $credit
+     *
+     * @return bool
+     */
+    public function updateBalance($date, $debit, $credit): bool
+    {
+        $balance = $debit - $credit;
+        $month = (int) date('n', strtotime($date));
+        $detail = new SubcuentaSaldo();
+        $detail->idsubcuenta = $this->idsubcuenta;
+
+        $inTransaction = self::$dataBase->inTransaction();
+        try {
+            if ($inTransaction === false) {
+                self::$dataBase->beginTransaction();
+            }
+
+            if (!$detail->updateBalance($month, $debit, $credit)) {
+                return false;
+            }
+
+            $sql = 'UPDATE ' . static::tableName() . ' SET '
+                . ' debe = debe + ' . $debit
+                . ',haber = haber + ' . $credit
+                . ',saldo = saldo + ' . $balance
+                . ' WHERE idsubcuenta = ' . $this->idsubcuenta;
+            self::$dataBase->exec($sql);
+        } catch (Exception $e) {
+            self::$miniLog->error($e->getMessage());
+            if (!$inTransaction) {
+                self::$dataBase->rollback();
+            }
+            return false;
+        } finally {
+            if (!$inTransaction && self::$dataBase->inTransaction()) {
+                self::$dataBase->rollback();
+                self::$miniLog->alert(self::$i18n->trans('update-account-balance-error'));
+                /**
+                 * Voids all return and throw statements from the try-block (returned values and exceptions are lost)
+                 * Reports cases when a return statement might introduce bugs.
+                 */
+                /** @noinspection SuspiciousReturnInspection */
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -190,97 +289,6 @@ class Subcuenta extends Base\ModelClass
     {
         $exercise = new Ejercicio();
         $exercise->loadFromCode($this->codejercicio);
-        return empty($exercise->codejercicio) || (strlen($this->codsubcuenta) <> $exercise->longsubcuenta);
-    }
-
-    /**
-     * Returns True if there is no erros on properties values.
-     *
-     * @return bool
-     */
-    public function test()
-    {
-        $this->codcuenta = trim($this->codcuenta);
-        $this->codsubcuenta = trim($this->codsubcuenta);
-        $this->descripcion = Utils::noHtml($this->descripcion);
-
-        if ($this->testErrorInData()) {
-            self::$miniLog->alert(self::$i18n->trans('account-data-missing'));
-            return false;
-        }
-
-        if ($this->testErrorInLengthSubAccount()) {
-            self::$miniLog->alert(self::$i18n->trans('account-length-error'));
-            return false;
-        }
-
-        $this->idcuenta = $this->getIdAccount();
-        if (empty($this->idcuenta)) {
-            self::$miniLog->alert(self::$i18n->trans('account-data-error'));
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Update account balance
-     *
-     * @param string $date
-     * @param float $debit
-     * @param float $credit
-     * @return bool
-     */
-    public function updateBalance($date, $debit, $credit): bool
-    {
-        $balance = $debit - $credit;
-        $month = (int) date("n", strtotime($date));
-        $detail = new SubcuentaSaldo();
-        $detail->idsubcuenta = $this->idsubcuenta;
-
-        $inTransaction = self::$dataBase->inTransaction();
-        try {
-            if ($inTransaction === false) {
-                self::$dataBase->beginTransaction();
-            }
-
-            if (!$detail->updateBalance($month, $debit, $credit)) {
-                return false;
-            }
-
-            $sql = 'UPDATE ' . static::tableName() . ' SET '
-                . ' debe = debe + ' . $debit
-                . ',haber = haber + ' . $credit
-                . ',saldo = saldo + ' . $balance
-                . ' WHERE idsubcuenta = ' . $this->idsubcuenta;
-            self::$dataBase->exec($sql);
-        } catch (Exception $e) {
-            self::$miniLog->error($e->getMessage());
-            if (!$inTransaction) {
-                self::$dataBase->rollback();
-            }
-            return false;
-        } finally {
-            if (!$inTransaction && self::$dataBase->inTransaction()) {
-                self::$dataBase->rollback();
-                self::$miniLog->alert(self::$i18n->trans('update-account-balance-error'));
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * Returns the url where to see / modify the data.
-     *
-     * @param string $type
-     * @param string $list
-     *
-     * @return string
-     */
-    public function url(string $type = 'auto', string $list = 'List')
-    {
-        return parent::url($type, 'ListCuenta?active=List');
+        return empty($exercise->codejercicio) || (\strlen($this->codsubcuenta) <> $exercise->longsubcuenta);
     }
 }

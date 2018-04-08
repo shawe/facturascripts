@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\App;
 
 /**
@@ -43,8 +44,8 @@ class AppRouter
      */
     public function __construct()
     {
-        if (!defined('FS_ROUTE')) {
-            define('FS_ROUTE', '');
+        if (!\defined('FS_ROUTE')) {
+            \define('FS_ROUTE', '');
         }
 
         $this->routes = $this->loadFromFile();
@@ -58,7 +59,7 @@ class AppRouter
     public function getApp()
     {
         $uri = $this->getUri();
-        if ('/api' === $uri || '/api/' === substr($uri, 0, 5)) {
+        if ('/api' === $uri || 0 === strpos($uri, '/api/')) {
             return new AppAPI($uri);
         }
 
@@ -80,7 +81,7 @@ class AppRouter
      *
      * @return bool
      */
-    public function getFile()
+    public function getFile(): bool
     {
         $uri = $this->getUri();
         $filePath = FS_FOLDER . $uri;
@@ -93,7 +94,7 @@ class AppRouter
         /// Allowed folder?
         $allowedFolders = ['node_modules', 'vendor', 'Dinamic', 'Core', 'Plugins'];
         foreach ($allowedFolders as $folder) {
-            if ('/' . $folder === substr($uri, 0, strlen($folder) + 1)) {
+            if (0 === strpos($uri, '/' . $folder)) {
                 header('Content-Type: ' . $this->getMime($filePath));
                 readfile($filePath);
                 return true;
@@ -104,7 +105,7 @@ class AppRouter
     }
 
     /**
-     * TODO: Uncomplete documentation
+     * TODO: Uncomplete documentation.
      *
      * @param $newRoute
      * @param $controllerName
@@ -136,7 +137,7 @@ class AppRouter
      *
      * @return string
      */
-    private function getMime($filePath)
+    private function getMime($filePath): string
     {
         if (substr($filePath, -4) === '.css') {
             return 'text/css';
@@ -157,10 +158,10 @@ class AppRouter
     private function getUri()
     {
         $uri = filter_input(INPUT_SERVER, 'REQUEST_URI');
-        $uri2 = ($uri === null) ? filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL) : $uri;
+        $uri2 = $uri ?? filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
         $uriArray = explode('?', $uri2);
 
-        return substr($uriArray[0], strlen(FS_ROUTE));
+        return substr($uriArray[0], \strlen(FS_ROUTE));
     }
 
     /**
@@ -168,7 +169,7 @@ class AppRouter
      *
      * @return array
      */
-    private function loadFromFile()
+    private function loadFromFile(): array
     {
         if (file_exists(self::ROUTE_LIST_FILE)) {
             $content = file_get_contents(self::ROUTE_LIST_FILE);
@@ -185,7 +186,7 @@ class AppRouter
      *
      * @return bool
      */
-    private function save()
+    private function save(): bool
     {
         $content = json_encode($this->routes);
         return file_put_contents(self::ROUTE_LIST_FILE, $content) !== false;

@@ -16,14 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
 use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Model;
 
 /**
- * Abstract class that contains the basic methods to populate a table with 
- * random data 
+ * Abstract class that contains the basic methods to populate a table with random data.
  *
  * @author Rafael San José <info@rsanjoseo.com>
  */
@@ -31,27 +31,17 @@ abstract class AbstractRandom
 {
 
     /**
-     * Link with the active database
-     *
-     * @var DataBase
-     */
-    private $dataBase;
-
-    /**
      * Contains the model to generate random data.
      *
      * @var mixed
      */
     protected $model;
-
     /**
-     * Generate random data.
+     * Link with the active database
      *
-     * @param int $num
-     *
-     * @return mixed
+     * @var DataBase
      */
-    abstract public function generate($num = 50);
+    private $dataBase;
 
     /**
      * AbstractRandom constructor.
@@ -65,6 +55,15 @@ abstract class AbstractRandom
     }
 
     /**
+     * Generate random data.
+     *
+     * @param int $num
+     *
+     * @return mixed
+     */
+    abstract public function generate($num = 50): int;
+
+    /**
      * Returns a random number between $min and $max1
      * 1 out of 10 times returns a value between $min and $max2
      * 1 out of 5 times it returns a value with decimal points
@@ -75,14 +74,14 @@ abstract class AbstractRandom
      *
      * @return float
      */
-    public function cantidad($min, $max1, $max2)
+    public function cantidad($min, $max1, $max2): float
     {
-        $cantidad = mt_rand($min, $max1);
+        $cantidad = random_int($min, $max1);
 
-        if (mt_rand(0, 9) == 0) {
-            $cantidad = mt_rand($min, $max2);
-        } elseif ($cantidad < $max1 && mt_rand(0, 4) == 0) {
-            $cantidad += round(mt_rand(1, 5) / mt_rand(1, 10), mt_rand(0, 3));
+        if (random_int(0, 9) === 0) {
+            $cantidad = random_int($min, $max2);
+        } elseif ($cantidad < $max1 && random_int(0, 4) === 0) {
+            $cantidad += round(random_int(1, 5) / random_int(1, 10), random_int(0, 3));
             $cantidad = min([$max1, $cantidad]);
         }
 
@@ -94,7 +93,7 @@ abstract class AbstractRandom
      *
      * @return string
      */
-    public function descripcion()
+    public function descripcion(): string
     {
         $sufijos = [
             'II', '3', 'XL', 'XXL', 'SE', 'GT', 'GTX', 'Pro', 'NX', 'XP', 'OS', 'Nitro',
@@ -117,7 +116,7 @@ abstract class AbstractRandom
         ];
 
         $descripcion = $this->getOneItem($descripciones1);
-        switch (mt_rand(0, 4)) {
+        switch (random_int(0, 4)) {
             case 0:
                 break;
 
@@ -126,15 +125,20 @@ abstract class AbstractRandom
                 break;
 
             case 2:
-                $texto .= ": $descripcion con {$this->getOneItem($descripciones)}, {$this->getOneItem($descripciones)}, {$this->getOneItem($descripciones)} y {$this->getOneItem($descripciones)}.";
+                $texto .= ": $descripcion con {$this->getOneItem($descripciones)},"
+                    . " {$this->getOneItem($descripciones)}, {$this->getOneItem($descripciones)} y"
+                    . " {$this->getOneItem($descripciones)}.";
                 break;
 
             case 3:
-                $texto .= ": $descripcion con:\n- {$this->getOneItem($descripciones)}\n- {$this->getOneItem($descripciones)}\n- {$this->getOneItem($descripciones)}\n- {$this->getOneItem($descripciones)}.";
+                $texto .= ": $descripcion con:" . \PHP_EOL . "- {$this->getOneItem($descripciones)}" . \PHP_EOL
+                    . "- {$this->getOneItem($descripciones)}" . \PHP_EOL . "- {$this->getOneItem($descripciones)}"
+                    . \PHP_EOL . "- {$this->getOneItem($descripciones)}.";
                 break;
 
             default:
-                $texto .= ": $descripcion con {$this->getOneItem($descripciones)}, {$this->getOneItem($descripciones)} y {$this->getOneItem($descripciones)}.";
+                $texto .= ": $descripcion con {$this->getOneItem($descripciones)}, {$this->getOneItem($descripciones)}"
+                    . " y {$this->getOneItem($descripciones)}.";
                 break;
         }
 
@@ -146,7 +150,7 @@ abstract class AbstractRandom
      *
      * @return string
      */
-    public function familia()
+    public function familia(): string
     {
         $prefijos = [
             'Jet', 'Jex', 'Max', 'Pro', 'FX', 'Neo', 'Maxi', 'Extreme', 'Sub',
@@ -158,20 +162,7 @@ abstract class AbstractRandom
             'Radeon', 'GeForce', 'nForce', 'Labtech', 'Station', 'Arco', 'Arkam',
         ];
 
-        return (mt_rand(0, 4) ? $this->getOneItem($prefijos) . ' ' : '') . $this->getOneItem($nombres);
-    }
-
-    /**
-     * Return a date between $start and $end.
-     *
-     * @param int $start
-     * @param int $end
-     *
-     * @return false|string
-     */
-    protected function fecha($start = 2013, $end = 2018)
-    {
-        return date(mt_rand(1, 28) . '-' . mt_rand(1, 12) . '-' . mt_rand($start, $end));
+        return (random_int(0, 4) ? $this->getOneItem($prefijos) . ' ' : '') . $this->getOneItem($nombres);
     }
 
     /**
@@ -183,7 +174,7 @@ abstract class AbstractRandom
      */
     public function getOneItem($array)
     {
-        return $array[mt_rand(0, count($array) - 1)];
+        return $array[random_int(0, count($array) - 1)];
     }
 
     /**
@@ -191,20 +182,21 @@ abstract class AbstractRandom
      *
      * @return string
      */
-    public function iban()
+    public function iban(): string
     {
         $pais = $this->getOneItem(['ES', 'FR']);
-        $pesos = ['A' => '10', 'B' => '11', 'C' => '12', 'D' => '13', 'E' => '14', 'F' => '15',
+        $pesos = [
+            'A' => '10', 'B' => '11', 'C' => '12', 'D' => '13', 'E' => '14', 'F' => '15',
             'G' => '16', 'H' => '17', 'I' => '18', 'J' => '19', 'K' => '20', 'L' => '21', 'M' => '22',
             'N' => '23', 'O' => '24', 'P' => '25', 'Q' => '26', 'R' => '27', 'S' => '28', 'T' => '29',
             'U' => '30', 'V' => '31', 'W' => '32', 'X' => '33', 'Y' => '34', 'Z' => '35',
         ];
 
-        $ccc = mt_rand(1000, 9999) . mt_rand(1000, 9999) . mt_rand(1000, 9999) . mt_rand(1000, 9999) . mt_rand(1000, 9999);
+        $ccc = random_int(1000, 9999) . random_int(1000, 9999) . random_int(1000, 9999) . random_int(1000, 9999) . random_int(1000, 9999);
         $dividendo = $ccc . $pesos[$pais[0]] . $pesos[$pais[1]] . '00';
         $digitoControl = 98 - \bcmod($dividendo, '97');
 
-        if (strlen($digitoControl) === 1) {
+        if (\strlen($digitoControl) === 1) {
             $digitoControl = '0' . $digitoControl;
         }
 
@@ -216,7 +208,7 @@ abstract class AbstractRandom
      *
      * @return string
      */
-    public function observaciones()
+    public function observaciones(): string
     {
         $observaciones = [
             'Pagado', 'Faltan piezas', 'No se corresponde con lo solicitado.',
@@ -227,7 +219,7 @@ abstract class AbstractRandom
 
         /// Add a lot of Blas as an option
         $bla = 'Bla';
-        while (mt_rand(0, 29) > 0) {
+        while (random_int(0, 29) > 0) {
             $bla .= ', bla';
         }
         $observaciones[] = $bla . '.';
@@ -246,14 +238,14 @@ abstract class AbstractRandom
      *
      * @return float
      */
-    public function precio($min, $max1, $max2)
+    public function precio($min, $max1, $max2): float
     {
-        $precio = mt_rand($min, $max1);
+        $precio = random_int($min, $max1);
 
-        if (mt_rand(0, 9) == 0) {
-            $precio = mt_rand($min, $max2);
-        } elseif ($precio < $max1 && mt_rand(0, 2) == 0) {
-            $precio += round(mt_rand(1, 5) / mt_rand(1, 10), (int) FS_NF0);
+        if (random_int(0, 9) === 0) {
+            $precio = random_int($min, $max2);
+        } elseif ($precio < $max1 && random_int(0, 2) === 0) {
+            $precio += round(random_int(1, 5) / random_int(1, 10), (int) FS_NF0);
             $precio = min([$max1, $precio]);
         }
 
@@ -263,8 +255,8 @@ abstract class AbstractRandom
     /**
      * Suffle all items from $model and put it to $variable.
      *
-     * @param $variable
-     * @param $model
+     * @param array $variable
+     * @param Model\Base\ModelClass $model
      */
     public function shuffle(&$variable, $model)
     {
@@ -278,15 +270,19 @@ abstract class AbstractRandom
      * Devuelve el string acortado.
      *
      * @param string $txt
-     * @param int    $len
+     * @param int $len
      *
      * @return string
      */
-    public function txt2codigo($txt, $len = 8)
+    public function txt2codigo($txt, $len = 8): string
     {
-        $result = str_replace([' ', '-', '_', '&', 'ó', ':', 'ñ', '"', "'", '*'], ['', '', '', '', 'O', '', 'N', '', '', '-'], strtoupper($txt));
-        if (strlen($result) > $len) {
-            return substr($result, 0, $len - 1) . mt_rand(0, 9);
+        $result = str_replace(
+            [' ', '-', '_', '&', 'ó', ':', 'ñ', '"', "'", '*'],
+            ['', '', '', '', 'O', '', 'N', '', '', '-'],
+            strtoupper($txt)
+        );
+        if (\strlen($result) > $len) {
+            return substr($result, 0, $len - 1) . random_int(0, 9);
         }
 
         return $result;
@@ -295,13 +291,26 @@ abstract class AbstractRandom
     /**
      * Returns a random string of $length length
      *
-     * @param string $length la longitud del string
+     * @param int $length la longitud del string
      *
      * @return string la cadena aleatoria
      */
-    public function randomString($length = 30)
+    public function randomString($length = 30): string
     {
         return mb_substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, $length);
+    }
+
+    /**
+     * Return a date between $start and $end.
+     *
+     * @param int $start
+     * @param int $end
+     *
+     * @return false|string
+     */
+    protected function fecha($start = 2013, $end = 2018)
+    {
+        return date(random_int(1, 28) . '-' . random_int(1, 12) . '-' . random_int($start, $end));
     }
 
     /**
@@ -310,11 +319,11 @@ abstract class AbstractRandom
      * @param string $modelName
      * @param string $tableName
      * @param string $functionName
-     * @param bool   $recursivo
+     * @param bool $recursivo
      *
      * @return array
      */
-    protected function randomModel($modelName, $tableName, $functionName, $recursivo = true)
+    protected function randomModel($modelName, $tableName, $functionName, $recursivo = true): array
     {
         $lista = [];
 
@@ -341,7 +350,7 @@ abstract class AbstractRandom
      *
      * @return Model\Cliente[]
      */
-    protected function randomClientes($recursivo = true)
+    protected function randomClientes($recursivo = true): array
     {
         return $this->randomModel('\FacturaScripts\Dinamic\Model\Cliente', 'clientes', 'clientes', $recursivo);
     }
@@ -353,7 +362,7 @@ abstract class AbstractRandom
      *
      * @return Model\Proveedor[]
      */
-    protected function randomProveedores($recursivo = true)
+    protected function randomProveedores($recursivo = true): array
     {
         return $this->randomModel('\FacturaScripts\Dinamic\Model\Proveedor', 'proveedores', 'proveedores', $recursivo);
     }
@@ -365,7 +374,7 @@ abstract class AbstractRandom
      *
      * @return Model\Agente[]
      */
-    protected function randomAgentes($recursivo = true)
+    protected function randomAgentes($recursivo = true): array
     {
         return $this->randomModel('\FacturaScripts\Dinamic\Model\Agente', 'agentes', 'agentes', $recursivo);
     }
@@ -377,7 +386,7 @@ abstract class AbstractRandom
      *
      * @return Model\Articulo[]
      */
-    protected function randomArticulos($recursivo = true)
+    protected function randomArticulos($recursivo = true): array
     {
         return $this->randomModel('\FacturaScripts\Dinamic\Model\Articulo', 'articulos', 'articulos', $recursivo);
     }

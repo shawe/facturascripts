@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\Utils;
@@ -41,6 +42,7 @@ class EstadoDocumento extends Base\ModelClass
     public $actualizastock;
 
     /**
+     * If the state is blocked or not.
      *
      * @var bool
      */
@@ -101,10 +103,11 @@ class EstadoDocumento extends Base\ModelClass
     }
 
     /**
-     * 
+     * TODO: Uncomplete documentation.
+     *
      * @return boolean
      */
-    public function delete()
+    public function delete(): bool
     {
         if ($this->bloquear) {
             self::$miniLog->alert(self::$i18n->trans('locked'));
@@ -119,16 +122,17 @@ class EstadoDocumento extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idestado';
     }
 
     /**
-     * 
+     * TODO: Uncomplete documentation.
+     *
      * @return boolean
      */
-    public function save()
+    public function save(): bool
     {
         if ($this->bloquear) {
             self::$miniLog->alert(self::$i18n->trans('locked'));
@@ -137,10 +141,10 @@ class EstadoDocumento extends Base\ModelClass
 
         if (parent::save()) {
             if ($this->predeterminado) {
-                $sql = "UPDATE " . static::tableName() . " SET predeterminado = false"
-                    . " WHERE predeterminado = true"
-                    . " AND tipodoc = " . self::$dataBase->var2str($this->tipodoc)
-                    . " AND idestado != " . self::$dataBase->var2str($this->idestado) . ";";
+                $sql = 'UPDATE ' . static::tableName() . ' SET predeterminado = false'
+                    . ' WHERE predeterminado = true'
+                    . ' AND tipodoc = ' . self::$dataBase->var2str($this->tipodoc)
+                    . ' AND idestado != ' . self::$dataBase->var2str($this->idestado) . ';';
                 return self::$dataBase->exec($sql);
             }
 
@@ -155,7 +159,7 @@ class EstadoDocumento extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'estados_documentos';
     }
@@ -165,14 +169,10 @@ class EstadoDocumento extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->nombre = Utils::noHtml($this->nombre);
 
-        if (empty($this->tipodoc) || empty($this->nombre)) {
-            return false;
-        }
-
-        return true;
+        return !(empty($this->tipodoc) || empty($this->nombre));
     }
 }

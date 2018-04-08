@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\App\AppSettings;
@@ -78,7 +79,7 @@ class Divisa extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'divisas';
     }
@@ -88,7 +89,7 @@ class Divisa extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'coddivisa';
     }
@@ -106,21 +107,11 @@ class Divisa extends Base\ModelClass
     }
 
     /**
-     * Returns True if is the default currency for the company.
-     *
-     * @return bool
-     */
-    public function isDefault()
-    {
-        return $this->coddivisa === AppSettings::get('default', 'coddivisa');
-    }
-
-    /**
      * Returns True if there is no errors on properties values.
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->descripcion = Utils::noHtml($this->descripcion);
         $this->simbolo = Utils::noHtml($this->simbolo);
@@ -136,5 +127,15 @@ class Divisa extends Base\ModelClass
         }
 
         return false;
+    }
+
+    /**
+     * Returns True if is the default currency for the company.
+     *
+     * @return bool
+     */
+    public function isDefault(): bool
+    {
+        return $this->coddivisa === AppSettings::get('default', 'coddivisa');
     }
 }

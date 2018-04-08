@@ -65,7 +65,7 @@
     {% set label = context.i18n.trans(filter.options.label) %}
 
     <div class="col-md-2">
-        <input type="hidden" id="{{ key }}Autocomplete" name="{{ key }}" value="{{ filter.options.value }}" />
+        <input type="hidden" id="{{ key }}Autocomplete" name="{{ key }}" value="{{ filter.options.value }}"/>
         <div class="input-group">
             {% if filter.options.value is empty %}
                 <span class="input-group-prepend" title="{{ key }}">
@@ -80,8 +80,7 @@
                     </button>
                 </span>
             {% endif %}
-            <input type="text" value="{{ filter.getCurrentValue() }}" class="form-control autocomplete" data-source="{{ filter.options.table }}"
-                   data-field="{{ filter.options.fieldcode }}" data-title="{{ filter.options.fieldtitle }}" placeholder="{{ label }}" autocomplete="off"/>
+            <input type="text" value="{{ filter.getCurrentValue() }}" class="form-control autocomplete" data-source="{{ filter.options.table }}" data-field="{{ filter.options.fieldcode }}" data-title="{{ filter.options.fieldtitle }}" placeholder="{{ label }}" autocomplete="off"/>
         </div>
     </div>
 {% endmacro %}
@@ -119,16 +118,18 @@
     {% set label = context.i18n.trans(filter.options.label) %}
 
     <div class="col-md-2">
-        <select name="{{ key }}" class="form-control" onchange="this.form.submit()">
-            <option value="">{{ label }}</option>
-            {% for data in filter.options.values %}
-                {% if (filter.options.value != '') and (data.code == filter.options.value) %}
-                    <option value="{{ data.code }}" selected="">{{ data.description }}</option>
-                {% else %}
-                    <option value="{{ data.code }}">{{ data.description }}</option>
-                {% endif %}
-            {% endfor %}
-        </select>
+        <label>
+            <select name="{{ key }}" class="form-control" onchange="this.form.submit()">
+                <option value="">{{ label }}</option>
+                {% for data in filter.options.values %}
+                    {% if (filter.options.value != '') and (data.code == filter.options.value) %}
+                        <option value="{{ data.code }}" selected="">{{ data.description }}</option>
+                    {% else %}
+                        <option value="{{ data.code }}">{{ data.description }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </label>
     </div>
 {% endmacro %}
 
@@ -144,9 +145,7 @@
     <div class="col-md-2">
         <div class="input-group">
             <div class="input-group-prepend">
-                <input name="{{ key }}-from-btn" id="{{ key }}-from-btn" type="button" value="{{ filter.options.operatorFrom }}"
-                       class="btn btn-outline-secondary dropdown-toggle"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
+                <input name="{{ key }}-from-btn" id="{{ key }}-from-btn" type="button" value="{{ filter.options.operatorFrom }}" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>
 
                 <div class="dropdown-menu">
                     <h6 class="dropdown-header">{{ context.i18n.trans('filter-method') }}</h6>
@@ -155,18 +154,14 @@
                     {% endfor %}
                 </div>
             </div>
-            <input type="hidden" name="{{ key }}-from-operator" id="{{ key }}-from-operator" value="{{ filter.options.operatorFrom }}" />
-            <input type="text" name="{{ key }}-from" value="{% if indexView == fsc.active %}{{ filter.options.valueFrom }}{% endif %}"
-                   class="form-control {{ filter.getSpecialClass() }}" placeholder="{{ label }}"
-                   autocomplete="off" onchange="this.form.submit()" {{ filter.getKeyboardFilter()|raw }}/>
+            <input type="hidden" name="{{ key }}-from-operator" id="{{ key }}-from-operator" value="{{ filter.options.operatorFrom }}"/>
+            <input type="text" name="{{ key }}-from" value="{% if indexView == fsc.active %}{{ filter.options.valueFrom }}{% endif %}" class="form-control {{ filter.getSpecialClass() }}" placeholder="{{ label }}" autocomplete="off" onchange="this.form.submit()" {{ filter.getKeyboardFilter()|raw }}/>
         </div>
     </div>
     <div class="col-md-2">
         <div class="input-group">
             <div class="input-group-prepend">
-                <input name="{{ key }}-to-btn" id="{{ key }}-to-btn" type="button" value="{{ filter.options.operatorTo }}"
-                       class="btn btn-outline-secondary dropdown-toggle"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
+                <input name="{{ key }}-to-btn" id="{{ key }}-to-btn" type="button" value="{{ filter.options.operatorTo }}" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>
 
                 <div class="dropdown-menu">
                     <h6 class="dropdown-header">{{ context.i18n.trans('filter-method') }}</h6>
@@ -175,10 +170,8 @@
                     {% endfor %}
                 </div>
             </div>
-            <input type="hidden" name="{{ key }}-to-operator" id="{{ key }}-to-operator" value="{{ filter.options.operatorTo }}" />
-            <input type="text" name="{{ key }}-to" value="{% if indexView == fsc.active %}{{ filter.options.valueTo }}{% endif %}"
-                   class="form-control {{ filter.getSpecialClass() }}" placeholder="{{ label }}"
-                   autocomplete="off" onchange="this.form.submit()" {{ filter.getKeyboardFilter()|raw }}/>
+            <input type="hidden" name="{{ key }}-to-operator" id="{{ key }}-to-operator" value="{{ filter.options.operatorTo }}"/>
+            <input type="text" name="{{ key }}-to" value="{% if indexView == fsc.active %}{{ filter.options.valueTo }}{% endif %}" class="form-control {{ filter.getSpecialClass() }}" placeholder="{{ label }}" autocomplete="off" onchange="this.form.submit()" {{ filter.getKeyboardFilter()|raw }}/>
         </div>
     </div>
 {% endmacro %}

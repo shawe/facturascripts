@@ -17,10 +17,12 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
-use FacturaScripts\Core\Lib\ExtendedController;
+use FacturaScripts\Core\Base\ControllerPermissions;
 use FacturaScripts\Core\Lib\Dashboard as DashboardLib;
+use FacturaScripts\Core\Lib\ExtendedController;
 use FacturaScripts\Core\Model\User;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -35,9 +37,9 @@ class EditDashboardData extends ExtendedController\EditController
     /**
      * Runs the controller's private logic.
      *
-     * @param Response                   $response
-     * @param User                       $user
-     * @param Base\ControllerPermissions $permissions
+     * @param Response $response
+     * @param User $user
+     * @param ControllerPermissions $permissions
      */
     public function privateCore(&$response, $user, $permissions)
     {
@@ -45,6 +47,75 @@ class EditDashboardData extends ExtendedController\EditController
 
         $this->validateProperties();
         $this->validateColumns();
+    }
+
+    /**
+     * Run the data edits
+     *
+     * @param ExtendedController\BaseView $view
+     *
+     * @return bool
+     */
+    protected function editAction($view): bool
+    {
+        $model = $view->getModel();
+        $properties = array_keys($this->getPropertiesFields());
+        $fields = array_keys($model->properties);
+        foreach ($fields as $key) {
+            if (!\in_array($key, $properties, false)) {
+                unset($model->properties[$key]);
+            }
+        }
+
+        return parent::editAction($view);
+    }
+
+    /**
+     * Returns the model name
+     *
+     * @return string
+     */
+    public function getModelClassName(): string
+    {
+        return 'DashboardData';
+    }
+
+    /**
+     * Returns basic page attributes
+     *
+     * @return array
+     */
+    public function getPageData(): array
+    {
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'dashboard-card';
+        $pageData['menu'] = 'reports';
+        $pageData['icon'] = 'fa-dashboard';
+        $pageData['showonmenu'] = false;
+
+        return $pageData;
+    }
+
+    /**
+     * Returns the configuration property value for a specified $field
+     *
+     * @param mixed $model
+     * @param string $field
+     *
+     * @return mixed
+     */
+    public function getFieldValue($model, $field)
+    {
+        $value = parent::getFieldValue($model, $field);
+        if (isset($value)) {
+            return $value;
+        }
+
+        if (\is_array($model->properties) && array_key_exists($field, $model->properties)) {
+            return $model->properties[$field];
+        }
+
+        return null;
     }
 
     /**
@@ -70,7 +141,7 @@ class EditDashboardData extends ExtendedController\EditController
         $fields = array_keys($this->getModel()->properties);
         $group = $this->views['EditDashboardData']->getColumns()['options']->columns;
         foreach ($group as $column) {
-            if (in_array($column->widget->fieldName, $fields, false)) {
+            if (\in_array($column->widget->fieldName, $fields, false)) {
                 continue;
             }
 
@@ -90,72 +161,5 @@ class EditDashboardData extends ExtendedController\EditController
                 $model->properties[$key] = $value;
             }
         }
-    }
-
-    /**
-     * Run the data edits
-     *
-     * @param BaseView $view
-     *
-     * @return bool
-     */
-    protected function editAction($view)
-    {
-        $model = $view->getModel();
-        $properties = array_keys($this->getPropertiesFields());
-        $fields = array_keys($model->properties);
-        foreach ($fields as $key) {
-            if (!in_array($key, $properties, false)) {
-                unset($model->properties[$key]);
-            }
-        }
-
-        return parent::editAction($view);
-    }
-
-    /**
-     * Returns the model name
-     */
-    public function getModelClassName()
-    {
-        return 'DashboardData';
-    }
-
-    /**
-     * Returns basic page attributes
-     *
-     * @return array
-     */
-    public function getPageData()
-    {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'dashboard-card';
-        $pagedata['menu'] = 'reports';
-        $pagedata['icon'] = 'fa-dashboard';
-        $pagedata['showonmenu'] = false;
-
-        return $pagedata;
-    }
-
-    /**
-     * Returns the configuration property value for a specified $field
-     *
-     * @param mixed  $model
-     * @param string $field
-     *
-     * @return mixed
-     */
-    public function getFieldValue($model, $field)
-    {
-        $value = parent::getFieldValue($model, $field);
-        if (isset($value)) {
-            return $value;
-        }
-
-        if (is_array($model->properties) && array_key_exists($field, $model->properties)) {
-            return $model->properties[$field];
-        }
-
-        return null;
     }
 }

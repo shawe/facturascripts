@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\Utils;
@@ -50,7 +51,7 @@ class Fabricante extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'fabricantes';
     }
@@ -60,7 +61,7 @@ class Fabricante extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'codfabricante';
     }
@@ -70,16 +71,16 @@ class Fabricante extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $status = false;
 
         $this->codfabricante = Utils::noHtml($this->codfabricante);
         $this->nombre = Utils::noHtml($this->nombre);
 
-        if (empty($this->codfabricante) || strlen($this->codfabricante) > 8) {
+        if (empty($this->codfabricante) || \strlen($this->codfabricante) > 8) {
             self::$miniLog->alert(self::$i18n->trans('code-manufacturer-valid-length'));
-        } elseif (empty($this->nombre) || strlen($this->nombre) > 100) {
+        } elseif (empty($this->nombre) || \strlen($this->nombre) > 100) {
             self::$miniLog->alert(self::$i18n->trans('manufacturer-description-not-valid'));
         } else {
             $status = true;

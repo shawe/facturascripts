@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Export;
 
 use FacturaScripts\Core\Base;
@@ -34,6 +35,7 @@ class PDFExport implements ExportInterface
     const LIST_LIMIT = 500;
 
     /**
+     * Tools to work with currencies.
      *
      * @var Base\DivisaTools
      */
@@ -90,7 +92,7 @@ class PDFExport implements ExportInterface
             $this->pdf->ezText('');
         }
 
-        return $this->pdf->ezStream(['Content-Disposition' => 'doc_' . mt_rand(1, 999999) . '.pdf']);
+        return $this->pdf->ezStream(['Content-Disposition' => 'doc_' . random_int(1, 999999) . '.pdf']);
     }
 
     /**
@@ -115,8 +117,8 @@ class PDFExport implements ExportInterface
     /**
      * Adds a new page with the model data.
      *
-     * @param mixed  $model
-     * @param array  $columns
+     * @param mixed $model
+     * @param array $columns
      * @param string $title
      */
     public function generateModelPage($model, $columns, $title = '')
@@ -142,16 +144,16 @@ class PDFExport implements ExportInterface
                 $value = $model->{$key};
             }
 
-            if (is_bool($value)) {
+            if (\is_bool($value)) {
                 $txt = $this->i18n->trans($value ? 'yes' : 'no');
                 $tableDataAux[] = ['key' => $colTitle, 'value' => $txt];
             } elseif ($value !== null && $value !== '') {
-                $value = is_string($value) ? Base\Utils::fixHtml($value) : $value;
+                $value = \is_string($value) ? Base\Utils::fixHtml($value) : $value;
                 $tableDataAux[] = ['key' => $colTitle, 'value' => $value];
             }
         }
 
-        $this->pdf->ezText($title . "\n", 12, ['justification' => 'center']);
+        $this->pdf->ezText($title . \PHP_EOL, 12, ['justification' => 'center']);
         $this->newLine();
 
         $tableData = $this->paralellTableData($tableDataAux, 'key', 'value', 'data1', 'data2');
@@ -161,12 +163,12 @@ class PDFExport implements ExportInterface
     /**
      * Adds a new page with a table listing the models data.
      *
-     * @param mixed                         $model
+     * @param mixed $model
      * @param Base\DataBase\DataBaseWhere[] $where
-     * @param array                         $order
-     * @param int                           $offset
-     * @param array                         $columns
-     * @param string                        $title
+     * @param array $order
+     * @param int $offset
+     * @param array $columns
+     * @param string $title
      */
     public function generateListModelPage($model, $where, $order, $offset, $columns, $title = '')
     {
@@ -217,7 +219,7 @@ class PDFExport implements ExportInterface
         }
         $this->generateModelPage($model, $columns, $model->primaryDescription());
 
-        $this->pdf->ezText("\n");
+        $this->pdf->ezText(\PHP_EOL);
 
         $headers = [
             'reference' => $this->i18n->trans('reference+description'),
@@ -230,12 +232,12 @@ class PDFExport implements ExportInterface
         $tableData = [];
         foreach ($model->getlines() as $line) {
             $tableData[] = [
-                'reference' => Base\Utils::fixHtml($line->referencia . " - " . $line->descripcion),
-                'quantity' => $this->numberTools->format($line->cantidad),
-                'price' => $this->numberTools->format($line->pvpunitario),
-                'discount' => $this->numberTools->format($line->dtopor),
-                'tax' => $this->numberTools->format($line->iva),
-                'total' => $this->numberTools->format($line->pvptotal),
+                'reference' => Base\Utils::fixHtml($line->referencia . ' - ' . $line->descripcion),
+                'quantity' => $this->numberTools::format($line->cantidad),
+                'price' => $this->numberTools::format($line->pvpunitario),
+                'discount' => $this->numberTools::format($line->dtopor),
+                'tax' => $this->numberTools::format($line->iva),
+                'total' => $this->numberTools::format($line->pvptotal),
             ];
         }
 
@@ -321,7 +323,7 @@ class PDFExport implements ExportInterface
         } elseif ($this->pdf->y < 200) {
             $this->pdf->ezNewPage();
         } else {
-            $this->pdf->ezText("\n");
+            $this->pdf->ezText(\PHP_EOL);
         }
     }
 
@@ -336,7 +338,7 @@ class PDFExport implements ExportInterface
     private function setTableColumns(&$columns, &$tableCols, &$tableColsTitle, &$tableOptions)
     {
         foreach ($columns as $col) {
-            if (is_string($col)) {
+            if (\is_string($col)) {
                 $tableCols[$col] = $col;
                 $tableColsTitle[$col] = $col;
                 continue;
@@ -347,7 +349,7 @@ class PDFExport implements ExportInterface
                 continue;
             }
 
-            if (isset($col->display) && $col->display !== 'none' && isset($col->widget->fieldName)) {
+            if (isset($col->display, $col->widget->fieldName) && $col->display !== 'none') {
                 $tableCols[$col->widget->fieldName] = $col->widget->fieldName;
                 $tableColsTitle[$col->widget->fieldName] = $this->i18n->trans($col->title);
                 $tableOptions['cols'][$col->widget->fieldName] = [
@@ -367,7 +369,7 @@ class PDFExport implements ExportInterface
      *
      * @return array
      */
-    private function getTableData($cursor, $tableCols, $tableOptions)
+    private function getTableData($cursor, $tableCols, $tableOptions): array
     {
         $tableData = [];
 
@@ -381,11 +383,11 @@ class PDFExport implements ExportInterface
 
                 $value = $row->{$col};
                 if ($tableOptions['cols'][$col]['col-type'] === 'number') {
-                    $value = $this->numberTools->format($value);
+                    $value = $this->numberTools::format($value);
                 } elseif ($tableOptions['cols'][$col]['col-type'] === 'money') {
                     $this->divisaTools->findDivisa($row);
-                    $value = $this->divisaTools->format($value, FS_NF0, 'coddivisa');
-                } elseif (is_bool($value)) {
+                    $value = $this->divisaTools::format($value, FS_NF0, 'coddivisa');
+                } elseif (\is_bool($value)) {
                     $value = $this->i18n->trans($value === 1 ? 'yes' : 'no');
                 } elseif (null === $value) {
                     $value = '';
@@ -444,7 +446,7 @@ class PDFExport implements ExportInterface
     /**
      * Returns a new table with 2 columns. Each column with colName1: colName2
      *
-     * @param array  $table
+     * @param array $table
      * @param string $colName1
      * @param string $colName2
      * @param string $finalColName1
@@ -452,7 +454,7 @@ class PDFExport implements ExportInterface
      *
      * @return array
      */
-    private function paralellTableData($table, $colName1, $colName2, $finalColName1, $finalColName2)
+    private function paralellTableData($table, $colName1, $colName2, $finalColName1, $finalColName2): array
     {
         $tableData = [];
         $key = 0;

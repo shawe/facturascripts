@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
 use FacturaScripts\Core\Model;
@@ -43,7 +44,7 @@ class AlbaranesProveedor extends AbstractRandomDocuments
      *
      * @return int
      */
-    public function generate($num = 50)
+    public function generate($num = 50): int
     {
         $alb = $this->model;
         $proveedores = $this->randomProveedores();
@@ -57,7 +58,7 @@ class AlbaranesProveedor extends AbstractRandomDocuments
                 break;
             }
 
-            $recargo = (mt_rand(0, 4) === 0);
+            $recargo = (random_int(0, 4) === 0);
             $regimeniva = $this->randomizeDocumentCompra($alb, $eje, $proveedores, $generated);
             if ($alb->save()) {
                 $this->randomLineas($alb, 'idalbaran', 'FacturaScripts\Dinamic\Model\LineaAlbaranProveedor', $regimeniva, $recargo, 1);

@@ -28,54 +28,54 @@
     <columns>
         <group name="data" numcolumns="12">
             <column name="code" display="none" order="100">
-                <widget type="text" fieldname="idfactura" required="true" />
+                <widget type="text" fieldname="idfactura" required="true"/>
             </column>
             <column name="numproveedor" numcolumns="3" order="140">
-                <widget type="text" fieldname="numproveedor" />
+                <widget type="text" fieldname="numproveedor"/>
             </column>
             <column name="date" title="date" numcolumns="2" order="110">
-                <widget type="datepicker" fieldname="fecha" required="true" />
+                <widget type="datepicker" fieldname="fecha" required="true"/>
             </column>
             <column name="hour" title="hour" numcolumns="2" order="120">
-                <widget type="text" fieldname="hora" required="true" />
+                <widget type="text" fieldname="hora" required="true"/>
             </column>
         </group>
         <group name="supplier" title="supplier" numcolumns="12">
             <column name="cifnif" title="cifnif" numcolumns="4" order="120">
-                <widget type="text" fieldname="cifnif" />
+                <widget type="text" fieldname="cifnif"/>
             </column>
             <column name="supplier" title="name-or-business-name" numcolumns="4" order="110">
-                <widget type="text" fieldname="nombre" required="true" />
+                <widget type="text" fieldname="nombre" required="true"/>
             </column>
         </group>
         <group name="codattributes" title="attributes" numcolumns="12">
             <column name="warehouse" numcolumns="3">
                 <widget type="select" fieldname="codalmacen">
-                    <values source="almacenes" fieldcode="codalmacen" fieldtitle="nombre"></values>
+                    <values source="almacenes" fieldcode="codalmacen" fieldtitle="nombre"/>
                 </widget>
             </column>
             <column name="serie" numcolumns="2" order="100">
                 <widget type="select" fieldname="codserie">
-                    <values source="series" fieldcode="codserie" fieldtitle="descripcion"></values>
+                    <values source="series" fieldcode="codserie" fieldtitle="descripcion"/>
                 </widget>
             </column>
             <column name="payment" title="method-payment" numcolumns="3" titleurl="ListFormaPago" order="120">
                 <widget type="select" fieldname="codpago">
-                    <values source="formaspago" fieldcode="codpago" fieldtitle="descripcion"></values>
+                    <values source="formaspago" fieldcode="codpago" fieldtitle="descripcion"/>
                 </widget>
             </column>
             <column name="currency" title="currency" numcolumns="2" titleurl="ListDivisa" order="130">
                 <widget type="select" fieldname="coddivisa">
-                    <values source="divisas" fieldcode="coddivisa" fieldtitle="descripcion"></values>
+                    <values source="divisas" fieldcode="coddivisa" fieldtitle="descripcion"/>
                 </widget>
             </column>
             <column name="tasaconv" numcolumns="2" order="150">
-                <widget type="number" fieldname="tasaconv" />
+                <widget type="number" fieldname="tasaconv"/>
             </column>
         </group>
         <group name="notes" numcolumns="12">
             <column name="observations" numcolumns="12" order="110">
-                <widget type="textarea" fieldname="observaciones" />
+                <widget type="textarea" fieldname="observaciones"/>
             </column>
         </group>
     </columns>

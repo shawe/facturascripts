@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController;
@@ -34,14 +35,14 @@ class ListFormaPago extends ExtendedController\ListController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'payment-methods';
-        $pagedata['icon'] = 'fa-credit-card';
-        $pagedata['menu'] = 'accounting';
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'payment-methods';
+        $pageData['icon'] = 'fa-credit-card';
+        $pageData['menu'] = 'accounting';
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**

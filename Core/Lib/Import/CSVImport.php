@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Import;
 
 use FacturaScripts\Core\Base\DataBase;
@@ -36,7 +37,7 @@ class CSVImport
      *
      * @return string
      */
-    public static function importTableSQL($table)
+    public static function importTableSQL($table): string
     {
         $filePath = static::getTableFilePath($table);
         if ($filePath === '') {
@@ -66,33 +67,16 @@ class CSVImport
     }
 
     /**
-     * Returns a value to SQL format.
-     * 
-     * @param DataBase $dataBase
-     * @param string   $value
-     * 
-     * @return string
-     */
-    private static function valueToSql(DataBase &$dataBase, string $value): string
-    {
-        if ($value === 'false' || $value === 'true') {
-            return $value;
-        }
-
-        return $dataBase->var2str($value);
-    }
-
-    /**
      * Return the correct filepath for the table
      *
      * @param string $table
      *
      * @return string
      */
-    protected static function getTableFilePath($table)
+    protected static function getTableFilePath($table): string
     {
-        if (!defined('FS_CODPAIS')) {
-            define('FS_CODPAIS', 'ES');
+        if (!\defined('FS_CODPAIS')) {
+            \define('FS_CODPAIS', 'ES');
         }
 
         $filePath = FS_FOLDER . '/Core/Data/Codpais/' . FS_CODPAIS . '/' . $table . '.csv';
@@ -113,5 +97,22 @@ class CSVImport
         }
 
         return '';
+    }
+
+    /**
+     * Returns a value to SQL format.
+     *
+     * @param DataBase $dataBase
+     * @param string $value
+     *
+     * @return string
+     */
+    private static function valueToSql(DataBase $dataBase, string $value): string
+    {
+        if ($value === 'false' || $value === 'true') {
+            return $value;
+        }
+
+        return $dataBase->var2str($value);
     }
 }

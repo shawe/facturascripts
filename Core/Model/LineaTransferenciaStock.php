@@ -68,7 +68,7 @@ class LineaTransferenciaStock extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'lineastranstocks';
     }
@@ -78,7 +78,7 @@ class LineaTransferenciaStock extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idlinea';
     }
@@ -99,7 +99,7 @@ class LineaTransferenciaStock extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         /// we force the check of the stock transfers table
         new TransferenciaStock();

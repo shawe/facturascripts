@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Dashboard;
 
 use FacturaScripts\Core\Model;
@@ -46,7 +47,7 @@ class InfoStateComponent extends BaseComponent implements ComponentInterface
      * InfoStateComponent constructor.
      *
      * @param Model\DashboardData $data
-     * @param string              $userNick
+     * @param string $userNick
      */
     public function __construct($data, $userNick)
     {
@@ -60,7 +61,7 @@ class InfoStateComponent extends BaseComponent implements ComponentInterface
      *
      * @return array
      */
-    public static function getPropertiesFields()
+    public static function getPropertiesFields(): array
     {
         return [
             'group' => '',
@@ -101,58 +102,6 @@ class InfoStateComponent extends BaseComponent implements ComponentInterface
     }
 
     /**
-     * Add details to component.
-     *
-     * @param $group
-     * @param $values
-     * @param $totalModel
-     */
-    private function addDetail($group, $values, &$totalModel)
-    {
-        foreach ($values as $value) {
-            $name = str_replace('-', '', $value['name']);
-            if ($name === 'total') {
-                continue;
-            }
-            $this->detail[$group][$value['name']] = $totalModel->totals[$name];
-        }
-    }
-
-    /**
-     * Return the model info table and url list.
-     *
-     * @param $modelName
-     *
-     * @return array
-     */
-    private function getModelInfo($modelName)
-    {
-        $model = self::DIR_MODEL . $modelName;
-        $modelObj = new $model();
-
-        return ['table' => $modelObj->tableName(), 'url' => $modelObj->url('list')];
-    }
-
-    /**
-     * Get summary data from total model.
-     *
-     * @param $table
-     * @param $values
-     *
-     * @return Model\TotalModel
-     */
-    private function getSQLData($table, $values)
-    {
-        $fields = [];
-        foreach ($values as $value) {
-            $name = str_replace('-', '', $value['name']);
-            $fields[$name] = $value['sql'];
-        }
-
-        return Model\TotalModel::all($table, [], $fields)[0];
-    }
-
-    /**
      * Data persists in the database, modifying if the record existed or inserting
      * in case the primary key does not exist.
      *
@@ -185,8 +134,63 @@ class InfoStateComponent extends BaseComponent implements ComponentInterface
      *
      * @return string
      */
-    public function url($id)
+    public function url($id): string
     {
         return $this->group[$id]['url'];
+    }
+
+    /**
+     * Add details to component.
+     *
+     * @param $group
+     * @param $values
+     * @param $totalModel
+     */
+    private function addDetail($group, $values, &$totalModel)
+    {
+        foreach ($values as $value) {
+            $name = str_replace('-', '', $value['name']);
+            if ($name === 'total') {
+                continue;
+            }
+            $this->detail[$group][$value['name']] = $totalModel->totals[$name];
+        }
+    }
+
+    /**
+     * Return the model info table and url list.
+     *
+     * @param $modelName
+     *
+     * @return array
+     */
+    private function getModelInfo($modelName): array
+    {
+        $model = self::DIR_MODEL . $modelName;
+        $modelObj = new $model();
+
+        if ($modelObj instanceof Model\Base\ModelClass) {
+            return ['table' => $modelObj->tableName(), 'url' => $modelObj->url('list')];
+        }
+        return [];
+    }
+
+    /**
+     * Get summary data from total model.
+     *
+     * @param $table
+     * @param $values
+     *
+     * @return Model\TotalModel
+     */
+    private function getSQLData($table, $values): Model\TotalModel
+    {
+        $fields = [];
+        foreach ($values as $value) {
+            $name = str_replace('-', '', $value['name']);
+            $fields[$name] = $value['sql'];
+        }
+
+        return Model\TotalModel::all($table, [], $fields)[0];
     }
 }

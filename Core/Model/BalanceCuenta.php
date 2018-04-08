@@ -61,7 +61,7 @@ class BalanceCuenta extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'co_cuentascb';
     }
@@ -71,7 +71,7 @@ class BalanceCuenta extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'id';
     }

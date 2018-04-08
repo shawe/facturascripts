@@ -16,13 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExtendedController;
-use FacturaScripts\Core\Model;
 use FacturaScripts\Core\Lib\IDFiscal;
 use FacturaScripts\Core\Lib\RegimenIVA;
+use FacturaScripts\Core\Model;
 
 /**
  * Controller to edit a single item from the Proveedor model
@@ -34,19 +35,39 @@ class EditProveedor extends ExtendedController\PanelController
 {
 
     /**
-     * Create and configure main view
+     * Returns the sum of the customer's total delivery notes.
+     *
+     * @param ExtendedController\EditView $view
+     *
+     * @return string
      */
-    private function addMainView()
+    public function calcSupplierDeliveryNotes($view): string
     {
-        $this->addEditView('Proveedor', 'EditProveedor', 'supplier');
+        $where = [];
+        $where[] = new DataBaseWhere('codproveedor', $this->getViewModelValue('EditProveedor', 'codproveedor'));
+        $where[] = new DataBaseWhere('ptefactura', true);
 
-        /// Load values option to Fiscal ID select input
-        $columnFiscalID = $this->views['EditProveedor']->columnForName('fiscal-id');
-        $columnFiscalID->widget->setValuesFromArray(IDFiscal::all());
+        $totalModel = Model\TotalModel::all('albaranesprov', $where, ['total' => 'SUM(total)'], '')[0];
 
-        /// Load values option to VAT Type select input
-        $columnVATType = $this->views['EditProveedor']->columnForName('vat-regime');
-        $columnVATType->widget->setValuesFromArray(RegimenIVA::all());
+        return $this->divisaTools::format($totalModel->totals['total'], 2);
+    }
+
+    /**
+     * Returns the sum of the client's total outstanding invoices.
+     *
+     * @param ExtendedController\EditView $view
+     *
+     * @return string
+     */
+    public function calcSupplierInvoicePending($view): string
+    {
+        $where = [];
+        $where[] = new DataBaseWhere('codproveedor', $this->getViewModelValue('EditProveedor', 'codproveedor'));
+        $where[] = new DataBaseWhere('estado', 'Pagado', '<>');
+
+        $totalModel = Model\TotalModel::all('recibosprov', $where, ['total' => 'SUM(importe)'], '')[0];
+
+        return $this->divisaTools::format($totalModel->totals['total'], 2);
     }
 
     /**
@@ -75,7 +96,7 @@ class EditProveedor extends ExtendedController\PanelController
     /**
      * Load view data
      *
-     * @param string                      $keyView
+     * @param string $keyView
      * @param ExtendedController\EditView $view
      */
     protected function loadData($keyView, $view)
@@ -90,7 +111,7 @@ class EditProveedor extends ExtendedController\PanelController
             case 'EditDireccionProveedor':
             case 'EditCuentaBancoProveedor':
                 $limit = 0;
-                /// no break
+                // no break
             case 'ListArticuloProveedor':
             case 'ListFacturaProveedor':
             case 'ListAlbaranProveedor':
@@ -108,50 +129,30 @@ class EditProveedor extends ExtendedController\PanelController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'supplier';
-        $pagedata['icon'] = 'fa-users';
-        $pagedata['menu'] = 'purchases';
-        $pagedata['showonmenu'] = false;
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'supplier';
+        $pageData['icon'] = 'fa-users';
+        $pageData['menu'] = 'purchases';
+        $pageData['showonmenu'] = false;
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
-     * Returns the sum of the customer's total delivery notes.
-     *
-     * @param ExtendedController\EditView $view
-     *
-     * @return string
+     * Create and configure main view
      */
-    public function calcSupplierDeliveryNotes($view)
+    private function addMainView()
     {
-        $where = [];
-        $where[] = new DataBaseWhere('codproveedor', $this->getViewModelValue('EditProveedor', 'codproveedor'));
-        $where[] = new DataBaseWhere('ptefactura', true);
+        $this->addEditView('Proveedor', 'EditProveedor', 'supplier');
 
-        $totalModel = Model\TotalModel::all('albaranesprov', $where, ['total' => 'SUM(total)'], '')[0];
+        /// Load values option to Fiscal ID select input
+        $columnFiscalID = $this->views['EditProveedor']->columnForName('fiscal-id');
+        $columnFiscalID->widget->setValuesFromArray(IDFiscal::all());
 
-        return $this->divisaTools->format($totalModel->totals['total'], 2);
-    }
-
-    /**
-     * Returns the sum of the client's total outstanding invoices.
-     *
-     * @param ExtendedController\EditView $view
-     *
-     * @return string
-     */
-    public function calcSupplierInvoicePending($view)
-    {
-        $where = [];
-        $where[] = new DataBaseWhere('codproveedor', $this->getViewModelValue('EditProveedor', 'codproveedor'));
-        $where[] = new DataBaseWhere('estado', 'Pagado', '<>');
-
-        $totalModel = Model\TotalModel::all('recibosprov', $where, ['total' => 'SUM(importe)'], '')[0];
-
-        return $this->divisaTools->format($totalModel->totals['total'], 2);
+        /// Load values option to VAT Type select input
+        $columnVATType = $this->views['EditProveedor']->columnForName('vat-regime');
+        $columnVATType->widget->setValuesFromArray(RegimenIVA::all());
     }
 }

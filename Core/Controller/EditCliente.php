@@ -16,13 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExtendedController;
-use FacturaScripts\Core\Model;
 use FacturaScripts\Core\Lib\IDFiscal;
 use FacturaScripts\Core\Lib\RegimenIVA;
+use FacturaScripts\Core\Model;
 
 /**
  * Controller to edit a single item from the Cliente model
@@ -34,19 +35,39 @@ class EditCliente extends ExtendedController\PanelController
 {
 
     /**
-     * Create and configure main view
+     * Returns the sum of the customer's total delivery notes.
+     *
+     * @param ExtendedController\EditView $view
+     *
+     * @return string
      */
-    private function addMainView()
+    public function calcClientDeliveryNotes($view): string
     {
-        $this->addEditView('Cliente', 'EditCliente', 'customer');
+        $where = [];
+        $where[] = new DataBaseWhere('codcliente', $this->getViewModelValue('EditCliente', 'codcliente'));
+        $where[] = new DataBaseWhere('ptefactura', true);
 
-        /// Load values option to Fiscal ID select input
-        $columnFiscalID = $this->views['EditCliente']->columnForName('fiscal-id');
-        $columnFiscalID->widget->setValuesFromArray(IDFiscal::all());
+        $totalModel = Model\TotalModel::all('albaranescli', $where, ['total' => 'SUM(total)'], '')[0];
 
-        /// Load values option to VAT Type select input
-        $columnVATType = $this->views['EditCliente']->columnForName('vat-regime');
-        $columnVATType->widget->setValuesFromArray(RegimenIVA::all());
+        return $this->divisaTools::format($totalModel->totals['total'], 2);
+    }
+
+    /**
+     * Returns the sum of the client's total outstanding invoices.
+     *
+     * @param ExtendedController\EditView $view
+     *
+     * @return string
+     */
+    public function calcClientInvoicePending($view): string
+    {
+        $where = [];
+        $where[] = new DataBaseWhere('codcliente', $this->getViewModelValue('EditCliente', 'codcliente'));
+        $where[] = new DataBaseWhere('estado', 'Pagado', '<>');
+
+        $totalModel = Model\TotalModel::all('reciboscli', $where, ['total' => 'SUM(importe)'], '')[0];
+
+        return $this->divisaTools::format($totalModel->totals['total'], 2);
     }
 
     /**
@@ -74,7 +95,7 @@ class EditCliente extends ExtendedController\PanelController
     /**
      * Load view data procedure
      *
-     * @param string                      $keyView
+     * @param string $keyView
      * @param ExtendedController\EditView $view
      */
     protected function loadData($keyView, $view)
@@ -97,7 +118,7 @@ class EditCliente extends ExtendedController\PanelController
             case 'EditDireccionCliente':
             case 'EditCuentaBancoCliente':
                 $limit = 0;
-                /// no break
+                // no break
             case 'ListFacturaCliente':
             case 'ListAlbaranCliente':
             case 'ListPedidoCliente':
@@ -114,50 +135,30 @@ class EditCliente extends ExtendedController\PanelController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'customer';
-        $pagedata['icon'] = 'fa-users';
-        $pagedata['menu'] = 'sales';
-        $pagedata['showonmenu'] = false;
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'customer';
+        $pageData['icon'] = 'fa-users';
+        $pageData['menu'] = 'sales';
+        $pageData['showonmenu'] = false;
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
-     * Returns the sum of the customer's total delivery notes.
-     *
-     * @param ExtendedController\EditView $view
-     *
-     * @return string
+     * Create and configure main view
      */
-    public function calcClientDeliveryNotes($view)
+    private function addMainView()
     {
-        $where = [];
-        $where[] = new DataBaseWhere('codcliente', $this->getViewModelValue('EditCliente', 'codcliente'));
-        $where[] = new DataBaseWhere('ptefactura', true);
+        $this->addEditView('Cliente', 'EditCliente', 'customer');
 
-        $totalModel = Model\TotalModel::all('albaranescli', $where, ['total' => 'SUM(total)'], '')[0];
+        /// Load values option to Fiscal ID select input
+        $columnFiscalID = $this->views['EditCliente']->columnForName('fiscal-id');
+        $columnFiscalID->widget->setValuesFromArray(IDFiscal::all());
 
-        return $this->divisaTools->format($totalModel->totals['total'], 2);
-    }
-
-    /**
-     * Returns the sum of the client's total outstanding invoices.
-     *
-     * @param ExtendedController\EditView $view
-     *
-     * @return string
-     */
-    public function calcClientInvoicePending($view)
-    {
-        $where = [];
-        $where[] = new DataBaseWhere('codcliente', $this->getViewModelValue('EditCliente', 'codcliente'));
-        $where[] = new DataBaseWhere('estado', 'Pagado', '<>');
-
-        $totalModel = Model\TotalModel::all('reciboscli', $where, ['total' => 'SUM(importe)'], '')[0];
-
-        return $this->divisaTools->format($totalModel->totals['total'], 2);
+        /// Load values option to VAT Type select input
+        $columnVATType = $this->views['EditCliente']->columnForName('vat-regime');
+        $columnVATType->widget->setValuesFromArray(RegimenIVA::all());
     }
 }

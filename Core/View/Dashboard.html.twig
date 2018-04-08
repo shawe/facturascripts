@@ -29,90 +29,77 @@
 
 {% block css %}
     {{ parent() }}
-    <style>
-        .btn-options {
-            color: #CCC;
-            border-color: #CCC;
-        }
-
-        [data-toggle="collapse"].card-close i:before{
-          content: "\f2d1";
-        }
-
-        [data-toggle="collapse"].card-close.collapsed i:before{
-          content: "\f2d2";
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('Dinamic/Assets/CSS/dashboard.css') }}"/>
 {% endblock %}
 
 {% block body %}
-{# Calculate texts according to language #}
-{% set refresh = i18n.trans('refresh-page') %}
-{% set defaultT, defaultF = i18n.trans('mark-as-homepage'), i18n.trans('marked-as-homepage') %}
-{% set title = i18n.trans(fsc.getPageData()['title']) | capitalize %}
+    {# Calculate texts according to language #}
+    {% set refresh = i18n.trans('refresh-page') %}
+    {% set defaultT, defaultF = i18n.trans('mark-as-homepage'), i18n.trans('marked-as-homepage') %}
+    {% set title = i18n.trans(fsc.getPageData()['title']) | capitalize %}
 
-{# Macros Template Imports #}
-{% from 'Macro/Utils.html.twig' import popoverTitle as popoverTitle %}
+    {# Macros Template Imports #}
+    {% from 'Macro/Utils.html.twig' import popoverTitle as popoverTitle %}
 
-{# Page Header #}
-<div class="container-fluid d-print-none">
-    {{ parent() }}
+    {# Page Header #}
+    <div class="container-fluid d-print-none">
+        {{ parent() }}
 
-    {# Header Row #}
-    <div class="row">
-        <div class="col-sm-7 col-6">
-            <div class="btn-group d-xs-none">
-                <a class="btn btn-sm btn-outline-secondary" href="{{ fsc.url() }}" {{ popoverTitle(refresh, 'bottom') }}>
-                    <i class="fa fa-refresh" aria-hidden="true"></i>
-                </a>
-                {% if fsc.getPageData()['name'] == fsc.user.homepage %}
-                <a class="btn btn-sm btn-outline-secondary active" href="{{ fsc.url() }}?defaultPage=FALSE" {{ popoverTitle(defaultF, 'bottom') }}>
-                    <i class="fa fa-bookmark" aria-hidden="true"></i>
-                </a>
-                {% else %}
-                <a class="btn btn-sm btn-outline-secondary" href="{{ fsc.url() }}?defaultPage=TRUE" {{ popoverTitle(defaultT, 'bottom') }}>
-                    <i class="fa fa-bookmark-o" aria-hidden="true"></i>
-                </a>
-                {% endif %}
+        {# Header Row #}
+        <div class="row">
+            <div class="col-sm-7 col-6">
+                <div class="btn-group d-xs-none">
+                    <a class="btn btn-sm btn-outline-secondary" href="{{ fsc.url() }}" {{ popoverTitle(refresh, 'bottom') }}>
+                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                    </a>
+                    {% if fsc.getPageData()['name'] == fsc.user.homepage %}
+                        <a class="btn btn-sm btn-outline-secondary active" href="{{ fsc.url() }}?defaultPage=FALSE" {{ popoverTitle(defaultF, 'bottom') }}>
+                            <i class="fa fa-bookmark" aria-hidden="true"></i>
+                        </a>
+                    {% else %}
+                        <a class="btn btn-sm btn-outline-secondary" href="{{ fsc.url() }}?defaultPage=TRUE" {{ popoverTitle(defaultT, 'bottom') }}>
+                            <i class="fa fa-bookmark-o" aria-hidden="true"></i>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-sm-5 col-6 text-right">
+                <h1 style="margin-top: 0; margin-bottom: 0;">
+                    <i class="fa {{ fsc.getPageData()['icon'] }}" aria-hidden="true"></i> {{ title }}
+                </h1>
             </div>
         </div>
-        <div class="col-sm-5 col-6 text-right">
-            <h1 style="margin-top: 0px; margin-bottom: 0px;">
-                <i class="fa {{ fsc.getPageData()['icon'] }}" aria-hidden="true"></i> {{ title }}
-            </h1>
+
+        <hr/>
+
+        {# Main Components #}
+        <div class="row dashboard-component-sortable">
+            {% for index, component in fsc.components %}
+                {% import 'Macro/' ~ component.getTemplate() as componentTemplate %}
+                <div class="{{ component.getNumColumns() }} dashboard-component">
+                    <div class="card {{ component.getCardClass() }}" id="{{ index }}">
+                        {{ componentTemplate.run(component, i18n) }}
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 
-    <hr />
+    {# Script for drap & drop #}
+    <script>
+        $(document).ready(function () {
+            $('.dashboard-component-sortable').sortable({
+                placeholderClass: 'dashboard-component'
+            });
 
-    {# Main Components #}
-    <div class="row dashboard-component-sortable">
-    {% for index, component in fsc.components %}
-        {% import 'Macro/' ~ component.getTemplate() as componentTemplate %}
-        <div class="{{ component.getNumColumns() }} dashboard-component">
-            <div class="card {{ component.getCardClass() }}" id="{{ index }}">
-                {{ componentTemplate.run(component, i18n) }}
-            </div>
-        </div>
-    {% endfor %}
-    </div>
-</div>
+            $('.card-sortable').sortable({
+                placeholderClass: 'card'
+            });
 
-{# Script for drap & drop #}
-<script>
-    $(document).ready(function () {
-        $('.dashboard-component-sortable').sortable({
-            placeholderClass: 'dashboard-component'
+            $('.list-group-sortable').sortable({
+                placeholderClass: 'list-group-item',
+                connectWith: '.connected'
+            });
         });
-
-        $('.card-sortable').sortable({
-            placeholderClass: 'card'
-        });
-
-        $('.list-group-sortable').sortable({
-            placeholderClass: 'list-group-item',
-            connectWith: '.connected'
-        });
-    });
-</script>
+    </script>
 {% endblock %}

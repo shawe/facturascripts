@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -46,8 +47,8 @@ class EditAsiento extends ExtendedController\PanelController
     /**
      * Load data view procedure
      *
-     * @param string                      $keyView
-     * @param ExtendedController\BaseView $view
+     * @param string $keyView
+     * @param ExtendedController\EditView $view
      */
     protected function loadData($keyView, $view)
     {
@@ -61,8 +62,8 @@ class EditAsiento extends ExtendedController\PanelController
                 $idasiento = $this->getViewModelValue('EditAsiento', 'idasiento');
                 if (!empty($idasiento)) {
                     $where = [new DataBaseWhere('idasiento', $idasiento)];
-                    $orderby = ['idpartida' => 'ASC'];
-                    $view->loadData($where, $orderby);
+                    $orderBy = ['idpartida' => 'ASC'];
+                    $view->loadData($where, $orderBy);
                 }
                 break;
         }
@@ -71,12 +72,12 @@ class EditAsiento extends ExtendedController\PanelController
     /**
      * Run the actions that alter data before reading it
      *
-     * @param BaseView $view
-     * @param string   $action
+     * @param ExtendedController\BaseView $view
+     * @param string $action
      *
      * @return bool
      */
-    protected function execPreviousAction($view, $action)
+    protected function execPreviousAction($view, $action): bool
     {
         switch ($action) {
             case 'account-data':
@@ -109,19 +110,20 @@ class EditAsiento extends ExtendedController\PanelController
      */
     public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'accounting-entries';
-        $pagedata['menu'] = 'accounting';
-        $pagedata['icon'] = 'fa-balance-scale';
-        $pagedata['showonmenu'] = false;
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'accounting-entries';
+        $pageData['menu'] = 'accounting';
+        $pageData['icon'] = 'fa-balance-scale';
+        $pageData['showonmenu'] = false;
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
      * Returns VAT data for an id VAT
      *
      * @param string $idVAT
+     *
      * @return array
      */
     private function getVATDetaill($idVAT): array
@@ -144,6 +146,7 @@ class EditAsiento extends ExtendedController\PanelController
      * @param string $exercise
      * @param string $codeSubAccount
      * @param string $source
+     *
      * @return array
      */
     private function getAccountData($exercise, $codeSubAccount, $source): array
