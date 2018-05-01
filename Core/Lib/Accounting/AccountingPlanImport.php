@@ -104,7 +104,7 @@ class AccountingPlanImport
 
     /**
      * Insert/update and account in accounting plan.
-     * 
+     *
      * @param string $code
      * @param string $definition
      * @param string $parentCode

@@ -164,9 +164,9 @@ abstract class ListController extends BaseController
     /**
      * Load data of list view
      *
-     * @param string $viewName
-     * @param array $where
-     * @param int $offset
+     * @param string          $viewName
+     * @param DataBaseWhere[] $where
+     * @param int             $offset
      */
     protected function loadData($viewName, $where, $offset)
     {
@@ -183,7 +183,7 @@ abstract class ListController extends BaseController
      * @param string $table      (Table to search)
      * @param string $fieldcode  (Primary column of the table to search and match)
      * @param string $fieldtitle (Column to show name or description)
-     * @param array  $where      (Estra where conditions)
+     * @param array  $where      (Extra where conditions)
      */
     protected function addFilterAutocomplete($viewName, $key, $label, $field, $table, $fieldcode, $fieldtitle, $where = [])
     {

@@ -85,7 +85,7 @@ class BaseComponent
     /**
      * Get the default filter to obtain dashboard components.
      *
-     * @return array
+     * @return DataBase\DataBaseWhere[]
      */
     protected function getDataFilter()
     {

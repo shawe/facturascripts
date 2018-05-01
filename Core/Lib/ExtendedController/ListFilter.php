@@ -70,7 +70,7 @@ class ListFilter
     /**
      * Adds $where to the informed filters in DataBaseWhere format
      *
-     * @param array $where
+     * @param DataBaseWhere[] $where
      */
     public function getDataBaseWhere(array &$where)
     {
@@ -217,7 +217,7 @@ class ListFilter
 
     /**
      * Creates and returns an autocomplete type filter.
-     * 
+     *
      * @param string $label
      * @param string $field
      * @param string $table
@@ -225,7 +225,7 @@ class ListFilter
      * @param string $fieldtitle
      * @param string $value
      * @param array  $where
-     * 
+     *
      * @return ListFilter
      */
     public static function newAutocompleteFilter($label, $field, $table, $fieldcode, $fieldtitle, $value, $where = []): ListFilter

@@ -46,10 +46,10 @@ abstract class ModelClass extends ModelCore
     /**
      * Returns all models that correspond to the selected filters.
      *
-     * @param array $where filters to apply to model records.
-     * @param array $order fields to use in the sorting. For example ['code' => 'ASC']
-     * @param int   $offset
-     * @param int   $limit
+     * @param DataBase\DataBaseWhere[] $where filters to apply to model records.
+     * @param array                    $order fields to use in the sorting. For example ['code' => 'ASC']
+     * @param int                      $offset
+     * @param int                      $limit
      *
      * @return self[]
      */
@@ -160,9 +160,9 @@ abstract class ModelClass extends ModelCore
      * meet the above conditions.
      * Returns True if the record exists and False otherwise.
      *
-     * @param string $cod
-     * @param array  $where
-     * @param array  $orderby
+     * @param string                   $cod
+     * @param DataBase\DataBaseWhere[] $where
+     * @param array                    $orderby
      *
      * @return bool
      */
@@ -181,8 +181,8 @@ abstract class ModelClass extends ModelCore
     /**
      * Returns the following code for the reported field or the primary key of the model.
      *
-     * @param string $field
-     * @param array  $where
+     * @param string                   $field
+     * @param DataBase\DataBaseWhere[] $where
      *
      * @return int
      */
@@ -391,9 +391,9 @@ abstract class ModelClass extends ModelCore
      * Read the record whose primary column corresponds to the value $cod
      * or the first that meets the indicated condition.
      *
-     * @param string $cod
-     * @param array  $where
-     * @param array  $orderby
+     * @param string                   $cod
+     * @param DataBase\DataBaseWhere[] $where
+     * @param array                    $orderby
      *
      * @return array
      */
