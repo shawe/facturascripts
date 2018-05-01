@@ -18,9 +18,6 @@
  */
 namespace FacturaScripts\Core\Base;
 
-use FacturaScripts\Core\Base\MiniLog;
-use Exception;
-
 /**
  * Description of DownloadTools
  *
@@ -79,11 +76,11 @@ class DownloadTools
 
     /**
      * Alternative function when followlocation fails.
-     * 
+     *
      * @param resource $ch
      * @param int      $redirects
      * @param bool     $curlopt_header
-     * 
+     *
      * @return string
      */
     private function curlRedirectExec($ch, &$redirects, $curlopt_header = false): string
@@ -128,10 +125,10 @@ class DownloadTools
     {
         try {
             $data = $this->getContents($url, $timeout);
-            if ($data && $data != 'ERROR' && file_put_contents($filename, $data) !== FALSE) {
+            if ($data && $data !== 'ERROR' && file_put_contents($filename, $data) !== FALSE) {
                 return true;
             }
-        } catch (Exception $exc) {
+        } catch (\Exception $exc) {
             /// nothing to do
         }
 

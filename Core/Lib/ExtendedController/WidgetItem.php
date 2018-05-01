@@ -240,13 +240,13 @@ abstract class WidgetItem implements VisualItemInterface
     {
         switch ($optionValue[0]) {
             case '<':
-                $optionValue = substr($optionValue, 1) ?: '';
-                $result = ((float) $valueItem < (float) $optionValue);
+                $newValue = substr($optionValue, 1) ?: '';
+                $result = ((float) $valueItem < (float) $newValue);
                 break;
 
             case '>':
-                $optionValue = substr($optionValue, 1) ?: '';
-                $result = ((float) $valueItem > (float) $optionValue);
+                $newValue = substr($optionValue, 1) ?: '';
+                $result = ((float) $valueItem > (float) $newValue);
                 break;
 
             default:
@@ -260,8 +260,8 @@ abstract class WidgetItem implements VisualItemInterface
     /**
      * Loads the attribute dictionary for a widget's group of options or values
      *
-     * @param array               $property
-     * @param \SimpleXMLElement[] $group
+     * @param array             $property
+     * @param \SimpleXMLElement $group
      */
     protected function getAttributesGroup(&$property, $group)
     {

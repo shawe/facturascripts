@@ -19,11 +19,10 @@
 namespace FacturaScripts\Core\App;
 
 use DebugBar\StandardDebugBar;
-use Exception;
-use FacturaScripts\Core\Base\DebugBar\DataBaseCollector;
-use FacturaScripts\Core\Base\DebugBar\TranslationCollector;
 use FacturaScripts\Core\Base\Controller;
 use FacturaScripts\Core\Base\ControllerPermissions;
+use FacturaScripts\Core\Base\DebugBar\DataBaseCollector;
+use FacturaScripts\Core\Base\DebugBar\TranslationCollector;
 use FacturaScripts\Core\Base\MenuManager;
 use FacturaScripts\Core\Model\User;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -150,7 +149,7 @@ class AppController extends App
             return $this->pageName;
         }
 
-        if ($this->getUriParam(0) !== 'index.php' && $this->getUriParam(0) !== '') {
+        if (!\in_array($this->getUriParam(0), ['index.php', ''], false)) {
             return $this->getUriParam(0);
         }
 
@@ -158,7 +157,7 @@ class AppController extends App
             return $user->homepage;
         }
 
-        return $this->settings->get('default', 'homepage', 'Wizard');
+        return $this->settings::get('default', 'homepage', 'Wizard');
     }
 
     /**
@@ -198,7 +197,7 @@ class AppController extends App
                 }
 
                 $httpStatus = Response::HTTP_OK;
-            } catch (Exception $exc) {
+            } catch (\Exception $exc) {
                 $this->debugBar['exceptions']->addException($exc);
                 $httpStatus = Response::HTTP_INTERNAL_SERVER_ERROR;
                 $template = 'Error/ControllerError.html.twig';
@@ -252,7 +251,7 @@ class AppController extends App
 
         try {
             $this->response->setContent($webRender->render($template, $templateVars));
-        } catch (Exception $exc) {
+        } catch (\Exception $exc) {
             $this->debugBar['exceptions']->addException($exc);
             $this->response->setContent($webRender->render('Error/TemplateError.html.twig', $templateVars));
             $this->response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -297,7 +296,7 @@ class AppController extends App
      *
      * @return User|bool
      */
-    private function cookieAuth(User &$user)
+    private function cookieAuth(User $user)
     {
         $cookieNick = $this->request->cookies->get('fsNick', '');
         if ($cookieNick === '') {
@@ -326,7 +325,7 @@ class AppController extends App
      * @param User $user
      * @param bool $force
      */
-    private function updateCookies(User &$user, bool $force = false)
+    private function updateCookies(User $user, bool $force = false)
     {
         if ($force || \time() - \strtotime($user->lastactivity) > self::USER_UPDATE_ACTIVITY_PERIOD) {
             $user->newLogkey($this->request->getClientIp());

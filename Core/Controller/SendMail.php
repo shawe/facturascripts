@@ -65,7 +65,6 @@ class SendMail extends Controller
     {
         parent::privateCore($response, $user, $permissions);
 
-
         // Get any operations that have to be performed
         $action = $this->request->get('action', '');
 
@@ -165,9 +164,11 @@ class SendMail extends Controller
         if ($emailTools->send($mail)) {
             unlink(FS_FOLDER . '/MyFiles/' . $fileName);
             $this->miniLog->info('send-mail-ok');
-        } else {
-            $this->miniLog->error('send-mail-error');
+            return true;
         }
+
+        $this->miniLog->error('send-mail-error');
+        return false;
     }
 
 

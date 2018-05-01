@@ -18,6 +18,8 @@
  */
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
+use FacturaScripts\Core\Base;
+
 /**
  * Controller to manage the data editing
  *
@@ -60,8 +62,6 @@ abstract class EditController extends PanelController
 
     /**
      * Create the view to display.
-     *
-     * @return EditView
      */
     protected function createViews()
     {
@@ -76,8 +76,8 @@ abstract class EditController extends PanelController
     /**
      * Loads the data to display.
      *
-     * @param string   $viewName
-     * @param BaseView $view
+     * @param string            $viewName
+     * @param BaseView|EditView $view
      */
     protected function loadData($viewName, $view)
     {

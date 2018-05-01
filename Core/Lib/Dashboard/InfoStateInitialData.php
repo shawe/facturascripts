@@ -46,6 +46,7 @@ class InfoStateInitialData
      */
     protected function getCustomerData()
     {
+        $result = [];
         $result['model'] = 'Cliente';
         $result['icon'] = 'fa-users';
         $result['group'] = 'customers';
@@ -65,6 +66,7 @@ class InfoStateInitialData
      */
     protected function getSupplierData()
     {
+        $result = [];
         $result['model'] = 'Proveedor';
         $result['icon'] = 'fa-users';
         $result['group'] = 'suppliers';
@@ -84,6 +86,7 @@ class InfoStateInitialData
      */
     protected function getProductData()
     {
+        $result = [];
         $result['model'] = 'Articulo';
         $result['icon'] = 'fa-cube';
         $result['group'] = 'products';

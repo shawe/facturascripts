@@ -41,6 +41,7 @@ class EstadoDocumento extends Base\ModelClass
     public $actualizastock;
 
     /**
+     * True if this state is blocked for end user.
      *
      * @var bool
      */
@@ -101,7 +102,8 @@ class EstadoDocumento extends Base\ModelClass
     }
 
     /**
-     * 
+     * Remove the model data from the database.
+     *
      * @return boolean
      */
     public function delete()
@@ -125,8 +127,9 @@ class EstadoDocumento extends Base\ModelClass
     }
 
     /**
-     * 
-     * @return boolean
+     * Stores the model data in the database.
+     *
+     * @return bool
      */
     public function save()
     {

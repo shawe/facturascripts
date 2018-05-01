@@ -108,7 +108,7 @@ class WidgetItemNumber extends WidgetItem
         }
 
         $style = $this->getTextOptionsHTML($value);
-        return '<span' . $style . '>' . self::$numberTools->format($value, $this->decimal) . '</span>';
+        return '<span' . $style . '>' . self::$numberTools::format($value, $this->decimal) . '</span>';
     }
 
     /**

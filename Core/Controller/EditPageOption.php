@@ -205,14 +205,14 @@ class EditPageOption extends Base\Controller
     /**
      * Get the list of users, excluding the user admin
      *
-     * @return Array
+     * @return array
      */
     public function getUserList()
     {
         $result = [];
         $users = Model\CodeModel::all(Model\User::tableName(), 'nick', 'nick', false);
         foreach ($users as $codeModel) {
-            if ($codeModel->code != 'admin') {
+            if ($codeModel->code !== 'admin') {
                 $result[$codeModel->code] = $codeModel->description;
             }
         }

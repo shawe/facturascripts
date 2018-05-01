@@ -40,8 +40,6 @@ final class CuentaBancoClienteTest extends TestCase
         $this->assertEquals('', $model->fmandato);
         $this->assertTrue($model->test());
 
-        $model->nombre = 'Test name';
-
         $this->assertTrue($model->test());
     }
 

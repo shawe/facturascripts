@@ -63,9 +63,9 @@ class AlbaranCliente extends Base\SalesDocument
 
     /**
      * Returns a new line for the document.
-     * 
+     *
      * @param array $data
-     * 
+     *
      * @return LineaAlbaranCliente
      */
     public function getNewLine(array $data = [])

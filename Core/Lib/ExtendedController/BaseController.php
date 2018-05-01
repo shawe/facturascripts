@@ -56,7 +56,7 @@ abstract class BaseController extends Base\Controller
     /**
      * List of views displayed by the controller.
      *
-     * @var mixed
+     * @var BaseView[]|EditView[]|ListView[]|BusinessDocumentView[]|GridView[]|EditListView[]|HtmlView[]
      */
     public $views;
 
@@ -107,7 +107,7 @@ abstract class BaseController extends Base\Controller
     {
         $results = [];
         $data = $this->requestGet(['source', 'field', 'title', 'term']);
-        foreach ($this->codeModel->search($data['source'], $data['field'], $data['title'], $data['term']) as $value) {
+        foreach ($this->codeModel::search($data['source'], $data['field'], $data['title'], $data['term']) as $value) {
             $results[] = ['key' => $value->code, 'value' => $value->description];
         }
         return $results;
@@ -117,7 +117,7 @@ abstract class BaseController extends Base\Controller
      * Return array with parameters values
      *
      * @param array $keys
-     * 
+     *
      * @return array
      */
     protected function requestGet($keys): array

@@ -116,7 +116,9 @@ class AttachedFile extends Base\ModelClass
     public function delete()
     {
         if (parent::delete()) {
-            @\unlink(\FS_FOLDER . $this->path);
+            if (\file_exists(\FS_FOLDER . $this->path)) {
+                \unlink(\FS_FOLDER . $this->path);
+            }
             return true;
         }
 

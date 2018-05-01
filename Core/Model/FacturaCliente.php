@@ -58,9 +58,9 @@ class FacturaCliente extends Base\SalesDocument
 
     /**
      * Returns a new line for the document.
-     * 
+     *
      * @param array $data
-     * 
+     *
      * @return LineaFacturaCliente
      */
     public function getNewLine(array $data = [])

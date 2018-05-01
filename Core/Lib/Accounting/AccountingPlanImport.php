@@ -54,6 +54,9 @@ class AccountingPlanImport
      */
     private $miniLog;
 
+    /**
+     * AccountingPlanImport constructor.
+     */
     public function __construct()
     {
         $this->ejercicio = new Model\Ejercicio();
@@ -179,7 +182,7 @@ class AccountingPlanImport
      *
      * @param string $filePath
      *
-     * @return \SimpleXMLElement|array
+     * @return \SimpleXMLElement
      */
     private function getData(string $filePath)
     {
@@ -187,7 +190,7 @@ class AccountingPlanImport
             return simplexml_load_string(file_get_contents($filePath));
         }
 
-        return [];
+        return simplexml_load_string('');
     }
 
     /**
@@ -293,10 +296,10 @@ class AccountingPlanImport
 
     /**
      * Search the parent of account in a accounting Plan.
-     * 
+     *
      * @param array  $accountCodes
      * @param string $account
-     * 
+     *
      * @return string
      */
     private function searchParent(array &$accountCodes, string $account): string

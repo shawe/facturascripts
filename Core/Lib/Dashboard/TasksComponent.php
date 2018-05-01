@@ -113,7 +113,7 @@ class TasksComponent extends BaseComponent implements ComponentInterface
         }
 
         if ($this->randomData) {
-            $data['enddate'] = (mt_rand(0, 2) == 0) ? date('Y-m-d') : null;
+            $data['enddate'] = (random_int(0, 2) == 0) ? date('Y-m-d') : null;
         }
 
         $newItem->properties = [

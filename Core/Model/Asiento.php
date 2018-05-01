@@ -18,9 +18,9 @@
  */
 namespace FacturaScripts\Core\Model;
 
-use FacturaScripts\Core\Lib\ExtendedController\GridDocumentInterface;
 use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Base\Utils;
+use FacturaScripts\Core\Lib\ExtendedController\GridDocumentInterface;
 
 /**
  * The accounting entry. It is related to an exercise and consists of games.
@@ -96,7 +96,7 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
      */
     public function accumulateAmounts(array &$detail)
     {
-        $this->importe += round(floatval($detail['haber']), (int) FS_NF0);
+        $this->importe += round((float) $detail['haber'], FS_NF0);
     }
 
     /**
@@ -379,7 +379,7 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
     }
 
     /**
-     * TODO: Uncomplete documentation
+     * Verify if there is an error on the exercise.
      *
      * @return string
      */

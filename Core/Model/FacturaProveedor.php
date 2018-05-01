@@ -58,9 +58,9 @@ class FacturaProveedor extends Base\PurchaseDocument
 
     /**
      * Returns a new line for the document.
-     * 
+     *
      * @param array $data
-     * 
+     *
      * @return LineaFacturaProveedor
      */
     public function getNewLine(array $data = [])

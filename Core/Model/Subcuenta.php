@@ -154,6 +154,9 @@ class Subcuenta extends Base\ModelClass
         $this->saldo = 0.0;
     }
 
+    /**
+     * Returns special account code from subaccount id.
+     */
     public function getSpecialAccountCode()
     {
         $result = $this->codcuentaesp;
@@ -356,7 +359,7 @@ class Subcuenta extends Base\ModelClass
             if ($inTransaction === false) {
                 self::$dataBase->commit();
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             self::$miniLog->error($e->getMessage());
             return false;
         } finally {

@@ -59,11 +59,11 @@ class Asientos extends AbstractRandomAccounting
             $asiento->clear();
             $asiento->codejercicio = $ejercicio->codejercicio;
             $asiento->concepto = $this->descripcion();
-            $asiento->fecha = date('d-m-Y', strtotime($ejercicio->fechainicio . ' +' . mt_rand(1, 360) . ' days'));
+            $asiento->fecha = date('d-m-Y', strtotime($ejercicio->fechainicio . ' +' . random_int(1, 360) . ' days'));
             $asiento->importe = $this->precio(-999, 150, 99999);
             if ($asiento->save()) {
                 shuffle($subcuentas);
-                $lineas = mt_rand(1, 20) * 2;
+                $lineas = random_int(1, 20) * 2;
                 $debe = true;
                 for ($linea = 0; $linea < $lineas; ++$linea) {
                     $partida->clear();

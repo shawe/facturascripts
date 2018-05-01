@@ -56,10 +56,10 @@ class ListAgente extends ExtendedController\ListController
         $this->addOrderBy('ListAgente', 'concat(nombre,apellidos)', 'name', 1);
         $this->addOrderBy('ListAgente', 'provincia', 'province');
 
-        $selectValues = $this->codeModel->all('agentes', 'cargo', 'cargo');
+        $selectValues = $this->codeModel::all('agentes', 'cargo', 'cargo');
         $this->addFilterSelect('ListAgente', 'cargo', 'position', 'cargo', $selectValues);
 
-        $cityValues = $this->codeModel->all('agentes', 'ciudad', 'ciudad');
+        $cityValues = $this->codeModel::all('agentes', 'ciudad', 'ciudad');
         $this->addFilterSelect('ListAgente', 'ciudad', 'city', 'ciudad', $cityValues);
 
         $this->addFilterCheckbox('ListAgente', 'debaja', 'suspended', 'debaja');

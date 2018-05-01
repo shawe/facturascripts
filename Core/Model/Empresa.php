@@ -142,7 +142,7 @@ class Empresa extends Base\Contact
      */
     public function install()
     {
-        $num = mt_rand(1, 9999);
+        $num = random_int(1, 9999);
 
         return 'INSERT INTO ' . static::tableName() . ' (idempresa,recequivalencia,web,email,fax,telefono1,codpais,apartado,'
             . 'provincia,ciudad,codpostal,direccion,administrador,cifnif,nombre,nombrecorto,personafisica)'

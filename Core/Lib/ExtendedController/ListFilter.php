@@ -31,6 +31,7 @@ class ListFilter
 {
 
     /**
+     * Model to use with select and autocomplete filters.
      *
      * @var CodeModel
      */
@@ -105,6 +106,11 @@ class ListFilter
         }
     }
 
+    /**
+     * Return the current value.
+     *
+     * @return mixed|string
+     */
     public function getCurrentValue()
     {
         switch ($this->type) {

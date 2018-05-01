@@ -51,6 +51,7 @@ class PDFExport implements ExportInterface
     const TEXT_SIZE_FH = 9;
 
     /**
+     * Tools to work with currencies.
      *
      * @var Base\DivisaTools
      */
@@ -98,7 +99,7 @@ class PDFExport implements ExportInterface
     /**
      * Return the full document.
      *
-     * @return mixed
+     * @return string
      */
     public function getDoc()
     {
@@ -107,7 +108,7 @@ class PDFExport implements ExportInterface
             $this->pdf->ezText('');
         }
 
-        return $this->pdf->ezStream(['Content-Disposition' => 'doc_' . mt_rand(1, 999999) . '.pdf']);
+        return $this->pdf->ezOutput();
     }
 
     /**
@@ -123,9 +124,10 @@ class PDFExport implements ExportInterface
      *
      * @param Response $response
      */
-    public function show(Response &$response)
+    public function show(Response $response)
     {
-        $response->headers->set('Content-type', 'application/pdf');
+        $response->headers->set('Content-Type', 'application/pdf');
+        $response->headers->set('Content-Disposition', 'inline;filename="doc_' . random_int(1, 999999) . '.pdf"');
         $response->setContent($this->getDoc());
     }
 
@@ -248,11 +250,11 @@ class PDFExport implements ExportInterface
         foreach ($model->getlines() as $line) {
             $tableData[] = [
                 'reference' => Base\Utils::fixHtml($line->referencia . " - " . $line->descripcion),
-                'quantity' => $this->numberTools->format($line->cantidad),
-                'price' => $this->numberTools->format($line->pvpunitario),
-                'discount' => $this->numberTools->format($line->dtopor),
-                'tax' => $this->numberTools->format($line->iva),
-                'total' => $this->numberTools->format($line->pvptotal),
+                'quantity' => $this->numberTools::format($line->cantidad),
+                'price' => $this->numberTools::format($line->pvpunitario),
+                'discount' => $this->numberTools::format($line->dtopor),
+                'tax' => $this->numberTools::format($line->iva),
+                'total' => $this->numberTools::format($line->pvptotal),
             ];
         }
 
@@ -401,10 +403,10 @@ class PDFExport implements ExportInterface
 
                 $value = $row->{$col};
                 if ($tableOptions['cols'][$col]['col-type'] === 'number') {
-                    $value = $this->numberTools->format($value);
+                    $value = $this->numberTools::format($value);
                 } elseif ($tableOptions['cols'][$col]['col-type'] === 'money') {
                     $this->divisaTools->findDivisa($row);
-                    $value = $this->divisaTools->format($value, FS_NF0, 'coddivisa');
+                    $value = $this->divisaTools::format($value, FS_NF0, 'coddivisa');
                 } elseif (is_bool($value)) {
                     $value = $this->i18n->trans($value === 1 ? 'yes' : 'no');
                 } elseif (null === $value) {

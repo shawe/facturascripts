@@ -59,14 +59,14 @@ class ArticulosProveedor extends AbstractRandom
 
             $art->clear();
             $art->referencia = $articulos[$generated]->referencia;
-            $art->refproveedor = (string) mt_rand(1, 99999999);
+            $art->refproveedor = (string) random_int(1, 99999999);
             $art->descripcion = $this->descripcion();
             $art->codimpuesto = $articulos[$generated]->codimpuesto;
             $art->codproveedor = $proveedores[$generated]->codproveedor;
             $art->precio = $this->precio(1, 49, 699);
-            $art->dto = mt_rand(0, 80);
-            $art->nostock = (mt_rand(0, 2) == 0);
-            $art->stockfis = mt_rand(0, 10);
+            $art->dto = random_int(0, 80);
+            $art->nostock = (random_int(0, 2) == 0);
+            $art->stockfis = random_int(0, 10);
             if (!$art->save()) {
                 break;
             }

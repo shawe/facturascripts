@@ -28,6 +28,14 @@ use FacturaScripts\Core\Model\Base\BusinessDocument;
 class BusinessDocumentGenerator
 {
 
+    /**
+     * Generates a document of specified type.
+     *
+     * @param BusinessDocument $prototype
+     * @param string           $newClass
+     *
+     * @return bool
+     */
     public function generate(BusinessDocument $prototype, string $newClass)
     {
         $exclude = ['idestado', 'fecha', 'hora'];
@@ -41,13 +49,17 @@ class BusinessDocumentGenerator
             $newDoc->{$field} = $prototype->{$field};
         }
 
-        if ($newDoc->save() && $this->cloneLines($prototype, $newDoc)) {
-            return true;
-        }
-
-        return false;
+        return $newDoc->save() && $this->cloneLines($prototype, $newDoc);
     }
 
+    /**
+     * Clone lines from given data.
+     *
+     * @param BusinessDocument $prototype
+     * @param BusinessDocument $newDoc
+     *
+     * @return bool
+     */
     private function cloneLines(BusinessDocument $prototype, $newDoc)
     {
         foreach ($prototype->getLines() as $line) {

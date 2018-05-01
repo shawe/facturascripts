@@ -104,7 +104,7 @@ class Pagination
     /**
      * Returns a paging item.
      *
-     * @param int         $page
+     * @param int|float   $page
      * @param int         $offset
      * @param string|bool $icon
      * @param bool        $active
@@ -116,7 +116,7 @@ class Pagination
         return [
             'url' => $this->url . $this->join . 'offset=' . $offset . $this->urlID,
             'icon' => $icon,
-            'page' => $page,
+            'page' => (int) $page,
             'active' => $active,
         ];
     }

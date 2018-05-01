@@ -206,13 +206,13 @@ abstract class PanelController extends BaseController
     /**
      * Returns the view class.
      *
-     * @param string $view
+     * @param object $view
      *
      * @return string
      */
     public function viewClass($view)
     {
-        $result = explode('\\', get_class($view));
+        $result = explode('\\', \get_class($view));
 
         return end($result);
     }

@@ -58,7 +58,7 @@ class AlbaranesCliente extends AbstractRandomDocuments
             }
 
             $recargo = false;
-            if ($clientes[0]->recargo || mt_rand(0, 4) === 0) {
+            if ($clientes[0]->recargo || random_int(0, 4) === 0) {
                 $recargo = true;
             }
 

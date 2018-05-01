@@ -30,12 +30,14 @@ class DivisaTools extends NumberTools
 {
 
     /**
+     * List of available currencies.
      *
      * @var Divisa[]
      */
     private static $divisas;
 
     /**
+     * The selected currency.
      *
      * @var Divisa
      */
@@ -67,7 +69,7 @@ class DivisaTools extends NumberTools
 
     /**
      * Finds a coddivisa and uses it as selected currency.
-     * 
+     *
      * @param mixed $model
      */
     public function findDivisa($model)
@@ -115,7 +117,7 @@ class DivisaTools extends NumberTools
      * Return format mask for edit grid
      *
      * @param int $decimals
-     * 
+     *
      * @return array
      */
     public static function gridMoneyFormat($decimals = FS_NF0)

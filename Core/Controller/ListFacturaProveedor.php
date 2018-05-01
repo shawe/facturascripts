@@ -57,16 +57,16 @@ class ListFacturaProveedor extends ExtendedController\ListController
         $this->addFilterNumber('ListFacturaProveedor', 'total', 'total', 'total');
 
         $where = [new DataBaseWhere('tipodoc', 'FacturaProveedor')];
-        $stateValues = $this->codeModel->all('estados_documentos', 'idestado', 'nombre', true, $where);
+        $stateValues = $this->codeModel::all('estados_documentos', 'idestado', 'nombre', true, $where);
         $this->addFilterSelect('ListFacturaProveedor', 'idestado', 'state', 'idestado', $stateValues);
 
-        $warehouseValues = $this->codeModel->all('almacenes', 'codalmacen', 'nombre');
+        $warehouseValues = $this->codeModel::all('almacenes', 'codalmacen', 'nombre');
         $this->addFilterSelect('ListFacturaProveedor', 'codalmacen', 'warehouse', 'codalmacen', $warehouseValues);
 
-        $serieValues = $this->codeModel->all('series', 'codserie', 'descripcion');
+        $serieValues = $this->codeModel::all('series', 'codserie', 'descripcion');
         $this->addFilterSelect('ListFacturaProveedor', 'codserie', 'series', 'codserie', $serieValues);
 
-        $paymentValues = $this->codeModel->all('formaspago', 'codpago', 'descripcion');
+        $paymentValues = $this->codeModel::all('formaspago', 'codpago', 'descripcion');
         $this->addFilterSelect('ListFacturaProveedor', 'codpago', 'payment-method', 'codpago', $paymentValues);
 
         $this->addFilterAutocomplete('ListFacturaProveedor', 'codproveedor', 'supplier', 'codproveedor', 'proveedores', 'codproveedor', 'nombre');

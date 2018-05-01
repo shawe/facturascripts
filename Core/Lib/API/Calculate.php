@@ -36,6 +36,9 @@ class Calculate extends APIResourceClass
      */
     private $error;
 
+    /**
+     * Return a list of help details.
+     */
     public function help()
     {
         $data = array();
@@ -103,7 +106,7 @@ class Calculate extends APIResourceClass
      * Overwrite and IGNORE the original method of the ancestor.
      *
      * @param string $name
-     * @param array $params
+     *
      * @return bool
      */
     public function processResource(string $name): bool

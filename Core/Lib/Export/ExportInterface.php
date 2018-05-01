@@ -32,7 +32,7 @@ interface ExportInterface
     /**
      * Return the full document.
      *
-     * @return mixed
+     * @return string
      */
     public function getDoc();
 
@@ -46,7 +46,7 @@ interface ExportInterface
      *
      * @param Response $response
      */
-    public function show(Response &$response);
+    public function show(Response $response);
 
     /**
      * Adds a new page with the model data.

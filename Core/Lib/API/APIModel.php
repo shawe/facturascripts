@@ -130,6 +130,11 @@ class APIModel extends APIResourceClass
         return $where;
     }
 
+    /**
+     * Return all items on model.
+     *
+     * @return bool
+     */
     protected function listAll(): bool
     {
         if ($this->method === 'GET') {

@@ -29,8 +29,8 @@ use FacturaScripts\Core\Model;
 class BaseComponent
 {
 
-    const DIR_MODEL = 'FacturaScripts\\Core\\Model\\';
-    const DIR_COMPONENTS = 'FacturaScripts\\Core\\Lib\\Dashboard\\';
+    const DIR_MODEL = 'FacturaScripts\\Dinamic\\Model\\';
+    const DIR_COMPONENTS = 'FacturaScripts\\Dinamic\\Lib\\Dashboard\\';
     const SUFIX_COMPONENTS = 'Component';
 
     /**
@@ -175,10 +175,10 @@ class BaseComponent
     private function getRandomText($maxWord = 20)
     {
         $words = ['lorem', 'ipsum', 'trastis', 'tus', 'turum', 'maruk', 'tartor', 'isis', 'osiris', 'morowik'];
-        $txt = $words[mt_rand(0, 9)];
+        $txt = $words[random_int(0, 9)];
 
         $numWord = 0;
-        while (mt_rand(0, 8) > 0) {
+        while (random_int(0, 8) > 0) {
             shuffle($words);
             $txt .= $words[0] . ' ';
             ++$numWord;

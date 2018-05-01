@@ -52,7 +52,7 @@ class Familias extends AbstractRandom
             $fam->clear();
             $fam->descripcion = $this->familia();
             $fam->codfamilia = $this->txt2codigo($fam->descripcion);
-            $fam->madre = (mt_rand(0, 4) == 0 && $fam->codfamilia != $codfamilia) ? $codfamilia : null;
+            $fam->madre = (random_int(0, 4) == 0 && $fam->codfamilia != $codfamilia) ? $codfamilia : null;
             if (!$fam->save()) {
                 break;
             }

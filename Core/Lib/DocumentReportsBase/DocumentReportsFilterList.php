@@ -18,8 +18,8 @@
  */
 namespace FacturaScripts\Core\Lib\DocumentReportsBase;
 
-use FacturaScripts\Core\Model;
 use FacturaScripts\Core\Base\DataBase;
+use FacturaScripts\Dinamic\Model;
 
 /**
  * Description of DocumentReportsFilterList
@@ -32,6 +32,8 @@ class DocumentReportsFilterList
 
     /**
      * Structure data from
+     *
+     * @var mixed
      */
     private $model;
 

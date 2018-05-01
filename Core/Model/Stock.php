@@ -141,6 +141,11 @@ class Stock extends Base\ModelClass
         return 'idstock';
     }
 
+    /**
+     * Stores the model data in the database.
+     *
+     * @return bool
+     */
     public function save()
     {
         if (parent::save()) {

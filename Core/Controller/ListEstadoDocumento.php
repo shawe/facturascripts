@@ -54,10 +54,10 @@ class ListEstadoDocumento extends ExtendedController\ListController
         $this->addOrderBy('ListEstadoDocumento', 'idestado', 'id');
         $this->addOrderBy('ListEstadoDocumento', 'nombre', 'name');
 
-        $types = $this->codeModel->all('estados_documentos', 'tipodoc', 'tipodoc');
+        $types = $this->codeModel::all('estados_documentos', 'tipodoc', 'tipodoc');
         $this->addFilterSelect('ListEstadoDocumento', 'tipodoc', 'doc-type', 'tipodoc', $types);
 
-        $generateTypes = $this->codeModel->all('estados_documentos', 'generadoc', 'generadoc');
+        $generateTypes = $this->codeModel::all('estados_documentos', 'generadoc', 'generadoc');
         $this->addFilterSelect('ListEstadoDocumento', 'generadoc', 'generate-doc-type', 'generadoc', $generateTypes);
 
         $this->addFilterSelect('ListEstadoDocumento', 'actualizastock', 'update-stock', 'actualizastock', $this->getActualizastockValues());
@@ -65,6 +65,11 @@ class ListEstadoDocumento extends ExtendedController\ListController
         $this->addFilterCheckbox('ListEstadoDocumento', 'editable', 'editable', 'editable');
     }
 
+    /**
+     * Return a list of the option to update stock and it's code key.
+     *
+     * @return array
+     */
     private function getActualizastockValues()
     {
         return [

@@ -83,6 +83,7 @@ class PluginManager
      * with the autoloader, but following the priority system of FacturaScripts.
      *
      * @param bool $clean
+     * @param bool $initControllers
      */
     public function deploy(bool $clean = true, bool $initControllers = false)
     {

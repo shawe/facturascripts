@@ -53,7 +53,7 @@ class ListCuenta extends ExtendedController\ListController
         $this->addView('ListSubcuenta', 'Subcuenta', 'subaccounts', 'fa-th-list');
         $this->addSearchFields('ListSubcuenta', ['codsubcuenta', 'descripcion', 'codejercicio']);
 
-        $exerciseValues = $this->codeModel->all('ejercicios', 'codejercicio', 'nombre');
+        $exerciseValues = $this->codeModel::all('ejercicios', 'codejercicio', 'nombre');
         $this->addFilterSelect('ListSubcuenta', 'codejercicio', 'exercise', 'codejercicio', $exerciseValues);
 
         $this->addOrderBy('ListSubcuenta', 'codejercicio desc, codsubcuenta', 'code');

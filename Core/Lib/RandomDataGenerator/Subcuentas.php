@@ -55,7 +55,7 @@ class Subcuentas extends AbstractRandomAccounting
             $subcuenta->clear();
             $subcuenta->codcuenta = $cuenta->codcuenta;
             $subcuenta->codejercicio = $cuenta->codejercicio;
-            $subcuenta->codsubcuenta = str_pad($cuenta->codcuenta . mt_rand(0, 9999), $ejercicioDetails->longsubcuenta, 0);
+            $subcuenta->codsubcuenta = str_pad($cuenta->codcuenta . random_int(0, 9999), $ejercicioDetails->longsubcuenta, 0);
             $subcuenta->descripcion = $this->descripcion();
             $subcuenta->idcuenta = $cuenta->idcuenta;
             if (!$subcuenta->save()) {

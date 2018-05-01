@@ -76,6 +76,6 @@ class WidgetItemMoney extends WidgetItem
         }
 
         $style = $this->getTextOptionsHTML($value);
-        return '<span' . $style . '>' . self::$divisaTools->format($value) . '</span>';
+        return '<span' . $style . '>' . self::$divisaTools::format($value) . '</span>';
     }
 }

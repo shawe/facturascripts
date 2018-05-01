@@ -26,6 +26,9 @@ namespace FacturaScripts\Core\Base;
 class NumberTools
 {
 
+    /**
+     * NumberTools constructor.
+     */
     public function __construct()
     {
         if (!defined('FS_NF1')) {

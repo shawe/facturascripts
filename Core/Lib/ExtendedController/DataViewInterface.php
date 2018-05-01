@@ -21,8 +21,9 @@ namespace FacturaScripts\Core\Lib\ExtendedController;
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 
 /**
- * TODO: Uncomplete documentation
+ * Interface DataViewInterface
  *
+ * @package FacturaScripts\Core\Lib\ExtendedController
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
 interface DataViewInterface

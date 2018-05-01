@@ -61,16 +61,16 @@ class ListAlbaranCliente extends ExtendedController\ListController
         $this->addFilterNumber('ListAlbaranCliente', 'total', 'total', 'total');
 
         $where = [new DataBaseWhere('tipodoc', 'AlbaranCliente')];
-        $stateValues = $this->codeModel->all('estados_documentos', 'idestado', 'nombre', true, $where);
+        $stateValues = $this->codeModel::all('estados_documentos', 'idestado', 'nombre', true, $where);
         $this->addFilterSelect('ListAlbaranCliente', 'idestado', 'state', 'idestado', $stateValues);
 
-        $warehouseValues = $this->codeModel->all('almacenes', 'codalmacen', 'nombre');
+        $warehouseValues = $this->codeModel::all('almacenes', 'codalmacen', 'nombre');
         $this->addFilterSelect('ListAlbaranCliente', 'codalmacen', 'warehouse', 'codalmacen', $warehouseValues);
 
-        $serieValues = $this->codeModel->all('series', 'codserie', 'descripcion');
+        $serieValues = $this->codeModel::all('series', 'codserie', 'descripcion');
         $this->addFilterSelect('ListAlbaranCliente', 'codserie', 'series', 'codserie', $serieValues);
 
-        $paymentValues = $this->codeModel->all('formaspago', 'codpago', 'descripcion');
+        $paymentValues = $this->codeModel::all('formaspago', 'codpago', 'descripcion');
         $this->addFilterSelect('ListAlbaranCliente', 'codpago', 'payment-method', 'codpago', $paymentValues);
 
         $this->addFilterAutocomplete('ListAlbaranCliente', 'codcliente', 'customer', 'codcliente', 'clientes', 'codcliente', 'nombre');
@@ -79,6 +79,10 @@ class ListAlbaranCliente extends ExtendedController\ListController
         $this->createViewLines();
     }
 
+
+    /**
+     * Create the view to display lines.
+     */
     protected function createViewLines()
     {
         $this->addView('ListLineaAlbaranCliente', 'LineaAlbaranCliente', 'lines', 'fa-list');
@@ -89,7 +93,7 @@ class ListAlbaranCliente extends ExtendedController\ListController
         $this->addOrderBy('ListLineaAlbaranCliente', 'pvptotal', 'ammount');
         $this->addOrderBy('ListLineaAlbaranCliente', 'idalbaran', 'delivery-note', 2);
 
-        $taxValues = $this->codeModel->all('impuestos', 'codimpuesto', 'descripcion');
+        $taxValues = $this->codeModel::all('impuestos', 'codimpuesto', 'descripcion');
         $this->addFilterSelect('ListLineaAlbaranCliente', 'codimpuesto', 'tax', 'codimpuesto', $taxValues);
 
         $this->addFilterNumber('ListLineaAlbaranCliente', 'cantidad', 'quantity', 'cantidad');

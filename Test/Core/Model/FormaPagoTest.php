@@ -42,7 +42,6 @@ final class FormaPagoTest extends TestCase
         $this->assertTrue($model->imprimir);
         $this->assertTrue($model->test());
 
-        $model->nombre = 'Test name';
         $model->descripcion = 'Test description';
         $model->codcuenta = 'COD1';
         $model->domiciliado = true;

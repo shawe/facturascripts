@@ -98,7 +98,7 @@ class ExportManager
      *
      * @param Response $response
      */
-    public function show(Response &$response)
+    public function show(Response $response)
     {
         self::$engine->show($response);
     }

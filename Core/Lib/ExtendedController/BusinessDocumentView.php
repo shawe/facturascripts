@@ -34,6 +34,7 @@ class BusinessDocumentView extends BaseView
 {
 
     /**
+     * Document states for the related business document.
      *
      * @var array
      */

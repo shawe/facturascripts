@@ -21,9 +21,9 @@ namespace FacturaScripts\Core\Controller;
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Base\DivisaTools;
 use FacturaScripts\Core\Lib\ExtendedController;
-use FacturaScripts\Core\Model;
 use FacturaScripts\Core\Lib\IDFiscal;
 use FacturaScripts\Core\Lib\RegimenIVA;
+use FacturaScripts\Dinamic\Model;
 
 /**
  * Controller to edit a single item from the Proveedor model
@@ -51,7 +51,7 @@ class EditProveedor extends ExtendedController\PanelController
         $totalModel = Model\TotalModel::all('albaranesprov', $where, ['total' => 'SUM(total)'], '')[0];
 
         $divisaTools = new DivisaTools();
-        return $divisaTools->format($totalModel->totals['total'], 2);
+        return $divisaTools::format($totalModel->totals['total'], 2);
     }
 
     /**
@@ -70,7 +70,7 @@ class EditProveedor extends ExtendedController\PanelController
         $totalModel = Model\TotalModel::all('recibosprov', $where, ['total' => 'SUM(importe)'], '')[0];
 
         $divisaTools = new DivisaTools();
-        return $divisaTools->format($totalModel->totals['total'], 2);
+        return $divisaTools::format($totalModel->totals['total'], 2);
     }
 
     /**

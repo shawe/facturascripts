@@ -36,7 +36,7 @@ class PageOption extends Base\ModelClass
      * Definition of the columns. It is called columns but it always
      * contains GroupItem, which contains the columns.
      *
-     * @var array
+     * @var ExtendedController\GroupItem[]
      */
     public $columns;
 
@@ -57,7 +57,7 @@ class PageOption extends Base\ModelClass
     /**
      * Definition of modal forms
      *
-     * @var array
+     * @var ExtendedController\ColumnItem[]
      */
     public $modals;
 

@@ -75,7 +75,7 @@ abstract class ModelCore
      *
      * @return array
      */
-    abstract protected function getModelFields();
+    abstract public function getModelFields();
 
     /**
      * Loads table fields if is necessary.
@@ -83,7 +83,7 @@ abstract class ModelCore
      * @param DataBase  $dataBase
      * @param string    $tableName
      */
-    abstract protected function loadModelFields(DataBase &$dataBase, string $tableName);
+    abstract protected function loadModelFields(DataBase $dataBase, string $tableName);
 
     /**
      * Returns the name of the column that is the model's primary key.
@@ -164,7 +164,7 @@ abstract class ModelCore
     {
         $fields = $this->getModelFields();
         foreach ($data as $key => $value) {
-            if (in_array($key, $exclude)) {
+            if (\in_array($key, $exclude)) {
                 continue;
             } elseif (!isset($fields[$key])) {
                 $this->{$key} = $value;

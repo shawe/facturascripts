@@ -76,9 +76,9 @@ class PresupuestoCliente extends Base\SalesDocument
 
     /**
      * Returns a new line for this document.
-     * 
+     *
      * @param array $data
-     * 
+     *
      * @return LineaPresupuestoCliente
      */
     public function getNewLine(array $data = [])
@@ -91,7 +91,14 @@ class PresupuestoCliente extends Base\SalesDocument
         
         return $newLine;
     }
-    
+
+    /**
+     * This function is called when creating the model table. Returns the SQL
+     * that will be executed after the creation of the table. Useful to insert values
+     * default.
+     *
+     * @return string
+     */
     public function install()
     {
         parent::install();

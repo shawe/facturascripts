@@ -55,7 +55,7 @@ class ListAsiento extends ExtendedController\ListController
         $this->addFilterDatePicker('ListAsiento', 'fecha', 'date', 'fecha');
         $this->addFilterNumber('ListAsiento', 'importe', 'amount', 'importe');
 
-        $selectValues = $this->codeModel->all('ejercicios', 'codejercicio', 'nombre');
+        $selectValues = $this->codeModel::all('ejercicios', 'codejercicio', 'nombre');
         $this->addFilterSelect('ListAsiento', 'codejercicio', 'exercise', 'codejercicio', $selectValues);
 
         $this->addOrderBy('ListAsiento', 'numero', 'number');

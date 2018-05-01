@@ -20,10 +20,10 @@ namespace FacturaScripts\Core\Model\Base;
 
 use FacturaScripts\Core\App\AppSettings;
 use FacturaScripts\Core\Base\Utils;
+use FacturaScripts\Core\Lib\BusinessDocumentGenerator;
 use FacturaScripts\Dinamic\Model\Ejercicio;
 use FacturaScripts\Dinamic\Model\EstadoDocumento;
 use FacturaScripts\Dinamic\Model\Serie;
-use FacturaScripts\Core\Lib\BusinessDocumentGenerator;
 
 /**
  * Description of BusinessDocument
@@ -90,6 +90,7 @@ abstract class BusinessDocument extends ModelClass
     public $editable;
 
     /**
+     * Available document status.
      *
      * @var EstadoDocumento[]
      */
@@ -131,6 +132,7 @@ abstract class BusinessDocument extends ModelClass
     public $idestado;
 
     /**
+     * Previous status.
      *
      * @var int
      */
@@ -213,33 +215,36 @@ abstract class BusinessDocument extends ModelClass
     /**
      * Returns the lines associated with the document.
      *
-     * @return mixed
+     * @return BusinessDocumentLine[]
      */
     abstract public function getLines();
 
     /**
      * Returns a new line for this business document.
-     * 
+     *
      * @param array $data
-     * 
-     * @return BusinessDocumentLine[]
+     *
+     * @return BusinessDocumentLine
      */
     abstract public function getNewLine(array $data = []);
 
     /**
      * Returns an array with the column for identify the subject(s),
-     * 
-     * @return BusinessDocumentLine
+     *
+     * @return array
      */
     abstract public function getSubjectColumns();
 
     /**
      * Sets subjects for this document.
+     *
+     * @param $subjects
      */
     abstract public function setSubject($subjects);
 
     /**
-     * 
+     * BusinessDocument constructor.
+     *
      * @param array $data
      */
     public function __construct(array $data = [])
@@ -286,6 +291,11 @@ abstract class BusinessDocument extends ModelClass
         }
     }
 
+    /**
+     * Deletes the document an the related lines.
+     *
+     * @return bool
+     */
     public function delete()
     {
         $lines = $this->getLines();
@@ -302,7 +312,8 @@ abstract class BusinessDocument extends ModelClass
     }
 
     /**
-     * 
+     * Return the related document status or an empty status.
+     *
      * @return EstadoDocumento
      */
     public function getState()
@@ -332,12 +343,18 @@ abstract class BusinessDocument extends ModelClass
     }
 
     /**
-     * 
+     * Fill the class with the registry values
+     * whose primary column corresponds to the value $cod, or according to the condition
+     * where indicated, if value is not reported in $cod.
+     * Initializes the values of the class if there is no record that
+     * meet the above conditions.
+     * Returns True if the record exists and False otherwise.
+     *
      * @param string $cod
      * @param array  $where
      * @param array  $orderby
-     * 
-     * @return boolean
+     *
+     * @return bool
      */
     public function loadFromCode($cod, array $where = [], array $orderby = [])
     {
@@ -380,10 +397,10 @@ abstract class BusinessDocument extends ModelClass
 
     /**
      * Assign the date and find an accounting exercise.
-     * 
+     *
      * @param string $date
      * @param string $hour
-     * 
+     *
      * @return bool
      */
     public function setDate(string $date, string $hour): bool
@@ -428,6 +445,11 @@ abstract class BusinessDocument extends ModelClass
         return parent::test();
     }
 
+    /**
+     * Returns if state was change.
+     *
+     * @return bool
+     */
     private function checkState()
     {
         if ($this->idestado == $this->idestadoAnt) {

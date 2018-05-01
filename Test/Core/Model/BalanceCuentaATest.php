@@ -42,7 +42,7 @@ final class BalanceCuentaATest extends TestCase
 
         $model->codbalance = 'CODB1';
         $model->codcuenta = 'CODC1';
-        $model->descuenta = 'DESC1';
+        $model->desccuenta = 'DESC1';
 
         $this->assertTrue($model->test());
     }

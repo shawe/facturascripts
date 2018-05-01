@@ -111,7 +111,7 @@ class AccountingReports extends Controller
         $dateFrom = $this->request->get('date-from', '');
         $dateTo = $this->request->get('date-to', '');
         $format = $this->request->get('format', '');
-        $params = ['grouping' => ('YES' == $this->request->get('grouping', 'YES'))];
+        $params = ['grouping' => ('YES' === $this->request->get('grouping', 'YES'))];
 
         switch ($action) {
             case 'ledger':

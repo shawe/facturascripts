@@ -51,7 +51,7 @@ abstract class ModelClass extends ModelCore
      * @param int   $offset
      * @param int   $limit
      *
-     * @return array
+     * @return self[]
      */
     public function all(array $where = [], array $order = [], int $offset = 0, int $limit = 50)
     {
@@ -289,7 +289,7 @@ abstract class ModelClass extends ModelCore
                 break;
 
             case 'edit':
-                $result .= is_null($value) ? 'Edit' . $model : 'Edit' . $model . '?code=' . $value;
+                $result .= null === $value ? 'Edit' . $model : 'Edit' . $model . '?code=' . $value;
                 break;
 
             case 'new':
@@ -404,5 +404,63 @@ abstract class ModelClass extends ModelCore
         $sql = 'SELECT * FROM ' . static::tableName() . $sqlWhere . $this->getOrderBy($orderby);
 
         return self::$dataBase->selectLimit($sql, 1);
+    }
+
+    /**
+     * Magic isset.
+     *
+     * @param $property
+     *
+     * @return bool
+     */
+    public function __isset($property)
+    {
+        if (property_exists($this, $property)) {
+            return $this->{$property} === null;
+        }
+        return false;
+    }
+
+    /**
+     * Magic unset.
+     *
+     * @param $property
+     */
+    public function __unset($property)
+    {
+        if (property_exists($this, $property)) {
+            unset($this->{$property});
+        }
+    }
+
+    /**
+     * Magic setter.
+     *
+     * @param string $property
+     * @param mixed $value
+     *
+     * @return self
+     */
+    public function __set($property, $value)
+    {
+        if (property_exists($this, $property)) {
+            $this->{$property} = $value;
+        }
+        return $this;
+    }
+
+    /**
+     * Magic getter.
+     *
+     * @param string $property
+     *
+     * @return mixed
+     */
+    public function __get($property)
+    {
+        if (property_exists($this, $property)) {
+            return $this->{$property};
+        }
+        return null;
     }
 }

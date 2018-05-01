@@ -58,6 +58,13 @@ class DashboardData extends Base\ModelClass
     public $id;
 
     /**
+     * Location.
+     *
+     * @var string
+     */
+    public $location;
+
+    /**
      * Nick of the user to whom the card is addressed.
      *
      * @var string
@@ -70,6 +77,13 @@ class DashboardData extends Base\ModelClass
      * @var array
      */
     public $properties;
+
+    /**
+     * Version.
+     *
+     * @var string
+     */
+    public $version;
 
     /**
      * Check an array of data so that it has the correct structure of the model.

@@ -57,16 +57,16 @@ class ListPresupuestoCliente extends ExtendedController\ListController
         $this->addFilterNumber('ListPresupuestoCliente', 'total', 'total', 'total');
 
         $where = [new DataBaseWhere('tipodoc', 'PresupuestoCliente')];
-        $stateValues = $this->codeModel->all('estados_documentos', 'idestado', 'nombre', true, $where);
+        $stateValues = $this->codeModel::all('estados_documentos', 'idestado', 'nombre', true, $where);
         $this->addFilterSelect('ListPresupuestoCliente', 'idestado', 'state', 'idestado', $stateValues);
 
-        $warehouseValues = $this->codeModel->all('almacenes', 'codalmacen', 'nombre');
+        $warehouseValues = $this->codeModel::all('almacenes', 'codalmacen', 'nombre');
         $this->addFilterSelect('ListPresupuestoCliente', 'codalmacen', 'warehouse', 'codalmacen', $warehouseValues);
 
-        $serieValues = $this->codeModel->all('series', 'codserie', 'descripcion');
+        $serieValues = $this->codeModel::all('series', 'codserie', 'descripcion');
         $this->addFilterSelect('ListPresupuestoCliente', 'codserie', 'series', 'codserie', $serieValues);
 
-        $paymentValues = $this->codeModel->all('formaspago', 'codpago', 'descripcion');
+        $paymentValues = $this->codeModel::all('formaspago', 'codpago', 'descripcion');
         $this->addFilterSelect('ListPresupuestoCliente', 'codpago', 'payment-method', 'codpago', $paymentValues);
 
         $this->addFilterAutocomplete('ListPresupuestoCliente', 'codcliente', 'customer', 'codcliente', 'clientes', 'codcliente', 'nombre');

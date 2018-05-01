@@ -20,6 +20,7 @@ namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExportManager;
+use FacturaScripts\Dinamic\Model\Base\ModelClass;
 
 /**
  * View definition for its use in ExtendedControllers
@@ -33,7 +34,7 @@ class EditListView extends BaseView implements DataViewInterface
     /**
      * Cursor with the display model's data
      *
-     * @var array
+     * @var ModelClass[]
      */
     private $cursor;
 
@@ -120,7 +121,7 @@ class EditListView extends BaseView implements DataViewInterface
     /**
      * Returns the list of read data in the Model format
      *
-     * @return array
+     * @return ModelClass[]
      */
     public function getCursor()
     {

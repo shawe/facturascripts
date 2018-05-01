@@ -19,8 +19,9 @@
  */
 namespace FacturaScripts\Core\Controller;
 
-use FacturaScripts\Core\Lib\ExtendedController;
+use FacturaScripts\Core\Base\ControllerPermissions;
 use FacturaScripts\Core\Lib\Dashboard as DashboardLib;
+use FacturaScripts\Core\Lib\ExtendedController;
 use FacturaScripts\Core\Model\User;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -82,7 +83,7 @@ class EditDashboardData extends ExtendedController\EditController
      *
      * @param Response                   $response
      * @param User                       $user
-     * @param Base\ControllerPermissions $permissions
+     * @param ControllerPermissions $permissions
      */
     public function privateCore(&$response, $user, $permissions)
     {

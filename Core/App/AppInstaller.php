@@ -76,6 +76,7 @@ class AppInstaller
         } elseif ($installed) {
             header('Location: ' . $this->getUri());
         } elseif ('TRUE' === $this->request->get('phpinfo', '')) {
+            /** @noinspection ForgottenDebugOutputInspection */
             phpinfo();
         } else {
             $this->render();
@@ -136,7 +137,7 @@ class AppInstaller
             }
         }
 
-        chmod('Plugins', octdec(777));
+        chmod('Plugins', (int) octdec(777));
         $pluginManager = new PluginManager();
         $pluginManager->deploy();
         return true;

@@ -39,6 +39,7 @@ abstract class BusinessDocumentLine extends ModelClass
     public $actualizastock;
 
     /**
+     * Previous value of update product stock.
      *
      * @var int
      */
@@ -52,6 +53,7 @@ abstract class BusinessDocumentLine extends ModelClass
     public $cantidad;
 
     /**
+     * Previous value of quantity.
      *
      * @var float|int
      */

@@ -192,7 +192,12 @@ abstract class SalesDocument extends BusinessDocument
         $this->direccion = '';
         $this->porcomision = 0.0;
     }
-    
+
+    /**
+     * Returns an array with the column for identify the subject(s),
+     *
+     * @return array
+     */
     public function getSubjectColumns()
     {
         return ['codcliente'];

@@ -79,9 +79,9 @@ class VisualItemLoadEngine
     /**
      * Load the column structure from the JSON
      *
-     * @param string (JSON)    $columns
-     * @param string (JSON)    $modals
-     * @param string (JSON)    $rows
+     * @param array            $columns
+     * @param array            $modals
+     * @param array            $rows
      * @param Model\PageOption $model
      */
     public static function loadJSON($columns, $modals, $rows, &$model)
@@ -100,8 +100,8 @@ class VisualItemLoadEngine
     /**
      * Load the column structure from the JSON
      *
-     * @param string $columns
-     * @param array  $target
+     * @param array $columns
+     * @param array $target
      */
     private static function getJSONGroupsColumns($columns, &$target)
     {

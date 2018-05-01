@@ -179,10 +179,10 @@ class SubcuentaSaldo extends Base\ModelClass
         $result = 0;
         $where = [new DataBaseWhere('idsubcuenta', $idSubAccount)];
         foreach ($this->all($where, ['mes' => 'ASC']) as $values) {
-            $detail[$values->mes - 1] = round($values->saldo, (int) FS_NF0);
+            $detail[$values->mes - 1] = round($values->saldo, FS_NF0);
             $result += $values->saldo;
         }
 
-        return round($result, (int) FS_NF0);
+        return round($result, FS_NF0);
     }
 }

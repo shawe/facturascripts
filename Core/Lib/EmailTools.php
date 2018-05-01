@@ -151,6 +151,13 @@ class EmailTools
         return true;
     }
 
+    /**
+     * Return the setting for the given key.
+     *
+     * @param string $key
+     *
+     * @return mixed|null
+     */
     private function getSetting(string $key)
     {
         return isset(self::$settings[$key]) ? self::$settings[$key] : null;

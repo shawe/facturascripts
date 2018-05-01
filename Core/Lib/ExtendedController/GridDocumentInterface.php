@@ -19,7 +19,9 @@
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 /**
+ * Interface GridDocumentInterface
  *
+ * @package FacturaScripts\Core\Lib\ExtendedController
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
 interface GridDocumentInterface

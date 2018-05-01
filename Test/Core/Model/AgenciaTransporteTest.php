@@ -49,7 +49,7 @@ final class AgenciaTransporteTest extends TestCase
     {
         $model = new AgenciaTransporte();
 
-        $this->assertInternalType('string', $model->primaryColumn());
+        $this->assertInternalType('string', $model::primaryColumn());
     }
 
     public function testInstall()

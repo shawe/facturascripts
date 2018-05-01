@@ -386,6 +386,13 @@ class Partida extends Base\ModelClass
         return true;
     }
 
+    /**
+     * Update the model data in the database.
+     *
+     * @param array $values
+     *
+     * @return bool
+     */
     protected function saveUpdate(array $values = [])
     {
         // Search for the difference in the amounts

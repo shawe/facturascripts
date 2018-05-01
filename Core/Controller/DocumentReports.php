@@ -18,7 +18,6 @@
  */
 namespace FacturaScripts\Core\Controller;
 
-use FacturaScripts\Core\Lib\DocumentReportsBase;
 use FacturaScripts\Core\App\AppSettings;
 use FacturaScripts\Core\Base\Cache;
 use FacturaScripts\Core\Base\Controller;
@@ -27,7 +26,8 @@ use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Base\MiniLog;
 use FacturaScripts\Core\Base\Translator;
 use FacturaScripts\Core\Base\Utils;
-use FacturaScripts\Core\Model;
+use FacturaScripts\Core\Lib\DocumentReportsBase;
+use FacturaScripts\Dinamic\Model;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -70,7 +70,7 @@ class DocumentReports extends Controller
     /**
      * List of index labels for data
      *
-     * @var Array
+     * @var array
      */
     private $labels;
 

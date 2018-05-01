@@ -37,6 +37,7 @@ abstract class BusinessDocumentController extends PanelController
     const ITEM_SELECT_LIMIT = 500;
 
     /**
+     * Class with a set of business document tools.
      *
      * @var BusinessDocumentTools
      */
@@ -165,6 +166,11 @@ abstract class BusinessDocumentController extends PanelController
         }
     }
 
+    /**
+     * Recalculate the document totals from lines.
+     *
+     * @return bool
+     */
     protected function recalculateDocumentAction(): bool
     {
         $this->setTemplate(false);
@@ -184,6 +190,11 @@ abstract class BusinessDocumentController extends PanelController
         return false;
     }
 
+    /**
+     * Save document data to database.
+     *
+     * @return bool
+     */
     protected function saveDocumentAction(): bool
     {
         $this->setTemplate(false);
@@ -212,7 +223,16 @@ abstract class BusinessDocumentController extends PanelController
         return false;
     }
 
-    protected function saveDocumentResult(BusinessDocumentView &$view, array &$data, array &$newLines): string
+    /**
+     * Save the document result.
+     *
+     * @param BusinessDocumentView $view
+     * @param array                $data
+     * @param array                $newLines
+     *
+     * @return string
+     */
+    protected function saveDocumentResult(BusinessDocumentView $view, array &$data, array &$newLines): string
     {
         if (!$view->model->setDate($data['fecha'], $data['hora'])) {
             return 'ERROR: BAD DATE';
@@ -250,7 +270,15 @@ abstract class BusinessDocumentController extends PanelController
         return $result;
     }
 
-    protected function saveLines(BusinessDocumentView &$view, array &$newLines): string
+    /**
+     * Save lines of the document.
+     *
+     * @param BusinessDocumentView $view
+     * @param array                $newLines
+     *
+     * @return string
+     */
+    protected function saveLines(BusinessDocumentView $view, array &$newLines): string
     {
         $result = 'OK';
 
@@ -299,7 +327,17 @@ abstract class BusinessDocumentController extends PanelController
         return $result;
     }
 
-    protected function setCustomer(BusinessDocumentView &$view, string $codcliente, string $newCliente = '', string $newCifnif = ''): string
+    /**
+     * Assign a customer to the document.
+     *
+     * @param BusinessDocumentView $view
+     * @param string               $codcliente
+     * @param string               $newCliente
+     * @param string               $newCifnif
+     *
+     * @return string
+     */
+    protected function setCustomer(BusinessDocumentView $view, string $codcliente, string $newCliente = '', string $newCifnif = ''): string
     {
         if ($view->model->codcliente === $codcliente && !empty($view->model->codcliente)) {
             return 'OK';
@@ -322,7 +360,17 @@ abstract class BusinessDocumentController extends PanelController
         return 'ERROR: NO CUSTOMER';
     }
 
-    protected function setSupplier(BusinessDocumentView &$view, string $codproveedor, string $newProveedor = '', string $newCifnif = ''): string
+    /**
+     * Assign a supplier to the document.
+     *
+     * @param BusinessDocumentView $view
+     * @param string               $codproveedor
+     * @param string               $newProveedor
+     * @param string               $newCifnif
+     *
+     * @return string
+     */
+    protected function setSupplier(BusinessDocumentView $view, string $codproveedor, string $newProveedor = '', string $newCifnif = ''): string
     {
         if ($view->model->codproveedor === $codproveedor && !empty($view->model->codproveedor)) {
             return 'OK';

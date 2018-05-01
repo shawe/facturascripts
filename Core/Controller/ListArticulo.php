@@ -53,15 +53,18 @@ class ListArticulo extends ExtendedController\ListController
         $this->createViewStock();
     }
 
+    /**
+     * Create the view to display a product.
+     */
     private function createViewArticulo()
     {
         $this->addView('ListArticulo', 'Articulo', 'products');
         $this->addSearchFields('ListArticulo', ['referencia', 'descripcion']);
 
-        $selectValues = $this->codeModel->all('fabricantes', 'codfabricante', 'nombre');
+        $selectValues = $this->codeModel::all('fabricantes', 'codfabricante', 'nombre');
         $this->addFilterSelect('ListArticulo', 'codfabricante', 'manufacturer', 'codfabricante', $selectValues);
 
-        $familyValues = $this->codeModel->all('familias', 'codfamilia', 'descripcion');
+        $familyValues = $this->codeModel::all('familias', 'codfamilia', 'descripcion');
         $this->addFilterSelect('ListArticulo', 'codfamilia', 'family', 'codfamilia', $familyValues);
 
         $this->addFilterCheckbox('ListArticulo', 'bloqueado', 'locked', 'bloqueado');
@@ -73,6 +76,9 @@ class ListArticulo extends ExtendedController\ListController
         $this->addOrderBy('ListArticulo', 'stockfis', 'stock');
     }
 
+    /**
+     * Create the view to display a product of supplier.
+     */
     private function createViewArticuloProveedor()
     {
         $this->addView('ListArticuloProveedor', 'ArticuloProveedor', 'supplier-products', 'fa-users');
@@ -86,12 +92,15 @@ class ListArticulo extends ExtendedController\ListController
         $this->addOrderBy('ListArticuloProveedor', 'stockfis', 'stock');
     }
 
+    /**
+     * * Create the view to display stock.
+     */
     private function createViewStock()
     {
         $this->addView('ListStock', 'Stock', 'stock', 'fa-tasks');
         $this->addSearchFields('ListStock', ['referencia', 'ubicacion']);
 
-        $selectValues = $this->codeModel->all('almacenes', 'codalmacen', 'nombre');
+        $selectValues = $this->codeModel::all('almacenes', 'codalmacen', 'nombre');
         $this->addFilterSelect('ListStock', 'codalmacen', 'warehouse', 'codalmacen', $selectValues);
 
         $this->addOrderBy('ListStock', 'referencia', 'reference');

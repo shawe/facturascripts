@@ -20,8 +20,8 @@
 namespace FacturaScripts\Core\Base;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
-use FacturaScripts\Core\Model\User;
-use FacturaScripts\Core\Model\RoleUser;
+use FacturaScripts\Dinamic\Model\RoleUser;
+use FacturaScripts\Dinamic\Model\User;
 
 /**
  * Description of ControllerPermissions
@@ -54,7 +54,7 @@ class ControllerPermissions
     /**
      * ControllerPermissions constructor.
      *
-     * @param User|bool   $user
+     * @param User|false   $user
      * @param string|null $pageName
      */
     public function __construct($user = false, $pageName = null)

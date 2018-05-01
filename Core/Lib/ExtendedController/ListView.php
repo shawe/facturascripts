@@ -21,6 +21,7 @@ namespace FacturaScripts\Core\Lib\ExtendedController;
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Base\DivisaTools;
 use FacturaScripts\Core\Lib\ExportManager;
+use FacturaScripts\Dinamic\Model\Base\ModelClass;
 
 /**
  * View definition for its use in ListController
@@ -40,11 +41,12 @@ class ListView extends BaseView implements DataViewInterface
     /**
      * Cursor with data from the model display
      *
-     * @var array
+     * @var ModelClass[]
      */
     private $cursor;
 
     /**
+     * Tools to work with currencies.
      *
      * @var DivisaTools
      */
@@ -248,7 +250,7 @@ class ListView extends BaseView implements DataViewInterface
     /**
      * Returns the read data list in Model format
      *
-     * @return array
+     * @return ModelClass[]
      */
     public function getCursor()
     {

@@ -37,18 +37,21 @@ class BusinessDocumentTools
 {
 
     /**
+     * IRPF value.
      *
      * @var float
      */
     private $irpf = 0.0;
 
     /**
+     * If surcharge is applicable or not.
      *
      * @var bool
      */
     private $recargo = false;
 
     /**
+     * If is without taxes or not.
      *
      * @var bool
      */
@@ -59,7 +62,7 @@ class BusinessDocumentTools
      *
      * @param BusinessDocument $doc
      */
-    public function recalculate(BusinessDocument &$doc)
+    public function recalculate(BusinessDocument $doc)
     {
         $this->clearTotals($doc);
         $lines = $doc->getLines();
@@ -71,18 +74,18 @@ class BusinessDocumentTools
             $doc->totalrecargo += $subt['totalrecargo'];
         }
 
-        $doc->total = round($doc->neto + $doc->totaliva + $doc->totalrecargo - $doc->totalirpf, (int) FS_NF0);
+        $doc->total = round($doc->neto + $doc->totaliva + $doc->totalrecargo - $doc->totalirpf, FS_NF0);
     }
 
     /**
      * Calculate document totals from form data and returns the new total and document lines.
      *
-     * @param BusinessDocument $doc
-     * @param array            $formLines
+     * @param BusinessDocument       $doc
+     * @param BusinessDocumentLine[] $formLines
      *
      * @return string
      */
-    public function recalculateForm(BusinessDocument &$doc, array &$formLines)
+    public function recalculateForm(BusinessDocument $doc, array &$formLines)
     {
         $this->clearTotals($doc);
         $lines = [];
@@ -98,7 +101,7 @@ class BusinessDocumentTools
             $doc->totalrecargo += $subt['totalrecargo'];
         }
 
-        $doc->total = round($doc->neto + $doc->totaliva + $doc->totalrecargo - $doc->totalirpf, (int) FS_NF0);
+        $doc->total = round($doc->neto + $doc->totaliva + $doc->totalrecargo - $doc->totalirpf, FS_NF0);
         $json = [
             'total' => $doc->total,
             'lines' => $lines
@@ -107,7 +110,12 @@ class BusinessDocumentTools
         return json_encode($json);
     }
 
-    private function clearTotals(BusinessDocument &$doc)
+    /**
+     * Clear the totals values for the document.
+     *
+     * @param BusinessDocument $doc
+     */
+    private function clearTotals(BusinessDocument $doc)
     {
         $this->irpf = $doc->irpf;
 
@@ -185,15 +193,23 @@ class BusinessDocumentTools
 
         /// rounding totals
         foreach ($subtotals as $key => $value) {
-            $subtotals[$key]['neto'] = round($value['neto'], (int) FS_NF0);
-            $subtotals[$key]['totaliva'] = round($value['totaliva'], (int) FS_NF0);
-            $subtotals[$key]['totalrecargo'] = round($value['totalrecargo'], (int) FS_NF0);
-            $subtotals[$key]['totalirpf'] = round($value['totalirpf'], (int) FS_NF0);
+            $subtotals[$key]['neto'] = round($value['neto'], FS_NF0);
+            $subtotals[$key]['totaliva'] = round($value['totaliva'], FS_NF0);
+            $subtotals[$key]['totalrecargo'] = round($value['totalrecargo'], FS_NF0);
+            $subtotals[$key]['totalirpf'] = round($value['totalirpf'], FS_NF0);
         }
 
         return $subtotals;
     }
 
+    /**
+     * Performs the necessary calculations for each line of the document.
+     *
+     * @param array            $fLine
+     * @param BusinessDocument $doc
+     *
+     * @return BusinessDocumentLine
+     */
     private function recalculateLine(array $fLine, BusinessDocument $doc)
     {
         if (!empty($fLine['referencia']) && empty($fLine['descripcion'])) {
@@ -229,6 +245,11 @@ class BusinessDocumentTools
         return $newLine;
     }
 
+    /**
+     * Set product data to document line.
+     *
+     * @param array $fLine
+     */
     private function setProductData(array &$fLine)
     {
         $articulo = new Articulo();

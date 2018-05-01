@@ -70,8 +70,7 @@ class BalanceAmmounts extends AccountingBase
         }
 
         /// every page is a table
-        $pages = [$balance];
-        return $pages;
+        return [$balance];
     }
 
     /**
@@ -109,9 +108,9 @@ class BalanceAmmounts extends AccountingBase
         return [
             'subcuenta' => $line['codsubcuenta'],
             'descripcion' => $this->getDescriptionSubcuenta($line['idsubcuenta']),
-            'debe' => $this->divisaTools->format($line['debe'], FS_NF0, ''),
-            'haber' => $this->divisaTools->format($line['haber'], FS_NF0, ''),
-            'saldo' => $this->divisaTools->format($saldo, FS_NF0, ''),
+            'debe' => $this->divisaTools::format($line['debe'], FS_NF0, ''),
+            'haber' => $this->divisaTools::format($line['haber'], FS_NF0, ''),
+            'saldo' => $this->divisaTools::format($saldo, FS_NF0, ''),
         ];
     }
 

@@ -25,7 +25,6 @@ namespace FacturaScripts\Core\Lib\ExtendedController;
  */
 interface VisualItemInterface
 {
-
     /**
      * Generates the HTML code to display the header for the visual element
      *

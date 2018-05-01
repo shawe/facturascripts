@@ -70,6 +70,14 @@ class AssetManager
         return $txt;
     }
 
+    /**
+     * Reduce the text of data, removing uneeded code. Similar to minify the content.
+     *
+     * @param string $data
+     * @param string $url
+     *
+     * @return string
+     */
     public static function fixCombineContent(string $data, string $url): string
     {
         // Replace relative paths

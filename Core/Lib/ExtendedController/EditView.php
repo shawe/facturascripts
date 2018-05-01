@@ -103,7 +103,7 @@ class EditView extends BaseView implements DataViewInterface
     /**
      * Load the data in the model property, according to the code specified.
      *
-     * @param string          $code
+     * @param string|false    $code
      * @param DataBaseWhere[] $where
      * @param array           $order
      * @param int             $offset
@@ -115,7 +115,7 @@ class EditView extends BaseView implements DataViewInterface
             $code = $this->newCode;
         }
 
-        if (is_array($code)) {
+        if (\is_array($code)) {
             $where = [];
             foreach ($code as $fieldName => $value) {
                 $where[] = new DataBaseWhere($fieldName, $value);

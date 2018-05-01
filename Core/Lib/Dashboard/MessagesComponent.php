@@ -98,7 +98,7 @@ class MessagesComponent extends BaseComponent implements ComponentInterface
         }
 
         if ($this->randomData) {
-            $data['link'] = (mt_rand(0, 3) === 0) ? 'https://www.' . mt_rand(999, 99999) . '.com' : '';
+            $data['link'] = (random_int(0, 3) === 0) ? 'https://www.' . random_int(999, 99999) . '.com' : '';
         }
 
         $newItem->properties = [

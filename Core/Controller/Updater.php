@@ -37,6 +37,7 @@ class Updater extends Controller
     const UPDATE_CORE_URL = 'https://s3.eu-west-2.amazonaws.com/facturascripts/2018.zip';
 
     /**
+     * Items to be checked in updater.
      *
      * @var array
      */
@@ -59,7 +60,8 @@ class Updater extends Controller
     }
 
     /**
-     * 
+     * Runs the controller's private logic.
+     *
      * @param Response              $response
      * @param User                  $user
      * @param ControllerPermissions $permissions
@@ -90,9 +92,9 @@ class Updater extends Controller
 
     /**
      * Erase $dir folder and all its subfolders.
-     * 
+     *
      * @param string $dir
-     * 
+     *
      * @return bool
      */
     private function delTree(string $dir): bool
@@ -123,7 +125,7 @@ class Updater extends Controller
 
     /**
      * Execute selected action.
-     * 
+     *
      * @param string $action
      */
     private function execAction(string $action)
@@ -143,16 +145,16 @@ class Updater extends Controller
 
     /**
      * Returns an array with all subforder of $baseDir folder.
-     * 
+     *
      * @param string $baseDir
-     * 
+     *
      * @return array
      */
     private function foldersFrom(string $baseDir): array
     {
         $directories = [];
         foreach (scandir($baseDir) as $file) {
-            if ($file == '.' || $file == '..') {
+            if ($file === '.' || $file === '..') {
                 continue;
             }
             $dir = $baseDir . DIRECTORY_SEPARATOR . $file;
@@ -167,7 +169,7 @@ class Updater extends Controller
 
     /**
      * Returns an array with all not writable folders.
-     * 
+     *
      * @return array
      */
     private function notWritablefolders(): array
@@ -184,7 +186,7 @@ class Updater extends Controller
 
     /**
      * Copy all files and folders from $src to $dst
-     * 
+     *
      * @param string $src
      * @param string $dst
      */
@@ -192,7 +194,7 @@ class Updater extends Controller
     {
         $dir = opendir($src);
         @mkdir($dst);
-        while (false !== ( $file = readdir($dir))) {
+        while (false !== ($file = readdir($dir))) {
             if ($file === '.' || $file === '..') {
                 continue;
             }
@@ -203,12 +205,14 @@ class Updater extends Controller
                 copy($src . '/' . $file, $dst . '/' . $file);
             }
         }
-        closedir($dir);
+        if (\is_resource($dir)) {
+            closedir($dir);
+        }
     }
 
     /**
      * Extract zip file and update all files.
-     * 
+     *
      * @return bool
      */
     private function update(): bool

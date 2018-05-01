@@ -77,12 +77,12 @@ abstract class AbstractRandom
      */
     public function cantidad($min, $max1, $max2)
     {
-        $cantidad = mt_rand($min, $max1);
+        $cantidad = random_int($min, $max1);
 
-        if (mt_rand(0, 9) == 0) {
-            $cantidad = mt_rand($min, $max2);
-        } elseif ($cantidad < $max1 && mt_rand(0, 4) == 0) {
-            $cantidad += round(mt_rand(1, 5) / mt_rand(1, 10), mt_rand(0, 3));
+        if (random_int(0, 9) == 0) {
+            $cantidad = random_int($min, $max2);
+        } elseif ($cantidad < $max1 && random_int(0, 4) == 0) {
+            $cantidad += round(random_int(1, 5) / random_int(1, 10), random_int(0, 3));
             $cantidad = min([$max1, $cantidad]);
         }
 
@@ -117,7 +117,7 @@ abstract class AbstractRandom
         ];
 
         $descripcion = $this->getOneItem($descripciones1);
-        switch (mt_rand(0, 4)) {
+        switch (random_int(0, 4)) {
             case 0:
                 break;
 
@@ -158,7 +158,7 @@ abstract class AbstractRandom
             'Radeon', 'GeForce', 'nForce', 'Labtech', 'Station', 'Arco', 'Arkam',
         ];
 
-        return (mt_rand(0, 4) ? $this->getOneItem($prefijos) . ' ' : '') . $this->getOneItem($nombres);
+        return (random_int(0, 4) ? $this->getOneItem($prefijos) . ' ' : '') . $this->getOneItem($nombres);
     }
 
     /**
@@ -171,7 +171,7 @@ abstract class AbstractRandom
      */
     protected function fecha($start = 2013, $end = 2018)
     {
-        return date(mt_rand(1, 28) . '-' . mt_rand(1, 12) . '-' . mt_rand($start, $end));
+        return date(random_int(1, 28) . '-' . random_int(1, 12) . '-' . random_int($start, $end));
     }
 
     /**
@@ -183,7 +183,7 @@ abstract class AbstractRandom
      */
     public function getOneItem($array)
     {
-        return $array[mt_rand(0, count($array) - 1)];
+        return $array[random_int(0, count($array) - 1)];
     }
 
     /**
@@ -200,7 +200,7 @@ abstract class AbstractRandom
             'U' => '30', 'V' => '31', 'W' => '32', 'X' => '33', 'Y' => '34', 'Z' => '35',
         ];
 
-        $ccc = mt_rand(1000, 9999) . mt_rand(1000, 9999) . mt_rand(1000, 9999) . mt_rand(1000, 9999) . mt_rand(1000, 9999);
+        $ccc = random_int(1000, 9999) . random_int(1000, 9999) . random_int(1000, 9999) . random_int(1000, 9999) . random_int(1000, 9999);
         $dividendo = $ccc . $pesos[$pais[0]] . $pesos[$pais[1]] . '00';
         $digitoControl = 98 - \bcmod($dividendo, '97');
 
@@ -227,7 +227,7 @@ abstract class AbstractRandom
 
         /// Add a lot of Blas as an option
         $bla = 'Bla';
-        while (mt_rand(0, 29) > 0) {
+        while (random_int(0, 29) > 0) {
             $bla .= ', bla';
         }
         $observaciones[] = $bla . '.';
@@ -248,12 +248,12 @@ abstract class AbstractRandom
      */
     public function precio($min, $max1, $max2)
     {
-        $precio = mt_rand($min, $max1);
+        $precio = random_int($min, $max1);
 
-        if (mt_rand(0, 9) == 0) {
-            $precio = mt_rand($min, $max2);
-        } elseif ($precio < $max1 && mt_rand(0, 2) == 0) {
-            $precio += round(mt_rand(1, 5) / mt_rand(1, 10), (int) FS_NF0);
+        if (random_int(0, 9) == 0) {
+            $precio = random_int($min, $max2);
+        } elseif ($precio < $max1 && random_int(0, 2) == 0) {
+            $precio += round(random_int(1, 5) / random_int(1, 10), FS_NF0);
             $precio = min([$max1, $precio]);
         }
 
@@ -286,7 +286,7 @@ abstract class AbstractRandom
     {
         $result = str_replace([' ', '-', '_', '&', 'ó', ':', 'ñ', '"', "'", '*'], ['', '', '', '', 'O', '', 'N', '', '', '-'], strtoupper($txt));
         if (strlen($result) > $len) {
-            return substr($result, 0, $len - 1) . mt_rand(0, 9);
+            return substr($result, 0, $len - 1) . random_int(0, 9);
         }
 
         return $result;
@@ -295,7 +295,7 @@ abstract class AbstractRandom
     /**
      * Returns a random string of $length length
      *
-     * @param string $length la longitud del string
+     * @param int $length Length of the string
      *
      * @return string la cadena aleatoria
      */

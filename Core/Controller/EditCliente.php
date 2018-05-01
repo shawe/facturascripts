@@ -21,9 +21,9 @@ namespace FacturaScripts\Core\Controller;
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Base\DivisaTools;
 use FacturaScripts\Core\Lib\ExtendedController;
-use FacturaScripts\Core\Model;
 use FacturaScripts\Core\Lib\IDFiscal;
 use FacturaScripts\Core\Lib\RegimenIVA;
+use FacturaScripts\Dinamic\Model;
 
 /**
  * Controller to edit a single item from the Cliente model
@@ -50,7 +50,7 @@ class EditCliente extends ExtendedController\PanelController
         $totalModel = Model\TotalModel::all('albaranescli', $where, ['total' => 'SUM(total)'], '')[0];
 
         $divisaTools = new DivisaTools();
-        return $divisaTools->format($totalModel->totals['total']);
+        return $divisaTools::format($totalModel->totals['total']);
     }
 
     /**
@@ -69,7 +69,7 @@ class EditCliente extends ExtendedController\PanelController
         $totalModel = Model\TotalModel::all('reciboscli', $where, ['total' => 'SUM(importe)'], '')[0];
 
         $divisaTools = new DivisaTools();
-        return $divisaTools->format($totalModel->totals['total'], 2);
+        return $divisaTools::format($totalModel->totals['total'], 2);
     }
 
     /**

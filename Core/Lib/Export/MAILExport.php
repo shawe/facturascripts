@@ -28,6 +28,11 @@ use Symfony\Component\HttpFoundation\Response;
 class MAILExport extends PDFExport
 {
 
+    /**
+     * Return the full document.
+     *
+     * @return string
+     */
     public function getDoc()
     {
         if ($this->pdf === null) {
@@ -38,7 +43,12 @@ class MAILExport extends PDFExport
         return $this->pdf->ezOutput();
     }
 
-    public function show(Response &$response)
+    /**
+     * Set headers and output document content to response.
+     *
+     * @param Response $response
+     */
+    public function show(Response $response)
     {
         $fileName = 'Mail_' . time() . '.pdf';
         $filePath = FS_FOLDER . '/MyFiles/' . $fileName;

@@ -34,7 +34,7 @@ class MegaSearch extends Base\Controller
      * This variable contains the input text as the $query parameter
      * to be used to filter the model data
      *
-     * @var string|false
+     * @var string
      */
     public $query;
 

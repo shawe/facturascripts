@@ -62,8 +62,7 @@ class Ledger extends AccountingBase
         }
 
         /// every page is a table
-        $pages = $ledger;
-        return $pages;
+        return $ledger;
     }
 
     /**
@@ -121,9 +120,8 @@ class Ledger extends AccountingBase
     /**
      * Process the header data to use the appropiate formats.
      *
+     * @param array $ledgerAccount
      * @param array $line
-     *
-     * @return array
      */
     protected function processHeader(&$ledgerAccount, $line)
     {
@@ -158,8 +156,8 @@ class Ledger extends AccountingBase
         }
         $item['cuenta'] = (isset($line['cuenta'])) ? $line['cuenta'] : $line['codsubcuenta'];
         $item['concepto'] = Utils::fixHtml($line['concepto']);
-        $item['debe'] = $this->divisaTools->format($line['debe'], FS_NF0, '');
-        $item['haber'] = $this->divisaTools->format($line['haber'], FS_NF0, '');
+        $item['debe'] = $this->divisaTools::format($line['debe'], FS_NF0, '');
+        $item['haber'] = $this->divisaTools::format($line['haber'], FS_NF0, '');
         return $item;
     }
 }

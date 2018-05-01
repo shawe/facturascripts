@@ -18,7 +18,6 @@
  */
 namespace FacturaScripts\Core\Base;
 
-use Exception;
 use FacturaScripts\Core\App\AppSettings;
 
 /**
@@ -30,6 +29,7 @@ class PluginDeploy
 {
 
     /**
+     * A list of file classified by folders.
      *
      * @var array
      */
@@ -119,7 +119,7 @@ class PluginDeploy
                 $controller = new $controllerNamespace($cache, $this->i18n, $this->minilog, $controllerName);
                 $menuManager->selectPage($controller->getPageData());
                 $pageNames[] = $controllerName;
-            } catch (Exception $exc) {
+            } catch (\Exception $exc) {
                 $this->minilog->critical($this->i18n->trans('cant-load-controller', ['%controllerName%' => $controllerName]));
             }
         }
@@ -179,6 +179,16 @@ class PluginDeploy
         return true;
     }
 
+    /**
+     * Return the correct type of the class.
+     *
+     * @param string $fileName
+     * @param string $folder
+     * @param string $place
+     * @param string $pluginName
+     *
+     * @return string
+     */
     private function getClassType(string $fileName, string $folder, string $place, string $pluginName): string
     {
         $path = FS_FOLDER . DIRECTORY_SEPARATOR . $place;
@@ -277,7 +287,7 @@ class PluginDeploy
     /**
      * Makes a recursive scan in folders inside a root folder and extracts the list of files
      * and pass its to an array as result.
-     * 
+     *
      * @param string $folder
      * @param bool   $recursive
      *

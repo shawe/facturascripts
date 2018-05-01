@@ -48,7 +48,7 @@ class Cuentas extends AbstractRandomAccounting
     {
         $cuenta = $this->model;
         for ($i = 0; $i < $num; ++$i) {
-            $codigo = mt_rand(1000, 9990);
+            $codigo = random_int(1000, 9990);
             $madre = floor($codigo / 10);
 
             $ejercicio = $this->getOneItem($this->ejercicios)->codejercicio;

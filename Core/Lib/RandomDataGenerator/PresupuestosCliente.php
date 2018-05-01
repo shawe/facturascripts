@@ -57,9 +57,9 @@ class PresupuestosCliente extends AbstractRandomDocuments
                 break;
             }
 
-            $recargo = ($clientes[0]->recargo || mt_rand(0, 4) === 0);
+            $recargo = ($clientes[0]->recargo || random_int(0, 4) === 0);
             $regimeniva = $this->randomizeDocumentVenta($presu, $eje, $clientes, $generated);
-            $presu->finoferta = date('d-m-Y', strtotime($presu->fecha . ' +' . mt_rand(1, 18) . ' months'));
+            $presu->finoferta = date('d-m-Y', strtotime($presu->fecha . ' +' . random_int(1, 18) . ' months'));
             if ($presu->save()) {
                 $this->randomLineas($presu, 'idpresupuesto', 'FacturaScripts\Dinamic\Model\LineaPresupuestoCliente', $regimeniva, $recargo);
                 ++$generated;

@@ -63,7 +63,7 @@ class AlbaranProveedor extends Base\PurchaseDocument
 
     /**
      * Returns a new line for the document.
-     * 
+     *
      * @param array $data
      *
      * @return LineaAlbaranProveedor

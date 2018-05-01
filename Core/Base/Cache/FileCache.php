@@ -127,14 +127,16 @@ class FileCache implements AdaptorInterface
     public function set($key, $content, $raw = false)
     {
         $this->minilog->debug($this->i18n->trans('filecache-set-key-item', ['%item%' => $key]));
-        $dest_file_name = $this->getRoute($key);
+        $destFileName = $this->getRoute($key);
         /** Use a unique temporary filename to make writes atomic with rewrite */
-        $temp_file_name = str_replace('.php', uniqid('-', true) . '.php', $dest_file_name);
-        $ret = @file_put_contents($temp_file_name, $raw ? $content : serialize($content));
+        $tempFileName = str_replace('.php', uniqid('-', true) . '.php', $destFileName);
+        $ret = @file_put_contents($tempFileName, $raw ? $content : serialize($content));
         if ($ret !== false) {
-            return @rename($temp_file_name, $dest_file_name);
+            return @rename($tempFileName, $destFileName);
         }
-        @unlink($temp_file_name);
+        if (\is_file($tempFileName)) {
+            unlink($tempFileName);
+        }
 
         return false;
     }
