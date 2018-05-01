@@ -109,7 +109,6 @@ class EditListView extends BaseView implements DataViewInterface
 
     /**
      * Column list and its configuration
-     * (Array of ColumnItem)
      *
      * @return GroupItem[]
      */

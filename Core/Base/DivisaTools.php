@@ -59,7 +59,7 @@ class DivisaTools extends NumberTools
 
             $coddivisa = AppSettings::get('default', 'coddivisa');
             foreach (self::$divisas as $div) {
-                if ($div->coddivisa == $coddivisa) {
+                if ($div instanceof Divisa && $div->coddivisa === $coddivisa) {
                     self::$selectedDivisa = $div;
                     break;
                 }

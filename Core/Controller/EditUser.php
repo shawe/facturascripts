@@ -77,11 +77,13 @@ class EditUser extends ExtendedController\PanelController
         if ($user->admin) {
             $pageModel = new Model\Page();
             foreach ($pageModel->all([], ['name' => 'ASC'], 0, 500) as $page) {
-                if (!$page->showonmenu) {
-                    continue;
-                }
+                if ($page instanceof Model\Page) {
+                    if (!$page->showonmenu) {
+                        continue;
+                    }
 
-                $pageList[] = ['value' => $page->name, 'title' => $page->name];
+                    $pageList[] = ['value' => $page->name, 'title' => $page->name];
+                }
             }
 
             return $pageList;
@@ -89,8 +91,10 @@ class EditUser extends ExtendedController\PanelController
 
         $roleUserModel = new Model\RoleUser();
         foreach ($roleUserModel->all([new DataBaseWhere('nick', $user->nick)]) as $roleUser) {
-            foreach ($roleUser->getRoleAccess() as $roleAccess) {
-                $pageList[] = ['value' => $roleAccess->pagename, 'title' => $roleAccess->pagename];
+            if ($roleUser instanceof Model\RoleUser) {
+                foreach ($roleUser->getRoleAccess() as $roleAccess) {
+                    $pageList[] = ['value' => $roleAccess->pagename, 'title' => $roleAccess->pagename];
+                }
             }
         }
 

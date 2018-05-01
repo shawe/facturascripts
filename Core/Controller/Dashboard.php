@@ -94,11 +94,13 @@ class Dashboard extends Base\Controller
         $dashboardModel = new Model\Dashboard();
         $rows = $dashboardModel->all();
         foreach ($rows as $data) {
-            $componentName = Lib\Dashboard\BaseComponent::DIR_COMPONENTS
-                . $data->component
-                . Lib\Dashboard\BaseComponent::SUFIX_COMPONENTS;
+            if ($data instanceof Model\Dashboard) {
+                $componentName = Lib\Dashboard\BaseComponent::DIR_COMPONENTS
+                    . $data->component
+                    . Lib\Dashboard\BaseComponent::SUFIX_COMPONENTS;
 
-            $this->components[$data->component] = new $componentName($data, $userNick);
+                $this->components[$data->component] = new $componentName($data, $userNick);
+            }
         }
     }
 

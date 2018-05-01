@@ -93,15 +93,17 @@ class MegaSearch extends Base\Controller
     {
         $pageModel = new Model\Page();
         foreach ($pageModel->all([], [], 0, 500) as $page) {
-            /// Does the page title coincide with the search $query?
-            $title = mb_strtolower($this->i18n->trans($page->title), 'UTF8');
-            if ($page->showonmenu && strpos($title, $this->query) !== false) {
-                $this->results['pages'][] = $page;
-            }
+            if ($page instanceof Model\Page) {
+                /// Does the page title coincide with the search $query?
+                $title = mb_strtolower($this->i18n->trans($page->title), 'UTF8');
+                if ($page->showonmenu && strpos($title, $this->query) !== false) {
+                    $this->results['pages'][] = $page;
+                }
 
-            /// Is it a ListController that could return more results?
-            if ($page->showonmenu && strpos($page->name, 'List') === 0) {
-                $this->sections[$page->name] = $page->url() . '?action=megasearch&query=' . $this->query;
+                /// Is it a ListController that could return more results?
+                if ($page->showonmenu && strpos($page->name, 'List') === 0) {
+                    $this->sections[$page->name] = $page->url() . '?action=megasearch&query=' . $this->query;
+                }
             }
         }
     }

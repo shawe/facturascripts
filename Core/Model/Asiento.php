@@ -123,11 +123,13 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
         foreach ($eje0->all() as $ej) {
             if ($ej instanceof Ejercicio && $ej->abierto()) {
                 foreach ($regiva0->all([new DataBase\DataBaseWhere('codejercicio', $ej->codejercicio)]) as $reg) {
-                    $sql = 'UPDATE ' . static::tableName() . ' SET editable = false WHERE editable = true'
-                        . ' AND codejercicio = ' . self::$dataBase->var2str($ej->codejercicio)
-                        . ' AND fecha >= ' . self::$dataBase->var2str($reg->fechainicio)
-                        . ' AND fecha <= ' . self::$dataBase->var2str($reg->fechafin) . ';';
-                    self::$dataBase->exec($sql);
+                    if ($reg instanceof RegularizacionImpuestos) {
+                        $sql = 'UPDATE ' . static::tableName() . ' SET editable = false WHERE editable = true'
+                            . ' AND codejercicio = ' . self::$dataBase->var2str($ej->codejercicio)
+                            . ' AND fecha >= ' . self::$dataBase->var2str($reg->fechainicio)
+                            . ' AND fecha <= ' . self::$dataBase->var2str($reg->fechafin) . ';';
+                        self::$dataBase->exec($sql);
+                    }
                 }
             } else {
                 $sql = 'UPDATE ' . static::tableName() . ' SET editable = false WHERE editable = true'
@@ -181,9 +183,11 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
             /// update accounts balances
             $account = new Subcuenta();
             foreach ($lines as $row) {
-                $account->idsubcuenta = $row->idsubcuenta;
-                if (!$account->updateBalance($date, ($row->debe * -1), ($row->haber * -1))) {
-                    return false;
+                if ($row instanceof Subcuenta) {
+                    $account->idsubcuenta = $row->idsubcuenta;
+                    if (!$account->updateBalance($date, ($row->debe * -1), ($row->haber * -1))) {
+                        return false;
+                    }
                 }
             }
 
@@ -271,35 +275,37 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
         $continuar = false;
         $ejercicio = new Ejercicio();
         foreach ($ejercicio->all([new DataBase\DataBaseWhere('estado', 'ABIERTO')]) as $eje) {
-            $posicion = 0;
-            $numero = 1;
-            $sql = '';
-            $continuar = true;
-            $consulta = 'SELECT idasiento,numero,fecha FROM ' . static::tableName()
-                . ' WHERE codejercicio = ' . self::$dataBase->var2str($eje->codejercicio)
-                . ' ORDER BY codejercicio ASC, fecha ASC, idasiento ASC';
-
-            $asientos = self::$dataBase->selectLimit($consulta, 1000, $posicion);
-            while (!empty($asientos) && $continuar) {
-                foreach ($asientos as $col) {
-                    if ($col['numero'] !== $numero) {
-                        $sql .= 'UPDATE ' . static::tableName() . ' SET numero = ' . self::$dataBase->var2str($numero)
-                            . ' WHERE idasiento = ' . self::$dataBase->var2str($col['idasiento']) . ';';
-                    }
-
-                    ++$numero;
-                }
-                $posicion += 1000;
-
-                if ($sql !== '') {
-                    if (!self::$dataBase->exec($sql)) {
-                        self::$miniLog->alert(self::$i18n->trans('renumber-accounting-error', ['%exerciseCode%' => $eje->codejercicio]));
-                        $continuar = false;
-                    }
-                    $sql = '';
-                }
+            if ($eje instanceof Ejercicio) {
+                $posicion = 0;
+                $numero = 1;
+                $sql = '';
+                $continuar = true;
+                $consulta = 'SELECT idasiento,numero,fecha FROM ' . static::tableName()
+                    . ' WHERE codejercicio = ' . self::$dataBase->var2str($eje->codejercicio)
+                    . ' ORDER BY codejercicio ASC, fecha ASC, idasiento ASC';
 
                 $asientos = self::$dataBase->selectLimit($consulta, 1000, $posicion);
+                while (!empty($asientos) && $continuar) {
+                    foreach ($asientos as $col) {
+                        if ($col['numero'] !== $numero) {
+                            $sql .= 'UPDATE ' . static::tableName() . ' SET numero = ' . self::$dataBase->var2str($numero)
+                                . ' WHERE idasiento = ' . self::$dataBase->var2str($col['idasiento']) . ';';
+                        }
+
+                        ++$numero;
+                    }
+                    $posicion += 1000;
+
+                    if ($sql !== '') {
+                        if (!self::$dataBase->exec($sql)) {
+                            self::$miniLog->alert(self::$i18n->trans('renumber-accounting-error', ['%exerciseCode%' => $eje->codejercicio]));
+                            $continuar = false;
+                        }
+                        $sql = '';
+                    }
+
+                    $asientos = self::$dataBase->selectLimit($consulta, 1000, $posicion);
+                }
             }
         }
 

@@ -135,7 +135,9 @@ abstract class Product extends ModelClass
             self::$impuestos = [];
             $impuestoModel = new Impuesto();
             foreach ($impuestoModel->all() as $imp) {
-                self::$impuestos[$imp->codimpuesto] = $imp;
+                if ($imp instanceof Impuesto) {
+                    self::$impuestos[$imp->codimpuesto] = $imp;
+                }
             }
         }
 
@@ -176,7 +178,9 @@ abstract class Product extends ModelClass
             self::$impuestos = [];
             $impuestoModel = new Impuesto();
             foreach ($impuestoModel->all() as $imp) {
-                self::$impuestos[$imp->codimpuesto] = $imp;
+                if ($imp instanceof Impuesto) {
+                    self::$impuestos[$imp->codimpuesto] = $imp;
+                }
             }
         }
     }

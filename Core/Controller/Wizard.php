@@ -63,9 +63,11 @@ class Wizard extends Controller
         $modelName = '\FacturaScripts\Dinamic\Model\\' . $modelName;
         $model = new $modelName();
 
-        $order = [$model->primaryDescriptionColumn() => 'ASC'];
-        foreach ($model->all([], $order, 0, self::ITEM_SELECT_LIMIT) as $newModel) {
-            $values[$newModel->primaryColumnValue()] = $newModel->primaryDescription();
+        if ($model instanceof Model\Base\ModelClass) {
+            $order = [$model->primaryDescriptionColumn() => 'ASC'];
+            foreach ($model->all([], $order, 0, self::ITEM_SELECT_LIMIT) as $newModel) {
+                $values[$newModel->primaryColumnValue()] = $newModel->primaryDescription();
+            }
         }
 
         return $values;
@@ -130,14 +132,16 @@ class Wizard extends Controller
 
         $almacenModel = new Model\Almacen();
         foreach ($almacenModel->all() as $almacen) {
-            $almacen->codpais = $codpais;
-            $almacen->provincia = $this->empresa->provincia;
-            $almacen->ciudad = $this->empresa->ciudad;
-            $almacen->save();
+            if ($almacen instanceof Model\Almacen) {
+                $almacen->codpais = $codpais;
+                $almacen->provincia = $this->empresa->provincia;
+                $almacen->ciudad = $this->empresa->ciudad;
+                $almacen->save();
 
-            $appSettings->set('default', 'codalmacen', $almacen->codalmacen);
-            $appSettings->save();
-            break;
+                $appSettings->set('default', 'codalmacen', $almacen->codalmacen);
+                $appSettings->save();
+                break;
+            }
         }
     }
 }

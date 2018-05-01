@@ -86,11 +86,13 @@ class TasksComponent extends BaseComponent implements ComponentInterface
         }
 
         foreach ($rows as $data) {
-            if (empty($data->properties['enddate'])) {
-                $this->tasks[] = $data;
-                continue;
+            if ($data instanceof Model\DashboardData) {
+                if (empty($data->properties['enddate'])) {
+                    $this->tasks[] = $data;
+                    continue;
+                }
+                $this->completed[] = $data;
             }
-            $this->completed[] = $data;
         }
     }
 

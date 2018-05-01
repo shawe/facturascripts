@@ -150,7 +150,7 @@ class SubcuentaSaldo extends Base\ModelClass
      * @param int   $month
      * @param float $debit
      * @param float $credit
-     * 
+     *
      * @return bool
      */
     public function updateBalance($month, $debit, $credit): bool
@@ -179,8 +179,10 @@ class SubcuentaSaldo extends Base\ModelClass
         $result = 0;
         $where = [new DataBaseWhere('idsubcuenta', $idSubAccount)];
         foreach ($this->all($where, ['mes' => 'ASC']) as $values) {
-            $detail[$values->mes - 1] = round($values->saldo, FS_NF0);
-            $result += $values->saldo;
+            if ($values instanceof self) {
+                $detail[$values->mes - 1] = round($values->saldo, FS_NF0);
+                $result += $values->saldo;
+            }
         }
 
         return round($result, FS_NF0);

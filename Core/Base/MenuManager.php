@@ -90,7 +90,7 @@ class MenuManager
     public function removeOld($currentPageNames)
     {
         foreach (self::$pageModel->all([], [], 0, 0) as $page) {
-            if (!in_array($page->name, $currentPageNames)) {
+            if ($page instanceof Model\Page && !in_array($page->name, $currentPageNames)) {
                 $page->delete();
             }
         }
@@ -157,8 +157,10 @@ class MenuManager
         $roleUserModel = new Model\RoleUser();
         $filter = [new DataBase\DataBaseWhere('nick', $nick)];
         foreach ($roleUserModel->all($filter) as $roleUser) {
-            foreach ($roleUser->getRoleAccess() as $roleAccess) {
-                $access[] = $roleAccess;
+            if ($roleUser instanceof Model\RoleUser) {
+                foreach ($roleUser->getRoleAccess() as $roleAccess) {
+                    $access[] = $roleAccess;
+                }
             }
         }
 
@@ -189,7 +191,7 @@ class MenuManager
         $userAccess = $this->getUserAccess(self::$user->nick);
         foreach ($pages as $page) {
             foreach ($userAccess as $pageRule) {
-                if ($page->name === $pageRule->pagename) {
+                if ($page instanceof Model\Page && $pageRule instanceof Model\RoleAccess && $page->name === $pageRule->pagename) {
                     $result[] = $page;
                     break;
                 }
@@ -289,7 +291,8 @@ class MenuManager
             if ($menuItem->name === $pageModel->name) {
                 $menu[$key]->active = true;
                 break;
-            } elseif (!empty($pageModel->submenu) && !empty($menuItem->menu) && $menuItem->name === $pageModel->submenu) {
+            }
+            if (!empty($pageModel->submenu) && !empty($menuItem->menu) && $menuItem->name === $pageModel->submenu) {
                 $menu[$key]->active = true;
                 $this->setActiveMenuItem($menu[$key]->menu, $pageModel);
                 break;

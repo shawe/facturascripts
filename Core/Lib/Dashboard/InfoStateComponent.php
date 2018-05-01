@@ -87,16 +87,18 @@ class InfoStateComponent extends BaseComponent implements ComponentInterface
         }
 
         foreach ($rows as $data) {
-            $modelInfo = $this->getModelInfo($data->properties['model']);
-            $totalModel = $this->getSQLData($modelInfo['table'], $data->properties['values']);
+            if ($data instanceof Model\DashboardData) {
+                $modelInfo = $this->getModelInfo($data->properties['model']);
+                $totalModel = $this->getSQLData($modelInfo['table'], $data->properties['values']);
 
-            $this->group[$data->properties['group']] = [
-                'icon' => $data->properties['icon'],
-                'value' => $totalModel->totals['total'],
-                'url' => $modelInfo['url'],
-            ];
+                $this->group[$data->properties['group']] = [
+                    'icon' => $data->properties['icon'],
+                    'value' => $totalModel->totals['total'],
+                    'url' => $modelInfo['url'],
+                ];
 
-            $this->addDetail($data->properties['group'], $data->properties['values'], $totalModel);
+                $this->addDetail($data->properties['group'], $data->properties['values'], $totalModel);
+            }
         }
     }
 
@@ -129,8 +131,11 @@ class InfoStateComponent extends BaseComponent implements ComponentInterface
     {
         $model = self::DIR_MODEL . $modelName;
         $modelObj = new $model();
-
-        return ['table' => $modelObj->tableName(), 'url' => $modelObj->url('list')];
+        $info = [];
+        if ($modelObj instanceof Model\Base\ModelClass) {
+            $info = ['table' => $modelObj->tableName(), 'url' => $modelObj->url('list')];
+        }
+        return $info;
     }
 
     /**

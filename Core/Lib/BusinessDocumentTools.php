@@ -19,8 +19,7 @@
 namespace FacturaScripts\Core\Lib;
 
 use FacturaScripts\Core\Base\Utils;
-use FacturaScripts\Core\Model\Base\BusinessDocument;
-use FacturaScripts\Core\Model\Base\BusinessDocumentLine;
+use FacturaScripts\Core\Model\Base;
 use FacturaScripts\Dinamic\Model\Articulo;
 use FacturaScripts\Dinamic\Model\Cliente;
 use FacturaScripts\Dinamic\Model\Empresa;
@@ -60,9 +59,9 @@ class BusinessDocumentTools
     /**
      * Recalculates document totals.
      *
-     * @param BusinessDocument $doc
+     * @param Base\BusinessDocument $doc
      */
-    public function recalculate(BusinessDocument $doc)
+    public function recalculate(Base\BusinessDocument $doc)
     {
         $this->clearTotals($doc);
         $lines = $doc->getLines();
@@ -80,12 +79,12 @@ class BusinessDocumentTools
     /**
      * Calculate document totals from form data and returns the new total and document lines.
      *
-     * @param BusinessDocument       $doc
-     * @param BusinessDocumentLine[] $formLines
+     * @param Base\BusinessDocument       $doc
+     * @param Base\BusinessDocumentLine[] $formLines
      *
      * @return string
      */
-    public function recalculateForm(BusinessDocument $doc, array &$formLines)
+    public function recalculateForm(Base\BusinessDocument $doc, array &$formLines)
     {
         $this->clearTotals($doc);
         $lines = [];
@@ -113,9 +112,9 @@ class BusinessDocumentTools
     /**
      * Clear the totals values for the document.
      *
-     * @param BusinessDocument $doc
+     * @param Base\BusinessDocument $doc
      */
-    private function clearTotals(BusinessDocument $doc)
+    private function clearTotals(Base\BusinessDocument $doc)
     {
         $this->irpf = $doc->irpf;
 
@@ -134,13 +133,13 @@ class BusinessDocumentTools
             return;
         }
 
-        if (isset($doc->codcliente)) {
+        if ($doc instanceof Base\SalesDocument && isset($doc->codcliente)) {
             $cliente = new Cliente();
             if ($cliente->loadFromCode($doc->codcliente)) {
                 $this->irpf = $cliente->irpf;
                 $this->recargo = $cliente->recargo;
             }
-        } elseif (isset($doc->codproveedor)) {
+        } elseif ($doc instanceof Base\PurchaseDocument && isset($doc->codproveedor)) {
             $proveedor = new Proveedor();
             if ($proveedor->loadFromCode($doc->codproveedor)) {
                 $this->irpf = $proveedor->irpf;
@@ -156,7 +155,7 @@ class BusinessDocumentTools
     /**
      * Returns subtotals by tax.
      *
-     * @param BusinessDocumentLine[] $lines
+     * @param Base\BusinessDocumentLine[] $lines
      *
      * @return array
      */
@@ -205,19 +204,19 @@ class BusinessDocumentTools
     /**
      * Performs the necessary calculations for each line of the document.
      *
-     * @param array            $fLine
-     * @param BusinessDocument $doc
+     * @param array                 $fLine
+     * @param Base\BusinessDocument $doc
      *
-     * @return BusinessDocumentLine
+     * @return Base\BusinessDocumentLine
      */
-    private function recalculateLine(array $fLine, BusinessDocument $doc)
+    private function recalculateLine(array $fLine, Base\BusinessDocument $doc)
     {
         if (!empty($fLine['referencia']) && empty($fLine['descripcion'])) {
             $this->setProductData($fLine);
         } elseif (empty($fLine['iva'])) {
             $impuestoModel = new Impuesto();
             foreach ($impuestoModel->all() as $imp) {
-                if ($imp->isDefault()) {
+                if ($imp instanceof Impuesto && $imp->isDefault()) {
                     $fLine['iva'] = $imp->iva;
                     $fLine['recargo'] = $this->recargo ? $imp->recargo : $fLine['recargo'];
                     break;

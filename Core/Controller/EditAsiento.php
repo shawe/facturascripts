@@ -414,10 +414,12 @@ class EditAsiento extends ExtendedController\PanelController
             }
 
             foreach ($entries as $line) {
-                $line->idpartida = null;
-                $line->idasiento = $accounting->idasiento;
-                if (!$line->save()) {
-                    throw new \Exception($this->i18n->trans('clone-line-document-error'));
+                if ($line instanceof Model\Partida) {
+                    $line->idpartida = null;
+                    $line->idasiento = $accounting->idasiento;
+                    if (!$line->save()) {
+                        throw new \Exception($this->i18n->trans('clone-line-document-error'));
+                    }
                 }
             }
             // confirm data

@@ -95,7 +95,9 @@ class AppSettings
     {
         $settingsModel = new Settings();
         foreach ($settingsModel->all() as $group) {
-            self::$data[$group->name] = $group->properties;
+            if ($group instanceof Settings) {
+                self::$data[$group->name] = $group->properties;
+            }
         }
 
         $constants = [
