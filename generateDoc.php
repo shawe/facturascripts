@@ -31,8 +31,8 @@ $sam = new Sami(
         'theme'                => 'default',
         'versions'             => $versions,
         'title'                => 'FacturaScripts',
-        'build_dir'            => __DIR__.'/build/%version%',
-        'cache_dir'            => __DIR__.'/cache/%version%',
+        'build_dir'            => __DIR__.'/doc/%version%',
+        'cache_dir'            => __DIR__.'/cache/doc/%version%',
         'remote_repository'    => new GitHubRemoteRepository('NeoRazorX/facturascripts', 'Core'),
         'default_opened_level' => 2,
     ]
