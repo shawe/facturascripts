@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Import;
 
 use FacturaScripts\Core\Base\DataBase;
@@ -24,7 +25,8 @@ use ParseCsv\Csv;
 /**
  * Common CSV import actions.
  *
- * @author Carlos García Gómez
+ * @package FacturaScripts\Core\Lib\Import
+ * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class CSVImport
 {
@@ -66,13 +68,13 @@ class CSVImport
 
     /**
      * Returns a value to SQL format.
-     * 
+     *
      * @param DataBase $dataBase
      * @param string   $value
-     * 
+     *
      * @return string
      */
-    private static function valueToSql(DataBase &$dataBase, string $value): string
+    private static function valueToSql(DataBase $dataBase, string $value): string
     {
         if ($value === 'false' || $value === 'true') {
             return $value;
@@ -90,8 +92,8 @@ class CSVImport
      */
     protected static function getTableFilePath(string $table): string
     {
-        if (!defined('FS_CODPAIS')) {
-            define('FS_CODPAIS', 'ES');
+        if (!\defined('FS_CODPAIS')) {
+            \define('FS_CODPAIS', 'ES');
         }
 
         $filePath = FS_FOLDER . '/Dinamic/Data/Codpais/' . FS_CODPAIS . '/' . $table . '.csv';

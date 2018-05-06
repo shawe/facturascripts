@@ -1,8 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017  Francesc Pineda Segarra  <francesc.pineda.segarra@gmail.com>
- * Copyright (C) 2018  Carlos García Gómez      <carlos@facturascripts.com>
+ * Copyright (C) 2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -17,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController;
@@ -24,6 +24,7 @@ use FacturaScripts\Core\Lib\ExtendedController;
 /**
  * Controller to edit a single item from the EstadoDocumento model
  *
+ * @package FacturaScripts\Core\Controller
  * @author Francesc Pineda Segarra <francesc.pineda.segarra@gmail.com>
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
@@ -33,7 +34,7 @@ class EditEstadoDocumento extends ExtendedController\EditController
     /**
      * Returns the model name
      */
-    public function getModelClassName()
+    public function getModelClassName(): string
     {
         return 'EstadoDocumento';
     }
@@ -43,14 +44,14 @@ class EditEstadoDocumento extends ExtendedController\EditController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'status-document';
-        $pagedata['menu'] = 'admin';
-        $pagedata['icon'] = 'fa-tag';
-        $pagedata['showonmenu'] = false;
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'status-document';
+        $pageData['menu'] = 'admin';
+        $pageData['icon'] = 'fa-tag';
+        $pageData['showonmenu'] = false;
 
-        return $pagedata;
+        return $pageData;
     }
 }

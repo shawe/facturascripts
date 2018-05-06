@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\Controller;
@@ -25,6 +26,7 @@ use FacturaScripts\Core\Model\CodeModel;
 /**
  * Description of SendMail
  *
+ * @package FacturaScripts\Core\Controller
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Javier García Iceta <javigarciaiceta@gmail.com>
  */
@@ -43,7 +45,7 @@ class SendMail extends Controller
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
         $pageData = parent::getPageData();
         $pageData['menu'] = 'reports';
@@ -84,7 +86,7 @@ class SendMail extends Controller
      *
      * @return string
      */
-    public function url()
+    public function url(): string
     {
         $fileName = $this->request->get('fileName', '');
         if (empty($fileName)) {
@@ -101,7 +103,7 @@ class SendMail extends Controller
      *
      * @return bool
      */
-    protected function execAction(string $action)
+    protected function execAction(string $action): bool
     {
         switch ($action) {
             case 'send':
@@ -139,7 +141,7 @@ class SendMail extends Controller
             // Remove unneeded spaces
             $emails = trim($this->request->request->get($field, ''));
             // Autocomplete adds a comma at the end, remove it if exists (maybe user remove it)
-            $emails = $emails[\strlen($emails) - 1] === ',' ? substr($emails, 0, -1) : $emails;
+            $emails = $emails[mb_strlen($emails) - 1] === ',' ? substr($emails, 0, -1) : $emails;
             $sendTo[$field] = \explode(',', $emails);
         }
         $subject = $this->request->request->get('subject', '');
@@ -176,7 +178,7 @@ class SendMail extends Controller
      *
      * @return bool
      */
-    protected function execPreviousAction($action)
+    protected function execPreviousAction($action): bool
     {
         switch ($action) {
             case 'autocomplete':

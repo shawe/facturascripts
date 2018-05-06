@@ -1,6 +1,6 @@
 /*
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -20,10 +20,10 @@
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
 
-var mainForm, accountDescription, accountBalance, total, unbalance, vatRegister;
-var vatModal, vatForm;
-var accountData = {'subaccount': ''};
-var accountGraph = null;
+let mainForm, accountDescription, accountBalance, total, unbalance, vatRegister;
+let vatModal, vatForm;
+let accountData = {'subaccount': ''};
+let accountGraph = null;
 
 /*
  * AMOUNT Functions Management
@@ -34,7 +34,7 @@ var accountGraph = null;
  * @param {number} balance
  */
 function setUnbalance(balance) {
-    var value = Number(balance);
+    const value = Number(balance);
     unbalance.textContent = value.toFixed(2);
 }
 
@@ -42,9 +42,9 @@ function setUnbalance(balance) {
  * Calculate unbalance from account entries
  */
 function calculateEntryUnbalance() {
-    var data = getGridData();
-    var balance = 0.00;
-    for (var i = 0, max = data.length; i < max; i++) {
+    const data = getGridData();
+    let balance = 0.00;
+    for (let i = 0, max = data.length; i < max; i++) {
         balance += Number(data[i].debe) - Number(data[i].haber);
     }
     setUnbalance(balance.toFixed(2));
@@ -110,9 +110,9 @@ function saveVatRegister() {
     vatModal.modal('hide');
 
     // save form data into grid data
-    var selectedRow = getRowSelected();
+    const selectedRow = getRowSelected();
     if (selectedRow !== null) {
-        var values = [
+        const values = [
             {'field': 'documento', 'value': vatForm.find('.modal-body [name="documento"]').val()},
             {'field': 'cifnif', 'value': vatForm.find('.modal-body [name="cifnif"]').val()},
             {'field': 'baseimponible', 'value': vatForm.find('.modal-body [name="baseimponible"]').val()},
@@ -132,7 +132,7 @@ function saveVatRegister() {
  * @param {string} action
  */
 function showVatRegister(action, mainForm) {
-    var selectedRow = getRowSelected();
+    const selectedRow = getRowSelected();
     if (selectedRow !== null) {
         // Set form object, first time
         if (vatModal === undefined) {
@@ -141,8 +141,8 @@ function showVatRegister(action, mainForm) {
         }
 
         // Load data from documentLineData and master document to modal form
-        var values = getGridRowValues(selectedRow);
-        var docForm = vatForm.find('.modal-body [name="documento"]');
+        const values = getGridRowValues(selectedRow);
+        const docForm = vatForm.find('.modal-body [name="documento"]');
         docForm.val(values['documento']);
         vatForm.find('.modal-body [name="cifnif"]').val(values['cifnif']);
         vatForm.find('.modal-body [name="baseimponible"]').val(values['baseimponible']);
@@ -164,15 +164,15 @@ function showVatRegister(action, mainForm) {
  */
 function customAfterSelection(row1, col1, row2, col2, preventScrolling) {
     if (col1 === col2 && row1 === row2) {
-        var subAccount = getGridFieldData(row1, 'codsubcuenta');
+        const subAccount = getGridFieldData(row1, 'codsubcuenta');
         if (subAccount !== accountData.subaccount) {
             if (subAccount === null || subAccount === '') {
                 clearAccountData();
                 return;
             }
 
-            var exercise = $('input[name=codejercicio]')[0];
-            var data = {
+            const exercise = $('input[name=codejercicio]')[0];
+            const data = {
                 action: 'account-data',
                 codsubcuenta: subAccount,
                 codejercicio: exercise.value
@@ -194,7 +194,7 @@ function customAfterChange(changes) {
         return;
     }
 
-    var data = {
+    const data = {
         action: "recalculate-document",
         changes: changes,
         lines: getGridData('order'),
@@ -211,9 +211,9 @@ function customAfterChange(changes) {
         data: data,
         success: function (results) {
             // update lines
-            var rowPos = 0;
+            let rowPos = 0;
             results.lines.forEach(function (element) {
-                var visualRow = gridObject.toVisualRow(rowPos);
+                let visualRow = gridObject.toVisualRow(rowPos);
                 documentLineData.rows[visualRow] = element;
                 rowPos++;
             });
@@ -269,7 +269,7 @@ $(document).ready(function () {
         addEvent('afterSelection', customAfterSelection);
 
         // Graphic bars
-        var ctx = document.getElementById('detail-balance');
+        let ctx = document.getElementById('detail-balance');
         if (ctx) {
             ctx = ctx.getContext('2d');
             accountGraph = new Chart(ctx, {

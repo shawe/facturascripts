@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\App\AppSettings;
@@ -25,6 +26,7 @@ use FacturaScripts\Core\Base\Utils;
  * A tax (VAT) that can be associated to articles, delivery notes lines,
  * invoices, etc.
  *
+ * @package FacturaScripts\Core\Model
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class Impuesto extends Base\ModelClass
@@ -75,7 +77,7 @@ class Impuesto extends Base\ModelClass
      *
      * @return bool
      */
-    public function isDefault()
+    public function isDefault(): bool
     {
         return $this->codimpuesto === AppSettings::get('default', 'codimpuesto');
     }
@@ -85,7 +87,7 @@ class Impuesto extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'codimpuesto';
     }
@@ -95,7 +97,7 @@ class Impuesto extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'impuestos';
     }
@@ -105,16 +107,16 @@ class Impuesto extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->codimpuesto = trim($this->codimpuesto);
-        if (empty($this->codimpuesto) || strlen($this->codimpuesto) > 10) {
+        if (empty($this->codimpuesto) || mb_strlen($this->codimpuesto) > 10) {
             self::$miniLog->alert(self::$i18n->trans('not-valid-tax-code-length'));
             return false;
         }
 
         $this->descripcion = Utils::noHtml($this->descripcion);
-        if (empty($this->descripcion) || strlen($this->descripcion) > 50) {
+        if (empty($this->descripcion) || mb_strlen($this->descripcion) > 50) {
             self::$miniLog->alert(self::$i18n->trans('not-valid-description-tax'));
             return false;
         }

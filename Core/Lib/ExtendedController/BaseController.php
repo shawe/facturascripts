@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base;
@@ -25,12 +26,11 @@ use FacturaScripts\Core\Model\CodeModel;
 /**
  * Description of BaseController
  *
+ * @package FacturaScripts\Core\Lib\ExtendedController
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 abstract class BaseController extends Base\Controller
 {
-
-    const MODEL_NAMESPACE = '\\FacturaScripts\\Dinamic\\Model\\';
 
     /**
      * Indicates the active view.
@@ -56,7 +56,7 @@ abstract class BaseController extends Base\Controller
     /**
      * List of views displayed by the controller.
      *
-     * @var mixed
+     * @var BaseView[]|EditView[]|ListView[]|BusinessDocumentView[]|GridView[]|EditListView[]|HtmlView[]
      */
     public $views;
 
@@ -94,7 +94,7 @@ abstract class BaseController extends Base\Controller
      */
     public function getFieldValue($model, $field)
     {
-        return isset($model->{$field}) ? $model->{$field} : null;
+        return $model->{$field} ?? null;
     }
 
     /**
@@ -107,12 +107,17 @@ abstract class BaseController extends Base\Controller
     {
         $results = [];
         $data = $this->requestGet(['source', 'field', 'title', 'term']);
-        foreach ($this->codeModel->search($data['source'], $data['field'], $data['title'], $data['term']) as $value) {
+        foreach ($this->codeModel::search($data['source'], $data['field'], $data['title'], $data['term']) as $value) {
             $results[] = ['key' => $value->code, 'value' => $value->description];
         }
         return $results;
     }
 
+    /**
+     * Obtain form data, and return it as array.
+     *
+     * @return array
+     */
     protected function getFormData(): array
     {
         $data = $this->request->request->all();
@@ -142,7 +147,7 @@ abstract class BaseController extends Base\Controller
      * Return array with parameters values
      *
      * @param array $keys
-     * 
+     *
      * @return array
      */
     protected function requestGet($keys): array

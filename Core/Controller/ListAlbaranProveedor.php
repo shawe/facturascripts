@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,14 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExtendedController;
 
 /**
- *  Controller to list the items in the AlbaranProveedor model
+ * Controller to list the items in the AlbaranProveedor model
  *
+ * @package FacturaScripts\Core\Controller
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -35,14 +37,14 @@ class ListAlbaranProveedor extends ExtendedController\ListController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'delivery-notes';
-        $pagedata['icon'] = 'fa-files-o';
-        $pagedata['menu'] = 'purchases';
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'delivery-notes';
+        $pageData['icon'] = 'fa-files-o';
+        $pageData['menu'] = 'purchases';
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
@@ -60,16 +62,16 @@ class ListAlbaranProveedor extends ExtendedController\ListController
         $this->addFilterNumber('ListAlbaranProveedor', 'total', 'total', 'total');
 
         $where = [new DataBaseWhere('tipodoc', 'AlbaranProveedor')];
-        $stateValues = $this->codeModel->all('estados_documentos', 'idestado', 'nombre', true, $where);
+        $stateValues = $this->codeModel::all('estados_documentos', 'idestado', 'nombre', true, $where);
         $this->addFilterSelect('ListAlbaranProveedor', 'idestado', 'state', 'idestado', $stateValues);
 
-        $warehouseValues = $this->codeModel->all('almacenes', 'codalmacen', 'nombre');
+        $warehouseValues = $this->codeModel::all('almacenes', 'codalmacen', 'nombre');
         $this->addFilterSelect('ListAlbaranProveedor', 'codalmacen', 'warehouse', 'codalmacen', $warehouseValues);
 
-        $serieValues = $this->codeModel->all('series', 'codserie', 'descripcion');
+        $serieValues = $this->codeModel::all('series', 'codserie', 'descripcion');
         $this->addFilterSelect('ListAlbaranProveedor', 'codserie', 'series', 'codserie', $serieValues);
 
-        $paymentValues = $this->codeModel->all('formaspago', 'codpago', 'descripcion');
+        $paymentValues = $this->codeModel::all('formaspago', 'codpago', 'descripcion');
         $this->addFilterSelect('ListAlbaranProveedor', 'codpago', 'payment-method', 'codpago', $paymentValues);
 
         $this->addFilterAutocomplete('ListAlbaranProveedor', 'codproveedor', 'supplier', 'codproveedor', 'proveedores', 'codproveedor', 'nombre');
@@ -88,7 +90,7 @@ class ListAlbaranProveedor extends ExtendedController\ListController
         $this->addOrderBy('ListLineaAlbaranProveedor', 'pvptotal', 'ammount');
         $this->addOrderBy('ListLineaAlbaranProveedor', 'idalbaran', 'delivery-note', 2);
 
-        $taxValues = $this->codeModel->all('impuestos', 'codimpuesto', 'descripcion');
+        $taxValues = $this->codeModel::all('impuestos', 'codimpuesto', 'descripcion');
         $this->addFilterSelect('ListLineaAlbaranProveedor', 'codimpuesto', 'tax', 'codimpuesto', $taxValues);
 
         $this->addFilterNumber('ListLineaAlbaranProveedor', 'cantidad', 'quantity', 'cantidad');

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2014-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2014-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -26,6 +27,7 @@ use FacturaScripts\Core\Base\Utils;
  * It is related to a single fiscal year and epigraph,
  * but it can be related to many subaccounts.
  *
+ * @package FacturaScripts\Core\Model
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -88,7 +90,7 @@ class Cuenta extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'cuentas';
     }
@@ -98,7 +100,7 @@ class Cuenta extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idcuenta';
     }
@@ -110,7 +112,7 @@ class Cuenta extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         /// force the parents tables
         new Ejercicio();
@@ -140,7 +142,7 @@ class Cuenta extends Base\ModelClass
     }
 
     /**
-     * TODO: Uncomplete documentation
+     * Verify if there is an error on the account.
      *
      * @return bool
      */
@@ -154,7 +156,7 @@ class Cuenta extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->codcuenta = trim($this->codcuenta);
         $this->descripcion = Utils::noHtml($this->descripcion);
@@ -174,7 +176,15 @@ class Cuenta extends Base\ModelClass
         return parent::test();
     }
 
-    public function url(string $type = 'auto', string $list = 'List')
+    /**
+     * Returns the url where to see / modify the data.
+     *
+     * @param string $type
+     * @param string $list
+     *
+     * @return string
+     */
+    public function url(string $type = 'auto', string $list = 'List'): string
     {
         return parent::url($type, 'ListCuenta?active=List');
     }

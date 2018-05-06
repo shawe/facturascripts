@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,11 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib;
 
 /**
  * Structure for each of the items in the FacturaScripts menu.
  *
+ * @package FacturaScripts\Core\Lib
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -92,10 +94,10 @@ class MenuItem
      *
      * @return string
      */
-    protected function getHTMLIcon()
+    protected function getHTMLIcon(): string
     {
-        return empty($this->icon) ? '<i class="fa fa-file-o fa-fw" aria-hidden="true"></i> ' : '<i class="fa ' . $this->icon
-            . ' fa-fw" aria-hidden="true"></i> ';
+        return empty($this->icon) ? '<i class="fa fa-file-o fa-fw" aria-hidden="true"></i> ' : '<i class="fa '
+            . $this->icon . ' fa-fw" aria-hidden="true"></i> ';
     }
 
     /**
@@ -105,7 +107,7 @@ class MenuItem
      *
      * @return string
      */
-    protected function getMenuId($parent)
+    protected function getMenuId($parent): string
     {
         return empty($parent) ? 'menu-' . $this->title : $parent . $this->name;
     }
@@ -117,7 +119,7 @@ class MenuItem
      *
      * @return string
      */
-    public function getHTML($parent = '')
+    public function getHTML($parent = ''): string
     {
         $active = $this->active ? ' active' : '';
         $menuId = $this->getMenuId($parent);

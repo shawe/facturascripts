@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,13 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 /**
  * This WidgetItem class modelises the common data and method of a WidgetItem element.
  *
- * @author Artex Trading sa     <jcuello@artextrading.com>
- * @author Carlos García Gómez  <carlos@facturascripts.com>
+ * @package FacturaScripts\Core\Lib\ExtendedController
+ * @author Artex Trading sa <jcuello@artextrading.com>
+ * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 abstract class WidgetItem implements VisualItemInterface
 {
@@ -129,7 +131,7 @@ abstract class WidgetItem implements VisualItemInterface
     /**
      * Array with list of personalization functions of the column
      */
-    public function columnFunction()
+    public function columnFunction(): array
     {
         return ['ColumnClass', 'ColumnHint', 'ColumnRequired', 'ColumnDescription'];
     }
@@ -141,7 +143,7 @@ abstract class WidgetItem implements VisualItemInterface
      *
      * @return string
      */
-    public function getHeaderHTML($value)
+    public function getHeaderHTML($value): string
     {
         return '<span title="' . $value . '"></span>';
     }
@@ -153,7 +155,7 @@ abstract class WidgetItem implements VisualItemInterface
      *
      * @return string
      */
-    public function getHintHTML($hint)
+    public function getHintHTML($hint): string
     {
         return empty($hint) ? '' : ' data-toggle="popover" data-placement="auto" data-trigger="hover" data-content="'
             . $hint . '" ';
@@ -202,7 +204,7 @@ abstract class WidgetItem implements VisualItemInterface
      *
      * @return WidgetItem
      */
-    public static function newFromJSON($widget)
+    public static function newFromJSON($widget): WidgetItem
     {
         $type = (string) $widget['type'];
         $widgetItem = self::widgetItemFromType($type);
@@ -218,7 +220,7 @@ abstract class WidgetItem implements VisualItemInterface
      *
      * @return WidgetItem
      */
-    public static function newFromXML($column)
+    public static function newFromXML($column): WidgetItem
     {
         $widgetAtributes = $column->widget->attributes();
         $type = (string) $widgetAtributes->type;
@@ -236,17 +238,17 @@ abstract class WidgetItem implements VisualItemInterface
      *
      * @return bool
      */
-    private function canApplyOptions($optionValue, $valueItem)
+    private function canApplyOptions($optionValue, $valueItem): bool
     {
         switch ($optionValue[0]) {
             case '<':
-                $optionValue = substr($optionValue, 1) ?: '';
-                $result = ((float) $valueItem < (float) $optionValue);
+                $newValue = substr($optionValue, 1) ?: '';
+                $result = ((float) $valueItem < (float) $newValue);
                 break;
 
             case '>':
-                $optionValue = substr($optionValue, 1) ?: '';
-                $result = ((float) $valueItem > (float) $optionValue);
+                $newValue = substr($optionValue, 1) ?: '';
+                $result = ((float) $valueItem > (float) $newValue);
                 break;
 
             default:
@@ -260,8 +262,8 @@ abstract class WidgetItem implements VisualItemInterface
     /**
      * Loads the attribute dictionary for a widget's group of options or values
      *
-     * @param array               $property
-     * @param \SimpleXMLElement[] $group
+     * @param array             $property
+     * @param \SimpleXMLElement $group
      */
     protected function getAttributesGroup(&$property, $group)
     {
@@ -281,7 +283,7 @@ abstract class WidgetItem implements VisualItemInterface
      *
      * @return string
      */
-    protected function getIconHTML()
+    protected function getIconHTML(): string
     {
         if (empty($this->icon)) {
             return '';
@@ -302,7 +304,7 @@ abstract class WidgetItem implements VisualItemInterface
      *
      * @return string
      */
-    protected function getTextOptionsHTML($valueItem)
+    protected function getTextOptionsHTML($valueItem): string
     {
         $html = '';
         foreach ($this->options as $option) {
@@ -329,7 +331,7 @@ abstract class WidgetItem implements VisualItemInterface
      *
      * @return string
      */
-    protected function specialAttributes()
+    protected function specialAttributes(): string
     {
         $attributes = $this->getHintHTML($this->hint);
         $attributes .= empty($this->readOnly) ? '' : ' readonly=""';
@@ -354,7 +356,7 @@ abstract class WidgetItem implements VisualItemInterface
      *
      * @return string
      */
-    protected function standardEditHTMLWidget($value, $specialAttributes, $extraClass = '', $type = '')
+    protected function standardEditHTMLWidget($value, $specialAttributes, $extraClass = '', $type = ''): string
     {
         $type2 = empty($type) ? $this->type : $type;
         $html = $this->getIconHTML()
@@ -376,7 +378,7 @@ abstract class WidgetItem implements VisualItemInterface
      *
      * @return string
      */
-    protected function standardListHTMLWidget($value, $text = '')
+    protected function standardListHTMLWidget($value, $text = ''): string
     {
         if ($value === null || $value === '') {
             return '';
@@ -393,7 +395,7 @@ abstract class WidgetItem implements VisualItemInterface
      *
      * @param string $type
      *
-     * @return WidgetItem
+     * @return WidgetItemAutocomplete|WidgetItemCheckBox|WidgetItemColor|WidgetItemDateTime|WidgetItemFileChooser|WidgetItemMoney|WidgetItemNumber|WidgetItemRadio|WidgetItemSelect|WidgetItemText
      */
     private static function widgetItemFromType($type)
     {

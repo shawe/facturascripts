@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -25,6 +25,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * AppAPI is the class used for API.
  *
+ * @package FacturaScripts\Core\App
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Rafael San José Tovar (http://www.x-netdigital.com) <info@rsanjoseo.com>
  */
@@ -69,7 +70,7 @@ class AppAPI extends App
      *
      * @author Ángel Guzmán Maeso <angel@guzmanmaeso.com>
      *
-     * @return boolean
+     * @return bool
      */
     private function checkAuthToken(): bool
     {
@@ -107,7 +108,8 @@ class AppAPI extends App
     private function getResourcesMap(): array
     {
         $resources = [[]];
-        foreach (scandir(FS_FOLDER . DIRECTORY_SEPARATOR . 'Dinamic' . DIRECTORY_SEPARATOR . 'Lib' . DIRECTORY_SEPARATOR . 'API', SCANDIR_SORT_NONE) as $resource) {
+        $dir = FS_FOLDER . DIRECTORY_SEPARATOR . 'Dinamic' . DIRECTORY_SEPARATOR . 'Lib' . DIRECTORY_SEPARATOR . 'API';
+        foreach (scandir($dir, SCANDIR_SORT_NONE) as $resource) {
             if (substr($resource, -4) === '.php') {
                 $class = substr('FacturaScripts\\Dinamic\\Lib\\API\\' . $resource, 0, -4);
                 $APIClass = new $class($this->response, $this->request, $this->miniLog, $this->i18n, []);
@@ -128,7 +130,7 @@ class AppAPI extends App
      */
     private function isDisabled(): bool
     {
-        return $this->settings->get('default', 'enable_api', false) !== 'true';
+        return $this->settings::get('default', 'enable_api', false) !== 'true';
     }
 
     /**

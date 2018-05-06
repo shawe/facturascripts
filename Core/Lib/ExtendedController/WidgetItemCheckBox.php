@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  carlos@facturascripts.com
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,11 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 /**
  * This class manage all specific method for a WidgetItem of Checkbox type.
  *
+ * @package FacturaScripts\Core\Lib\ExtendedController
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
 class WidgetItemCheckBox extends WidgetItem
@@ -43,9 +45,9 @@ class WidgetItemCheckBox extends WidgetItem
      *
      * @return string
      */
-    public function getEditHTML($value)
+    public function getEditHTML($value): string
     {
-        $checked = in_array(strtolower($value), ['true', 't', '1'], false) ? ' checked="" ' : '';
+        $checked = \in_array(strtolower($value), ['true', 't', '1'], false) ? ' checked="" ' : '';
         $html = $this->getIconHTML()
             . '<input name="' . $this->fieldName . '" id="' . $this->fieldName
             . '" class="form-check-input" type="checkbox" value="true" '
@@ -65,13 +67,13 @@ class WidgetItemCheckBox extends WidgetItem
      *
      * @return string
      */
-    public function getListHTML($value)
+    public function getListHTML($value): string
     {
         if ($value === null || $value === '') {
             return '-';
         }
 
-        $checked = in_array($value, ['t', '1'], false);
+        $checked = \in_array($value, ['t', '1'], false);
         $icon = $checked ? 'fa-check' : 'fa-minus';
         $style = $this->getTextOptionsHTML($checked);
 
@@ -86,7 +88,7 @@ class WidgetItemCheckBox extends WidgetItem
      *
      * @return string
      */
-    protected function specialAttributes()
+    protected function specialAttributes(): string
     {
         $readOnly = empty($this->readOnly) ? '' : ' disabled';
         return parent::specialAttributes() . $readOnly;

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2016-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2016-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,15 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
 use FacturaScripts\Core\App\AppSettings;
 use FacturaScripts\Core\Model;
+use FacturaScripts\Dinamic\Model\Base\BusinessDocument;
 
 /**
  * Abstract class that contains the methods that generate random documents
- * for clients and suppliers, such as orders, delivery notes and invoices. 
+ * for clients and suppliers, such as orders, delivery notes and invoices.
  *
+ * @package FacturaScripts\Core\Lib\RandomDataGenerator
  * @author Rafael San José <info@rsanjoseo.com>
  */
 abstract class AbstractRandomDocuments extends AbstractRandomPeople
@@ -93,71 +96,71 @@ abstract class AbstractRandomDocuments extends AbstractRandomPeople
      *
      * @param mixed $doc
      */
-    protected function randomizeDocument(&$doc)
+    protected function randomizeDocument($doc)
     {
         $doc->fecha = $this->fecha();
-        $doc->hora = mt_rand(10, 20) . ':' . mt_rand(10, 59) . ':' . mt_rand(10, 59);
+        $doc->hora = random_int(10, 20) . ':' . random_int(10, 59) . ':' . random_int(10, 59);
         $doc->codpago = $this->formasPago[0]->codpago;
-        $doc->codalmacen = (mt_rand(0, 2) == 0) ? $this->almacenes[0]->codalmacen : AppSettings::get('default', 'codalmacen');
+        $doc->codalmacen = (random_int(0, 2) === 0) ? $this->almacenes[0]->codalmacen : AppSettings::get('default', 'codalmacen');
         $doc->idempresa = AppSettings::get('default', 'idempresa');
 
         foreach ($this->divisas as $div) {
-            if ($div->coddivisa == AppSettings::get('default', 'coddivisa')) {
+            if ($div->coddivisa === AppSettings::get('default', 'coddivisa')) {
                 $doc->coddivisa = $div->coddivisa;
                 $doc->tasaconv = $div->tasaconv;
                 break;
             }
         }
 
-        if (mt_rand(0, 2) == 0) {
+        if (random_int(0, 2) === 0) {
             $doc->coddivisa = $this->divisas[0]->coddivisa;
             $doc->tasaconv = $this->divisas[0]->tasaconv;
         }
 
         $doc->codserie = AppSettings::get('default', 'codserie');
-        if (!isset($doc->codserie) || $doc->codserie == "---null---") {
+        if (!isset($doc->codserie) || $doc->codserie === '---null---') {
             $doc->codserie = 'A';
             $doc->irpf = 0;
         }
-        if (mt_rand(0, 2) == 0) {
-            if ($this->series[0]->codserie != 'R') {
+        if (random_int(0, 2) === 0) {
+            if ($this->series[0]->codserie !== 'R') {
                 $doc->codserie = $this->series[0]->codserie;
             }
 
-            $doc->observaciones = $this->observaciones($doc->fecha);
+            $doc->observaciones = $this->observaciones();
         }
 
-        if (isset($doc->numero2) && mt_rand(0, 4) == 0) {
-            $doc->numero2 = mt_rand(10, 99999);
-        } elseif (isset($doc->numproveedor) && mt_rand(0, 4) == 0) {
-            $doc->numproveedor = mt_rand(10, 99999);
+        if (isset($doc->numero2) && random_int(0, 4) === 0) {
+            $doc->numero2 = random_int(10, 99999);
+        } elseif (isset($doc->numproveedor) && random_int(0, 4) === 0) {
+            $doc->numproveedor = random_int(10, 99999);
         }
 
-        $doc->codagente = mt_rand(0, 4) ? $this->agentes[0]->codagente : null;
+        $doc->codagente = random_int(0, 4) ? $this->agentes[0]->codagente : null;
     }
 
     /**
      * Generates a random purchase document
      *
-     * @param $doc
+     * @param BusinessDocument  $doc
      * @param Model\Ejercicio   $eje
      * @param Model\Proveedor[] $proveedores
      * @param int               $num
      *
      * @return string
      */
-    protected function randomizeDocumentCompra(&$doc, $eje, $proveedores, $num)
+    protected function randomizeDocumentCompra($doc, $eje, $proveedores, $num): string
     {
         $doc->codejercicio = $eje->codejercicio;
 
         $regimeniva = 'Exento';
-        if (mt_rand(0, 14) > 0 && isset($proveedores[$num])) {
+        if (random_int(0, 14) > 0 && isset($proveedores[$num])) {
             $doc->setSubject([$proveedores[$num]]);
             $regimeniva = $proveedores[$num]->regimeniva;
         } else {
             /// Every once in a while, generate one without provider, to check if it breaks ;-)
             $doc->nombre = $this->empresa();
-            $doc->cifnif = mt_rand(1111111, 99999999) . 'Z';
+            $doc->cifnif = random_int(1111111, 99999999) . 'Z';
         }
 
         return $regimeniva;
@@ -166,25 +169,25 @@ abstract class AbstractRandomDocuments extends AbstractRandomPeople
     /**
      * Generates a random sale document
      *
-     * @param $doc
-     * @param Model\Ejercicio $eje
-     * @param Model\Cliente[] $clientes
-     * @param int             $num
+     * @param BusinessDocument $doc
+     * @param Model\Ejercicio  $eje
+     * @param Model\Cliente[]  $clientes
+     * @param int              $num
      *
      * @return string
      */
-    protected function randomizeDocumentVenta(&$doc, $eje, $clientes, $num)
+    protected function randomizeDocumentVenta($doc, $eje, $clientes, $num): string
     {
         $doc->codejercicio = $eje->codejercicio;
 
         $regimeniva = 'Exento';
-        if (mt_rand(0, 14) > 0 && isset($clientes[$num])) {
+        if (random_int(0, 14) > 0 && isset($clientes[$num])) {
             $doc->setSubject([$clientes[$num]]);
             $regimeniva = $clientes[$num]->regimeniva;
         } else {
             /// Every once in a while, generate one without the client, to check if it breaks ;-)
             $doc->nombrecliente = $this->nombre() . ' ' . $this->apellidos();
-            $doc->cifnif = mt_rand(1111, 999999999) . 'J';
+            $doc->cifnif = random_int(1111, 999999999) . 'J';
         }
 
         return $regimeniva;
@@ -193,14 +196,14 @@ abstract class AbstractRandomDocuments extends AbstractRandomPeople
     /**
      * Generates random document lines
      *
-     * @param $doc
-     * @param string $iddoc
-     * @param string $lineaClass
-     * @param string $regimeniva
-     * @param bool   $recargo
-     * @param int    $modStock
+     * @param BusinessDocument $doc
+     * @param string           $iddoc
+     * @param string           $lineaClass
+     * @param string           $regimeniva
+     * @param bool             $recargo
+     * @param int              $modStock
      */
-    protected function randomLineas(&$doc, $iddoc, $lineaClass, $regimeniva, $recargo, $modStock = 0)
+    protected function randomLineas($doc, $iddoc, $lineaClass, $regimeniva, $recargo, $modStock = 0)
     {
         $imp = new Model\Impuesto();
 
@@ -208,7 +211,7 @@ abstract class AbstractRandomDocuments extends AbstractRandomPeople
 
         /// 1 out of 15 times we use negative quantities
         $modcantidad = 1;
-        if (mt_rand(0, 4) == 0) {
+        if (random_int(0, 4) === 0) {
             $modcantidad = -1;
         }
 
@@ -222,7 +225,7 @@ abstract class AbstractRandomDocuments extends AbstractRandomPeople
             $lin->codimpuesto = $this->impuestos[0]->codimpuesto;
             $lin->iva = $this->impuestos[0]->iva;
 
-            if ($recargo && mt_rand(0, 2) == 0) {
+            if ($recargo && random_int(0, 2) === 0) {
                 $lin->recargo = $this->impuestos[0]->recargo;
             }
 
@@ -237,14 +240,14 @@ abstract class AbstractRandomDocuments extends AbstractRandomPeople
 
             $lin->irpf = $doc->irpf;
 
-            if ($regimeniva == 'Exento') {
+            if ($regimeniva === 'Exento') {
                 $lin->codimpuesto = null;
                 $lin->iva = 0;
                 $lin->recargo = 0;
                 $doc->irpf = $lin->irpf = 0;
             }
 
-            if (mt_rand(0, 4) == 0) {
+            if (random_int(0, 4) === 0) {
                 $lin->dtopor = $this->cantidad(0, 33, 100);
             }
 

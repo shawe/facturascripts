@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\App\AppSettings;
@@ -25,6 +26,7 @@ use FacturaScripts\Core\Base\Utils;
  * A series of invoicing or accounting, to have different numbering
  * in each series.
  *
+ * @package FacturaScripts\Core\Model
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class Serie extends Base\ModelClass
@@ -67,7 +69,7 @@ class Serie extends Base\ModelClass
      *
      * @return bool
      */
-    public function isDefault()
+    public function isDefault(): bool
     {
         return $this->codserie === AppSettings::get('default', 'codserie');
     }
@@ -77,7 +79,7 @@ class Serie extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'codserie';
     }
@@ -87,7 +89,7 @@ class Serie extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'series';
     }
@@ -97,7 +99,7 @@ class Serie extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->codserie = trim($this->codserie);
         $this->descripcion = Utils::noHtml($this->descripcion);
@@ -107,7 +109,7 @@ class Serie extends Base\ModelClass
             return false;
         }
 
-        if (strlen($this->descripcion) < 1 || strlen($this->descripcion) > 100) {
+        if ('' === $this->descripcion || mb_strlen($this->descripcion) > 100) {
             self::$miniLog->alert(self::$i18n->trans('invalid-column-lenght', ['%column%' => 'descripcion', '%min%' => '1', '%max%' => '100']));
             return false;
         }

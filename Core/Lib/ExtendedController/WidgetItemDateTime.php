@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,11 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 /**
  * Description of WidgetItemDateTime
  *
+ * @package FacturaScripts\Core\Lib\ExtendedController
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
 class WidgetItemDateTime extends WidgetItem
@@ -43,7 +45,7 @@ class WidgetItemDateTime extends WidgetItem
      *
      * @return string
      */
-    public function getEditHTML($value)
+    public function getEditHTML($value): string
     {
         $specialAttributes = $this->specialAttributes();
         $specialClass = $this->readOnly ? '' : ' datepicker';
@@ -58,7 +60,7 @@ class WidgetItemDateTime extends WidgetItem
      *
      * @return string
      */
-    public function getListHTML($value)
+    public function getListHTML($value): string
     {
         if (is_numeric($value)) {
             $value = date('d-m-Y', (int) $value);

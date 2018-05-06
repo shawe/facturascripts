@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -28,12 +29,14 @@ use FacturaScripts\Dinamic\Model\EstadoDocumento;
 /**
  * Description of BusinessDocumentView
  *
- * @author Carlos García Gómez
+ * @package FacturaScripts\Core\Lib\ExtendedController
+ * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class BusinessDocumentView extends BaseView
 {
 
     /**
+     * Document states for the related business document.
      *
      * @var array
      */
@@ -97,7 +100,7 @@ class BusinessDocumentView extends BaseView
      *
      * @return string
      */
-    public function getLineData()
+    public function getLineData(): string
     {
         $data = [
             'headers' => [],
@@ -165,14 +168,14 @@ class BusinessDocumentView extends BaseView
      *
      * @return array
      */
-    public function processFormLines(array $formLines)
+    public function processFormLines(array $formLines): array
     {
         $newLines = [];
         $order = count($formLines);
         foreach ($formLines as $data) {
             $line = ['orden' => $order];
             foreach ($this->lineOptions as $col) {
-                $line[$col->widget->fieldName] = isset($data[$col->widget->fieldName]) ? $data[$col->widget->fieldName] : null;
+                $line[$col->widget->fieldName] = $data[$col->widget->fieldName] ?? null;
             }
             $newLines[] = $line;
             $order--;

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017  Francesc Pineda Segarra  <francesc.pineda.segarra@gmail.com>
+ * Copyright (C) 2017 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -27,6 +27,7 @@ use FacturaScripts\Core\Base\MiniLog;
 /**
  * This class traces the SQL queries
  *
+ * @package FacturaScripts\Core\Base\DebugBar
  * @author Francesc Pineda Segarra <francesc.pineda.segarra@gmail.com>
  */
 class DataBaseCollector extends DataCollector implements Renderable, AssetProvider
@@ -53,7 +54,7 @@ class DataBaseCollector extends DataCollector implements Renderable, AssetProvid
      *
      * @return array Collected data
      */
-    public function collect()
+    public function collect(): array
     {
         $queries = [];
         $totalExecTime = 0;
@@ -78,7 +79,7 @@ class DataBaseCollector extends DataCollector implements Renderable, AssetProvid
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'db';
     }
@@ -89,7 +90,7 @@ class DataBaseCollector extends DataCollector implements Renderable, AssetProvid
      *
      * @return array
      */
-    public function getWidgets()
+    public function getWidgets(): array
     {
         return [
             'database' => [
@@ -111,7 +112,7 @@ class DataBaseCollector extends DataCollector implements Renderable, AssetProvid
      *
      * @return array
      */
-    public function getAssets()
+    public function getAssets(): array
     {
         $basePath = '../../../../../../';
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,11 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\App;
 
 /**
  * Description of AppRouter
  *
+ * @package FacturaScripts\Core\App
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class AppRouter
@@ -43,8 +45,8 @@ class AppRouter
      */
     public function __construct()
     {
-        if (!defined('FS_ROUTE')) {
-            define('FS_ROUTE', '');
+        if (!\defined('FS_ROUTE')) {
+            \define('FS_ROUTE', '');
         }
 
         $this->routes = $this->loadFromFile();
@@ -63,10 +65,10 @@ class AppRouter
      *
      * @return App
      */
-    public function getApp()
+    public function getApp(): App
     {
         $uri = $this->getUri();
-        if ('/api' === $uri || '/api/' === substr($uri, 0, 5)) {
+        if ('/api' === $uri || 0 === strpos($uri, '/api/')) {
             return new AppAPI($uri);
         }
 
@@ -83,7 +85,7 @@ class AppRouter
                 continue;
             }
 
-            if (0 === strncmp($uri, $key, strlen($key) - 1)) {
+            if (0 === strncmp($uri, $key, mb_strlen($key) - 1)) {
                 return new AppController($uri, $data['controller']);
             }
         }
@@ -109,7 +111,7 @@ class AppRouter
         /// Allowed folder?
         $allowedFolders = ['node_modules', 'vendor', 'Dinamic', 'Core', 'Plugins'];
         foreach ($allowedFolders as $folder) {
-            if ('/' . $folder === substr($uri, 0, strlen($folder) + 1)) {
+            if (0 === strpos($uri, '/' . $folder)) {
                 header('Content-Type: ' . $this->getMime($filePath));
                 readfile($filePath);
                 return true;
@@ -152,7 +154,7 @@ class AppRouter
      *
      * @return string
      */
-    private function getMime(string $filePath)
+    private function getMime(string $filePath): string
     {
         if (substr($filePath, -4) === '.css') {
             return 'text/css';
@@ -173,10 +175,10 @@ class AppRouter
     private function getUri()
     {
         $uri = filter_input(INPUT_SERVER, 'REQUEST_URI');
-        $uri2 = ($uri === null) ? filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL) : $uri;
+        $uri2 = $uri ?? filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
         $uriArray = explode('?', $uri2);
 
-        return substr($uriArray[0], strlen(FS_ROUTE));
+        return substr($uriArray[0], mb_strlen(FS_ROUTE));
     }
 
     /**

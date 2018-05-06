@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2017 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Dashboard;
 
 use FacturaScripts\Core\Model;
@@ -23,6 +24,7 @@ use FacturaScripts\Core\Model;
 /**
  * Description of ComponentMessages
  *
+ * @package FacturaScripts\Core\Lib\Dashboard
  * @author Francesc Pineda Segarra <francesc.pineda.segarra@gmail.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -53,7 +55,7 @@ class MessagesComponent extends BaseComponent implements ComponentInterface
      *
      * @return array
      */
-    public static function getPropertiesFields()
+    public static function getPropertiesFields(): array
     {
         return [
             'description' => '',
@@ -98,7 +100,7 @@ class MessagesComponent extends BaseComponent implements ComponentInterface
         }
 
         if ($this->randomData) {
-            $data['link'] = (mt_rand(0, 3) === 0) ? 'https://www.' . mt_rand(999, 99999) . '.com' : '';
+            $data['link'] = (random_int(0, 3) === 0) ? 'https://www.' . random_int(999, 99999) . '.com' : '';
         }
 
         $newItem->properties = [
@@ -115,7 +117,7 @@ class MessagesComponent extends BaseComponent implements ComponentInterface
      *
      * @return string
      */
-    public function getNumColumns()
+    public function getNumColumns(): string
     {
         return 'col-5';
     }
@@ -127,7 +129,7 @@ class MessagesComponent extends BaseComponent implements ComponentInterface
      *
      * @return string
      */
-    public function url($id)
+    public function url($id): string
     {
         return 'EditDashboardData?code=' . $id;
     }

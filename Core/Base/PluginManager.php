@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Base;
 
 use ZipArchive;
@@ -24,7 +25,6 @@ use ZipArchive;
  * FacturaScripts plugins manager.
  *
  * @package FacturaScripts\Core\Base
- *
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class PluginManager
@@ -83,6 +83,7 @@ class PluginManager
      * with the autoloader, but following the priority system of FacturaScripts.
      *
      * @param bool $clean
+     * @param bool $initControllers
      */
     public function deploy(bool $clean = true, bool $initControllers = false)
     {
@@ -238,7 +239,7 @@ class PluginManager
     public function remove(string $pluginName): bool
     {
         /// can't remove enabled plugins
-        if (in_array($pluginName, self::$enabledPlugins)) {
+        if (\in_array($pluginName, self::$enabledPlugins, false)) {
             self::$minilog->error(self::$i18n->trans('plugin-enabled', ['%pluginName%' => $pluginName]));
             return false;
         }
@@ -256,9 +257,9 @@ class PluginManager
 
     /**
      * Check for plugins needed.
-     * 
+     *
      * @param array $require
-     * 
+     *
      * @return bool
      */
     private function checkRequire(array $require): bool
@@ -303,13 +304,13 @@ class PluginManager
 
     /**
      * Disables plugins that depends on $pluginDisabled
-     * 
+     *
      * @param string $pluginDisabled
      */
     private function disableByDependecy(string $pluginDisabled)
     {
         foreach (self::$enabledPlugins as $key => $value) {
-            if (in_array($pluginDisabled, $value['require'])) {
+            if (\in_array($pluginDisabled, $value['require'], false)) {
                 self::$minilog->info(self::$i18n->trans('plugin-disabled', ['%pluginName%' => $value['name']]));
                 unset(self::$enabledPlugins[$key]);
                 $this->disableByDependecy($value['name']);
@@ -340,7 +341,7 @@ class PluginManager
         $ini = parse_ini_string($iniContent);
         if ($ini !== false) {
             foreach (['name', 'version', 'description', 'min_version'] as $key) {
-                $info[$key] = isset($ini[$key]) ? $ini[$key] : $info[$key];
+                $info[$key] = $ini[$key] ?? $info[$key];
             }
 
             if (isset($ini['require'])) {
@@ -354,7 +355,7 @@ class PluginManager
                 $info['description'] = self::$i18n->trans('incompatible-with-facturascripts', ['%version%' => self::MIN_VERSION]);
             }
 
-            $info['enabled'] = in_array($info['name'], $this->enabledPlugins());
+            $info['enabled'] = \in_array($info['name'], $this->enabledPlugins(), false);
         }
 
         return $info;
@@ -397,7 +398,7 @@ class PluginManager
      */
     private function scanFolder(string $folderPath): array
     {
-        $scan = scandir($folderPath, SCANDIR_SORT_ASCENDING);
-        return is_array($scan) ? array_diff($scan, ['.', '..']) : [];
+        $scan = scandir($folderPath, \SCANDIR_SORT_ASCENDING);
+        return \is_array($scan) ? array_diff($scan, ['.', '..']) : [];
     }
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -24,6 +25,7 @@ use FacturaScripts\Core\Model\CodeModel;
 /**
  * LisFilter definition for its use in ListController.
  *
+ * @package FacturaScripts\Core\Lib\ExtendedController
  * @author Artex Trading sa <jcuello@artextrading.com>
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
@@ -31,6 +33,7 @@ class ListFilter
 {
 
     /**
+     * Model to use with select and autocomplete filters.
      *
      * @var CodeModel
      */
@@ -69,7 +72,7 @@ class ListFilter
     /**
      * Adds $where to the informed filters in DataBaseWhere format
      *
-     * @param array $where
+     * @param DataBaseWhere[] $where
      */
     public function getDataBaseWhere(array &$where)
     {
@@ -105,6 +108,11 @@ class ListFilter
         }
     }
 
+    /**
+     * Return the current value.
+     *
+     * @return mixed|string
+     */
     public function getCurrentValue()
     {
         switch ($this->type) {
@@ -112,7 +120,7 @@ class ListFilter
                 return self::$codeModel->getDescription($this->options['table'], $this->options['fieldcode'], $this->options['value'], $this->options['fieldtitle']);
 
             default:
-                return isset($this->options['value']) ? $this->options['value'] : '';
+                return $this->options['value'] ?? '';
         }
     }
 
@@ -121,7 +129,7 @@ class ListFilter
      *
      * @return array
      */
-    public function getFilterOperators()
+    public function getFilterOperators(): array
     {
         return [
             'like-than' => '=',
@@ -211,7 +219,7 @@ class ListFilter
 
     /**
      * Creates and returns an autocomplete type filter.
-     * 
+     *
      * @param string $label
      * @param string $field
      * @param string $table
@@ -219,7 +227,7 @@ class ListFilter
      * @param string $fieldtitle
      * @param string $value
      * @param array  $where
-     * 
+     *
      * @return ListFilter
      */
     public static function newAutocompleteFilter($label, $field, $table, $fieldcode, $fieldtitle, $value, $where = []): ListFilter
@@ -263,12 +271,12 @@ class ListFilter
 
     /**
      * Creates and returns a select type filter.
-     * 
+     *
      * @param string $label
      * @param string $field
      * @param array  $values
      * @param string $value
-     * 
+     *
      * @return ListFilter
      */
     public static function newSelectFilter($label, $field, $values, $value): ListFilter
@@ -320,7 +328,7 @@ class ListFilter
      * Check if option value is not null or empty
      *
      * @param string $key
-     * 
+     *
      * @return bool
      */
     private function hasValue($key = 'value'): bool

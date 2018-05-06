@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2018 Carlos Garcia Gomez <carlos@facturascripts.com>
+ * Copyright (C) 2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -10,7 +10,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
@@ -22,6 +22,7 @@ namespace FacturaScripts\Core\Base;
 /**
  * Manage some basic and common actions with files.
  *
+ * @package FacturaScripts\Core\Base
  * @author Francesc Pineda Segarra <francesc.pineda.segarra@gmail.com>
  */
 class FileManager
@@ -47,16 +48,16 @@ class FileManager
      *
      * @param string $dir     Folder where looking for files and folders inside.
      * @param int    $order   Order to apply SCANDIR_SORT_ASCENDING/SCANDIR_SORT_DESCENDING,
-     *                        by default SCANDIR_SORT_ASCENDING.
+     *                         by default SCANDIR_SORT_ASCENDING.
      * @param array  $exclude Array list of items to exclude, by default ['.', '..'].
      *
      * @return array
      */
-    public function getFrom($dir, $order = SCANDIR_SORT_ASCENDING, array $exclude = ['.', '..']): array
+    public function getFrom($dir, $order = \SCANDIR_SORT_ASCENDING, array $exclude = ['.', '..']): array
     {
         $list = [];
         foreach (array_diff(scandir($dir, $order), $exclude) as $file) {
-            $list[] = str_replace(\FS_FOLDER . '/', '', $dir . self::DS . $file);
+            $list[] = \str_replace(\FS_FOLDER . '/', '', $dir . self::DS . $file);
         }
         return $list;
     }
@@ -66,14 +67,14 @@ class FileManager
      * Note: The path are relative to FS_FOLDER.
      *
      * @param string $dir       Folder to start looking for files.
-     * @param int    $order     Order to apply SCANDIR_SORT_ASCENDING/SCANDIR_SORT_DESCENDING,
-     *                          by default SCANDIR_SORT_ASCENDING.
+     * @param int    $order     Order to apply \SCANDIR_SORT_ASCENDING/SCANDIR_SORT_DESCENDING,
+     *                          by default \SCANDIR_SORT_ASCENDING.
      * @param array  $exclude   Array list of items to exclude, by default ['.', '..'].
      * @param bool   $recursive Look for recursively or not, by default false.
      *
      * @return array
      */
-    public function getFilesFrom($dir, $order = SCANDIR_SORT_ASCENDING, array $exclude = ['.', '..'], $recursive = false): array
+    public function getFilesFrom($dir, $order = \SCANDIR_SORT_ASCENDING, array $exclude = ['.', '..'], $recursive = false): array
     {
         $items = $this->getFrom($dir, $order, $exclude);
 
@@ -83,7 +84,7 @@ class FileManager
                 unset($items[$pos]);
                 if ($recursive) {
                     foreach ($this->getFilesFrom($dir . self::DS . $item, $order, $exclude, $recursive) as $file) {
-                        $moreItems[] = str_replace(\FS_FOLDER . '/', '', $file);
+                        $moreItems[] = \str_replace(\FS_FOLDER . '/', '', $file);
                     }
                 }
             }
@@ -99,13 +100,13 @@ class FileManager
      *
      * @param array $directories Folder to start looking for files.
      * @param int   $order       Order to apply SCANDIR_SORT_ASCENDING/SCANDIR_SORT_DESCENDING,
-     *                           by default SCANDIR_SORT_ASCENDING.
+     *                            by default SCANDIR_SORT_ASCENDING.
      * @param array $exclude     Array list of items to exclude, by default ['.', '..'].
      * @param bool  $recursive   Look for recursively or not, by default true.
      *
      * @return array
      */
-    public function getAllFrom(array $directories, $order = SCANDIR_SORT_ASCENDING, array $exclude = ['.', '..'], $recursive = true): array
+    public function getAllFrom(array $directories, $order = \SCANDIR_SORT_ASCENDING, array $exclude = ['.', '..'], $recursive = true): array
     {
         foreach ($directories as $directory) {
             $items = $this->getFrom($directory, $order, $exclude);
@@ -115,10 +116,10 @@ class FileManager
                 if ($recursive && is_dir($item)) {
                     $moreItems[] = $item;
                     foreach ($this->getAllFrom([$item], $order, $exclude, $recursive) as $file) {
-                        $moreItems[] = str_replace(\FS_FOLDER . '/', '', $file);
+                        $moreItems[] = \str_replace(\FS_FOLDER . '/', '', $file);
                     }
                 } else {
-                    $moreItems[] = str_replace(\FS_FOLDER . '/', '', $item);
+                    $moreItems[] = \str_replace(\FS_FOLDER . '/', '', $item);
                 }
             }
             $result = array_unique(\array_merge($items, $moreItems));

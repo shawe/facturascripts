@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\App;
 
 use FacturaScripts\Core\Base;
@@ -26,6 +27,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * App class is used for encapsulate common parts of code for the normal App execution.
  *
+ * @package FacturaScripts\Core\App
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 abstract class App
@@ -136,7 +138,7 @@ abstract class App
      *
      * @return bool
      */
-    public function connect()
+    public function connect(): bool
     {
         if ($this->dataBase->connect()) {
             $this->settings->load();
@@ -160,7 +162,7 @@ abstract class App
      *
      * @return bool
      */
-    abstract public function run();
+    abstract public function run(): bool;
 
     /**
      * Returns the data into the standard output.
@@ -177,10 +179,10 @@ abstract class App
      *
      * @return string
      */
-    protected function getUriParam($num)
+    protected function getUriParam($num): string
     {
         $params = explode('/', substr($this->uri, 1));
-        return isset($params[$num]) ? $params[$num] : '';
+        return $params[$num] ?? '';
     }
 
     /**
@@ -188,7 +190,7 @@ abstract class App
      *
      * @return bool
      */
-    protected function isIPBanned()
+    protected function isIPBanned(): bool
     {
         return $this->ipFilter->isBanned($this->request->getClientIp());
     }

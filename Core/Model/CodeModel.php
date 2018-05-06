@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base;
@@ -24,8 +25,9 @@ use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 /**
  * Auxiliary model to load a list of codes and their descriptions
  *
- * @author Artex Trading sa     <jcuello@artextrading.com>
- * @author Carlos García Gómez  <carlos@facturascripts.com>
+ * @package FacturaScripts\Core\Model
+ * @author Artex Trading sa <jcuello@artextrading.com>
+ * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class CodeModel
 {
@@ -59,7 +61,7 @@ class CodeModel
      *
      * @param array $data
      */
-    public function __construct($data = [])
+    public function __construct(array $data = [])
     {
         if (empty($data)) {
             $this->code = '';
@@ -73,15 +75,15 @@ class CodeModel
     /**
      * Load a CodeModel list (code and description) for the indicated table.
      *
-     * @param string $tableName
-     * @param string $fieldCode
-     * @param string $fieldDescription
-     * @param bool   $addEmpty
-     * @param array  $where
+     * @param string           $tableName
+     * @param string           $fieldCode
+     * @param string           $fieldDescription
+     * @param bool             $addEmpty
+     * @param DataBaseWhere[]  $where
      *
      * @return self[]
      */
-    public static function all($tableName, $fieldCode, $fieldDescription, $addEmpty = true, $where = [])
+    public static function all($tableName, $fieldCode, $fieldDescription, $addEmpty = true, array $where = []): array
     {
         $result = [];
         if ($addEmpty) {
@@ -113,7 +115,7 @@ class CodeModel
      *
      * @return self[]
      */
-    public static function search($tableName, $fieldCode, $fieldDescription, $search)
+    public static function search($tableName, $fieldCode, $fieldDescription, $search): array
     {
         $fields = $fieldCode . '|' . $fieldDescription;
         $where = [new DataBaseWhere($fields, mb_strtolower($search), 'LIKE')];
@@ -130,7 +132,7 @@ class CodeModel
      *
      * @return self
      */
-    public function get($tableName, $fieldCode, $code, $fieldDescription)
+    public function get($tableName, $fieldCode, $code, $fieldDescription): self
     {
         if (self::$dataBase === null) {
             self::$dataBase = new Base\DataBase();
@@ -158,10 +160,8 @@ class CodeModel
      *
      * @return string
      */
-    public function getDescription($tableName, $fieldCode, $code, $fieldDescription)
+    public function getDescription($tableName, $fieldCode, $code, $fieldDescription): string
     {
-        $model = $this->get($tableName, $fieldCode, $code, $fieldDescription);
-
-        return $model->description;
+        return $this->get($tableName, $fieldCode, $code, $fieldDescription)->description;
     }
 }

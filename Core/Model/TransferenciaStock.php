@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2016-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2016-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,11 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 /**
  * Description of transferencia_stock
  *
+ * @package FacturaScripts\Core\Model
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class TransferenciaStock extends Base\ModelClass
@@ -85,7 +87,7 @@ class TransferenciaStock extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idtrans';
     }
@@ -95,7 +97,7 @@ class TransferenciaStock extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'transstock';
     }
@@ -105,7 +107,7 @@ class TransferenciaStock extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         if ($this->codalmadestino === $this->codalmaorigen) {
             self::$miniLog->alert(self::$i18n->trans('warehouse-cant-be-same'));

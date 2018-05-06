@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -26,6 +26,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * APIResource is an abstract class for any API Resource.
  *
+ * @package FacturaScripts\Core\Lib\API\Base
  * @author Rafael San José Tovar (http://www.x-netdigital.com) <rsanjoseo@gmail.com>
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
@@ -129,7 +130,6 @@ abstract class APIResourceClass
      * Process the resource, allowing POST/PUT/DELETE/GET ALL actions
      *
      * @param string $name of resource, used only if are several.
-     * @param array $params . Params are URI segments. Can be an empty array, not null.
      *
      * @return bool
      */

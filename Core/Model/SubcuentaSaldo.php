@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -23,6 +24,7 @@ use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 /**
  * Description of SubcuentaSaldo
  *
+ * @package FacturaScripts\Core\Model
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
 class SubcuentaSaldo extends Base\ModelClass
@@ -84,7 +86,7 @@ class SubcuentaSaldo extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'subcuentas_saldos';
     }
@@ -94,7 +96,7 @@ class SubcuentaSaldo extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'id';
     }
@@ -118,7 +120,7 @@ class SubcuentaSaldo extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         new Subcuenta();
         return '';
@@ -130,7 +132,7 @@ class SubcuentaSaldo extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $account = new Subcuenta();
         if (!$account->loadFromCode($this->idsubcuenta)) {
@@ -150,7 +152,7 @@ class SubcuentaSaldo extends Base\ModelClass
      * @param int   $month
      * @param float $debit
      * @param float $credit
-     * 
+     *
      * @return bool
      */
     public function updateBalance($month, $debit, $credit): bool
@@ -179,10 +181,10 @@ class SubcuentaSaldo extends Base\ModelClass
         $result = 0;
         $where = [new DataBaseWhere('idsubcuenta', $idSubAccount)];
         foreach ($this->all($where, ['mes' => 'ASC']) as $values) {
-            $detail[$values->mes - 1] = round($values->saldo, (int) FS_NF0);
+            $detail[$values->mes - 1] = round($values->saldo, FS_NF0);
             $result += $values->saldo;
         }
 
-        return round($result, (int) FS_NF0);
+        return round($result, FS_NF0);
     }
 }

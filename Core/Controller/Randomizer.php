@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base;
@@ -26,6 +27,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Controller to generate random data
  *
+ * @package FacturaScripts\Core\Controller
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Rafael San José <info@rsanjoseo.com>
  */
@@ -71,7 +73,7 @@ class Randomizer extends Base\Controller
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
         $pageData = parent::getPageData();
         $pageData['menu'] = 'admin';
@@ -182,8 +184,6 @@ class Randomizer extends Base\Controller
         if (false !== $app) {
             $this->miniLog->info($this->i18n->trans($txt, ['%quantity%' => $app->generate()]));
         }
-
-        return;
     }
 
     /**
@@ -194,23 +194,23 @@ class Randomizer extends Base\Controller
         $this->totalCounter = [];
 
         $models = [
-            'agentes' => '\FacturaScripts\Dinamic\Model\Agente',
-            'albaranescli' => '\FacturaScripts\Dinamic\Model\AlbaranCliente',
-            'albaranesprov' => '\FacturaScripts\Dinamic\Model\AlbaranProveedor',
-            'asientos' => '\FacturaScripts\Dinamic\Model\Asiento',
-            'articulos' => '\FacturaScripts\Dinamic\Model\Articulo',
-            'articulosprov' => '\FacturaScripts\Dinamic\Model\ArticuloProveedor',
-            'clientes' => '\FacturaScripts\Dinamic\Model\Cliente',
-            'cuentas' => '\FacturaScripts\Dinamic\Model\Cuenta',
-            'grupos' => '\FacturaScripts\Dinamic\Model\GrupoClientes',
-            'fabricantes' => '\FacturaScripts\Dinamic\Model\Fabricante',
-            'familias' => '\FacturaScripts\Dinamic\Model\Familia',
-            'pedidoscli' => '\FacturaScripts\Dinamic\Model\PedidoCliente',
-            'pedidosprov' => '\FacturaScripts\Dinamic\Model\PedidoProveedor',
-            'presupuestoscli' => '\FacturaScripts\Dinamic\Model\PresupuestoCliente',
-            'presupuestosprov' => '\FacturaScripts\Dinamic\Model\PresupuestoProveedor',
-            'proveedores' => '\FacturaScripts\Dinamic\Model\Proveedor',
-            'subcuentas' => '\FacturaScripts\Dinamic\Model\Subcuenta'
+            'agentes' => self::MODEL_NAMESPACE . 'Agente',
+            'albaranescli' => self::MODEL_NAMESPACE . 'AlbaranCliente',
+            'albaranesprov' => self::MODEL_NAMESPACE . 'AlbaranProveedor',
+            'asientos' => self::MODEL_NAMESPACE . 'Asiento',
+            'articulos' => self::MODEL_NAMESPACE . 'Articulo',
+            'articulosprov' => self::MODEL_NAMESPACE . 'ArticuloProveedor',
+            'clientes' => self::MODEL_NAMESPACE . 'Cliente',
+            'cuentas' => self::MODEL_NAMESPACE . 'Cuenta',
+            'grupos' => self::MODEL_NAMESPACE . 'GrupoClientes',
+            'fabricantes' => self::MODEL_NAMESPACE . 'Fabricante',
+            'familias' => self::MODEL_NAMESPACE . 'Familia',
+            'pedidoscli' => self::MODEL_NAMESPACE . 'PedidoCliente',
+            'pedidosprov' => self::MODEL_NAMESPACE . 'PedidoProveedor',
+            'presupuestoscli' => self::MODEL_NAMESPACE . 'PresupuestoCliente',
+            'presupuestosprov' => self::MODEL_NAMESPACE . 'PresupuestoProveedor',
+            'proveedores' => self::MODEL_NAMESPACE . 'Proveedor',
+            'subcuentas' => self::MODEL_NAMESPACE . 'Subcuenta'
         ];
 
         foreach ($models as $tag => $modelName) {

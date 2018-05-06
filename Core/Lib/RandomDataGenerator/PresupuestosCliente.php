@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2016-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2016-2017 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,13 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
 use FacturaScripts\Core\Model;
 
 /**
- *  Generate customer budgets with random data.
+ * Generate customer budgets with random data.
  *
+ * @package FacturaScripts\Core\Lib\RandomDataGenerator
  * @author Rafael San José <info@rsanjoseo.com>
  */
 class PresupuestosCliente extends AbstractRandomDocuments
@@ -43,7 +45,7 @@ class PresupuestosCliente extends AbstractRandomDocuments
      *
      * @return int
      */
-    public function generate($num = 50)
+    public function generate($num = 50): int
     {
         $presu = $this->model;
         $this->shuffle($clientes, new Model\Cliente());
@@ -57,11 +59,11 @@ class PresupuestosCliente extends AbstractRandomDocuments
                 break;
             }
 
-            $recargo = ($clientes[0]->recargo || mt_rand(0, 4) === 0);
+            $recargo = ($clientes[0]->recargo || random_int(0, 4) === 0);
             $regimeniva = $this->randomizeDocumentVenta($presu, $eje, $clientes, $generated);
-            $presu->finoferta = date('d-m-Y', strtotime($presu->fecha . ' +' . mt_rand(1, 18) . ' months'));
+            $presu->finoferta = date('d-m-Y', strtotime($presu->fecha . ' +' . random_int(1, 18) . ' months'));
             if ($presu->save()) {
-                $this->randomLineas($presu, 'idpresupuesto', 'FacturaScripts\Dinamic\Model\LineaPresupuestoCliente', $regimeniva, $recargo);
+                $this->randomLineas($presu, 'idpresupuesto', self::MODEL_NAMESPACE . 'LineaPresupuestoCliente', $regimeniva, $recargo);
                 ++$generated;
             } else {
                 break;

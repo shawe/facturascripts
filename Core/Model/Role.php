@@ -1,8 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2016       Joe Nilson             <joenilson at gmail.com>
- * Copyright (C) 2017-2018  Carlos García Gómez    <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\Utils;
@@ -24,8 +24,9 @@ use FacturaScripts\Core\Base\Utils;
 /**
  * Define a permission package to quickly assign users.
  *
- * @author Joe Nilson           <joenilson at gmail.com>
- * @author Carlos García Gómez  <carlos@facturascripts.com>
+ * @package FacturaScripts\Core\Model
+ * @author Joe Nilson <joenilson at gmail.com>
+ * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class Role extends Base\ModelClass
 {
@@ -51,7 +52,7 @@ class Role extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'codrole';
     }
@@ -61,7 +62,7 @@ class Role extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'roles';
     }
@@ -72,7 +73,7 @@ class Role extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->descripcion = Utils::noHtml($this->descripcion);
 
@@ -87,7 +88,7 @@ class Role extends Base\ModelClass
      *
      * @return string
      */
-    public function url(string $type = 'auto', string $list = 'List')
+    public function url(string $type = 'auto', string $list = 'List'): string
     {
         return parent::url($type, 'ListUser?active=List');
     }

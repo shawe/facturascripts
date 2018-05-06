@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController;
@@ -23,8 +24,10 @@ use FacturaScripts\Core\Lib\ExtendedController;
 /**
  * Controller to list the items in the Familia model
  *
+ * @package FacturaScripts\Core\Controller
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
+ * @package FacturaScripts\Core\Controller
  */
 class ListFamilia extends ExtendedController\ListController
 {
@@ -34,14 +37,14 @@ class ListFamilia extends ExtendedController\ListController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'families';
-        $pagedata['icon'] = 'fa-object-group';
-        $pagedata['menu'] = 'warehouse';
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'families';
+        $pageData['icon'] = 'fa-object-group';
+        $pageData['menu'] = 'warehouse';
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
@@ -56,7 +59,7 @@ class ListFamilia extends ExtendedController\ListController
         $this->addOrderBy('ListFamilia', 'descripcion', 'description');
         $this->addOrderBy('ListFamilia', 'madre', 'parent');
 
-        $selectValues = $this->codeModel->all('familias', 'codfamilia', 'descripcion');
+        $selectValues = $this->codeModel::all('familias', 'codfamilia', 'descripcion');
         $this->addFilterSelect('ListFamilia', 'madre', 'parent', 'madre', $selectValues);
     }
 }

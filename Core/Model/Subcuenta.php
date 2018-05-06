@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -24,6 +25,7 @@ use FacturaScripts\Core\Base\Utils;
 /**
  * Detail level of an accounting plan. It is related to a single account.
  *
+ * @package FacturaScripts\Core\Model
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -114,7 +116,7 @@ class Subcuenta extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'subcuentas';
     }
@@ -124,7 +126,7 @@ class Subcuenta extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idsubcuenta';
     }
@@ -136,7 +138,7 @@ class Subcuenta extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         new CuentaEspecial();
         new Cuenta();
@@ -154,7 +156,12 @@ class Subcuenta extends Base\ModelClass
         $this->saldo = 0.0;
     }
 
-    public function getSpecialAccountCode()
+    /**
+     * Returns special account code from subaccount id.
+     *
+     * @return string
+     */
+    public function getSpecialAccountCode(): string
     {
         $result = $this->codcuentaesp;
         if (empty($result)) {
@@ -202,7 +209,7 @@ class Subcuenta extends Base\ModelClass
     {
         $exercise = new Ejercicio();
         $exercise->loadFromCode($this->codejercicio);
-        return empty($exercise->codejercicio) || (strlen($this->codsubcuenta) <> $exercise->longsubcuenta);
+        return empty($exercise->codejercicio) || (mb_strlen($this->codsubcuenta) <> $exercise->longsubcuenta);
     }
 
     /**
@@ -210,7 +217,7 @@ class Subcuenta extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->codcuenta = trim($this->codcuenta);
         $this->codsubcuenta = trim($this->codsubcuenta);
@@ -242,7 +249,7 @@ class Subcuenta extends Base\ModelClass
      *
      * @return bool
      */
-    protected function saveInsert(array $values = [])
+    protected function saveInsert(array $values = []): bool
     {
         $accountDetail = new SubcuentaSaldo();
         $inTransaction = self::$dataBase->inTransaction();
@@ -288,7 +295,7 @@ class Subcuenta extends Base\ModelClass
      *
      * @return bool
      */
-    public function delete()
+    public function delete(): bool
     {
         // Search for detail balance
         $where = [new DataBaseWhere('idsubcuenta', $this->idsubcuenta)];
@@ -331,7 +338,7 @@ class Subcuenta extends Base\ModelClass
     public function updateBalance(string $date, float $debit, float $credit): bool
     {
         $balance = $debit - $credit;
-        $month = (int) date("n", strtotime($date));
+        $month = (int) date('n', strtotime($date));
         $detail = new SubcuentaSaldo();
         $detail->idsubcuenta = $this->idsubcuenta;
 
@@ -356,7 +363,7 @@ class Subcuenta extends Base\ModelClass
             if ($inTransaction === false) {
                 self::$dataBase->commit();
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             self::$miniLog->error($e->getMessage());
             return false;
         } finally {
@@ -378,7 +385,7 @@ class Subcuenta extends Base\ModelClass
      *
      * @return string
      */
-    public function url(string $type = 'auto', string $list = 'List')
+    public function url(string $type = 'auto', string $list = 'List'): string
     {
         return parent::url($type, 'ListCuenta?active=List');
     }

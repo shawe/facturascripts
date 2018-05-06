@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2014-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2014-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\Utils;
@@ -23,6 +24,7 @@ use FacturaScripts\Core\Base\Utils;
 /**
  * A group of customers, which may be associated with a rate.
  *
+ * @package FacturaScripts\Core\Model
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class GrupoClientes extends Base\ModelClass
@@ -65,7 +67,7 @@ class GrupoClientes extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         /// As there is a key outside of tariffs, we have to check that table before
         new Tarifa();
@@ -78,7 +80,7 @@ class GrupoClientes extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'codgrupo';
     }
@@ -88,7 +90,7 @@ class GrupoClientes extends Base\ModelClass
      *
      * @return string
      */
-    public function primaryDescriptionColumn()
+    public function primaryDescriptionColumn(): string
     {
         return 'nombre';
     }
@@ -98,7 +100,7 @@ class GrupoClientes extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'gruposclientes';
     }
@@ -108,7 +110,7 @@ class GrupoClientes extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->nombre = Utils::noHtml($this->nombre);
 
@@ -127,7 +129,7 @@ class GrupoClientes extends Base\ModelClass
      *
      * @return string
      */
-    public function url(string $type = 'auto', string $list = 'List')
+    public function url(string $type = 'auto', string $list = 'List'): string
     {
         return parent::url($type, 'ListCliente?active=List');
     }
@@ -137,7 +139,7 @@ class GrupoClientes extends Base\ModelClass
      *
      * @return bool
      */
-    private function checkCircularRelation()
+    private function checkCircularRelation(): bool
     {
         if ($this->parent === null) {
             return false;
@@ -151,7 +153,7 @@ class GrupoClientes extends Base\ModelClass
         $subgroups = [$this->codgrupo];
         $group = $this->get($this->parent);
         while ($group->parent !== null) {
-            if (in_array($group->parent, $subgroups)) {
+            if (\in_array($group->parent, $subgroups, false)) {
                 self::$miniLog->alert(self::$i18n->trans('parent-group-loop', ['%parentGroup%' => $group->codgrupo]));
                 return true;
             }

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\Utils;
@@ -23,6 +24,7 @@ use FacturaScripts\Core\Base\Utils;
 /**
  * Accounting year. It is the period in which accounting entry, invoices, delivery notes are grouped ...
  *
+ * @package FacturaScripts\Core\Model
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class Ejercicio extends Base\ModelClass
@@ -98,7 +100,7 @@ class Ejercicio extends Base\ModelClass
      *
      * @return bool
      */
-    public function abierto()
+    public function abierto(): bool
     {
         return $this->estado === 'ABIERTO';
     }
@@ -124,7 +126,7 @@ class Ejercicio extends Base\ModelClass
      *
      * @return string
      */
-    public function getBestFecha($fecha, $showError = false)
+    public function getBestFecha($fecha, $showError = false): string
     {
         $fecha2 = strtotime($fecha);
 
@@ -189,7 +191,7 @@ class Ejercicio extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         return 'INSERT INTO ' . static::tableName() . ' (codejercicio,nombre,fechainicio,fechafin,'
             . 'estado,longsubcuenta,idasientoapertura,idasientopyg,idasientocierre) '
@@ -218,7 +220,7 @@ class Ejercicio extends Base\ModelClass
      *
      * @return string
      */
-    public function newCodigo($cod = '0001')
+    public function newCodigo($cod = '0001'): string
     {
         $sql = 'SELECT * FROM ' . static::tableName() . ' WHERE codejercicio = ' . self::$dataBase->var2str($cod) . ';';
         if (!self::$dataBase->select($sql)) {
@@ -239,7 +241,7 @@ class Ejercicio extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'codejercicio';
     }
@@ -249,7 +251,7 @@ class Ejercicio extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'ejercicios';
     }
@@ -259,7 +261,7 @@ class Ejercicio extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         /// TODO: Change dates verify to $this->inRange() call
         $this->codejercicio = trim($this->codejercicio);
@@ -267,7 +269,7 @@ class Ejercicio extends Base\ModelClass
 
         if (!preg_match('/^[A-Z0-9_]{1,4}$/i', $this->codejercicio)) {
             self::$miniLog->alert(self::$i18n->trans('invalid-column-lenght', ['%column%' => 'codejercicio', '%min%' => '1', '%max%' => '4']));
-        } elseif (!(strlen($this->nombre) > 1) && !(strlen($this->nombre) < 100)) {
+        } elseif (!(mb_strlen($this->nombre) > 1) && !(mb_strlen($this->nombre) < 100)) {
             self::$miniLog->alert(self::$i18n->trans('invalid-column-lenght', ['%column%' => 'nombre', '%min%' => '1', '%max%' => '100']));
         } elseif (strtotime($this->fechainicio) > strtotime($this->fechafin)) {
             $params = ['%endDate%' => $this->fechainicio, '%startDate%' => $this->fechafin];
@@ -286,7 +288,7 @@ class Ejercicio extends Base\ModelClass
      *
      * @return string en formato año
      */
-    public function year()
+    public function year(): string
     {
         return date('Y', strtotime($this->fechainicio));
     }

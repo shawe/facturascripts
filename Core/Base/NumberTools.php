@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,24 +16,29 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Base;
 
 /**
  * NumberTools give us some basic and common methods for numbers.
  *
+ * @package FacturaScripts\Core\Base
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class NumberTools
 {
 
+    /**
+     * NumberTools constructor.
+     */
     public function __construct()
     {
-        if (!defined('FS_NF1')) {
-            define('FS_NF1', ',');
+        if (!\defined('FS_NF1')) {
+            \define('FS_NF1', ',');
         }
 
-        if (!defined('FS_NF2')) {
-            define('FS_NF2', ' ');
+        if (!\defined('FS_NF2')) {
+            \define('FS_NF2', ' ');
         }
     }
 
@@ -45,7 +50,7 @@ class NumberTools
      *
      * @return string
      */
-    public static function format($number, $decimals = FS_NF0)
+    public static function format($number, $decimals = FS_NF0): string
     {
         return number_format((float) $number, (int) $decimals, FS_NF1, FS_NF2);
     }

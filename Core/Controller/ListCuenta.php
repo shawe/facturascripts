@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController;
@@ -23,6 +24,7 @@ use FacturaScripts\Core\Lib\ExtendedController;
 /**
  * Controller to list the items in the Cuenta model
  *
+ * @package FacturaScripts\Core\Controller
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -34,14 +36,14 @@ class ListCuenta extends ExtendedController\ListController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'accounting-accounts';
-        $pagedata['icon'] = 'fa-book';
-        $pagedata['menu'] = 'accounting';
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'accounting-accounts';
+        $pageData['icon'] = 'fa-book';
+        $pageData['menu'] = 'accounting';
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
@@ -53,7 +55,7 @@ class ListCuenta extends ExtendedController\ListController
         $this->addView('ListSubcuenta', 'Subcuenta', 'subaccounts', 'fa-th-list');
         $this->addSearchFields('ListSubcuenta', ['codsubcuenta', 'descripcion', 'codejercicio']);
 
-        $exerciseValues = $this->codeModel->all('ejercicios', 'codejercicio', 'nombre');
+        $exerciseValues = $this->codeModel::all('ejercicios', 'codejercicio', 'nombre');
         $this->addFilterSelect('ListSubcuenta', 'codejercicio', 'exercise', 'codejercicio', $exerciseValues);
 
         $this->addOrderBy('ListSubcuenta', 'codejercicio desc, codsubcuenta', 'code');

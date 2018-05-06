@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model\Base;
 
 use FacturaScripts\Core\Base\DataBase;
@@ -24,6 +25,7 @@ use FacturaScripts\Core\Base\DataBase;
  * The class from which all models inherit, connects to the database,
  * check the structure of the table and if necessary create or adapt.
  *
+ * @package FacturaScripts\Core\Model\Base
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 abstract class ModelClass extends ModelCore
@@ -34,26 +36,26 @@ abstract class ModelClass extends ModelCore
      *
      * @return string
      */
-    abstract public function modelClassName();
+    abstract public function modelClassName(): string;
 
     /**
      * Returns the name of the model.
      *
      * @return string
      */
-    abstract public function modelName();
+    abstract public function modelName(): string;
 
     /**
      * Returns all models that correspond to the selected filters.
      *
-     * @param array $where filters to apply to model records.
-     * @param array $order fields to use in the sorting. For example ['code' => 'ASC']
-     * @param int   $offset
-     * @param int   $limit
+     * @param DataBase\DataBaseWhere[] $where filters to apply to model records.
+     * @param array                    $order fields to use in the sorting. For example ['code' => 'ASC']
+     * @param int                      $offset
+     * @param int                      $limit
      *
-     * @return array
+     * @return self[]
      */
-    public function all(array $where = [], array $order = [], int $offset = 0, int $limit = 50)
+    public function all(array $where = [], array $order = [], int $offset = 0, int $limit = 50): array
     {
         $modelList = [];
         $sqlWhere = DataBase\DataBaseWhere::getSQLWhere($where);
@@ -77,7 +79,7 @@ abstract class ModelClass extends ModelCore
     public function checkArrayData(array &$data)
     {
         foreach ($this->getModelFields() as $field => $values) {
-            if (in_array($values['type'], ['boolean', 'tinyint(1)']) && !isset($data[$field])) {
+            if (\in_array($values['type'], ['boolean', 'tinyint(1)']) && !isset($data[$field])) {
                 $data[$field] = false;
             } elseif (isset($data[$field]) && $data[$field] === '---null---') {
                 /// ---null--- text comes from widgetItemSelect.
@@ -93,7 +95,7 @@ abstract class ModelClass extends ModelCore
      *
      * @return int
      */
-    public function count(array $where = [])
+    public function count(array $where = []): int
     {
         $sql = 'SELECT COUNT(1) AS total FROM ' . static::tableName() . DataBase\DataBaseWhere::getSQLWhere($where);
         $data = self::$dataBase->select($sql);
@@ -109,7 +111,7 @@ abstract class ModelClass extends ModelCore
      *
      * @return bool
      */
-    public function delete()
+    public function delete(): bool
     {
         $sql = 'DELETE FROM ' . static::tableName() . ' WHERE ' . static::primaryColumn()
             . ' = ' . self::$dataBase->var2str($this->primaryColumnValue()) . ';';
@@ -122,7 +124,7 @@ abstract class ModelClass extends ModelCore
      *
      * @return bool
      */
-    public function exists()
+    public function exists(): bool
     {
         if ($this->primaryColumnValue() === null) {
             return false;
@@ -160,13 +162,13 @@ abstract class ModelClass extends ModelCore
      * meet the above conditions.
      * Returns True if the record exists and False otherwise.
      *
-     * @param string $cod
-     * @param array  $where
-     * @param array  $orderby
+     * @param string                   $cod
+     * @param DataBase\DataBaseWhere[] $where
+     * @param array                    $orderby
      *
      * @return bool
      */
-    public function loadFromCode($cod, array $where = [], array $orderby = [])
+    public function loadFromCode($cod, array $where = [], array $orderby = []): bool
     {
         $data = $this->getRecord($cod, $where, $orderby);
         if (empty($data)) {
@@ -181,22 +183,22 @@ abstract class ModelClass extends ModelCore
     /**
      * Returns the following code for the reported field or the primary key of the model.
      *
-     * @param string $field
-     * @param array  $where
+     * @param string                   $field
+     * @param DataBase\DataBaseWhere[] $where
      *
      * @return int
      */
-    public function newCode(string $field = '', array $where = [])
+    public function newCode(string $field = '', array $where = []): int
     {
         /// if not field value take PK Field
         if (empty($field)) {
-            $field = $this->primaryColumn();
+            $field = $this::primaryColumn();
         }
         /// get fields list
         $modelFields = $this->getModelFields();
 
         /// Set Cast to Integer if field it's not
-        if (!in_array($modelFields[$field]['type'], ['integer', 'int', 'serial'])) {
+        if (!\in_array($modelFields[$field]['type'], ['integer', 'int', 'serial'])) {
             /// Set Where to Integers values only
             $where[] = new DataBase\DataBaseWhere($field, '^-?[0-9]+$', 'REGEXP');
             $field = self::$dataBase->sql2Int($field);
@@ -218,7 +220,7 @@ abstract class ModelClass extends ModelCore
      *
      * @return string
      */
-    public function primaryDescriptionColumn()
+    public function primaryDescriptionColumn(): string
     {
         return 'descripcion';
     }
@@ -228,10 +230,10 @@ abstract class ModelClass extends ModelCore
      *
      * @return string
      */
-    public function primaryDescription()
+    public function primaryDescription(): string
     {
         $field = $this->primaryDescriptionColumn();
-        return isset($this->{$field}) ? $this->{$field} : (string) $this->primaryColumnValue();
+        return $this->{$field} ?? (string) $this->primaryColumnValue();
     }
 
     /**
@@ -239,7 +241,7 @@ abstract class ModelClass extends ModelCore
      *
      * @return bool
      */
-    public function save()
+    public function save(): bool
     {
         if ($this->test()) {
             if ($this->exists()) {
@@ -258,7 +260,7 @@ abstract class ModelClass extends ModelCore
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         foreach ($this->getModelFields() as $key => $value) {
             if (null === $value['default'] && $value['is_nullable'] === 'NO' && $this->{$key} === null && $this->{$key} !== $this->primaryColumnValue()) {
@@ -278,7 +280,7 @@ abstract class ModelClass extends ModelCore
      *
      * @return string
      */
-    public function url(string $type = 'auto', string $list = 'List')
+    public function url(string $type = 'auto', string $list = 'List'): string
     {
         $value = $this->primaryColumnValue();
         $model = $this->modelClassName();
@@ -289,7 +291,7 @@ abstract class ModelClass extends ModelCore
                 break;
 
             case 'edit':
-                $result .= is_null($value) ? 'Edit' . $model : 'Edit' . $model . '?code=' . $value;
+                $result .= $value === null ? 'Edit' . $model : 'Edit' . $model . '?code=' . $value;
                 break;
 
             case 'new':
@@ -311,14 +313,14 @@ abstract class ModelClass extends ModelCore
      *
      * @return bool
      */
-    protected function saveInsert(array $values = [])
+    protected function saveInsert(array $values = []): bool
     {
         $insertFields = [];
         $insertValues = [];
         foreach ($this->getModelFields() as $field) {
             if (isset($this->{$field['name']})) {
                 $fieldName = $field['name'];
-                $fieldValue = isset($values[$fieldName]) ? $values[$fieldName] : $this->{$fieldName};
+                $fieldValue = $values[$fieldName] ?? $this->{$fieldName};
 
                 $insertFields[] = $fieldName;
                 $insertValues[] = self::$dataBase->var2str($fieldValue);
@@ -345,15 +347,15 @@ abstract class ModelClass extends ModelCore
      *
      * @return bool
      */
-    protected function saveUpdate(array $values = [])
+    protected function saveUpdate(array $values = []): bool
     {
         $sql = 'UPDATE ' . static::tableName();
         $coma = ' SET';
 
         foreach ($this->getModelFields() as $field) {
-            if ($field['name'] !== $this->primaryColumn()) {
+            if ($field['name'] !== $this::primaryColumn()) {
                 $fieldName = $field['name'];
-                $fieldValue = isset($values[$fieldName]) ? $values[$fieldName] : $this->{$fieldName};
+                $fieldValue = $values[$fieldName] ?? $this->{$fieldName};
                 $sql .= $coma . ' ' . $fieldName . ' = ' . self::$dataBase->var2str($fieldValue);
                 if ($coma === ' SET') {
                     $coma = ', ';
@@ -373,7 +375,7 @@ abstract class ModelClass extends ModelCore
      *
      * @return string
      */
-    private function getOrderBy(array $order)
+    private function getOrderBy(array $order): string
     {
         $result = '';
         $coma = ' ORDER BY ';
@@ -391,13 +393,13 @@ abstract class ModelClass extends ModelCore
      * Read the record whose primary column corresponds to the value $cod
      * or the first that meets the indicated condition.
      *
-     * @param string $cod
-     * @param array  $where
-     * @param array  $orderby
+     * @param string                   $cod
+     * @param DataBase\DataBaseWhere[] $where
+     * @param array                    $orderby
      *
      * @return array
      */
-    private function getRecord($cod, array $where = [], array $orderby = [])
+    private function getRecord($cod, array $where = [], array $orderby = []): array
     {
         $sqlWhere = empty($where) ? ' WHERE ' . static::primaryColumn() . ' = ' . self::$dataBase->var2str($cod) : DataBase\DataBaseWhere::getSQLWhere($where);
 

@@ -1,6 +1,6 @@
 /*
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2017 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -23,9 +23,9 @@
  * @returns {Array|json2tr.items}
  */
 function json2tr(json) {
-    var items = [];
+    let items = [];
     $.each(json, function (key, val) {
-        var tableTR = "";
+        let tableTR = "";
         $.each(this, function (key2, val2) {
             if (key2 === "url") {
                 tableTR += "";
@@ -51,8 +51,8 @@ function json2tr(json) {
 function reloadClickableRow() {
     $(".clickableRow").mousedown(function (event) {
         if (event.which === 1) {
-            var href = $(this).attr("data-href");
-            var target = $(this).attr("data-target");
+            let href = $(this).attr("data-href");
+            let target = $(this).attr("data-target");
             if (typeof href !== typeof undefined && href !== false) {
                 if (typeof target !== typeof undefined && target === "_blank") {
                     window.open($(this).attr("data-href"));
@@ -67,7 +67,7 @@ function reloadClickableRow() {
 function searchOnSection(url) {
     $.getJSON(url, function (json) {
         $.each(json, function (key, val) {
-            var items = json2tr(val.results);
+            let items = json2tr(val.results);
 
             if (items.length > 0) {
                 $("#v-pills-tab").append("<a class='nav-link' id='v-pills-" + key + "-tab' data-toggle='pill' href='#v-pills-"
@@ -76,7 +76,7 @@ function searchOnSection(url) {
                     <i class='fa " + val.icon + " fa-fw'></i>\n\
                     " + val.title + "\n\
                 </a>");
-                var tableHTML = "<thead><tr>";
+                let tableHTML = "<thead><tr>";
                 $.each(val.columns, function (key3, val3) {
                     tableHTML += "<th>" + val3 + "</th>";
                 });

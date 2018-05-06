@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2017 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -22,6 +22,7 @@ namespace FacturaScripts\Core\Base;
 /**
  * Defines global attributes and methos for all classes.
  *
+ * @package FacturaScripts\Core\Base
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Rafael San José Tovar
  */

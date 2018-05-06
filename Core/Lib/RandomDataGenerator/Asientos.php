@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2016-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2016-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
 use FacturaScripts\Core\Model;
@@ -23,6 +24,7 @@ use FacturaScripts\Core\Model;
 /**
  * Generate random accounting entries.
  *
+ * @package FacturaScripts\Core\Lib\RandomDataGenerator
  * @author Rafael San José <info@rsanjoseo.com>
  */
 class Asientos extends AbstractRandomAccounting
@@ -43,7 +45,7 @@ class Asientos extends AbstractRandomAccounting
      *
      * @return int
      */
-    public function generate($num = 25)
+    public function generate($num = 25): int
     {
         $asiento = $this->model;
         $partida = new Model\Partida();
@@ -59,11 +61,11 @@ class Asientos extends AbstractRandomAccounting
             $asiento->clear();
             $asiento->codejercicio = $ejercicio->codejercicio;
             $asiento->concepto = $this->descripcion();
-            $asiento->fecha = date('d-m-Y', strtotime($ejercicio->fechainicio . ' +' . mt_rand(1, 360) . ' days'));
+            $asiento->fecha = date('d-m-Y', strtotime($ejercicio->fechainicio . ' +' . random_int(1, 360) . ' days'));
             $asiento->importe = $this->precio(-999, 150, 99999);
             if ($asiento->save()) {
                 shuffle($subcuentas);
-                $lineas = mt_rand(1, 20) * 2;
+                $lineas = random_int(1, 20) * 2;
                 $debe = true;
                 for ($linea = 0; $linea < $lineas; ++$linea) {
                     $partida->clear();

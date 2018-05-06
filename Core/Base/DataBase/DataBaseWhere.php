@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -24,6 +24,7 @@ use FacturaScripts\Core\Base\DataBase;
 /**
  * Structure that defines a WHERE condition to filter the model data
  *
+ * @package FacturaScripts\Core\Base\DataBase
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -91,7 +92,7 @@ class DataBaseWhere
      *
      * @return string
      */
-    private function format2Date($addTime = false)
+    private function format2Date($addTime = false): string
     {
         $time = $addTime ? ' H:i:s' : '';
 
@@ -103,11 +104,11 @@ class DataBaseWhere
      *
      * @return string
      */
-    private function getValueFromOperator()
+    private function getValueFromOperator(): string
     {
         switch ($this->operator) {
             case 'LIKE':
-                if (is_bool($this->value)) {
+                if (\is_bool($this->value)) {
                     $result = $this->value ? 'TRUE' : 'FALSE';
                 } else {
                     $result = "LOWER('%" . $this->dataBase->escapeString($this->value) . "%')";
@@ -149,7 +150,7 @@ class DataBaseWhere
      *
      * @return string
      */
-    private function getValueFromType()
+    private function getValueFromType(): string
     {
         switch (gettype($this->value)) {
             case 'boolean':
@@ -178,13 +179,13 @@ class DataBaseWhere
      *
      * @return string
      */
-    private function getValue()
+    private function getValue(): string
     {
         if ($this->value === null) {
             return 'NULL';
         }
 
-        return in_array($this->operator, ['LIKE', 'IS', 'IS NOT', 'IN', 'REGEXP'], false) ? $this->getValueFromOperator() : $this->getValueFromType();
+        return \in_array($this->operator, ['LIKE', 'IS', 'IS NOT', 'IN', 'REGEXP'], false) ? $this->getValueFromOperator() : $this->getValueFromType();
     }
 
     /**
@@ -194,7 +195,7 @@ class DataBaseWhere
      *
      * @return string
      */
-    public function getSQLWhereItem($applyOperation = false)
+    public function getSQLWhereItem($applyOperation = false): string
     {
         $result = '';
         $union = '';
@@ -228,7 +229,7 @@ class DataBaseWhere
      *
      * @return string
      */
-    public static function getSQLWhere($whereItems)
+    public static function getSQLWhere($whereItems): string
     {
         $result = '';
         $join = false;
@@ -254,7 +255,7 @@ class DataBaseWhere
      *
      * @return array
      */
-    public static function getFieldsFilter(array $whereItems)
+    public static function getFieldsFilter(array $whereItems): array
     {
         $result = [];
         foreach ($whereItems as $item) {

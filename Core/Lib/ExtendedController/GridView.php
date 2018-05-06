@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
-use Exception;
 use FacturaScripts\Core\Base;
 use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Lib\ExportManager;
@@ -27,6 +27,7 @@ use FacturaScripts\Core\Model\Base\ModelClass;
 /**
  * Description of GridView
  *
+ * @package FacturaScripts\Core\Lib\ExtendedController
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
 class GridView extends BaseView
@@ -195,10 +196,10 @@ class GridView extends BaseView
     /**
      * Load the data in the cursor property, according to the where filter specified.
      *
-     * @param DataBaseWhere[] $where
-     * @param array           $order
+     * @param DataBase\DataBaseWhere[] $where
+     * @param array                    $order
      */
-    public function loadData($where = [], $order = [])
+    public function loadData(array $where = [], array $order = [])
     {
         // load columns configuration
         $this->gridData = $this->getColumns();
@@ -240,7 +241,7 @@ class GridView extends BaseView
     private function deleteLinesOld(&$linesOld, &$linesNew): bool
     {
         if (!empty($linesOld)) {
-            $fieldPK = $this->model->primaryColumn();
+            $fieldPK = $this->model::primaryColumn();
             $oldIDs = array_column($linesOld, $fieldPK);
             $newIDs = array_column($linesNew, $fieldPK);
             $deletedIDs = array_diff($oldIDs, $newIDs);
@@ -255,6 +256,13 @@ class GridView extends BaseView
         return true;
     }
 
+    /**
+     * Save data to database.
+     *
+     * @param $data
+     *
+     * @return array
+     */
     public function saveData($data): array
     {
         $result = [
@@ -263,11 +271,13 @@ class GridView extends BaseView
             'url' => ''
         ];
 
+        $dataBase = new DataBase();
+
         try {
             // load master document data and test it's ok
-            $parentPK = $this->parentModel->primaryColumn();
+            $parentPK = $this->parentModel::primaryColumn();
             if (!$this->loadDocumentDataFromArray($parentPK, $data['document'])) {
-                throw new Exception(self::$i18n->trans('parent-document-test-error'));
+                throw new \Exception(self::$i18n->trans('parent-document-test-error'));
             }
 
             // load detail document data (old)
@@ -275,12 +285,11 @@ class GridView extends BaseView
             $linesOld = $this->model->all([new DataBase\DataBaseWhere($parentPK, $parentValue)]);
 
             // start transaction
-            $dataBase = new DataBase();
             $dataBase->beginTransaction();
 
             // delete old lines not used
             if (!$this->deleteLinesOld($linesOld, $data['lines'])) {
-                throw new Exception(self::$i18n->trans('lines-delete-error'));
+                throw new \Exception(self::$i18n->trans('lines-delete-error'));
             }
 
             // Proccess detail document data (new)
@@ -291,14 +300,14 @@ class GridView extends BaseView
                     $this->model->{$parentPK} = $parentValue;
                 }
                 if (!$this->model->save()) {
-                    throw new Exception(self::$i18n->trans('lines-save-error'));
+                    throw new \Exception(self::$i18n->trans('lines-save-error'));
                 }
                 $this->parentModel->accumulateAmounts($newLine);
             }
 
             // save master document
             if (!$this->parentModel->save()) {
-                throw new Exception(self::$i18n->trans('parent-document-save-error'));
+                throw new \Exception(self::$i18n->trans('parent-document-save-error'));
             }
 
             // confirm save data into database
@@ -306,7 +315,7 @@ class GridView extends BaseView
 
             // URL for refresh data
             $result['url'] = $this->parentView->getURL('edit') . '&action=save-ok';
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $result['error'] = true;
             $result['message'] = $e->getMessage();
         } finally {
@@ -317,16 +326,24 @@ class GridView extends BaseView
         }
     }
 
+    /**
+     * Process the form lines.
+     *
+     * @param $lines
+     *
+     * @return array
+     */
     public function processFormLines(&$lines): array
     {
         $result = [];
-        $primaryKey = $this->model->primaryColumn();
+        $primaryKey = $this->model::primaryColumn();
         foreach ($lines as $data) {
             if (!isset($data[$primaryKey])) {
                 foreach ($this->pageOption->columns as $group) {
                     foreach ($group->columns as $col) {
                         if (!isset($data[$col->widget->fieldName])) {
-                            $data[$col->widget->fieldName] = null;   // TODO: maybe the widget can have a default value method instead of null
+                            // TODO: maybe the widget can have a default value method instead of null
+                            $data[$col->widget->fieldName] = null;
                         }
                     }
                 }

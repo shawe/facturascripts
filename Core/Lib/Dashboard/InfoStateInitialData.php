@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2017 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,11 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Dashboard;
 
 /**
  * Description of InfoStateInitialData
  *
+ * @package FacturaScripts\Core\Lib\Dashboard
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
 class InfoStateInitialData
@@ -46,6 +48,7 @@ class InfoStateInitialData
      */
     protected function getCustomerData()
     {
+        $result = [];
         $result['model'] = 'Cliente';
         $result['icon'] = 'fa-users';
         $result['group'] = 'customers';
@@ -65,6 +68,7 @@ class InfoStateInitialData
      */
     protected function getSupplierData()
     {
+        $result = [];
         $result['model'] = 'Proveedor';
         $result['icon'] = 'fa-users';
         $result['group'] = 'suppliers';
@@ -84,6 +88,7 @@ class InfoStateInitialData
      */
     protected function getProductData()
     {
+        $result = [];
         $result['model'] = 'Articulo';
         $result['icon'] = 'fa-cube';
         $result['group'] = 'products';

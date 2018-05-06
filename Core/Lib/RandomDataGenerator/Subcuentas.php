@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2016-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2016-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
 use FacturaScripts\Core\Model;
@@ -24,6 +25,7 @@ use FacturaScripts\Core\Model;
  * Generates accounting sub-accounts at random.
  * It may be better to incorporate the accounting plan of your country.
  *
+ * @package FacturaScripts\Core\Lib\RandomDataGenerator
  * @author Rafael San José <info@rsanjoseo.com>
  */
 class Subcuentas extends AbstractRandomAccounting
@@ -44,7 +46,7 @@ class Subcuentas extends AbstractRandomAccounting
      *
      * @return int
      */
-    public function generate($num = 50)
+    public function generate($num = 50): int
     {
         $subcuenta = $this->model;
         $this->shuffle($cuentas, new Model\Cuenta());
@@ -55,7 +57,7 @@ class Subcuentas extends AbstractRandomAccounting
             $subcuenta->clear();
             $subcuenta->codcuenta = $cuenta->codcuenta;
             $subcuenta->codejercicio = $cuenta->codejercicio;
-            $subcuenta->codsubcuenta = str_pad($cuenta->codcuenta . mt_rand(0, 9999), $ejercicioDetails->longsubcuenta, 0);
+            $subcuenta->codsubcuenta = str_pad($cuenta->codcuenta . random_int(0, 9999), $ejercicioDetails->longsubcuenta, 0);
             $subcuenta->descripcion = $this->descripcion();
             $subcuenta->idcuenta = $cuenta->idcuenta;
             if (!$subcuenta->save()) {

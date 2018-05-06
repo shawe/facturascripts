@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Model;
@@ -23,6 +24,7 @@ use FacturaScripts\Core\Model;
 /**
  * This class manage all specific method for a WidgetItem of Select type.
  *
+ * @package FacturaScripts\Core\Lib\ExtendedController
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
 class WidgetItemSelect extends WidgetItem
@@ -55,7 +57,7 @@ class WidgetItemSelect extends WidgetItem
      *
      * @return string
      */
-    public function getEditHTML($value)
+    public function getEditHTML($value): string
     {
         $specialAttributes = $this->specialAttributes();
 
@@ -71,7 +73,7 @@ class WidgetItemSelect extends WidgetItem
             . '<select name="' . $this->fieldName . '" class="form-control"' . $specialAttributes . '>';
 
         foreach ($this->values as $option) {
-            /// don't use strict comparation (===)
+            /** @noinspection TypeUnsafeComparisonInspection */
             $selected = ($option['value'] == $value) ? ' selected="selected" ' : '';
             $html .= '<option value="' . $option['value'] . '" ' . $selected . '>' . $option['title']
                 . '</option>';
@@ -92,7 +94,7 @@ class WidgetItemSelect extends WidgetItem
      *
      * @return string
      */
-    public function getListHTML($value)
+    public function getListHTML($value): string
     {
         if ($value === null || $value === '') {
             return '-';
@@ -101,6 +103,7 @@ class WidgetItemSelect extends WidgetItem
         $txt = $value;
         foreach ($this->values as $option) {
             /// don't use strict comparation (===)
+            /** @noinspection TypeUnsafeComparisonInspection */
             if ($option['value'] == $value) {
                 $txt = $option['title'];
                 break;
@@ -170,7 +173,7 @@ class WidgetItemSelect extends WidgetItem
     {
         $this->values = [];
         foreach ($values as $value) {
-            if (is_array($value)) {
+            if (\is_array($value)) {
                 $this->values[] = ['title' => $value['title'], 'value' => $value['value']];
                 continue;
             }

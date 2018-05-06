@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2016-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2016-2017 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,13 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
 use FacturaScripts\Core\Model;
 
 /**
- *  Generates customer orders with random data.
+ * Generates customer orders with random data.
  *
+ * @package FacturaScripts\Core\Lib\RandomDataGenerator
  * @author Rafael San José <info@rsanjoseo.com>
  */
 class PedidosCliente extends AbstractRandomDocuments
@@ -43,7 +45,7 @@ class PedidosCliente extends AbstractRandomDocuments
      *
      * @return int
      */
-    public function generate($num = 50)
+    public function generate($num = 50): int
     {
         $ped = $this->model;
         $this->shuffle($clientes, new Model\Cliente());
@@ -57,13 +59,13 @@ class PedidosCliente extends AbstractRandomDocuments
                 break;
             }
 
-            $recargo = ($clientes[0]->recargo || mt_rand(0, 4) === 0);
+            $recargo = ($clientes[0]->recargo || random_int(0, 4) === 0);
             $regimeniva = $this->randomizeDocumentVenta($ped, $eje, $clientes, $generated);
-            if (mt_rand(0, 3) == 0) {
-                $ped->fechasalida = date('d-m-Y', strtotime($ped->fecha . ' +' . mt_rand(1, 3) . ' months'));
+            if (random_int(0, 3) === 0) {
+                $ped->fechasalida = date('d-m-Y', strtotime($ped->fecha . ' +' . random_int(1, 3) . ' months'));
             }
             if ($ped->save()) {
-                $this->randomLineas($ped, 'idpedido', 'FacturaScripts\Dinamic\Model\LineaPedidoCliente', $regimeniva, $recargo);
+                $this->randomLineas($ped, 'idpedido', self::MODEL_NAMESPACE . 'LineaPedidoCliente', $regimeniva, $recargo);
                 ++$generated;
             } else {
                 break;

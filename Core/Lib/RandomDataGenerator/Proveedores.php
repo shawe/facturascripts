@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2016-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2016-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,14 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
 use FacturaScripts\Core\App\AppSettings;
+use FacturaScripts\Core\Base\Utils;
 use FacturaScripts\Core\Model;
 
 /**
- *  Generate random data for the suppliers (proveedores) file
+ * Generate random data for the suppliers (proveedores) file
  *
+ * @package FacturaScripts\Core\Lib\RandomDataGenerator
  * @author Rafael San José <info@rsanjoseo.com>
  */
 class Proveedores extends AbstractRandomPeople
@@ -44,25 +47,25 @@ class Proveedores extends AbstractRandomPeople
      *
      * @return int
      */
-    public function generate($num = 50)
+    public function generate($num = 50): int
     {
         $proveedor = $this->model;
         for ($generated = 0; $generated < $num; ++$generated) {
             $proveedor->clear();
             $this->fillCliPro($proveedor);
 
-            if (mt_rand(0, 9) == 0) {
+            if (random_int(0, 9) === 0) {
                 $proveedor->regimeniva = 'Exento';
             }
 
             $proveedor->codproveedor = $proveedor->newCode();
             if ($proveedor->save()) {
                 /// añadimos direcciones
-                $numDirs = mt_rand(0, 3);
+                $numDirs = random_int(0, 3);
                 $this->direccionesProveedor($proveedor, $numDirs);
 
                 /// Añadimos cuentas bancarias
-                $numCuentas = mt_rand(0, 3);
+                $numCuentas = random_int(0, 3);
                 $this->cuentasBancoProveedor($proveedor, $numCuentas);
             } else {
                 break;
@@ -83,14 +86,14 @@ class Proveedores extends AbstractRandomPeople
         while ($max > 0) {
             $cuenta = new Model\CuentaBancoProveedor();
             $cuenta->codproveedor = $proveedor->codproveedor;
-            $cuenta->descripcion = 'Banco ' . mt_rand(1, 999);
+            $cuenta->descripcion = 'Banco ' . random_int(1, 999);
             $cuenta->iban = $this->iban();
-            $cuenta->swift = $this->randomString(8);
+            $cuenta->swift = Utils::randomString(8);
 
-            $opcion = mt_rand(0, 2);
-            if ($opcion == 0) {
+            $opcion = random_int(0, 2);
+            if ($opcion === 0) {
                 $cuenta->swift = '';
-            } elseif ($opcion == 1) {
+            } elseif ($opcion === 1) {
                 $cuenta->iban = '';
             }
 
@@ -112,20 +115,20 @@ class Proveedores extends AbstractRandomPeople
             $dir->codproveedor = $proveedor->codproveedor;
             $dir->codpais = AppSettings::get('default', 'codpais');
 
-            if (mt_rand(0, 2) == 0) {
+            if (random_int(0, 2) === 0) {
                 $dir->codpais = $this->paises[0]->codpais;
             }
 
             $dir->provincia = $this->provincia();
             $dir->ciudad = $this->ciudad();
             $dir->direccion = $this->direccion();
-            $dir->codpostal = (string) mt_rand(1234, 99999);
+            $dir->codpostal = (string) random_int(1234, 99999);
 
-            if (mt_rand(0, 3) == 0) {
-                $dir->apartado = (string) mt_rand(1234, 99999);
+            if (random_int(0, 3) === 0) {
+                $dir->apartado = (string) random_int(1234, 99999);
             }
 
-            if (mt_rand(0, 1) == 0) {
+            if (random_int(0, 1) === 0) {
                 $dir->direccionppal = false;
             }
 

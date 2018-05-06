@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -25,6 +26,7 @@ use FacturaScripts\Core\Model;
 /**
  * Controller to edit a single item from the Role model.
  *
+ * @package FacturaScripts\Core\Controller
  * @author Artex Trading sa <jferrer@artextrading.com>
  */
 class EditRole extends ExtendedController\PanelController
@@ -35,15 +37,15 @@ class EditRole extends ExtendedController\PanelController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'role';
-        $pagedata['menu'] = 'admin';
-        $pagedata['icon'] = 'fa-id-card-o';
-        $pagedata['showonmenu'] = false;
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'role';
+        $pageData['menu'] = 'admin';
+        $pageData['icon'] = 'fa-id-card-o';
+        $pageData['showonmenu'] = false;
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
@@ -59,7 +61,7 @@ class EditRole extends ExtendedController\PanelController
     {
         // add Pages to Rol
         if (!Model\RoleAccess::addPagesToRole($codrole, $pages)) {
-            throw new \Exception(self::$i18n->trans('cancel-process'));
+            throw new \Exception($this->i18n->trans('cancel-process'));
         }
     }
 
@@ -84,7 +86,7 @@ class EditRole extends ExtendedController\PanelController
      *
      * @return bool
      */
-    protected function execPreviousAction($action)
+    protected function execPreviousAction($action): bool
     {
         switch ($action) {
             case 'add-rol-access':
@@ -116,7 +118,7 @@ class EditRole extends ExtendedController\PanelController
      *
      * @return Model\Page[]
      */
-    private function getPages()
+    private function getPages(): array
     {
         $menu = $this->request->get('menu', '---null---');
         if ($menu === '---null---') {

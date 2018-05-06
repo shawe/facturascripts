@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib;
 
 use FacturaScripts\Core\Model\Base\BusinessDocument;
@@ -23,32 +24,45 @@ use FacturaScripts\Core\Model\Base\BusinessDocument;
 /**
  * Description of BusinessDocumentGenerator
  *
- * @author Carlos García Gómez
+ * @package FacturaScripts\Core\Lib
+ * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class BusinessDocumentGenerator
 {
 
-    public function generate(BusinessDocument $prototype, string $newClass)
+    /**
+     * Generates a document of specified type.
+     *
+     * @param BusinessDocument $prototype
+     * @param string           $newClass
+     *
+     * @return bool
+     */
+    public function generate(BusinessDocument $prototype, string $newClass): bool
     {
         $exclude = ['idestado', 'fecha', 'hora'];
         $newDocClass = '\\FacturaScripts\\Dinamic\\Model\\' . $newClass;
         $newDoc = new $newDocClass();
         foreach ($prototype->getModelFields() as $field => $value) {
-            if (in_array($field, $exclude)) {
+            if (\in_array($field, $exclude, false)) {
                 continue;
             }
 
             $newDoc->{$field} = $prototype->{$field};
         }
 
-        if ($newDoc->save() && $this->cloneLines($prototype, $newDoc)) {
-            return true;
-        }
-
-        return false;
+        return $newDoc->save() && $this->cloneLines($prototype, $newDoc);
     }
 
-    private function cloneLines(BusinessDocument $prototype, $newDoc)
+    /**
+     * Clone lines from given data.
+     *
+     * @param BusinessDocument $prototype
+     * @param BusinessDocument $newDoc
+     *
+     * @return bool
+     */
+    private function cloneLines(BusinessDocument $prototype, $newDoc): bool
     {
         foreach ($prototype->getLines() as $line) {
             $arrayLine = [];

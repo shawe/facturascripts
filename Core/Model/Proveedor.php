@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\App\AppSettings;
@@ -24,6 +25,7 @@ use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 /**
  * A supplier. It can be related to several addresses or sub-accounts.
  *
+ * @package FacturaScripts\Core\Model
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class Proveedor extends Base\ComercialContact
@@ -61,7 +63,7 @@ class Proveedor extends Base\ComercialContact
      *
      * @return DireccionProveedor[]
      */
-    public function getDirecciones()
+    public function getDirecciones(): array
     {
         $dirModel = new DireccionProveedor();
 
@@ -73,7 +75,7 @@ class Proveedor extends Base\ComercialContact
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'codproveedor';
     }
@@ -83,7 +85,7 @@ class Proveedor extends Base\ComercialContact
      *
      * @return string
      */
-    public function primaryDescriptionColumn()
+    public function primaryDescriptionColumn(): string
     {
         return 'nombre';
     }
@@ -93,7 +95,7 @@ class Proveedor extends Base\ComercialContact
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'proveedores';
     }
@@ -103,7 +105,7 @@ class Proveedor extends Base\ComercialContact
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->codproveedor = empty($this->codproveedor) ? (string) $this->newCode() : trim($this->codproveedor);
 

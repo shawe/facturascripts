@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,11 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 /**
  * Description of Settings
  *
+ * @package FacturaScripts\Core\Model
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
 class Settings extends Base\ModelClass
@@ -65,7 +67,7 @@ class Settings extends Base\ModelClass
     {
         $properties = [];
         foreach ($data as $key => $value) {
-            if (!in_array($key, ['name', 'action', 'active'])) {
+            if (!\in_array($key, ['name', 'action', 'active'])) {
                 $properties[$key] = $value;
                 unset($data[$key]);
             }
@@ -99,7 +101,7 @@ class Settings extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'name';
     }
@@ -109,7 +111,7 @@ class Settings extends Base\ModelClass
      *
      * @return string
      */
-    public function primaryDescription()
+    public function primaryDescription(): string
     {
         return '';
     }
@@ -121,7 +123,7 @@ class Settings extends Base\ModelClass
      *
      * @return bool
      */
-    protected function saveInsert(array $values = [])
+    protected function saveInsert(array $values = []): bool
     {
         return parent::saveInsert(['properties' => json_encode($this->properties)]);
     }
@@ -133,7 +135,7 @@ class Settings extends Base\ModelClass
      *
      * @return bool
      */
-    protected function saveUpdate(array $values = [])
+    protected function saveUpdate(array $values = []): bool
     {
         return parent::saveUpdate(['properties' => json_encode($this->properties)]);
     }
@@ -143,7 +145,7 @@ class Settings extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'settings';
     }

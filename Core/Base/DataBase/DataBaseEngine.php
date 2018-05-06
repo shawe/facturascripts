@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2015-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2015-2017 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -22,6 +22,7 @@ namespace FacturaScripts\Core\Base\DataBase;
 /**
  * Interface for each of the compatible database engines
  *
+ * @package FacturaScripts\Core\Base\DataBase
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -39,7 +40,7 @@ interface DataBaseEngine
      *
      * @return DataBaseSQL
      */
-    public function getSQL();
+    public function getSQL(): DataBaseSQL;
 
     /**
      * Converts the sqlColumns returned data to a working structure
@@ -55,7 +56,7 @@ interface DataBaseEngine
      *
      * @return string
      */
-    public function version($link);
+    public function version($link): string;
 
     /**
      * Connects to the database
@@ -114,7 +115,7 @@ interface DataBaseEngine
      *
      * @return array
      */
-    public function select($link, $sql);
+    public function select($link, $sql): array;
 
     /**
      * Runs a DDL statement on the connection.
@@ -125,7 +126,7 @@ interface DataBaseEngine
      *
      * @return bool
      */
-    public function exec($link, $sql);
+    public function exec($link, $sql): bool;
 
     /**
      * Compares the columns set in the arrays

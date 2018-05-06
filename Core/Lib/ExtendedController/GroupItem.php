@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,11 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 /**
  * Description of GroupItem
  *
+ * @package FacturaScripts\Core\Lib\ExtendedController
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
 class GroupItem extends VisualItem implements VisualItemInterface
@@ -68,7 +70,7 @@ class GroupItem extends VisualItem implements VisualItemInterface
      *
      * @return string
      */
-    public function getHeaderHTML($value)
+    public function getHeaderHTML($value): string
     {
         return $this->getIconHTML() . parent::getHeaderHTML($value);
     }
@@ -125,9 +127,9 @@ class GroupItem extends VisualItem implements VisualItemInterface
      *
      * @param array $group
      *
-     * @return GroupItem
+     * @return self
      */
-    public static function newFromJSON($group)
+    public static function newFromJSON($group): self
     {
         $result = new self();
         $result->loadFromJSON($group);
@@ -140,9 +142,9 @@ class GroupItem extends VisualItem implements VisualItemInterface
      *
      * @param \SimpleXMLElement $group
      *
-     * @return GroupItem
+     * @return self
      */
-    public static function newFromXML($group)
+    public static function newFromXML($group): self
     {
         $result = new self();
         $result->loadFromXML($group);
@@ -158,7 +160,7 @@ class GroupItem extends VisualItem implements VisualItemInterface
      *
      * @return int
      */
-    public static function sortColumns($column1, $column2)
+    public static function sortColumns($column1, $column2): int
     {
         if ($column1->order === $column2->order) {
             return 0;
@@ -172,7 +174,7 @@ class GroupItem extends VisualItem implements VisualItemInterface
      *
      * @return string
      */
-    private function getIconHTML()
+    private function getIconHTML(): string
     {
         if (empty($this->icon)) {
             return '';

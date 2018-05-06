@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\App\AppSettings;
@@ -24,6 +25,7 @@ use FacturaScripts\Core\Base\Utils;
 /**
  * Usuario de FacturaScripts.
  *
+ * @package FacturaScripts\Core\Model
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class User extends Base\ModelClass
@@ -148,7 +150,7 @@ class User extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         /// we need this models to be checked before
         new Page();
@@ -169,7 +171,7 @@ class User extends Base\ModelClass
      *
      * @return string
      */
-    public function newLogkey($ipAddress)
+    public function newLogkey($ipAddress): string
     {
         $this->lastactivity = date('d-m-Y H:i:s');
         $this->lastip = $ipAddress;
@@ -183,7 +185,7 @@ class User extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'nick';
     }
@@ -203,7 +205,7 @@ class User extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'users';
     }
@@ -214,7 +216,7 @@ class User extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->checkEmptyValues();
         $this->nick = trim($this->nick);
@@ -243,7 +245,7 @@ class User extends Base\ModelClass
      *
      * @return bool
      */
-    public function verifyLogkey($value)
+    public function verifyLogkey($value): bool
     {
         return $this->logkey === $value;
     }
@@ -255,7 +257,7 @@ class User extends Base\ModelClass
      *
      * @return bool
      */
-    public function verifyPassword($value)
+    public function verifyPassword($value): bool
     {
         if (password_verify($value, $this->password)) {
             if (password_needs_rehash($this->password, PASSWORD_DEFAULT)) {

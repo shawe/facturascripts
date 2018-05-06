@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base;
@@ -26,6 +27,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Edit option for any page.
  *
+ * @package FacturaScripts\Core\Controller
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  * @author Fco. Antonio Moreno Pérez <famphuelva@gmail.com>
@@ -66,15 +68,15 @@ class EditPageOption extends Base\Controller
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'page-configuration';
-        $pagedata['menu'] = 'admin';
-        $pagedata['icon'] = 'fa-wrench';
-        $pagedata['showonmenu'] = false;
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'page-configuration';
+        $pageData['menu'] = 'admin';
+        $pageData['icon'] = 'fa-wrench';
+        $pageData['showonmenu'] = false;
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
@@ -82,7 +84,7 @@ class EditPageOption extends Base\Controller
      *
      * @return string
      */
-    public function getPanelHeader()
+    public function getPanelHeader(): string
     {
         return $this->i18n->trans('configure-columns');
     }
@@ -92,7 +94,7 @@ class EditPageOption extends Base\Controller
      *
      * @return string
      */
-    public function getPanelFooter()
+    public function getPanelFooter(): string
     {
         return '<strong>'
             . $this->i18n->trans('page') . ':&nbsp;' . $this->selectedViewName . '<br>'
@@ -103,14 +105,14 @@ class EditPageOption extends Base\Controller
     /**
      * Get the list of users, excluding the user admin
      *
-     * @return Array
+     * @return array
      */
-    public function getUserList()
+    public function getUserList(): array
     {
         $result = [];
         $users = Model\CodeModel::all(Model\User::tableName(), 'nick', 'nick', false);
         foreach ($users as $codeModel) {
-            if ($codeModel->code != 'admin') {
+            if ($codeModel->code !== 'admin') {
                 $result[$codeModel->code] = $codeModel->description;
             }
         }
@@ -193,7 +195,7 @@ class EditPageOption extends Base\Controller
     private function getParams()
     {
         $this->selectedViewName = $this->request->get('code', '');
-        $this->backPage = $this->request->get('url') ?: $this->selectedViewName;
+        $this->backPage = $this->request->get('url') ? : $this->selectedViewName;
 
         $this->selectedUser = $this->user->admin ? $this->request->get('nick', '') : $this->user->nick;
     }

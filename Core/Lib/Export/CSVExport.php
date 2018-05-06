@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Export;
 
 use FacturaScripts\Core\Base;
@@ -25,6 +26,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Class to export to CSV
  * Follow the XLSExport style to have a more uniform code
  *
+ * @package FacturaScripts\Core\Lib\Export
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class CSVExport implements ExportInterface
@@ -89,7 +91,7 @@ class CSVExport implements ExportInterface
      *
      * @return string
      */
-    public function getSeparator()
+    public function getSeparator(): string
     {
         return $this->separator;
     }
@@ -99,7 +101,7 @@ class CSVExport implements ExportInterface
      *
      * @return string
      */
-    public function getDelimiter()
+    public function getDelimiter(): string
     {
         return $this->delimiter;
     }
@@ -109,7 +111,7 @@ class CSVExport implements ExportInterface
      *
      * @return string
      */
-    public function getDoc()
+    public function getDoc(): string
     {
         return \implode(PHP_EOL, $this->csv);
     }
@@ -127,7 +129,7 @@ class CSVExport implements ExportInterface
      *
      * @param Response $response
      */
-    public function show(Response &$response)
+    public function show(Response $response)
     {
         $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
         $response->headers->set('Content-Disposition', 'attachment;filename=doc.csv');
@@ -145,7 +147,7 @@ class CSVExport implements ExportInterface
     {
         $tableData = [];
         foreach ((array) $model as $key => $value) {
-            if (is_string($value)) {
+            if (\is_string($value)) {
                 $tableData[] = [
                     'key' => $this->delimiter . $key . $this->delimiter,
                     'value' => $this->delimiter . $value . $this->delimiter,
@@ -201,7 +203,7 @@ class CSVExport implements ExportInterface
     {
         $tableData = [];
         foreach ((array) $model as $key => $value) {
-            if (is_string($value)) {
+            if (\is_string($value)) {
                 $tableData[] = [
                     'key' => $this->delimiter . $key . $this->delimiter,
                     'value' => $this->delimiter . $value . $this->delimiter,
@@ -240,7 +242,7 @@ class CSVExport implements ExportInterface
      *
      * @return array
      */
-    private function getTableData($cursor, $tableCols)
+    private function getTableData($cursor, $tableCols): array
     {
         $tableData = [];
 

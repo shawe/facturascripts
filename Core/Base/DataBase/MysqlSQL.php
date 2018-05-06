@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2015-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2015-2017 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -22,6 +22,7 @@ namespace FacturaScripts\Core\Base\DataBase;
 /**
  * Class that gathers all the needed SQL sentences by the database engine
  *
+ * @package FacturaScripts\Core\Base\DataBase
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -34,7 +35,7 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    private function getTypeAndConstraints($colData)
+    private function getTypeAndConstraints($colData): string
     {
         $type = stripos('integer,serial', $colData['type']) === false ? strtolower($colData['type']) : FS_DB_INTEGER;
         switch (true) {
@@ -58,7 +59,7 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    private function getConstraints($colData)
+    private function getConstraints($colData): string
     {
         $notNull = ($colData['null'] === 'NO');
         $result = ' NULL';
@@ -85,12 +86,12 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    private function fixPostgresql($sql)
+    private function fixPostgresql($sql): string
     {
         $search = ['::character varying', 'without time zone', 'now()', 'CURRENT_TIMESTAMP', 'CURRENT_DATE'];
         $replace = ['', '', "'00:00'", "'" . date('Y-m-d') . " 00:00:00'", date("'Y-m-d'")];
 
-        return str_replace($search, $replace, $sql);
+        return \str_replace($search, $replace, $sql);
     }
 
     /**
@@ -100,7 +101,7 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sql2Int($colName)
+    public function sql2Int($colName): string
     {
         return 'CAST(' . $colName . ' as UNSIGNED)';
     }
@@ -110,7 +111,7 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlLastValue()
+    public function sqlLastValue(): string
     {
         return 'SELECT LAST_INSERT_ID() as num;';
     }
@@ -122,7 +123,7 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlColumns($tableName)
+    public function sqlColumns($tableName): string
     {
         return 'SHOW COLUMNS FROM `' . $tableName . '`;';
     }
@@ -134,7 +135,7 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlConstraints($tableName)
+    public function sqlConstraints($tableName): string
     {
         $sql = 'SELECT CONSTRAINT_NAME as name, CONSTRAINT_TYPE as type'
             . ' FROM information_schema.table_constraints '
@@ -151,7 +152,7 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlConstraintsExtended($tableName)
+    public function sqlConstraintsExtended($tableName): string
     {
         $sql = 'SELECT t1.constraint_name as name,'
             . ' t1.constraint_type as type,'
@@ -182,7 +183,7 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlTableConstraints($xmlCons)
+    public function sqlTableConstraints($xmlCons): string
     {
         $sql = '';
         foreach ($xmlCons as $res) {
@@ -199,7 +200,7 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlIndexes($tableName)
+    public function sqlIndexes($tableName): string
     {
         return 'SHOW INDEXES FROM ' . $tableName . ';';
     }
@@ -213,7 +214,7 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlCreateTable($tableName, $columns, $constraints)
+    public function sqlCreateTable($tableName, $columns, $constraints): string
     {
         $fields = '';
         foreach ($columns as $col) {
@@ -235,7 +236,7 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlAlterAddColumn($tableName, $colData)
+    public function sqlAlterAddColumn($tableName, $colData): string
     {
         $sql = 'ALTER TABLE ' . $tableName . ' ADD `' . $colData['name'] . '` '
             . $this->getTypeAndConstraints($colData) . ';';
@@ -251,7 +252,7 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlAlterModifyColumn($tableName, $colData)
+    public function sqlAlterModifyColumn($tableName, $colData): string
     {
         $sql = 'ALTER TABLE ' . $tableName
             . ' MODIFY `' . $colData['name'] . '` '
@@ -268,7 +269,7 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlAlterConstraintDefault($tableName, $colData)
+    public function sqlAlterConstraintDefault($tableName, $colData): string
     {
         $result = '';
         if ($colData['type'] !== 'serial') {
@@ -286,7 +287,7 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlAlterConstraintNull($tableName, $colData)
+    public function sqlAlterConstraintNull($tableName, $colData): string
     {
         return $this->sqlAlterModifyColumn($tableName, $colData);
     }
@@ -299,7 +300,7 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlDropConstraint($tableName, $colData)
+    public function sqlDropConstraint($tableName, $colData): string
     {
         $start = 'ALTER TABLE ' . $tableName . ' DROP';
         switch ($colData['type']) {
@@ -327,7 +328,7 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlAddConstraint($tableName, $constraintName, $sql)
+    public function sqlAddConstraint($tableName, $constraintName, $sql): string
     {
         return 'ALTER TABLE ' . $tableName
             . ' ADD CONSTRAINT ' . $constraintName . ' '
@@ -341,7 +342,7 @@ class MysqlSQL implements DataBaseSQL
      *
      * @return string
      */
-    public function sqlSequenceExists($seqName)
+    public function sqlSequenceExists($seqName): string
     {
         return $seqName;
     }

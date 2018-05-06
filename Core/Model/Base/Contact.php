@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model\Base;
 
 use FacturaScripts\Core\Base\Utils;
@@ -23,6 +24,7 @@ use FacturaScripts\Core\Base\Utils;
 /**
  * Description of Contact
  *
+ * @package FacturaScripts\Core\Model\Base
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 abstract class Contact extends ModelClass
@@ -107,7 +109,7 @@ abstract class Contact extends ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->cifnif = Utils::noHtml($this->cifnif);
         $this->email = Utils::noHtml($this->email);

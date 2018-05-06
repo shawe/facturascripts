@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2016-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2016-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,13 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
 use FacturaScripts\Core\Model;
 
 /**
- *  Generates delivery notes to suppliers with random data.
+ * Generates delivery notes to suppliers with random data.
  *
+ * @package FacturaScripts\Core\Lib\RandomDataGenerator
  * @author Francesc Pineda Segarra <francesc.pineda.segarra@gmail.com>
  */
 class PresupuestosProveedor extends AbstractRandomDocuments
@@ -60,7 +62,7 @@ class PresupuestosProveedor extends AbstractRandomDocuments
             $recargo = (random_int(0, 4) === 0);
             $regimeniva = $this->randomizeDocumentCompra($pre, $eje, $proveedores, $generated);
             if ($pre->save()) {
-                $this->randomLineas($pre, 'idpresupuesto', 'FacturaScripts\Dinamic\Model\LineaPresupuestoProveedor', $regimeniva, $recargo, 1);
+                $this->randomLineas($pre, 'idpresupuesto', self::MODEL_NAMESPACE . 'LineaPresupuestoProveedor', $regimeniva, $recargo, 1);
                 ++$generated;
             } else {
                 break;

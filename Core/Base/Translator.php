@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -25,6 +25,7 @@ use Symfony\Component\Translation\Translator as symfonyTranslator;
 /**
  * The Translator class manage all translations methods required for internationalization.
  *
+ * @package FacturaScripts\Core\Base
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class Translator
@@ -92,7 +93,7 @@ class Translator
      *
      * @return string
      */
-    public function trans($txt, array $parameters = [])
+    public function trans($txt, array $parameters = []): string
     {
         if (empty($txt)) {
             return '';
@@ -110,9 +111,9 @@ class Translator
      *
      * @return string
      */
-    public function customTrans($lang, $txt, array $parameters = [])
+    public function customTrans($lang, $txt, array $parameters = []): string
     {
-        if (!in_array($lang, self::$languages)) {
+        if (!\in_array($lang, self::$languages, false)) {
             $this->locateFiles($lang);
         }
 
@@ -158,11 +159,11 @@ class Translator
      *
      * @return array
      */
-    public function getAvailableLanguages()
+    public function getAvailableLanguages(): array
     {
         $languages = [];
         $dir = FS_FOLDER . '/Core/Translation';
-        foreach (scandir($dir, SCANDIR_SORT_ASCENDING) as $fileName) {
+        foreach (scandir($dir, \SCANDIR_SORT_ASCENDING) as $fileName) {
             if ($fileName !== '.' && $fileName !== '..' && !is_dir($fileName) && substr($fileName, -5) === '.json') {
                 $key = substr($fileName, 0, -5);
                 $languages[$key] = $this->trans('languages-' . substr($fileName, 0, -5));
@@ -177,7 +178,7 @@ class Translator
      *
      * @return string
      */
-    public function getLangCode()
+    public function getLangCode(): string
     {
         return self::$defaultLang;
     }
@@ -187,7 +188,7 @@ class Translator
      *
      * @return array
      */
-    public function getMissingStrings()
+    public function getMissingStrings(): array
     {
         return self::$missingStrings;
     }
@@ -197,7 +198,7 @@ class Translator
      *
      * @return array
      */
-    public function getUsedStrings()
+    public function getUsedStrings(): array
     {
         return self::$usedStrings;
     }

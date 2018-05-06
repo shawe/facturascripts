@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\Controller;
@@ -29,6 +30,7 @@ use ZipArchive;
 /**
  * Description of Updater
  *
+ * @package FacturaScripts\Core\Controller
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class Updater extends Controller
@@ -37,6 +39,7 @@ class Updater extends Controller
     const UPDATE_CORE_URL = 'https://s3.eu-west-2.amazonaws.com/facturascripts/2018.zip';
 
     /**
+     * Items to be checked in updater.
      *
      * @var array
      */
@@ -47,7 +50,7 @@ class Updater extends Controller
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
         $pageData = parent::getPageData();
         $pageData['menu'] = 'admin';
@@ -59,7 +62,8 @@ class Updater extends Controller
     }
 
     /**
-     * 
+     * Runs the controller's private logic.
+     *
      * @param Response              $response
      * @param User                  $user
      * @param ControllerPermissions $permissions
@@ -90,16 +94,16 @@ class Updater extends Controller
 
     /**
      * Erase $dir folder and all its subfolders.
-     * 
+     *
      * @param string $dir
-     * 
+     *
      * @return bool
      */
     private function delTree(string $dir): bool
     {
-        $files = array_diff(scandir($dir), ['.', '..']);
+        $files = array_diff(scandir($dir, \SCANDIR_SORT_ASCENDING), ['.', '..']);
         foreach ($files as $file) {
-            (is_dir("$dir/$file")) ? $this->delTree("$dir/$file") : unlink("$dir/$file");
+            is_dir("$dir/$file") ? $this->delTree("$dir/$file") : unlink("$dir/$file");
         }
 
         return rmdir($dir);
@@ -123,7 +127,7 @@ class Updater extends Controller
 
     /**
      * Execute selected action.
-     * 
+     *
      * @param string $action
      */
     private function execAction(string $action)
@@ -143,16 +147,16 @@ class Updater extends Controller
 
     /**
      * Returns an array with all subforder of $baseDir folder.
-     * 
+     *
      * @param string $baseDir
-     * 
+     *
      * @return array
      */
     private function foldersFrom(string $baseDir): array
     {
         $directories = [];
-        foreach (scandir($baseDir) as $file) {
-            if ($file == '.' || $file == '..') {
+        foreach (scandir($baseDir, \SCANDIR_SORT_ASCENDING) as $file) {
+            if ($file === '.' || $file === '..') {
                 continue;
             }
             $dir = $baseDir . DIRECTORY_SEPARATOR . $file;
@@ -167,7 +171,7 @@ class Updater extends Controller
 
     /**
      * Returns an array with all not writable folders.
-     * 
+     *
      * @return array
      */
     private function notWritablefolders(): array
@@ -184,7 +188,7 @@ class Updater extends Controller
 
     /**
      * Copy all files and folders from $src to $dst
-     * 
+     *
      * @param string $src
      * @param string $dst
      */
@@ -192,7 +196,7 @@ class Updater extends Controller
     {
         $dir = opendir($src);
         @mkdir($dst);
-        while (false !== ( $file = readdir($dir))) {
+        while (false !== ($file = readdir($dir))) {
             if ($file === '.' || $file === '..') {
                 continue;
             }
@@ -203,12 +207,14 @@ class Updater extends Controller
                 copy($src . '/' . $file, $dst . '/' . $file);
             }
         }
-        closedir($dir);
+        if (\is_resource($dir)) {
+            closedir($dir);
+        }
     }
 
     /**
      * Extract zip file and update all files.
-     * 
+     *
      * @return bool
      */
     private function update(): bool

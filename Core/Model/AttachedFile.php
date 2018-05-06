@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use finfo;
@@ -23,6 +24,7 @@ use finfo;
 /**
  * Class to manage attached files.
  *
+ * @package FacturaScripts\Core\Model
  * @author Francesc Pineda Segarra <francesc.pineda.segarra@gmail.com>
  */
 class AttachedFile extends Base\ModelClass
@@ -112,7 +114,7 @@ class AttachedFile extends Base\ModelClass
      *
      * @return bool
      */
-    public function delete()
+    public function delete(): bool
     {
         if (parent::delete()) {
             unlink(FS_FOLDER . DIRECTORY_SEPARATOR . $this->path);
@@ -123,14 +125,14 @@ class AttachedFile extends Base\ModelClass
     }
 
     /**
-     * 
+     *
      * @param string $cod
      * @param array  $where
      * @param array  $orderby
-     * 
-     * @return boolean
+     *
+     * @return bool
      */
-    public function loadFromCode($cod, array $where = [], array $orderby = [])
+    public function loadFromCode($cod, array $where = [], array $orderby = []): bool
     {
         if (parent::loadFromCode($cod, $where, $orderby)) {
             $this->previousPath = $this->path;
@@ -145,7 +147,7 @@ class AttachedFile extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idfile';
     }
@@ -155,7 +157,7 @@ class AttachedFile extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'attached_files';
     }
@@ -163,16 +165,16 @@ class AttachedFile extends Base\ModelClass
     /**
      * Test model data.
      *
-     * @return boolean
+     * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         if (!file_exists(FS_FOLDER . DIRECTORY_SEPARATOR . 'MyFiles' . DIRECTORY_SEPARATOR . $this->path)) {
             self::$miniLog->alert(self::$i18n->trans('file-not-found'));
             return false;
         }
 
-        if ($this->path != $this->previousPath) {
+        if ($this->path !== $this->previousPath) {
             $this->setFile();
         }
 

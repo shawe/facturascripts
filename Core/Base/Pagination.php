@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -22,6 +22,7 @@ namespace FacturaScripts\Core\Base;
 /**
  * Manage the navigation bar to jump between the data of a model.
  *
+ * @package FacturaScripts\Core\Base
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
 class Pagination
@@ -73,7 +74,7 @@ class Pagination
      *
      * @return int
      */
-    private function getRecordMin($offset)
+    private function getRecordMin($offset): int
     {
         $result = $offset - (self::FS_ITEM_LIMIT * self::FS_PAGE_MARGIN);
         if ($result < 0) {
@@ -91,7 +92,7 @@ class Pagination
      *
      * @return int
      */
-    private function getRecordMax($offset, $count)
+    private function getRecordMax($offset, $count): int
     {
         $result = $offset + (self::FS_ITEM_LIMIT * (self::FS_PAGE_MARGIN + 1));
         if ($result > $count) {
@@ -104,19 +105,19 @@ class Pagination
     /**
      * Returns a paging item.
      *
-     * @param int         $page
+     * @param int|float   $page
      * @param int         $offset
      * @param string|bool $icon
      * @param bool        $active
      *
      * @return array
      */
-    private function addPaginationItem($page, $offset, $icon = false, $active = false)
+    private function addPaginationItem($page, $offset, $icon = false, $active = false): array
     {
         return [
             'url' => $this->url . $this->join . 'offset=' . $offset . $this->urlID,
             'icon' => $icon,
-            'page' => $page,
+            'page' => (int) $page,
             'active' => $active,
         ];
     }
@@ -140,7 +141,7 @@ class Pagination
      *               page   => page number
      *               active => indicate if it is the active indicator
      */
-    public function getPages($count, $offset = 0)
+    public function getPages($count, $offset = 0): array
     {
         $result = [];
         $recordMin = $this->getRecordMin($offset);
@@ -197,7 +198,7 @@ class Pagination
      *
      * @return int
      */
-    private function offset($page)
+    private function offset($page): int
     {
         return $page * self::FS_ITEM_LIMIT;
     }

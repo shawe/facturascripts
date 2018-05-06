@@ -1,8 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2017  Carlos Garcia Gomez     <carlos@facturascripts.com>
- * Copyright (C) 2017       Francesc Pineda Segarra <francesc.pineda.segarra@gmail.com>
+ * Copyright (C) 2013-2017 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -26,6 +25,7 @@ use FacturaScripts\Core\Base\Translator;
 /**
  * Class to connect and interact with memcache.
  *
+ * @package FacturaScripts\Core\Base\Cache
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Francesc Pineda Segarra <francesc.pineda.segarra@gmail.com>
  */
@@ -85,7 +85,7 @@ class MemcacheAdapter implements AdaptorInterface
      *
      * @return bool
      */
-    public function isConnected()
+    public function isConnected(): bool
     {
         return self::$connected;
     }
@@ -117,7 +117,7 @@ class MemcacheAdapter implements AdaptorInterface
      *
      * @return bool whether if the operation was successful or not
      */
-    public function set($key, $content, $expire = 5400)
+    public function set($key, $content, $expire = 5400): bool
     {
         $this->minilog->debug($this->i18n->trans('memcache-set-key-item', ['%item%' => $key]));
         if (self::$connected) {
@@ -136,7 +136,7 @@ class MemcacheAdapter implements AdaptorInterface
      *
      * @return bool true if the data was removed successfully
      */
-    public function delete($key)
+    public function delete($key): bool
     {
         $this->minilog->debug($this->i18n->trans('memcache-delete-key-item', ['%item%' => $key]));
 
@@ -152,7 +152,7 @@ class MemcacheAdapter implements AdaptorInterface
      *
      * @return bool always true
      */
-    public function clear()
+    public function clear(): bool
     {
         $this->minilog->debug($this->i18n->trans('memcache-clear'));
         if (self::$connected) {

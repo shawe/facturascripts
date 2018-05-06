@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,18 +16,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
-use Exception;
-use FacturaScripts\Core\Base\DivisaTools;
 use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
+use FacturaScripts\Core\Base\DivisaTools;
 use FacturaScripts\Core\Lib\ExtendedController;
 use FacturaScripts\Core\Model;
 
 /**
  * Controller to edit a single item from the Asiento model
  *
+ * @package FacturaScripts\Core\Controller
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  * @author Fco Antonio Moreno Pérez <famphuelva@gmail.com>
@@ -43,13 +44,13 @@ class EditAsiento extends ExtendedController\PanelController
      */
     public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'accounting-entries';
-        $pagedata['menu'] = 'accounting';
-        $pagedata['icon'] = 'fa-balance-scale';
-        $pagedata['showonmenu'] = false;
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'accounting-entries';
+        $pageData['menu'] = 'accounting';
+        $pageData['icon'] = 'fa-balance-scale';
+        $pageData['showonmenu'] = false;
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
@@ -69,7 +70,7 @@ class EditAsiento extends ExtendedController\PanelController
      *
      * @return bool
      */
-    protected function execPreviousAction($action)
+    protected function execPreviousAction($action): bool
     {
         switch ($action) {
             case 'save-ok':
@@ -139,7 +140,7 @@ class EditAsiento extends ExtendedController\PanelController
         if ($subAccount->loadFromCode(null, $where)) {
             $balance = new Model\SubcuentaSaldo();
             $result['description'] = $subAccount->descripcion;
-            $result['codevat'] = ($subAccount->codimpuesto === null) ? '' : $subAccount->codimpuesto;
+            $result['codevat'] = $subAccount->codimpuesto ?? '';
             $result['balance'] = $balance->setSubAccountBalance($subAccount->idsubcuenta, $result['detail']);
             $result['balance'] = DivisaTools::format($result['balance']);
         }
@@ -148,9 +149,16 @@ class EditAsiento extends ExtendedController\PanelController
         return $result;
     }
 
+    /**
+     * Calculate new amounts.
+     *
+     * @param array $data
+     * @param float $credit
+     * @param float $debit
+     */
     private function calculateAmounts(array &$data, float $credit, float $debit)
     {
-        $unbalance = round(($credit - $debit), (int) FS_NF0);
+        $unbalance = round($credit - $debit, FS_NF0);
         $index = count($data['lines']) - 1;
         $line = &$data['lines'][$index];
 
@@ -166,9 +174,15 @@ class EditAsiento extends ExtendedController\PanelController
             }
         }
         $data['unbalance'] = $unbalance;
-        $data['total'] = ($credit > $debit) ? round($credit, (int) FS_NF0) : round($debit, (int) FS_NF0);
+        $data['total'] = ($credit > $debit) ? round($credit, FS_NF0) : round($debit, FS_NF0);
     }
 
+    /**
+     * Check if there are empty values.
+     *
+     * @param array $line
+     * @param array $previousLine
+     */
     private function checkEmptyValues(array &$line, array $previousLine)
     {
         if (empty($line['concepto'])) {
@@ -181,6 +195,15 @@ class EditAsiento extends ExtendedController\PanelController
         }
     }
 
+    /**
+     * Return the recalculate lines.
+     *
+     * @param array $lines
+     * @param float $totalCredit
+     * @param float $totalDebit
+     *
+     * @return array
+     */
     private function recalculateLines(array $lines, float &$totalCredit, float &$totalDebit): array
     {
         // Work variables
@@ -286,6 +309,16 @@ class EditAsiento extends ExtendedController\PanelController
         return $result;
     }
 
+    /**
+     * Return the recalculate the VAT details.
+     *
+     * @param array  $line
+     * @param array  $document
+     * @param string $codevat
+     * @param float  $base
+     *
+     * @return array
+     */
     private function recalculateVatRegister(array &$line, array $document, string $codevat, float $base): array
     {
         $result = [];
@@ -311,6 +344,13 @@ class EditAsiento extends ExtendedController\PanelController
         return $result;
     }
 
+    /**
+     * Return the recalculate document details.
+     *
+     * @param $data
+     *
+     * @return array
+     */
     protected function recalculateDocument(&$data): array
     {
         $result = [
@@ -345,6 +385,13 @@ class EditAsiento extends ExtendedController\PanelController
         return $result;
     }
 
+    /**
+     * Returns a clone of the given data.
+     *
+     * @param $data
+     *
+     * @return string
+     */
     private function cloneDocument(&$data): string
     {
         // init document
@@ -365,21 +412,21 @@ class EditAsiento extends ExtendedController\PanelController
             $accounting->fecha = date('d-m-Y');
             $accounting->numero = $accounting->newCode('numero');
             if (!$accounting->save()) {
-                throw new Exception(self::$i18n->trans('clone-document-error'));
+                throw new \Exception($this->i18n->trans('clone-document-error'));
             }
 
             foreach ($entries as $line) {
                 $line->idpartida = null;
                 $line->idasiento = $accounting->idasiento;
                 if (!$line->save()) {
-                    throw new Exception(self::$i18n->trans('clone-line-document-error'));
+                    throw new \Exception($this->i18n->trans('clone-line-document-error'));
                 }
             }
             // confirm data
             $dataBase->commit();
             $result = $accounting->url('type') . '&action=save-ok';
-        } catch (Exception $e) {
-            self::$miniLog->alert($e->getMessage());
+        } catch (\Exception $e) {
+            $this->miniLog->alert($e->getMessage());
             $result = '';
         } finally {
             if ($dataBase->inTransaction()) {
@@ -393,8 +440,8 @@ class EditAsiento extends ExtendedController\PanelController
     /**
      * Load data view procedure
      *
-     * @param string                      $viewName
-     * @param ExtendedController\BaseView $view
+     * @param string                                                  $viewName
+     * @param ExtendedController\BaseView|ExtendedController\EditView $view
      */
     protected function loadData($viewName, $view)
     {

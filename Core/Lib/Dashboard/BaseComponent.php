@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2017 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Dashboard;
 
 use FacturaScripts\Core\Base\DataBase;
@@ -24,6 +25,7 @@ use FacturaScripts\Core\Model;
 /**
  * Description of ComponentBase
  *
+ * @package FacturaScripts\Core\Lib\Dashboard
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
 class BaseComponent
@@ -85,9 +87,9 @@ class BaseComponent
     /**
      * Get the default filter to obtain dashboard components.
      *
-     * @return array
+     * @return DataBase\DataBaseWhere[]
      */
-    protected function getDataFilter()
+    protected function getDataFilter(): array
     {
         $result = [
             new DataBase\DataBaseWhere('component', $this->component),
@@ -106,7 +108,7 @@ class BaseComponent
      *
      * @return array
      */
-    protected function getDataOrderBy()
+    protected function getDataOrderBy(): array
     {
         return ['displaydate' => 'ASC', 'id' => 'ASC'];
     }
@@ -116,7 +118,7 @@ class BaseComponent
      *
      * @return string
      */
-    public function getTemplate()
+    public function getTemplate(): string
     {
         return $this->component . self::SUFIX_COMPONENTS . '.html.twig';
     }
@@ -126,7 +128,7 @@ class BaseComponent
      *
      * @return string
      */
-    public function getNumColumns()
+    public function getNumColumns(): string
     {
         return 'col';
     }
@@ -136,7 +138,7 @@ class BaseComponent
      *
      * @return string
      */
-    public function getCardClass()
+    public function getCardClass(): string
     {
         return '';
     }
@@ -175,10 +177,10 @@ class BaseComponent
     private function getRandomText($maxWord = 20)
     {
         $words = ['lorem', 'ipsum', 'trastis', 'tus', 'turum', 'maruk', 'tartor', 'isis', 'osiris', 'morowik'];
-        $txt = $words[mt_rand(0, 9)];
+        $txt = $words[random_int(0, 9)];
 
         $numWord = 0;
-        while (mt_rand(0, 8) > 0) {
+        while (random_int(0, 8) > 0) {
             shuffle($words);
             $txt .= $words[0] . ' ';
             ++$numWord;

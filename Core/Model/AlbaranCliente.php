@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -26,6 +27,7 @@ use FacturaScripts\Dinamic\Model\LineaAlbaranCliente;
  * of a material that has been sold to you. It implies the exit of this material
  * from the company's warehouse.
  *
+ * @package FacturaScripts\Core\Model
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class AlbaranCliente extends Base\SalesDocument
@@ -52,7 +54,7 @@ class AlbaranCliente extends Base\SalesDocument
      *
      * @return LineaAlbaranCliente[]
      */
-    public function getLines()
+    public function getLines(): array
     {
         $lineaModel = new LineaAlbaranCliente();
         $where = [new DataBaseWhere('idalbaran', $this->idalbaran)];
@@ -63,12 +65,12 @@ class AlbaranCliente extends Base\SalesDocument
 
     /**
      * Returns a new line for the document.
-     * 
+     *
      * @param array $data
-     * 
+     *
      * @return LineaAlbaranCliente
      */
-    public function getNewLine(array $data = [])
+    public function getNewLine(array $data = []): LineaAlbaranCliente
     {
         $newLine = new LineaAlbaranCliente($data);
         $newLine->idalbaran = $this->idalbaran;
@@ -86,7 +88,7 @@ class AlbaranCliente extends Base\SalesDocument
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         parent::install();
 
@@ -100,7 +102,7 @@ class AlbaranCliente extends Base\SalesDocument
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idalbaran';
     }
@@ -110,7 +112,7 @@ class AlbaranCliente extends Base\SalesDocument
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'albaranescli';
     }

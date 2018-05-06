@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController;
@@ -23,6 +24,7 @@ use FacturaScripts\Core\Lib\ExtendedController;
 /**
  * Controller to list the items in the Articulo model
  *
+ * @package FacturaScripts\Core\Controller
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class ListArticulo extends ExtendedController\ListController
@@ -33,14 +35,14 @@ class ListArticulo extends ExtendedController\ListController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'products';
-        $pagedata['icon'] = 'fa-cubes';
-        $pagedata['menu'] = 'warehouse';
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'products';
+        $pageData['icon'] = 'fa-cubes';
+        $pageData['menu'] = 'warehouse';
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
@@ -53,15 +55,18 @@ class ListArticulo extends ExtendedController\ListController
         $this->createViewStock();
     }
 
+    /**
+     * Create the view to display a product.
+     */
     private function createViewArticulo()
     {
         $this->addView('ListArticulo', 'Articulo', 'products');
         $this->addSearchFields('ListArticulo', ['referencia', 'descripcion']);
 
-        $selectValues = $this->codeModel->all('fabricantes', 'codfabricante', 'nombre');
+        $selectValues = $this->codeModel::all('fabricantes', 'codfabricante', 'nombre');
         $this->addFilterSelect('ListArticulo', 'codfabricante', 'manufacturer', 'codfabricante', $selectValues);
 
-        $familyValues = $this->codeModel->all('familias', 'codfamilia', 'descripcion');
+        $familyValues = $this->codeModel::all('familias', 'codfamilia', 'descripcion');
         $this->addFilterSelect('ListArticulo', 'codfamilia', 'family', 'codfamilia', $familyValues);
 
         $this->addFilterCheckbox('ListArticulo', 'bloqueado', 'locked', 'bloqueado');
@@ -73,6 +78,9 @@ class ListArticulo extends ExtendedController\ListController
         $this->addOrderBy('ListArticulo', 'stockfis', 'stock');
     }
 
+    /**
+     * Create the view to display a product of supplier.
+     */
     private function createViewArticuloProveedor()
     {
         $this->addView('ListArticuloProveedor', 'ArticuloProveedor', 'supplier-products', 'fa-users');
@@ -86,12 +94,15 @@ class ListArticulo extends ExtendedController\ListController
         $this->addOrderBy('ListArticuloProveedor', 'stockfis', 'stock');
     }
 
+    /**
+     * * Create the view to display stock.
+     */
     private function createViewStock()
     {
         $this->addView('ListStock', 'Stock', 'stock', 'fa-tasks');
         $this->addSearchFields('ListStock', ['referencia', 'ubicacion']);
 
-        $selectValues = $this->codeModel->all('almacenes', 'codalmacen', 'nombre');
+        $selectValues = $this->codeModel::all('almacenes', 'codalmacen', 'nombre');
         $this->addFilterSelect('ListStock', 'codalmacen', 'warehouse', 'codalmacen', $selectValues);
 
         $this->addOrderBy('ListStock', 'referencia', 'reference');

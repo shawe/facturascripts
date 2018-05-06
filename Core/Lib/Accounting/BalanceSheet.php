@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Accounting;
 
 use FacturaScripts\Core\Base\Utils;
@@ -23,6 +24,7 @@ use FacturaScripts\Core\Base\Utils;
 /**
  * Description of BalanceSheet
  *
+ * @package FacturaScripts\Core\Lib\Accounting
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Raul Jiménez <comercial@nazcanetworks.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
@@ -53,7 +55,7 @@ class BalanceSheet extends AccountingBase
      *
      * @return array
      */
-    public function generate(string $dateFrom, string $dateTo, array $params = [])
+    public function generate(string $dateFrom, string $dateTo, array $params = []): array
     {
         $this->dateFrom = $dateFrom;
         $this->dateTo = $dateTo;
@@ -66,8 +68,7 @@ class BalanceSheet extends AccountingBase
         }
 
         /// every page is a table
-        $pages = [$this->calcSheetBalance($data)];
-        return $pages;
+        return [$this->calcSheetBalance($data)];
     }
 
     /**
@@ -77,7 +78,7 @@ class BalanceSheet extends AccountingBase
      *
      * @return array
      */
-    private function calcSheetBalance($data)
+    private function calcSheetBalance($data): array
     {
         $balanceCalculado = [];
         foreach ($data as $lineaBalance) {
@@ -107,7 +108,7 @@ class BalanceSheet extends AccountingBase
      *
      * @return array
      */
-    protected function getData()
+    protected function getData(): array
     {
         $dateFrom = $this->dataBase->var2str($this->dateFrom);
         $dateTo = $this->dataBase->var2str($this->dateTo);
@@ -160,11 +161,11 @@ class BalanceSheet extends AccountingBase
      *
      * @return array
      */
-    protected function processLine($line)
+    protected function processLine($line): array
     {
         $line['descripcion'] = Utils::fixHtml($line['descripcion']);
-        $line['saldo'] = $this->divisaTools->format($line['saldo'], FS_NF0, '');
-        $line['saldoprev'] = $this->divisaTools->format($line['saldoprev'], FS_NF0, '');
+        $line['saldo'] = $this->divisaTools::format($line['saldo'], FS_NF0, '');
+        $line['saldoprev'] = $this->divisaTools::format($line['saldoprev'], FS_NF0, '');
 
         return $line;
     }

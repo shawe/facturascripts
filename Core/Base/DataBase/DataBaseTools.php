@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2015-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2015-2017 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -26,6 +26,7 @@ use FacturaScripts\Core\Base\Translator;
 /**
  * This class group all method for DataBase, tools like check/generate table, compare constraints/columns, ...
  *
+ * @package FacturaScripts\Core\Base\DataBase
  * @author Carlos García Gómez
  */
 class DataBaseTools
@@ -80,7 +81,7 @@ class DataBaseTools
      *
      * @return string
      */
-    public function checkTable($tableName, $xmlCols, $xmlCons)
+    public function checkTable($tableName, $xmlCols, $xmlCons): string
     {
         if (!self::$dataBase->checkTableAux($tableName)) {
             self::$miniLog->critical(self::$i18n->trans('error-to-innodb'));
@@ -118,9 +119,9 @@ class DataBaseTools
      * @param array  $xmlCols
      * @param array  $xmlCons
      *
-     * @return bool
+     * @return string
      */
-    public function generateTable($tableName, $xmlCols, $xmlCons)
+    public function generateTable($tableName, $xmlCols, $xmlCons): string
     {
         return self::$sql->sqlCreateTable($tableName, $xmlCols, $xmlCons);
     }
@@ -135,7 +136,7 @@ class DataBaseTools
      *
      * @return string
      */
-    private function compareConstraints($tableName, $xmlCons, $dbCons, $deleteOnly = false)
+    private function compareConstraints($tableName, $xmlCons, $dbCons, $deleteOnly = false): string
     {
         $result = '';
 
@@ -173,7 +174,7 @@ class DataBaseTools
      *
      * @return array
      */
-    private function searchInArray($items, $index, $value)
+    private function searchInArray($items, $index, $value): array
     {
         $result = [];
         foreach ($items as $column) {
@@ -195,7 +196,7 @@ class DataBaseTools
      *
      * @return string
      */
-    private function compareColumns($tableName, $xmlCols, $dbCols)
+    private function compareColumns($tableName, $xmlCols, $dbCols): string
     {
         $result = '';
         foreach ($xmlCols as $xml_col) {
@@ -237,7 +238,7 @@ class DataBaseTools
      *
      * @return bool
      */
-    private function compareDataTypes($dbType, $xmlType)
+    private function compareDataTypes($dbType, $xmlType): bool
     {
         $db0 = strtolower($dbType);
         $xml = strtolower($xmlType);
@@ -264,7 +265,7 @@ class DataBaseTools
      *
      * @return bool
      */
-    public function getXmlTable($tableName, &$columns, &$constraints)
+    public function getXmlTable($tableName, &$columns, &$constraints): bool
     {
         $return = false;
         $filename = $this->getXmlTableLocation($tableName);
@@ -299,7 +300,7 @@ class DataBaseTools
      *
      * @return string
      */
-    private function getXmlTableLocation($tableName)
+    private function getXmlTableLocation($tableName): string
     {
         $fileName = FS_FOLDER . '/Dinamic/Table/' . $tableName . '.xml';
         if (FS_DEBUG && !file_exists($fileName)) {

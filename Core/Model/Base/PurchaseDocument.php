@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model\Base;
 
 use FacturaScripts\Core\Base\Utils;
@@ -24,6 +25,7 @@ use FacturaScripts\Dinamic\Model\Proveedor;
 /**
  * Description of PurchaseDocument
  *
+ * @package FacturaScripts\Core\Model\Base
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 abstract class PurchaseDocument extends BusinessDocument
@@ -51,7 +53,12 @@ abstract class PurchaseDocument extends BusinessDocument
      */
     public $numproveedor;
 
-    public function getSubjectColumns()
+    /**
+     * Returns an array with the column for identify the subject(s),
+     *
+     * @return array
+     */
+    public function getSubjectColumns(): array
     {
         return ['codproveedor'];
     }
@@ -77,7 +84,7 @@ abstract class PurchaseDocument extends BusinessDocument
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->nombre = Utils::noHtml($this->nombre);
         $this->numproveedor = Utils::noHtml($this->numproveedor);

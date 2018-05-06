@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,11 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Base;
 
 /**
  * Utils give us some basic and common methods.
  *
+ * @package FacturaScripts\Core\Base
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class Utils
@@ -34,7 +36,7 @@ class Utils
      *
      * @return string
      */
-    public static function bin2str($val)
+    public static function bin2str($val): string
     {
         if ($val === null) {
             return 'NULL';
@@ -68,7 +70,7 @@ class Utils
      *
      * @return integer
      */
-    public static function intval($str)
+    public static function intval($str): int
     {
         if ($str === null) {
             return null;
@@ -88,9 +90,9 @@ class Utils
      *
      * @return bool
      */
-    public static function floatcmp($f1, $f2, $precision = 10, $round = false)
+    public static function floatcmp($f1, $f2, $precision = 10, $round = false): bool
     {
-        if ($round || !function_exists('bccomp')) {
+        if ($round || !\function_exists('bccomp')) {
             return abs($f1 - $f2) < 6 / 10 ** ($precision + 1);
         }
 
@@ -107,7 +109,7 @@ class Utils
      *
      * @return array
      */
-    public static function dateRange($first, $last, $step = '+1 day', $format = 'd-m-Y')
+    public static function dateRange($first, $last, $step = '+1 day', $format = 'd-m-Y'): array
     {
         $dates = [];
         $start = strtotime($first);
@@ -128,7 +130,7 @@ class Utils
      *
      * @return string
      */
-    public static function randomString($length = 10)
+    public static function randomString($length = 10): string
     {
         return mb_substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, $length);
     }
@@ -145,11 +147,11 @@ class Utils
      *
      * @param string $txt
      *
-     * @return string
+     * @return null|string
      */
     public static function noHtml($txt)
     {
-        $newt = str_replace(
+        $newt = \str_replace(
             ['<', '>', '"', "'"], ['&lt;', '&gt;', '&quot;', '&#39;'], $txt
         );
 
@@ -161,14 +163,14 @@ class Utils
      *
      * @param string $txt
      *
-     * @return string
+     * @return null|string
      */
     public static function fixHtml($txt)
     {
         $original = ['&lt;', '&gt;', '&quot;', '&#39;'];
         $final = ['<', '>', "'", "'"];
 
-        return ($txt === null) ? null : trim(str_replace($original, $final, $txt));
+        return ($txt === null) ? null : trim(\str_replace($original, $final, $txt));
     }
 
     /**
@@ -180,9 +182,9 @@ class Utils
      *
      * @return bool
      */
-    public static function str2bool($val)
+    public static function str2bool($val): bool
     {
-        return in_array(strtolower($val), ['true', 't', '1'], false);
+        return \in_array(strtolower($val), ['true', 't', '1'], false);
     }
 
     /**

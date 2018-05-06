@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,12 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 /**
  * Description of ColumnItem
  *
- * @author Artex Trading sa    <jcuello@artextrading.com>
+ * @package FacturaScripts\Core\Lib\ExtendedController
+ * @author Artex Trading sa <jcuello@artextrading.com>
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class ColumnItem extends VisualItem implements VisualItemInterface
@@ -92,7 +94,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @return ColumnItem[]
      */
-    public function columnsFromJSON($columns)
+    public function columnsFromJSON($columns): array
     {
         $result = [];
         foreach ($columns as $data) {
@@ -113,7 +115,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @return string
      */
-    public function getEditHTML($value, $withLabel = true, $formName = 'main_form')
+    public function getEditHTML($value, $withLabel = true, $formName = 'main_form'): string
     {
         $header = $withLabel ? $this->getHeaderHTML($this->title) : '';
         $data = $this->getColumnData($this->widget->columnFunction());
@@ -148,7 +150,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @return string
      */
-    public function getHeaderHTML($value)
+    public function getHeaderHTML($value): string
     {
         $html = parent::getHeaderHTML($value);
 
@@ -166,7 +168,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @return string
      */
-    public function getListHTML($value)
+    public function getListHTML($value): string
     {
         return $this->widget->getListHTML($value);
     }
@@ -240,7 +242,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @return ColumnItem
      */
-    public static function newFromJSON($column)
+    public static function newFromJSON($column): ColumnItem
     {
         $result = new self();
         $result->loadFromJSON($column);
@@ -271,7 +273,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @return string
      */
-    private function buttonHTMLColumn($data, $formName)
+    private function buttonHTMLColumn($data, $formName): string
     {
         return '<div class="form-group' . $data['ColumnClass'] . '"><label>&nbsp;</label>'
             . $this->widget->getHTML($this->widget->label, $formName, $data['ColumnHint'], 'col')
@@ -288,7 +290,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @return string
      */
-    private function checkboxHTMLColumn($header, $value, $data)
+    private function checkboxHTMLColumn($header, $value, $data): string
     {
         $input = $this->widget->getEditHTML($value);
         $label = empty($header) ? $input : '<label class="form-check-label mb-2 mr-sm-2'
@@ -307,7 +309,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @return string
      */
-    protected function getColumnClass()
+    protected function getColumnClass(): string
     {
         return ($this->numColumns > 0) ? (' col-md-' . $this->numColumns) : ' col';
     }
@@ -319,7 +321,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @return array
      */
-    private function getColumnData($properties)
+    private function getColumnData($properties): array
     {
         $result = [];
         foreach ($properties as $value) {
@@ -335,7 +337,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @return string
      */
-    protected function getColumnDescription()
+    protected function getColumnDescription(): string
     {
         $description = '';
         if (!empty($this->description)) {
@@ -354,7 +356,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @return string
      */
-    protected function getColumnHint()
+    protected function getColumnHint(): string
     {
         return $this->widget->getHintHTML($this->i18n->trans($this->widget->hint));
     }
@@ -364,7 +366,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @return string
      */
-    protected function getColumnRequired()
+    protected function getColumnRequired(): string
     {
         return '';
     }
@@ -378,7 +380,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @return string
      */
-    private function radioHTMLColumn($header, $data, $value)
+    private function radioHTMLColumn($header, $data, $value): string
     {
         $html = '';
         $index = 0;
@@ -394,7 +396,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
             $values = [$index . '"', $optionValue['value'], $checked];
             $html .= '<div class="form-check">'
                 . '<label class="form-check-label custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0" '
-                . $data['ColumnHint'] . '>' . str_replace($template_var, $values, $input)
+                . $data['ColumnHint'] . '>' . \str_replace($template_var, $values, $input)
                 . '&nbsp;' . $optionValue['title']
                 . '</label>'
                 . '</div>';
@@ -414,7 +416,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @return string
      */
-    private function standardHTMLColumn($header, $value, $data)
+    private function standardHTMLColumn($header, $value, $data): string
     {
         $label = empty($header) ? '' : '<label for="' . $this->widget->fieldName . '" ' . $data['ColumnHint'] . '>'
             . $header . '</label>';

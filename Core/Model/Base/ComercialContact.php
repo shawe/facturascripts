@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model\Base;
 
 use FacturaScripts\Core\App\AppSettings;
@@ -26,6 +27,7 @@ use FacturaScripts\Core\Lib\RegimenIVA;
 /**
  * Description of ComercialContact
  *
+ * @package FacturaScripts\Core\Model\Base
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 abstract class ComercialContact extends Contact
@@ -90,7 +92,7 @@ abstract class ComercialContact extends Contact
     /**
      * % IRPF retention of the document. It is obtained from the series.
      * Each line can have a different%.
-     * 
+     *
      * @var float|int
      */
     public $irpf;
@@ -161,8 +163,8 @@ abstract class ComercialContact extends Contact
         parent::clear();
         $this->codpago = AppSettings::get('default', 'codpago');
         $this->debaja = false;
-        $this->regimeniva = self::$regimenIVA->defaultValue();
-        $this->tipoidfiscal = self::$idFiscal->defaultValue();
+        $this->regimeniva = self::$regimenIVA::defaultValue();
+        $this->tipoidfiscal = self::$idFiscal::defaultValue();
     }
 
     /**
@@ -170,7 +172,7 @@ abstract class ComercialContact extends Contact
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->razonsocial = Utils::noHtml($this->razonsocial);
         $this->web = Utils::noHtml($this->web);

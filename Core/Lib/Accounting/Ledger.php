@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Accounting;
 
 use FacturaScripts\Core\Base\Utils;
@@ -23,6 +24,7 @@ use FacturaScripts\Core\Base\Utils;
 /**
  * Description of Ledger
  *
+ * @package FacturaScripts\Core\Lib\Accounting
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author nazca <comercial@nazcanetworks.com>
  */
@@ -38,7 +40,7 @@ class Ledger extends AccountingBase
      *
      * @return array
      */
-    public function generate(string $dateFrom, string $dateTo, array $params = [])
+    public function generate(string $dateFrom, string $dateTo, array $params = []): array
     {
         $this->dateFrom = $dateFrom;
         $this->dateTo = $dateTo;
@@ -53,7 +55,7 @@ class Ledger extends AccountingBase
         $ledgerAccount = [];
         //Process each line of the results
         foreach ($results as $line) {
-            $account = ($grouping) ? $line['codcuenta'] : 0;
+            $account = $grouping ? $line['codcuenta'] : 0;
             if ($grouping) {
                 $this->processHeader($ledgerAccount[$account], $line);
                 $ledger[$account][0] = $this->processLine($ledgerAccount[$account], $grouping);
@@ -62,8 +64,7 @@ class Ledger extends AccountingBase
         }
 
         /// every page is a table
-        $pages = $ledger;
-        return $pages;
+        return $ledger;
     }
 
     /**
@@ -71,7 +72,7 @@ class Ledger extends AccountingBase
      *
      * @return array
      */
-    protected function getDataGrouped()
+    protected function getDataGrouped(): array
     {
         if (!$this->dataBase->tableExists('partidas')) {
             return [];
@@ -98,7 +99,7 @@ class Ledger extends AccountingBase
      *
      * @return array
      */
-    protected function getData()
+    protected function getData(): array
     {
         if (!$this->dataBase->tableExists('partidas')) {
             return [];
@@ -121,9 +122,8 @@ class Ledger extends AccountingBase
     /**
      * Process the header data to use the appropiate formats.
      *
+     * @param array $ledgerAccount
      * @param array $line
-     *
-     * @return array
      */
     protected function processHeader(&$ledgerAccount, $line)
     {
@@ -149,17 +149,17 @@ class Ledger extends AccountingBase
      *
      * @return array
      */
-    protected function processLine($line, $grouping)
+    protected function processLine($line, $grouping): array
     {
         $item = [];
         if (!$grouping) {
-            $item['fecha'] = ($line['fecha']) ?? date('d-m-Y', strtotime($line['fecha']));
-            $item['numero'] = ($line['numero']) ?? $line['numero'];
+            $item['fecha'] = $line['fecha'] ?? date('d-m-Y', strtotime($line['fecha']));
+            $item['numero'] = $line['numero'] ?? $line['numero'];
         }
-        $item['cuenta'] = (isset($line['cuenta'])) ? $line['cuenta'] : $line['codsubcuenta'];
+        $item['cuenta'] = $line['cuenta'] ?? $line['codsubcuenta'];
         $item['concepto'] = Utils::fixHtml($line['concepto']);
-        $item['debe'] = $this->divisaTools->format($line['debe'], FS_NF0, '');
-        $item['haber'] = $this->divisaTools->format($line['haber'], FS_NF0, '');
+        $item['debe'] = $this->divisaTools::format($line['debe'], FS_NF0, '');
+        $item['haber'] = $this->divisaTools::format($line['haber'], FS_NF0, '');
         return $item;
     }
 }

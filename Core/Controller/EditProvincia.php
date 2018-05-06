@@ -1,8 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017  Francesc Pineda Segarra  <francesc.pineda.segarra@gmail.com>
- * Copyright (C) 2018  Carlos García Gómez      <carlos@facturascripts.com>
+ * Copyright (C) 2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -17,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController;
@@ -24,6 +24,7 @@ use FacturaScripts\Core\Lib\ExtendedController;
 /**
  * Controlador para la edición de un registro del modelo de Provincia
  *
+ * @package FacturaScripts\Core\Controller
  * @author Francesc Pineda Segarra <francesc.pineda.segarra@gmail.com>
  */
 class EditProvincia extends ExtendedController\EditController
@@ -32,7 +33,7 @@ class EditProvincia extends ExtendedController\EditController
     /**
      * Returns the model name
      */
-    public function getModelClassName()
+    public function getModelClassName(): string
     {
         return 'Provincia';
     }
@@ -42,14 +43,14 @@ class EditProvincia extends ExtendedController\EditController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'province';
-        $pagedata['menu'] = 'admin';
-        $pagedata['icon'] = 'fa-globe';
-        $pagedata['showonmenu'] = false;
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'province';
+        $pageData['menu'] = 'admin';
+        $pageData['icon'] = 'fa-globe';
+        $pageData['showonmenu'] = false;
 
-        return $pagedata;
+        return $pageData;
     }
 }

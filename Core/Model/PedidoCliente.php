@@ -1,8 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2014-2018    Carlos Garcia Gomez        <carlos@facturascripts.com>
- * Copyright (C) 2014         Francesc Pineda Segarra    <shawe.ewahs@gmail.com>
+ * Copyright (C) 2014-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -17,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -24,6 +24,9 @@ use FacturaScripts\Dinamic\Model\LineaPedidoCliente;
 
 /**
  * Customer order.
+ *
+ * @package FacturaScripts\Core\Model
+ * @author Francesc Pineda Segarra <shawe.ewahs@gmail.com>
  */
 class PedidoCliente extends Base\SalesDocument
 {
@@ -56,7 +59,7 @@ class PedidoCliente extends Base\SalesDocument
      *
      * @return LineaPedidoCliente[]
      */
-    public function getLines()
+    public function getLines(): array
     {
         $lineaModel = new LineaPedidoCliente();
         $where = [new DataBaseWhere('idpedido', $this->idpedido)];
@@ -67,12 +70,12 @@ class PedidoCliente extends Base\SalesDocument
 
     /**
      * Returns a new line for the document.
-     * 
+     *
      * @param array $data
      *
      * @return LineaPedidoCliente
      */
-    public function getNewLine(array $data = [])
+    public function getNewLine(array $data = []): LineaPedidoCliente
     {
         $newLine = new LineaPedidoCliente($data);
         $newLine->idpedido = $this->idpedido;
@@ -83,7 +86,14 @@ class PedidoCliente extends Base\SalesDocument
         return $newLine;
     }
 
-    public function install()
+    /**
+     * This function is called when creating the model table. Returns the SQL
+     * that will be executed after the creation of the table. Useful to insert values
+     * default.
+     *
+     * @return string
+     */
+    public function install(): string
     {
         parent::install();
         new AlbaranCliente();
@@ -96,7 +106,7 @@ class PedidoCliente extends Base\SalesDocument
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idpedido';
     }
@@ -106,7 +116,7 @@ class PedidoCliente extends Base\SalesDocument
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'pedidoscli';
     }

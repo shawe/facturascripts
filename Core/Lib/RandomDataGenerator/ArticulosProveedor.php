@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2016-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2016-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
 use FacturaScripts\Core\Model;
@@ -23,6 +24,7 @@ use FacturaScripts\Core\Model;
 /**
  * Associate products to suppliers at random
  *
+ * @package FacturaScripts\Core\Lib\RandomDataGenerator
  * @author Rafael San José <info@rsanjoseo.com>
  */
 class ArticulosProveedor extends AbstractRandom
@@ -43,11 +45,11 @@ class ArticulosProveedor extends AbstractRandom
      *
      * @return int
      */
-    public function generate($num = 50)
+    public function generate($num = 50): int
     {
         $this->shuffle($articulos, new Model\Articulo());
         $this->shuffle($proveedores, new Model\Proveedor());
-        if(empty($proveedores)) {
+        if (empty($proveedores)) {
             return 0;
         }
         
@@ -59,14 +61,14 @@ class ArticulosProveedor extends AbstractRandom
 
             $art->clear();
             $art->referencia = $articulos[$generated]->referencia;
-            $art->refproveedor = (string) mt_rand(1, 99999999);
+            $art->refproveedor = (string) random_int(1, 99999999);
             $art->descripcion = $this->descripcion();
             $art->codimpuesto = $articulos[$generated]->codimpuesto;
             $art->codproveedor = $proveedores[$generated]->codproveedor;
             $art->precio = $this->precio(1, 49, 699);
-            $art->dto = mt_rand(0, 80);
-            $art->nostock = (mt_rand(0, 2) == 0);
-            $art->stockfis = mt_rand(0, 10);
+            $art->dto = random_int(0, 80);
+            $art->nostock = (random_int(0, 2) === 0);
+            $art->stockfis = random_int(0, 10);
             if (!$art->save()) {
                 break;
             }

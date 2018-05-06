@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2016-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2016-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,14 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
 use FacturaScripts\Core\App\AppSettings;
+use FacturaScripts\Core\Base\Utils;
 use FacturaScripts\Core\Model;
 
 /**
  * Generate random data for the customers (clientes) file
  *
+ * @package FacturaScripts\Core\Lib\RandomDataGenerator
  * @author Rafael San José <info@rsanjoseo.com>
  */
 class Clientes extends AbstractRandomPeople
@@ -44,24 +47,24 @@ class Clientes extends AbstractRandomPeople
      *
      * @return int
      */
-    public function generate($num = 50)
+    public function generate($num = 50): int
     {
         $cliente = $this->model;
         for ($i = 0; $i < $num; ++$i) {
             $cliente->clear();
             $this->fillCliPro($cliente);
 
-            $cliente->fechaalta = date(mt_rand(1, 28) . '-' . mt_rand(1, 12) . '-' . mt_rand(2013, date('Y')));
-            $cliente->regimeniva = (mt_rand(0, 9) === 0) ? 'Exento' : 'General';
+            $cliente->fechaalta = date(random_int(1, 28) . '-' . random_int(1, 12) . '-' . random_int(2013, date('Y')));
+            $cliente->regimeniva = (random_int(0, 9) === 0) ? 'Exento' : 'General';
 
-            if (mt_rand(0, 2) > 0) {
+            if (random_int(0, 2) > 0) {
                 shuffle($this->agentes);
                 $cliente->codagente = $this->agentes[0]->codagente;
             } else {
                 $cliente->codagente = null;
             }
 
-            if (mt_rand(0, 2) > 0 && !empty($this->grupos)) {
+            if (random_int(0, 2) > 0 && !empty($this->grupos)) {
                 shuffle($this->grupos);
                 $cliente->codgrupo = $this->grupos[0]->codgrupo;
             } else {
@@ -74,11 +77,11 @@ class Clientes extends AbstractRandomPeople
             }
 
             /// añadimos direcciones
-            $numDirs = mt_rand(0, 3);
+            $numDirs = random_int(0, 3);
             $this->direccionesCliente($cliente, $numDirs);
 
             /// Añadimos cuentas bancarias
-            $numCuentas = mt_rand(0, 3);
+            $numCuentas = random_int(0, 3);
             $this->cuentasBancoCliente($cliente, $numCuentas);
         }
 
@@ -96,10 +99,10 @@ class Clientes extends AbstractRandomPeople
         while ($max > 0) {
             $cuenta = new Model\CuentaBancoCliente();
             $cuenta->codcliente = $cliente->codcliente;
-            $cuenta->descripcion = 'Banco ' . mt_rand(1, 999);
+            $cuenta->descripcion = 'Banco ' . random_int(1, 999);
             $cuenta->iban = $this->iban();
-            $cuenta->swift = (mt_rand(0, 2) != 0) ? $this->randomString(8) : '';
-            $cuenta->fmandato = (mt_rand(0, 1) == 0) ? date('d-m-Y', strtotime($cliente->fechaalta . ' +' . mt_rand(1, 30) . ' days')) : null;
+            $cuenta->swift = random_int(0, 2) !== 0 ? Utils::randomString(8) : '';
+            $cuenta->fmandato = (random_int(0, 1) === 0) ? date('d-m-Y', strtotime($cliente->fechaalta . ' +' . random_int(1, 30) . ' days')) : null;
 
             if (!$cuenta->save()) {
                 break;
@@ -120,15 +123,15 @@ class Clientes extends AbstractRandomPeople
         while ($max > 0) {
             $dir = new Model\DireccionCliente();
             $dir->codcliente = $cliente->codcliente;
-            $dir->codpais = (mt_rand(0, 2) === 0) ? $this->paises[0]->codpais : AppSettings::get('default', 'codpais');
+            $dir->codpais = (random_int(0, 2) === 0) ? $this->paises[0]->codpais : AppSettings::get('default', 'codpais');
 
             $dir->provincia = $this->provincia();
             $dir->ciudad = $this->ciudad();
             $dir->direccion = $this->direccion();
-            $dir->codpostal = (string) mt_rand(1234, 99999);
-            $dir->apartado = (mt_rand(0, 3) == 0) ? (string) mt_rand(1234, 99999) : null;
-            $dir->domenvio = (mt_rand(0, 1) === 1);
-            $dir->domfacturacion = (mt_rand(0, 1) === 1);
+            $dir->codpostal = (string) random_int(1234, 99999);
+            $dir->apartado = (random_int(0, 3) === 0) ? (string) random_int(1234, 99999) : null;
+            $dir->domenvio = (random_int(0, 1) === 1);
+            $dir->domfacturacion = (random_int(0, 1) === 1);
             $dir->descripcion = 'Dirección #' . $max;
             if (!$dir->save()) {
                 break;

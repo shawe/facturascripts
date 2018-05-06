@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\Utils;
@@ -23,6 +24,7 @@ use FacturaScripts\Core\Base\Utils;
 /**
  * The quantity in inventory of an item in a particular warehouse.
  *
+ * @package FacturaScripts\Core\Model
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class Stock extends Base\ModelClass
@@ -123,7 +125,7 @@ class Stock extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         new Almacen();
         new Articulo();
@@ -136,12 +138,17 @@ class Stock extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idstock';
     }
 
-    public function save()
+    /**
+     * Stores the model data in the database.
+     *
+     * @return bool
+     */
+    public function save(): bool
     {
         if (parent::save()) {
             $articulo = new Articulo();
@@ -161,7 +168,7 @@ class Stock extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'stocks';
     }
@@ -171,7 +178,7 @@ class Stock extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->cantidad = round($this->cantidad, self::MAX_DECIMALS);
 
@@ -198,7 +205,7 @@ class Stock extends Base\ModelClass
      *
      * @return float
      */
-    public function totalFromArticulo($ref)
+    public function totalFromArticulo($ref): float
     {
         $sql = 'SELECT SUM(cantidad) AS total FROM ' . static::tableName()
             . ' WHERE referencia = ' . self::$dataBase->var2str($ref);
@@ -219,7 +226,7 @@ class Stock extends Base\ModelClass
      *
      * @return string
      */
-    public function url(string $type = 'auto', string $list = 'List')
+    public function url(string $type = 'auto', string $list = 'List'): string
     {
         return parent::url($type, 'ListArticulo?active=List');
     }

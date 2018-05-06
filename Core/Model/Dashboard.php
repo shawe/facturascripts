@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,11 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 /**
  * Components to use into the Dashboard of FacturaScripts.
  *
+ * @package FacturaScripts\Core\Model
  * @author Francesc Pineda Segarra <francesc.pineda.segarra@gmail.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -57,7 +59,7 @@ class Dashboard extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         return 'INSERT INTO ' . static::tableName() . " (component, version, location) VALUES ('Messages','1.0 (Beta)', 0);"
             . 'INSERT INTO ' . static::tableName() . " (component, version, location) VALUES ('Tasks','1.0 (Beta)', 0);"
@@ -69,7 +71,7 @@ class Dashboard extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'component';
     }
@@ -79,7 +81,7 @@ class Dashboard extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'dashboard';
     }
@@ -92,7 +94,7 @@ class Dashboard extends Base\ModelClass
      *
      * @return string
      */
-    public function url(string $type = 'auto', string $list = 'List')
+    public function url(string $type = 'auto', string $list = 'List'): string
     {
         return parent::url($type, '');
     }

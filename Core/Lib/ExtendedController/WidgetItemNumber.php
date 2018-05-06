@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base\NumberTools;
@@ -23,6 +24,7 @@ use FacturaScripts\Core\Base\NumberTools;
 /**
  * This class manage all specific method for a WidgetItem of Number type.
  *
+ * @package FacturaScripts\Core\Lib\ExtendedController
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
 class WidgetItemNumber extends WidgetItem
@@ -88,7 +90,7 @@ class WidgetItemNumber extends WidgetItem
      *
      * @return string
      */
-    public function getEditHTML($value)
+    public function getEditHTML($value): string
     {
         $specialAttributes = $this->specialAttributes();
         return $this->standardEditHTMLWidget($value, $specialAttributes);
@@ -101,14 +103,14 @@ class WidgetItemNumber extends WidgetItem
      *
      * @return string
      */
-    public function getListHTML($value)
+    public function getListHTML($value): string
     {
         if ($value === null || $value === '') {
             return '-';
         }
 
         $style = $this->getTextOptionsHTML($value);
-        return '<span' . $style . '>' . self::$numberTools->format($value, $this->decimal) . '</span>';
+        return '<span' . $style . '>' . self::$numberTools::format($value, $this->decimal) . '</span>';
     }
 
     /**
@@ -150,7 +152,7 @@ class WidgetItemNumber extends WidgetItem
      *
      * @return string
      */
-    protected function specialAttributes()
+    protected function specialAttributes(): string
     {
         $base = parent::specialAttributes();
         $step = empty($this->step) ? ' step="any"' : ' step="' . $this->step . '"';

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\App\AppSettings;
@@ -24,6 +25,7 @@ use FacturaScripts\Core\Base\Utils;
 /**
  * Payment method of an invoice, delivery note, order or estimation.
  *
+ * @package FacturaScripts\Core\Model
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class FormaPago extends Base\ModelClass
@@ -90,7 +92,7 @@ class FormaPago extends Base\ModelClass
      *
      * @return string
      */
-    public function calcularVencimiento($fechaInicio, $diasDePago = '')
+    public function calcularVencimiento($fechaInicio, $diasDePago = ''): string
     {
         $fecha = $this->calcularVencimiento2($fechaInicio);
 
@@ -138,7 +140,7 @@ class FormaPago extends Base\ModelClass
      *
      * @return bool
      */
-    public function isDefault()
+    public function isDefault(): bool
     {
         return $this->codpago === AppSettings::get('default', 'codpago');
     }
@@ -148,7 +150,7 @@ class FormaPago extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'codpago';
     }
@@ -158,7 +160,7 @@ class FormaPago extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'formaspago';
     }
@@ -168,7 +170,7 @@ class FormaPago extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->descripcion = Utils::noHtml($this->descripcion);
 
@@ -191,7 +193,7 @@ class FormaPago extends Base\ModelClass
      *
      * @return string
      */
-    private function calcularVencimiento2($fechaInicio, $diaDePago = 0)
+    private function calcularVencimiento2($fechaInicio, $diaDePago = 0): string
     {
         if ($diaDePago === 0) {
             return date('d-m-Y', strtotime($fechaInicio . ' ' . $this->vencimiento));

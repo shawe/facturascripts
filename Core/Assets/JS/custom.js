@@ -1,6 +1,6 @@
 /*
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -29,8 +29,8 @@ $(document).ready(function () {
 
     $(".clickableRow").mousedown(function (event) {
         if (event.which === 1) {
-            var href = $(this).attr("data-href");
-            var target = $(this).attr("data-target");
+            const href = $(this).attr("data-href");
+            const target = $(this).attr("data-target");
             if (typeof href !== typeof undefined && href !== false) {
                 if (typeof target !== typeof undefined && target === "_blank") {
                     window.open($(this).attr("data-href"));

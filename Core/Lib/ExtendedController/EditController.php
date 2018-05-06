@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,11 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
+
+use FacturaScripts\Core\Base;
 
 /**
  * Controller to manage the data editing
  *
+ * @package FacturaScripts\Core\Lib\ExtendedController
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -60,8 +64,6 @@ abstract class EditController extends PanelController
 
     /**
      * Create the view to display.
-     *
-     * @return EditView
      */
     protected function createViews()
     {
@@ -76,8 +78,8 @@ abstract class EditController extends PanelController
     /**
      * Loads the data to display.
      *
-     * @param string   $viewName
-     * @param BaseView $view
+     * @param string            $viewName
+     * @param BaseView|EditView $view
      */
     protected function loadData($viewName, $view)
     {

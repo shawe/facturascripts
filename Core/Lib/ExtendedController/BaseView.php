@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,14 +16,19 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base;
+use FacturaScripts\Core\Model\Base\PurchaseDocument;
+use FacturaScripts\Core\Model\Base\SalesDocument;
 use FacturaScripts\Core\Model\PageOption;
+use FacturaScripts\Dinamic\Model\Base\BusinessDocument;
 
 /**
  * Base definition for the views used in ExtendedControllers
  *
+ * @package FacturaScripts\Core\Lib\ExtendedController
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -47,7 +52,7 @@ abstract class BaseView
     /**
      * Model to use in this view.
      *
-     * @var mixed
+     * @var BusinessDocument|SalesDocument|PurchaseDocument
      */
     public $model;
 
@@ -74,6 +79,8 @@ abstract class BaseView
     
     /**
      * Method to export the view data.
+     *
+     * @param $exportManager
      */
     abstract public function export(&$exportManager);
 
@@ -99,7 +106,7 @@ abstract class BaseView
     public function clear()
     {
         $this->model->clear();
-        $this->model->{$this->model->primaryColumn()} = $this->model->newCode();
+        $this->model->{$this->model::primaryColumn()} = $this->model->newCode();
     }
 
     /**
@@ -109,7 +116,7 @@ abstract class BaseView
      *
      * @return ColumnItem
      */
-    public function columnForField(string $fieldName)
+    public function columnForField(string $fieldName): ColumnItem
     {
         $result = null;
         foreach ($this->pageOption->columns as $group) {
@@ -134,7 +141,7 @@ abstract class BaseView
      *
      * @return ColumnItem
      */
-    public function columnForName(string $columnName)
+    public function columnForName(string $columnName): ColumnItem
     {
         $result = null;
         foreach ($this->pageOption->columns as $group) {
@@ -157,7 +164,7 @@ abstract class BaseView
      *
      * @return array
      */
-    public function getModals()
+    public function getModals(): array
     {
         return $this->pageOption->modals;
     }
@@ -177,11 +184,11 @@ abstract class BaseView
      *
      * @param string $key
      *
-     * @return RowItem
+     * @return RowItem|null
      */
     public function getRow(string $key)
     {
-        return isset($this->pageOption->rows[$key]) ? $this->pageOption->rows[$key] : null;
+        return $this->pageOption->rows[$key] ?? null;
     }
 
     /**
@@ -191,7 +198,7 @@ abstract class BaseView
      *
      * @return string
      */
-    public function getURL(string $type)
+    public function getURL(string $type): string
     {
         return empty($this->model) ? '' : $this->model->url($type);
     }
@@ -201,7 +208,7 @@ abstract class BaseView
      *
      * @return string
      */
-    public function getViewName()
+    public function getViewName(): string
     {
         return $this->pageOption->name;
     }
@@ -213,7 +220,7 @@ abstract class BaseView
      */
     public function loadFromData(array &$data)
     {
-        $fieldKey = $this->model->primaryColumn();
+        $fieldKey = $this->model::primaryColumn();
         $fieldValue = $data[$fieldKey];
         if ($fieldValue !== $this->model->primaryColumnValue() && $fieldValue !== '') {
             $this->model->loadFromCode($fieldValue);

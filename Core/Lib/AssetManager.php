@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,12 +16,14 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib;
 
 /**
  * Asset Manager for easy add extra assets.
  *
- * @author Carlos García Gómez
+ * @package FacturaScripts\Core\Lib
+ * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class AssetManager
 {
@@ -70,12 +72,20 @@ class AssetManager
         return $txt;
     }
 
+    /**
+     * Reduce the text of data, removing uneeded code. Similar to minify the content.
+     *
+     * @param string $data
+     * @param string $url
+     *
+     * @return string
+     */
     public static function fixCombineContent(string $data, string $url): string
     {
         // Replace relative paths
         $replace = [
-            'url(../' => "url(" . dirname($url, 2) . '/',
-            "url('../" => "url('" . dirname($url, 2) . '/',
+            'url(../' => 'url(' . \dirname($url, 2) . '/',
+            "url('../" => "url('" . \dirname($url, 2) . '/',
         ];
         $buffer = \str_replace(array_keys($replace), $replace, $data);
 
@@ -83,9 +93,9 @@ class AssetManager
         $buffer = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $buffer);
         
         // Remove space after colons
-        $buffer = str_replace(': ', ':', $buffer);
+        $buffer = \str_replace(': ', ':', $buffer);
         
         // Remove whitespace
-        return str_replace(["\r\n", "\r", "\n", "\t", '  ', '    ', '    '], '', $buffer);
+        return \str_replace(["\r\n", "\r", "\n", "\t", '  ', '    ', '    '], '', $buffer);
     }
 }

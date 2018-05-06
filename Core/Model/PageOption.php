@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase;
@@ -25,6 +26,7 @@ use FacturaScripts\Core\Lib\ExtendedController;
  * Visual configuration of the FacturaScripts views,
  * each PageOption corresponds to a controller.
  *
+ * @package FacturaScripts\Core\Model
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
 class PageOption extends Base\ModelClass
@@ -36,7 +38,7 @@ class PageOption extends Base\ModelClass
      * Definition of the columns. It is called columns but it always
      * contains GroupItem, which contains the columns.
      *
-     * @var array
+     * @var ExtendedController\GroupItem[]
      */
     public $columns;
 
@@ -57,7 +59,7 @@ class PageOption extends Base\ModelClass
     /**
      * Definition of modal forms
      *
-     * @var array
+     * @var ExtendedController\ColumnItem[]
      */
     public $modals;
 
@@ -127,7 +129,7 @@ class PageOption extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         new Page();
         new User();
@@ -157,7 +159,7 @@ class PageOption extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'id';
     }
@@ -167,7 +169,7 @@ class PageOption extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'pages_options';
     }
@@ -177,7 +179,7 @@ class PageOption extends Base\ModelClass
      *
      * @return array
      */
-    private function getEncodeValues()
+    private function getEncodeValues(): array
     {
         return [
             'columns' => json_encode($this->columns),
@@ -195,7 +197,7 @@ class PageOption extends Base\ModelClass
      *
      * @return Database\DataBaseWhere[]
      */
-    private function getPageFilter(string $name, string $nick)
+    private function getPageFilter(string $name, string $nick): array
     {
         return [
             new DataBase\DataBaseWhere('nick', $nick),
@@ -212,7 +214,7 @@ class PageOption extends Base\ModelClass
      *
      * @return bool
      */
-    protected function saveInsert(array $values = [])
+    protected function saveInsert(array $values = []): bool
     {
         return parent::saveInsert($this->getEncodeValues());
     }
@@ -224,7 +226,7 @@ class PageOption extends Base\ModelClass
      *
      * @return bool
      */
-    protected function saveUpdate(array $values = [])
+    protected function saveUpdate(array $values = []): bool
     {
         return parent::saveUpdate($this->getEncodeValues());
     }

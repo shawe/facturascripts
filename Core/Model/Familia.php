@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\Utils;
@@ -23,6 +24,7 @@ use FacturaScripts\Core\Base\Utils;
 /**
  * A family of products.
  *
+ * @package FacturaScripts\Core\Model
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -66,7 +68,7 @@ class Familia extends Base\ModelClass
      *
      * @return self[]
      */
-    public function hijas($codmadre = '')
+    public function hijas($codmadre = ''): array
     {
         $famlist = [];
 
@@ -91,7 +93,7 @@ class Familia extends Base\ModelClass
      *
      * @return self[]
      */
-    public function madres()
+    public function madres(): array
     {
         $famlist = [];
 
@@ -117,7 +119,7 @@ class Familia extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'codfamilia';
     }
@@ -127,7 +129,7 @@ class Familia extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'familias';
     }
@@ -137,14 +139,14 @@ class Familia extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->codfamilia = Utils::noHtml($this->codfamilia);
         $this->descripcion = Utils::noHtml($this->descripcion);
 
-        if (empty($this->codfamilia) || strlen($this->codfamilia) > 8) {
+        if (empty($this->codfamilia) || mb_strlen($this->codfamilia) > 8) {
             self::$miniLog->alert(self::$i18n->trans('family-code-valid-length'));
-        } elseif (empty($this->descripcion) || strlen($this->descripcion) > 100) {
+        } elseif (empty($this->descripcion) || mb_strlen($this->descripcion) > 100) {
             self::$miniLog->alert(self::$i18n->trans('family-desc-not-valid'));
         } elseif ($this->madre === $this->codfamilia) {
             self::$miniLog->alert(self::$i18n->trans('parent-family-cant-be-child'));
@@ -164,7 +166,7 @@ class Familia extends Base\ModelClass
      *
      * @return array
      */
-    private function auxAll(&$familias, $madre, $nivel)
+    private function auxAll(&$familias, $madre, $nivel): array
     {
         $subfamilias = [];
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2015-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2015-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,11 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 /**
  * Artículo vendido por un proveedor.
  *
+ * @package FacturaScripts\Core\Model
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class ArticuloProveedor extends Base\Product
@@ -80,7 +82,7 @@ class ArticuloProveedor extends Base\Product
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         /// force the verification of the provider table
         new Proveedor();
@@ -93,7 +95,7 @@ class ArticuloProveedor extends Base\Product
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'id';
     }
@@ -103,7 +105,7 @@ class ArticuloProveedor extends Base\Product
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'articulosprov';
     }
@@ -116,7 +118,7 @@ class ArticuloProveedor extends Base\Product
      *
      * @return string
      */
-    public function url(string $type = 'auto', string $list = 'List')
+    public function url(string $type = 'auto', string $list = 'List'): string
     {
         return parent::url($type, 'ListArticulo?active=List');
     }

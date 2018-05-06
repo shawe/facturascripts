@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\Controller;
@@ -29,6 +30,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Description of AccountingReports
  *
+ * @package FacturaScripts\Core\Controller
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class AccountingReports extends Controller
@@ -53,7 +55,7 @@ class AccountingReports extends Controller
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
         $pageData = parent::getPageData();
         $pageData['menu'] = 'reports';
@@ -68,7 +70,7 @@ class AccountingReports extends Controller
      *
      * @return array
      */
-    public function getReports()
+    public function getReports(): array
     {
         return [
             'ledger' => ['description' => 'ledger', 'grouping' => true],
@@ -102,7 +104,7 @@ class AccountingReports extends Controller
     /**
      * Execute main actions.
      * Filter bi date-from date-to format and grouping
-     * 
+     *
      * @param $action
      */
     private function execAction($action)
@@ -111,7 +113,7 @@ class AccountingReports extends Controller
         $dateFrom = $this->request->get('date-from', '');
         $dateTo = $this->request->get('date-to', '');
         $format = $this->request->get('format', '');
-        $params = ['grouping' => ('YES' == $this->request->get('grouping', 'YES'))];
+        $params = ['grouping' => 'YES' === $this->request->get('grouping', 'YES')];
 
         switch ($action) {
             case 'ledger':

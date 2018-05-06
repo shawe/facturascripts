@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2017 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -19,13 +19,12 @@
 
 namespace FacturaScripts\Core\Base\DataBase;
 
-use Exception;
-use mysqli;
 use FacturaScripts\Core\Base\Translator;
 
 /**
  * Class to connect with MySQL.
  *
+ * @package FacturaScripts\Core\Base\DataBase
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -112,7 +111,7 @@ class Mysql implements DataBaseEngine
      *
      * @return string
      */
-    public function version($link)
+    public function version($link): string
     {
         return 'MYSQL ' . $link->server_version;
     }
@@ -122,7 +121,7 @@ class Mysql implements DataBaseEngine
      *
      * @param string $error
      *
-     * @return null|mysqli
+     * @return \mysqli|null
      */
     public function connect(&$error)
     {
@@ -158,7 +157,7 @@ class Mysql implements DataBaseEngine
      *
      * @return bool
      */
-    public function close($link)
+    public function close($link): bool
     {
         $this->rollbackTransactions();
 
@@ -172,7 +171,7 @@ class Mysql implements DataBaseEngine
      *
      * @return string
      */
-    public function errorMessage($link)
+    public function errorMessage($link): string
     {
         return ($link->error !== '') ? $link->error : $this->lastErrorMsg;
     }
@@ -184,7 +183,7 @@ class Mysql implements DataBaseEngine
      *
      * @return bool
      */
-    public function beginTransaction($link)
+    public function beginTransaction($link): bool
     {
         $result = $this->exec($link, 'START TRANSACTION;');
         if ($result) {
@@ -201,10 +200,10 @@ class Mysql implements DataBaseEngine
      *
      * @return bool
      */
-    public function commit($link)
+    public function commit($link): bool
     {
         $result = $this->exec($link, 'COMMIT;');
-        if ($result && in_array($link, $this->transactions, false)) {
+        if ($result && \in_array($link, $this->transactions, false)) {
             $this->unsetTransaction($link);
         }
 
@@ -218,10 +217,10 @@ class Mysql implements DataBaseEngine
      *
      * @return bool
      */
-    public function rollback($link)
+    public function rollback($link): bool
     {
         $result = $this->exec($link, 'ROLLBACK;');
-        if (in_array($link, $this->transactions, false)) {
+        if (\in_array($link, $this->transactions, false)) {
             $this->unsetTransaction($link);
         }
 
@@ -235,9 +234,9 @@ class Mysql implements DataBaseEngine
      *
      * @return bool
      */
-    public function inTransaction($link)
+    public function inTransaction($link): bool
     {
-        return in_array($link, $this->transactions, false);
+        return \in_array($link, $this->transactions, false);
     }
 
     /**
@@ -249,7 +248,7 @@ class Mysql implements DataBaseEngine
      *
      * @return array
      */
-    public function select($link, $sql)
+    public function select($link, $sql): array
     {
         $result = [];
         try {
@@ -261,7 +260,7 @@ class Mysql implements DataBaseEngine
                 }
                 $aux->free();
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->lastErrorMsg = $e->getMessage();
             $result = [];
         }
@@ -278,7 +277,7 @@ class Mysql implements DataBaseEngine
      *
      * @return bool
      */
-    public function exec($link, $sql)
+    public function exec($link, $sql): bool
     {
         try {
             if ($link->multi_query($sql)) {
@@ -287,7 +286,7 @@ class Mysql implements DataBaseEngine
                 } while ($more);
             }
             $result = ($link->errno === 0);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->lastErrorMsg = $e->getMessage();
             $result = false;
         }
@@ -303,7 +302,7 @@ class Mysql implements DataBaseEngine
      *
      * @return string
      */
-    public function escapeString($link, $str)
+    public function escapeString($link, $str): string
     {
         return $link->escape_string($str);
     }
@@ -313,7 +312,7 @@ class Mysql implements DataBaseEngine
      *
      * @return string
      */
-    public function dateStyle()
+    public function dateStyle(): string
     {
         return 'Y-m-d';
     }
@@ -326,7 +325,7 @@ class Mysql implements DataBaseEngine
      *
      * @return bool
      */
-    private function compareDataTypeNumeric($dbType, $xmlType)
+    private function compareDataTypeNumeric($dbType, $xmlType): bool
     {
         return (0 === strpos($dbType, 'int(') && $xmlType === 'INTEGER') ||
             (0 === strpos($dbType, 'double') && $xmlType === 'double precision');
@@ -340,7 +339,7 @@ class Mysql implements DataBaseEngine
      *
      * @return bool
      */
-    private function compareDataTypeChar($dbType, $xmlType)
+    private function compareDataTypeChar($dbType, $xmlType): bool
     {
         $result = 0 === strpos($xmlType, 'character varying(');
         if ($result) {
@@ -358,7 +357,7 @@ class Mysql implements DataBaseEngine
      *
      * @return bool
      */
-    public function compareDataTypes($dbType, $xmlType)
+    public function compareDataTypes($dbType, $xmlType): bool
     {
         $result = (
             ($dbType === $xmlType) ||
@@ -385,7 +384,7 @@ class Mysql implements DataBaseEngine
      *
      * @return array
      */
-    public function listTables($link)
+    public function listTables($link): array
     {
         $tables = [];
         $aux = $this->select($link, 'SHOW TABLES;');
@@ -413,7 +412,7 @@ class Mysql implements DataBaseEngine
      *
      * @return bool
      */
-    public function checkSequence($link, $tableName, $default, $colname)
+    public function checkSequence($link, $tableName, $default, $colname): bool
     {
         return true;
     }
@@ -427,7 +426,7 @@ class Mysql implements DataBaseEngine
      *
      * @return bool
      */
-    public function checkTableAux($link, $tableName, &$error)
+    public function checkTableAux($link, $tableName, &$error): bool
     {
         $result = true;
 
@@ -450,7 +449,7 @@ class Mysql implements DataBaseEngine
      *
      * @return array
      */
-    public function columnFromData($colData)
+    public function columnFromData($colData): array
     {
         $result = array_change_key_case($colData);
         $result['is_nullable'] = $result['null'];
@@ -466,17 +465,19 @@ class Mysql implements DataBaseEngine
      *
      * @return DataBaseSQL
      */
-    public function getSQL()
+    public function getSQL(): DataBaseSQL
     {
         return $this->utilsSQL;
     }
 
     /**
-     * Indicates the operator for the database engine
+     * Indicates the operator for the database engine.
      *
      * @param string $operator
+     *
+     * @return string
      */
-    public function getOperator($operator)
+    public function getOperator($operator): string
     {
         return $operator;
     }

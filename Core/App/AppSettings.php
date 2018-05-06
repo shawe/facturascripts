@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -24,6 +24,7 @@ use FacturaScripts\Core\Model\Settings;
 /**
  * AppSettings manage the essential data settings of the app.
  *
+ * @package FacturaScripts\Core\App
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class AppSettings
@@ -137,8 +138,8 @@ class AppSettings
     private function setConstants($data)
     {
         foreach ($data as $key => $value) {
-            if (!defined($key)) {
-                define($key, static::get('default', $value['property'], $value['default']));
+            if (!\defined($key)) {
+                \define($key, static::get('default', $value['property'], $value['default']));
             }
         }
     }

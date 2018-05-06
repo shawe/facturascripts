@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2017 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,11 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib;
 
 /**
  * This class centralizes all common method for fiscal id.
  *
+ * @package FacturaScripts\Core\Lib
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class IDFiscal
@@ -31,7 +33,7 @@ class IDFiscal
      *
      * @return string
      */
-    public static function defaultValue()
+    public static function defaultValue(): string
     {
         return 'CIF/NIF';
     }
@@ -41,7 +43,7 @@ class IDFiscal
      *
      * @return array
      */
-    public static function all()
+    public static function all(): array
     {
         return ['CIF/NIF', 'Pasaporte', 'DNI', 'NIF', 'CIF', 'VAT', 'CUIT'];
     }

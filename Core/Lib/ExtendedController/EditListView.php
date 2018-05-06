@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,14 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExportManager;
+use FacturaScripts\Dinamic\Model\Base\ModelClass;
 
 /**
  * View definition for its use in ExtendedControllers
  *
+ * @package FacturaScripts\Core\Lib\ExtendedController
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -33,7 +36,7 @@ class EditListView extends BaseView implements DataViewInterface
     /**
      * Cursor with the display model's data
      *
-     * @var array
+     * @var ModelClass[]
      */
     private $cursor;
 
@@ -70,7 +73,7 @@ class EditListView extends BaseView implements DataViewInterface
     {
         parent::__construct($title, $modelName);
 
-        $this->order = [$this->model->primaryColumn() => 'ASC'];
+        $this->order = [$this->model::primaryColumn() => 'ASC'];
         $this->offset = 0;
         $this->where = [];
 
@@ -112,7 +115,7 @@ class EditListView extends BaseView implements DataViewInterface
      *
      * @return GroupItem[]
      */
-    public function getColumns()
+    public function getColumns(): array
     {
         return $this->pageOption->columns;
     }
@@ -120,7 +123,7 @@ class EditListView extends BaseView implements DataViewInterface
     /**
      * Returns the list of read data in the Model format
      *
-     * @return array
+     * @return ModelClass[]
      */
     public function getCursor()
     {
@@ -157,7 +160,7 @@ class EditListView extends BaseView implements DataViewInterface
      * @param int             $offset
      * @param int             $limit
      */
-    public function loadData($code = false, $where = [], $order = [], $offset = 0, $limit = FS_ITEM_LIMIT)
+    public function loadData($code = false, array $where = [], array $order = [], $offset = 0, $limit = FS_ITEM_LIMIT)
     {
         $this->order = empty($order) ? $this->order : $order;
         $this->count = $this->model->count($where);

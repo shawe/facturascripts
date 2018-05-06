@@ -6,7 +6,7 @@
      * in rows and columns format.
      *
      * This file is part of FacturaScripts
-     * Copyright (C) 2017-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+     * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
      *
      * This program is free software: you can redistribute it and/or modify
      * it under the terms of the GNU Lesser General Public License as
@@ -30,9 +30,9 @@
     {{ parent() }}
 
     <script type="text/javascript">
-        var tabActive = '{{ fsc.active }}';
+        let tabActive = '{{ fsc.active }}';
         function deleteFromList() {
-            var deleteCodes = getLineCodes();
+            const deleteCodes = getLineCodes();
             if (deleteCodes.length) {
                 bootbox.confirm({
                     title: "{{ i18n.trans('confirm-delete')|raw }}",
@@ -58,17 +58,17 @@
             return false;
         }
         function execActionForm(actionValue) {
-            var form = document.getElementById('form' + tabActive);
+            const form = document.getElementById('form' + tabActive);
             $('<input>').attr({type: 'hidden', name: 'action'}).appendTo(form);
             $('<input>').attr({type: 'hidden', name: 'code'}).appendTo(form);
-            var lineCodes = getLineCodes();
+            const lineCodes = getLineCodes();
             form.action.value = actionValue;
             form.code.value = lineCodes.join();
             form.submit();
         }
         function getAutocompleteData(formName, source, field, title, term) {
-            var formData = {};
-            var rawForm = $('form[name="' + formName + '"]').serializeArray();
+            const formData = {};
+            const rawForm = $('form[name="' + formName + '"]').serializeArray();
             $.each(rawForm, function (i, input) {
                 formData[input.name] = input.value;
             });
@@ -81,7 +81,7 @@
             return formData;
         }
         function getLineCodes() {
-            var lineCodes = [];
+            const lineCodes = [];
             $('.tab' + tabActive + ' .listAction').each(function () {
                 if ($(this).prop('checked')) {
                     lineCodes.push($(this).val());
@@ -94,14 +94,14 @@
             execActionForm('export');
         }
         function goToOptions(url) {
-            var previous = '';
+            let previous = '';
             if (typeof url !== 'undefined') {
                 previous = '&url=' + encodeURIComponent(url + '?active=' + tabActive);
             }
             window.location.href = 'EditPageOption?code=' + tabActive + previous;
         }
         function insertRecord() {
-            var urls = { {{ fsc.getStringURLs('new') | raw }} };
+            const urls = { {{ fsc.getStringURLs('new') | raw }} };
             document.insertForm.action = urls[tabActive];
             document.insertForm.submit();
         }
@@ -122,15 +122,15 @@
             });
             // set/unset all delete checkbox
             $('.listActionCB').click(function () {
-                var checked = $(this).prop('checked');
+                const checked = $(this).prop('checked');
                 $('.listAction').prop('checked', checked);
             });
             // autocomplete filters
             $('.autocomplete').each(function () {
-                var source = $(this).attr('data-source');
-                var field = $(this).attr('data-field');
-                var title = $(this).attr('data-title');
-                var formName = $(this).closest('form').attr('name');
+                const source = $(this).attr('data-source');
+                const field = $(this).attr('data-field');
+                const title = $(this).attr('data-title');
+                const formName = $(this).closest('form').attr('name');
                 $(this).autocomplete({
                     source: function (request, response) {
                         $.ajax({
@@ -139,7 +139,7 @@
                             data: getAutocompleteData(formName, source, field, title, request.term),
                             dataType: 'json',
                             success: function (results) {
-                                var values = [];
+                                const values = [];
                                 results.forEach(function (element) {
                                     values.push({key: element.key, value: element.key + " | " + element.value});
                                 });
@@ -220,7 +220,7 @@
                 </div>
             </div>
             <div class="col-sm-5 col-6 text-right">
-                <h2 style="margin-top: 0px;">
+                <h2 style="margin-top: 0;">
                     <i class="fa {{ fsc.getPageData()['icon'] }}" aria-hidden="true"></i> {{ title }}
                 </h2>
             </div>

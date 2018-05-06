@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2015-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2015-2017 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -26,6 +26,7 @@ use FacturaScripts\Core\Base\DataBase\Postgresql;
 /**
  * Generic class of access to the database, either MySQL or PostgreSQL.
  *
+ * @package FacturaScripts\Core\Base
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -91,7 +92,7 @@ class DataBase
      *
      * @return DataBaseEngine
      */
-    public function getEngine()
+    public function getEngine(): DataBaseEngine
     {
         return self::$engine;
     }
@@ -103,7 +104,7 @@ class DataBase
      *
      * @return string
      */
-    public function getOperator($operator)
+    public function getOperator($operator): string
     {
         return self::$engine->getOperator($operator);
     }
@@ -113,7 +114,7 @@ class DataBase
      *
      * @return array
      */
-    public function getTables()
+    public function getTables(): array
     {
         if (count(self::$tables) === 0) {
             self::$tables = self::$engine->listTables(self::$link);
@@ -129,11 +130,11 @@ class DataBase
      *
      * @return array
      */
-    public function getColumns($tableName)
+    public function getColumns($tableName): array
     {
         $result = [];
         $data = $this->select(self::$engine->getSQL()->sqlColumns($tableName));
-        if (is_array($data) && !empty($data)) {
+        if (\is_array($data) && !empty($data)) {
             foreach ($data as $dataCol) {
                 $column = self::$engine->columnFromData($dataCol);
                 $result[$column['name']] = $column;
@@ -151,7 +152,7 @@ class DataBase
      *
      * @return array
      */
-    public function getConstraints($tableName, $extended = false)
+    public function getConstraints($tableName, $extended = false): array
     {
         if ($extended) {
             $sql = self::$engine->getSQL()->sqlConstraintsExtended($tableName);
@@ -171,11 +172,11 @@ class DataBase
      *
      * @return array
      */
-    public function getIndexes($tableName)
+    public function getIndexes($tableName): array
     {
         $result = [];
         $data = $this->select(self::$engine->getSQL()->sqlIndexes($tableName));
-        if (is_array($data) && !empty($data)) {
+        if (\is_array($data) && !empty($data)) {
             foreach ($data as $row) {
                 $result[] = ['name' => $row['Key_name']];
             }
@@ -189,7 +190,7 @@ class DataBase
      *
      * @return bool
      */
-    public function connected()
+    public function connected(): bool
     {
         return (bool) self::$link;
     }
@@ -199,7 +200,7 @@ class DataBase
      *
      * @return bool
      */
-    public function connect()
+    public function connect(): bool
     {
         if ($this->connected()) {
             return true;
@@ -220,7 +221,7 @@ class DataBase
      *
      * @return bool
      */
-    public function close()
+    public function close(): bool
     {
         if (!$this->connected()) {
             return true;
@@ -242,7 +243,7 @@ class DataBase
      *
      * @return bool
      */
-    public function inTransaction()
+    public function inTransaction(): bool
     {
         return self::$engine->inTransaction(self::$link);
     }
@@ -252,7 +253,7 @@ class DataBase
      *
      * @return bool
      */
-    public function beginTransaction()
+    public function beginTransaction(): bool
     {
         $result = $this->inTransaction();
         if (!$result) {
@@ -268,7 +269,7 @@ class DataBase
      *
      * @return bool
      */
-    public function commit()
+    public function commit(): bool
     {
         $result = self::$engine->commit(self::$link);
         if ($result) {
@@ -283,7 +284,7 @@ class DataBase
      *
      * @return bool
      */
-    public function rollback()
+    public function rollback(): bool
     {
         self::$miniLog->error(self::$engine->errorMessage(self::$link));
         self::$miniLog->sql('Rollback Transaction');
@@ -299,7 +300,7 @@ class DataBase
      *
      * @return array
      */
-    public function select($sql)
+    public function select($sql): array
     {
         return $this->selectLimit($sql, 0);
     }
@@ -316,7 +317,7 @@ class DataBase
      *
      * @return array
      */
-    public function selectLimit($sql, $limit = FS_ITEM_LIMIT, $offset = 0)
+    public function selectLimit($sql, $limit = FS_ITEM_LIMIT, $offset = 0): array
     {
         if (!$this->connected()) {
             return [];
@@ -350,7 +351,7 @@ class DataBase
      *
      * @return bool
      */
-    public function exec($sql)
+    public function exec($sql): bool
     {
         $result = $this->connected();
         if ($result) {
@@ -393,7 +394,7 @@ class DataBase
      *
      * @return string
      */
-    public function version()
+    public function version(): string
     {
         if (!$this->connected()) {
             return '';
@@ -410,13 +411,13 @@ class DataBase
      *
      * @return bool
      */
-    public function tableExists($tableName, array $list = [])
+    public function tableExists($tableName, array $list = []): bool
     {
         if (empty($list)) {
             $list = $this->getTables();
         }
 
-        return in_array($tableName, $list, false);
+        return \in_array($tableName, $list, false);
     }
 
     /**
@@ -426,7 +427,7 @@ class DataBase
      *
      * @return bool
      */
-    public function checkTableAux($tableName)
+    public function checkTableAux($tableName): bool
     {
         $error = '';
         $result = self::$engine->checkTableAux(self::$link, $tableName, $error);
@@ -444,13 +445,13 @@ class DataBase
      *
      * @return string
      */
-    public function var2str($val)
+    public function var2str($val): string
     {
         if ($val === null) {
             return 'NULL';
         }
 
-        if (is_bool($val)) {
+        if (\is_bool($val)) {
             if ($val) {
                 return 'TRUE';
             }
@@ -478,7 +479,7 @@ class DataBase
      *
      * @return string
      */
-    public function escapeString($str)
+    public function escapeString($str): string
     {
         if (self::$engine) {
             $str = self::$engine->escapeString(self::$link, $str);
@@ -492,7 +493,7 @@ class DataBase
      *
      * @return string
      */
-    public function dateStyle()
+    public function dateStyle(): string
     {
         return self::$engine->dateStyle();
     }
@@ -504,7 +505,7 @@ class DataBase
      *
      * @return string
      */
-    public function sql2Int($colName)
+    public function sql2Int($colName): string
     {
         return self::$engine->getSQL()->sql2Int($colName);
     }

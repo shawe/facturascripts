@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -24,6 +25,7 @@ use FacturaScripts\Core\Lib\ExtendedController;
 /**
  * Controller to list the items in the PedidoCliente model
  *
+ * @package FacturaScripts\Core\Controller
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  * @author Raul Jimenez <raul.jimenez@nazcanetworks.com>
@@ -36,14 +38,14 @@ class ListPedidoCliente extends ExtendedController\ListController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'orders';
-        $pagedata['icon'] = 'fa-files-o';
-        $pagedata['menu'] = 'sales';
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'orders';
+        $pageData['icon'] = 'fa-files-o';
+        $pageData['menu'] = 'sales';
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
@@ -61,16 +63,16 @@ class ListPedidoCliente extends ExtendedController\ListController
         $this->addFilterNumber('ListPedidoCliente', 'total', 'total', 'total');
 
         $where = [new DataBaseWhere('tipodoc', 'PedidoCliente')];
-        $stateValues = $this->codeModel->all('estados_documentos', 'idestado', 'nombre', true, $where);
+        $stateValues = $this->codeModel::all('estados_documentos', 'idestado', 'nombre', true, $where);
         $this->addFilterSelect('ListPedidoCliente', 'idestado', 'state', 'idestado', $stateValues);
 
-        $warehouseValues = $this->codeModel->all('almacenes', 'codalmacen', 'nombre');
+        $warehouseValues = $this->codeModel::all('almacenes', 'codalmacen', 'nombre');
         $this->addFilterSelect('ListPedidoCliente', 'codalmacen', 'warehouse', 'codalmacen', $warehouseValues);
 
-        $serieValues = $this->codeModel->all('series', 'codserie', 'descripcion');
+        $serieValues = $this->codeModel::all('series', 'codserie', 'descripcion');
         $this->addFilterSelect('ListPedidoCliente', 'codserie', 'series', 'codserie', $serieValues);
 
-        $paymentValues = $this->codeModel->all('formaspago', 'codpago', 'descripcion');
+        $paymentValues = $this->codeModel::all('formaspago', 'codpago', 'descripcion');
         $this->addFilterSelect('ListPedidoCliente', 'codpago', 'payment-method', 'codpago', $paymentValues);
 
         $this->addFilterAutocomplete('ListPedidoCliente', 'codcliente', 'customer', 'codcliente', 'clientes', 'codcliente', 'nombre');
@@ -89,7 +91,7 @@ class ListPedidoCliente extends ExtendedController\ListController
         $this->addOrderBy('ListLineaPedidoCliente', 'pvptotal', 'ammount');
         $this->addOrderBy('ListLineaPedidoCliente', 'idpedido', 'code', 2);
 
-        $taxValues = $this->codeModel->all('impuestos', 'codimpuesto', 'descripcion');
+        $taxValues = $this->codeModel::all('impuestos', 'codimpuesto', 'descripcion');
         $this->addFilterSelect('ListLineaPedidoCliente', 'codimpuesto', 'tax', 'codimpuesto', $taxValues);
 
         $this->addFilterNumber('ListLineaPedidoCliente', 'cantidad', 'quantity', 'cantidad');

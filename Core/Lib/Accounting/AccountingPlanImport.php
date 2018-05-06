@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Accounting;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -27,6 +28,7 @@ use ParseCsv\Csv;
 /**
  * Description of AccountingPlanImport
  *
+ * @package FacturaScripts\Core\Lib\Accounting
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Raul Jimenez <comercial@nazcanetworks.com>
  */
@@ -54,6 +56,9 @@ class AccountingPlanImport
      */
     private $miniLog;
 
+    /**
+     * AccountingPlanImport constructor.
+     */
     public function __construct()
     {
         $this->ejercicio = new Model\Ejercicio();
@@ -101,7 +106,7 @@ class AccountingPlanImport
 
     /**
      * Insert/update and account in accounting plan.
-     * 
+     *
      * @param string $code
      * @param string $definition
      * @param string $parentCode
@@ -179,15 +184,15 @@ class AccountingPlanImport
      *
      * @param string $filePath
      *
-     * @return \SimpleXMLElement|array
+     * @return \SimpleXMLElement
      */
-    private function getData(string $filePath)
+    private function getData(string $filePath): \SimpleXMLElement
     {
         if (file_exists($filePath)) {
             return simplexml_load_string(file_get_contents($filePath));
         }
 
-        return [];
+        return simplexml_load_string('');
     }
 
     /**
@@ -259,8 +264,8 @@ class AccountingPlanImport
         $length = [];
         foreach ($csv->data as $value) {
             $key = $value[$csv->titles[0]];
-            if (strlen($key) > 0) {
-                $length[] = strlen($key);
+            if (mb_strlen($key) > 0) {
+                $length[] = mb_strlen($key);
                 $accountPlan[$key] = utf8_encode($value[$csv->titles[1]]);
             }
         }
@@ -273,7 +278,7 @@ class AccountingPlanImport
         ksort($accountPlan);
         
         foreach ($accountPlan as $key => $value) {
-            switch (strlen($key)) {
+            switch (mb_strlen($key)) {
                 case $minLength:
                     $this->createAccount($key, $value);
                     break;
@@ -293,10 +298,10 @@ class AccountingPlanImport
 
     /**
      * Search the parent of account in a accounting Plan.
-     * 
+     *
      * @param array  $accountCodes
      * @param string $account
-     * 
+     *
      * @return string
      */
     private function searchParent(array &$accountCodes, string $account): string
@@ -306,7 +311,8 @@ class AccountingPlanImport
             $strCode = (string) $code;
             if ($strCode === $account) {
                 continue;
-            } elseif (strpos($account, $strCode) === 0 && strlen($strCode) > strlen($parentCode)) {
+            }
+            if (strpos($account, $strCode) === 0 && mb_strlen($strCode) > mb_strlen($parentCode)) {
                 $parentCode = $code;
             }
         }

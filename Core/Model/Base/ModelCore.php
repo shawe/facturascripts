@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model\Base;
 
 use FacturaScripts\Core\Base\Cache;
@@ -30,6 +31,7 @@ use FacturaScripts\Dinamic\Lib\Import\CSVImport;
  * The class from which all models inherit, connects to the database,
  * check the structure of the table and if necessary create or adapt.
  *
+ * @package FacturaScripts\Core\Model\Base
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 abstract class ModelCore
@@ -75,7 +77,7 @@ abstract class ModelCore
      *
      * @return array
      */
-    abstract protected function getModelFields();
+    abstract public function getModelFields(): array;
 
     /**
      * Loads table fields if is necessary.
@@ -83,21 +85,21 @@ abstract class ModelCore
      * @param DataBase  $dataBase
      * @param string    $tableName
      */
-    abstract protected function loadModelFields(DataBase &$dataBase, string $tableName);
+    abstract protected function loadModelFields(DataBase $dataBase, string $tableName);
 
     /**
      * Returns the name of the column that is the model's primary key.
      *
      * @return string
      */
-    abstract public static function primaryColumn();
+    abstract public static function primaryColumn(): string;
 
     /**
      * Returns the name of the table that uses this model.
      *
      * @return string
      */
-    abstract public static function tableName();
+    abstract public static function tableName(): string;
 
     /**
      * ModelClass constructor.
@@ -118,7 +120,7 @@ abstract class ModelCore
             }
         }
 
-        if (static::tableName() !== '' && !in_array(static::tableName(), self::$checkedTables, false) && $this->checkTable()) {
+        if (static::tableName() !== '' && !\in_array(static::tableName(), self::$checkedTables, false) && $this->checkTable()) {
             self::$miniLog->debug(self::$i18n->trans('table-checked', ['%tableName%' => static::tableName()]));
             self::$checkedTables[] = static::tableName();
             self::$cache->set('fs_checked_tables', self::$checkedTables);
@@ -149,7 +151,7 @@ abstract class ModelCore
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         return CSVImport::importTableSQL(static::tableName());
     }
@@ -164,16 +166,17 @@ abstract class ModelCore
     {
         $fields = $this->getModelFields();
         foreach ($data as $key => $value) {
-            if (in_array($key, $exclude)) {
+            if (\in_array($key, $exclude, false)) {
                 continue;
-            } elseif (!isset($fields[$key])) {
+            }
+            if (!isset($fields[$key])) {
                 $this->{$key} = $value;
                 continue;
             }
 
             // We check if it is a varchar (with established length) or another type of data
             $field = $fields[$key];
-            $type = (strpos($field['type'], '(') === false) ? $field['type'] : substr($field['type'], 0, strpos($field['type'], '('));
+            $type = strpos($field['type'], '(') === false ? $field['type'] : substr($field['type'], 0, strpos($field['type'], '('));
 
             switch ($type) {
                 case 'tinyint':
@@ -209,7 +212,7 @@ abstract class ModelCore
      */
     public function primaryColumnValue()
     {
-        return $this->{$this->primaryColumn()};
+        return $this->{$this::primaryColumn()};
     }
 
     /**
@@ -217,7 +220,7 @@ abstract class ModelCore
      *
      * @return bool
      */
-    private function checkTable()
+    private function checkTable(): bool
     {
         $dbTools = new DataBaseTools();
         $sql = '';

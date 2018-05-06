@@ -1,6 +1,6 @@
 /*
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -20,12 +20,12 @@
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
 
-var documentUrl = location.href;
-var documentLineData = [];
-var gridObject = null;               // TODO: convert to POO
-var autocompleteColumns = [];
-var eventManager = {};
-var cellSelected = { row: null, column: null };
+const documentUrl = location.href;
+let documentLineData = [];
+let gridObject = null;               // TODO: convert to POO
+let autocompleteColumns = [];
+let eventManager = {};
+let cellSelected = { row: null, column: null };
 
 /* Generate a single source function for autocomplete columns
  *
@@ -33,13 +33,13 @@ var cellSelected = { row: null, column: null };
  * @returns {Function}
  */
 function assignSource(data) {
-    var source = data.source.slice(0);
-    var field = data.field.slice(0);
-    var title = data.title.slice(0);
+    const source = data.source.slice(0);
+    const field = data.field.slice(0);
+    const title = data.title.slice(0);
 
     return function (query, process) {
         query = query.split(' | ', 1)[0];
-        var ajaxData = {
+        const ajaxData = {
             term: query,
             action: 'autocomplete',
             source: source,
@@ -52,7 +52,7 @@ function assignSource(data) {
             dataType: 'json',
             data: ajaxData,
             success: function (response) {
-                var values = [];
+                const values = [];
                 response.forEach(function (element) {
                     values.push(element.key + " | " + element.value);
                 });
@@ -64,9 +64,9 @@ function assignSource(data) {
 
 /* Configure source data for autocomplete columns */
 function configureAutocompleteColumns(columns) {
-    var column = null;
-    var keys = Object.keys(columns);
-    for (var i = 0, max = keys.length; i < max; i++) {
+    let column = null;
+    const keys = Object.keys(columns);
+    for (let i = 0, max = keys.length; i < max; i++) {
         column = columns[keys[i]];
         if (column['type'] === 'autocomplete') {
             // Add column to list of columns to control
@@ -88,8 +88,8 @@ function configureAutocompleteColumns(columns) {
  * @returns {Array}
  */
 function getGridData(fieldOrder = null) {
-    var rowIndex, lines = [];
-    for (var i = 0, max = documentLineData.rows.length; i < max; i++) {
+    let rowIndex, lines = [];
+    for (let i = 0, max = documentLineData.rows.length; i < max; i++) {
         rowIndex = gridObject.toVisualRow(i);
         if (gridObject.isEmptyRow(rowIndex)) {
             continue;
@@ -104,20 +104,20 @@ function getGridData(fieldOrder = null) {
 
 /* Return column value */
 function getGridFieldData(row, fieldName) {
-    var physicalRow = gridObject.toPhysicalRow(row);
+    const physicalRow = gridObject.toPhysicalRow(row);
     return documentLineData['rows'][physicalRow][fieldName];
 }
 
 /* Return row values */
 function getGridRowValues(row) {
-    var physicalRow = gridObject.toPhysicalRow(row);
+    const physicalRow = gridObject.toPhysicalRow(row);
     return documentLineData['rows'][physicalRow];
 }
 
 /* Set row value */
 function setGridRowValues(row, values) {
-    var physicalRow = gridObject.toPhysicalRow(row);
-    for (var i = 0, max = values.length; i < max; i++) {
+    const physicalRow = gridObject.toPhysicalRow(row);
+    for (let i = 0, max = values.length; i < max; i++) {
         documentLineData['rows'][physicalRow][values[i].field] = values[i].value;
     }
     gridObject.render();
@@ -125,7 +125,7 @@ function setGridRowValues(row, values) {
 
 /* Return field name for a column */
 function getGridColumnName(col) {
-    var physicalColumn = gridObject.toPhysicalColumn(col);
+    const physicalColumn = gridObject.toPhysicalColumn(col);
     return documentLineData['columns'][physicalColumn]['data'];
 }
 
@@ -141,7 +141,7 @@ function deselectCell() {
 
 /* Return actual row selected */
 function getRowSelected() {
-    var selected = gridObject.getSelected();
+    const selected = gridObject.getSelected();
     if (selected === undefined) {
         return cellSelected.row;
     }
@@ -150,7 +150,7 @@ function getRowSelected() {
 
 /* Return actual column selected */
 function getColumnSelected() {
-    var selected = gridObject.getSelected();
+    const selected = gridObject.getSelected();
     if (selected === undefined) {
         return cellSelected.column;
     }
@@ -175,7 +175,7 @@ function addEvent(name, fn) {
 
 function eventAfterSelection(row1, col1, row2, col2, preventScrolling) {
     // Check if editing
-    var editor = gridObject.getActiveEditor();
+    const editor = gridObject.getActiveEditor();
     if (editor && editor.isOpened()) {
         return;
     }
@@ -185,7 +185,7 @@ function eventAfterSelection(row1, col1, row2, col2, preventScrolling) {
     cellSelected.column = col1;
 
     // Call to children event
-    var events = Object.keys(eventManager);
+    const events = Object.keys(eventManager);
     if (events.includes('afterSelection')) {
         eventManager['afterSelection'](row1, col1, row2, col2, preventScrolling);
     }
@@ -193,11 +193,11 @@ function eventAfterSelection(row1, col1, row2, col2, preventScrolling) {
 
 function eventBeforeChange(changes, source) {
     // Aply correction to autocomplete columns
-    var isAutoComplete = false;
+    let isAutoComplete = false;
     if (autocompleteColumns.length > 0) {
-        for (var i = 0, max = changes.length; i < max; i++) {
+        for (let i = 0, max = changes.length; i < max; i++) {
             if (autocompleteColumns.includes(changes[i][1])) {
-                var values = changes[i][3].split(' | ');
+                let values = changes[i][3].split(' | ');
                 changes[i][3] = values[0];
                 isAutoComplete = (values.length > 1);
             }
@@ -205,7 +205,7 @@ function eventBeforeChange(changes, source) {
     }
 
     // Call to children event
-    var events = Object.keys(eventManager);
+    const events = Object.keys(eventManager);
     if (events.includes('beforeChange')) {
         eventManager['beforeChange'](changes, source, isAutoComplete);
     }
@@ -221,15 +221,15 @@ function eventBeforeChange(changes, source) {
  * @returns {Boolean}
  */
 function saveDocument(mainFormName) {
-    var submitButton = document.getElementById('save-document');
+    const submitButton = document.getElementById('save-document');
     submitButton.disabled = true;
     try {
-        var data = {
+        let data = {
             action: "save-document",
             lines: getGridData('order'),
             document: {}
         };
-        var mainForm = $("form[name=" + mainFormName + "]");
+        let mainForm = $("form[name=" + mainFormName + "]");
         $.each(mainForm.serializeArray(), function(key, value) {
             data.document[value.name] = value.value;
         });
@@ -261,7 +261,7 @@ function saveDocument(mainFormName) {
  */
 $(document).ready(function () {
     // Grid Data
-    var container = document.getElementById("document-lines");
+    const container = document.getElementById("document-lines");
     if (container) {
         // Prepare autocomplete columns
         configureAutocompleteColumns(documentLineData['columns']);

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -20,12 +20,13 @@
 namespace FacturaScripts\Core\Base;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
-use FacturaScripts\Core\Model\User;
 use FacturaScripts\Core\Model\RoleUser;
+use FacturaScripts\Core\Model\User;
 
 /**
  * Description of ControllerPermissions
  *
+ * @package FacturaScripts\Core\Base
  * @author carlos
  */
 class ControllerPermissions
@@ -54,7 +55,7 @@ class ControllerPermissions
     /**
      * ControllerPermissions constructor.
      *
-     * @param User|bool   $user
+     * @param User|false   $user
      * @param string|null $pageName
      */
     public function __construct($user = false, $pageName = null)

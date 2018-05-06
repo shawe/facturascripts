@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -24,6 +25,7 @@ use FacturaScripts\Core\Lib\ExtendedController;
 /**
  * Controller to list the items in the AlbaranCliente model
  *
+ * @package FacturaScripts\Core\Controller
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -35,14 +37,14 @@ class ListAlbaranCliente extends ExtendedController\ListController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'delivery-notes';
-        $pagedata['icon'] = 'fa-files-o';
-        $pagedata['menu'] = 'sales';
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'delivery-notes';
+        $pageData['icon'] = 'fa-files-o';
+        $pageData['menu'] = 'sales';
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
@@ -61,16 +63,16 @@ class ListAlbaranCliente extends ExtendedController\ListController
         $this->addFilterNumber('ListAlbaranCliente', 'total', 'total', 'total');
 
         $where = [new DataBaseWhere('tipodoc', 'AlbaranCliente')];
-        $stateValues = $this->codeModel->all('estados_documentos', 'idestado', 'nombre', true, $where);
+        $stateValues = $this->codeModel::all('estados_documentos', 'idestado', 'nombre', true, $where);
         $this->addFilterSelect('ListAlbaranCliente', 'idestado', 'state', 'idestado', $stateValues);
 
-        $warehouseValues = $this->codeModel->all('almacenes', 'codalmacen', 'nombre');
+        $warehouseValues = $this->codeModel::all('almacenes', 'codalmacen', 'nombre');
         $this->addFilterSelect('ListAlbaranCliente', 'codalmacen', 'warehouse', 'codalmacen', $warehouseValues);
 
-        $serieValues = $this->codeModel->all('series', 'codserie', 'descripcion');
+        $serieValues = $this->codeModel::all('series', 'codserie', 'descripcion');
         $this->addFilterSelect('ListAlbaranCliente', 'codserie', 'series', 'codserie', $serieValues);
 
-        $paymentValues = $this->codeModel->all('formaspago', 'codpago', 'descripcion');
+        $paymentValues = $this->codeModel::all('formaspago', 'codpago', 'descripcion');
         $this->addFilterSelect('ListAlbaranCliente', 'codpago', 'payment-method', 'codpago', $paymentValues);
 
         $this->addFilterAutocomplete('ListAlbaranCliente', 'codcliente', 'customer', 'codcliente', 'clientes', 'codcliente', 'nombre');
@@ -79,6 +81,10 @@ class ListAlbaranCliente extends ExtendedController\ListController
         $this->createViewLines();
     }
 
+
+    /**
+     * Create the view to display lines.
+     */
     protected function createViewLines()
     {
         $this->addView('ListLineaAlbaranCliente', 'LineaAlbaranCliente', 'lines', 'fa-list');
@@ -89,7 +95,7 @@ class ListAlbaranCliente extends ExtendedController\ListController
         $this->addOrderBy('ListLineaAlbaranCliente', 'pvptotal', 'ammount');
         $this->addOrderBy('ListLineaAlbaranCliente', 'idalbaran', 'delivery-note', 2);
 
-        $taxValues = $this->codeModel->all('impuestos', 'codimpuesto', 'descripcion');
+        $taxValues = $this->codeModel::all('impuestos', 'codimpuesto', 'descripcion');
         $this->addFilterSelect('ListLineaAlbaranCliente', 'codimpuesto', 'tax', 'codimpuesto', $taxValues);
 
         $this->addFilterNumber('ListLineaAlbaranCliente', 'cantidad', 'quantity', 'cantidad');

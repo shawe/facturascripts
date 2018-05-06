@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Export;
 
 use Symfony\Component\HttpFoundation\Response;
@@ -23,12 +24,18 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Description of MAILExport
  *
+ * @package FacturaScripts\Core\Lib\Export
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class MAILExport extends PDFExport
 {
 
-    public function getDoc()
+    /**
+     * Return the full document.
+     *
+     * @return string
+     */
+    public function getDoc(): string
     {
         if ($this->pdf === null) {
             $this->newPage();
@@ -38,7 +45,12 @@ class MAILExport extends PDFExport
         return $this->pdf->ezOutput();
     }
 
-    public function show(Response &$response)
+    /**
+     * Set headers and output document content to response.
+     *
+     * @param Response $response
+     */
+    public function show(Response $response)
     {
         $fileName = 'Mail_' . time() . '.pdf';
         $filePath = FS_FOLDER . '/MyFiles/' . $fileName;

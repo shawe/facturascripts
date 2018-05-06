@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model\Base;
 
 use FacturaScripts\Core\App\AppSettings;
@@ -25,6 +26,7 @@ use FacturaScripts\Core\Model\Impuesto;
 /**
  * Description of Product
  *
+ * @package FacturaScripts\Core\Model\Base
  * @author Carlos García Gómez
  */
 abstract class Product extends ModelClass
@@ -155,7 +157,7 @@ abstract class Product extends ModelClass
      *
      * @return string
      */
-    public function primaryDescriptionColumn()
+    public function primaryDescriptionColumn(): string
     {
         return 'referencia';
     }
@@ -186,7 +188,7 @@ abstract class Product extends ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->codbarras = Utils::noHtml($this->codbarras);
         $this->descripcion = Utils::noHtml($this->descripcion);

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -24,6 +25,7 @@ use FacturaScripts\Core\Lib\ExportManager;
 /**
  * View definition for its use in ExtendedControllers
  *
+ * @package FacturaScripts\Core\Lib\ExtendedController
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -75,7 +77,7 @@ class EditView extends BaseView implements DataViewInterface
      *
      * @return GroupItem[]
      */
-    public function getColumns()
+    public function getColumns(): array
     {
         return $this->pageOption->columns;
     }
@@ -85,7 +87,7 @@ class EditView extends BaseView implements DataViewInterface
      *
      * @return string
      */
-    public function getPanelHeader()
+    public function getPanelHeader(): string
     {
         return $this->title;
     }
@@ -95,7 +97,7 @@ class EditView extends BaseView implements DataViewInterface
      *
      * @return string
      */
-    public function getPanelFooter()
+    public function getPanelFooter(): string
     {
         return '';
     }
@@ -103,19 +105,19 @@ class EditView extends BaseView implements DataViewInterface
     /**
      * Load the data in the model property, according to the code specified.
      *
-     * @param string          $code
-     * @param DataBaseWhere[] $where
-     * @param array           $order
-     * @param int             $offset
-     * @param int             $limit
+     * @param array|string|false $code
+     * @param DataBaseWhere[]    $where
+     * @param array              $order
+     * @param int                $offset
+     * @param int                $limit
      */
-    public function loadData($code = '', $where = [], $order = [], $offset = 0, $limit = FS_ITEM_LIMIT)
+    public function loadData($code = '', array $where = [], array $order = [], $offset = 0, $limit = FS_ITEM_LIMIT)
     {
         if ($this->newCode !== null) {
             $code = $this->newCode;
         }
 
-        if (is_array($code)) {
+        if (\is_array($code)) {
             $where = [];
             foreach ($code as $fieldName => $value) {
                 $where[] = new DataBaseWhere($fieldName, $value);
@@ -125,7 +127,7 @@ class EditView extends BaseView implements DataViewInterface
             $this->model->loadFromCode($code);
         }
 
-        $fieldName = $this->model->primaryColumn();
+        $fieldName = $this->model::primaryColumn();
         $this->count = empty($this->model->{$fieldName}) ? 0 : 1;
 
         /// if not a new reg. we lock primary key

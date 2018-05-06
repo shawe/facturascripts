@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017  Francesc Pineda Segarra  <francesc.pineda.segarra@gmail.com>
+ * Copyright (C) 2017 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -27,6 +27,7 @@ use FacturaScripts\Core\Base\Translator;
 /**
  * This class collects the translations
  *
+ * @package FacturaScripts\Core\Base\DebugBar
  * @author Francesc Pineda Segarra <francesc.pineda.segarra@gmail.com>
  * @source Based on: https://github.com/spiroski/laravel-debugbar-translations
  */
@@ -62,7 +63,7 @@ class TranslationCollector extends DataCollector implements Renderable, AssetPro
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'translations';
     }
@@ -73,7 +74,7 @@ class TranslationCollector extends DataCollector implements Renderable, AssetPro
      *
      * @return array
      */
-    public function getWidgets()
+    public function getWidgets(): array
     {
         return [
             'translations' => [
@@ -95,7 +96,7 @@ class TranslationCollector extends DataCollector implements Renderable, AssetPro
      *
      * @return array
      */
-    public function getAssets()
+    public function getAssets(): array
     {
         $basePath = '../../../../../../';
 
@@ -123,7 +124,7 @@ class TranslationCollector extends DataCollector implements Renderable, AssetPro
      *
      * @return array Collected data
      */
-    public function collect()
+    public function collect(): array
     {
         $this->addTranslations();
 

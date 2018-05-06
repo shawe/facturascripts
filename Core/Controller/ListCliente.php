@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController;
@@ -23,6 +24,7 @@ use FacturaScripts\Core\Lib\ExtendedController;
 /**
  * Controller to list the items in the Cliente model
  *
+ * @package FacturaScripts\Core\Controller
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -34,14 +36,14 @@ class ListCliente extends ExtendedController\ListController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'customers';
-        $pagedata['icon'] = 'fa-users';
-        $pagedata['menu'] = 'sales';
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'customers';
+        $pageData['icon'] = 'fa-users';
+        $pageData['menu'] = 'sales';
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
@@ -56,7 +58,7 @@ class ListCliente extends ExtendedController\ListController
         $this->addOrderBy('ListCliente', 'nombre', 'name', 1);
         $this->addOrderBy('ListCliente', 'fecha', 'date');
 
-        $selectValues = $this->codeModel->all('gruposclientes', 'codgrupo', 'nombre');
+        $selectValues = $this->codeModel::all('gruposclientes', 'codgrupo', 'nombre');
         $this->addFilterSelect('ListCliente', 'codgrupo', 'group', 'codgrupo', $selectValues);
         $this->addFilterCheckbox('ListCliente', 'debaja', 'suspended', 'debaja');
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -24,6 +25,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Description of ExportManager
  *
+ * @package FacturaScripts\Core\Lib
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class ExportManager
@@ -98,7 +100,7 @@ class ExportManager
      *
      * @param Response $response
      */
-    public function show(Response &$response)
+    public function show(Response $response)
     {
         self::$engine->show($response);
     }

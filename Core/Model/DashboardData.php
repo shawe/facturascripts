@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,11 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 /**
  * Components data to show into the Dashboard of FacturaScripts.
  *
+ * @package FacturaScripts\Core\Model
  * @author Francesc Pineda Segarra <francesc.pineda.segarra@gmail.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -58,6 +60,13 @@ class DashboardData extends Base\ModelClass
     public $id;
 
     /**
+     * Location.
+     *
+     * @var string
+     */
+    public $location;
+
+    /**
      * Nick of the user to whom the card is addressed.
      *
      * @var string
@@ -72,6 +81,13 @@ class DashboardData extends Base\ModelClass
     public $properties;
 
     /**
+     * Version.
+     *
+     * @var string
+     */
+    public $version;
+
+    /**
      * Check an array of data so that it has the correct structure of the model.
      *
      * @param array $data
@@ -80,7 +96,7 @@ class DashboardData extends Base\ModelClass
     {
         $properties = [];
         foreach ($data as $key => $value) {
-            if (!in_array($key, ['id', 'nick', 'creationdate', 'displaydate', 'action'])) {
+            if (!\in_array($key, ['id', 'nick', 'creationdate', 'displaydate', 'action'])) {
                 $properties[$key] = $value;
                 unset($data[$key]);
             }
@@ -107,7 +123,7 @@ class DashboardData extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         new User();
         new Dashboard();
@@ -132,7 +148,7 @@ class DashboardData extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'id';
     }
@@ -144,7 +160,7 @@ class DashboardData extends Base\ModelClass
      *
      * @return bool
      */
-    protected function saveInsert(array $values = [])
+    protected function saveInsert(array $values = []): bool
     {
         return parent::saveInsert(['properties' => json_encode($this->properties)]);
     }
@@ -156,7 +172,7 @@ class DashboardData extends Base\ModelClass
      *
      * @return bool
      */
-    protected function saveUpdate(array $values = [])
+    protected function saveUpdate(array $values = []): bool
     {
         return parent::saveUpdate(['properties' => json_encode($this->properties)]);
     }
@@ -166,7 +182,7 @@ class DashboardData extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'dashboard_data';
     }
@@ -179,7 +195,7 @@ class DashboardData extends Base\ModelClass
      *
      * @return string
      */
-    public function url(string $type = 'auto', string $list = 'List')
+    public function url(string $type = 'auto', string $list = 'List'): string
     {
         $value = $this->primaryColumnValue();
         $model = $this->modelClassName();

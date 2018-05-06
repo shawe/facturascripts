@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2015-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2015-2017 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -22,6 +22,7 @@ namespace FacturaScripts\Core\Base\DataBase;
 /**
  * Interface to manage the SQL statements needed by the database
  *
+ * @package FacturaScripts\Core\Base\DataBase
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -34,7 +35,7 @@ interface DataBaseSQL
      *
      * @return string
      */
-    public function sql2Int($colName);
+    public function sql2Int($colName): string;
 
     /**
      * SQL statement to get the last value of a sequence or ID
@@ -82,8 +83,10 @@ interface DataBaseSQL
      * @param string $tableName
      * @param array  $columns
      * @param array  $constraints
+     *
+     * @return string
      */
-    public function sqlCreateTable($tableName, $columns, $constraints);
+    public function sqlCreateTable($tableName, $columns, $constraints): string;
 
     /**
      * SQL statement to add a given table column

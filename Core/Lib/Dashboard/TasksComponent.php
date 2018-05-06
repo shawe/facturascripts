@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2017 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Dashboard;
 
 use FacturaScripts\Core\Model;
@@ -23,6 +24,7 @@ use FacturaScripts\Core\Model;
 /**
  * Description of TasksComponent
  *
+ * @package FacturaScripts\Core\Lib\Dashboard
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
 class TasksComponent extends BaseComponent implements ComponentInterface
@@ -60,7 +62,7 @@ class TasksComponent extends BaseComponent implements ComponentInterface
      *
      * @return array
      */
-    public static function getPropertiesFields()
+    public static function getPropertiesFields(): array
     {
         return [
             'description' => '',
@@ -113,7 +115,7 @@ class TasksComponent extends BaseComponent implements ComponentInterface
         }
 
         if ($this->randomData) {
-            $data['enddate'] = (mt_rand(0, 2) == 0) ? date('Y-m-d') : null;
+            $data['enddate'] = random_int(0, 2) === 0 ? date('Y-m-d') : null;
         }
 
         $newItem->properties = [
@@ -132,7 +134,7 @@ class TasksComponent extends BaseComponent implements ComponentInterface
      *
      * @return string
      */
-    public function url($id)
+    public function url($id): string
     {
         return 'EditDashboardData?code=' . $id;
     }
@@ -142,7 +144,7 @@ class TasksComponent extends BaseComponent implements ComponentInterface
      *
      * @return string
      */
-    public function getCardClass()
+    public function getCardClass(): string
     {
         return 'task-card';
     }

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,11 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 /**
  * This RowItem class modelises the common data and method of a RowItem element.
  *
+ * @package FacturaScripts\Core\Lib\ExtendedController
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
 abstract class RowItem implements VisualItemInterface
@@ -64,7 +66,7 @@ abstract class RowItem implements VisualItemInterface
      *
      * @return string
      */
-    public function getHeaderHTML($value)
+    public function getHeaderHTML($value): string
     {
         return $value;
     }
@@ -76,7 +78,7 @@ abstract class RowItem implements VisualItemInterface
      *
      * @return RowItem
      */
-    public static function newFromJSON($row)
+    public static function newFromJSON($row): RowItem
     {
         $type = (string) $row['type'];
         $result = self::rowItemFromType($type);
@@ -92,7 +94,7 @@ abstract class RowItem implements VisualItemInterface
      *
      * @return RowItem
      */
-    public static function newFromXML($row)
+    public static function newFromXML($row): RowItem
     {
         $rowAtributes = $row->attributes();
         $type = (string) $rowAtributes->type;
@@ -109,7 +111,7 @@ abstract class RowItem implements VisualItemInterface
      *
      * @return array
      */
-    protected function getAttributesFromXML($item)
+    protected function getAttributesFromXML($item): array
     {
         $result = ['value' => trim((string) $item)];
         foreach ($item->attributes() as $key => $value) {
@@ -126,7 +128,7 @@ abstract class RowItem implements VisualItemInterface
      *
      * @return WidgetButton[]
      */
-    protected function loadButtonsFromJSON($buttonsJSON)
+    protected function loadButtonsFromJSON($buttonsJSON): array
     {
         $buttons = [];
         foreach ($buttonsJSON as $button) {
@@ -140,11 +142,11 @@ abstract class RowItem implements VisualItemInterface
     /**
      * Return a list of WidgetButtons from the XML.
      *
-     * @param \SimpleXMLElement|\SimpleXMLElement[] $buttonsXML
+     * @param \SimpleXMLElement $buttonsXML
      *
      * @return WidgetButton[]
      */
-    protected function loadButtonsFromXML($buttonsXML)
+    protected function loadButtonsFromXML($buttonsXML): array
     {
         $buttons = [];
         foreach ($buttonsXML->button as $item) {

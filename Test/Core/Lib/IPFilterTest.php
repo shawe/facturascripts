@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017    Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017    Carlos Garcia Gomez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -50,7 +50,7 @@ class IPFilterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \FacturaScripts\Core\Base\IPFilter::setAttempt
+     * @covers \FacturaScripts\Core\Lib\IPFilter::setAttempt
      */
     public function testSetAttempt()
     {
@@ -63,7 +63,7 @@ class IPFilterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \FacturaScripts\Core\Base\IPFilter::isBanned
+     * @covers \FacturaScripts\Core\Lib\IPFilter::isBanned
      */
     public function testIsBanned()
     {

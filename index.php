@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos Garcia Gomez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -37,9 +37,10 @@ register_shutdown_function("fatal_handler");
 
 /// Preliminary checks
 if (!file_exists(__DIR__ . '/config.php')) {
-    if ((int) substr(phpversion(), 0, 1) < 7) {
+    if (version_compare(PHP_VERSION, '7.0.0') >= 0) {
         die('You need PHP 7<br/>You have PHP ' . phpversion());
-    } elseif (!file_exists(__DIR__ . '/vendor')) {
+    }
+    if (!file_exists(__DIR__ . '/vendor')) {
         die('<h1>COMPOSER ERROR</h1><p>You need to run: composer install</p>');
     }
 

@@ -1,8 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2018  Carlos García Gómez      <carlos@facturascripts.com>
- * Copyright (C) 2017  Francesc Pineda Segarra  <francesc.pineda.segarra@gmail.com>
+ * Copyright (C) 2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -17,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController;
@@ -24,6 +24,7 @@ use FacturaScripts\Core\Lib\ExtendedController;
 /**
  * Controller to list the items in the EstadoDocumento model
  *
+ * @package FacturaScripts\Core\Controller
  * @author Francesc Pineda Segarra <francesc.pineda.segarra@gmail.com>
  */
 class ListEstadoDocumento extends ExtendedController\ListController
@@ -34,14 +35,14 @@ class ListEstadoDocumento extends ExtendedController\ListController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'document-states';
-        $pagedata['icon'] = 'fa-tags';
-        $pagedata['menu'] = 'admin';
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'document-states';
+        $pageData['icon'] = 'fa-tags';
+        $pageData['menu'] = 'admin';
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
@@ -54,10 +55,10 @@ class ListEstadoDocumento extends ExtendedController\ListController
         $this->addOrderBy('ListEstadoDocumento', 'idestado', 'id');
         $this->addOrderBy('ListEstadoDocumento', 'nombre', 'name');
 
-        $types = $this->codeModel->all('estados_documentos', 'tipodoc', 'tipodoc');
+        $types = $this->codeModel::all('estados_documentos', 'tipodoc', 'tipodoc');
         $this->addFilterSelect('ListEstadoDocumento', 'tipodoc', 'doc-type', 'tipodoc', $types);
 
-        $generateTypes = $this->codeModel->all('estados_documentos', 'generadoc', 'generadoc');
+        $generateTypes = $this->codeModel::all('estados_documentos', 'generadoc', 'generadoc');
         $this->addFilterSelect('ListEstadoDocumento', 'generadoc', 'generate-doc-type', 'generadoc', $generateTypes);
 
         $this->addFilterSelect('ListEstadoDocumento', 'actualizastock', 'update-stock', 'actualizastock', $this->getActualizastockValues());
@@ -65,7 +66,12 @@ class ListEstadoDocumento extends ExtendedController\ListController
         $this->addFilterCheckbox('ListEstadoDocumento', 'editable', 'editable', 'editable');
     }
 
-    private function getActualizastockValues()
+    /**
+     * Return a list of the option to update stock and it's code key.
+     *
+     * @return array
+     */
+    private function getActualizastockValues(): array
     {
         return [
             ['code' => null, 'description' => '------'],

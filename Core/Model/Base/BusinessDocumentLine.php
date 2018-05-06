@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model\Base;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -26,6 +27,7 @@ use FacturaScripts\Dinamic\Model\Stock;
 /**
  * Description of BusinessDocumentLine
  *
+ * @package FacturaScripts\Core\Model\Base
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 abstract class BusinessDocumentLine extends ModelClass
@@ -39,6 +41,7 @@ abstract class BusinessDocumentLine extends ModelClass
     public $actualizastock;
 
     /**
+     * Previous value of update product stock.
      *
      * @var int
      */
@@ -52,6 +55,7 @@ abstract class BusinessDocumentLine extends ModelClass
     public $cantidad;
 
     /**
+     * Previous value of quantity.
      *
      * @var float|int
      */
@@ -156,8 +160,8 @@ abstract class BusinessDocumentLine extends ModelClass
     public function __construct(array $data = [])
     {
         parent::__construct($data);
-        $this->actualizastockAnt = isset($this->actualizastock) ? $this->actualizastock : 0;
-        $this->cantidadAnt = isset($this->cantidad) ? $this->cantidad : 0;
+        $this->actualizastockAnt = $this->actualizastock ?? 0;
+        $this->cantidadAnt = $this->cantidad ?? 0;
     }
 
     /**
@@ -182,9 +186,9 @@ abstract class BusinessDocumentLine extends ModelClass
     /**
      * Removed this row from the database table.
      *
-     * @return boolean
+     * @return bool
      */
-    public function delete()
+    public function delete(): bool
     {
         if (parent::delete()) {
             $this->cantidad = 0;
@@ -199,7 +203,7 @@ abstract class BusinessDocumentLine extends ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idlinea';
     }
@@ -209,7 +213,7 @@ abstract class BusinessDocumentLine extends ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->descripcion = Utils::noHtml($this->descripcion);
         $this->pvpsindto = $this->pvpunitario * $this->cantidad;
@@ -222,10 +226,10 @@ abstract class BusinessDocumentLine extends ModelClass
      * Updates stock according to line data and $codalmacen warehouse.
      *
      * @param string $codalmacen
-     * 
-     * @return boolean
+     *
+     * @return bool
      */
-    public function updateStock(string $codalmacen)
+    public function updateStock(string $codalmacen): bool
     {
         if ($this->actualizastock === $this->actualizastockAnt && $this->cantidad === $this->cantidadAnt) {
             return true;
@@ -258,12 +262,12 @@ abstract class BusinessDocumentLine extends ModelClass
      *
      * @param string $type
      * @param string $list
-     * 
+     *
      * @return string
      */
-    public function url(string $type = 'auto', string $list = 'List')
+    public function url(string $type = 'auto', string $list = 'List'): string
     {
-        $name = str_replace('Linea', '', $this->modelClassName());
+        $name = \str_replace('Linea', '', $this->modelClassName());
         return parent::url($type, 'List' . $name . '?active=List');
     }
 

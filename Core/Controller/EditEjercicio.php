@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -25,6 +26,7 @@ use FacturaScripts\Core\Lib\ExtendedController;
 /**
  * Controller to edit a single item from the Ejercicio model
  *
+ * @package FacturaScripts\Core\Controller
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  * @author Francesc Pineda Segarra <francesc.pineda.segarra@gmail.com>
@@ -37,15 +39,15 @@ class EditEjercicio extends ExtendedController\PanelController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'exercise';
-        $pagedata['menu'] = 'accounting';
-        $pagedata['icon'] = 'fa-calendar';
-        $pagedata['showonmenu'] = false;
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'exercise';
+        $pageData['menu'] = 'accounting';
+        $pageData['icon'] = 'fa-calendar';
+        $pageData['showonmenu'] = false;
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
@@ -111,7 +113,7 @@ class EditEjercicio extends ExtendedController\PanelController
      *
      * @return bool
      */
-    private function importAccountingPlan()
+    private function importAccountingPlan(): bool
     {
         $accountingPlanImport = new AccountingPlanImport();
         $codejercicio = $this->getViewModelValue('EditEjercicio', 'codejercicio');
@@ -135,5 +137,6 @@ class EditEjercicio extends ExtendedController\PanelController
             default:
                 $this->miniLog->error($this->i18n->trans('file-not-supported'));
         }
+        return true;
     }
 }

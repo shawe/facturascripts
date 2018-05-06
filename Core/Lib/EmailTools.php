@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2017 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib;
 
 use FacturaScripts\Core\Base\MiniLog;
@@ -26,6 +27,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 /**
  * Tools for send emails.
  *
+ * @package FacturaScripts\Core\Lib
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class EmailTools
@@ -74,7 +76,7 @@ class EmailTools
             $sign,
         ];
 
-        return str_replace($search, $replace, $html);
+        return \str_replace($search, $replace, $html);
     }
 
     /**
@@ -82,7 +84,7 @@ class EmailTools
      *
      * @return PHPMailer
      */
-    public function newMail()
+    public function newMail(): PHPMailer
     {
         $mail = new PHPMailer();
         $mail->CharSet = 'UTF-8';
@@ -92,7 +94,7 @@ class EmailTools
         $mail->SMTPSecure = $this->getSetting('enc');
         $mail->Host = $this->getSetting('host');
         $mail->Port = $this->getSetting('port');
-        $mail->Username = $this->getSetting('user') ? $this->getSetting('user') : $this->getSetting('email');
+        $mail->Username = $this->getSetting('user') ?: $this->getSetting('email');
         $mail->Password = $this->getSetting('password');
         $mail->setFrom($this->getSetting('email'));
 
@@ -118,7 +120,7 @@ class EmailTools
      *
      * @return bool
      */
-    public function send($mail)
+    public function send($mail): bool
     {
         if (null === $this->getSetting('host')) {
             return false;
@@ -140,7 +142,7 @@ class EmailTools
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         if (self::$settings['mailer'] === 'smtp') {
             $mail = $this->newMail();
@@ -151,9 +153,16 @@ class EmailTools
         return true;
     }
 
+    /**
+     * Return the setting for the given key.
+     *
+     * @param string $key
+     *
+     * @return mixed|null
+     */
     private function getSetting(string $key)
     {
-        return isset(self::$settings[$key]) ? self::$settings[$key] : null;
+        return self::$settings[$key] ?? null;
     }
 
     /**
@@ -161,10 +170,10 @@ class EmailTools
      *
      * @return array
      */
-    private function smtpOptions()
+    private function smtpOptions(): array
     {
         $SMTPOptions = [];
-        if (isset(self::$settings['lowsecure']) && self::$settings['lowsecure']) {
+        if (!empty(self::$settings['lowsecure'])) {
             $SMTPOptions = [
                 'ssl' => [
                     'verify_peer' => false,

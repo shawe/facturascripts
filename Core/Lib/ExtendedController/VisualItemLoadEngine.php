@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Model;
@@ -23,6 +24,7 @@ use FacturaScripts\Core\Model;
 /**
  * Description of VisualItemLoadEngine
  *
+ * @package FacturaScripts\Core\Lib\ExtendedController
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
 class VisualItemLoadEngine
@@ -55,9 +57,9 @@ class VisualItemLoadEngine
      * @param string           $name
      * @param Model\PageOption $model
      *
-     * @return boolean
+     * @return bool
      */
-    public static function installXML($name, &$model)
+    public static function installXML($name, &$model): bool
     {
         $fileName = FS_FOLDER . '/Dinamic/XMLView/' . $name . '.xml';
         if (FS_DEBUG && !file_exists($fileName)) {
@@ -79,9 +81,9 @@ class VisualItemLoadEngine
     /**
      * Load the column structure from the JSON
      *
-     * @param string (JSON)    $columns
-     * @param string (JSON)    $modals
-     * @param string (JSON)    $rows
+     * @param array            $columns
+     * @param array            $modals
+     * @param array            $rows
      * @param Model\PageOption $model
      */
     public static function loadJSON($columns, $modals, $rows, &$model)
@@ -100,8 +102,8 @@ class VisualItemLoadEngine
     /**
      * Load the column structure from the JSON
      *
-     * @param string $columns
-     * @param array  $target
+     * @param array $columns
+     * @param array $target
      */
     private static function getJSONGroupsColumns($columns, &$target)
     {

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2016-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2016-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,13 +16,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
 use FacturaScripts\Core\Model;
 
 /**
- *  Generates delivery notes to customers with random data.
+ * Generates delivery notes to customers with random data.
  *
+ * @package FacturaScripts\Core\Lib\RandomDataGenerator
  * @author Rafael San José <info@rsanjoseo.com>
  */
 class AlbaranesCliente extends AbstractRandomDocuments
@@ -43,7 +45,7 @@ class AlbaranesCliente extends AbstractRandomDocuments
      *
      * @return int
      */
-    public function generate($num = 50)
+    public function generate($num = 50): int
     {
         $alb = $this->model;
         $clientes = $this->randomClientes();
@@ -58,13 +60,13 @@ class AlbaranesCliente extends AbstractRandomDocuments
             }
 
             $recargo = false;
-            if ($clientes[0]->recargo || mt_rand(0, 4) === 0) {
+            if ($clientes[0]->recargo || random_int(0, 4) === 0) {
                 $recargo = true;
             }
 
             $regimeniva = $this->randomizeDocumentVenta($alb, $eje, $clientes, $generated);
             if ($alb->save()) {
-                $this->randomLineas($alb, 'idalbaran', 'FacturaScripts\Dinamic\Model\LineaAlbaranCliente', $regimeniva, $recargo, -1);
+                $this->randomLineas($alb, 'idalbaran', self::MODEL_NAMESPACE . 'LineaAlbaranCliente', $regimeniva, $recargo, -1);
                 ++$generated;
             } else {
                 break;

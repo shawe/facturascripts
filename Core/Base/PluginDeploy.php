@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,20 +16,22 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Base;
 
-use Exception;
 use FacturaScripts\Core\App\AppSettings;
 
 /**
  * Description of PluginDeploy
  *
+ * @package FacturaScripts\Core\Base
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class PluginDeploy
 {
 
     /**
+     * A list of file classified by folders.
      *
      * @var array
      */
@@ -119,7 +121,7 @@ class PluginDeploy
                 $controller = new $controllerNamespace($cache, $this->i18n, $this->minilog, $controllerName);
                 $menuManager->selectPage($controller->getPageData());
                 $pageNames[] = $controllerName;
-            } catch (Exception $exc) {
+            } catch (\Exception $exc) {
                 $this->minilog->critical($this->i18n->trans('cant-load-controller', ['%controllerName%' => $controllerName]));
             }
         }
@@ -128,7 +130,7 @@ class PluginDeploy
         $menuManager->reload();
 
         /// checks app homepage
-        if (!in_array(AppSettings::get('default', 'homepage', ''), $pageNames)) {
+        if (!\in_array(AppSettings::get('default', 'homepage', ''), $pageNames, false)) {
             $appSettings = new AppSettings();
             $appSettings->set('default', 'homepage', 'AdminPlugins');
             $appSettings->save();
@@ -147,7 +149,7 @@ class PluginDeploy
         $done = true;
         if (file_exists($folder)) {
             /// Comprobamos los archivos que no son '.' ni '..'
-            $items = array_diff(scandir($folder, SCANDIR_SORT_ASCENDING), ['.', '..']);
+            $items = array_diff(scandir($folder, \SCANDIR_SORT_ASCENDING), ['.', '..']);
 
             /// Ahora recorremos y eliminamos lo que encontramos
             foreach ($items as $item) {
@@ -179,6 +181,16 @@ class PluginDeploy
         return true;
     }
 
+    /**
+     * Return the correct type of the class.
+     *
+     * @param string $fileName
+     * @param string $folder
+     * @param string $place
+     * @param string $pluginName
+     *
+     * @return string
+     */
     private function getClassType(string $fileName, string $folder, string $place, string $pluginName): string
     {
         $path = FS_FOLDER . DIRECTORY_SEPARATOR . $place;
@@ -277,7 +289,7 @@ class PluginDeploy
     /**
      * Makes a recursive scan in folders inside a root folder and extracts the list of files
      * and pass its to an array as result.
-     * 
+     *
      * @param string $folder
      * @param bool   $recursive
      *
@@ -285,8 +297,8 @@ class PluginDeploy
      */
     private function scanFolders(string $folder, bool $recursive = true): array
     {
-        $scan = scandir($folder, SCANDIR_SORT_ASCENDING);
-        if (!is_array($scan)) {
+        $scan = scandir($folder, \SCANDIR_SORT_ASCENDING);
+        if (!\is_array($scan)) {
             return [];
         }
 

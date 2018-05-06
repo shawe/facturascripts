@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Accounting;
 
 use FacturaScripts\Dinamic\Model\Subcuenta;
@@ -23,6 +24,7 @@ use FacturaScripts\Dinamic\Model\Subcuenta;
 /**
  * Description of BalanceAmmounts
  *
+ * @package FacturaScripts\Core\Lib\Accounting
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author nazca <comercial@nazcanetworks.com>
  */
@@ -47,14 +49,14 @@ class BalanceAmmounts extends AccountingBase
 
     /**
      * Generate the balance ammounts between two dates.
-     * 
+     *
      * @param string $dateFrom
      * @param string $dateTo
      * @param array  $params
-     * 
+     *
      * @return array
      */
-    public function generate(string $dateFrom, string $dateTo, array $params = [])
+    public function generate(string $dateFrom, string $dateTo, array $params = []): array
     {
         $this->dateFrom = $dateFrom;
         $this->dateTo = $dateTo;
@@ -70,8 +72,7 @@ class BalanceAmmounts extends AccountingBase
         }
 
         /// every page is a table
-        $pages = [$balance];
-        return $pages;
+        return [$balance];
     }
 
     /**
@@ -79,7 +80,7 @@ class BalanceAmmounts extends AccountingBase
      *
      * @return array
      */
-    protected function getData()
+    protected function getData(): array
     {
         if (!$this->dataBase->tableExists('partidas')) {
             return [];
@@ -102,16 +103,16 @@ class BalanceAmmounts extends AccountingBase
      *
      * @return array
      */
-    private function processLine($line)
+    private function processLine($line): array
     {
         $saldo = (float) $line['debe'] - (float) $line['haber'];
 
         return [
             'subcuenta' => $line['codsubcuenta'],
             'descripcion' => $this->getDescriptionSubcuenta($line['idsubcuenta']),
-            'debe' => $this->divisaTools->format($line['debe'], FS_NF0, ''),
-            'haber' => $this->divisaTools->format($line['haber'], FS_NF0, ''),
-            'saldo' => $this->divisaTools->format($saldo, FS_NF0, ''),
+            'debe' => $this->divisaTools::format($line['debe'], FS_NF0, ''),
+            'haber' => $this->divisaTools::format($line['haber'], FS_NF0, ''),
+            'saldo' => $this->divisaTools::format($saldo, FS_NF0, ''),
         ];
     }
 
@@ -122,7 +123,7 @@ class BalanceAmmounts extends AccountingBase
      *
      * @return string
      */
-    private function getDescriptionSubcuenta($idsubcuenta)
+    private function getDescriptionSubcuenta($idsubcuenta): string
     {
         $subcuenta = $this->subcuentaModel->get($idsubcuenta);
         if ($subcuenta !== false) {

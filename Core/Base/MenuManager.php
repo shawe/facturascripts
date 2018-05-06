@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Base;
 
 use FacturaScripts\Core\Model;
@@ -24,6 +25,7 @@ use FacturaScripts\Dinamic\Lib\MenuItem;
 /**
  * Manage the use of the Facturascripts menu.
  *
+ * @package FacturaScripts\Core\Base
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -63,7 +65,7 @@ class MenuManager
      *
      * @return array
      */
-    public function getMenu()
+    public function getMenu(): array
     {
         return self::$menu;
     }
@@ -90,7 +92,7 @@ class MenuManager
     public function removeOld($currentPageNames)
     {
         foreach (self::$pageModel->all([], [], 0, 0) as $page) {
-            if (!in_array($page->name, $currentPageNames)) {
+            if (!\in_array($page->name, $currentPageNames, false)) {
                 $page->delete();
             }
         }
@@ -151,7 +153,7 @@ class MenuManager
      *
      * @return Model\RoleAccess[]
      */
-    private function getUserAccess($nick)
+    private function getUserAccess($nick): array
     {
         $access = [];
         $roleUserModel = new Model\RoleUser();
@@ -170,7 +172,7 @@ class MenuManager
      *
      * @return Model\Page[]
      */
-    private function loadPages()
+    private function loadPages(): array
     {
         $where = [new DataBase\DataBaseWhere('showonmenu', true)];
         $order = [
@@ -204,7 +206,7 @@ class MenuManager
      *
      * @return array
      */
-    private function loadUserMenu()
+    private function loadUserMenu(): array
     {
         $result = [];
         $menuValue = '';
@@ -252,7 +254,7 @@ class MenuManager
      *
      * @return bool
      */
-    private function pageNeedSave($pageModel, $pageData)
+    private function pageNeedSave($pageModel, $pageData): bool
     {
         return
             ($pageModel->menu !== $pageData['menu']) || ($pageModel->submenu !== $pageData['submenu']) ||
@@ -289,7 +291,8 @@ class MenuManager
             if ($menuItem->name === $pageModel->name) {
                 $menu[$key]->active = true;
                 break;
-            } elseif (!empty($pageModel->submenu) && !empty($menuItem->menu) && $menuItem->name === $pageModel->submenu) {
+            }
+            if (!empty($pageModel->submenu) && !empty($menuItem->menu) && $menuItem->name === $pageModel->submenu) {
                 $menu[$key]->active = true;
                 $this->setActiveMenuItem($menu[$key]->menu, $pageModel);
                 break;
@@ -305,7 +308,7 @@ class MenuManager
      *
      * @return array
      */
-    private function sortMenu(&$sortMenu, &$result)
+    private function sortMenu(&$sortMenu, &$result): array
     {
         /// Reorder menu by title
         array_multisort($sortMenu, SORT_ASC, $result);

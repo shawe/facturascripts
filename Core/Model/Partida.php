@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\App\AppSettings;
@@ -26,6 +27,7 @@ use FacturaScripts\Core\Base\Utils;
  * The line of a accounting entry.
  * It is related to a accounting entry and a sub-account.
  *
+ * @package FacturaScripts\Core\Model
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -193,7 +195,7 @@ class Partida extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'partidas';
     }
@@ -203,7 +205,7 @@ class Partida extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idpartida';
     }
@@ -215,7 +217,7 @@ class Partida extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         new Asiento();
         new Subcuenta();
@@ -255,7 +257,7 @@ class Partida extends Base\ModelClass
     private function getIdSubAccount($code, $exercise)
     {
         if (empty($code) || empty($exercise)) {
-            return NULL;
+            return null;
         }
 
         $where = [
@@ -293,7 +295,7 @@ class Partida extends Base\ModelClass
             return false;
         }
 
-        if (strlen($this->concepto) > 255) {
+        if (mb_strlen($this->concepto) > 255) {
             self::$miniLog->alert(self::$i18n->trans('concept-too-large'));
             return false;
         }
@@ -348,7 +350,7 @@ class Partida extends Base\ModelClass
      *
      * @return bool
      */
-    protected function saveInsert(array $values = [])
+    protected function saveInsert(array $values = []): bool
     {
         $date = $this->getAccountingDate();
         $account = new Subcuenta();
@@ -386,13 +388,20 @@ class Partida extends Base\ModelClass
         return true;
     }
 
-    protected function saveUpdate(array $values = [])
+    /**
+     * Update the model data in the database.
+     *
+     * @param array $values
+     *
+     * @return bool
+     */
+    protected function saveUpdate(array $values = []): bool
     {
         // Search for the difference in the amounts
-        $entry = new Partida();
+        $entry = new self();
         $entry->loadFromCode($this->idpartida);
-        $debit = (isset($values['debe']) ? $values['debe'] : $this->debe) - $entry->debe;
-        $credit = (isset($values['haber']) ? $values['haber'] : $this->haber) - $entry->haber;
+        $debit = ($values['debe'] ?? $this->debe) - $entry->debe;
+        $credit = ($values['haber'] ?? $this->haber) - $entry->haber;
 
         // Get data to update balance
         $date = $this->getAccountingDate();
@@ -436,7 +445,7 @@ class Partida extends Base\ModelClass
      *
      * @return bool
      */
-    public function delete()
+    public function delete(): bool
     {
         $date = $this->getAccountingDate();
         $account = new Subcuenta();
@@ -449,7 +458,7 @@ class Partida extends Base\ModelClass
             }
 
             /// update account balance
-            if (!$account->updateBalance($date, ($this->debe * -1), ($this->haber * -1))) {
+            if (!$account->updateBalance($date, $this->debe * -1, $this->haber * -1)) {
                 return false;
             }
 

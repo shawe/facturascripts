@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController;
@@ -23,6 +24,7 @@ use FacturaScripts\Core\Lib\ExtendedController;
 /**
  * Controller to list the items in the Asiento model
  *
+ * @package FacturaScripts\Core\Controller
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class ListAsiento extends ExtendedController\ListController
@@ -33,14 +35,14 @@ class ListAsiento extends ExtendedController\ListController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'accounting-entries';
-        $pagedata['icon'] = 'fa-balance-scale';
-        $pagedata['menu'] = 'accounting';
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'accounting-entries';
+        $pageData['icon'] = 'fa-balance-scale';
+        $pageData['menu'] = 'accounting';
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
@@ -55,7 +57,7 @@ class ListAsiento extends ExtendedController\ListController
         $this->addFilterDatePicker('ListAsiento', 'fecha', 'date', 'fecha');
         $this->addFilterNumber('ListAsiento', 'importe', 'amount', 'importe');
 
-        $selectValues = $this->codeModel->all('ejercicios', 'codejercicio', 'nombre');
+        $selectValues = $this->codeModel::all('ejercicios', 'codejercicio', 'nombre');
         $this->addFilterSelect('ListAsiento', 'codejercicio', 'exercise', 'codejercicio', $selectValues);
 
         $this->addOrderBy('ListAsiento', 'numero', 'number');
@@ -73,8 +75,10 @@ class ListAsiento extends ExtendedController\ListController
      * Run the actions that alter data before reading it.
      *
      * @param string $action
+     *
+     * @return bool
      */
-    protected function execPreviousAction($action)
+    protected function execPreviousAction($action): bool
     {
         switch ($action) {
             case 'renumber':

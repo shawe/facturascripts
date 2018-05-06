@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2014-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2014-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\Utils;
@@ -23,6 +24,7 @@ use FacturaScripts\Core\Base\Utils;
 /**
  * Abbreviated detail of a balance.
  *
+ * @package FacturaScripts\Core\Model
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class BalanceCuentaA extends Base\ModelClass
@@ -63,7 +65,7 @@ class BalanceCuentaA extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'balancescuentasabreviadas';
     }
@@ -73,7 +75,7 @@ class BalanceCuentaA extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'id';
     }
@@ -134,7 +136,7 @@ class BalanceCuentaA extends Base\ModelClass
      *
      * @return self[]
      */
-    public function allFromCodbalance($cod)
+    public function allFromCodbalance($cod): array
     {
         $balist = [];
         $sql = 'SELECT * FROM ' . static::tableName()
@@ -157,7 +159,7 @@ class BalanceCuentaA extends Base\ModelClass
      *
      * @return self[]
      */
-    public function searchByCodbalance($cod)
+    public function searchByCodbalance($cod): array
     {
         $balist = [];
         $sql = 'SELECT * FROM ' . static::tableName()

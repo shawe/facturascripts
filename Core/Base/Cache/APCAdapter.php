@@ -1,8 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017       Francesc Pineda Segarra  <francesc.pineda.segarra@gmail.com>
- * Copyright (C) 2017-2018  Carlos Garcia Gomez      <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -26,6 +25,7 @@ use FacturaScripts\Core\Base\Translator;
 /**
  * Class to connect and interact with APC.
  *
+ * @package FacturaScripts\Core\Base\Cache
  * @author Francesc Pineda Segarra <francesc.pineda.segarra@gmail.com>
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
@@ -84,7 +84,7 @@ class APCAdapter implements AdaptorInterface
      *
      * @return bool whether if the operation was successful or not
      */
-    public function set($key, $content, $expire = 5400)
+    public function set($key, $content, $expire = 5400): bool
     {
         $this->minilog->debug($this->i18n->trans('apc-set-key-item', ['%item%' => $key]));
 
@@ -98,7 +98,7 @@ class APCAdapter implements AdaptorInterface
      *
      * @return bool true if the data was removed successfully
      */
-    public function delete($key)
+    public function delete($key): bool
     {
         $this->minilog->debug($this->i18n->trans('apc-delete-key-item', ['%item%' => $key]));
 
@@ -108,9 +108,9 @@ class APCAdapter implements AdaptorInterface
     /**
      * Flush all cache.
      *
-     * @return bool always true
+     * @return bool
      */
-    public function clear()
+    public function clear(): bool
     {
         $this->minilog->debug($this->i18n->trans('apc-clear'));
         /**

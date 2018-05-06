@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2015-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2015-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase;
@@ -24,6 +25,7 @@ use FacturaScripts\Core\Base\DataBase;
  * Auxiliary model to load a list of totals
  * with or without grouping by code.
  *
+ * @package FacturaScripts\Core\Model
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
 class TotalModel
@@ -55,7 +57,7 @@ class TotalModel
      *
      * @param array $data
      */
-    public function __construct($data = [])
+    public function __construct(array $data = [])
     {
         $this->code = '';
         $this->totals = [];
@@ -88,7 +90,7 @@ class TotalModel
      *
      * @return string
      */
-    private static function getFieldSQL($fieldCode, $fieldList)
+    private static function getFieldSQL($fieldCode, $fieldList): string
     {
         $result = '';
         $comma = '';
@@ -116,7 +118,7 @@ class TotalModel
      *
      * @return self[]
      */
-    public static function all($tableName, $where, $fieldList, $fieldCode = '')
+    public static function all($tableName, $where, $fieldList, $fieldCode = ''): array
     {
         $result = [];
 

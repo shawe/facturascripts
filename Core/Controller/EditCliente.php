@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,18 +16,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Base\DivisaTools;
 use FacturaScripts\Core\Lib\ExtendedController;
-use FacturaScripts\Core\Model;
 use FacturaScripts\Core\Lib\IDFiscal;
 use FacturaScripts\Core\Lib\RegimenIVA;
+use FacturaScripts\Core\Model;
 
 /**
  * Controller to edit a single item from the Cliente model
  *
+ * @package FacturaScripts\Core\Controller
  * @author Artex Trading sa <jcuello@artextrading.com>
  * @author Fco. Antonio Moreno Pérez <famphuelva@gmail.com>
  */
@@ -37,11 +39,9 @@ class EditCliente extends ExtendedController\PanelController
     /**
      * Returns the sum of the customer's total delivery notes.
      *
-     * @param ExtendedController\EditView $view
-     *
      * @return string
      */
-    public function calcClientDeliveryNotes($view)
+    public function calcClientDeliveryNotes(): string
     {
         $where = [];
         $where[] = new DataBaseWhere('codcliente', $this->getViewModelValue('EditCliente', 'codcliente'));
@@ -50,17 +50,15 @@ class EditCliente extends ExtendedController\PanelController
         $totalModel = Model\TotalModel::all('albaranescli', $where, ['total' => 'SUM(total)'], '')[0];
 
         $divisaTools = new DivisaTools();
-        return $divisaTools->format($totalModel->totals['total']);
+        return $divisaTools::format($totalModel->totals['total']);
     }
 
     /**
      * Returns the sum of the client's total outstanding invoices.
      *
-     * @param ExtendedController\EditView $view
-     *
      * @return string
      */
-    public function calcClientInvoicePending($view)
+    public function calcClientInvoicePending(): string
     {
         $where = [];
         $where[] = new DataBaseWhere('codcliente', $this->getViewModelValue('EditCliente', 'codcliente'));
@@ -69,7 +67,7 @@ class EditCliente extends ExtendedController\PanelController
         $totalModel = Model\TotalModel::all('reciboscli', $where, ['total' => 'SUM(importe)'], '')[0];
 
         $divisaTools = new DivisaTools();
-        return $divisaTools->format($totalModel->totals['total'], 2);
+        return $divisaTools::format($totalModel->totals['total'], 2);
     }
 
     /**
@@ -77,15 +75,15 @@ class EditCliente extends ExtendedController\PanelController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'customer';
-        $pagedata['icon'] = 'fa-users';
-        $pagedata['menu'] = 'sales';
-        $pagedata['showonmenu'] = false;
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'customer';
+        $pageData['icon'] = 'fa-users';
+        $pageData['menu'] = 'sales';
+        $pageData['showonmenu'] = false;
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**

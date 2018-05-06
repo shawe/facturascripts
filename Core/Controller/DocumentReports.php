@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
-use FacturaScripts\Core\Lib\DocumentReportsBase;
 use FacturaScripts\Core\App\AppSettings;
 use FacturaScripts\Core\Base\Cache;
 use FacturaScripts\Core\Base\Controller;
@@ -27,12 +27,14 @@ use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Base\MiniLog;
 use FacturaScripts\Core\Base\Translator;
 use FacturaScripts\Core\Base\Utils;
+use FacturaScripts\Core\Lib\DocumentReportsBase;
 use FacturaScripts\Core\Model;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Description of AccountingReports
  *
+ * @package FacturaScripts\Core\Controller
  * @author Francesc Pineda Segarra <francesc.pineda.segarra@gmail.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -70,7 +72,7 @@ class DocumentReports extends Controller
     /**
      * List of index labels for data
      *
-     * @var Array
+     * @var array
      */
     private $labels;
 
@@ -95,10 +97,10 @@ class DocumentReports extends Controller
         ];
 
         $this->filters = [
-            'employee' => new DocumentReportsBase\DocumentReportsFilterList('\FacturaScripts\Dinamic\Model\Agente', '', 'fa-users'),
-            'serie' => new DocumentReportsBase\DocumentReportsFilterList('\FacturaScripts\Dinamic\Model\Serie', AppSettings::get('default', 'codserie')),
-            'currency' => new DocumentReportsBase\DocumentReportsFilterList('\FacturaScripts\Dinamic\Model\Divisa', AppSettings::get('default', 'coddivisa')),
-            'payment-method' => new DocumentReportsBase\DocumentReportsFilterList('\FacturaScripts\Dinamic\Model\FormaPago'),
+            'employee' => new DocumentReportsBase\DocumentReportsFilterList(self::MODEL_NAMESPACE . 'Agente', '', 'fa-users'),
+            'serie' => new DocumentReportsBase\DocumentReportsFilterList(self::MODEL_NAMESPACE . 'Serie', AppSettings::get('default', 'codserie')),
+            'currency' => new DocumentReportsBase\DocumentReportsFilterList(self::MODEL_NAMESPACE . 'Divisa', AppSettings::get('default', 'coddivisa')),
+            'payment-method' => new DocumentReportsBase\DocumentReportsFilterList(self::MODEL_NAMESPACE . 'FormaPago'),
         ];
     }
 
@@ -190,23 +192,23 @@ class DocumentReports extends Controller
      *
      * @return string
      */
-    private function getDateSQL($format)
+    private function getDateSQL($format): string
     {
         $concat = [];
         $options = explode('-', $format);
 
         switch (true) {
-            case in_array('d', $options):
+            case \in_array('d', $options, false):
                 $concat[] = 'LPAD(CAST(EXTRACT(DAY FROM fecha) AS CHAR(10)), 2, \'0\')';
                 $concat[] = ' \'-\' ';
             /// no break
 
-            case in_array('m', $options):
+            case \in_array('m', $options, false):
                 $concat[] = 'LPAD(CAST(EXTRACT(MONTH FROM fecha) AS CHAR(10)), 2, \'0\')';
                 $concat[] = ' \'-\' ';
             /// no break
 
-            case in_array('Y', $options):
+            case \in_array('Y', $options, false):
                 $concat[] = 'CAST(EXTRACT(YEAR FROM fecha) AS CHAR(10))';
         }
 
@@ -225,7 +227,7 @@ class DocumentReports extends Controller
      *
      * @return DataBase\DataBaseWhere[]
      */
-    private function getWhere($source)
+    private function getWhere($source): array
     {
         $where = [
             new DataBase\DataBaseWhere('fecha', $source->dateFrom->format('d-m-Y'), '>='),
@@ -248,7 +250,7 @@ class DocumentReports extends Controller
      *
      * @return array
      */
-    private function populateTable(&$source, $step, $format)
+    private function populateTable(&$source, $step, $format): array
     {
         // Init data
         $result = [];
@@ -298,7 +300,7 @@ class DocumentReports extends Controller
      *
      * @return string
      */
-    public function getLabels()
+    public function getLabels(): string
     {
         return '"' . implode('","', $this->labels) . '"';
     }
@@ -310,7 +312,7 @@ class DocumentReports extends Controller
      *
      * @return string
      */
-    public function getDataTable($sourceKey)
+    public function getDataTable($sourceKey): string
     {
         return implode(',', $this->dataTable[$sourceKey]);
     }
@@ -320,7 +322,7 @@ class DocumentReports extends Controller
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
         $pageData = parent::getPageData();
         $pageData['menu'] = 'reports';
@@ -335,7 +337,7 @@ class DocumentReports extends Controller
      *
      * @return array
      */
-    public function getDocumentTypes()
+    public function getDocumentTypes(): array
     {
         return [
             'customer-estimations' => $this->i18n->trans('customer-estimations'),

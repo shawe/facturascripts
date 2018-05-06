@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model\Base;
 
 use FacturaScripts\Core\Base\DataBase;
@@ -27,6 +28,7 @@ use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
  * This type of model is only for reading data,
  * it does not allow modification or deletion.
  *
+ * @package FacturaScripts\Core\Model\Base
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
 abstract class ModelView
@@ -66,7 +68,7 @@ abstract class ModelView
      *
      * @param array $data
      */
-    public function __construct($data = [])
+    public function __construct(array $data = [])
     {
         if (self::$dataBase === null) {
             self::$dataBase = new DataBase();
@@ -192,7 +194,7 @@ abstract class ModelView
      *
      * @return int
      */
-    public function count(array $where = [])
+    public function count(array $where = []): int
     {
         $sql = 'SELECT COUNT(1) AS total FROM ' . $this->getSQLFrom() . DataBaseWhere::getSQLWhere($where);
         $data = self::$dataBase->select($sql);
@@ -225,11 +227,11 @@ abstract class ModelView
      *
      * @return self[]
      */
-    public function all(array $where, array $order = [], int $offset = 0, int $limit = 0)
+    public function all(array $where, array $order = [], int $offset = 0, int $limit = 0): array
     {
         $result = [];
         if ($this->checkTables()) {
-            $class = get_class($this);
+            $class = \get_class($this);
             $sqlWhere = DataBaseWhere::getSQLWhere($where);
             $sqlOrderBy = $this->getOrderBy($order);
             $sql = 'SELECT ' . $this->fieldsList()

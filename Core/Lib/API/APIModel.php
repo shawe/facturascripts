@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -27,6 +27,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * APIModel is the class for any API Model Resource in Dinamic/Model folder.
  *
+ * @package FacturaScripts\Core\Lib\API
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Rafael San José Tovar (http://www.x-netdigital.com) <rsanjoseo@gmail.com>
  */
@@ -45,6 +46,7 @@ class APIModel extends APIResourceClass
      * TODO: The conversion to the plural is language dependent.
      *
      * @param $text
+     *
      * @return string
      */
     private function pluralize($text): string
@@ -72,7 +74,7 @@ class APIModel extends APIResourceClass
     private function getResourcesFromFolder($folder): array
     {
         $resources = [];
-        foreach (scandir(FS_FOLDER . '/Dinamic/' . $folder, SCANDIR_SORT_ASCENDING) as $fName) {
+        foreach (scandir(FS_FOLDER . '/Dinamic/' . $folder, \SCANDIR_SORT_ASCENDING) as $fName) {
             if (substr($fName, -4) === '.php') {
                 $modelName = substr($fName, 0, -4);
                 $plural = $this->pluralize($modelName);
@@ -130,6 +132,11 @@ class APIModel extends APIResourceClass
         return $where;
     }
 
+    /**
+     * Return all items on model.
+     *
+     * @return bool
+     */
     protected function listAll(): bool
     {
         if ($this->method === 'GET') {
@@ -191,7 +198,7 @@ class APIModel extends APIResourceClass
      */
     public function doPOST(): bool
     {
-        $cod = $this->model->primaryColumn();
+        $cod = $this->model::primaryColumn();
 
         // If editing, retrieve the current data
         $this->model->loadFromCode($this->params[0]);

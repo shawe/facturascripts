@@ -1,7 +1,6 @@
 <?php
 /**
- * Copyright (C) 2017   Joe Nilson          <joenilson at gmail.com>
- * Copyright (C) 2018   Carlos Garcia Gomez <carlos@facturascripts.com>
+ * Copyright (C) 2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,6 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -24,6 +24,7 @@ use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
  * ApiKey model to manage the connection tokens through the api
  * that will be generated to synchronize different applications.
  *
+ * @package FacturaScripts\Core\Model
  * @author Joe Nilson <joenilson at gmail.com>
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
@@ -79,7 +80,7 @@ class ApiKey extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'api_keys';
     }
@@ -89,7 +90,7 @@ class ApiKey extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'id';
     }
@@ -113,9 +114,9 @@ class ApiKey extends Base\ModelClass
      *
      * @author Ángel Guzmán Maeso <angel@guzmanmaeso.com>
      *
-     * @return boolean
+     * @return bool
      */
-    public function checkAuthToken(string $token)
+    public function checkAuthToken(string $token): bool
     {
         // SELECT id FROM api_keys WHERE apikey='TOKEN' AND enabled=1
         $where = [

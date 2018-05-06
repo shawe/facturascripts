@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -19,12 +19,12 @@
 
 namespace FacturaScripts\Core\Base\DataBase;
 
-use Exception;
 use FacturaScripts\Core\Base\Translator;
 
 /**
  * Class to connect with PostgreSQL.
  *
+ * @package FacturaScripts\Core\Base\DataBase
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -68,7 +68,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return string
      */
-    public function version($link)
+    public function version($link): string
     {
         return 'POSTGRESQL ' . pg_version($link)['server'];
     }
@@ -80,7 +80,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return array
      */
-    public function columnFromData($colData)
+    public function columnFromData($colData): array
     {
         $colData['extra'] = null;
 
@@ -100,7 +100,7 @@ class Postgresql implements DataBaseEngine
      */
     public function connect(&$error)
     {
-        if (!function_exists('pg_connect')) {
+        if (!\function_exists('pg_connect')) {
             $error = $this->i18n->trans('php-postgresql-not-found');
 
             return null;
@@ -127,7 +127,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return bool
      */
-    public function close($link)
+    public function close($link): bool
     {
         return pg_close($link);
     }
@@ -139,7 +139,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return string
      */
-    public function errorMessage($link)
+    public function errorMessage($link): string
     {
         $error = pg_last_error($link);
 
@@ -153,7 +153,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return bool
      */
-    public function beginTransaction($link)
+    public function beginTransaction($link): bool
     {
         return $this->exec($link, 'BEGIN TRANSACTION;');
     }
@@ -165,7 +165,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return bool
      */
-    public function commit($link)
+    public function commit($link): bool
     {
         return $this->exec($link, 'COMMIT;');
     }
@@ -177,7 +177,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return bool
      */
-    public function rollback($link)
+    public function rollback($link): bool
     {
         return $this->exec($link, 'ROLLBACK;');
     }
@@ -189,7 +189,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return bool
      */
-    public function inTransaction($link)
+    public function inTransaction($link): bool
     {
         $status = pg_transaction_status($link);
         switch ($status) {
@@ -230,7 +230,7 @@ class Postgresql implements DataBaseEngine
                 }
                 pg_free_result($aux);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->lastErrorMsg = $e->getMessage();
             $result = $selectRows ? [] : false;
         }
@@ -246,11 +246,11 @@ class Postgresql implements DataBaseEngine
      *
      * @return array
      */
-    public function select($link, $sql)
+    public function select($link, $sql): array
     {
         $results = $this->runSql($link, $sql);
 
-        return is_array($results) ? $results : [];
+        return \is_array($results) ? $results : [];
     }
 
     /**
@@ -262,7 +262,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return bool
      */
-    public function exec($link, $sql)
+    public function exec($link, $sql): bool
     {
         return $this->runSql($link, $sql, false) === true;
     }
@@ -275,7 +275,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return string
      */
-    public function escapeString($link, $str)
+    public function escapeString($link, $str): string
     {
         return pg_escape_string($link, $str);
     }
@@ -285,7 +285,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return string
      */
-    public function dateStyle()
+    public function dateStyle(): string
     {
         return 'd-m-Y';
     }
@@ -298,7 +298,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return bool
      */
-    public function compareDataTypes($dbType, $xmlType)
+    public function compareDataTypes($dbType, $xmlType): bool
     {
         return $dbType === $xmlType;
     }
@@ -310,7 +310,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return array
      */
-    public function listTables($link)
+    public function listTables($link): array
     {
         $tables = [];
         $sql = 'SELECT tablename'
@@ -319,7 +319,7 @@ class Postgresql implements DataBaseEngine
             . ' ORDER BY tablename ASC;';
 
         $aux = $this->select($link, $sql);
-        if (is_array($aux)) {
+        if (\is_array($aux)) {
             foreach ($aux as $a) {
                 $tables[] = $a['tablename'];
             }
@@ -359,7 +359,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return bool
      */
-    public function checkTableAux($link, $tableName, &$error)
+    public function checkTableAux($link, $tableName, &$error): bool
     {
         return true;
     }
@@ -369,7 +369,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return DataBaseSQL
      */
-    public function getSQL()
+    public function getSQL(): DataBaseSQL
     {
         return $this->utilsSQL;
     }
@@ -378,6 +378,8 @@ class Postgresql implements DataBaseEngine
      * Indicates the operator for the database engine
      *
      * @param string $operator
+     *
+     * @return string
      */
     public function getOperator($operator)
     {

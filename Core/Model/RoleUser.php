@@ -1,8 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2016       Joe Nilson          <joenilson at gmail.com>
- * Copyright (C) 2017-2018  Carlos García Gómez <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -17,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -24,8 +24,9 @@ use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 /**
  * Defines the relationship between a user and a role.
  *
- * @author Joe Nilson            <joenilson at gmail.com>
- * @author Carlos García Gómez   <carlos@facturascripts.com>
+ * @package FacturaScripts\Core\Model
+ * @author Joe Nilson <joenilson at gmail.com>
+ * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class RoleUser extends Base\ModelClass
 {
@@ -62,7 +63,7 @@ class RoleUser extends Base\ModelClass
      *
      * @return RoleAccess[]
      */
-    public function getRoleAccess($pageName = '')
+    public function getRoleAccess($pageName = ''): array
     {
         $accesses = [];
         $roleAccessModel = new RoleAccess();
@@ -90,7 +91,7 @@ class RoleUser extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         new Role();
 
@@ -102,7 +103,7 @@ class RoleUser extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'id';
     }
@@ -112,7 +113,7 @@ class RoleUser extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'roles_users';
     }
@@ -122,7 +123,7 @@ class RoleUser extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         if (empty($this->nick)) {
             self::$miniLog->alert(self::$i18n->trans('nick-is-empty'));

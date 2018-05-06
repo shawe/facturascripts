@@ -1,8 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez     <carlos@facturascripts.com>
- * Copyright (C) 2017       Francesc Pineda Segarra <francesc.pineda.segarra@gmail.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -17,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\Utils;
@@ -25,8 +25,9 @@ use FacturaScripts\Core\Base\Utils;
  * A state associated with documents to distinguish them by groups.
  * For example: Earrings, Approved, ...
  *
+ * @package FacturaScripts\Core\Model
  * @author Francesc Pineda Segarra <francesc.pìneda.segarra@gmail.com>
- * @author Carlos García Gómez     <carlos@facturascripts.com>
+ * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class EstadoDocumento extends Base\ModelClass
 {
@@ -41,6 +42,7 @@ class EstadoDocumento extends Base\ModelClass
     public $actualizastock;
 
     /**
+     * True if this state is blocked for end user.
      *
      * @var bool
      */
@@ -101,10 +103,11 @@ class EstadoDocumento extends Base\ModelClass
     }
 
     /**
-     * 
-     * @return boolean
+     * Remove the model data from the database.
+     *
+     * @return bool
      */
-    public function delete()
+    public function delete(): bool
     {
         if ($this->bloquear) {
             self::$miniLog->alert(self::$i18n->trans('locked'));
@@ -119,16 +122,17 @@ class EstadoDocumento extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idestado';
     }
 
     /**
-     * 
-     * @return boolean
+     * Stores the model data in the database.
+     *
+     * @return bool
      */
-    public function save()
+    public function save(): bool
     {
         if ($this->bloquear) {
             self::$miniLog->alert(self::$i18n->trans('locked'));
@@ -137,10 +141,10 @@ class EstadoDocumento extends Base\ModelClass
 
         if (parent::save()) {
             if ($this->predeterminado) {
-                $sql = "UPDATE " . static::tableName() . " SET predeterminado = false"
-                    . " WHERE predeterminado = true"
-                    . " AND tipodoc = " . self::$dataBase->var2str($this->tipodoc)
-                    . " AND idestado != " . self::$dataBase->var2str($this->idestado) . ";";
+                $sql = 'UPDATE ' . static::tableName() . ' SET predeterminado = false'
+                    . ' WHERE predeterminado = true'
+                    . ' AND tipodoc = ' . self::$dataBase->var2str($this->tipodoc)
+                    . ' AND idestado != ' . self::$dataBase->var2str($this->idestado) . ';';
                 return self::$dataBase->exec($sql);
             }
 
@@ -155,7 +159,7 @@ class EstadoDocumento extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'estados_documentos';
     }
@@ -165,7 +169,7 @@ class EstadoDocumento extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->nombre = Utils::noHtml($this->nombre);
 

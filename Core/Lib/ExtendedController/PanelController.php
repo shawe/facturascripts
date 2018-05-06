@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base;
@@ -25,6 +26,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Controller to edit data through the vertical panel
  *
+ * @package FacturaScripts\Core\Lib\ExtendedController
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -88,7 +90,7 @@ abstract class PanelController extends BaseController
      *
      * @return string
      */
-    public function getPrimaryDescription()
+    public function getPrimaryDescription(): string
     {
         $viewName = array_keys($this->views)[0];
         $model = $this->views[$viewName]->getModel();
@@ -116,7 +118,7 @@ abstract class PanelController extends BaseController
      *
      * @return string
      */
-    public function getURL($type)
+    public function getURL($type): string
     {
         $view = array_values($this->views)[0];
         return $view->getURL($type);
@@ -133,7 +135,7 @@ abstract class PanelController extends BaseController
     public function getViewModelValue($viewName, $fieldName)
     {
         $model = $this->views[$viewName]->getModel();
-        return isset($model->{$fieldName}) ? $model->{$fieldName} : null;
+        return $model->{$fieldName} ?? null;
     }
 
     /**
@@ -205,13 +207,13 @@ abstract class PanelController extends BaseController
     /**
      * Returns the view class.
      *
-     * @param string $view
+     * @param object $view
      *
      * @return string
      */
-    public function viewClass($view)
+    public function viewClass($view): string
     {
-        $result = explode('\\', get_class($view));
+        $result = explode('\\', \get_class($view));
         return end($result);
     }
 
@@ -312,7 +314,7 @@ abstract class PanelController extends BaseController
      *
      * @return bool
      */
-    protected function deleteAction()
+    protected function deleteAction(): bool
     {
         if (!$this->permissions->allowDelete) {
             $this->miniLog->alert($this->i18n->trans('not-allowed-delete'));
@@ -334,7 +336,7 @@ abstract class PanelController extends BaseController
      *
      * @return bool
      */
-    protected function editAction()
+    protected function editAction(): bool
     {
         if (!$this->permissions->allowUpdate) {
             $this->miniLog->alert($this->i18n->trans('not-allowed-modify'));
@@ -381,7 +383,7 @@ abstract class PanelController extends BaseController
      *
      * @return bool
      */
-    protected function execPreviousAction($action)
+    protected function execPreviousAction($action): bool
     {
         switch ($action) {
             case 'autocomplete':

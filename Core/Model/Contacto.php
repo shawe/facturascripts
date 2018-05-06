@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2015-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2015-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\App\AppSettings;
@@ -24,6 +25,7 @@ use FacturaScripts\Core\Base\Utils;
 /**
  * Description of crm_contacto
  *
+ * @package FacturaScripts\Core\Model
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class Contacto extends Base\Contact
@@ -155,7 +157,7 @@ class Contacto extends Base\Contact
      *
      * @return string
      */
-    public function newLogkey($ipAddress)
+    public function newLogkey($ipAddress): string
     {
         $this->lastactivity = date('d-m-Y H:i:s');
         $this->lastip = $ipAddress;
@@ -169,17 +171,17 @@ class Contacto extends Base\Contact
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idcontacto';
     }
 
     /**
      * Returns the name of the column used to describe this item.
-     * 
+     *
      * @return string
      */
-    public function primaryDescriptionColumn()
+    public function primaryDescriptionColumn(): string
     {
         return 'email';
     }
@@ -189,7 +191,7 @@ class Contacto extends Base\Contact
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'contactos';
     }
@@ -199,7 +201,7 @@ class Contacto extends Base\Contact
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->apellidos = Utils::noHtml($this->apellidos);
         $this->cargo = Utils::noHtml($this->cargo);
@@ -218,7 +220,7 @@ class Contacto extends Base\Contact
      *
      * @return bool
      */
-    public function verifyLogkey($value)
+    public function verifyLogkey($value): bool
     {
         return $this->logkey === $value;
     }

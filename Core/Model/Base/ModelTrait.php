@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model\Base;
 
 use FacturaScripts\Core\Base\DataBase;
@@ -24,6 +25,7 @@ use FacturaScripts\Core\Base\DataBase;
  * The class from which all models inherit, connects to the database,
  * check the structure of the table and if necessary create or adapt.
  *
+ * @package FacturaScripts\Core\Model\Base
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 trait ModelTrait
@@ -41,7 +43,7 @@ trait ModelTrait
      *
      * @return array
      */
-    public function getModelFields()
+    public function getModelFields(): array
     {
         return static::$fields;
     }
@@ -51,7 +53,7 @@ trait ModelTrait
      *
      * @return string
      */
-    public function modelClassName()
+    public function modelClassName(): string
     {
         $result = explode('\\', $this->modelName());
 
@@ -63,9 +65,9 @@ trait ModelTrait
      *
      * @return string
      */
-    public function modelName()
+    public function modelName(): string
     {
-        return get_class($this);
+        return \get_class($this);
     }
 
     /**
@@ -74,10 +76,10 @@ trait ModelTrait
      * @param DataBase  $dataBase
      * @param string    $tableName
      */
-    protected function loadModelFields(DataBase &$dataBase, string $tableName)
+    protected function loadModelFields(DataBase $dataBase, string $tableName)
     {
         if (empty(self::$fields)) {
-            self::$fields = ($dataBase->tableExists($tableName) ? $dataBase->getColumns($tableName) : []);
+            self::$fields = $dataBase->tableExists($tableName) ? $dataBase->getColumns($tableName) : [];
         }
     }
 }

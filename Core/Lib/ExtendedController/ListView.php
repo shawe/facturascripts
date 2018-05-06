@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,15 +16,18 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Base\DivisaTools;
 use FacturaScripts\Core\Lib\ExportManager;
+use FacturaScripts\Dinamic\Model\Base\ModelClass;
 
 /**
  * View definition for its use in ListController
  *
+ * @package FacturaScripts\Core\Lib\ExtendedController
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -40,11 +43,12 @@ class ListView extends BaseView implements DataViewInterface
     /**
      * Cursor with data from the model display
      *
-     * @var array
+     * @var ModelClass[]
      */
     private $cursor;
 
     /**
+     * Tools to work with currencies.
      *
      * @var DivisaTools
      */
@@ -174,7 +178,7 @@ class ListView extends BaseView implements DataViewInterface
      */
     public function addSearchIn($fields)
     {
-        if (is_array($fields)) {
+        if (\is_array($fields)) {
             // TODO: Error: Perhaps array_merge/array_replace can be used instead.
             // Feel free to disable the inspection if '+' is intended.
             //$this->searchIn = array_merge($this->searchIn, $fields);
@@ -217,7 +221,7 @@ class ListView extends BaseView implements DataViewInterface
      *
      * @return string
      */
-    public function getClickEvent($data)
+    public function getClickEvent($data): string
     {
         foreach ($this->getColumns() as $col) {
             if ($col->widget->onClick !== null && $col->widget->onClick !== '') {
@@ -234,7 +238,7 @@ class ListView extends BaseView implements DataViewInterface
      *
      * @return ColumnItem[]
      */
-    public function getColumns()
+    public function getColumns(): array
     {
         $keys = array_keys($this->pageOption->columns);
         if (empty($keys)) {
@@ -248,7 +252,7 @@ class ListView extends BaseView implements DataViewInterface
     /**
      * Returns the read data list in Model format
      *
-     * @return array
+     * @return ModelClass[]
      */
     public function getCursor()
     {
@@ -260,7 +264,7 @@ class ListView extends BaseView implements DataViewInterface
      *
      * @return ListFilter[]
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return $this->filters;
     }
@@ -270,7 +274,7 @@ class ListView extends BaseView implements DataViewInterface
      *
      * @return array
      */
-    public function getOrderBy()
+    public function getOrderBy(): array
     {
         return $this->orderby;
     }
@@ -280,7 +284,7 @@ class ListView extends BaseView implements DataViewInterface
      *
      * @return string
      */
-    public function getSearchIn()
+    public function getSearchIn(): string
     {
         return implode('|', $this->searchIn);
     }
@@ -292,7 +296,7 @@ class ListView extends BaseView implements DataViewInterface
      *
      * @return array
      */
-    public function getSQLOrderBy($orderKey = '')
+    public function getSQLOrderBy($orderKey = ''): array
     {
         if (empty($this->orderby)) {
             return [];
@@ -315,7 +319,7 @@ class ListView extends BaseView implements DataViewInterface
      * @param int             $offset
      * @param int             $limit
      */
-    public function loadData($code = false, $where = [], $order = [], $offset = 0, $limit = FS_ITEM_LIMIT)
+    public function loadData($code = false, array $where = [], array $order = [], $offset = 0, $limit = FS_ITEM_LIMIT)
     {
         $this->order = empty($order) ? $this->getSQLOrderBy($this->selectedOrderBy) : $order;
         $this->count = $this->model->count($where);
@@ -338,7 +342,7 @@ class ListView extends BaseView implements DataViewInterface
     public function setSelectedOrderBy($orderKey)
     {
         $keys = array_keys($this->orderby);
-        if (empty($orderKey) || !in_array($orderKey, $keys, false)) {
+        if (empty($orderKey) || !\in_array($orderKey, $keys, false)) {
             if (empty($this->selectedOrderBy)) {
                 $this->selectedOrderBy = (string) $keys[0]; // We force the first element when there is no default
             }

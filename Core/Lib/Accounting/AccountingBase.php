@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Accounting;
 
 use FacturaScripts\Core\Base\DataBase;
@@ -24,6 +25,7 @@ use FacturaScripts\Core\Base\DivisaTools;
 /**
  * Description of AccountingBase
  *
+ * @package FacturaScripts\Core\Lib\Accounting
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author nazca <comercial@nazcanetworks.com>
  */
@@ -60,8 +62,14 @@ abstract class AccountingBase
 
     /**
      * Generate the balance ammounts between two dates.
+     *
+     * @param string $dateFrom
+     * @param string $dateTo
+     * @param array  $params
+     *
+     * @return array
      */
-    abstract public function generate(string $dateFrom, string $dateTo, array $params = []);
+    abstract public function generate(string $dateFrom, string $dateTo, array $params = []): array;
 
     /**
      * Obtains the balances for each one of the sections of the balance sheet according to their assigned accounts.
@@ -85,7 +93,7 @@ abstract class AccountingBase
      *
      * @return string
      */
-    protected function addToDate($date, $add)
+    protected function addToDate($date, $add): string
     {
         return \date('d-m-Y', strtotime($add, strtotime($date)));
     }

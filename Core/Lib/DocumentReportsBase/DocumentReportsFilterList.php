@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,14 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\DocumentReportsBase;
 
-use FacturaScripts\Core\Model;
 use FacturaScripts\Core\Base\DataBase;
+use FacturaScripts\Core\Model;
 
 /**
  * Description of DocumentReportsFilterList
  *
+ * @package FacturaScripts\Core\Lib\DocumentReportsBase
  * @author Francesc Pineda Segarra <francesc.pineda.segarra@gmail.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -32,6 +34,8 @@ class DocumentReportsFilterList
 
     /**
      * Structure data from
+     *
+     * @var mixed
      */
     private $model;
 
@@ -80,7 +84,7 @@ class DocumentReportsFilterList
     private function loadValuesFromModel($allowEmpty = true)
     {
         $tableName = $this->model->tableName();
-        $fieldCode = $this->model->primaryColumn();
+        $fieldCode = $this->model::primaryColumn();
         $fieldDesc = $this->model->primaryDescriptionColumn();
         $rows = Model\CodeModel::all($tableName, $fieldCode, $fieldDesc, $allowEmpty);
 
@@ -102,6 +106,6 @@ class DocumentReportsFilterList
             return null;
         }
 
-        return new DataBase\DataBaseWhere($this->model->primaryColumn(), $this->selectedValue);
+        return new DataBase\DataBaseWhere($this->model::primaryColumn(), $this->selectedValue);
     }
 }

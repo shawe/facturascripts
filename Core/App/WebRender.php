@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\App;
 
 use FacturaScripts\Core\Base\MiniLog;
@@ -30,7 +31,8 @@ use Twig_Loader_Filesystem;
 /**
  * Description of WebRender
  *
- * @author Carlos García Gómez
+ * @package FacturaScripts\Core\App
+ * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class WebRender
 {
@@ -76,8 +78,8 @@ class WebRender
     public function __construct()
     {
         $this->installed = true;
-        if (!defined('FS_DEBUG')) {
-            define('FS_DEBUG', true);
+        if (!\defined('FS_DEBUG')) {
+            \define('FS_DEBUG', true);
             $this->installed = false;
         }
 
@@ -93,7 +95,7 @@ class WebRender
      *
      * @return Twig_Environment
      */
-    public function getTwig()
+    public function getTwig(): Twig_Environment
     {
         $twig = new Twig_Environment($this->loader, $this->getOptions());
 
@@ -145,7 +147,7 @@ class WebRender
      *
      * @return string
      */
-    public function render($template, $params)
+    public function render($template, $params): string
     {
         $templateVars = [
             'i18n' => $this->i18n,
@@ -164,7 +166,7 @@ class WebRender
      *
      * @return array
      */
-    private function getOptions()
+    private function getOptions(): array
     {
         if ($this->installed) {
             return [

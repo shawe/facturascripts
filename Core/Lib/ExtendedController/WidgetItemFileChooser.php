@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez  carlos@facturascripts.com
+ * Copyright (C) 2017-2018 Carlos García Gómez  carlos@facturascripts.com
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -23,6 +24,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 /**
  * This class manage all specific method for a WidgetItem of File Chooser type.
  *
+ * @package FacturaScripts\Core\Lib\ExtendedController
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class WidgetItemFileChooser extends WidgetItem
@@ -44,10 +46,10 @@ class WidgetItemFileChooser extends WidgetItem
      *
      * @return string
      */
-    public function getEditHTML($value)
+    public function getEditHTML($value): string
     {
         $html = $this->getIconHTML() . "<input type='file' name='" . $this->fieldName
-            . "' class='form-control-file' " . $this->specialAttributes() . " />";
+            . "' class='form-control-file' " . $this->specialAttributes() . ' />';
 
         if (!empty($this->icon)) {
             $html .= '</div>';
@@ -67,7 +69,7 @@ class WidgetItemFileChooser extends WidgetItem
      *
      * @return string
      */
-    public function getListHTML($value)
+    public function getListHTML($value): string
     {
         return $this->standardListHTMLWidget($value);
     }
@@ -77,7 +79,7 @@ class WidgetItemFileChooser extends WidgetItem
      *
      * @return int
      */
-    public function getMaxFileUpload()
+    public function getMaxFileUpload(): int
     {
         return UploadedFile::getMaxFilesize() / 1024 / 1024;
     }

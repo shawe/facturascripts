@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2014-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2014-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,11 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 /**
  * An address of a client. It can have several.
  *
+ * @package FacturaScripts\Core\Model
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class DireccionCliente extends Base\Address
@@ -75,7 +77,7 @@ class DireccionCliente extends Base\Address
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'dirclientes';
     }
@@ -85,7 +87,7 @@ class DireccionCliente extends Base\Address
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'id';
     }
@@ -107,7 +109,7 @@ class DireccionCliente extends Base\Address
      *
      * @return bool
      */
-    public function save()
+    public function save(): bool
     {
         /// update the modification date
         $this->fecha = date('d-m-Y');

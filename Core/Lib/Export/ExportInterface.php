@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\Export;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -24,6 +25,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Export interface.
  *
+ * @package FacturaScripts\Core\Lib\Export
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 interface ExportInterface
@@ -32,9 +34,9 @@ interface ExportInterface
     /**
      * Return the full document.
      *
-     * @return mixed
+     * @return string
      */
-    public function getDoc();
+    public function getDoc(): string;
 
     /**
      * Blank document.
@@ -46,7 +48,7 @@ interface ExportInterface
      *
      * @param Response $response
      */
-    public function show(Response &$response);
+    public function show(Response $response);
 
     /**
      * Adds a new page with the model data.

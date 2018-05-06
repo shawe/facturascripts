@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2016-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2016-2017 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
 use FacturaScripts\Core\Model;
@@ -23,6 +24,7 @@ use FacturaScripts\Core\Model;
 /**
  * Generates random data in the product families (familias) file
  *
+ * @package FacturaScripts\Core\Lib\RandomDataGenerator
  * @author Rafael San José <info@rsanjoseo.com>
  */
 class Familias extends AbstractRandom
@@ -43,7 +45,7 @@ class Familias extends AbstractRandom
      *
      * @return int
      */
-    public function generate($num = 50)
+    public function generate($num = 50): int
     {
         $fam = $this->model;
         $codfamilia = null;
@@ -52,7 +54,7 @@ class Familias extends AbstractRandom
             $fam->clear();
             $fam->descripcion = $this->familia();
             $fam->codfamilia = $this->txt2codigo($fam->descripcion);
-            $fam->madre = (mt_rand(0, 4) == 0 && $fam->codfamilia != $codfamilia) ? $codfamilia : null;
+            $fam->madre = (random_int(0, 4) === 0 && $fam->codfamilia !== $codfamilia) ? $codfamilia : null;
             if (!$fam->save()) {
                 break;
             }

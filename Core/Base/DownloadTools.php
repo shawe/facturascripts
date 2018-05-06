@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,14 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-namespace FacturaScripts\Core\Base;
 
-use FacturaScripts\Core\Base\MiniLog;
-use Exception;
+namespace FacturaScripts\Core\Base;
 
 /**
  * Description of DownloadTools
  *
+ * @package FacturaScripts\Core\Base
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class DownloadTools
@@ -33,38 +32,38 @@ class DownloadTools
 
     /**
      * Downloads and returns url content with curl or file_get_contents.
-     * 
+     *
      * @param string $url
      * @param int    $timeout
-     * 
+     *
      * @return string
      */
     public function getContents(string $url, int $timeout = 30): string
     {
-        if (function_exists('curl_init')) {
+        if (\function_exists('curl_init')) {
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
             curl_setopt($ch, CURLOPT_USERAGENT, self::USERAGENT);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            if (ini_get('open_basedir') === NULL) {
+            if (ini_get('open_basedir') === null) {
                 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
             }
 
             $data = curl_exec($ch);
             $info = curl_getinfo($ch);
-            if ($info['http_code'] == 200) {
+            if ($info['http_code'] === 200) {
                 curl_close($ch);
                 return $data;
             }
 
-            if ($info['http_code'] == 301 || $info['http_code'] == 302) {
+            if ($info['http_code'] === 301 || $info['http_code'] === 302) {
                 $redirs = 0;
                 return $this->curlRedirectExec($ch, $redirs);
             }
 
             /// guardamos en el log
-            if ($info['http_code'] != 404) {
+            if ($info['http_code'] !== 404) {
                 $error = (curl_error($ch) === '') ? 'ERROR ' . $info['http_code'] : curl_error($ch);
                 $minilog = new MiniLog();
                 $minilog->alert($error);
@@ -79,11 +78,11 @@ class DownloadTools
 
     /**
      * Alternative function when followlocation fails.
-     * 
+     *
      * @param resource $ch
      * @param int      $redirects
      * @param bool     $curlopt_header
-     * 
+     *
      * @return string
      */
     private function curlRedirectExec($ch, &$redirects, $curlopt_header = false): string
@@ -92,11 +91,11 @@ class DownloadTools
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $data = curl_exec($ch);
         $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        if ($http_code == 301 || $http_code == 302) {
+        if ($http_code === 301 || $http_code === 302) {
             list($header) = explode("\r\n\r\n", $data, 2);
             $matches = [];
             preg_match("/(Location:|URI:)[^(\n)]*/", $header, $matches);
-            $url = trim(str_replace($matches[1], "", $matches[0]));
+            $url = trim(\str_replace($matches[1], '', $matches[0]));
             $url_parsed = parse_url($url);
             if (isset($url_parsed)) {
                 curl_setopt($ch, CURLOPT_URL, $url);
@@ -117,21 +116,21 @@ class DownloadTools
 
     /**
      * Downloads file from selected url.
-     * 
+     *
      * @param string $url
      * @param string $filename
      * @param int    $timeout
-     * 
+     *
      * @return bool
      */
     public function download(string $url, string $filename, int $timeout = 30): bool
     {
         try {
             $data = $this->getContents($url, $timeout);
-            if ($data && $data != 'ERROR' && file_put_contents($filename, $data) !== FALSE) {
+            if ($data && $data !== 'ERROR' && file_put_contents($filename, $data) !== false) {
                 return true;
             }
-        } catch (Exception $exc) {
+        } catch (\Exception $exc) {
             /// nothing to do
         }
 

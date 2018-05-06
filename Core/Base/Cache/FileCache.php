@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2017 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -26,6 +26,7 @@ use FacturaScripts\Core\Base\Translator;
  * Simple file cache
  * This class is great for those who can't use apc or memcached in their projects.
  *
+ * @package FacturaScripts\Core\Base\Cache
  * @author Emilio Cobos (emiliocobos.net) <ecoal95@gmail.com> and github contributors
  * @author Carlos García Gómez <carlos@facturascripts.com>
  *
@@ -85,7 +86,7 @@ class FileCache implements AdaptorInterface
      *
      * @return string the filename of the php file
      */
-    private function getRoute($key)
+    private function getRoute($key): string
     {
         return self::$config['cache_path'] . '/' . md5($key) . '.php';
     }
@@ -124,17 +125,17 @@ class FileCache implements AdaptorInterface
      *
      * @return bool whether if the operation was successful or not
      */
-    public function set($key, $content, $raw = false)
+    public function set($key, $content, $raw = false): bool
     {
         $this->minilog->debug($this->i18n->trans('filecache-set-key-item', ['%item%' => $key]));
-        $dest_file_name = $this->getRoute($key);
+        $destFileName = $this->getRoute($key);
         /** Use a unique temporary filename to make writes atomic with rewrite */
-        $temp_file_name = str_replace('.php', uniqid('-', true) . '.php', $dest_file_name);
-        $ret = @file_put_contents($temp_file_name, $raw ? $content : serialize($content));
+        $tempFileName = \str_replace('.php', uniqid('-', true) . '.php', $destFileName);
+        $ret = @file_put_contents($tempFileName, $raw ? $content : serialize($content));
         if ($ret !== false) {
-            return @rename($temp_file_name, $dest_file_name);
+            return @rename($tempFileName, $destFileName);
         }
-        @unlink($temp_file_name);
+        @unlink($tempFileName);
 
         return false;
     }
@@ -146,7 +147,7 @@ class FileCache implements AdaptorInterface
      *
      * @return bool true if the data was removed successfully
      */
-    public function delete($key)
+    public function delete($key): bool
     {
         $this->minilog->debug($this->i18n->trans('filecache-delete-key-item', ['%item%' => $key]));
         $ruta = $this->getRoute($key);
@@ -162,10 +163,10 @@ class FileCache implements AdaptorInterface
      *
      * @return bool always true
      */
-    public function clear()
+    public function clear(): bool
     {
         $this->minilog->debug($this->i18n->trans('filecache-clear'));
-        foreach (scandir(self::$config['cache_path'], SCANDIR_SORT_ASCENDING) as $fileName) {
+        foreach (scandir(self::$config['cache_path'], \SCANDIR_SORT_ASCENDING) as $fileName) {
             if (substr($fileName, -4) === '.php') {
                 unlink(self::$config['cache_path'] . '/' . $fileName);
             }
@@ -182,7 +183,7 @@ class FileCache implements AdaptorInterface
      *
      * @return bool if the file has expired or not
      */
-    private function fileExpired($file, $time = null)
+    private function fileExpired($file, $time = null): bool
     {
         if (file_exists($file)) {
             return time() > (filemtime($file) + 60 * ($time ?: self::$config['expires']));

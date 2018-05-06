@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base;
@@ -26,6 +27,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Controller that lists the data in table mode
  *
+ * @package FacturaScripts\Core\Lib\ExtendedController
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -107,7 +109,7 @@ abstract class ListController extends BaseController
      *
      * @return array
      */
-    public function pagination(string $viewName)
+    public function pagination(string $viewName): array
     {
         $offset = $this->getOffSet($viewName);
         $count = $this->views[$viewName]->count;
@@ -164,9 +166,9 @@ abstract class ListController extends BaseController
     /**
      * Load data of list view
      *
-     * @param string $viewName
-     * @param array $where
-     * @param int $offset
+     * @param string          $viewName
+     * @param DataBaseWhere[] $where
+     * @param int             $offset
      */
     protected function loadData($viewName, $where, $offset)
     {
@@ -183,7 +185,7 @@ abstract class ListController extends BaseController
      * @param string $table      (Table to search)
      * @param string $fieldcode  (Primary column of the table to search and match)
      * @param string $fieldtitle (Column to show name or description)
-     * @param array  $where      (Estra where conditions)
+     * @param array  $where      (Extra where conditions)
      */
     protected function addFilterAutocomplete($viewName, $key, $label, $field, $table, $fieldcode, $fieldtitle, $where = [])
     {
@@ -203,7 +205,7 @@ abstract class ListController extends BaseController
      */
     protected function addFilterCheckbox($viewName, $key, $label, $field, $inverse = false, $matchValue = true)
     {
-        $value = ($viewName == $this->active) ? $this->request->get($key, '') : '';
+        $value = $viewName == $this->active ? $this->request->get($key, '') : '';
         $this->views[$viewName]->addFilter($key, ListFilter::newCheckboxFilter($field, $value, $label, $inverse, $matchValue));
     }
 
@@ -234,9 +236,9 @@ abstract class ListController extends BaseController
         $config = [
             'field' => $field,
             'label' => $label,
-            'valueFrom' => ($viewName == $this->active) ? $this->request->get($key . '-from', '') : '',
+            'valueFrom' => $viewName == $this->active ? $this->request->get($key . '-from', '') : '',
             'operatorFrom' => $this->request->get($key . '-from-operator', '>='),
-            'valueTo' => ($viewName == $this->active) ? $this->request->get($key . '-to', '') : '',
+            'valueTo' => $viewName == $this->active ? $this->request->get($key . '-to', '') : '',
             'operatorTo' => $this->request->get($key . '-to-operator', '<='),
         ];
 
@@ -265,9 +267,9 @@ abstract class ListController extends BaseController
      * @param string $field     (Field of the table to apply filter)
      * @param array  $values    (Values to show)
      */
-    protected function addFilterSelect($viewName, $key, $label, $field, $values = [])
+    protected function addFilterSelect($viewName, $key, $label, $field, array $values = [])
     {
-        $value = ($viewName == $this->active) ? $this->request->get($key, '') : '';
+        $value = $viewName == $this->active ? $this->request->get($key, '') : '';
         $this->views[$viewName]->addFilter($key, ListFilter::newSelectFilter($label, $field, $values, $value));
     }
 
@@ -331,7 +333,7 @@ abstract class ListController extends BaseController
      *
      * @return bool
      */
-    protected function deleteAction()
+    protected function deleteAction(): bool
     {
         if (!$this->permissions->allowDelete) {
             $this->miniLog->alert($this->i18n->trans('not-allowed-delete'));
@@ -387,7 +389,7 @@ abstract class ListController extends BaseController
      *
      * @return bool
      */
-    protected function execPreviousAction($action)
+    protected function execPreviousAction($action): bool
     {
         switch ($action) {
             case 'autocomplete':
@@ -411,7 +413,7 @@ abstract class ListController extends BaseController
      *
      * @return int
      */
-    private function getOffSet($viewName)
+    private function getOffSet($viewName): int
     {
         return ($viewName === $this->active) ? $this->offset : 0;
     }
@@ -423,7 +425,7 @@ abstract class ListController extends BaseController
      *
      * @return string
      */
-    private function getParams($viewName)
+    private function getParams($viewName): string
     {
         $result = '';
         if ($viewName === $this->active) {
@@ -450,11 +452,11 @@ abstract class ListController extends BaseController
      *
      * @return array
      */
-    private function getTextColumns($view, $maxColumns)
+    private function getTextColumns($view, $maxColumns): array
     {
         $result = [];
         foreach ($view->getColumns() as $col) {
-            if ($col->display === 'none' || !in_array($col->widget->type, ['text', 'money'], false)) {
+            if ($col->display === 'none' || !\in_array($col->widget->type, ['text', 'money'], false)) {
                 continue;
             }
 
@@ -472,7 +474,7 @@ abstract class ListController extends BaseController
      *
      * @return DataBaseWhere[]
      */
-    protected function getWhere()
+    protected function getWhere(): array
     {
         $result = [];
 

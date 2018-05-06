@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2012-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2012-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\Utils;
@@ -23,6 +24,7 @@ use FacturaScripts\Core\Base\Utils;
 /**
  * Stores the data of an article.
  *
+ * @package FacturaScripts\Core\Model
  * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class Articulo extends Base\Product
@@ -166,7 +168,7 @@ class Articulo extends Base\Product
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         /**
          * The articles table has several foreign keys, so we must force the checking of those tables.
@@ -183,7 +185,7 @@ class Articulo extends Base\Product
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'referencia';
     }
@@ -217,7 +219,7 @@ class Articulo extends Base\Product
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'articulos';
     }
@@ -227,7 +229,7 @@ class Articulo extends Base\Product
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         $this->observaciones = Utils::noHtml($this->observaciones);
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2014-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2014-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,15 +16,17 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
-use FacturaScripts\Core\Lib\ExtendedController\GridDocumentInterface;
 use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Base\Utils;
+use FacturaScripts\Core\Lib\ExtendedController\GridDocumentInterface;
 
 /**
  * The accounting entry. It is related to an exercise and consists of games.
  *
+ * @package FacturaScripts\Core\Model
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
@@ -96,7 +98,7 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
      */
     public function accumulateAmounts(array &$detail)
     {
-        $this->importe += round(floatval($detail['haber']), (int) FS_NF0);
+        $this->importe += round((float) $detail['haber'], FS_NF0);
     }
 
     /**
@@ -145,7 +147,7 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
      *
      * @return bool
      */
-    public function delete()
+    public function delete(): bool
     {
         $error = $this->deleteErrorDataExercise();
         if (!empty($error)) {
@@ -182,7 +184,7 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
             $account = new Subcuenta();
             foreach ($lines as $row) {
                 $account->idsubcuenta = $row->idsubcuenta;
-                if (!$account->updateBalance($date, ($row->debe * -1), ($row->haber * -1))) {
+                if (!$account->updateBalance($date, $row->debe * -1, $row->haber * -1)) {
                     return false;
                 }
             }
@@ -219,7 +221,7 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         new Ejercicio();
         new SubcuentaSaldo();
@@ -235,7 +237,7 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
      *
      * @return int
      */
-    public function newCode(string $field = '', array $where = [])
+    public function newCode(string $field = '', array $where = []): int
     {
         $where[] = new DataBase\DataBaseWhere('codejercicio', $this->codejercicio);
         return parent::newCode($field, $where);
@@ -246,7 +248,7 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idasiento';
     }
@@ -256,7 +258,7 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
      *
      * @return string
      */
-    public function primaryDescriptionColumn()
+    public function primaryDescriptionColumn(): string
     {
         return 'numero';
     }
@@ -266,7 +268,7 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
      *
      * @return bool
      */
-    public function renumber()
+    public function renumber(): bool
     {
         $continuar = false;
         $ejercicio = new Ejercicio();
@@ -311,7 +313,7 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'asientos';
     }
@@ -337,7 +339,7 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
             return false;
         }
 
-        if (strlen($this->concepto) > 255) {
+        if (mb_strlen($this->concepto) > 255) {
             self::$miniLog->alert(self::$i18n->trans('concept-too-large'));
             return false;
         }
@@ -379,7 +381,7 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
     }
 
     /**
-     * TODO: Uncomplete documentation
+     * Verify if there is an error on the exercise.
      *
      * @return string
      */
