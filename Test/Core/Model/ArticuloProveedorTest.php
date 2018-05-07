@@ -35,10 +35,10 @@ final class ArticuloProveedorTest extends CustomTest
     {
         $model = new ArticuloProveedor();
 
-        $this->assertInstanceOf(ArticuloProveedor::class, $model);
-        $this->assertEquals(0.0, $model->precio);
-        $this->assertEquals(0.0, $model->dto);
-        $this->assertFalse($model->test());
+        $this::assertInstanceOf(ArticuloProveedor::class, $model);
+        $this::assertEquals(0.0, $model->precio);
+        $this::assertEquals(0.0, $model->dto);
+        $this::assertFalse($model->test());
 
         $model->codproveedor = 'PROV1';
         $model->referencia = 'REF1PROV1';
@@ -46,42 +46,42 @@ final class ArticuloProveedorTest extends CustomTest
         $model->precio = 123.45;
         $model->dto = 12.34;
 
-        $this->assertTrue($model->test());
+        $this::assertTrue($model->test());
     }
 
     public function testTable()
     {
         $model = new ArticuloProveedor();
 
-        $this->assertInternalType('string', $model::tableName());
+        $this::assertInternalType('string', $model::tableName());
     }
 
     public function testPrimaryColumn()
     {
         $model = new ArticuloProveedor();
 
-        $this->assertInternalType('string', $model::primaryColumn());
+        $this::assertInternalType('string', $model::primaryColumn());
     }
 
     public function testInstall()
     {
         $model = new ArticuloProveedor();
 
-        $this->assertInternalType('string', $model->install());
+        $this::assertInternalType('string', $model->install());
     }
 
     public function testSave()
     {
         $dataBase = new DataBase();
 
-        $this->assertEquals(true, $dataBase->connect());
+        $this::assertEquals(true, $dataBase->connect());
 
         $model = new ArticuloProveedor();
         $sql = $model->install();
 
         if ($sql !== '') {
             $result = $dataBase->exec($sql);
-            $this->assertFalse($result);
+            $this::assertFalse($result);
         }
     }
 
@@ -91,9 +91,9 @@ final class ArticuloProveedorTest extends CustomTest
         $list = $model->all();
 
         if (!empty($list)) {
-            $this->assertInternalType('array', $list);
+            $this::assertInternalType('array', $list);
         } else {
-            $this->assertSame([], $list);
+            $this::assertSame([], $list);
         }
     }
 }

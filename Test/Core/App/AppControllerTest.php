@@ -43,7 +43,7 @@ class AppControllerTest extends \PHPUnit_Framework_TestCase
 
     public function testConnect()
     {
-        $this->assertTrue($this->object->connect());
+        $this::assertTrue($this->object->connect());
     }
 
     /**
@@ -51,6 +51,6 @@ class AppControllerTest extends \PHPUnit_Framework_TestCase
      */
     public function testRun()
     {
-        $this->assertTrue($this->object->run());
+        $this::assertTrue($this->object->run());
     }
 }

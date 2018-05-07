@@ -33,17 +33,17 @@ final class EmpresaTest extends CustomTest
     {
         $model = new Empresa();
 
-        $this->assertInstanceOf(Empresa::class, $model);
-        $this->assertEquals('', $model->administrador);
-        $this->assertEquals('', $model->ciudad);
-        $this->assertEquals('', $model->codpostal);
-        $this->assertEquals('', $model->direccion);
-        $this->assertEquals('', $model->nombre);
-        $this->assertEquals('', $model->nombrecorto);
-        $this->assertEquals('', $model->provincia);
-        $this->assertEquals('', $model->web);
+        $this::assertInstanceOf(Empresa::class, $model);
+        $this::assertEquals('', $model->administrador);
+        $this::assertEquals('', $model->ciudad);
+        $this::assertEquals('', $model->codpostal);
+        $this::assertEquals('', $model->direccion);
+        $this::assertEquals('', $model->nombre);
+        $this::assertEquals('', $model->nombrecorto);
+        $this::assertEquals('', $model->provincia);
+        $this::assertEquals('', $model->web);
 
-        $this->assertFalse($model->test());
+        $this::assertFalse($model->test());
 
         $model->administrador = 'Test name admin';
         $model->ciudad = 'Test city';
@@ -54,22 +54,22 @@ final class EmpresaTest extends CustomTest
         $model->provincia = 'Test name';
         $model->web = 'http://www.example.com';
 
-        $this->assertTrue($model->test());
-        $this->assertTrue($model->save());
+        $this::assertTrue($model->test());
+        $this::assertTrue($model->save());
     }
 
     public function testTable()
     {
         $model = new Empresa();
 
-        $this->assertInternalType('string', $model::tableName());
+        $this::assertInternalType('string', $model::tableName());
     }
 
     public function testPrimaryColumn()
     {
         $model = new Empresa();
 
-        $this->assertInternalType('string', $model::primaryColumn());
+        $this::assertInternalType('string', $model::primaryColumn());
     }
 
     public function testAll()
@@ -78,9 +78,9 @@ final class EmpresaTest extends CustomTest
         $list = $model->all();
 
         if (!empty($list)) {
-            $this->assertInternalType('array', $list);
+            $this::assertInternalType('array', $list);
         } else {
-            $this->assertSame([], $list);
+            $this::assertSame([], $list);
         }
     }
 }

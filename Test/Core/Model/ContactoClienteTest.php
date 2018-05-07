@@ -35,45 +35,45 @@ final class ContactoClienteTest extends CustomTest
     {
         $model = new ContactoCliente();
 
-        $this->assertInstanceOf(ContactoCliente::class, $model);
-        $this->assertNull($model->codcliente);
-        $this->assertNull($model->idcontacto);
-        $this->assertFalse($model->test());
+        $this::assertInstanceOf(ContactoCliente::class, $model);
+        $this::assertNull($model->codcliente);
+        $this::assertNull($model->idcontacto);
+        $this::assertFalse($model->test());
     }
 
     public function testTable()
     {
         $model = new ContactoCliente();
 
-        $this->assertInternalType('string', $model::tableName());
+        $this::assertInternalType('string', $model::tableName());
     }
 
     public function testPrimaryColumn()
     {
         $model = new ContactoCliente();
 
-        $this->assertInternalType('string', $model::primaryColumn());
+        $this::assertInternalType('string', $model::primaryColumn());
     }
 
     public function testInstall()
     {
         $model = new ContactoCliente();
 
-        $this->assertInternalType('string', $model->install());
+        $this::assertInternalType('string', $model->install());
     }
 
     public function testSave()
     {
         $dataBase = new DataBase();
 
-        $this->assertEquals(true, $dataBase->connect());
+        $this::assertEquals(true, $dataBase->connect());
 
         $model = new ContactoCliente();
         $sql = $model->install();
 
         if ($sql !== '') {
             $result = $dataBase->exec($sql);
-            $this->assertFalse($result);
+            $this::assertFalse($result);
         }
     }
 
@@ -83,9 +83,9 @@ final class ContactoClienteTest extends CustomTest
         $list = $model->all();
 
         if (!empty($list)) {
-            $this->assertInternalType('array', $list);
+            $this::assertInternalType('array', $list);
         } else {
-            $this->assertSame([], $list);
+            $this::assertSame([], $list);
         }
     }
 }

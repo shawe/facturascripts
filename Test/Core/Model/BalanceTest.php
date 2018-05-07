@@ -35,54 +35,54 @@ final class BalanceTest extends CustomTest
     {
         $model = new Balance();
 
-        $this->assertInstanceOf(Balance::class, $model);
-        $this->assertNull($model->codbalance);
-        $this->assertNull($model->descripcion4ba);
-        $this->assertNull($model->nivel4);
-        $this->assertNull($model->descripcion3);
-        $this->assertNull($model->orden3);
-        $this->assertNull($model->nivel3);
-        $this->assertNull($model->descripcion2);
-        $this->assertNull($model->nivel2);
-        $this->assertNull($model->descripcion1);
-        $this->assertNull($model->nivel1);
-        $this->assertNull($model->naturaleza);
-        $this->assertFalse($model->test());
+        $this::assertInstanceOf(Balance::class, $model);
+        $this::assertNull($model->codbalance);
+        $this::assertNull($model->descripcion4ba);
+        $this::assertNull($model->nivel4);
+        $this::assertNull($model->descripcion3);
+        $this::assertNull($model->orden3);
+        $this::assertNull($model->nivel3);
+        $this::assertNull($model->descripcion2);
+        $this::assertNull($model->nivel2);
+        $this::assertNull($model->descripcion1);
+        $this::assertNull($model->nivel1);
+        $this::assertNull($model->naturaleza);
+        $this::assertFalse($model->test());
     }
 
     public function testTable()
     {
         $model = new Balance();
 
-        $this->assertInternalType('string', $model::tableName());
+        $this::assertInternalType('string', $model::tableName());
     }
 
     public function testPrimaryColumn()
     {
         $model = new Balance();
 
-        $this->assertInternalType('string', $model::primaryColumn());
+        $this::assertInternalType('string', $model::primaryColumn());
     }
 
     public function testInstall()
     {
         $model = new Balance();
 
-        $this->assertInternalType('string', $model->install());
+        $this::assertInternalType('string', $model->install());
     }
 
     public function testSave()
     {
         $dataBase = new DataBase();
 
-        $this->assertEquals(true, $dataBase->connect());
+        $this::assertEquals(true, $dataBase->connect());
 
         $model = new Balance();
         $sql = $model->install();
 
         if ($sql !== '') {
             $result = $dataBase->exec($sql);
-            $this->assertFalse($result);
+            $this::assertFalse($result);
         }
     }
 
@@ -92,9 +92,9 @@ final class BalanceTest extends CustomTest
         $list = $model->all();
 
         if (!empty($list)) {
-            $this->assertInternalType('array', $list);
+            $this::assertInternalType('array', $list);
         } else {
-            $this->assertSame([], $list);
+            $this::assertSame([], $list);
         }
     }
 }

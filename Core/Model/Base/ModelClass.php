@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018 Carlos Garcia Gomez <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -262,9 +262,11 @@ abstract class ModelClass extends ModelCore
      */
     public function test(): bool
     {
+        $status = true;
+
         $fields = $this->getModelFields();
         if (empty($fields)) {
-            return false;
+            $status = false;
         }
 
         foreach ($fields as $key => $value) {
@@ -273,11 +275,11 @@ abstract class ModelClass extends ModelCore
             }
             if (null === $value['default'] && $value['is_nullable'] === 'NO' && $this->{$key} === null) {
                 self::$miniLog->alert(self::$i18n->trans('field-can-not-be-null', ['%fieldName%' => $key, '%tableName%' => static::tableName()]));
-                return false;
+                $status = false;
             }
         }
 
-        return true;
+        return $status;
     }
 
     /**
@@ -294,7 +296,7 @@ abstract class ModelClass extends ModelCore
         $model = $this->modelClassName();
         switch ($type) {
             case 'edit':
-                return is_null($value) ? 'Edit' . $model : 'Edit' . $model . '?code=' . $value;
+                return null === $value ? 'Edit' . $model : 'Edit' . $model . '?code=' . $value;
 
             case 'list':
                 return $list . $model;

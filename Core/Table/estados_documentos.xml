@@ -21,6 +21,8 @@
     <column>
         <name>generadoc</name>
         <type>character varying(30)</type>
+        <null>NO</null>
+        <default>''</default>
     </column>
     <column>
         <name>idestado</name>

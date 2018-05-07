@@ -52,7 +52,7 @@ class TranslationTest extends \PHPUnit_Framework_TestCase
         foreach ($this->scanFolder($this->basePath) as $fileName) {
             $fileArray = $this->readJSON($this->basePath . $fileName);
             $msg = 'File ' . $fileName . ' is wrong';
-            $this->assertNotNull($fileArray, $msg);
+            $this::assertNotNull($fileArray, $msg);
         }
     }
 
@@ -82,7 +82,7 @@ class TranslationTest extends \PHPUnit_Framework_TestCase
             $orderedString = json_encode($orderedArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
             $msg = 'File ' . $fileName . ' have no ordered keys.';
-            //$this->assertEquals($fileString, $orderedString, $msg);
+            //$this::assertEquals($fileString, $orderedString, $msg);
         }
     }
 
@@ -99,7 +99,7 @@ class TranslationTest extends \PHPUnit_Framework_TestCase
             $exists = array_key_exists($key, $primaryArray);
             $msg = 'Key \'' . $key . '\' not exists on ' . $this->mainLang . '.';
             // Require remove unneeded translations
-            //$this->assertTrue($exists, $msg);
+            //$this::assertTrue($exists, $msg);
         }
     }
 

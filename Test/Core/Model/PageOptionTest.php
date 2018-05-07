@@ -35,47 +35,47 @@ final class PageOptionTest extends CustomTest
     {
         $model = new PageOption();
 
-        $this->assertInstanceOf(PageOption::class, $model);
-        $this->assertEquals([], $model->columns);
-        $this->assertEquals([], $model->modals);
-        $this->assertEquals([], $model->filters);
-        $this->assertEquals([], $model->rows);
-        $this->assertFalse($model->test());
+        $this::assertInstanceOf(PageOption::class, $model);
+        $this::assertEquals([], $model->columns);
+        $this::assertEquals([], $model->modals);
+        $this::assertEquals([], $model->filters);
+        $this::assertEquals([], $model->rows);
+        $this::assertFalse($model->test());
     }
 
     public function testTable()
     {
         $model = new PageOption();
 
-        $this->assertInternalType('string', $model::tableName());
+        $this::assertInternalType('string', $model::tableName());
     }
 
     public function testPrimaryColumn()
     {
         $model = new PageOption();
 
-        $this->assertInternalType('string', $model::primaryColumn());
+        $this::assertInternalType('string', $model::primaryColumn());
     }
 
     public function testInstall()
     {
         $model = new PageOption();
 
-        $this->assertInternalType('string', $model->install());
+        $this::assertInternalType('string', $model->install());
     }
 
     public function testSave()
     {
         $dataBase = new DataBase();
 
-        $this->assertEquals(true, $dataBase->connect());
+        $this::assertEquals(true, $dataBase->connect());
 
         $model = new PageOption();
         $sql = $model->install();
 
         if ($sql !== '') {
             $result = $dataBase->exec($sql);
-            $this->assertFalse($result);
+            $this::assertFalse($result);
         }
     }
 
@@ -85,9 +85,9 @@ final class PageOptionTest extends CustomTest
         $list = $model->all();
 
         if (!empty($list)) {
-            $this->assertInternalType('array', $list);
+            $this::assertInternalType('array', $list);
         } else {
-            $this->assertSame([], $list);
+            $this::assertSame([], $list);
         }
     }
 }

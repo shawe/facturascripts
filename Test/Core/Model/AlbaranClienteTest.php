@@ -32,80 +32,80 @@ final class AlbaranClienteTest extends CustomTest
     public function testNewAlbaranCliente()
     {
         $model = new AlbaranCliente();
-        $this->assertInstanceOf(AlbaranCliente::class, $model);
-        $this->assertNull($model->apartado);
-        $this->assertNull($model->cifnif);
-        $this->assertNull($model->ciudad);
-        $this->assertNull($model->codagente);
-        $this->assertEquals(AppSettings::get('default', 'codalmacen'), $model->codalmacen);
-        $this->assertEquals(null, $model->codcliente);
-        $this->assertEquals(AppSettings::get('default', 'coddivisa'), $model->coddivisa);
-        $this->assertEquals(null, $model->coddir);
-        $this->assertEquals(null, $model->codejercicio);
-        $this->assertEquals(null, $model->codigo);
-        $this->assertEquals(AppSettings::get('default', 'codpago'), $model->codpago);
-        $this->assertEquals(null, $model->codpostal);
-        $this->assertEquals(AppSettings::get('default', 'codserie'), $model->codserie);
-        $this->assertEquals(null, $model->direccion);
-        $this->assertEquals(null, $model->codtrans);
-        $this->assertEquals(null, $model->codigoenv);
-        $this->assertEquals(null, $model->nombreenv);
-        $this->assertEquals(null, $model->apellidosenv);
-        $this->assertEquals(null, $model->apartadoenv);
-        $this->assertEquals(null, $model->direccionenv);
-        $this->assertEquals(null, $model->codpostalenv);
-        $this->assertEquals(null, $model->ciudadenv);
-        $this->assertEquals(null, $model->provinciaenv);
-        $this->assertEquals(null, $model->codpaisenv);
-        $this->assertEquals(date('d-m-Y'), $model->fecha);
-        $this->assertEquals(null, $model->femail);
-        $this->assertEquals(AppSettings::get('default', 'idempresa'), $model->idempresa);
-        $this->assertEquals(0.0, $model->irpf);
-        $this->assertEquals(0.0, $model->neto);
-        $this->assertEquals(null, $model->nombrecliente);
-        $this->assertEquals(null, $model->numero);
-        $this->assertEquals(null, $model->numero2);
-        $this->assertEquals(null, $model->porcomision);
-        $this->assertEquals(null, $model->provincia);
-        $this->assertEquals(1.0, $model->tasaconv);
-        $this->assertEquals(0.0, $model->total);
-        $this->assertEquals(0.0, $model->totaliva);
-        $this->assertEquals(0.0, $model->totaleuros);
-        $this->assertEquals(0.0, $model->totalirpf);
-        $this->assertEquals(0.0, $model->totalrecargo);
-        $this->assertEquals(null, $model->observaciones);
-        $this->assertFalse($model->test());
+        $this::assertInstanceOf(AlbaranCliente::class, $model);
+        $this::assertNull($model->apartado);
+        $this::assertNull($model->cifnif);
+        $this::assertNull($model->ciudad);
+        $this::assertNull($model->codagente);
+        $this::assertEquals(AppSettings::get('default', 'codalmacen'), $model->codalmacen);
+        $this::assertEquals(null, $model->codcliente);
+        $this::assertEquals(AppSettings::get('default', 'coddivisa'), $model->coddivisa);
+        $this::assertEquals(null, $model->coddir);
+        $this::assertEquals(null, $model->codejercicio);
+        $this::assertEquals(null, $model->codigo);
+        $this::assertEquals(AppSettings::get('default', 'codpago'), $model->codpago);
+        $this::assertEquals(null, $model->codpostal);
+        $this::assertEquals(AppSettings::get('default', 'codserie'), $model->codserie);
+        $this::assertEquals(null, $model->direccion);
+        $this::assertEquals(null, $model->codtrans);
+        $this::assertEquals(null, $model->codigoenv);
+        $this::assertEquals(null, $model->nombreenv);
+        $this::assertEquals(null, $model->apellidosenv);
+        $this::assertEquals(null, $model->apartadoenv);
+        $this::assertEquals(null, $model->direccionenv);
+        $this::assertEquals(null, $model->codpostalenv);
+        $this::assertEquals(null, $model->ciudadenv);
+        $this::assertEquals(null, $model->provinciaenv);
+        $this::assertEquals(null, $model->codpaisenv);
+        $this::assertEquals(date('d-m-Y'), $model->fecha);
+        $this::assertEquals(null, $model->femail);
+        $this::assertEquals(AppSettings::get('default', 'idempresa'), $model->idempresa);
+        $this::assertEquals(0.0, $model->irpf);
+        $this::assertEquals(0.0, $model->neto);
+        $this::assertEquals(null, $model->nombrecliente);
+        $this::assertEquals(null, $model->numero);
+        $this::assertEquals(null, $model->numero2);
+        $this::assertEquals(null, $model->porcomision);
+        $this::assertEquals(null, $model->provincia);
+        $this::assertEquals(1.0, $model->tasaconv);
+        $this::assertEquals(0.0, $model->total);
+        $this::assertEquals(0.0, $model->totaliva);
+        $this::assertEquals(0.0, $model->totaleuros);
+        $this::assertEquals(0.0, $model->totalirpf);
+        $this::assertEquals(0.0, $model->totalrecargo);
+        $this::assertEquals(null, $model->observaciones);
+        $this::assertFalse($model->test());
     }
 
     public function testTable()
     {
         $model = new AlbaranCliente();
-        $this->assertInternalType('string', $model::tableName());
+        $this::assertInternalType('string', $model::tableName());
     }
 
     public function testPrimaryColumn()
     {
         $model = new AlbaranCliente();
-        $this->assertInternalType('string', $model::primaryColumn());
+        $this::assertInternalType('string', $model::primaryColumn());
     }
 
     public function testInstall()
     {
         $model = new AlbaranCliente();
-        $this->assertInternalType('string', $model->install());
+        $this::assertInternalType('string', $model->install());
     }
 
     public function testSave()
     {
         $dataBase = new DataBase();
-        $this->assertEquals(true, $dataBase->connect());
+        $this::assertEquals(true, $dataBase->connect());
 
         $model = new AlbaranCliente();
         $sql = $model->install();
 
         if ($sql !== '') {
             $result = $dataBase->exec($sql);
-            $this->assertFalse($result);
+            $this::assertFalse($result);
         }
     }
 
@@ -115,9 +115,9 @@ final class AlbaranClienteTest extends CustomTest
         $list = $model->all();
 
         if (!empty($list)) {
-            $this->assertInternalType('array', $list);
+            $this::assertInternalType('array', $list);
         } else {
-            $this->assertSame([], $list);
+            $this::assertSame([], $list);
         }
     }
 }

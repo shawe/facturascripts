@@ -19,7 +19,6 @@
  */
 namespace FacturaScripts\Test\Core\Model;
 
-use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Model\Provincia;
 use FacturaScripts\Test\Core\CustomTest;
 
@@ -35,35 +34,35 @@ final class ProvinciaTest extends CustomTest
     {
         $model = new Provincia();
 
-        $this->assertInstanceOf(Provincia::class, $model);
-        $this->assertEquals('', $model->provincia);
-        $this->assertFalse($model->test());
+        $this::assertInstanceOf(Provincia::class, $model);
+        $this::assertEquals('', $model->provincia);
+        $this::assertFalse($model->test());
 
         $model->codpais = 'ESP';
         $model->provincia = 'Test name';
 
-        $this->assertTrue($model->test());
+        $this::assertTrue($model->test());
     }
 
     public function testTable()
     {
         $model = new Provincia();
 
-        $this->assertInternalType('string', $model::tableName());
+        $this::assertInternalType('string', $model::tableName());
     }
 
     public function testPrimaryColumn()
     {
         $model = new Provincia();
 
-        $this->assertInternalType('string', $model::primaryColumn());
+        $this::assertInternalType('string', $model::primaryColumn());
     }
 
     public function testInstall()
     {
         $model = new Provincia();
 
-        $this->assertInternalType('string', $model->install());
+        $this::assertInternalType('string', $model->install());
     }
 
     public function testAll()
@@ -72,9 +71,9 @@ final class ProvinciaTest extends CustomTest
         $list = $model->all();
 
         if (!empty($list)) {
-            $this->assertInternalType('array', $list);
+            $this::assertInternalType('array', $list);
         } else {
-            $this->assertSame([], $list);
+            $this::assertSame([], $list);
         }
     }
 }

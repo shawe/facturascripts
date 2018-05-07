@@ -86,6 +86,13 @@ class Provincia extends Base\ModelClass
     public $provincia;
 
     /**
+     * Date of revision.
+     *
+     * @var string
+     */
+    public $fecha_revision;
+
+    /**
      * Returns the name of the column that is the model's primary key.
      *
      * @return string
@@ -103,6 +110,15 @@ class Provincia extends Base\ModelClass
     public static function tableName(): string
     {
         return 'provincias';
+    }
+
+    /**
+     * Reset the values of all model properties.
+     */
+    public function clear()
+    {
+        parent::clear();
+        $this->fecha_revision = date('d-m-Y');
     }
 
     /**

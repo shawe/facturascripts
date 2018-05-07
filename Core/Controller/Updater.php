@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -63,6 +63,11 @@ class Updater extends Controller
         return $pageData;
     }
 
+    /**
+     * Return the core version.
+     *
+     * @return float
+     */
     public function getVersion()
     {
         return self::CORE_VERSION;
@@ -173,6 +178,7 @@ class Updater extends Controller
             $dir = $baseDir . DIRECTORY_SEPARATOR . $file;
             if (is_dir($dir)) {
                 $directories[] = $dir;
+                /** @noinspection SlowArrayOperationsInLoopInspection */
                 $directories = array_merge($directories, $this->foldersFrom($dir));
             }
         }
@@ -180,6 +186,11 @@ class Updater extends Controller
         return $directories;
     }
 
+    /**
+     * TODO: Undocumented function.
+     *
+     * @return array
+     */
     private function getUpdateItems(): array
     {
         $cacheData = $this->cache->get('UPDATE_ITEMS');
@@ -204,6 +215,12 @@ class Updater extends Controller
         return $items;
     }
 
+    /**
+     * TODO: Undocumented function.
+     *
+     * @param array $items
+     * @param array $projectData
+     */
     private function getUpdateItemsCore(array &$items, array $projectData)
     {
         foreach ($projectData['builds'] as $build) {

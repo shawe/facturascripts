@@ -35,50 +35,50 @@ final class SerieTest extends CustomTest
     {
         $model = new Serie();
 
-        $this->assertInstanceOf(Serie::class, $model);
-        $this->assertFalse($model->siniva);
-        $this->assertFalse($model->test());
+        $this::assertInstanceOf(Serie::class, $model);
+        $this::assertFalse($model->siniva);
+        $this::assertFalse($model->test());
 
         $model->siniva = true;
         $model->codserie = 'A';
         $model->descripcion = 'Test description';
 
-        $this->assertTrue($model->test());
+        $this::assertTrue($model->test());
     }
 
     public function testTable()
     {
         $model = new Serie();
 
-        $this->assertInternalType('string', $model::tableName());
+        $this::assertInternalType('string', $model::tableName());
     }
 
     public function testPrimaryColumn()
     {
         $model = new Serie();
 
-        $this->assertInternalType('string', $model::primaryColumn());
+        $this::assertInternalType('string', $model::primaryColumn());
     }
 
     public function testInstall()
     {
         $model = new Serie();
 
-        $this->assertInternalType('string', $model->install());
+        $this::assertInternalType('string', $model->install());
     }
 
     public function testSave()
     {
         $dataBase = new DataBase();
 
-        $this->assertEquals(true, $dataBase->connect());
+        $this::assertEquals(true, $dataBase->connect());
 
         $model = new Serie();
         $sql = $model->install();
 
         if ($sql !== '') {
             $result = $dataBase->exec($sql);
-            $this->assertFalse($result);
+            $this::assertFalse($result);
         }
     }
 
@@ -88,9 +88,9 @@ final class SerieTest extends CustomTest
         $list = $model->all();
 
         if (!empty($list)) {
-            $this->assertInternalType('array', $list);
+            $this::assertInternalType('array', $list);
         } else {
-            $this->assertSame([], $list);
+            $this::assertSame([], $list);
         }
     }
 }

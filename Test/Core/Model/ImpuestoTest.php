@@ -20,7 +20,6 @@
 
 namespace FacturaScripts\Test\Core\Model;
 
-use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Model\Impuesto;
 use FacturaScripts\Test\Core\CustomTest;
 
@@ -35,36 +34,36 @@ final class ImpuestoTest extends CustomTest
     {
         $model = new Impuesto();
 
-        $this->assertInstanceOf(Impuesto::class, $model);
-        $this->assertEquals('', $model->codimpuesto);
-        $this->assertEquals('', $model->descripcion);
-        $this->assertFalse($model->test());
+        $this::assertInstanceOf(Impuesto::class, $model);
+        $this::assertEquals('', $model->codimpuesto);
+        $this::assertEquals('', $model->descripcion);
+        $this::assertFalse($model->test());
 
         $model->codimpuesto = 'CODI1';
         $model->descripcion = 'Test description';
 
-        $this->assertTrue($model->test());
+        $this::assertTrue($model->test());
     }
 
     public function testTable()
     {
         $model = new Impuesto();
 
-        $this->assertInternalType('string', $model::tableName());
+        $this::assertInternalType('string', $model::tableName());
     }
 
     public function testPrimaryColumn()
     {
         $model = new Impuesto();
 
-        $this->assertInternalType('string', $model::primaryColumn());
+        $this::assertInternalType('string', $model::primaryColumn());
     }
 
     public function testInstall()
     {
         $model = new Impuesto();
 
-        $this->assertInternalType('string', $model->install());
+        $this::assertInternalType('string', $model->install());
     }
 
     public function testAll()
@@ -73,9 +72,9 @@ final class ImpuestoTest extends CustomTest
         $list = $model->all();
 
         if (!empty($list)) {
-            $this->assertInternalType('array', $list);
+            $this::assertInternalType('array', $list);
         } else {
-            $this->assertSame([], $list);
+            $this::assertSame([], $list);
         }
     }
 }

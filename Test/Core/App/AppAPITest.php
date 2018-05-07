@@ -43,7 +43,7 @@ class AppAPITest extends \PHPUnit_Framework_TestCase
 
     public function testConnect()
     {
-        $this->assertTrue($this->object->connect());
+        $this::assertTrue($this->object->connect());
     }
 
     /**
@@ -52,6 +52,6 @@ class AppAPITest extends \PHPUnit_Framework_TestCase
     public function testRun()
     {
         $mustRun = ('true' == AppSettings::get('default', 'enable_api', false));
-        $this->assertEquals($this->object->run(), $mustRun);
+        $this::assertEquals($this->object->run(), $mustRun);
     }
 }

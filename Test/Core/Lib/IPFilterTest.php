@@ -51,7 +51,7 @@ class IPFilterTest extends \PHPUnit_Framework_TestCase
 
         /// leemos directamente del archivo para ver si hay algo
         $data = file_get_contents(FS_FOLDER . '/MyFiles/Cache/ip.list');
-        $this->assertNotEmpty($data);
+        $this::assertNotEmpty($data);
     }
 
     /**
@@ -67,6 +67,6 @@ class IPFilterTest extends \PHPUnit_Framework_TestCase
         $this->object->setAttempt('192.168.1.1');
         $this->object->setAttempt('192.168.1.1');
 
-        $this->assertTrue($this->object->isBanned('192.168.1.1'));
+        $this::assertTrue($this->object->isBanned('192.168.1.1'));
     }
 }

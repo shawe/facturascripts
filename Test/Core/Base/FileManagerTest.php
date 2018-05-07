@@ -38,7 +38,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetFrom()
     {
-        $this->assertNotEmpty($this->object->getFrom(\FS_FOLDER));
+        $this::assertNotEmpty($this->object->getFrom(\FS_FOLDER));
     }
 
     /**
@@ -46,7 +46,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetFilesFrom()
     {
-        $this->assertNotEmpty($this->object->getFrom(\FS_FOLDER . '/MyFiles'));
+        $this::assertNotEmpty($this->object->getFrom(\FS_FOLDER . '/MyFiles'));
     }
 
     /**
@@ -54,7 +54,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAllFrom()
     {
-        $this->assertNotEmpty($this->object->getFrom(\FS_FOLDER . '/MyFiles'));
+        $this::assertNotEmpty($this->object->getFrom(\FS_FOLDER . '/MyFiles'));
     }
 
     /**
@@ -62,7 +62,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreateFolder()
     {
-        $this->assertTrue($this->object->createFolder(\FS_FOLDER . '/MyFiles/Test1/Test2/Test3'), 'Recursive folder creation fails.');
+        $this::assertTrue($this->object->createFolder(\FS_FOLDER . '/MyFiles/Test1/Test2/Test3'), 'Recursive folder creation fails.');
     }
 
     /**
@@ -70,7 +70,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeleteDirectory()
     {
-        $this->assertTrue($this->object->deleteDirectory(\FS_FOLDER . '/MyFiles/Test1'), 'Recursive delete dir fails.');
+        $this::assertTrue($this->object->deleteDirectory(\FS_FOLDER . '/MyFiles/Test1'), 'Recursive delete dir fails.');
     }
 
     /**

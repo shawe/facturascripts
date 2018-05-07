@@ -35,52 +35,52 @@ final class LineaPedidoProveedorTest extends CustomTest
     {
         $model = new LineaPedidoProveedor();
 
-        $this->assertInstanceOf(LineaPedidoProveedor::class, $model);
-        $this->assertEquals(0.0, $model->cantidad);
-        $this->assertEquals('', $model->descripcion);
-        $this->assertEquals(0.0, $model->dtopor);
-        $this->assertEquals(0.0, $model->irpf);
-        $this->assertEquals(0.0, $model->iva);
-        $this->assertEquals(0.0, $model->pvpsindto);
-        $this->assertEquals(0.0, $model->pvptotal);
-        $this->assertEquals(0.0, $model->pvpunitario);
-        $this->assertEquals(0.0, $model->recargo);
-        $this->assertFalse($model->test());
+        $this::assertInstanceOf(LineaPedidoProveedor::class, $model);
+        $this::assertEquals(0.0, $model->cantidad);
+        $this::assertEquals('', $model->descripcion);
+        $this::assertEquals(0.0, $model->dtopor);
+        $this::assertEquals(0.0, $model->irpf);
+        $this::assertEquals(0.0, $model->iva);
+        $this::assertEquals(0.0, $model->pvpsindto);
+        $this::assertEquals(0.0, $model->pvptotal);
+        $this::assertEquals(0.0, $model->pvpunitario);
+        $this::assertEquals(0.0, $model->recargo);
+        $this::assertFalse($model->test());
     }
 
     public function testTable()
     {
         $model = new LineaPedidoProveedor();
 
-        $this->assertInternalType('string', $model::tableName());
+        $this::assertInternalType('string', $model::tableName());
     }
 
     public function testPrimaryColumn()
     {
         $model = new LineaPedidoProveedor();
 
-        $this->assertInternalType('string', $model::primaryColumn());
+        $this::assertInternalType('string', $model::primaryColumn());
     }
 
     public function testInstall()
     {
         $model = new LineaPedidoProveedor();
 
-        $this->assertInternalType('string', $model->install());
+        $this::assertInternalType('string', $model->install());
     }
 
     public function testSave()
     {
         $dataBase = new DataBase();
 
-        $this->assertEquals(true, $dataBase->connect());
+        $this::assertEquals(true, $dataBase->connect());
 
         $model = new LineaPedidoProveedor();
         $sql = $model->install();
 
         if ($sql !== '') {
             $result = $dataBase->exec($sql);
-            $this->assertFalse($result);
+            $this::assertFalse($result);
         }
     }
 
@@ -90,9 +90,9 @@ final class LineaPedidoProveedorTest extends CustomTest
         $list = $model->all();
 
         if (!empty($list)) {
-            $this->assertInternalType('array', $list);
+            $this::assertInternalType('array', $list);
         } else {
-            $this->assertSame([], $list);
+            $this::assertSame([], $list);
         }
     }
 }

@@ -35,17 +35,17 @@ final class EstadoDocumentoTest extends CustomTest
     {
         $model = new EstadoDocumento();
 
-        $this->assertInstanceOf(EstadoDocumento::class, $model);
-        $this->assertEquals(0, $model->actualizastock);
-        $this->assertFalse($model->bloquear);
-        $this->assertTrue($model->editable);
-        $this->assertFalse($model->predeterminado);
-        $this->assertFalse($model->test());
+        $this::assertInstanceOf(EstadoDocumento::class, $model);
+        $this::assertEquals(0, $model->actualizastock);
+        $this::assertFalse($model->bloquear);
+        $this::assertTrue($model->editable);
+        $this::assertFalse($model->predeterminado);
+        $this::assertFalse($model->test());
 
         $model->nombre = 'Test name';
         $model->tipodoc = 'PedidoProveedor';
 
-        $this->assertTrue($model->test());
+        $this::assertTrue($model->test());
     }
 
     public function testBloquear()
@@ -54,44 +54,44 @@ final class EstadoDocumentoTest extends CustomTest
         $model->nombre = '1234';
         $model->bloquear = true;
 
-        $this->assertTrue($model->test());
-        $this->assertFalse($model->save());
-        $this->assertFalse($model->delete());
+        $this::assertTrue($model->test());
+        $this::assertFalse($model->save());
+        $this::assertFalse($model->delete());
     }
 
     public function testTable()
     {
         $model = new EstadoDocumento();
 
-        $this->assertInternalType('string', $model::tableName());
+        $this::assertInternalType('string', $model::tableName());
     }
 
     public function testPrimaryColumn()
     {
         $model = new EstadoDocumento();
 
-        $this->assertInternalType('string', $model::primaryColumn());
+        $this::assertInternalType('string', $model::primaryColumn());
     }
 
     public function testInstall()
     {
         $model = new EstadoDocumento();
 
-        $this->assertInternalType('string', $model->install());
+        $this::assertInternalType('string', $model->install());
     }
 
     public function testSave()
     {
         $dataBase = new DataBase();
 
-        $this->assertEquals(true, $dataBase->connect());
+        $this::assertEquals(true, $dataBase->connect());
 
         $model = new EstadoDocumento();
         $sql = $model->install();
 
         if ($sql !== '') {
             $result = $dataBase->exec($sql);
-            $this->assertFalse($result);
+            $this::assertFalse($result);
         }
     }
 
@@ -101,9 +101,9 @@ final class EstadoDocumentoTest extends CustomTest
         $list = $model->all();
 
         if (!empty($list)) {
-            $this->assertInternalType('array', $list);
+            $this::assertInternalType('array', $list);
         } else {
-            $this->assertSame([], $list);
+            $this::assertSame([], $list);
         }
     }
 }

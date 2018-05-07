@@ -32,78 +32,78 @@ final class AgenteTest extends CustomTest
     {
         $model = new Agente();
 
-        $this->assertInstanceOf(
+        $this::assertInstanceOf(
             Agente::class,
             $model
         );
 
-        $this->assertNull(
+        $this::assertNull(
             $model->codagente
         );
 
-        $this->assertEquals(
+        $this::assertEquals(
             '',
             $model->nombre
         );
 
-        $this->assertEquals(
+        $this::assertEquals(
             '',
             $model->apellidos
         );
 
-        $this->assertEquals(
+        $this::assertEquals(
             '',
             $model->cifnif
         );
 
-        $this->assertEquals(
+        $this::assertEquals(
             0.00,
             $model->porcomision
         );
 
-        $this->assertEquals(
+        $this::assertEquals(
             null,
             $model->seg_social
         );
 
-        $this->assertEquals(
+        $this::assertEquals(
             null,
             $model->banco
         );
 
-        $this->assertEquals(
+        $this::assertEquals(
             null,
             $model->cargo
         );
 
-        $this->assertEquals(
+        $this::assertEquals(
             date('d-m-Y'),
             $model->fechaalta
         );
 
-        $this->assertEquals(
+        $this::assertEquals(
             null,
             $model->fechabaja
         );
 
-        $this->assertEquals(
+        $this::assertEquals(
             null,
             $model->fechanacimiento
         );
 
-        $this->assertInternalType(
+        $this::assertInternalType(
             'string',
             $model->primaryDescription()
         );
 
-        $this->assertFalse($model->test());
+        $this::assertFalse($model->test());
     }
 
     public function testTable()
     {
         $model = new Agente();
 
-        $this->assertInternalType(
+        $this::assertInternalType(
             'string',
             $model::tableName()
         );
@@ -113,7 +113,7 @@ final class AgenteTest extends CustomTest
     {
         $model = new Agente();
 
-        $this->assertInternalType(
+        $this::assertInternalType(
             'string',
             $model::primaryColumn()
         );
@@ -123,7 +123,7 @@ final class AgenteTest extends CustomTest
     {
         $model = new Agente();
 
-        $this->assertInternalType(
+        $this::assertInternalType(
             'string',
             $model->install()
         );
@@ -133,14 +133,14 @@ final class AgenteTest extends CustomTest
     {
         $dataBase = new DataBase();
 
-        $this->assertEquals(true, $dataBase->connect());
+        $this::assertEquals(true, $dataBase->connect());
 
         $model = new Agente();
         $sql = $model->install();
 
         if ($sql !== '') {
             $result = $dataBase->exec($sql);
-            $this->assertFalse($result);
+            $this::assertFalse($result);
         }
     }
 
@@ -150,9 +150,9 @@ final class AgenteTest extends CustomTest
         $list = $model->all();
 
         if (!empty($list)) {
-            $this->assertInternalType('array', $list);
+            $this::assertInternalType('array', $list);
         } else {
-            $this->assertSame([], $list);
+            $this::assertSame([], $list);
         }
     }
 }

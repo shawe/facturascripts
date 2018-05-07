@@ -75,6 +75,7 @@ class AttachedFile extends Base\ModelClass
     public $path;
 
     /**
+     * Contains the preious relative path to file.
      *
      * @var string
      */
@@ -125,6 +126,12 @@ class AttachedFile extends Base\ModelClass
     }
 
     /**
+     * Fill the class with the registry values
+     * whose primary column corresponds to the value $cod, or according to the condition
+     * where indicated, if value is not reported in $cod.
+     * Initializes the values of the class if there is no record that
+     * meet the above conditions.
+     * Returns True if the record exists and False otherwise.
      *
      * @param string $cod
      * @param array  $where

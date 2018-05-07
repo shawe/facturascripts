@@ -35,14 +35,14 @@ final class StockTest extends CustomTest
     {
         $model = new Stock();
 
-        $this->assertInstanceOf(Stock::class, $model);
-        $this->assertEquals(0, $model->cantidad);
-        $this->assertEquals(0, $model->reservada);
-        $this->assertEquals(0, $model->disponible);
-        $this->assertEquals(0, $model->pterecibir);
-        $this->assertEquals(0, $model->stockmin);
-        $this->assertEquals(0, $model->stockmax);
-        $this->assertFalse($model->test());
+        $this::assertInstanceOf(Stock::class, $model);
+        $this::assertEquals(0, $model->cantidad);
+        $this::assertEquals(0, $model->reservada);
+        $this::assertEquals(0, $model->disponible);
+        $this::assertEquals(0, $model->pterecibir);
+        $this::assertEquals(0, $model->stockmin);
+        $this::assertEquals(0, $model->stockmax);
+        $this::assertFalse($model->test());
 
         $model->cantidad = 2;
         $model->codalmacen = 'ALG';
@@ -52,42 +52,42 @@ final class StockTest extends CustomTest
         $model->stockmin = 1;
         $model->stockmax = 5;
 
-        $this->assertTrue($model->test());
+        $this::assertTrue($model->test());
     }
 
     public function testTable()
     {
         $model = new Stock();
 
-        $this->assertInternalType('string', $model::tableName());
+        $this::assertInternalType('string', $model::tableName());
     }
 
     public function testPrimaryColumn()
     {
         $model = new Stock();
 
-        $this->assertInternalType('string', $model::primaryColumn());
+        $this::assertInternalType('string', $model::primaryColumn());
     }
 
     public function testInstall()
     {
         $model = new Stock();
 
-        $this->assertInternalType('string', $model->install());
+        $this::assertInternalType('string', $model->install());
     }
 
     public function testSave()
     {
         $dataBase = new DataBase();
 
-        $this->assertEquals(true, $dataBase->connect());
+        $this::assertEquals(true, $dataBase->connect());
 
         $model = new Stock();
         $sql = $model->install();
 
         if ($sql !== '') {
             $result = $dataBase->exec($sql);
-            $this->assertFalse($result);
+            $this::assertFalse($result);
         }
     }
 
@@ -97,9 +97,9 @@ final class StockTest extends CustomTest
         $list = $model->all();
 
         if (!empty($list)) {
-            $this->assertInternalType('array', $list);
+            $this::assertInternalType('array', $list);
         } else {
-            $this->assertSame([], $list);
+            $this::assertSame([], $list);
         }
     }
 }

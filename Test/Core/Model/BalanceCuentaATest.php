@@ -35,52 +35,52 @@ final class BalanceCuentaATest extends CustomTest
     {
         $model = new BalanceCuentaA();
 
-        $this->assertInstanceOf(BalanceCuentaA::class, $model);
-        $this->assertNull($model->codbalance);
-        $this->assertNull($model->codcuenta);
-        $this->assertNull($model->desccuenta);
-        $this->assertFalse($model->test());
+        $this::assertInstanceOf(BalanceCuentaA::class, $model);
+        $this::assertNull($model->codbalance);
+        $this::assertNull($model->codcuenta);
+        $this::assertNull($model->desccuenta);
+        $this::assertFalse($model->test());
 
         $model->codbalance = 'CODB1';
         $model->codcuenta = 'CODC1';
         $model->desccuenta = 'DESC1';
 
-        $this->assertTrue($model->test());
+        $this::assertTrue($model->test());
     }
 
     public function testTable()
     {
         $model = new BalanceCuentaA();
 
-        $this->assertInternalType('string', $model::tableName());
+        $this::assertInternalType('string', $model::tableName());
     }
 
     public function testPrimaryColumn()
     {
         $model = new BalanceCuentaA();
 
-        $this->assertInternalType('string', $model::primaryColumn());
+        $this::assertInternalType('string', $model::primaryColumn());
     }
 
     public function testInstall()
     {
         $model = new BalanceCuentaA();
 
-        $this->assertInternalType('string', $model->install());
+        $this::assertInternalType('string', $model->install());
     }
 
     public function testSave()
     {
         $dataBase = new DataBase();
 
-        $this->assertEquals(true, $dataBase->connect());
+        $this::assertEquals(true, $dataBase->connect());
 
         $model = new BalanceCuentaA();
         $sql = $model->install();
 
         if ($sql !== '') {
             $result = $dataBase->exec($sql);
-            $this->assertFalse($result);
+            $this::assertFalse($result);
         }
     }
 
@@ -90,9 +90,9 @@ final class BalanceCuentaATest extends CustomTest
         $list = $model->all();
 
         if (!empty($list)) {
-            $this->assertInternalType('array', $list);
+            $this::assertInternalType('array', $list);
         } else {
-            $this->assertSame([], $list);
+            $this::assertSame([], $list);
         }
     }
 }
