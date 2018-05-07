@@ -16,6 +16,7 @@ config-mysql.php
 config-postgresql.php
 generateDoc.sh
 package-lock.json
+MINILOG.json
 *.cache
 *.lock
 
