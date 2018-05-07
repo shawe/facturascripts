@@ -195,7 +195,7 @@ class EditPageOption extends Base\Controller
     private function getParams()
     {
         $this->selectedViewName = $this->request->get('code', '');
-        $this->backPage = $this->request->get('url') ? : $this->selectedViewName;
+        $this->backPage = $this->request->get('url') ?? $this->selectedViewName;
 
         $this->selectedUser = $this->user->admin ? $this->request->get('nick', '') : $this->user->nick;
     }
