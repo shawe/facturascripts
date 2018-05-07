@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos Garcia Gomez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -229,7 +229,6 @@ abstract class ModelCore
 
         if (!$dbTools->getXmlTable(static::tableName(), $xmlCols, $xmlCons)) {
             self::$miniLog->critical(self::$i18n->trans('error-on-xml-file'));
-
             return false;
         }
 
@@ -244,7 +243,6 @@ abstract class ModelCore
         if ($sql !== '' && !self::$dataBase->exec($sql)) {
             self::$miniLog->critical(self::$i18n->trans('check-table', ['%tableName%' => static::tableName()]));
             self::$cache->clear();
-
             return false;
         }
 

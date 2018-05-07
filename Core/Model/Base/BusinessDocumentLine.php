@@ -268,6 +268,10 @@ abstract class BusinessDocumentLine extends ModelClass
     public function url(string $type = 'auto', string $list = 'List'): string
     {
         $name = \str_replace('Linea', '', $this->modelClassName());
+        if ($type === 'new') {
+            return 'Edit' . $name;
+        }
+
         return parent::url($type, 'List' . $name . '?active=List');
     }
 

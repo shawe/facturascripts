@@ -33,13 +33,6 @@ class BalanceCuentaA extends Base\ModelClass
     use Base\ModelTrait;
 
     /**
-     * Primary key.
-     *
-     * @var int
-     */
-    public $id;
-
-    /**
      * Balance code.
      *
      * @var string
@@ -61,13 +54,40 @@ class BalanceCuentaA extends Base\ModelClass
     public $desccuenta;
 
     /**
-     * Returns the name of the table that uses this model.
+     * Primary key.
      *
-     * @return string
+     * @var int
      */
-    public static function tableName(): string
+    public $id;
+
+    /**
+     * Obtain all balances from the account by your balance code.
+     *
+     * @param string $cod
+     *
+     * @return self[]
+     */
+    public function allFromCodbalance($cod): array
     {
-        return 'balancescuentasabreviadas';
+        $balist = [];
+        $sql = 'SELECT * FROM ' . static::tableName()
+            . ' WHERE codbalance = ' . self::$dataBase->var2str($cod) . ' ORDER BY codcuenta ASC;';
+
+        $data = self::$dataBase->select($sql);
+        if (!empty($data)) {
+            foreach ($data as $b) {
+                $balist[] = new self($b);
+            }
+        }
+
+        return $balist;
+    }
+
+    public function install(): string
+    {
+        new Balance();
+
+        return parent::install();
     }
 
     /**
@@ -130,29 +150,6 @@ class BalanceCuentaA extends Base\ModelClass
     }
 
     /**
-     * Obtain all balances from the account by your balance code.
-     *
-     * @param string $cod
-     *
-     * @return self[]
-     */
-    public function allFromCodbalance($cod): array
-    {
-        $balist = [];
-        $sql = 'SELECT * FROM ' . static::tableName()
-            . ' WHERE codbalance = ' . self::$dataBase->var2str($cod) . ' ORDER BY codcuenta ASC;';
-
-        $data = self::$dataBase->select($sql);
-        if (!empty($data)) {
-            foreach ($data as $b) {
-                $balist[] = new self($b);
-            }
-        }
-
-        return $balist;
-    }
-
-    /**
      * Search all balances of the account by its balance code.
      *
      * @param string $cod
@@ -173,5 +170,15 @@ class BalanceCuentaA extends Base\ModelClass
         }
 
         return $balist;
+    }
+
+    /**
+     * Returns the name of the table that uses this model.
+     *
+     * @return string
+     */
+    public static function tableName(): string
+    {
+        return 'balancescuentasabreviadas';
     }
 }

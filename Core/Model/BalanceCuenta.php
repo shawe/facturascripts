@@ -31,13 +31,6 @@ class BalanceCuenta extends Base\ModelClass
     use Base\ModelTrait;
 
     /**
-     * Primary key.
-     *
-     * @var int
-     */
-    public $id;
-
-    /**
      * Balance code.
      *
      * @var string
@@ -59,13 +52,17 @@ class BalanceCuenta extends Base\ModelClass
     public $desccuenta;
 
     /**
-     * Returns the name of the table that uses this model.
+     * Primary key.
      *
-     * @return string
+     * @var int
      */
-    public static function tableName(): string
+    public $id;
+
+    public function install(): string
     {
-        return 'balancescuentas';
+        new Balance();
+
+        return parent::install();
     }
 
     /**
@@ -76,5 +73,15 @@ class BalanceCuenta extends Base\ModelClass
     public static function primaryColumn(): string
     {
         return 'id';
+    }
+
+    /**
+     * Returns the name of the table that uses this model.
+     *
+     * @return string
+     */
+    public static function tableName(): string
+    {
+        return 'balancescuentas';
     }
 }

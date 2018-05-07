@@ -34,27 +34,6 @@ class RoleAccess extends Base\ModelClass
     use Base\ModelTrait;
 
     /**
-     * Identifier.
-     *
-     * @var int
-     */
-    public $id;
-
-    /**
-     * Role code.
-     *
-     * @var string
-     */
-    public $codrole;
-
-    /**
-     * Name of the page.
-     *
-     * @var string
-     */
-    public $pagename;
-
-    /**
      * Permission to delete.
      *
      * @var bool
@@ -69,24 +48,24 @@ class RoleAccess extends Base\ModelClass
     public $allowupdate;
 
     /**
-     * Returns the name of the table that uses this model.
+     * Role code.
      *
-     * @return string
+     * @var string
      */
-    public static function tableName(): string
-    {
-        return 'roles_access';
-    }
+    public $codrole;
 
     /**
-     * Returns the name of the column that is the model's primary key.
+     * Identifier.
      *
-     * @return string
+     * @var int
      */
-    public static function primaryColumn(): string
-    {
-        return 'id';
-    }
+    public $id;
+    /**
+     * Name of the page.
+     *
+     * @var string
+     */
+    public $pagename;
 
     /**
      * Add the indicated page list to the Role group
@@ -117,5 +96,33 @@ class RoleAccess extends Base\ModelClass
         }
 
         return true;
+    }
+
+    public function install(): string
+    {
+        new Role();
+        new User();
+
+        return parent::install();
+    }
+
+    /**
+     * Returns the name of the column that is the model's primary key.
+     *
+     * @return string
+     */
+    public static function primaryColumn(): string
+    {
+        return 'id';
+    }
+
+    /**
+     * Returns the name of the table that uses this model.
+     *
+     * @return string
+     */
+    public static function tableName(): string
+    {
+        return 'roles_access';
     }
 }

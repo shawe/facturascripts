@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2018 Carlos García Gómez <carlos@facturascripts.com>
+ * Copyright (C) 2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -36,7 +36,9 @@ use ZipArchive;
 class Updater extends Controller
 {
 
-    const UPDATE_CORE_URL = 'https://s3.eu-west-2.amazonaws.com/facturascripts/2018.zip';
+    const CORE_PROJECT_ID = 1;
+    const CORE_VERSION = 2018.001;
+    const UPDATE_CORE_URL = 'https://beta.facturascripts.com/DownloadBuild';
 
     /**
      * Items to be checked in updater.
@@ -61,6 +63,11 @@ class Updater extends Controller
         return $pageData;
     }
 
+    public function getVersion()
+    {
+        return self::CORE_VERSION;
+    }
+
     /**
      * Runs the controller's private logic.
      *
@@ -82,11 +89,7 @@ class Updater extends Controller
             return;
         }
 
-        $this->updaterItems[] = [
-            'id' => 'CORE',
-            'description' => 'Core component',
-            'downloaded' => file_exists(FS_FOLDER . DIRECTORY_SEPARATOR . 'update-core.zip')
-        ];
+        $this->updaterItems = $this->getUpdateItems();
 
         $action = $this->request->get('action', '');
         $this->execAction($action);
@@ -114,14 +117,22 @@ class Updater extends Controller
      */
     private function download()
     {
-        if (file_exists(FS_FOLDER . DIRECTORY_SEPARATOR . 'update-core.zip')) {
-            unlink(FS_FOLDER . DIRECTORY_SEPARATOR . 'update-core.zip');
-        }
+        $idItem = $this->request->get('item', '');
+        foreach ($this->updaterItems as $key => $item) {
+            if($item['id'] != $idItem) {
+                continue;
+            }
 
-        $downloader = new DownloadTools();
-        if ($downloader->download(self::UPDATE_CORE_URL, FS_FOLDER . DIRECTORY_SEPARATOR . 'update-core.zip')) {
-            $this->miniLog->info('download-completed');
-            $this->updaterItems[0]['downloaded'] = true;
+            if (file_exists(FS_FOLDER . DIRECTORY_SEPARATOR . $item['filename'])) {
+                unlink(FS_FOLDER . DIRECTORY_SEPARATOR . $item['filename']);
+            }
+
+            $downloader = new DownloadTools();
+            if ($downloader->download($item['url'], FS_FOLDER . DIRECTORY_SEPARATOR . $item['filename'])) {
+                $this->miniLog->info('download-completed');
+                $this->updaterItems[$key]['downloaded'] = true;
+                $this->cache->clear();
+            }
         }
     }
 
@@ -167,6 +178,46 @@ class Updater extends Controller
         }
 
         return $directories;
+    }
+
+    private function getUpdateItems(): array
+    {
+        $cacheData = $this->cache->get('UPDATE_ITEMS');
+        if (is_array($cacheData)) {
+            return $cacheData;
+        }
+
+        $downloader = new DownloadTools();
+        $json = json_decode($downloader->getContents(self::UPDATE_CORE_URL), true);
+        if (empty($json)) {
+            return [];
+        }
+
+        $items = [];
+        foreach ($json as $projectData) {
+            if ($projectData['project'] === self::CORE_PROJECT_ID) {
+                $this->getUpdateItemsCore($items, $projectData);
+            }
+        }
+
+        $this->cache->set('UPDATE_ITEMS', $items);
+        return $items;
+    }
+
+    private function getUpdateItemsCore(array &$items, array $projectData)
+    {
+        foreach ($projectData['builds'] as $build) {
+            if ($build['stable'] && $build['version'] > self::CORE_VERSION) {
+                $items[] = [
+                    'id' => 'CORE',
+                    'description' => 'Core component v' . $build['version'],
+                    'downloaded' => file_exists(FS_FOLDER . DIRECTORY_SEPARATOR . 'update-core.zip'),
+                    'filename' => 'update-core.zip',
+                    'url' => self::UPDATE_CORE_URL . '/' . $projectData['project'] . '/' . $build['version']
+                ];
+                break;
+            }
+        }
     }
 
     /**

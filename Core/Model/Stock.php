@@ -228,6 +228,10 @@ class Stock extends Base\ModelClass
      */
     public function url(string $type = 'auto', string $list = 'List'): string
     {
+        if ($type === 'new') {
+            return 'EditArticulo';
+        }
+
         return parent::url($type, 'ListArticulo?active=List');
     }
 }

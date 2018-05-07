@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2015-2017 Carlos García Gómez <carlos@facturascripts.com>
+ * Copyright (C) 2015-2018 Carlos Garcia Gomez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace FacturaScripts\Core\Base;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseEngine;
@@ -32,6 +31,7 @@ use FacturaScripts\Core\Base\DataBase\Postgresql;
  */
 class DataBase
 {
+
     /**
      * The link with de database.
      *
@@ -116,7 +116,7 @@ class DataBase
      */
     public function getTables(): array
     {
-        if (count(self::$tables) === 0) {
+        if (empty(self::$tables)) {
             self::$tables = self::$engine->listTables(self::$link);
         }
 
@@ -161,7 +161,6 @@ class DataBase
         }
 
         $data = $this->select($sql);
-
         return $data ? array_values($data) : [];
     }
 
@@ -333,7 +332,6 @@ class DataBase
         $result = self::$engine->select(self::$link, $sql);
         if (empty($result)) {
             self::$miniLog->critical(self::$engine->errorMessage(self::$link));
-
             return [];
         }
 
@@ -385,7 +383,6 @@ class DataBase
     public function lastval()
     {
         $aux = $this->select(self::$engine->getSQL()->sqlLastValue());
-
         return $aux ? $aux[0]['num'] : false;
     }
 
@@ -396,11 +393,7 @@ class DataBase
      */
     public function version(): string
     {
-        if (!$this->connected()) {
-            return '';
-        }
-
-        return self::$engine->version(self::$link);
+        return $this->connected() ? self::$engine->version(self::$link) : '';
     }
 
     /**
@@ -451,12 +444,8 @@ class DataBase
             return 'NULL';
         }
 
-        if (\is_bool($val)) {
-            if ($val) {
-                return 'TRUE';
-            }
-
-            return 'FALSE';
+        if (is_bool($val)) {
+            return $val ? 'TRUE' : 'FALSE';
         }
 
         /// If its a date
