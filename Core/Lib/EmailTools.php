@@ -62,7 +62,7 @@ class EmailTools
      */
     public function getHtml($companyName, $title, $txt, $sign)
     {
-        $html = file_get_contents(FS_FOLDER . '/Dinamic/Assets/Email/BasicTemplate.html.twig');
+        $html = file_get_contents(\FS_FOLDER . \DIRECTORY_SEPARATOR . 'Dinamic' . \DIRECTORY_SEPARATOR . 'Assets' . \DIRECTORY_SEPARATOR . 'Email' . \DIRECTORY_SEPARATOR . 'BasicTemplate.html.twig');
         $search = [
             '[[titulo]]',
             '[[empresa]]',

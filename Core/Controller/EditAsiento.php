@@ -158,7 +158,7 @@ class EditAsiento extends ExtendedController\PanelController
      */
     private function calculateAmounts(array &$data, float $credit, float $debit)
     {
-        $unbalance = round($credit - $debit, FS_NF0);
+        $unbalance = round($credit - $debit, \FS_NF0);
         $index = count($data['lines']) - 1;
         $line = &$data['lines'][$index];
 
@@ -174,7 +174,7 @@ class EditAsiento extends ExtendedController\PanelController
             }
         }
         $data['unbalance'] = $unbalance;
-        $data['total'] = ($credit > $debit) ? round($credit, FS_NF0) : round($debit, FS_NF0);
+        $data['total'] = ($credit > $debit) ? round($credit, \FS_NF0) : round($debit, \FS_NF0);
     }
 
     /**

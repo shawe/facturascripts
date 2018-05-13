@@ -50,8 +50,8 @@ class NumberTools
      *
      * @return string
      */
-    public static function format($number, $decimals = FS_NF0): string
+    public static function format($number, $decimals = \FS_NF0): string
     {
-        return number_format((float) $number, (int) $decimals, FS_NF1, FS_NF2);
+        return number_format((float) $number, (int) $decimals, \FS_NF1, \FS_NF2);
     }
 }

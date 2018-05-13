@@ -111,7 +111,7 @@ class EditView extends BaseView implements DataViewInterface
      * @param int                $offset
      * @param int                $limit
      */
-    public function loadData($code = '', array $where = [], array $order = [], $offset = 0, $limit = FS_ITEM_LIMIT)
+    public function loadData($code = '', array $where = [], array $order = [], $offset = 0, $limit = \FS_ITEM_LIMIT)
     {
         if ($this->newCode !== null) {
             $code = $this->newCode;

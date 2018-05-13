@@ -60,8 +60,8 @@ class EditFabricante extends ExtendedController\PanelController
     /**
      * Load data view procedure
      *
-     * @param string                                                  $viewName
-     * @param ExtendedController\BaseView|ExtendedController\EditView $view
+     * @param string                      $viewName
+     * @param ExtendedController\EditView $view
      */
     protected function loadData($viewName, $view)
     {

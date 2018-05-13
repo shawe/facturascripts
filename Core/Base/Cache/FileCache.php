@@ -65,7 +65,7 @@ class FileCache implements AdaptorInterface
     public function __construct()
     {
         self::$config = [
-            'cache_path' => FS_FOLDER . '/MyFiles/Cache/FileCache',
+            'cache_path' => \FS_FOLDER . \DIRECTORY_SEPARATOR . 'MyFiles' . \DIRECTORY_SEPARATOR . 'Cache' . \DIRECTORY_SEPARATOR . 'FileCache',
             'expires' => 180,
         ];
 
@@ -89,7 +89,7 @@ class FileCache implements AdaptorInterface
      */
     private function getRoute($key): string
     {
-        return self::$config['cache_path'] . '/' . md5($key) . '.php';
+        return self::$config['cache_path'] . \DIRECTORY_SEPARATOR . md5($key) . '.php';
     }
 
     /**
@@ -137,7 +137,9 @@ class FileCache implements AdaptorInterface
         if ($ret !== false) {
             return @rename($tempFileName, $destFileName);
         }
-        @unlink($tempFileName);
+        if (\file_exists($tempFileName)) {
+            unlink($tempFileName);
+        }
 
         return false;
     }
@@ -170,7 +172,7 @@ class FileCache implements AdaptorInterface
         $this->minilog->debug($this->i18n->trans('filecache-clear'));
         foreach (scandir(self::$config['cache_path'], \SCANDIR_SORT_ASCENDING) as $fileName) {
             if (substr($fileName, -4) === '.php') {
-                unlink(self::$config['cache_path'] . '/' . $fileName);
+                unlink(self::$config['cache_path'] . \DIRECTORY_SEPARATOR . $fileName);
             }
         }
 

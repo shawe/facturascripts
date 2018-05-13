@@ -45,7 +45,7 @@ class Cache
         if (self::$engine === null) {
             if (\extension_loaded('apc') && ini_get('apc.enabled') && ini_get('apc.enable_cli')) {
                 self::$engine = new APCAdapter();
-            } elseif (FS_CACHE_HOST !== '' && \class_exists('Memcache')) {
+            } elseif (\FS_CACHE_HOST !== '' && \class_exists('Memcache')) {
                 self::$engine = new MemcacheAdapter();
                 if (!self::$engine->isConnected()) {
                     self::$engine = null;

@@ -69,7 +69,7 @@ class DataBase
             self::$miniLog = new MiniLog();
             self::$tables = [];
 
-            switch (strtolower(FS_DB_TYPE)) {
+            switch (strtolower(\FS_DB_TYPE)) {
                 case 'mysql':
                     self::$engine = new Mysql();
                     break;
@@ -316,7 +316,7 @@ class DataBase
      *
      * @return array
      */
-    public function selectLimit($sql, $limit = FS_ITEM_LIMIT, $offset = 0): array
+    public function selectLimit($sql, $limit = \FS_ITEM_LIMIT, $offset = 0): array
     {
         if (!$this->connected()) {
             return [];

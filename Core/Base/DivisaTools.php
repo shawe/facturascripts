@@ -95,14 +95,14 @@ class DivisaTools extends NumberTools
      *
      * @return string
      */
-    public static function format($number, $decimals = FS_NF0, $decoration = 'symbol'): string
+    public static function format($number, $decimals = \FS_NF0, $decoration = 'symbol'): string
     {
         $txt = parent::format($number, $decimals);
 
         switch ($decoration) {
             case 'symbol':
                 $symbol = self::$selectedDivisa->simbolo;
-                if (FS_CURRENCY_POS === 'right') {
+                if (\FS_CURRENCY_POS === 'right') {
                     return $txt . ' ' . $symbol;
                 }
                 return $symbol . ' ' . $txt;
@@ -122,7 +122,7 @@ class DivisaTools extends NumberTools
      *
      * @return array
      */
-    public static function gridMoneyFormat($decimals = FS_NF0): array
+    public static function gridMoneyFormat($decimals = \FS_NF0): array
     {
         $moneyFormat = '0.';
         for ($num = 0; $num < $decimals; $num++) {

@@ -18,7 +18,7 @@
  */
 
 /**
- * @author Carlos García Gómez
+ * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 require_once __DIR__ . '/../vendor/autoload.php';
 

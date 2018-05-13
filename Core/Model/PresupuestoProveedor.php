@@ -20,7 +20,7 @@
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
-use FacturaScripts\Dinamic\Model\LineaPresupuestoProveedor;
+use FacturaScripts\Dinamic\Model\LineaPresupuestoProveedor as DinamicLineaPresupuestoProveedor;
 
 /**
  * Supplier order.
@@ -50,11 +50,11 @@ class PresupuestoProveedor extends Base\PurchaseDocument
     /**
      * Returns the lines associated with the order.
      *
-     * @return LineaPresupuestoProveedor[]
+     * @return DinamicLineaPresupuestoProveedor[]
      */
     public function getLines(): array
     {
-        $lineaModel = new LineaPresupuestoProveedor();
+        $lineaModel = new DinamicLineaPresupuestoProveedor();
         $where = [new DataBaseWhere('idpresupuesto', $this->idpresupuesto)];
         $order = ['orden' => 'DESC', 'idlinea' => 'ASC'];
 
@@ -66,11 +66,11 @@ class PresupuestoProveedor extends Base\PurchaseDocument
      *
      * @param array $data
      *
-     * @return LineaPresupuestoProveedor
+     * @return DinamicLineaPresupuestoProveedor
      */
-    public function getNewLine(array $data = []): LineaPresupuestoProveedor
+    public function getNewLine(array $data = []): DinamicLineaPresupuestoProveedor
     {
-        $newLine = new LineaPresupuestoProveedor($data);
+        $newLine = new DinamicLineaPresupuestoProveedor($data);
         $newLine->idpresupuesto = $this->idpresupuesto;
 
         $state = $this->getState();

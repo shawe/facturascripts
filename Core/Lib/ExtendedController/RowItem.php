@@ -82,7 +82,9 @@ abstract class RowItem implements VisualItemInterface
     {
         $type = (string) $row['type'];
         $result = self::rowItemFromType($type);
-        $result->loadFromJSON($row);
+        if ($result !== null) {
+            $result->loadFromJSON($row);
+        }
 
         return $result;
     }
@@ -99,7 +101,9 @@ abstract class RowItem implements VisualItemInterface
         $rowAtributes = $row->attributes();
         $type = (string) $rowAtributes->type;
         $result = self::rowItemFromType($type);
-        $result->loadFromXML($row);
+        if ($result !== null) {
+            $result->loadFromXML($row);
+        }
 
         return $result;
     }

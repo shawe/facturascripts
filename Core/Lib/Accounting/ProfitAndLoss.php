@@ -157,8 +157,8 @@ class ProfitAndLoss extends AccountingBase
     protected function processLine($line): array
     {
         $line['descripcion'] = Utils::fixHtml($line['descripcion']);
-        $line['saldo'] = $this->divisaTools::format($line['saldo'], FS_NF0, '');
-        $line['saldoprev'] = $this->divisaTools::format($line['saldoprev'], FS_NF0, '');
+        $line['saldo'] = $this->divisaTools::format($line['saldo'], \FS_NF0, '');
+        $line['saldoprev'] = $this->divisaTools::format($line['saldoprev'], \FS_NF0, '');
 
         return $line;
     }

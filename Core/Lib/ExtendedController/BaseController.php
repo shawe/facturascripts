@@ -137,7 +137,7 @@ abstract class BaseController extends Base\Controller
                     continue;
                 }
 
-                if ($uploadFile->move(FS_FOLDER . DIRECTORY_SEPARATOR . 'MyFiles', $uploadFile->getClientOriginalName())) {
+                if ($uploadFile->move(\FS_FOLDER . DIRECTORY_SEPARATOR . 'MyFiles', $uploadFile->getClientOriginalName())) {
                     $data[$key] = $uploadFile->getClientOriginalName();
                 }
             }

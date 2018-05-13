@@ -73,7 +73,7 @@ class EditArticulo extends ExtendedController\PanelController
             unset($this->views['ListArticuloProveedor']);
         }
 
-        $limit = FS_ITEM_LIMIT;
+        $limit = \FS_ITEM_LIMIT;
         switch ($viewName) {
             case 'EditArticulo':
                 $code = $this->request->get('code');

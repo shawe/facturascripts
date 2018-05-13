@@ -171,7 +171,7 @@ class AppInstaller
     {
         $dataLanguage = explode(';', filter_input(INPUT_SERVER, 'HTTP_ACCEPT_LANGUAGE'));
         $userLanguage = \str_replace('-', '_', explode(',', $dataLanguage[0])[0]);
-        $translationExists = file_exists(FS_FOLDER . '/Core/Translation/' . $userLanguage . '.json');
+        $translationExists = file_exists(\FS_FOLDER . \DIRECTORY_SEPARATOR . 'Core' . \DIRECTORY_SEPARATOR . 'Translation' . \DIRECTORY_SEPARATOR . $userLanguage . '.json');
 
         return $translationExists ? $userLanguage : 'en_EN';
     }
@@ -203,7 +203,7 @@ class AppInstaller
     {
         /// HTML template variables
         $templateVars = [
-            'license' => file_get_contents(FS_FOLDER . '/COPYING'),
+            'license' => file_get_contents(\FS_FOLDER . \DIRECTORY_SEPARATOR . 'COPYING'),
             'memcache_prefix' => Utils::randomString(8),
             'timezones' => $this->getTimezoneList()
         ];
@@ -212,7 +212,7 @@ class AppInstaller
         $webRender = new WebRender();
 
         /// Generate and return the HTML
-        $response = new Response($webRender->render('Installer/Install.html.twig', $templateVars), Response::HTTP_OK);
+        $response = new Response($webRender->render('Installer' . \DIRECTORY_SEPARATOR . 'Install.html.twig', $templateVars), Response::HTTP_OK);
         $response->send();
     }
 
@@ -223,9 +223,9 @@ class AppInstaller
      */
     private function saveHtaccess(): bool
     {
-        if (!file_exists(FS_FOLDER . '/.htaccess')) {
-            $txt = file_get_contents(FS_FOLDER . '/htaccess-sample');
-            file_put_contents(FS_FOLDER . '/.htaccess', \is_string($txt) ? $txt : '');
+        if (!file_exists(\FS_FOLDER . \DIRECTORY_SEPARATOR . '.htaccess')) {
+            $txt = file_get_contents(\FS_FOLDER . \DIRECTORY_SEPARATOR . 'htaccess-sample');
+            file_put_contents(\FS_FOLDER . \DIRECTORY_SEPARATOR . '.htaccess', \is_string($txt) ? $txt : '');
         }
 
         return true;
@@ -238,7 +238,7 @@ class AppInstaller
      */
     private function saveInstall(): bool
     {
-        $file = fopen(FS_FOLDER . '/config.php', 'wb');
+        $file = fopen(\FS_FOLDER . \DIRECTORY_SEPARATOR . 'config.php', 'wb');
         if (\is_resource($file)) {
             fwrite($file, "<?php\n");
             fwrite($file, "define('FS_COOKIES_EXPIRE', 604800);\n");
@@ -291,7 +291,7 @@ class AppInstaller
             }
         }
 
-        if (!is_writable(FS_FOLDER)) {
+        if (!is_writable(\FS_FOLDER)) {
             $this->miniLog->critical($this->i18n->trans('folder-not-writable'));
             $errors = true;
         }

@@ -170,9 +170,9 @@ abstract class BusinessDocumentController extends PanelController
      */
     protected function loadData($viewName, $view)
     {
-        $iddoc = $this->request->get('code', '');
-        if ($viewName === 'Document' && !empty($iddoc)) {
-            $view->loadData($iddoc);
+        $idDoc = $this->request->get('code', '');
+        if ($viewName === 'Document' && !empty($idDoc)) {
+            $view->loadData($idDoc);
         }
     }
 

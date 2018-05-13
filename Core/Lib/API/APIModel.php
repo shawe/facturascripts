@@ -74,7 +74,7 @@ class APIModel extends APIResourceClass
     private function getResourcesFromFolder($folder): array
     {
         $resources = [];
-        foreach (scandir(FS_FOLDER . '/Dinamic/' . $folder, \SCANDIR_SORT_ASCENDING) as $fName) {
+        foreach (scandir(\FS_FOLDER . \DIRECTORY_SEPARATOR . 'Dinamic' . \DIRECTORY_SEPARATOR . $folder, \SCANDIR_SORT_ASCENDING) as $fName) {
             if (substr($fName, -4) === '.php') {
                 $modelName = substr($fName, 0, -4);
                 $plural = $this->pluralize($modelName);

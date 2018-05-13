@@ -37,7 +37,7 @@ class MysqlSQL implements DataBaseSQL
      */
     private function getTypeAndConstraints($colData): string
     {
-        $type = stripos('integer,serial', $colData['type']) === false ? strtolower($colData['type']) : FS_DB_INTEGER;
+        $type = stripos('integer,serial', $colData['type']) === false ? strtolower($colData['type']) : \FS_DB_INTEGER;
         switch (true) {
             case $type === 'serial':
             case stripos($colData['default'], 'nextval(') !== false:

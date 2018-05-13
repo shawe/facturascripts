@@ -717,5 +717,18 @@
     "create-accounting-entry": "Create Accounting Entry",
     "hint-create-accounting-entry": "Create the accounting entry for the regularization of the taxes of the period",
     "previous-balance": "Previous Balance",
-    "result": "Result"
+    "result": "Result",
+    "mime-type": "MimeType",
+    "states": "States",
+    "book": "Book",
+    "subtract": "Subtract",
+    "do-nothing": "Do nothing",
+    "foresee": "Foresee",
+    "doc-type": "Document type",
+    "generate-doc-type": "Generate document type",
+    "update-stock": "Update stock",
+    "component": "Component",
+    "action": "Action",
+    "reserved": "Reserved",
+    "pending-reception": "Pending reception"
 }

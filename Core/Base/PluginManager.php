@@ -38,12 +38,12 @@ class PluginManager
     /**
      * Path to list plugins on file.
      */
-    const PLUGIN_LIST_FILE = FS_FOLDER . DIRECTORY_SEPARATOR . 'MyFiles' . DIRECTORY_SEPARATOR . 'plugins.json';
+    const PLUGIN_LIST_FILE = \FS_FOLDER . DIRECTORY_SEPARATOR . 'MyFiles' . DIRECTORY_SEPARATOR . 'plugins.json';
 
     /**
      * Plugin path folder.
      */
-    const PLUGIN_PATH = FS_FOLDER . DIRECTORY_SEPARATOR . 'Plugins' . DIRECTORY_SEPARATOR;
+    const PLUGIN_PATH = \FS_FOLDER . DIRECTORY_SEPARATOR . 'Plugins' . DIRECTORY_SEPARATOR;
 
     /**
      * List of active plugins.
@@ -186,7 +186,7 @@ class PluginManager
         }
 
         $pathINI = $zipFile->getNameIndex($zipIndex);
-        $folderPluginZip = explode('/', $pathINI);
+        $folderPluginZip = explode(\DIRECTORY_SEPARATOR, $pathINI);
 
         /// get plugin information
         $info = $this->getPluginInfo($zipName, $zipFile->getFromIndex($zipIndex));
@@ -223,7 +223,7 @@ class PluginManager
         $plugins = [];
 
         foreach (FileManager::scanFolder(self::PLUGIN_PATH, false) as $folder) {
-            $iniPath = self::PLUGIN_PATH . $folder . '/facturascripts.ini';
+            $iniPath = self::PLUGIN_PATH . $folder . \DIRECTORY_SEPARATOR . 'facturascripts.ini';
             $iniContent = file_exists($iniPath) ? file_get_contents($iniPath) : '';
             $plugins[] = $this->getPluginInfo($folder, $iniContent);
         }

@@ -44,11 +44,11 @@ class AssetManager
         $base = DIRECTORY_SEPARATOR . 'Dinamic' . DIRECTORY_SEPARATOR . 'Assets' . DIRECTORY_SEPARATOR;
         $jsFile = $base . 'JS' . DIRECTORY_SEPARATOR . $name . '.js';
         $cssFile = $base . 'CSS' . DIRECTORY_SEPARATOR . $name . '.css';
-        if (file_exists(FS_FOLDER . $jsFile)) {
-            $assets['js'][] = FS_ROUTE . $jsFile;
+        if (file_exists(\FS_FOLDER . $jsFile)) {
+            $assets['js'][] = \FS_ROUTE . $jsFile;
         }
-        if (file_exists(FS_FOLDER . $cssFile)) {
-            $assets['css'][] = FS_ROUTE . $cssFile;
+        if (file_exists(\FS_FOLDER . $cssFile)) {
+            $assets['css'][] = \FS_ROUTE . $cssFile;
         }
 
         return $assets;
@@ -65,8 +65,8 @@ class AssetManager
     {
         $txt = '';
         foreach ($fileList as $file) {
-            $content = file_get_contents(FS_FOLDER . DIRECTORY_SEPARATOR . $file) . "\n";
-            $txt .= static::fixCombineContent($content, FS_ROUTE . DIRECTORY_SEPARATOR . $file);
+            $content = file_get_contents(\FS_FOLDER . DIRECTORY_SEPARATOR . $file) . "\n";
+            $txt .= static::fixCombineContent($content, \FS_ROUTE . DIRECTORY_SEPARATOR . $file);
         }
 
         return $txt;

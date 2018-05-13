@@ -59,7 +59,7 @@ class FileManager
     public static function notWritableFolders(): array
     {
         $notwritable = [];
-        foreach (static::scanFolder(FS_FOLDER) as $folder) {
+        foreach (static::scanFolder(\FS_FOLDER) as $folder) {
             if (!is_writable($folder)) {
                 $notwritable[] = $folder;
             }
@@ -77,7 +77,7 @@ class FileManager
     public static function recurseCopy(string $src, string $dst)
     {
         $folder = opendir($src);
-        if (static::mkDir($dst)) {
+        if (static::mkDir($dst) && \is_resource($folder)) {
             while (\is_resource($folder) && false !== ($file = readdir($folder))) {
                 if ($file === '.' || $file === '..') {
                     continue;

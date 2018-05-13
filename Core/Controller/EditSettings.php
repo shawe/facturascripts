@@ -87,7 +87,7 @@ class EditSettings extends ExtendedController\PanelController
                 return 'EditSettings';
         }
 
-        return FS_ROUTE;
+        return \FS_ROUTE;
     }
 
     /**
@@ -98,7 +98,7 @@ class EditSettings extends ExtendedController\PanelController
     private function allSettingsXMLViews(): array
     {
         $names = [];
-        $files = array_diff(scandir(FS_FOLDER . '/Dinamic/XMLView', \SCANDIR_SORT_ASCENDING), ['.', '..']);
+        $files = array_diff(scandir(\FS_FOLDER . \DIRECTORY_SEPARATOR . 'Dinamic' . \DIRECTORY_SEPARATOR . 'XMLView', \SCANDIR_SORT_ASCENDING), ['.', '..']);
         foreach ($files as $fileName) {
             if (0 === strpos($fileName, self::KEY_SETTINGS)) {
                 $names[] = substr($fileName, 0, -4);

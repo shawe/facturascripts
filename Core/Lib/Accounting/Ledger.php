@@ -158,8 +158,8 @@ class Ledger extends AccountingBase
         }
         $item['cuenta'] = $line['cuenta'] ?? $line['codsubcuenta'];
         $item['concepto'] = Utils::fixHtml($line['concepto']);
-        $item['debe'] = $this->divisaTools::format($line['debe'], FS_NF0, '');
-        $item['haber'] = $this->divisaTools::format($line['haber'], FS_NF0, '');
+        $item['debe'] = $this->divisaTools::format($line['debe'], \FS_NF0, '');
+        $item['haber'] = $this->divisaTools::format($line['haber'], \FS_NF0, '');
         return $item;
     }
 }

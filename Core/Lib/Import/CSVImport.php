@@ -100,19 +100,19 @@ class CSVImport
             \define('FS_CODPAIS', 'ESP');
         }
 
-        $filePath = FS_FOLDER . '/Dinamic/Data/Codpais/' . FS_CODPAIS . '/' . $table . '.csv';
+        $filePath = \FS_FOLDER . \DIRECTORY_SEPARATOR . 'Dinamic' . \DIRECTORY_SEPARATOR . 'Data' . \DIRECTORY_SEPARATOR . 'Codpais' . \DIRECTORY_SEPARATOR . \FS_CODPAIS . \DIRECTORY_SEPARATOR . $table . '.csv';
         if (file_exists($filePath)) {
             return $filePath;
         }
 
-        $lang = strtoupper(substr(FS_LANG, 0, 2));
-        $filePath = FS_FOLDER . '/Dinamic/Data/Lang/' . $lang . '/' . $table . '.csv';
+        $lang = strtoupper(substr(\FS_LANG, 0, 2));
+        $filePath = \FS_FOLDER . \DIRECTORY_SEPARATOR . 'Dinamic' . \DIRECTORY_SEPARATOR . 'Data' . \DIRECTORY_SEPARATOR . 'Lang' . \DIRECTORY_SEPARATOR . $lang . \DIRECTORY_SEPARATOR . $table . '.csv';
         if (file_exists($filePath)) {
             return $filePath;
         }
 
         /// If everything else fails
-        $filePath = FS_FOLDER . '/Dinamic/Data/Lang/ES/' . $table . '.csv';
+        $filePath = \FS_FOLDER . \DIRECTORY_SEPARATOR . 'Dinamic' . \DIRECTORY_SEPARATOR . 'Data' . \DIRECTORY_SEPARATOR . 'Lang' . \DIRECTORY_SEPARATOR . 'ES' . \DIRECTORY_SEPARATOR . $table . '.csv';
         if (file_exists($filePath)) {
             return $filePath;
         }

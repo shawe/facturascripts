@@ -443,7 +443,7 @@ abstract class BusinessDocument extends ModelClass
          */
         $this->totaleuros = round($this->total / $this->tasaconv, 5);
         $total = $this->neto + $this->totaliva - $this->totalirpf + $this->totalrecargo;
-        if (!Utils::floatcmp($this->total, $total, FS_NF0, true)) {
+        if (!Utils::floatcmp($this->total, $total, \FS_NF0, true)) {
             self::$miniLog->alert(self::$i18n->trans('bad-total-error'));
             return false;
         }

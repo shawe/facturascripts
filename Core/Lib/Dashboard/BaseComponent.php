@@ -162,6 +162,7 @@ class BaseComponent
                 'description' => $this->getRandomText($maxWord),
             ];
 
+            /** @noinspection PhpUndefinedMethodInspection */
             $this->saveData($data);
         }
         $this->randomData = false;

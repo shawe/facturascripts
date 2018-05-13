@@ -78,8 +78,8 @@ abstract class EditController extends PanelController
     /**
      * Loads the data to display.
      *
-     * @param string            $viewName
-     * @param BaseView|EditView $view
+     * @param string   $viewName
+     * @param EditView $view
      */
     protected function loadData($viewName, $view)
     {

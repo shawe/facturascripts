@@ -63,7 +63,7 @@ class PostgresqlSQL implements DataBaseSQL
             . 'character_maximum_length, column_default as default,'
             . 'is_nullable'
             . ' FROM information_schema.columns'
-            . " WHERE table_catalog = '" . FS_DB_NAME . "'"
+            . " WHERE table_catalog = '" . \FS_DB_NAME . "'"
             . " AND table_name = '" . $tableName . "'"
             . ' ORDER BY 1 ASC;';
 
@@ -140,7 +140,7 @@ class PostgresqlSQL implements DataBaseSQL
                 continue;
             }
 
-            if (FS_DB_FOREIGN_KEYS || 0 !== strpos($res['constraint'], 'FOREIGN KEY')) {
+            if (\FS_DB_FOREIGN_KEYS || 0 !== strpos($res['constraint'], 'FOREIGN KEY')) {
                 $sql .= ', CONSTRAINT ' . $res['name'] . ' ' . $res['constraint'];
             }
         }

@@ -118,7 +118,7 @@ class AttachedFile extends Base\ModelClass
      */
     public function delete(): bool
     {
-        if (!unlink(FS_FOLDER . DIRECTORY_SEPARATOR . $this->path)) {
+        if (!unlink(\FS_FOLDER . DIRECTORY_SEPARATOR . $this->path)) {
             self::$miniLog->alert(self::$i18n->trans('cant-delete-file', ['%fileName%' => $this->path]));
             return false;
         }
@@ -177,7 +177,7 @@ class AttachedFile extends Base\ModelClass
      */
     public function test(): bool
     {
-        if (!file_exists(FS_FOLDER . DIRECTORY_SEPARATOR . 'MyFiles' . DIRECTORY_SEPARATOR . $this->path)) {
+        if (!file_exists(\FS_FOLDER . DIRECTORY_SEPARATOR . 'MyFiles' . DIRECTORY_SEPARATOR . $this->path)) {
             self::$miniLog->alert(self::$i18n->trans('file-not-found'));
             return false;
         }
@@ -202,25 +202,25 @@ class AttachedFile extends Base\ModelClass
     {
         /// remove old file
         if (!empty($this->previousPath)) {
-            unlink(FS_FOLDER . DIRECTORY_SEPARATOR . $this->previousPath);
+            unlink(\FS_FOLDER . DIRECTORY_SEPARATOR . $this->previousPath);
         }
 
         $this->filename = $this->path;
         $path = 'MyFiles' . DIRECTORY_SEPARATOR . date('Y' . DIRECTORY_SEPARATOR . 'm', strtotime($this->date));
-        if (!file_exists(FS_FOLDER . DIRECTORY_SEPARATOR . $path)) {
-            FileManager::mkDir(FS_FOLDER . DIRECTORY_SEPARATOR . $path, 0777, true);
+        if (!file_exists(\FS_FOLDER . DIRECTORY_SEPARATOR . $path)) {
+            FileManager::mkDir(\FS_FOLDER . DIRECTORY_SEPARATOR . $path, 0777, true);
         }
 
-        $basePath = FS_FOLDER . DIRECTORY_SEPARATOR . 'MyFiles';
-        if (!rename($basePath . DIRECTORY_SEPARATOR . $this->path, FS_FOLDER . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $this->idfile)) {
+        $basePath = \FS_FOLDER . DIRECTORY_SEPARATOR . 'MyFiles';
+        if (!rename($basePath . DIRECTORY_SEPARATOR . $this->path, \FS_FOLDER . DIRECTORY_SEPARATOR . $path . DIRECTORY_SEPARATOR . $this->idfile)) {
             return false;
         }
 
         $this->path = $path . DIRECTORY_SEPARATOR . $this->idfile;
         $this->previousPath = $this->path;
-        $this->size = filesize(FS_FOLDER . DIRECTORY_SEPARATOR . $this->path);
+        $this->size = filesize(\FS_FOLDER . DIRECTORY_SEPARATOR . $this->path);
         $finfo = new finfo();
-        $this->mimetype = $finfo->file(FS_FOLDER . DIRECTORY_SEPARATOR . $this->path, FILEINFO_MIME_TYPE);
+        $this->mimetype = $finfo->file(\FS_FOLDER . DIRECTORY_SEPARATOR . $this->path, FILEINFO_MIME_TYPE);
         return true;
     }
 }

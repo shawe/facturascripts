@@ -29,7 +29,7 @@ class IntegrityCheck
     /**
      * Path to list of integrity file.
      */
-    const BASE = FS_FOLDER . DIRECTORY_SEPARATOR . 'MyFiles' . DIRECTORY_SEPARATOR;
+    const BASE = \FS_FOLDER . DIRECTORY_SEPARATOR . 'MyFiles' . DIRECTORY_SEPARATOR;
     const INTEGRITY_FILE = self::BASE . 'integrity.json';
     const INTEGRITY_USER_FILE = self::BASE . 'integrity-validation.json';
 
@@ -46,7 +46,7 @@ class IntegrityCheck
         $exclude = ['.', '..', 'Dinamic', 'Documentation', 'MyFiles', 'node_modules', 'Plugins', 'Test', 'vendor'];
         $exclude[] = '.htaccess';
         $exclude[] = 'config.php';
-        $files = $fileManager::scanFolder(FS_FOLDER, true, $exclude);
+        $files = $fileManager::scanFolder(\FS_FOLDER, true, $exclude);
         foreach ($files as $fileName) {
             $resources[$fileName] = self::getFileHash($fileName);
         }

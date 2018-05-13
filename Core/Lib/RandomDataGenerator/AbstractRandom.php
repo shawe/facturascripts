@@ -263,7 +263,7 @@ abstract class AbstractRandom
         if (random_int(0, 9) === 0) {
             $precio = random_int($min, $max2);
         } elseif ($precio < $max1 && random_int(0, 2) === 0) {
-            $precio += round(random_int(1, 5) / random_int(1, 10), FS_NF0);
+            $precio += round(random_int(1, 5) / random_int(1, 10), \FS_NF0);
             $precio = min([$max1, $precio]);
         }
 
@@ -321,7 +321,7 @@ abstract class AbstractRandom
         $lista = [];
 
         $sql = 'SELECT * FROM ' . $tableName . ' ORDER BY ';
-        $sql .= strtolower(FS_DB_TYPE) === 'mysql' ? 'RAND()' : 'random()';
+        $sql .= strtolower(\FS_DB_TYPE) === 'mysql' ? 'RAND()' : 'random()';
 
         $data = $this->dataBase->selectLimit($sql, 100, 0);
         if (!empty($data)) {

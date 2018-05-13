@@ -116,7 +116,6 @@ class EditListView extends BaseView implements DataViewInterface
 
     /**
      * Column list and its configuration
-     * (Array of ColumnItem)
      *
      * @return GroupItem[]
      */
@@ -165,7 +164,7 @@ class EditListView extends BaseView implements DataViewInterface
      * @param int             $offset
      * @param int             $limit
      */
-    public function loadData($code = false, array $where = [], array $order = [], $offset = 0, $limit = FS_ITEM_LIMIT)
+    public function loadData($code = false, array $where = [], array $order = [], $offset = 0, $limit = \FS_ITEM_LIMIT)
     {
         $this->order = empty($order) ? $this->order : $order;
         $this->count = $this->model->count($where);

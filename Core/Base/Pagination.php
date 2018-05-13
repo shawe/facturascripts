@@ -30,7 +30,7 @@ class Pagination
     /**
      * Constants for paging.
      */
-    const FS_ITEM_LIMIT = FS_ITEM_LIMIT;
+    const FS_ITEM_LIMIT = \FS_ITEM_LIMIT;
     const FS_PAGE_MARGIN = 5;
 
     /**
@@ -200,6 +200,6 @@ class Pagination
      */
     private function offset($page): int
     {
-        return $page * self::FS_ITEM_LIMIT;
+        return (int) $page * self::FS_ITEM_LIMIT;
     }
 }

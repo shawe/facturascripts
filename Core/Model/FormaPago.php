@@ -104,16 +104,14 @@ class FormaPago extends Base\ModelClass
             }
         }
 
-        if ($arrayDias !== null) {
-            foreach ($arrayDias as $i => $diaDePago) {
-                if ($i === 0) {
-                    $fecha = $this->calcularVencimiento2($fechaInicio, $diaDePago);
-                } else {
-                    /// If there are several days of payment, we choose the closest date
-                    $fechaTemp = $this->calcularVencimiento2($fechaInicio, $diaDePago);
-                    if (strtotime($fechaTemp) < strtotime($fecha)) {
-                        $fecha = $fechaTemp;
-                    }
+        foreach ($arrayDias as $i => $diaDePago) {
+            if ($i === 0) {
+                $fecha = $this->calcularVencimiento2($fechaInicio, $diaDePago);
+            } else {
+                /// If there are several days of payment, we choose the closest date
+                $fechaTemp = $this->calcularVencimiento2($fechaInicio, $diaDePago);
+                if (strtotime($fechaTemp) < strtotime($fecha)) {
+                    $fecha = $fechaTemp;
                 }
             }
         }

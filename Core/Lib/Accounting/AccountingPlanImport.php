@@ -189,7 +189,8 @@ class AccountingPlanImport
     private function getData(string $filePath): \SimpleXMLElement
     {
         if (file_exists($filePath)) {
-            return simplexml_load_string(file_get_contents($filePath));
+            $txt = file_get_contents($filePath);
+            return simplexml_load_string(\is_string($txt) ? $txt : '');
         }
 
         return simplexml_load_string('');

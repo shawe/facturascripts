@@ -121,7 +121,7 @@ class SendMail extends Controller
     private function removeOld()
     {
         $regex = '/Mail_([0-9]+).pdf/';
-        foreach (glob(FS_FOLDER . '/MyFiles/Mail_*.pdf') as $fileName) {
+        foreach (glob(\FS_FOLDER . \DIRECTORY_SEPARATOR . 'MyFiles' . \DIRECTORY_SEPARATOR . 'Mail_*.pdf') as $fileName) {
             $fileTime = [];
             preg_match($regex, $fileName, $fileTime);
             if ($fileTime[1] < (time() - 3600)) {
@@ -132,8 +132,11 @@ class SendMail extends Controller
 
     /**
      * Send and email with data posted from form.
+     *
+     * @return bool
+     * @throws \PHPMailer\PHPMailer\Exception
      */
-    protected function send()
+    protected function send(): bool
     {
         $fieldsEmail = ['email', 'email-cc', 'email-bcc'];
         $sendTo = [];
@@ -150,25 +153,27 @@ class SendMail extends Controller
 
         $emailTools = new EmailTools();
         $mail = $emailTools->newMail();
-        foreach ($sendTo['email'] as $email) {
+        foreach ((array) $sendTo['email'] as $email) {
             $mail->addAddress($email);
         }
-        foreach ($sendTo['email-cc'] as $email) {
+        foreach ((array) $sendTo['email-cc'] as $email) {
             $mail->addCC($email);
         }
-        foreach ($sendTo['email-bcc'] as $email) {
+        foreach ((array) $sendTo['email-bcc'] as $email) {
             $mail->addBCC($email);
         }
         $mail->Subject = $subject;
         $mail->msgHTML($body);
-        $mail->addAttachment(FS_FOLDER . '/MyFiles/' . $fileName);
+        $mail->addAttachment(\FS_FOLDER . \DIRECTORY_SEPARATOR . 'MyFiles' . \DIRECTORY_SEPARATOR . $fileName);
 
         if ($emailTools->send($mail)) {
-            unlink(FS_FOLDER . '/MyFiles/' . $fileName);
+            unlink(\FS_FOLDER . \DIRECTORY_SEPARATOR . 'MyFiles' . \DIRECTORY_SEPARATOR . $fileName);
             $this->miniLog->info('send-mail-ok');
-        } else {
-            $this->miniLog->error('send-mail-error');
+            return true;
         }
+
+        $this->miniLog->error('send-mail-error');
+        return false;
     }
 
     /**

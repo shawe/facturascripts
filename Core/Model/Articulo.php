@@ -197,9 +197,9 @@ class Articulo extends Base\Product
      */
     public function setPvp($pvp)
     {
-        $pvp2 = round($pvp, FS_NF0 + 2);
+        $pvp2 = round($pvp, \FS_NF0 + 2);
 
-        if (!Utils::floatcmp($this->pvp, $pvp2, FS_NF0 + 2)) {
+        if (!Utils::floatcmp($this->pvp, $pvp2, \FS_NF0 + 2)) {
             $this->pvp = $pvp2;
         }
     }

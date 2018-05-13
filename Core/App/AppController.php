@@ -77,7 +77,7 @@ class AppController extends App
     {
         parent::__construct($uri);
         $this->debugBar = new StandardDebugBar();
-        if (FS_DEBUG) {
+        if (\FS_DEBUG) {
             $this->debugBar['time']->startMeasure('init', 'AppController::__construct()');
             $this->debugBar->addCollector(new DataBaseCollector($this->miniLog));
             $this->debugBar->addCollector(new TranslationCollector($this->i18n));
@@ -131,7 +131,7 @@ class AppController extends App
             $controllerName = "FacturaScripts\\Core\\Controller\\{$pageName}";
 
             /// This is important in development and unattended installations
-            if (FS_DEBUG || !file_exists(FS_FOLDER . DIRECTORY_SEPARATOR . 'Dinamic')) {
+            if (\FS_DEBUG || !file_exists(\FS_FOLDER . DIRECTORY_SEPARATOR . 'Dinamic')) {
                 $this->pluginManager->deploy();
             }
         }
@@ -171,7 +171,7 @@ class AppController extends App
      */
     private function loadController($pageName, $user)
     {
-        if (FS_DEBUG) {
+        if (\FS_DEBUG) {
             $this->debugBar['time']->stopMeasure('init');
             $this->debugBar['time']->startMeasure('loadController', 'AppController::loadController()');
         }
@@ -209,7 +209,7 @@ class AppController extends App
 
         $this->response->setStatusCode($httpStatus);
         if ($template) {
-            if (FS_DEBUG) {
+            if (\FS_DEBUG) {
                 $this->debugBar['time']->stopMeasure('loadController');
                 $this->debugBar['time']->startMeasure('renderHtml', 'AppController::renderHtml()');
             }
@@ -241,8 +241,8 @@ class AppController extends App
         $webRender = new WebRender();
         $webRender->loadPluginFolders();
 
-        if (FS_DEBUG) {
-            $baseUrl = FS_ROUTE . '/vendor/maximebf/debugbar/src/DebugBar/Resources/';
+        if (\FS_DEBUG) {
+            $baseUrl = \FS_ROUTE . \DIRECTORY_SEPARATOR . 'vendor' . \DIRECTORY_SEPARATOR . 'maximebf' . \DIRECTORY_SEPARATOR . 'debugbar' . \DIRECTORY_SEPARATOR . 'src' . \DIRECTORY_SEPARATOR . 'DebugBar' . \DIRECTORY_SEPARATOR . 'Resources' . \DIRECTORY_SEPARATOR;
             $templateVars['debugBarRender'] = $this->debugBar->getJavascriptRenderer($baseUrl);
 
             /// add log data to the debugBar
@@ -256,7 +256,7 @@ class AppController extends App
             $this->response->setContent($webRender->render($template, $templateVars));
         } catch (\Exception $exc) {
             $this->debugBar['exceptions']->addException($exc);
-            $this->response->setContent($webRender->render('Error/TemplateError.html.twig', $templateVars));
+            $this->response->setContent($webRender->render('Error' . \DIRECTORY_SEPARATOR . 'TemplateError.html.twig', $templateVars));
             $this->response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -334,7 +334,7 @@ class AppController extends App
             $user->newLogkey($this->request->getClientIp());
             $user->save();
 
-            $expire = time() + FS_COOKIES_EXPIRE;
+            $expire = time() + \FS_COOKIES_EXPIRE;
             $this->response->headers->setCookie(new Cookie('fsNick', $user->nick, $expire));
             $this->response->headers->setCookie(new Cookie('fsLogkey', $user->logkey, $expire));
             $this->response->headers->setCookie(new Cookie('fsLang', $user->langcode, $expire));

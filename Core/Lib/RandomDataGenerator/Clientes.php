@@ -54,7 +54,7 @@ class Clientes extends AbstractRandomPeople
             $cliente->clear();
             $this->fillCliPro($cliente);
 
-            $cliente->fechaalta = date(random_int(1, 28) . '-' . random_int(1, 12) . '-' . random_int(2013, date('Y')));
+            $cliente->fechaalta = date((string) random_int(1, 28) . '-' . (string) random_int(1, 12) . '-' . (string) random_int(2013, date('Y')));
             $cliente->regimeniva = (random_int(0, 9) === 0) ? 'Exento' : 'General';
 
             if (random_int(0, 2) > 0) {

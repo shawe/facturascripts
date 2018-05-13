@@ -131,7 +131,7 @@ class Mysql implements DataBaseEngine
             return null;
         }
 
-        $result = new \mysqli(FS_DB_HOST, FS_DB_USER, FS_DB_PASS, FS_DB_NAME, (int) FS_DB_PORT);
+        $result = new \mysqli(\FS_DB_HOST, \FS_DB_USER, \FS_DB_PASS, \FS_DB_NAME, (int) \FS_DB_PORT);
         if ($result->connect_errno) {
             $error = $result->connect_error;
             $this->lastErrorMsg = $error;
@@ -143,7 +143,7 @@ class Mysql implements DataBaseEngine
         $result->autocommit(false);
 
         /// desactivamos las claves ajenas
-        if (!FS_DB_FOREIGN_KEYS) {
+        if (!\FS_DB_FOREIGN_KEYS) {
             $this->exec($result, 'SET foreign_key_checks = 0;');
         }
 
@@ -390,7 +390,7 @@ class Mysql implements DataBaseEngine
         $aux = $this->select($link, 'SHOW TABLES;');
         if (!empty($aux)) {
             foreach ($aux as $a) {
-                $key = 'Tables_in_' . FS_DB_NAME;
+                $key = 'Tables_in_' . \FS_DB_NAME;
                 if (isset($a[$key])) {
                     $tables[] = $a[$key];
                 }
@@ -431,7 +431,7 @@ class Mysql implements DataBaseEngine
         $result = true;
 
         /// ¿La tabla no usa InnoDB?
-        $data = $this->select($link, 'SHOW TABLE STATUS FROM `' . FS_DB_NAME . "` LIKE '" . $tableName . "';");
+        $data = $this->select($link, 'SHOW TABLE STATUS FROM `' . \FS_DB_NAME . "` LIKE '" . $tableName . "';");
         if (!empty($data) && $data[0]['Engine'] !== 'InnoDB') {
             $result = $this->exec($link, 'ALTER TABLE ' . $tableName . ' ENGINE=InnoDB;');
             if ($result) {

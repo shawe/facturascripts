@@ -57,13 +57,13 @@ class IPFilter
      */
     public function __construct()
     {
-        $this->filePath = FS_FOLDER . '/MyFiles/Cache/ip.list';
+        $this->filePath = \FS_FOLDER . \DIRECTORY_SEPARATOR . 'MyFiles' . \DIRECTORY_SEPARATOR . 'Cache' . \DIRECTORY_SEPARATOR . 'ip.list';
         $this->ipList = [];
 
         if (file_exists($this->filePath)) {
             /// We read the list of IP addresses in the file
             $file = fopen($this->filePath, 'rb');
-            if ($file) {
+            if (\is_resource($file)) {
                 while (!feof($file)) {
                     $line = explode(';', trim(fgets($file)));
                     $this->readIp($line);
@@ -146,7 +146,7 @@ class IPFilter
     private function save()
     {
         $file = fopen($this->filePath, 'wb');
-        if ($file) {
+        if (\is_resource($file)) {
             foreach ($this->ipList as $line) {
                 fwrite($file, $line['ip'] . ';' . $line['count'] . ';' . $line['expire'] . "\n");
             }

@@ -61,9 +61,9 @@ class VisualItemLoadEngine
      */
     public static function installXML($name, &$model): bool
     {
-        $fileName = FS_FOLDER . '/Dinamic/XMLView/' . $name . '.xml';
-        if (FS_DEBUG && !file_exists($fileName)) {
-            $fileName = FS_FOLDER . '/Core/XMLView/' . $name . '.xml';
+        $fileName = \FS_FOLDER . \DIRECTORY_SEPARATOR . 'Dinamic' . \DIRECTORY_SEPARATOR . 'XMLView' . \DIRECTORY_SEPARATOR . $name . '.xml';
+        if (\FS_DEBUG && !file_exists($fileName)) {
+            $fileName = \FS_FOLDER . \DIRECTORY_SEPARATOR . 'Core' . \DIRECTORY_SEPARATOR . 'XMLView' . \DIRECTORY_SEPARATOR . $name . '.xml';
         }
 
         $xml = simplexml_load_string(file_get_contents($fileName));

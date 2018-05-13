@@ -219,57 +219,59 @@ abstract class AbstractRandomDocuments extends AbstractRandomPeople
         while ($numlineas > 0) {
             $lineaClass = self::MODEL_NAMESPACE . $lineaClass;
             $lin = new $lineaClass();
-            $lin->{$iddoc} = $doc->{$iddoc};
-            $lin->cantidad = $modcantidad * $this->cantidad(1, 3, 19);
-            $lin->descripcion = $this->descripcion();
-            $lin->pvpunitario = $this->precio(1, 49, 699);
-            $lin->codimpuesto = $this->impuestos[0]->codimpuesto;
-            $lin->iva = $this->impuestos[0]->iva;
+            if ($lin instanceof Model\Base\BusinessDocumentLine) {
+                $lin->{$iddoc} = $doc->{$iddoc};
+                $lin->cantidad = $modcantidad * $this->cantidad(1, 3, 19);
+                $lin->descripcion = $this->descripcion();
+                $lin->pvpunitario = $this->precio(1, 49, 699);
+                $lin->codimpuesto = $this->impuestos[0]->codimpuesto;
+                $lin->iva = $this->impuestos[0]->iva;
 
-            if ($recargo && random_int(0, 2) === 0) {
-                $lin->recargo = $this->impuestos[0]->recargo;
-            }
+                if ($recargo && random_int(0, 2) === 0) {
+                    $lin->recargo = $this->impuestos[0]->recargo;
+                }
 
-            if (isset($articulos[$numlineas]) && $articulos[$numlineas]->sevende) {
-                $lin->referencia = $articulos[$numlineas]->referencia;
-                $lin->descripcion = $articulos[$numlineas]->descripcion;
-                $lin->pvpunitario = $articulos[$numlineas]->pvp;
-                $lin->codimpuesto = $articulos[$numlineas]->codimpuesto;
-                $lin->iva = $imp->get($articulos[$numlineas]->codimpuesto)->iva;
-                $lin->recargo = 0;
-            }
+                if (isset($articulos[$numlineas]) && $articulos[$numlineas]->sevende) {
+                    $lin->referencia = $articulos[$numlineas]->referencia;
+                    $lin->descripcion = $articulos[$numlineas]->descripcion;
+                    $lin->pvpunitario = $articulos[$numlineas]->pvp;
+                    $lin->codimpuesto = $articulos[$numlineas]->codimpuesto;
+                    $lin->iva = $imp->get($articulos[$numlineas]->codimpuesto)->iva;
+                    $lin->recargo = 0;
+                }
 
-            $lin->irpf = $doc->irpf;
+                $lin->irpf = $doc->irpf;
 
-            if ($regimeniva === 'Exento') {
-                $lin->codimpuesto = null;
-                $lin->iva = 0;
-                $lin->recargo = 0;
-                $doc->irpf = $lin->irpf = 0;
-            }
+                if ($regimeniva === 'Exento') {
+                    $lin->codimpuesto = null;
+                    $lin->iva = 0;
+                    $lin->recargo = 0;
+                    $doc->irpf = $lin->irpf = 0;
+                }
 
-            if (random_int(0, 4) === 0) {
-                $lin->dtopor = $this->cantidad(0, 33, 100);
-            }
+                if (random_int(0, 4) === 0) {
+                    $lin->dtopor = $this->cantidad(0, 33, 100);
+                }
 
-            $lin->pvpsindto = $lin->pvpunitario * $lin->cantidad;
-            $lin->pvptotal = $lin->pvpunitario * $lin->cantidad * (100 - $lin->dtopor) / 100;
+                $lin->pvpsindto = $lin->pvpunitario * $lin->cantidad;
+                $lin->pvptotal = $lin->pvpunitario * $lin->cantidad * (100 - $lin->dtopor) / 100;
 
-            if ($lin->save()) {
-                $doc->neto += $lin->pvptotal;
-                $doc->totaliva += ($lin->pvptotal * $lin->iva / 100);
-                $doc->totalirpf += ($lin->pvptotal * $lin->irpf / 100);
-                $doc->totalrecargo += ($lin->pvptotal * $lin->recargo / 100);
+                if ($lin->save()) {
+                    $doc->neto += $lin->pvptotal;
+                    $doc->totaliva += ($lin->pvptotal * $lin->iva / 100);
+                    $doc->totalirpf += ($lin->pvptotal * $lin->irpf / 100);
+                    $doc->totalrecargo += ($lin->pvptotal * $lin->recargo / 100);
+                }
             }
 
             --$numlineas;
         }
 
         /// redondeamos
-        $doc->neto = round($doc->neto, FS_NF0);
-        $doc->totaliva = round($doc->totaliva, FS_NF0);
-        $doc->totalirpf = round($doc->totalirpf, FS_NF0);
-        $doc->totalrecargo = round($doc->totalrecargo, FS_NF0);
+        $doc->neto = round($doc->neto, \FS_NF0);
+        $doc->totaliva = round($doc->totaliva, \FS_NF0);
+        $doc->totalirpf = round($doc->totalirpf, \FS_NF0);
+        $doc->totalrecargo = round($doc->totalrecargo, \FS_NF0);
         $doc->total = $doc->neto + $doc->totaliva - $doc->totalirpf + $doc->totalrecargo;
         $doc->save();
     }

@@ -334,7 +334,7 @@ class PDFExport implements ExportInterface
             $this->pdf = new \Cezpdf('a4', $orientation);
             $this->pdf->addInfo('Creator', 'FacturaScripts');
             $this->pdf->addInfo('Producer', 'FacturaScripts');
-            $this->pdf->tempPath = FS_FOLDER . '/MyFiles/Cache';
+            $this->pdf->tempPath = \FS_FOLDER . \DIRECTORY_SEPARATOR . 'MyFiles' . \DIRECTORY_SEPARATOR . 'Cache';
 
             $this->tableWidth = $this->pdf->ez['pageWidth'] - self::CONTENT_X * 2;
 
@@ -414,7 +414,7 @@ class PDFExport implements ExportInterface
                     $value = $this->numberTools::format($value);
                 } elseif ($tableOptions['cols'][$col]['col-type'] === 'money') {
                     $this->divisaTools->findDivisa($row);
-                    $value = $this->divisaTools::format($value, FS_NF0, 'coddivisa');
+                    $value = $this->divisaTools::format($value, \FS_NF0, 'coddivisa');
                 } elseif (\is_bool($value)) {
                     $value = $this->i18n->trans($value === 1 ? 'yes' : 'no');
                 } elseif (null === $value) {

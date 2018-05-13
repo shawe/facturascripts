@@ -18,6 +18,7 @@
  */
 namespace FacturaScripts\Core\App;
 
+use FacturaScripts\Core\Lib\API\APIModel;
 use FacturaScripts\Core\Model\ApiKey;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -107,12 +108,14 @@ class AppAPI extends App
     private function getResourcesMap(): array
     {
         $resources = [[]];
-        $dir = FS_FOLDER . DIRECTORY_SEPARATOR . 'Dinamic' . DIRECTORY_SEPARATOR . 'Lib' . DIRECTORY_SEPARATOR . 'API';
+        $dir = \FS_FOLDER . DIRECTORY_SEPARATOR . 'Dinamic' . DIRECTORY_SEPARATOR . 'Lib' . DIRECTORY_SEPARATOR . 'API';
         foreach (scandir($dir, SCANDIR_SORT_NONE) as $resource) {
             if (substr($resource, -4) === '.php') {
                 $class = substr('FacturaScripts\\Dinamic\\Lib\\API\\' . $resource, 0, -4);
                 $APIClass = new $class($this->response, $this->request, $this->miniLog, $this->i18n, []);
-                $resources[] = $APIClass->getResources();
+                if ($APIClass instanceof APIModel) {
+                    $resources[] = $APIClass->getResources();
+                }
                 unset($APIClass);
             }
         }
@@ -157,8 +160,8 @@ class AppAPI extends App
         }
 
         $APIClass = new $map[$resourceName]['API']($this->response, $this->request, $this->miniLog, $this->i18n, $params);
-        if (isset($APIClass)) {
-            return $APIClass->processResource($map[$resourceName]['Name'], $params);
+        if (isset($APIClass) && $APIClass instanceof APIModel) {
+            return $APIClass->processResource($map[$resourceName]['Name']);
         }
         $this->fatalError('database-error', Response::HTTP_INTERNAL_SERVER_ERROR);
         return false;

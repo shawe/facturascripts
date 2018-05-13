@@ -149,7 +149,7 @@ class DataBaseTools
             }
         }
 
-        if (!empty($xmlCons) && !$deleteOnly && FS_DB_FOREIGN_KEYS) {
+        if (!empty($xmlCons) && !$deleteOnly && \FS_DB_FOREIGN_KEYS) {
             foreach ($xmlCons as $xml_con) {
                 if (strpos($xml_con['constraint'], 'PRIMARY') === 0) {
                     continue;
@@ -204,7 +204,7 @@ class DataBaseTools
                 /**
                  * The integer type used in columns can be changed in the control panel tab
                  */
-                $xml_col['type'] = FS_DB_INTEGER;
+                $xml_col['type'] = \FS_DB_INTEGER;
             }
 
             $column = $this->searchInArray($dbCols, 'name', $xml_col['name']);
@@ -244,7 +244,7 @@ class DataBaseTools
         $xml = strtolower($xmlType);
 
         $result = (
-            FS_DB_TYPE_CHECK ||
+            \FS_DB_TYPE_CHECK ||
             self::$dataBase->getEngine()->compareDataTypes($db0, $xml) ||
             ($xml === 'serial') ||
             (
@@ -302,9 +302,9 @@ class DataBaseTools
      */
     private function getXmlTableLocation($tableName): string
     {
-        $fileName = FS_FOLDER . '/Dinamic/Table/' . $tableName . '.xml';
-        if (FS_DEBUG && !file_exists($fileName)) {
-            $fileName = FS_FOLDER . '/Core/Table/' . $tableName . '.xml';
+        $fileName = \FS_FOLDER . \DIRECTORY_SEPARATOR . 'Dinamic' . \DIRECTORY_SEPARATOR . 'Table' . \DIRECTORY_SEPARATOR . $tableName . '.xml';
+        if (\FS_DEBUG && !file_exists($fileName)) {
+            $fileName = \FS_FOLDER . \DIRECTORY_SEPARATOR . 'Core' . \DIRECTORY_SEPARATOR . 'Table' . \DIRECTORY_SEPARATOR . $tableName . '.xml';
         }
 
         return $fileName;

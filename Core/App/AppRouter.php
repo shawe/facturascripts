@@ -30,7 +30,7 @@ class AppRouter
     /**
      * Path to list of routes stored on file.
      */
-    const ROUTE_LIST_FILE = FS_FOLDER . DIRECTORY_SEPARATOR . 'MyFiles' . DIRECTORY_SEPARATOR . 'routes.json';
+    const ROUTE_LIST_FILE = \FS_FOLDER . DIRECTORY_SEPARATOR . 'MyFiles' . DIRECTORY_SEPARATOR . 'routes.json';
 
     /**
      * List of routes.
@@ -100,7 +100,7 @@ class AppRouter
     public function getFile(): bool
     {
         $uri = $this->getUri();
-        $filePath = FS_FOLDER . $uri;
+        $filePath = \FS_FOLDER . $uri;
 
         /// Not a file?
         if (!is_file($filePath)) {
@@ -177,7 +177,7 @@ class AppRouter
         $uri2 = $uri ?? filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL);
         $uriArray = explode('?', $uri2);
 
-        return substr($uriArray[0], mb_strlen(FS_ROUTE));
+        return substr($uriArray[0], mb_strlen(\FS_ROUTE));
     }
 
     /**

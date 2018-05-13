@@ -75,7 +75,7 @@ class BusinessDocumentTools
             $doc->totalrecargo += $subt['totalrecargo'];
         }
 
-        $doc->total = round($doc->neto + $doc->totaliva + $doc->totalrecargo - $doc->totalirpf, FS_NF0);
+        $doc->total = round($doc->neto + $doc->totaliva + $doc->totalrecargo - $doc->totalirpf, \FS_NF0);
     }
 
     /**
@@ -91,7 +91,9 @@ class BusinessDocumentTools
         $this->clearTotals($doc);
         $lines = [];
         foreach ($formLines as $fLine) {
-            $lines[] = $this->recalculateLine($fLine, $doc);
+            if ($fLine instanceof Base\BusinessDocumentLine) {
+                $lines[] = $this->recalculateLine($fLine, $doc);
+            }
         }
 
         foreach ($this->getSubtotals($lines) as $subt) {
@@ -102,7 +104,7 @@ class BusinessDocumentTools
             $doc->totalrecargo += $subt['totalrecargo'];
         }
 
-        $doc->total = round($doc->neto + $doc->totaliva + $doc->totalrecargo - $doc->totalirpf, FS_NF0);
+        $doc->total = round($doc->neto + $doc->totaliva + $doc->totalrecargo - $doc->totalirpf, \FS_NF0);
         $json = [
             'total' => $doc->total,
             'lines' => $lines
@@ -194,10 +196,10 @@ class BusinessDocumentTools
 
         /// rounding totals
         foreach ($subtotals as $key => $value) {
-            $subtotals[$key]['neto'] = round($value['neto'], FS_NF0);
-            $subtotals[$key]['totaliva'] = round($value['totaliva'], FS_NF0);
-            $subtotals[$key]['totalrecargo'] = round($value['totalrecargo'], FS_NF0);
-            $subtotals[$key]['totalirpf'] = round($value['totalirpf'], FS_NF0);
+            $subtotals[$key]['neto'] = round($value['neto'], \FS_NF0);
+            $subtotals[$key]['totaliva'] = round($value['totaliva'], \FS_NF0);
+            $subtotals[$key]['totalrecargo'] = round($value['totalrecargo'], \FS_NF0);
+            $subtotals[$key]['totalirpf'] = round($value['totalirpf'], \FS_NF0);
         }
 
         return $subtotals;

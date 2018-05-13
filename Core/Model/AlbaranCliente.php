@@ -20,7 +20,7 @@
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
-use FacturaScripts\Dinamic\Model\LineaAlbaranCliente;
+use FacturaScripts\Dinamic\Model\LineaAlbaranCliente as DinamicLineaAlbaranCliente;
 
 /**
  * Customer's delivery note or delivery note. Represents delivery to a customer
@@ -52,11 +52,11 @@ class AlbaranCliente extends Base\SalesDocument
     /**
      * Returns the lines associated with the delivery note.
      *
-     * @return LineaAlbaranCliente[]
+     * @return DinamicLineaAlbaranCliente[]
      */
     public function getLines(): array
     {
-        $lineaModel = new LineaAlbaranCliente();
+        $lineaModel = new DinamicLineaAlbaranCliente();
         $where = [new DataBaseWhere('idalbaran', $this->idalbaran)];
         $order = ['orden' => 'DESC', 'idlinea' => 'ASC'];
 
@@ -68,11 +68,11 @@ class AlbaranCliente extends Base\SalesDocument
      *
      * @param array $data
      *
-     * @return LineaAlbaranCliente
+     * @return DinamicLineaAlbaranCliente
      */
-    public function getNewLine(array $data = []): LineaAlbaranCliente
+    public function getNewLine(array $data = []): DinamicLineaAlbaranCliente
     {
-        $newLine = new LineaAlbaranCliente($data);
+        $newLine = new DinamicLineaAlbaranCliente($data);
         $newLine->idalbaran = $this->idalbaran;
 
         $state = $this->getState();

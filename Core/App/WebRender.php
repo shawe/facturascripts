@@ -83,7 +83,11 @@ class WebRender
         }
 
         $this->i18n = new Translator();
-        $path = FS_DEBUG ? FS_FOLDER . '/Core/View' : FS_FOLDER . '/Dinamic/View';
+
+        $coreView = \FS_FOLDER . \DIRECTORY_SEPARATOR . 'Core' . \DIRECTORY_SEPARATOR . 'View';
+        $dinamicView = \FS_FOLDER . \DIRECTORY_SEPARATOR . 'Dinamic' . \DIRECTORY_SEPARATOR . 'View';
+        $path = \FS_DEBUG ? $coreView : $dinamicView;
+
         $this->loader = new Twig_Loader_Filesystem($path);
         $this->miniLog = new MiniLog();
         $this->pluginManager = new PluginManager();
@@ -100,7 +104,7 @@ class WebRender
 
         /// asset functions
         $assetFunction = new Twig_Function('asset', function ($string) {
-            return FS_ROUTE . '/' . $string;
+            return \FS_ROUTE . \DIRECTORY_SEPARATOR . $string;
         });
         $twig->addFunction($assetFunction);
 
@@ -122,17 +126,17 @@ class WebRender
     public function loadPluginFolders()
     {
         /// Core namespace
-        $this->loader->addPath(FS_FOLDER . '/Core/View', 'Core');
+        $this->loader->addPath(\FS_FOLDER . \DIRECTORY_SEPARATOR . 'Core' . \DIRECTORY_SEPARATOR . 'View', 'Core');
 
         foreach ($this->pluginManager->enabledPlugins() as $pluginName) {
-            $pluginPath = FS_FOLDER . '/Plugins/' . $pluginName . '/View';
+            $pluginPath = \FS_FOLDER . \DIRECTORY_SEPARATOR . 'Plugins' . \DIRECTORY_SEPARATOR . $pluginName . \DIRECTORY_SEPARATOR . 'View';
             if (!file_exists($pluginPath)) {
                 continue;
             }
 
             /// plugin namespace
             $this->loader->addPath($pluginPath, 'Plugin' . $pluginName);
-            if (FS_DEBUG) {
+            if (\FS_DEBUG) {
                 $this->loader->prependPath($pluginPath);
             }
         }
@@ -169,12 +173,12 @@ class WebRender
     {
         if ($this->installed) {
             return [
-                'debug' => FS_DEBUG,
-                'cache' => FS_FOLDER . '/MyFiles/Cache/Twig',
+                'debug' => \FS_DEBUG,
+                'cache' => \FS_FOLDER . \DIRECTORY_SEPARATOR . 'MyFiles' . \DIRECTORY_SEPARATOR . 'Cache' . \DIRECTORY_SEPARATOR . 'Twig',
                 'auto_reload' => true
             ];
         }
 
-        return ['debug' => FS_DEBUG,];
+        return ['debug' => \FS_DEBUG,];
     }
 }

@@ -28,6 +28,41 @@ namespace FacturaScripts\Core\Model;
 class PartidaImpuesto extends Base\ModelView
 {
     /**
+     * TODO: Undocumented property
+     *
+     * @var float
+     */
+    public $baseimponible;
+
+    /**
+     * TODO: Undocumented property
+     *
+     * @var float
+     */
+    public $iva;
+
+    /**
+     * TODO: Undocumented property
+     *
+     * @var float
+     */
+    public $cuotaiva;
+
+    /**
+     * TODO: Undocumented property
+     *
+     * @var float
+     */
+    public $recargo;
+
+    /**
+     * TODO: Undocumented property
+     *
+     * @var float
+     */
+    public $cuotarecargo;
+
+    /**
      * List of tables required for the execution of the view.
      */
     protected function getTables(): array
