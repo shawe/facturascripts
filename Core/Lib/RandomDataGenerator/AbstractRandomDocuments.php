@@ -78,7 +78,7 @@ abstract class AbstractRandomDocuments extends AbstractRandomPeople
     /**
      * AbstractRandomDocuments constructor.
      *
-     * @param $model
+     * @param mixed $model
      */
     public function __construct($model)
     {
@@ -101,7 +101,7 @@ abstract class AbstractRandomDocuments extends AbstractRandomPeople
         $doc->fecha = $this->fecha();
         $doc->hora = random_int(10, 20) . ':' . random_int(10, 59) . ':' . random_int(10, 59);
         $doc->codpago = $this->formasPago[0]->codpago;
-        $doc->codalmacen = (random_int(0, 2) === 0) ? $this->almacenes[0]->codalmacen : AppSettings::get('default', 'codalmacen');
+        $doc->codalmacen = random_int(0, 2) === 0 ? $this->almacenes[0]->codalmacen : AppSettings::get('default', 'codalmacen');
         $doc->idempresa = AppSettings::get('default', 'idempresa');
 
         foreach ($this->divisas as $div) {
@@ -142,10 +142,10 @@ abstract class AbstractRandomDocuments extends AbstractRandomPeople
     /**
      * Generates a random purchase document
      *
-     * @param BusinessDocument  $doc
-     * @param Model\Ejercicio   $eje
-     * @param Model\Proveedor[] $proveedores
-     * @param int               $num
+     * @param Model\Base\PurchaseDocument $doc
+     * @param Model\Ejercicio             $eje
+     * @param Model\Proveedor[]           $proveedores
+     * @param int                         $num
      *
      * @return string
      */
@@ -154,7 +154,7 @@ abstract class AbstractRandomDocuments extends AbstractRandomPeople
         $doc->codejercicio = $eje->codejercicio;
 
         $regimeniva = 'Exento';
-        if (random_int(0, 14) > 0 && isset($proveedores[$num])) {
+        if (isset($proveedores[$num]) && random_int(0, 14) > 0) {
             $doc->setSubject([$proveedores[$num]]);
             $regimeniva = $proveedores[$num]->regimeniva;
         } else {
@@ -169,10 +169,10 @@ abstract class AbstractRandomDocuments extends AbstractRandomPeople
     /**
      * Generates a random sale document
      *
-     * @param BusinessDocument $doc
-     * @param Model\Ejercicio  $eje
-     * @param Model\Cliente[]  $clientes
-     * @param int              $num
+     * @param Model\Base\SalesDocument $doc
+     * @param Model\Ejercicio          $eje
+     * @param Model\Cliente[]          $clientes
+     * @param int                      $num
      *
      * @return string
      */
@@ -181,7 +181,7 @@ abstract class AbstractRandomDocuments extends AbstractRandomPeople
         $doc->codejercicio = $eje->codejercicio;
 
         $regimeniva = 'Exento';
-        if (random_int(0, 14) > 0 && isset($clientes[$num])) {
+        if (isset($clientes[$num]) && random_int(0, 14) > 0) {
             $doc->setSubject([$clientes[$num]]);
             $regimeniva = $clientes[$num]->regimeniva;
         } else {
@@ -217,6 +217,7 @@ abstract class AbstractRandomDocuments extends AbstractRandomPeople
 
         $numlineas = (int) $this->cantidad(0, 10, 200);
         while ($numlineas > 0) {
+            $lineaClass = self::MODEL_NAMESPACE . $lineaClass;
             $lin = new $lineaClass();
             $lin->{$iddoc} = $doc->{$iddoc};
             $lin->cantidad = $modcantidad * $this->cantidad(1, 3, 19);

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -18,10 +18,10 @@
  */
 namespace FacturaScripts\Core\Controller;
 
-use FacturaScripts\Core\Lib\ExtendedController;
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Base\DivisaTools;
-use FacturaScripts\Core\Model\CodeModel;
+use FacturaScripts\Core\Lib\ExtendedController;
+use FacturaScripts\Core\Model;
 
 /**
  * Controller to list the items in the RegularizacionImpuesto model
@@ -66,13 +66,13 @@ class EditRegularizacionImpuesto extends ExtendedController\PanelController
      */
     public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'vat-regularization';
-        $pagedata['menu'] = 'accounting';
-        $pagedata['icon'] = 'fa-map-signs';
-        $pagedata['showonmenu'] = false;
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'vat-regularization';
+        $pageData['menu'] = 'accounting';
+        $pageData['icon'] = 'fa-map-signs';
+        $pageData['showonmenu'] = false;
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
@@ -91,8 +91,8 @@ class EditRegularizacionImpuesto extends ExtendedController\PanelController
     /**
      * Load data view procedure
      *
-     * @param string                      $viewName
-     * @param ExtendedController\BaseView $view
+     * @param string                                                                              $viewName
+     * @param ExtendedController\BaseView|ExtendedController\EditView|ExtendedController\ListView $view
      */
     protected function loadData($viewName, $view)
     {
@@ -122,13 +122,13 @@ class EditRegularizacionImpuesto extends ExtendedController\PanelController
                         new DataBaseWhere('asientos.fecha', $endDate, '<='),
                         new DataBaseWhere('subcuentas.codcuentaesp', 'IVAREX,IVAREP,IVARUE,IVARRE,IVASEX,IVASIM,IVASOP,IVASUE', 'IN')
                     ];
-                    $orderby = [
+                    $orderBy = [
                         'cuentasesp.descripcion' => 'ASC',
                         'subcuentas.codimpuesto' => 'ASC',
                         'partidas.iva' => 'ASC',
                         'partidas.recargo' => 'ASC'
                     ];
-                    $view->loadData(false, $where, $orderby);
+                    $view->loadData(false, $where, $orderBy);
                     $this->calculateAmounts($view->getCursor());
                 }
                 break;
@@ -174,7 +174,7 @@ class EditRegularizacionImpuesto extends ExtendedController\PanelController
      *
      * @return bool
      */
-    protected function execPreviousAction($action)
+    protected function execPreviousAction($action): bool
     {
         switch ($action) {
             case 'create-accounting-entry':
@@ -220,7 +220,7 @@ class EditRegularizacionImpuesto extends ExtendedController\PanelController
             new DataBaseWhere($fields, mb_strtolower($data['term']), 'LIKE')
         ];
 
-        foreach (CodeModel::all($data['source'], $data['field'], $data['title'], false, $where) as $row) {
+        foreach (Model\CodeModel::all($data['source'], $data['field'], $data['title'], false, $where) as $row) {
             $results[] = ['key' => $row->code, 'value' => $row->description];
         }
         return $results;
@@ -229,7 +229,7 @@ class EditRegularizacionImpuesto extends ExtendedController\PanelController
     /**
      * Calculates the amounts for the different sections of the regularization
      *
-     * @param PartidaImpuestoResumen[] $data
+     * @param Model\PartidaImpuestoResumen[] $data
      */
     private function calculateAmounts($data)
     {
@@ -239,12 +239,12 @@ class EditRegularizacionImpuesto extends ExtendedController\PanelController
         $this->purchases = 0.00;
 
         foreach ($data as $row) {
-            if (in_array($row->codcuentaesp, ['IVAREX','IVAREP','IVARUE','IVARRE'])) {
+            if (\in_array($row->codcuentaesp, ['IVAREX','IVAREP','IVARUE','IVARRE'])) {
                 $this->sales += $row->cuotaiva + $row->cuotarecargo;
                 continue;
             }
 
-            if (in_array($row->codcuentaesp, ['IVASEX','IVASIM','IVASOP','IVASUE'])) {
+            if (\in_array($row->codcuentaesp, ['IVASEX','IVASIM','IVASOP','IVASUE'])) {
                 $this->purchases += $row->cuotaiva + $row->cuotarecargo;
             }
         }
@@ -258,9 +258,9 @@ class EditRegularizacionImpuesto extends ExtendedController\PanelController
      * @param string $field
      * @return string
      */
-    public function getAmount($field)
+    public function getAmount($field): string
     {
         $divisaTools = new DivisaTools();
-        return $divisaTools->format($this->{$field}, 2);
+        return $divisaTools::format($this->{$field}, 2);
     }
 }

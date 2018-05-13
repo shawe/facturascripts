@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2018    Carlos Garcia Gomez <carlos@facturascripts.com>
+ * Copyright (C) 2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -28,57 +28,61 @@ use FacturaScripts\Core\Base\FileManager;
  */
 class FileManagerTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @var FileManager
-     */
-    protected $object;
 
-    /**
-     * @covers \FacturaScripts\Core\Base\FileManager::getFrom
-     */
-    public function testGetFrom()
+    public function testCreateWritableFolder()
     {
-        $this::assertNotEmpty($this->object->getFrom(\FS_FOLDER));
+        $this::assertTrue(FileManager::mkDir(\FS_FOLDER . '/MyFiles/TestWritable1/Test1/Test2/Test3', 0777, true));
+        $scan = FileManager::scanFolder(\FS_FOLDER . '/MyFiles/TestWritable1', true, []);
+        $this::assertNotEmpty($scan, '<pre>' . print_r($scan, true) . '</pre>');
     }
 
     /**
-     * @covers \FacturaScripts\Core\Base\FileManager::getFilesFrom
+     * @covers \FacturaScripts\Core\Base\FileManager::scanFolder
      */
-    public function testGetFilesFrom()
+    public function testScanFolder()
     {
-        $this::assertNotEmpty($this->object->getFrom(\FS_FOLDER . '/MyFiles'));
+        FileManager::recurseCopy(\FS_FOLDER . '/MyFiles/TestWritable1', \FS_FOLDER . '/MyFiles/TestWritable2');
+        $this::assertNotEmpty(FileManager::scanFolder(\FS_FOLDER . '/MyFiles/TestWritable2'));
+        $this::assertEquals(
+            FileManager::scanFolder(\FS_FOLDER . '/MyFiles/TestWritable1', true),
+            FileManager::scanFolder(\FS_FOLDER . '/MyFiles/TestWritable2', true),
+            'Folder not equals'
+        );
+        $this::assertTrue(
+            FileManager::delTree(\FS_FOLDER . '/MyFiles/TestWritable1/Test1/Test2'),
+            'Recursive delete dir fails.'
+        );
+        $this::assertNotEquals(
+            FileManager::scanFolder(\FS_FOLDER . '/MyFiles/TestWritable1', true),
+            FileManager::scanFolder(\FS_FOLDER . '/MyFiles/TestWritable2', true),
+            'Folder are equals '
+            . '<pre>' . print_r(
+                \array_diff(
+                    FileManager::scanFolder(\FS_FOLDER . '/MyFiles/TestWritable1', true),
+                    FileManager::scanFolder(\FS_FOLDER . '/MyFiles/TestWritable2', true)
+                ),
+                true
+            ) . '</pre>'
+        );
     }
 
     /**
-     * @covers \FacturaScripts\Core\Base\FileManager::getAllFrom
+     * @covers \FacturaScripts\Core\Base\FileManager::delTree
      */
-    public function testGetAllFrom()
+    public function testDelTreeWritableFolder()
     {
-        $this::assertNotEmpty($this->object->getFrom(\FS_FOLDER . '/MyFiles'));
+        $this::assertTrue(FileManager::delTree(\FS_FOLDER . '/MyFiles/TestWritable1'), 'Recursive delete dir fails.');
+        $this::assertTrue(FileManager::delTree(\FS_FOLDER . '/MyFiles/TestWritable2'), 'Recursive delete dir fails.');
     }
 
     /**
-     * @covers \FacturaScripts\Core\Base\FileManager::createFolder
+     * @covers \FacturaScripts\Core\Base\FileManager::delTree
      */
-    public function testCreateFolder()
+    public function testDelTreeNonWritableFolder()
     {
-        $this::assertTrue($this->object->createFolder(\FS_FOLDER . '/MyFiles/Test1/Test2/Test3'), 'Recursive folder creation fails.');
-    }
-
-    /**
-     * @covers \FacturaScripts\Core\Base\FileManager::deleteDirectory
-     */
-    public function testDeleteDirectory()
-    {
-        $this::assertTrue($this->object->deleteDirectory(\FS_FOLDER . '/MyFiles/Test1'), 'Recursive delete dir fails.');
-    }
-
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
-    protected function setUp()
-    {
-        $this->object = new FileManager();
+        $this::assertTrue(
+            FileManager::delTree(\FS_FOLDER . '/MyFiles/TestNonWritable'),
+            'Recursive delete dir fails.'
+        );
     }
 }

@@ -95,7 +95,7 @@ class EditSettings extends ExtendedController\PanelController
      *
      * @return array
      */
-    private function allSettingsXMLViews()
+    private function allSettingsXMLViews(): array
     {
         $names = [];
         $files = array_diff(scandir(FS_FOLDER . '/Dinamic/XMLView', \SCANDIR_SORT_ASCENDING), ['.', '..']);

@@ -54,7 +54,7 @@ class CSVImport
         foreach ($csv->data as $row) {
             $sql .= $sep . '(';
             $sep2 = '';
-            foreach ($row as $value) {
+            foreach ((array) $row as $value) {
                 $sql .= $sep2 . self::valueToSql($dataBase, $value);
                 $sep2 = ', ';
             }
@@ -92,8 +92,8 @@ class CSVImport
      */
     protected static function getTableFilePath(string $table): string
     {
-        if (!defined('FS_CODPAIS')) {
-            define('FS_CODPAIS', 'ESP');
+        if (!\defined('FS_CODPAIS')) {
+            \define('FS_CODPAIS', 'ESP');
         }
 
         $filePath = FS_FOLDER . '/Dinamic/Data/Codpais/' . FS_CODPAIS . '/' . $table . '.csv';

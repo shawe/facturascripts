@@ -146,8 +146,8 @@ class BaseComponent
     /**
      * Generate some random data.
      *
-     * @param $numRecords
-     * @param $maxWord
+     * @param int $numRecords
+     * @param int $maxWord
      */
     protected function generateRandomData($numRecords, $maxWord)
     {

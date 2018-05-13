@@ -75,7 +75,7 @@ class ListPedidoProveedor extends ExtendedController\ListController
         $paymentValues = $this->codeModel::all('formaspago', 'codpago', 'descripcion');
         $this->addFilterSelect('ListPedidoProveedor', 'codpago', 'payment-method', 'codpago', $paymentValues);
 
-        $this->addFilterAutocomplete('ListPedidoProveedor', 'codproveedor', 'supplier', 'codproveedor', 'proveedores', 'codproveedor', 'nombre');
+        $this->addFilterAutocomplete('ListPedidoProveedor', 'proveedores', 'codproveedor', 'supplier', 'nombre');
 
         // Delivery notes lines
         $this->createViewLines();

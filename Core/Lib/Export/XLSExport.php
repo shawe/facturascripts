@@ -159,9 +159,9 @@ class XLSExport implements ExportInterface
     /**
      * Set the table content.
      *
-     * @param $columns
-     * @param $tableCols
-     * @param $sheetHeaders
+     * @param array $columns
+     * @param array $tableCols
+     * @param array $sheetHeaders
      */
     private function setTableColumns(&$columns, &$tableCols, &$sheetHeaders)
     {

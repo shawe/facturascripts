@@ -147,7 +147,7 @@ class AdminPlugins extends Base\Controller
     /**
      * Execute main actions.
      *
-     * @param $action
+     * @param string $action
      */
     private function execAction($action)
     {

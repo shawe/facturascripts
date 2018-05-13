@@ -20,6 +20,7 @@
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base;
+use FacturaScripts\Core\Model\Base\ModelClass;
 use FacturaScripts\Dinamic\Lib\BusinessDocumentTools;
 use FacturaScripts\Dinamic\Model\Cliente;
 use FacturaScripts\Dinamic\Model\Proveedor;
@@ -80,9 +81,11 @@ abstract class BusinessDocumentController extends PanelController
         $modelName = '\FacturaScripts\Dinamic\Model\\' . $modelName;
         $model = new $modelName();
 
-        $order = [$model->primaryDescriptionColumn() => 'ASC'];
-        foreach ($model->all([], $order, 0, self::ITEM_SELECT_LIMIT) as $newModel) {
-            $values[$newModel->primaryColumnValue()] = $newModel->primaryDescription();
+        if ($model instanceof ModelClass) {
+            $order = [$model->primaryDescriptionColumn() => 'ASC'];
+            foreach ($model->all([], $order, 0, self::ITEM_SELECT_LIMIT) as $newModel) {
+                $values[$newModel->primaryColumnValue()] = $newModel->primaryDescription();
+            }
         }
 
         return $values;

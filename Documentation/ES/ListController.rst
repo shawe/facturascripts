@@ -191,11 +191,11 @@ controlador más arriba o abajo
 
 .. code:: php
 
-        public function getPageData()
+        public function getPageData(): array
         {
-            $pagedata = parent::getPageData();
-            $pagedata['title'] = 'Agentes';
-            $pagedata['icon'] = 'fa-user-circle-o';
-            $pagedata['menu'] = 'admin';
-            return $pagedata;
+            $pageData = parent::getPageData();
+            $pageData['title'] = 'Agentes';
+            $pageData['icon'] = 'fa-user-circle-o';
+            $pageData['menu'] = 'admin';
+            return $pageData;
         }

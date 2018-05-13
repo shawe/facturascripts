@@ -75,7 +75,7 @@ class ListFacturaProveedor extends ExtendedController\ListController
         $paymentValues = $this->codeModel::all('formaspago', 'codpago', 'descripcion');
         $this->addFilterSelect('ListFacturaProveedor', 'codpago', 'payment-method', 'codpago', $paymentValues);
 
-        $this->addFilterAutocomplete('ListFacturaProveedor', 'codproveedor', 'supplier', 'codproveedor', 'proveedores', 'codproveedor', 'nombre');
+        $this->addFilterAutocomplete('ListFacturaProveedor', 'proveedores', 'codproveedor', 'supplier', 'nombre');
         $this->addFilterCheckbox('ListFacturaProveedor', 'paid', 'paid', 'pagada');
 
         // Delivery notes lines

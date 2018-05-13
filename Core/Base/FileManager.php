@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -45,10 +45,10 @@ class FileManager
         $files = is_dir($folder) ? static::scanFolder($folder) : [];
         foreach ($files as $file) {
             $path = $folder . DIRECTORY_SEPARATOR . $file;
-            is_dir($path) ? static::delTree($path) : unlink($path);
+            is_dir($path) ? static::delTree($path) : @unlink($path);
         }
 
-        return is_dir($folder) ? rmdir($folder) : unlink($folder);
+        return is_dir($folder) ? @rmdir($folder) : @unlink($folder);
     }
 
     /**
@@ -77,17 +77,19 @@ class FileManager
     public static function recurseCopy(string $src, string $dst)
     {
         $folder = opendir($src);
-        @mkdir($dst);
-        while (false !== ($file = readdir($folder))) {
-            if ($file === '.' || $file === '..') {
-                continue;
-            } elseif (is_dir($src . DIRECTORY_SEPARATOR . $file)) {
-                static::recurseCopy($src . DIRECTORY_SEPARATOR . $file, $dst . DIRECTORY_SEPARATOR . $file);
-            } else {
-                copy($src . DIRECTORY_SEPARATOR . $file, $dst . DIRECTORY_SEPARATOR . $file);
+        if (static::mkDir($dst)) {
+            while (\is_resource($folder) && false !== ($file = readdir($folder))) {
+                if ($file === '.' || $file === '..') {
+                    continue;
+                }
+                if (is_dir($src . DIRECTORY_SEPARATOR . $file)) {
+                    static::recurseCopy($src . DIRECTORY_SEPARATOR . $file, $dst . DIRECTORY_SEPARATOR . $file);
+                } else {
+                    copy($src . DIRECTORY_SEPARATOR . $file, $dst . DIRECTORY_SEPARATOR . $file);
+                }
             }
+            closedir($folder);
         }
-        closedir($folder);
     }
 
     /**
@@ -95,17 +97,18 @@ class FileManager
      *
      * @param string $folder
      * @param bool   $recursive
+     * @param array  $exclude
      *
      * @return array
      */
-    public static function scanFolder(string $folder, bool $recursive = false): array
+    public static function scanFolder(string $folder, bool $recursive = false, array $exclude = ['.', '..']): array
     {
         $scan = scandir($folder, SCANDIR_SORT_ASCENDING);
-        if (!is_array($scan)) {
+        if (!\is_array($scan)) {
             return [];
         }
 
-        $rootFolder = array_diff($scan, ['.', '..']);
+        $rootFolder = array_diff($scan, $exclude);
         if (!$recursive) {
             return $rootFolder;
         }
@@ -124,5 +127,20 @@ class FileManager
         }
 
         return $result;
+    }
+
+    /**
+     * Create a folder in a secure way.
+     * @source https://github.com/kalessil/phpinspectionsea/blob/master/docs/probable-bugs.md#mkdir-race-condition
+     *
+     * @param string $folder path to folder
+     * @param int    $mode important to set 0 at start (generate sticky bits without it)
+     * @param bool   $recursive true if path must be created recursively
+     *
+     * @return bool
+     */
+    public static function mkDir($folder, $mode = 0777, $recursive = false): bool
+    {
+        return is_dir($folder) || (@mkdir($folder, $mode, $recursive) && is_dir($folder));
     }
 }

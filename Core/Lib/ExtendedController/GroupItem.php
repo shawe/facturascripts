@@ -85,7 +85,7 @@ class GroupItem extends VisualItem implements VisualItemInterface
         parent::loadFromJSON($group);
         $this->icon = (string) $group['icon'];
 
-        foreach ($group['columns'] as $column) {
+        foreach ((array) $group['columns'] as $column) {
             $columnItem = ColumnItem::newFromJSON($column);
             $this->columns[$columnItem->name] = $columnItem;
         }

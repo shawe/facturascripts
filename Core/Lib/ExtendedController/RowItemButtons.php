@@ -54,7 +54,7 @@ class RowItemButtons extends RowItem
     public function loadFromJSON($row)
     {
         $this->type = (string) $row['type'];
-        foreach ($row['buttons'] as $button) {
+        foreach ((array) $row['buttons'] as $button) {
             $widgetButton = WidgetButton::newFromJSON($button);
             $this->buttons[] = $widgetButton;
         }

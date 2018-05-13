@@ -147,7 +147,7 @@ abstract class ListController extends BaseController
             $orderKey = '';
 
             // If processing the selected view, calculate order and filters
-            if ($this->active == $viewName) {
+            if ($this->active === $viewName) {
                 $orderKey = $this->request->get('order', '');
                 $where = $this->getWhere();
             }
@@ -178,19 +178,30 @@ abstract class ListController extends BaseController
     /**
      * Add an autocomplete type filter to the ListView.
      *
-     * @param string $viewName
-     * @param string $key        (Filter identifier)
-     * @param string $label      (Human reader description)
-     * @param string $field      (Field of the model to apply filter)
-     * @param string $table      (Table to search)
-     * @param string $fieldcode  (Primary column of the table to search and match)
-     * @param string $fieldtitle (Column to show name or description)
-     * @param array  $where      (Extra where conditions)
+     * @param string $viewName   Name of the view to attach the filter
+     * @param string $table      Table to search
+     * @param string $key        Filter identifier
+     * @param string $label      Human reader description
+     * @param string $fieldTitle Column to show name or description
+     * @param string $field      Field of the model to apply filter (commonly same as $key)
+     * @param string $fieldCode  Primary column of the table to search and match (commonly same as $key)
+     * @param array  $where      Extra where conditions
      */
-    protected function addFilterAutocomplete($viewName, $key, $label, $field, $table, $fieldcode, $fieldtitle, $where = [])
+    protected function addFilterAutocomplete($viewName, $table, $key, $label, $fieldTitle, $field = null, $fieldCode = null, array $where = [])
     {
-        $value = ($viewName == $this->active) ? $this->request->get($key, '') : '';
-        $this->views[$viewName]->addFilter($key, ListFilter::newAutocompleteFilter($label, $field, $table, $fieldcode, $fieldtitle, $value, $where));
+        $value = ($viewName === $this->active) ? $this->request->get($key, '') : '';
+        $this->views[$viewName]->addFilter(
+            $key,
+            ListFilter::newAutocompleteFilter(
+                $label,
+                $field ?? $key,
+                $table,
+                $fieldCode ?? $key,
+                $fieldTitle,
+                $value,
+                $where
+            )
+        );
     }
 
     /**
@@ -205,8 +216,11 @@ abstract class ListController extends BaseController
      */
     protected function addFilterCheckbox($viewName, $key, $label, $field, $inverse = false, $matchValue = true)
     {
-        $value = $viewName == $this->active ? $this->request->get($key, '') : '';
-        $this->views[$viewName]->addFilter($key, ListFilter::newCheckboxFilter($field, $value, $label, $inverse, $matchValue));
+        $value = $viewName === $this->active ? $this->request->get($key, '') : '';
+        $this->views[$viewName]->addFilter(
+            $key,
+            ListFilter::newCheckboxFilter($field, $value, $label, $inverse, $matchValue)
+        );
     }
 
     /**
@@ -236,9 +250,9 @@ abstract class ListController extends BaseController
         $config = [
             'field' => $field,
             'label' => $label,
-            'valueFrom' => $viewName == $this->active ? $this->request->get($key . '-from', '') : '',
+            'valueFrom' => $viewName === $this->active ? $this->request->get($key . '-from', '') : '',
             'operatorFrom' => $this->request->get($key . '-from-operator', '>='),
-            'valueTo' => $viewName == $this->active ? $this->request->get($key . '-to', '') : '',
+            'valueTo' => $viewName === $this->active ? $this->request->get($key . '-to', '') : '',
             'operatorTo' => $this->request->get($key . '-to-operator', '<='),
         ];
 
@@ -269,7 +283,7 @@ abstract class ListController extends BaseController
      */
     protected function addFilterSelect($viewName, $key, $label, $field, array $values = [])
     {
-        $value = $viewName == $this->active ? $this->request->get($key, '') : '';
+        $value = $viewName === $this->active ? $this->request->get($key, '') : '';
         $this->views[$viewName]->addFilter($key, ListFilter::newSelectFilter($label, $field, $values, $value));
     }
 
@@ -321,7 +335,12 @@ abstract class ListController extends BaseController
      */
     protected function addView($viewName, $modelName, $viewTitle = 'search', $icon = 'fa-search')
     {
-        $this->views[$viewName] = new ListView($viewTitle, self::MODEL_NAMESPACE . $modelName, $viewName, $this->user->nick);
+        $this->views[$viewName] = new ListView(
+            $viewTitle,
+            self::MODEL_NAMESPACE . $modelName,
+            $viewName,
+            $this->user->nick
+        );
         $this->icons[$viewName] = $icon;
         if (empty($this->active)) {
             $this->active = $viewName;
@@ -523,7 +542,7 @@ abstract class ListController extends BaseController
             $cols = $this->getTextColumns($listView, 6);
             $json[$viewName]['columns'] = $cols;
 
-            foreach ($listView->getCursor() as $item) {
+            foreach ((array) $listView->getCursor() as $item) {
                 $jItem = ['url' => $item->url()];
                 foreach ($cols as $col) {
                     $jItem[$col] = $item->{$col};

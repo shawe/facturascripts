@@ -154,7 +154,7 @@ class EditPageOption extends Base\Controller
      */
     private function checkNickAndID()
     {
-        if ($this->model->nick != $this->selectedUser) {
+        if ($this->model->nick !== $this->selectedUser) {
             $this->model->id = null;
             $this->model->nick = empty($this->selectedUser) ? null : $this->selectedUser;
         }

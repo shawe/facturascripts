@@ -89,7 +89,7 @@ class Dashboard extends Base\Controller
     /**
      * Get the list of components to this user.
      *
-     * @param $userNick
+     * @param string $userNick
      */
     private function getListComponents($userNick)
     {

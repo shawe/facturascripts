@@ -52,14 +52,14 @@ abstract class AbstractRandom
      *
      * @param int $num
      *
-     * @return mixed
+     * @return int
      */
-    abstract public function generate($num = 50);
+    abstract public function generate($num = 50): int;
 
     /**
      * AbstractRandom constructor.
      *
-     * @param $model
+     * @param mixed $model
      */
     public function __construct($model)
     {
@@ -125,19 +125,25 @@ abstract class AbstractRandom
                 break;
 
             case 1:
-                $texto .= ": $descripcion con {$this->getOneItem($descripciones)}.";
+                $texto .= ': ' . $descripcion . ' con ' . $this->getOneItem($descripciones) . '.';
                 break;
 
             case 2:
-                $texto .= ": $descripcion con {$this->getOneItem($descripciones)}, {$this->getOneItem($descripciones)}, {$this->getOneItem($descripciones)} y {$this->getOneItem($descripciones)}.";
+                $texto .= ': ' . $descripcion . ' con ' . $this->getOneItem($descripciones) . ', '
+                    . $this->getOneItem($descripciones) . ',' . ' ' . $this->getOneItem($descripciones) . ' y '
+                    . $this->getOneItem($descripciones) . '.';
                 break;
 
             case 3:
-                $texto .= ": $descripcion con:\n- {$this->getOneItem($descripciones)}\n- {$this->getOneItem($descripciones)}\n- {$this->getOneItem($descripciones)}\n- {$this->getOneItem($descripciones)}.";
+                $texto .= ': ' . $descripcion . ' con:' . \PHP_EOL . '- ' . $this->getOneItem($descripciones) . \PHP_EOL
+                    . '- ' . $this->getOneItem($descripciones) . \PHP_EOL
+                    . '- ' . $this->getOneItem($descripciones) . \PHP_EOL
+                    . '- ' . $this->getOneItem($descripciones);
                 break;
 
             default:
-                $texto .= ": $descripcion con {$this->getOneItem($descripciones)}, {$this->getOneItem($descripciones)} y {$this->getOneItem($descripciones)}.";
+                $texto .= ': ' . $descripcion . ' con ' . $this->getOneItem($descripciones)
+                    . ', ' . $this->getOneItem($descripciones) . ' y ' . $this->getOneItem($descripciones) . '.';
                 break;
         }
 
@@ -180,7 +186,7 @@ abstract class AbstractRandom
     /**
      * Return one random item from given array.
      *
-     * @param $array
+     * @param array $array
      *
      * @return mixed
      */
@@ -203,7 +209,8 @@ abstract class AbstractRandom
             'U' => '30', 'V' => '31', 'W' => '32', 'X' => '33', 'Y' => '34', 'Z' => '35',
         ];
 
-        $ccc = random_int(1000, 9999) . random_int(1000, 9999) . random_int(1000, 9999) . random_int(1000, 9999) . random_int(1000, 9999);
+        $ccc = random_int(1000, 9999) . random_int(1000, 9999) . random_int(1000, 9999) . random_int(1000, 9999)
+            . random_int(1000, 9999);
         $dividendo = $ccc . $pesos[$pais[0]] . $pesos[$pais[1]] . '00';
         $digitoControl = 98 - \bcmod($dividendo, '97');
 
@@ -266,8 +273,8 @@ abstract class AbstractRandom
     /**
      * Suffle all items from $model and put it to $variable.
      *
-     * @param $variable
-     * @param $model
+     * @param array $variable
+     * @param mixed $model
      */
     public function shuffle(&$variable, $model)
     {
@@ -287,7 +294,11 @@ abstract class AbstractRandom
      */
     public function txt2codigo($txt, $len = 8): string
     {
-        $result = \str_replace([' ', '-', '_', '&', 'ó', ':', 'ñ', '"', "'", '*'], ['', '', '', '', 'O', '', 'N', '', '', '-'], strtoupper($txt));
+        $result = \str_replace(
+            [' ', '-', '_', '&', 'ó', ':', 'ñ', '"', "'", '*'],
+            ['', '', '', '', 'O', '', 'N', '', '', '-'],
+            strtoupper($txt)
+        );
         if (mb_strlen($result) > $len) {
             return substr($result, 0, $len - 1) . random_int(0, 9);
         }

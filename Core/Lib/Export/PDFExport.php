@@ -248,7 +248,7 @@ class PDFExport implements ExportInterface
             'total' => $this->i18n->trans('total'),
         ];
         $tableData = [];
-        foreach ($model->getlines() as $line) {
+        foreach ($model->getLines() as $line) {
             $tableData[] = [
                 'reference' => Base\Utils::fixHtml($line->referencia . ' - ' . $line->descripcion),
                 'quantity' => $this->numberTools::format($line->cantidad),
@@ -338,7 +338,13 @@ class PDFExport implements ExportInterface
 
             $this->tableWidth = $this->pdf->ez['pageWidth'] - self::CONTENT_X * 2;
 
-            $this->pdf->ezStartPageNumbers($this->pdf->ez['pageWidth'] / 2, self::FOOTER_Y, self::TEXT_SIZE_FH, 'left', '{PAGENUM} / {TOTALPAGENUM}');
+            $this->pdf->ezStartPageNumbers(
+                $this->pdf->ez['pageWidth'] / 2,
+                self::FOOTER_Y,
+                self::TEXT_SIZE_FH,
+                'left',
+                '{PAGENUM} / {TOTALPAGENUM}'
+            );
         } elseif ($this->pdf->y < 200) {
             $this->pdf->ezNewPage();
         } else {
@@ -352,10 +358,10 @@ class PDFExport implements ExportInterface
     /**
      * Set the table content.
      *
-     * @param $columns
-     * @param $tableCols
-     * @param $tableColsTitle
-     * @param $tableOptions
+     * @param array $columns
+     * @param array $tableCols
+     * @param array $tableColsTitle
+     * @param array $tableOptions
      */
     private function setTableColumns(&$columns, &$tableCols, &$tableColsTitle, &$tableOptions)
     {
@@ -445,8 +451,8 @@ class PDFExport implements ExportInterface
     /**
      * Remove the empty columns to save space.
      *
-     * @param $tableData
-     * @param $tableColsTitle
+     * @param array $tableData
+     * @param array $tableColsTitle
      */
     private function removeEmptyCols(&$tableData, &$tableColsTitle)
     {
@@ -504,11 +510,32 @@ class PDFExport implements ExportInterface
         $headerPos = $this->pdf->ez['pageHeight'] - 25;
         $header = $this->pdf->openObject();
         // Top Left
-        $this->pdf->addText(self::CONTENT_X, $headerPos, self::TEXT_SIZE_FH + 2, $this->getCompanyName());
+        $this->pdf->addText(
+            self::CONTENT_X,
+            $headerPos,
+            self::TEXT_SIZE_FH + 2,
+            $this->getCompanyName()
+        );
+        /*
         // Top Center
-        //$this->pdf->addText($this->pdf->ez['pageWidth']/2, $headerPos, self::TEXT_SIZE_FH + 2, 'Top Center', 0, 'center');
+        $this->pdf->addText(
+            $this->pdf->ez['pageWidth']/2,
+            $headerPos,
+            self::TEXT_SIZE_FH + 2,
+            'Top Center',
+            0,
+            'center'
+        );
         // Top Right
-        //$this->pdf->addText($this->tableWidth + self::CONTENT_X, $headerPos, self::TEXT_SIZE_FH + 2, 'Top Right', 0, 'right');
+        $this->pdf->addText(
+            $this->tableWidth + self::CONTENT_X,
+            $headerPos,
+            self::TEXT_SIZE_FH + 2,
+            'Top Right',
+            0,
+            'right'
+        );
+        */
         $this->pdf->closeObject();
         $this->pdf->addObject($header, 'all');
     }
@@ -519,13 +546,34 @@ class PDFExport implements ExportInterface
     protected function insertFooter()
     {
         $footer = $this->pdf->openObject();
+        /*
         // Bottom Left
-        //$this->pdf->addText(self::CONTENT_X, self::FOOTER_Y, self::TEXT_SIZE_FH, 'Bottom Left');
+        $this->pdf->addText(
+            self::CONTENT_X,
+            self::FOOTER_Y,
+            self::TEXT_SIZE_FH,
+            'Bottom Left'
+        );
         // Bottom Center
-        //$this->pdf->addText($this->pdf->ez['pageWidth']/2, self::FOOTER_Y, self::TEXT_SIZE_FH, 'Bottom Center', 0, 'center');
+        $this->pdf->addText(
+            $this->pdf->ez['pageWidth']/2,
+            self::FOOTER_Y,
+            self::TEXT_SIZE_FH,
+            'Bottom Center',
+            0,
+            'center'
+        );
+        */
         // Bottom Right
         $now = $this->i18n->trans('generated-at', ['%when%' => date('d-m-Y H:i')]);
-        $this->pdf->addText($this->tableWidth + self::CONTENT_X, self::FOOTER_Y, self::TEXT_SIZE_FH, $now, 0, 'right');
+        $this->pdf->addText(
+            $this->tableWidth + self::CONTENT_X,
+            self::FOOTER_Y,
+            self::TEXT_SIZE_FH,
+            $now,
+            0,
+            'right'
+        );
         $this->pdf->closeObject();
         $this->pdf->addObject($footer, 'all');
     }

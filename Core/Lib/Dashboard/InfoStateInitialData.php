@@ -53,9 +53,20 @@ class InfoStateInitialData
         $result['icon'] = 'fa-users';
         $result['group'] = 'customers';
         $result['values'] = [
-            ['name' => 'total', 'sql' => 'count(*)', 'type' => 'int'],
-            ['name' => 'new', 'sql' => 'SUM(CASE WHEN EXTRACT(YEAR FROM fechaalta) = EXTRACT(YEAR FROM current_date) THEN 1 ELSE 0 END)', 'type' => 'int'],
-            ['name' => 'suspended', 'sql' => 'SUM(CASE WHEN debaja THEN 1 ELSE 0 END)', 'type' => 'int'],
+            [
+                'name' => 'total',
+                'sql' => 'count(*)',
+                'type' => 'int'
+            ],
+            [
+                'name' => 'new',
+                'sql' => 'SUM(CASE WHEN EXTRACT(YEAR FROM fechaalta) = EXTRACT(YEAR FROM current_date) THEN 1 ELSE 0 END)',
+                'type' => 'int'],
+            [
+                'name' => 'suspended',
+                'sql' => 'SUM(CASE WHEN debaja THEN 1 ELSE 0 END)',
+                'type' => 'int'
+            ],
         ];
 
         return $result;
@@ -73,9 +84,21 @@ class InfoStateInitialData
         $result['icon'] = 'fa-users';
         $result['group'] = 'suppliers';
         $result['values'] = [
-            ['name' => 'total', 'sql' => 'count(*)', 'type' => 'int'],
-            ['name' => 'is-creditor', 'sql' => 'SUM(CASE WHEN acreedor THEN 1 ELSE 0 END)', 'type' => 'int'],
-            ['name' => 'suspended', 'sql' => 'SUM(CASE WHEN debaja THEN 1 ELSE 0 END)', 'type' => 'int'],
+            [
+                'name' => 'total',
+                'sql' => 'count(*)',
+                'type' => 'int'
+            ],
+            [
+                'name' => 'is-creditor',
+                'sql' => 'SUM(CASE WHEN acreedor THEN 1 ELSE 0 END)',
+                'type' => 'int'
+            ],
+            [
+                'name' => 'suspended',
+                'sql' => 'SUM(CASE WHEN debaja THEN 1 ELSE 0 END)',
+                'type' => 'int'
+            ],
         ];
 
         return $result;
@@ -93,10 +116,25 @@ class InfoStateInitialData
         $result['icon'] = 'fa-cube';
         $result['group'] = 'products';
         $result['values'] = [
-            ['name' => 'total', 'sql' => 'count(*)', 'type' => 'int'],
-            ['name' => 'for-sale', 'sql' => 'SUM(CASE WHEN sevende THEN 1 ELSE 0 END)', 'type' => 'int'],
-            ['name' => 'no-stock', 'sql' => 'SUM(CASE WHEN (sevende AND stockfis < 0) THEN 1 ELSE 0 END)', 'type' => 'int'],
-            ['name' => 'locked', 'sql' => 'SUM(CASE WHEN bloqueado THEN 1 ELSE 0 END)', 'type' => 'int'],
+            [
+                'name' => 'total',
+                'sql' => 'count(*)',
+                'type' => 'int'],
+            [
+                'name' => 'for-sale',
+                'sql' => 'SUM(CASE WHEN sevende THEN 1 ELSE 0 END)',
+                'type' => 'int'
+            ],
+            [
+                'name' => 'no-stock',
+                'sql' => 'SUM(CASE WHEN (sevende AND stockfis < 0) THEN 1 ELSE 0 END)',
+                'type' => 'int'
+            ],
+            [
+                'name' => 'locked',
+                'sql' => 'SUM(CASE WHEN bloqueado THEN 1 ELSE 0 END)',
+                'type' => 'int'
+            ],
         ];
 
         return $result;

@@ -78,8 +78,8 @@ class EditPedidoCliente extends ExtendedController\BusinessDocumentController
     protected function loadData($viewName, $view)
     {
         if ($viewName === 'EditPedidoCliente') {
-            $idpedido = $this->getViewModelValue('Document', 'idpedido');
-            $view->loadData($idpedido);
+            $idPedido = $this->getViewModelValue('Document', 'idpedido');
+            $view->loadData($idPedido);
         }
 
         parent::loadData($viewName, $view);

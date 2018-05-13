@@ -19,7 +19,6 @@
 
 namespace FacturaScripts\Core\Base;
 
-use FacturaScripts\Core\Base\FileManager;
 use ZipArchive;
 
 /**
@@ -112,6 +111,7 @@ class PluginManager
             $this->disableByDependecy($pluginName);
             $this->save();
             $this->deploy(true, true);
+            /** @noinspection DisconnectedForeachInstructionInspection */
             self::$minilog->info(self::$i18n->trans('plugin-disabled', ['%pluginName%' => $pluginName]));
             break;
         }

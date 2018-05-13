@@ -242,7 +242,11 @@ abstract class BusinessDocumentLine extends ModelClass
             }
 
             $stock = new Stock();
-            if (!$stock->loadFromCode('', [new DataBaseWhere('codalmacen', $codalmacen), new DataBaseWhere('referencia', $this->referencia)])) {
+            $where = [
+                new DataBaseWhere('codalmacen', $codalmacen),
+                new DataBaseWhere('referencia', $this->referencia)
+            ];
+            if (!$stock->loadFromCode('', $where)) {
                 $stock->codalmacen = $codalmacen;
                 $stock->referencia = $this->referencia;
             }

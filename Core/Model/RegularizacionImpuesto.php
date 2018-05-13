@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2014-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2014-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -113,7 +113,7 @@ class RegularizacionImpuesto extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'regularizacionimpuestos';
     }
@@ -123,7 +123,7 @@ class RegularizacionImpuesto extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idregularizacion';
     }
@@ -133,7 +133,7 @@ class RegularizacionImpuesto extends Base\ModelClass
      *
      * @return string
      */
-    public function primaryDescription()
+    public function primaryDescription(): string
     {
         return $this->codejercicio . ' - ' . $this->periodo;
     }
@@ -183,7 +183,7 @@ class RegularizacionImpuesto extends Base\ModelClass
      *
      * @return bool
      */
-    public function delete()
+    public function delete(): bool
     {
         // TODO: Apply transactions
         $sql = 'DELETE FROM ' . static::tableName()
@@ -208,7 +208,7 @@ class RegularizacionImpuesto extends Base\ModelClass
      * Calculate Period data
      *
      * @param string $period
-     * @param date|null $date
+     * @param string|null $date
      * @param bool $add
      * @return array
      */
@@ -308,7 +308,6 @@ class RegularizacionImpuesto extends Base\ModelClass
             $this->idsubcuentadeudora = $account->idsubcuenta;
             $this->codsubcuentadeudora = $account->codsubcuenta;
         }
-        return;
     }
 
     /**
@@ -317,7 +316,7 @@ class RegularizacionImpuesto extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         if (!parent::test()) {
             return false;

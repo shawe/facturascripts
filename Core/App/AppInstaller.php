@@ -18,6 +18,7 @@
  */
 namespace FacturaScripts\Core\App;
 
+use FacturaScripts\Core\Base\FileManager;
 use FacturaScripts\Core\Base\MiniLog;
 use FacturaScripts\Core\Base\PluginManager;
 use FacturaScripts\Core\Base\Translator;
@@ -133,7 +134,7 @@ class AppInstaller
     {
         // Check each needed folder to deploy
         foreach (['Plugins', 'Dinamic', 'MyFiles'] as $folder) {
-            if (!file_exists($folder) && !mkdir($folder) && !is_dir($folder)) {
+            if (!file_exists($folder) && !FileManager::mkDir($folder) && !is_dir($folder)) {
                 $this->miniLog->critical($this->i18n->trans('cant-create-folders', ['%folder%' => $folder]));
                 return false;
             }
@@ -340,8 +341,9 @@ class AppInstaller
      */
     private function testPostgreSql($dbData): bool
     {
-        $connectionStr = 'host=' . $dbData['host'] . ' port=' . $dbData['port'];
-        $connection = @\pg_connect($connectionStr . ' dbname=postgres user=' . $dbData['user'] . ' password=' . $dbData['pass']);
+        $connectionStr = 'host=' . $dbData['host'] . ' port=' . $dbData['port'] . ' dbname=postgres user='
+            . $dbData['user'] . ' password=' . $dbData['pass'];
+        $connection = @\pg_connect($connectionStr);
         if (\is_resource($connection)) {
             // Check that the DB exists, if it doesn't, we try to create a new one
             $sqlExistsBD = "SELECT 1 AS result FROM pg_database WHERE datname = '" . $dbData['name'] . "';";
@@ -358,7 +360,7 @@ class AppInstaller
 
         $this->miniLog->critical($this->i18n->trans('cant-connect-database'));
         if (\is_resource($connection) && \pg_last_error($connection) !== false) {
-            $this->miniLog->critical((string) \pg_last_error($connection));
+            $this->miniLog->critical(\pg_last_error($connection));
         }
 
         return false;

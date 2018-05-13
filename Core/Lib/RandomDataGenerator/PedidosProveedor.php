@@ -54,7 +54,7 @@ class PedidosProveedor extends AbstractRandomDocuments
         while ($generated < $num) {
             $ped->clear();
             $this->randomizeDocument($ped);
-            $eje = $this->ejercicio->getByFecha($ped->fecha);
+            $eje = $this->ejercicio::getByFecha($ped->fecha);
             if (false === $eje) {
                 break;
             }
@@ -62,7 +62,7 @@ class PedidosProveedor extends AbstractRandomDocuments
             $recargo = (random_int(0, 4) === 0);
             $regimeniva = $this->randomizeDocumentCompra($ped, $eje, $proveedores, $generated);
             if ($ped->save()) {
-                $this->randomLineas($ped, 'idpedido', self::MODEL_NAMESPACE . 'LineaPedidoProveedor', $regimeniva, $recargo);
+                $this->randomLineas($ped, 'idpedido', 'LineaPedidoProveedor', $regimeniva, $recargo);
                 ++$generated;
             } else {
                 break;

@@ -31,21 +31,6 @@ class MAILExport extends PDFExport
 {
 
     /**
-     * Return the full document.
-     *
-     * @return string
-     */
-    public function getDoc(): string
-    {
-        if ($this->pdf === null) {
-            $this->newPage();
-            $this->pdf->ezText('');
-        }
-
-        return $this->pdf->ezOutput();
-    }
-
-    /**
      * Set headers and output document content to response.
      *
      * @param Response $response

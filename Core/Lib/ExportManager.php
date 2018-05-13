@@ -65,7 +65,7 @@ class ExportManager
      *
      * @return string
      */
-    public function defaultOption()
+    public function defaultOption(): string
     {
         $keys = array_keys(self::$options);
 
@@ -77,7 +77,7 @@ class ExportManager
      *
      * @return array
      */
-    public function options()
+    public function options(): array
     {
         return self::$options;
     }
@@ -166,7 +166,7 @@ class ExportManager
      *
      * @return string
      */
-    private function getExportClassName($option)
+    private function getExportClassName($option): string
     {
         $className = 'FacturaScripts\\Dinamic\\Lib\\Export\\' . $option . 'Export';
         if (!class_exists($className)) {

@@ -92,11 +92,11 @@ class WidgetItemFileChooser extends WidgetItem
     /**
      * Generates the HTML code to display the data in read only.
      *
-     * @param $value
+     * @param string $value
      *
      * @return string
      */
-    public function getReadOnlyHTML($value)
+    public function getReadOnlyHTML($value): string
     {
         $specialAttributes = $this->specialAttributes();
         return $this->standardEditHTMLWidget($value, $specialAttributes);

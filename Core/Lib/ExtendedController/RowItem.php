@@ -124,7 +124,7 @@ abstract class RowItem implements VisualItemInterface
     /**
      * Returns a list of WidgetButton loaded from JSON.
      *
-     * @param $buttonsJSON
+     * @param array $buttonsJSON
      *
      * @return WidgetButton[]
      */

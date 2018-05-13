@@ -82,13 +82,15 @@ class WidgetItemAutocomplete extends WidgetItem
                 . '<i class="fa fa-keyboard-o" aria-hidden="true"></i></span></span>';
         } else {
             $html .= '<span class="input-group-prepend">'
-                . '<button type="button" class="btn btn-warning" onclick="$(\'#' . $this->fieldName . 'Autocomplete, #' . $this->fieldName . 'Autocomplete2\').val(\'\');">'
+                . '<button type="button" class="btn btn-warning" onclick="$(\'#' . $this->fieldName . 'Autocomplete, #'
+                . $this->fieldName . 'Autocomplete2\').val(\'\');">'
                 . '<i class="fa fa-remove" aria-hidden="true"></i>'
                 . '</button>'
                 . '</span>';
         }
 
-        $html .= '<input type="text" id="' . $this->fieldName . 'Autocomplete2" value="' . $this->getTextValue($value) . '" class="form-control autocomplete"'
+        $html .= '<input type="text" id="' . $this->fieldName . 'Autocomplete2" value="' . $this->getTextValue($value)
+            . '" class="form-control autocomplete"'
             . ' data-source="' . $this->values[0]['source'] . '" data-field="' . $this->values[0]['fieldcode'] . '"'
             . ' data-title="' . $this->values[0]['fieldtitle'] . '" ' . $specialAttributes . ' />'
             . '</div>';

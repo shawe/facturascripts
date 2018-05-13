@@ -27,7 +27,8 @@ use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Base\MiniLog;
 use FacturaScripts\Core\Base\Translator;
 use FacturaScripts\Core\Base\Utils;
-use FacturaScripts\Core\Lib\DocumentReportsBase;
+use FacturaScripts\Core\Lib\DocumentReportsBase\DocumentReportsFilterList;
+use FacturaScripts\Core\Lib\DocumentReportsBase\DocumentReportsSource;
 use FacturaScripts\Core\Model;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -51,7 +52,7 @@ class DocumentReports extends Controller
     /**
      * List of filters.
      *
-     * @var DocumentReportsBase\DocumentReportsFilterList[]
+     * @var DocumentReportsFilterList[]
      */
     public $filters;
 
@@ -65,7 +66,7 @@ class DocumentReports extends Controller
     /**
      * List of sources.
      *
-     * @var DocumentReportsBase\DocumentReportsSource[]
+     * @var DocumentReportsSource[]
      */
     public $sources;
 
@@ -92,15 +93,15 @@ class DocumentReports extends Controller
         $this->labels = [];
 
         $this->sources = [
-            new DocumentReportsBase\DocumentReportsSource('customer-invoices', '181,225,174'),
-            new DocumentReportsBase\DocumentReportsSource('supplier-invoices', '154,206,223'),
+            new DocumentReportsSource('customer-invoices', '181,225,174'),
+            new DocumentReportsSource('supplier-invoices', '154,206,223'),
         ];
 
         $this->filters = [
-            'employee' => new DocumentReportsBase\DocumentReportsFilterList(self::MODEL_NAMESPACE . 'Agente', '', 'fa-users'),
-            'serie' => new DocumentReportsBase\DocumentReportsFilterList(self::MODEL_NAMESPACE . 'Serie', AppSettings::get('default', 'codserie')),
-            'currency' => new DocumentReportsBase\DocumentReportsFilterList(self::MODEL_NAMESPACE . 'Divisa', AppSettings::get('default', 'coddivisa')),
-            'payment-method' => new DocumentReportsBase\DocumentReportsFilterList(self::MODEL_NAMESPACE . 'FormaPago'),
+            'employee' => new DocumentReportsFilterList(self::MODEL_NAMESPACE . 'Agente', '', 'fa-users'),
+            'serie' => new DocumentReportsFilterList(self::MODEL_NAMESPACE . 'Serie', AppSettings::get('default', 'codserie')),
+            'currency' => new DocumentReportsFilterList(self::MODEL_NAMESPACE . 'Divisa', AppSettings::get('default', 'coddivisa')),
+            'payment-method' => new DocumentReportsFilterList(self::MODEL_NAMESPACE . 'FormaPago'),
         ];
     }
 
@@ -127,7 +128,7 @@ class DocumentReports extends Controller
      * Set values selected by the user to source.
      *
      * @param int                                   $index
-     * @param DocumentReportsBase\DocumentReportsSource $source
+     * @param DocumentReportsSource $source
      */
     private function setDefaultToSource($index, &$source)
     {
@@ -139,7 +140,7 @@ class DocumentReports extends Controller
     /**
      * Execute main actions.
      *
-     * @param $action
+     * @param string $action
      */
     protected function execAction($action)
     {
@@ -159,8 +160,8 @@ class DocumentReports extends Controller
     /**
      * Set the better result to use for step and format.
      *
-     * @param $step
-     * @param $format
+     * @param string $step
+     * @param string $format
      */
     private function getStepFormat(&$step, &$format)
     {
@@ -223,7 +224,7 @@ class DocumentReports extends Controller
     /**
      * Establishes the WHERE clause according to the defined filters.
      *
-     * @param DocumentReportsBase\DocumentReportsSource $source
+     * @param DocumentReportsSource $source
      *
      * @return DataBase\DataBaseWhere[]
      */
@@ -244,7 +245,7 @@ class DocumentReports extends Controller
     /**
      * Populate the result with the parameters.
      *
-     * @param DocumentReportsBase\DocumentReportsSource $source
+     * @param DocumentReportsSource $source
      * @param string                                    $step
      * @param string                                    $format
      *
@@ -289,6 +290,11 @@ class DocumentReports extends Controller
         foreach ($this->sources as $source) {
             $data = $this->populateTable($source, $step, $format);
             $this->dataTable[$source->source] = $data;
+            /**
+             * Perhaps array_merge/array_replace can be used instead. Feel free to disable the inspection if '+' is intended.
+             * Documentation can be found here: https://github.com/kalessil/phpinspectionsea/blob/master/docs/probable-bugs.md#addition-operator-applied-to-arrays
+             */
+            /** @noinspection AdditionOperationOnArraysInspection */
             $this->labels += array_keys($data);
             unset($data);
         }
@@ -308,7 +314,7 @@ class DocumentReports extends Controller
     /**
      * Return a comma separated list of keys.
      *
-     * @param $sourceKey
+     * @param string $sourceKey
      *
      * @return string
      */

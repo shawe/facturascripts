@@ -105,9 +105,9 @@ class InfoStateComponent extends BaseComponent implements ComponentInterface
     /**
      * Add details to component.
      *
-     * @param $group
-     * @param $values
-     * @param $totalModel
+     * @param string $group
+     * @param array $values
+     * @param Model\TotalModel $totalModel
      */
     private function addDetail($group, $values, &$totalModel)
     {
@@ -123,7 +123,7 @@ class InfoStateComponent extends BaseComponent implements ComponentInterface
     /**
      * Return the model info table and url list.
      *
-     * @param $modelName
+     * @param string $modelName
      *
      * @return array
      */
@@ -138,8 +138,8 @@ class InfoStateComponent extends BaseComponent implements ComponentInterface
     /**
      * Get summary data from total model.
      *
-     * @param $table
-     * @param $values
+     * @param string $table
+     * @param array $values
      *
      * @return Model\TotalModel
      */

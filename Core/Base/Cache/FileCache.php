@@ -19,6 +19,7 @@
 
 namespace FacturaScripts\Core\Base\Cache;
 
+use FacturaScripts\Core\Base\FileManager;
 use FacturaScripts\Core\Base\MiniLog;
 use FacturaScripts\Core\Base\Translator;
 
@@ -72,7 +73,7 @@ class FileCache implements AdaptorInterface
         $this->minilog = new MiniLog();
 
         $dir = self::$config['cache_path'];
-        if (!file_exists($dir) && !@mkdir($dir, 0775, true) && !is_dir($dir)) {
+        if (!file_exists($dir) && !FileManager::mkDir($dir, 0775, true) && !is_dir($dir)) {
             $this->minilog->critical($this->i18n->trans('cant-create-folder', ['%folderName%' => $dir]));
         }
         $this->minilog->debug($this->i18n->trans('using-filecache'));
@@ -110,6 +111,7 @@ class FileCache implements AdaptorInterface
              * Documentation can be found here:
              * https://github.com/kalessil/phpinspectionsea/blob/master/docs/security.md#exploiting-unserialize
              */
+            /** @noinspection UnserializeExploitsInspection */
             return $raw ? $content : unserialize($content);
         }
 

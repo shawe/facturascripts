@@ -712,6 +712,7 @@
     "email-to": "Email To",
     "email-cc": "Email Carbon Copy",
     "email-bcc": "Email Blind Carbon Copy",
+    "cant-change-key": "Can't change the key. Key '%key%' changed from %fromValue% to %toValue%.",
     "summary": "Summary",
     "create-accounting-entry": "Create Accounting Entry",
     "hint-create-accounting-entry": "Create the accounting entry for the regularization of the taxes of the period",

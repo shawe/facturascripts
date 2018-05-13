@@ -267,8 +267,8 @@ class CSVExport implements ExportInterface
     /**
      * Fills an array with the CSV data
      *
-     * @param $tableData
-     * @param $sheetHeaders
+     * @param array $tableData
+     * @param array $sheetHeaders
      */
     public function writeSheet($tableData, $sheetHeaders)
     {

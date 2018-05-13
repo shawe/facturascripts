@@ -58,6 +58,6 @@ class HtmlView extends BaseView
      */
     public function export(&$exportManager)
     {
-        /// TODO: complete this method
+        /// TODO: Complete this method
     }
 }

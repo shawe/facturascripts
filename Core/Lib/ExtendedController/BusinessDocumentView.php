@@ -82,7 +82,12 @@ class BusinessDocumentView extends BaseView
         // Loads document states
         $estadoDocModel = new EstadoDocumento();
         $modelClass = explode('\\', $modelName);
-        $this->documentStates = $estadoDocModel->all([new DataBaseWhere('tipodoc', end($modelClass))], ['nombre' => 'ASC'], 0, 0);
+        $this->documentStates = $estadoDocModel->all(
+            [new DataBaseWhere('tipodoc', end($modelClass))],
+            ['nombre' => 'ASC'],
+            0,
+            0
+        );
     }
 
     /**

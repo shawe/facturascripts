@@ -114,7 +114,7 @@ class BusinessDocumentTools
     /**
      * Clear the totals values for the document.
      *
-     * @param Base\BusinessDocument $doc
+     * @param Base\BusinessDocument|Base\PurchaseDocument|Base\SalesDocument $doc
      */
     private function clearTotals(Base\BusinessDocument $doc)
     {
@@ -218,7 +218,7 @@ class BusinessDocumentTools
         } elseif (empty($fLine['iva'])) {
             $impuestoModel = new Impuesto();
             foreach ($impuestoModel->all() as $imp) {
-                if ($imp->isDefault()) {
+                if ($imp instanceof Impuesto && $imp->isDefault()) {
                     $fLine['iva'] = $imp->iva;
                     $fLine['recargo'] = $this->recargo ? $imp->recargo : $fLine['recargo'];
                     break;

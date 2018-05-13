@@ -97,12 +97,16 @@ class ListFilter
             default:
                 if ($this->hasValue('valueFrom')) {
                     $where[] = new DataBaseWhere(
-                        $this->options['field'], $this->options['valueFrom'], $this->options['operatorFrom']
+                        $this->options['field'],
+                        $this->options['valueFrom'],
+                        $this->options['operatorFrom']
                     );
                 }
                 if ($this->hasValue('valueTo')) {
                     $where[] = new DataBaseWhere(
-                        $this->options['field'], $this->options['valueTo'], $this->options['operatorTo']
+                        $this->options['field'],
+                        $this->options['valueTo'],
+                        $this->options['operatorTo']
                     );
                 }
         }
@@ -117,7 +121,12 @@ class ListFilter
     {
         switch ($this->type) {
             case 'autocomplete':
-                return self::$codeModel->getDescription($this->options['table'], $this->options['fieldcode'], $this->options['value'], $this->options['fieldtitle']);
+                return self::$codeModel->getDescription(
+                    $this->options['table'],
+                    $this->options['fieldcode'],
+                    $this->options['value'],
+                    $this->options['fieldtitle']
+                );
 
             default:
                 return $this->options['value'] ?? '';
@@ -223,20 +232,20 @@ class ListFilter
      * @param string $label
      * @param string $field
      * @param string $table
-     * @param string $fieldcode
-     * @param string $fieldtitle
+     * @param string $fieldCode
+     * @param string $fieldTitle
      * @param string $value
      * @param array  $where
      *
      * @return ListFilter
      */
-    public static function newAutocompleteFilter($label, $field, $table, $fieldcode, $fieldtitle, $value, $where = []): ListFilter
+    public static function newAutocompleteFilter($label, $field, $table, $fieldCode, $fieldTitle, $value, array $where = []): ListFilter
     {
         $options = [
             'label' => $label,
             'field' => $field,
-            'fieldcode' => $fieldcode,
-            'fieldtitle' => $fieldtitle,
+            'fieldcode' => $fieldCode,
+            'fieldtitle' => $fieldTitle,
             'table' => $table,
             'value' => $value,
             'where' => $where

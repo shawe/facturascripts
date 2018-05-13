@@ -19,6 +19,7 @@
 
 namespace FacturaScripts\Core\Model;
 
+use FacturaScripts\Core\Base\FileManager;
 use finfo;
 
 /**
@@ -135,13 +136,13 @@ class AttachedFile extends Base\ModelClass
      *
      * @param string $cod
      * @param array  $where
-     * @param array  $orderby
+     * @param array  $orderBy
      *
      * @return bool
      */
-    public function loadFromCode($cod, array $where = [], array $orderby = []): bool
+    public function loadFromCode($cod, array $where = [], array $orderBy = []): bool
     {
-        if (parent::loadFromCode($cod, $where, $orderby)) {
+        if (parent::loadFromCode($cod, $where, $orderBy)) {
             $this->previousPath = $this->path;
             return true;
         }
@@ -195,9 +196,9 @@ class AttachedFile extends Base\ModelClass
     /**
      * Examine and move new file setted.
      *
-     * @return boolean
+     * @return bool
      */
-    protected function setFile()
+    protected function setFile(): bool
     {
         /// remove old file
         if (!empty($this->previousPath)) {
@@ -207,7 +208,7 @@ class AttachedFile extends Base\ModelClass
         $this->filename = $this->path;
         $path = 'MyFiles' . DIRECTORY_SEPARATOR . date('Y' . DIRECTORY_SEPARATOR . 'm', strtotime($this->date));
         if (!file_exists(FS_FOLDER . DIRECTORY_SEPARATOR . $path)) {
-            mkdir(FS_FOLDER . DIRECTORY_SEPARATOR . $path, 0777, true);
+            FileManager::mkDir(FS_FOLDER . DIRECTORY_SEPARATOR . $path, 0777, true);
         }
 
         $basePath = FS_FOLDER . DIRECTORY_SEPARATOR . 'MyFiles';

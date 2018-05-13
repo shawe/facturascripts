@@ -54,7 +54,7 @@ class AlbaranesProveedor extends AbstractRandomDocuments
         while ($generated < $num) {
             $alb->clear();
             $this->randomizeDocument($alb);
-            $eje = $this->ejercicio->getByFecha($alb->fecha);
+            $eje = $this->ejercicio::getByFecha($alb->fecha);
             if (false === $eje) {
                 break;
             }
@@ -62,7 +62,7 @@ class AlbaranesProveedor extends AbstractRandomDocuments
             $recargo = (random_int(0, 4) === 0);
             $regimeniva = $this->randomizeDocumentCompra($alb, $eje, $proveedores, $generated);
             if ($alb->save()) {
-                $this->randomLineas($alb, 'idalbaran', self::MODEL_NAMESPACE . 'LineaAlbaranProveedor', $regimeniva, $recargo, 1);
+                $this->randomLineas($alb, 'idalbaran', 'LineaAlbaranProveedor', $regimeniva, $recargo, 1);
                 ++$generated;
             } else {
                 break;

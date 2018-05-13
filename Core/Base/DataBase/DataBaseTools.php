@@ -75,9 +75,9 @@ class DataBaseTools
     /**
      * Checks to the database table
      *
-     * @param $tableName
-     * @param $xmlCols
-     * @param $xmlCons
+     * @param string $tableName
+     * @param array $xmlCols
+     * @param array $xmlCons
      *
      * @return string
      */
@@ -313,8 +313,8 @@ class DataBaseTools
     /**
      * Update the name and type foreach column from the XML
      *
-     * @param $columns
-     * @param $xml
+     * @param array             $columns
+     * @param \SimpleXMLElement $xml
      */
     private function checkXmlColumns(&$columns, $xml)
     {

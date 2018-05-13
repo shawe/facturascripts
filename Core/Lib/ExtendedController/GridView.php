@@ -82,7 +82,7 @@ class GridView extends BaseView
      */
     public function export(&$exportManager)
     {
-        /// TODO: complete this method
+        /// TODO: Complete this method
     }
 
     /**
@@ -223,8 +223,10 @@ class GridView extends BaseView
      */
     private function loadDocumentDataFromArray($fieldPK, &$data): bool
     {
-        if ($this->parentModel->loadFromCode($data[$fieldPK])) {    // old data
-            $this->parentModel->loadFromData($data, ['action', 'active']);  // new data (the web form may not have all the fields)
+        // old data
+        if ($this->parentModel->loadFromCode($data[$fieldPK])) {
+            // new data (the web form may not have all the fields)
+            $this->parentModel->loadFromData($data, ['action', 'active']);
             return $this->parentModel->test();
         }
         return false;
@@ -259,7 +261,7 @@ class GridView extends BaseView
     /**
      * Save data to database.
      *
-     * @param $data
+     * @param array $data
      *
      * @return array
      */
@@ -294,7 +296,7 @@ class GridView extends BaseView
 
             // Proccess detail document data (new)
             $this->parentModel->initTotals();
-            foreach ($data['lines'] as $newLine) {
+            foreach ((array) $data['lines'] as $newLine) {
                 $this->model->loadFromData($newLine);
                 if (empty($this->model->primaryColumnValue())) {
                     $this->model->{$parentPK} = $parentValue;
@@ -329,7 +331,7 @@ class GridView extends BaseView
     /**
      * Process the form lines.
      *
-     * @param $lines
+     * @param array $lines
      *
      * @return array
      */
@@ -342,7 +344,7 @@ class GridView extends BaseView
                 foreach ($this->pageOption->columns as $group) {
                     foreach ($group->columns as $col) {
                         if (!isset($data[$col->widget->fieldName])) {
-                            // TODO: maybe the widget can have a default value method instead of null
+                            // TODO: Maybe the widget can have a default value method instead of null
                             $data[$col->widget->fieldName] = null;
                         }
                     }

@@ -45,7 +45,7 @@ class PresupuestosProveedor extends AbstractRandomDocuments
      *
      * @return int
      */
-    public function generate($num = 50)
+    public function generate($num = 50): int
     {
         $pre = $this->model;
         $this->shuffle($proveedores, new Model\Proveedor());
@@ -54,7 +54,7 @@ class PresupuestosProveedor extends AbstractRandomDocuments
         while ($generated < $num) {
             $pre->clear();
             $this->randomizeDocument($pre);
-            $eje = $this->ejercicio->getByFecha($pre->fecha);
+            $eje = $this->ejercicio::getByFecha($pre->fecha);
             if (false === $eje) {
                 break;
             }
@@ -62,7 +62,7 @@ class PresupuestosProveedor extends AbstractRandomDocuments
             $recargo = (random_int(0, 4) === 0);
             $regimeniva = $this->randomizeDocumentCompra($pre, $eje, $proveedores, $generated);
             if ($pre->save()) {
-                $this->randomLineas($pre, 'idpresupuesto', self::MODEL_NAMESPACE . 'LineaPresupuestoProveedor', $regimeniva, $recargo, 1);
+                $this->randomLineas($pre, 'idpresupuesto', 'LineaPresupuestoProveedor', $regimeniva, $recargo, 1);
                 ++$generated;
             } else {
                 break;

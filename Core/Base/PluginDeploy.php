@@ -20,7 +20,6 @@
 namespace FacturaScripts\Core\Base;
 
 use FacturaScripts\Core\App\AppSettings;
-use FacturaScripts\Core\Base\FileManager;
 
 /**
  * Description of PluginDeploy
@@ -123,7 +122,9 @@ class PluginDeploy
                 $menuManager->selectPage($controller->getPageData());
                 $pageNames[] = $controllerName;
             } catch (\Exception $exc) {
-                $this->minilog->critical($this->i18n->trans('cant-load-controller', ['%controllerName%' => $controllerName]));
+                $this->minilog->critical(
+                    $this->i18n->trans('cant-load-controller', ['%controllerName%' => $controllerName])
+                );
             }
         }
 
@@ -147,8 +148,10 @@ class PluginDeploy
      */
     private function createFolder(string $folder): bool
     {
-        if (!file_exists($folder) && !@mkdir($folder, 0775, true)) {
-            $this->minilog->critical($this->i18n->trans('cant-create-folder', ['%folderName%' => $folder]));
+        if (!file_exists($folder) && !FileManager::mkDir($folder, 0775, true)) {
+            $this->minilog->critical(
+                $this->i18n->trans('cant-create-folder', ['%folderName%' => $folder])
+            );
             return false;
         }
 

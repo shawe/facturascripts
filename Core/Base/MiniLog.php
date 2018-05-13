@@ -183,10 +183,8 @@ class MiniLog
         $messages = [];
 
         foreach (self::$dataLog as $data) {
-            if (\in_array($data['level'], $levels, false)) {
-                if ($data['message'] !== '') {
-                    $messages[] = $data;
-                }
+            if (\in_array($data['level'], $levels, false) && $data['message'] !== '') {
+                $messages[] = $data;
             }
         }
 

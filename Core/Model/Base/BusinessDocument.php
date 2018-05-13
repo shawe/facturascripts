@@ -240,7 +240,7 @@ abstract class BusinessDocument extends ModelClass
     /**
      * Sets subjects for this document.
      *
-     * @param $subjects
+     * @param array $subjects
      */
     abstract public function setSubject($subjects);
 
@@ -290,7 +290,7 @@ abstract class BusinessDocument extends ModelClass
 
         /// select default status
         foreach (self::$estados as $estado) {
-            if ($estado->tipodoc === $this->modelClassName() && $estado->predeterminado) {
+            if ($estado->predeterminado && $estado->tipodoc === $this->modelClassName()) {
                 $this->idestado = $estado->idestado;
                 $this->editable = $estado->editable;
                 break;
@@ -359,13 +359,13 @@ abstract class BusinessDocument extends ModelClass
      *
      * @param string $cod
      * @param array  $where
-     * @param array  $orderby
+     * @param array  $orderBy
      *
      * @return bool
      */
-    public function loadFromCode($cod, array $where = [], array $orderby = []): bool
+    public function loadFromCode($cod, array $where = [], array $orderBy = []): bool
     {
-        if (parent::loadFromCode($cod, $where, $orderby)) {
+        if (parent::loadFromCode($cod, $where, $orderBy)) {
             $this->idestadoAnt = $this->idestado;
             return true;
         }
@@ -416,7 +416,7 @@ abstract class BusinessDocument extends ModelClass
     public function setDate(string $date, string $hour): bool
     {
         $ejercicioModel = new Ejercicio();
-        $ejercicio = $ejercicioModel->getByFecha($date);
+        $ejercicio = $ejercicioModel::getByFecha($date);
         if ($ejercicio) {
             $this->codejercicio = $ejercicio->codejercicio;
             $this->fecha = $date;
@@ -442,7 +442,8 @@ abstract class BusinessDocument extends ModelClass
          * many decimals.
          */
         $this->totaleuros = round($this->total / $this->tasaconv, 5);
-        if (!Utils::floatcmp($this->total, $this->neto + $this->totaliva - $this->totalirpf + $this->totalrecargo, FS_NF0, true)) {
+        $total = $this->neto + $this->totaliva - $this->totalirpf + $this->totalrecargo;
+        if (!Utils::floatcmp($this->total, $total, FS_NF0, true)) {
             self::$miniLog->alert(self::$i18n->trans('bad-total-error'));
             return false;
         }

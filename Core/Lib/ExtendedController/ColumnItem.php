@@ -345,7 +345,10 @@ class ColumnItem extends VisualItem implements VisualItemInterface
         }
 
         if ($this->widget->type === 'filechooser') {
-            $description = ' ' . $this->i18n->trans('help-server-accepts-filesize', ['%size%' => $this->widget->getMaxFileUpload()]);
+            $description = ' ' . $this->i18n->trans(
+                'help-server-accepts-filesize',
+                ['%size%' => $this->widget->getMaxFileUpload()]
+            );
         }
 
         return empty($description) ? '' : '<small class="form-text text-muted">' . $description . '</small>';

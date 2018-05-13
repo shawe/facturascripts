@@ -129,24 +129,6 @@ class Empresa extends Base\Contact
     }
 
     /**
-     * This function is called when creating the model table. Returns the SQL
-     * that will be executed after the creation of the table. Useful to insert values
-     * default.
-     *
-     * @return string
-     */
-    public function install(): string
-    {
-        $num = random_int(1, 9999);
-
-        return 'INSERT INTO ' . static::tableName() . ' (idempresa,recequivalencia,web,email,fax,telefono1,codpais,apartado,'
-            . 'provincia,ciudad,codpostal,direccion,administrador,cifnif,nombre,nombrecorto,personafisica)'
-            . "VALUES (1,NULL,'https://www.facturascripts.com',"
-            . "NULL,NULL,NULL,'ESP',NULL,NULL,NULL,NULL,'C/ Falsa, 123','','00000014Z',"
-            . "'Empresa " . $num . " S.L.','E-" . $num . "','0');";
-    }
-
-    /**
      * Returns the name of the column that is the model's primary key.
      *
      * @return string

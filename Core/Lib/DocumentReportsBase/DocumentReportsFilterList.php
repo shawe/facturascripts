@@ -35,7 +35,7 @@ class DocumentReportsFilterList
     /**
      * Structure data from
      *
-     * @var mixed
+     * @var Model\Base\ModelClass
      */
     private $model;
 
@@ -83,7 +83,7 @@ class DocumentReportsFilterList
      */
     private function loadValuesFromModel($allowEmpty = true)
     {
-        $tableName = $this->model->tableName();
+        $tableName = $this->model::tableName();
         $fieldCode = $this->model::primaryColumn();
         $fieldDesc = $this->model->primaryDescriptionColumn();
         $rows = Model\CodeModel::all($tableName, $fieldCode, $fieldDesc, $allowEmpty);

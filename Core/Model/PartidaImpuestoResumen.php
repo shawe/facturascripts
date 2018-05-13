@@ -28,6 +28,48 @@ namespace FacturaScripts\Core\Model;
 class PartidaImpuestoResumen extends Base\ModelView
 {
     /**
+     * TODO: Undocummented property.
+     *
+     * @var float
+     */
+    public $baseimponible;
+
+    /**
+     * TODO: Undocummented property.
+     *
+     * @var float
+     */
+    public $iva;
+
+    /**
+     * TODO: Undocummented property.
+     *
+     * @var float
+     */
+    public $recargo;
+
+    /**
+     * TODO: Undocummented property.
+     *
+     * @var float
+     */
+    public $cuotaiva;
+
+    /**
+     * TODO: Undocummented property.
+     *
+     * @var float
+     */
+    public $cuotarecargo;
+
+    /**
+     * TODO: Undocummented property.
+     *
+     * @var float
+     */
+    public $total;
+
+    /**
      * Return Group By clausule
      */
     protected function getGroupBy(): string

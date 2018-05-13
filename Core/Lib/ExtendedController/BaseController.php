@@ -22,6 +22,7 @@ namespace FacturaScripts\Core\Lib\ExtendedController;
 use FacturaScripts\Core\Base;
 use FacturaScripts\Core\Lib\ExportManager;
 use FacturaScripts\Core\Model\CodeModel;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Description of BaseController
@@ -124,22 +125,21 @@ abstract class BaseController extends Base\Controller
 
         /// get file uploads
         foreach ($this->request->files->all() as $key => $uploadFile) {
-            if (null === $uploadFile) {
-                continue;
-            }
-            if (!$uploadFile->isValid()) {
-                $this->miniLog->error($uploadFile->getErrorMessage());
-                continue;
-            }
+            if ($uploadFile instanceof UploadedFile) {
+                if (!$uploadFile->isValid()) {
+                    $this->miniLog->error($uploadFile->getErrorMessage());
+                    continue;
+                }
 
-            /// exclude php files
-            if (\in_array($uploadFile->getClientMimeType(), ['application/x-php', 'text/x-php'])) {
-                $this->miniLog->error($this->i18n->trans('php-files-blocked'));
-                continue;
-            }
+                /// exclude php files
+                if (\in_array($uploadFile->getClientMimeType(), ['application/x-php', 'text/x-php'])) {
+                    $this->miniLog->error($this->i18n->trans('php-files-blocked'));
+                    continue;
+                }
 
-            if ($uploadFile->move(FS_FOLDER . DIRECTORY_SEPARATOR . 'MyFiles', $uploadFile->getClientOriginalName())) {
-                $data[$key] = $uploadFile->getClientOriginalName();
+                if ($uploadFile->move(FS_FOLDER . DIRECTORY_SEPARATOR . 'MyFiles', $uploadFile->getClientOriginalName())) {
+                    $data[$key] = $uploadFile->getClientOriginalName();
+                }
             }
         }
 

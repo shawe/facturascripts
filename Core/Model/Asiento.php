@@ -158,7 +158,7 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
         /// TODO: Check if accounting entry have VAT Accounts
         $regularization = new RegularizacionImpuesto();
         if ($regularization->getFechaInside($this->fecha)) {
-            self::$miniLog->alert(self::$i18n->trans('acounting-within-regularization', ['%tax%' => FS_IVA]));
+            self::$miniLog->alert(self::$i18n->trans('acounting-within-regularization', ['%tax%' => \FS_IVA]));
             return false;
         }
         unset($regularization);
@@ -295,7 +295,12 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
 
                 if ($sql !== '') {
                     if (!self::$dataBase->exec($sql)) {
-                        self::$miniLog->alert(self::$i18n->trans('renumber-accounting-error', ['%exerciseCode%' => $eje->codejercicio]));
+                        self::$miniLog->alert(
+                            self::$i18n->trans(
+                                'renumber-accounting-error',
+                                ['%exerciseCode%' => $eje->codejercicio]
+                            )
+                        );
                         $continuar = false;
                     }
                     $sql = '';
@@ -388,7 +393,7 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
     private function testErrorInExercise(): string
     {
         $exerciseModel = new Ejercicio();
-        $exercise = $exerciseModel->getByFecha($this->fecha);
+        $exercise = $exerciseModel::getByFecha($this->fecha);
         if (empty($exercise) || empty($exercise->codejercicio)) {
             return 'exercise-data-missing';
         }

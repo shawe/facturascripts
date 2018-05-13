@@ -45,7 +45,7 @@ class APIModel extends APIResourceClass
      *
      * TODO: The conversion to the plural is language dependent.
      *
-     * @param $text
+     * @param string $text
      *
      * @return string
      */
@@ -207,7 +207,13 @@ class APIModel extends APIResourceClass
         // Retrieve the past data, and replace the changes
         $values = $this->request->request->all();
         if (isset($values[$cod]) && $values[$cod] !== $this->params[0]) {
-            $this->setError("Can't change the key. Key '$cod'' changed from {$this->params[0]} to {$values[$cod]}.", $values);
+            $this->setError(
+                $this->i18n->trans(
+                    'cant-change-key',
+                    ['%key%' => $cod, '%fromValue%' => $this->params[0], '%toValue%' => $values[$cod]]
+                ),
+                $values
+            );
             return false;
         }
         foreach ($values as $key => $value) {

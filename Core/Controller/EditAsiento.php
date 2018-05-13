@@ -190,7 +190,10 @@ class EditAsiento extends ExtendedController\PanelController
         }
 
         if (empty($line['codcontrapartida']) && !empty($line['codsubcuenta'])) {
-            // TODO: [Fix] Go through previous lines in search of the offsetting. The sub-account that uses the offsetting for the first time is needed
+            /**
+             * TODO: [Fix] Go through previous lines in search of the offsetting.
+             * The sub-account that uses the offsetting for the first time is needed.
+             */
             $line['codcontrapartida'] = ($line['codsubcuenta'] === $previousLine['codcontrapartida']) ? $previousLine['codsubcuenta'] : $previousLine['codcontrapartida'];
         }
     }
@@ -347,7 +350,7 @@ class EditAsiento extends ExtendedController\PanelController
     /**
      * Return the recalculate document details.
      *
-     * @param $data
+     * @param array $data
      *
      * @return array
      */
@@ -377,7 +380,10 @@ class EditAsiento extends ExtendedController\PanelController
                 $result['subaccount'] = $this->getAccountData($data['document']['codejercicio'], $line['codsubcuenta']);
 
                 $result['vat'] = $this->recalculateVatRegister(
-                    $line, $data['document'], $result['subaccount']['codevat'], $result['unbalance']
+                    $line,
+                    $data['document'],
+                    $result['subaccount']['codevat'],
+                    $result['unbalance']
                 );
             }
         }
@@ -388,7 +394,7 @@ class EditAsiento extends ExtendedController\PanelController
     /**
      * Returns a clone of the given data.
      *
-     * @param $data
+     * @param array $data
      *
      * @return string
      */
@@ -440,8 +446,8 @@ class EditAsiento extends ExtendedController\PanelController
     /**
      * Load data view procedure
      *
-     * @param string                                                  $viewName
-     * @param ExtendedController\BaseView|ExtendedController\EditView $view
+     * @param string                      $viewName
+     * @param ExtendedController\EditView $view
      */
     protected function loadData($viewName, $view)
     {
@@ -455,8 +461,8 @@ class EditAsiento extends ExtendedController\PanelController
                 $idasiento = $this->getViewModelValue('EditAsiento', 'idasiento');
                 if (!empty($idasiento)) {
                     $where = [new DataBaseWhere('idasiento', $idasiento)];
-                    $orderby = ['idpartida' => 'ASC'];
-                    $view->loadData($where, $orderby);
+                    $orderBy = ['idpartida' => 'ASC'];
+                    $view->loadData($where, $orderBy);
                 }
                 break;
         }

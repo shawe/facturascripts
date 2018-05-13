@@ -53,20 +53,6 @@ class Dashboard extends Base\ModelClass
     public $version;
 
     /**
-     * This function is called when creating the model table.
-     * Returns the SQL that will be executed after the creation of the table,
-     * useful to insert default values.
-     *
-     * @return string
-     */
-    public function install(): string
-    {
-        return 'INSERT INTO ' . static::tableName() . " (component, version, location) VALUES ('Messages','1.0 (Beta)', 0);"
-            . 'INSERT INTO ' . static::tableName() . " (component, version, location) VALUES ('Tasks','1.0 (Beta)', 0);"
-            . 'INSERT INTO ' . static::tableName() . " (component, version, location) VALUES ('InfoState','1.0 (Beta)', 0);";
-    }
-
-    /**
      * Returns the name of the column that is the model's primary key.
      *
      * @return string

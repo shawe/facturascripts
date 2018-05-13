@@ -75,7 +75,7 @@ class ListPedidoCliente extends ExtendedController\ListController
         $paymentValues = $this->codeModel::all('formaspago', 'codpago', 'descripcion');
         $this->addFilterSelect('ListPedidoCliente', 'codpago', 'payment-method', 'codpago', $paymentValues);
 
-        $this->addFilterAutocomplete('ListPedidoCliente', 'codcliente', 'customer', 'codcliente', 'clientes', 'codcliente', 'nombre');
+        $this->addFilterAutocomplete('ListPedidoCliente', 'clientes', 'codcliente', 'customer', 'nombre');
 
         // Delivery notes lines
         $this->createViewLines();

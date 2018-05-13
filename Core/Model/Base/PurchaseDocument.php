@@ -65,12 +65,12 @@ abstract class PurchaseDocument extends BusinessDocument
 
     /**
      * Assign the supplier to the document.
-     * 
+     *
      * @param Proveedor[] $subjects
      *
-     * @return boolean
+     * @return bool
      */
-    public function setSubject($subjects)
+    public function setSubject($subjects): bool
     {
         if (!isset($subjects[0]->codproveedor)) {
             return false;
@@ -98,9 +98,9 @@ abstract class PurchaseDocument extends BusinessDocument
     /**
      * Updates subjects data in this document.
      *
-     * @return boolean
+     * @return bool
      */
-    public function updateSubject()
+    public function updateSubject(): bool
     {
         if (empty($this->codproveedor)) {
             return false;

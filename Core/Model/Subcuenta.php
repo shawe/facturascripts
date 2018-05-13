@@ -157,7 +157,7 @@ class Subcuenta extends Base\ModelClass
 
         // Search open exercise for current date
         $exerciseModel = new Ejercicio();
-        if ($exercise = $exerciseModel->getByFecha(date('d-m-Y'), true, false)) {
+        if ($exercise = $exerciseModel::getByFecha(date('d-m-Y'), true, false)) {
             $this->codejercicio = $exercise->codejercicio;
         }
     }
@@ -203,7 +203,8 @@ class Subcuenta extends Base\ModelClass
      */
     private function testErrorInData(): bool
     {
-        return empty($this->codcuenta) || empty($this->codsubcuenta) || empty($this->descripcion) || empty($this->codejercicio);
+        return empty($this->codcuenta) || empty($this->codsubcuenta) || empty($this->descripcion)
+            || empty($this->codejercicio);
     }
 
     /**
@@ -296,12 +297,13 @@ class Subcuenta extends Base\ModelClass
         return true;
     }
 
-    /*
+    /**
      * Update account balance
      *
      * @param string $date
-     * @param float $debit
-     * @param float $credit
+     * @param float  $debit
+     * @param float  $credit
+     *
      * @return bool
      */
     public function updateBalance(string $date, float $debit, float $credit): bool

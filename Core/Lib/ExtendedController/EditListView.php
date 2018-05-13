@@ -104,7 +104,12 @@ class EditListView extends BaseView implements DataViewInterface
     {
         if ($this->count > 0) {
             $exportManager->generateListModelPage(
-                $this->model, $this->where, $this->order, $this->offset, $this->getColumns(), $this->title
+                $this->model,
+                $this->where,
+                $this->order,
+                $this->offset,
+                $this->getColumns(),
+                $this->title
             );
         }
     }
@@ -125,7 +130,7 @@ class EditListView extends BaseView implements DataViewInterface
      *
      * @return ModelClass[]
      */
-    public function getCursor()
+    public function getCursor(): array
     {
         return $this->cursor;
     }

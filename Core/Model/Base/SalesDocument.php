@@ -207,12 +207,12 @@ abstract class SalesDocument extends BusinessDocument
 
     /**
      * Assign the customer to the document.
-     * 
+     *
      * @param Cliente[] $subjects
-     * 
-     * @return boolean
+     *
+     * @return bool
      */
-    public function setSubject($subjects)
+    public function setSubject($subjects): bool
     {
         if (!isset($subjects[0]->codcliente)) {
             return false;
@@ -268,7 +268,7 @@ abstract class SalesDocument extends BusinessDocument
      *
      * @return boolean
      */
-    public function updateSubject()
+    public function updateSubject(): bool
     {
         if (empty($this->codcliente)) {
             return false;

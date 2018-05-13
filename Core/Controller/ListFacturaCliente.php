@@ -75,7 +75,7 @@ class ListFacturaCliente extends ExtendedController\ListController
         $paymentValues = $this->codeModel::all('formaspago', 'codpago', 'descripcion');
         $this->addFilterSelect('ListFacturaCliente', 'codpago', 'payment-method', 'codpago', $paymentValues);
 
-        $this->addFilterAutocomplete('ListFacturaCliente', 'codcliente', 'customer', 'codcliente', 'clientes', 'codcliente', 'nombre');
+        $this->addFilterAutocomplete('ListFacturaCliente', 'clientes', 'codcliente', 'customer', 'nombre');
         $this->addFilterCheckbox('ListFacturaCliente', 'paid', 'paid', 'pagada');
 
         // Delivery notes lines

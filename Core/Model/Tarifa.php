@@ -125,9 +125,13 @@ class Tarifa extends Base\ModelClass
         $this->nombre = Utils::noHtml($this->nombre);
 
         if (empty($this->codtarifa) || mb_strlen($this->codtarifa) > 6) {
-            self::$miniLog->alert(self::$i18n->trans('invalid-column-lenght', ['%column%' => 'codtarifa', '%min%' => '1', '%max%' => '6']));
+            self::$miniLog->alert(
+                self::$i18n->trans('invalid-column-lenght', ['%column%' => 'codtarifa', '%min%' => '1', '%max%' => '6'])
+            );
         } elseif (empty($this->nombre) || mb_strlen($this->nombre) > 50) {
-            self::$miniLog->alert(self::$i18n->trans('invalid-column-lenght', ['%column%' => 'nombre', '%min%' => '1', '%max%' => '50']));
+            self::$miniLog->alert(
+                self::$i18n->trans('invalid-column-lenght', ['%column%' => 'nombre', '%min%' => '1', '%max%' => '50'])
+            );
         } else {
             return true;
         }

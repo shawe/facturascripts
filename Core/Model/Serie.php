@@ -105,12 +105,16 @@ class Serie extends Base\ModelClass
         $this->descripcion = Utils::noHtml($this->descripcion);
 
         if (!preg_match('/^[A-Z0-9]{1,4}$/i', $this->codserie)) {
-            self::$miniLog->alert(self::$i18n->trans('invalid-column-lenght', ['%column%' => 'codserie', '%min%' => '1', '%max%' => '4']));
+            self::$miniLog->alert(
+                self::$i18n->trans('invalid-column-lenght', ['%column%' => 'codserie', '%min%' => '1', '%max%' => '4'])
+            );
             return false;
         }
 
         if ('' === $this->descripcion || mb_strlen($this->descripcion) > 100) {
-            self::$miniLog->alert(self::$i18n->trans('invalid-column-lenght', ['%column%' => 'descripcion', '%min%' => '1', '%max%' => '100']));
+            self::$miniLog->alert(
+                self::$i18n->trans('invalid-column-lenght', ['%column%' => 'descripcion', '%min%' => '1', '%max%' => '100'])
+            );
             return false;
         }
 

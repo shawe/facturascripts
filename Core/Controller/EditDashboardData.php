@@ -116,9 +116,9 @@ class EditDashboardData extends ExtendedController\EditController
     /**
      * Return the propierties fields.
      *
-     * @return mixed
+     * @return array
      */
-    private function getPropertiesFields()
+    private function getPropertiesFields(): array
     {
         $model = $this->getModel();
         $component = 'FacturaScripts\\Dinamic\\Lib\\Dashboard\\'

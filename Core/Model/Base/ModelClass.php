@@ -164,13 +164,13 @@ abstract class ModelClass extends ModelCore
      *
      * @param string                   $cod
      * @param DataBase\DataBaseWhere[] $where
-     * @param array                    $orderby
+     * @param array                    $orderBy
      *
      * @return bool
      */
-    public function loadFromCode($cod, array $where = [], array $orderby = []): bool
+    public function loadFromCode($cod, array $where = [], array $orderBy = []): bool
     {
-        $data = $this->getRecord($cod, $where, $orderby);
+        $data = $this->getRecord($cod, $where, $orderBy);
         if (empty($data)) {
             $this->clear();
             return false;
@@ -270,11 +270,16 @@ abstract class ModelClass extends ModelCore
         }
 
         foreach ($fields as $key => $value) {
-            if ($key == $this->primaryColumn()) {
+            if ($key === static::primaryColumn()) {
                 continue;
             }
             if (null === $value['default'] && $value['is_nullable'] === 'NO' && $this->{$key} === null) {
-                self::$miniLog->alert(self::$i18n->trans('field-can-not-be-null', ['%fieldName%' => $key, '%tableName%' => static::tableName()]));
+                self::$miniLog->alert(
+                    self::$i18n->trans(
+                        'field-can-not-be-null',
+                        ['%fieldName%' => $key, '%tableName%' => static::tableName()]
+                    )
+                );
                 $status = false;
             }
         }
@@ -397,14 +402,14 @@ abstract class ModelClass extends ModelCore
      *
      * @param string                   $cod
      * @param DataBase\DataBaseWhere[] $where
-     * @param array                    $orderby
+     * @param array                    $orderBy
      *
      * @return array
      */
-    private function getRecord($cod, array $where = [], array $orderby = []): array
+    private function getRecord($cod, array $where = [], array $orderBy = []): array
     {
         $sqlWhere = empty($where) ? ' WHERE ' . static::primaryColumn() . ' = ' . self::$dataBase->var2str($cod) : DataBase\DataBaseWhere::getSQLWhere($where);
-        $sql = 'SELECT * FROM ' . static::tableName() . $sqlWhere . $this->getOrderBy($orderby);
+        $sql = 'SELECT * FROM ' . static::tableName() . $sqlWhere . $this->getOrderBy($orderBy);
 
         return self::$dataBase->selectLimit($sql, 1);
     }

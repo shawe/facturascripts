@@ -172,11 +172,11 @@ o abajo
 
 .. code:: php
 
-        public function getPageData()
+        public function getPageData(): array
         {
-            $pagedata = parent::getPageData();
-            $pagedata['title'] = 'agents';
-            $pagedata['icon'] = 'fa-user-circle-o';
-            $pagedata['menu'] = 'admin';
-            return $pagedata;
+            $pageData = parent::getPageData();
+            $pageData['title'] = 'agents';
+            $pageData['icon'] = 'fa-user-circle-o';
+            $pageData['menu'] = 'admin';
+            return $pageData;
         }

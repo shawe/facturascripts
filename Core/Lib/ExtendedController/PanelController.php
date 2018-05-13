@@ -166,7 +166,7 @@ abstract class PanelController extends BaseController
             $this->loadData($viewName, $view);
 
             // check if we are processing the main view
-            if ($viewName == $mainViewName) {
+            if ($viewName === $mainViewName) {
                 $this->hasData = $view->count > 0;
                 continue;
             }
@@ -248,10 +248,10 @@ abstract class PanelController extends BaseController
     /**
      * Adds a Grid type view to the controller.
      *
-     * @param $viewName
-     * @param $parentView
-     * @param $modelName
-     * @param $viewTitle
+     * @param string $viewName
+     * @param string $parentView
+     * @param string $modelName
+     * @param string $viewTitle
      * @param string $viewIcon
      */
     protected function addGridView($viewName, $parentView, $modelName, $viewTitle, $viewIcon = 'fa-list')

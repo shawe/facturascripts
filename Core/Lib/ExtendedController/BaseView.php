@@ -20,6 +20,8 @@
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base;
+use FacturaScripts\Core\Lib\ExportManager;
+use FacturaScripts\Core\Model\Base\ModelClass;
 use FacturaScripts\Core\Model\Base\PurchaseDocument;
 use FacturaScripts\Core\Model\Base\SalesDocument;
 use FacturaScripts\Core\Model\PageOption;
@@ -52,7 +54,7 @@ abstract class BaseView
     /**
      * Model to use in this view.
      *
-     * @var BusinessDocument|SalesDocument|PurchaseDocument
+     * @var ModelClass|BusinessDocument|SalesDocument|PurchaseDocument
      */
     public $model;
 
@@ -80,7 +82,7 @@ abstract class BaseView
     /**
      * Method to export the view data.
      *
-     * @param $exportManager
+     * @param ExportManager $exportManager
      */
     abstract public function export(&$exportManager);
 
@@ -222,7 +224,7 @@ abstract class BaseView
     {
         $fieldKey = $this->model::primaryColumn();
         $fieldValue = $data[$fieldKey];
-        if ($fieldValue !== $this->model->primaryColumnValue() && $fieldValue !== '') {
+        if ($fieldValue !== '' && $fieldValue !== $this->model->primaryColumnValue()) {
             $this->model->loadFromCode($fieldValue);
         }
 

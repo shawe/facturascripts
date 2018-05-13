@@ -65,9 +65,11 @@ class Wizard extends Controller
         $modelName = '\FacturaScripts\Dinamic\Model\\' . $modelName;
         $model = new $modelName();
 
-        $order = [$model->primaryDescriptionColumn() => 'ASC'];
-        foreach ($model->all([], $order, 0, self::ITEM_SELECT_LIMIT) as $newModel) {
-            $values[$newModel->primaryColumnValue()] = $newModel->primaryDescription();
+        if ($model instanceof Model\Base\ModelClass) {
+            $order = [$model->primaryDescriptionColumn() => 'ASC'];
+            foreach ($model->all([], $order, 0, self::ITEM_SELECT_LIMIT) as $newModel) {
+                $values[$newModel->primaryColumnValue()] = $newModel->primaryDescription();
+            }
         }
 
         return $values;

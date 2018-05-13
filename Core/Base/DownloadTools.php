@@ -96,8 +96,8 @@ class DownloadTools
             $matches = [];
             preg_match("/(Location:|URI:)[^(\n)]*/", $header, $matches);
             $url = trim(\str_replace($matches[1], '', $matches[0]));
-            $url_parsed = parse_url($url);
-            if (isset($url_parsed)) {
+            $urlParsed = parse_url($url);
+            if (isset($urlParsed)) {
                 curl_setopt($ch, CURLOPT_URL, $url);
                 $redirects++;
                 return $this->curlRedirectExec($ch, $redirects, $curlopt_header);

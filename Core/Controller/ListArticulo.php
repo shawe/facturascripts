@@ -86,7 +86,7 @@ class ListArticulo extends ExtendedController\ListController
         $this->addView('ListArticuloProveedor', 'ArticuloProveedor', 'supplier-products', 'fa-users');
         $this->addSearchFields('ListArticuloProveedor', ['referencia', 'descripcion']);
 
-        $this->addFilterAutocomplete('ListArticuloProveedor', 'codproveedor', 'supplier', 'codproveedor', 'proveedores', 'codproveedor', 'nombre');
+        $this->addFilterAutocomplete('ListArticuloProveedor', 'proveedores', 'codproveedor', 'supplier', 'nombre');
 
         $this->addOrderBy('ListArticuloProveedor', 'referencia', 'reference');
         $this->addOrderBy('ListArticuloProveedor', 'descripcion', 'description');

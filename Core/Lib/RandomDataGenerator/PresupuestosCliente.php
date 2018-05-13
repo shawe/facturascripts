@@ -54,7 +54,7 @@ class PresupuestosCliente extends AbstractRandomDocuments
         while ($generated < $num) {
             $presu->clear();
             $this->randomizeDocument($presu);
-            $eje = $this->ejercicio->getByFecha($presu->fecha);
+            $eje = $this->ejercicio::getByFecha($presu->fecha);
             if (false === $eje) {
                 break;
             }
@@ -63,7 +63,7 @@ class PresupuestosCliente extends AbstractRandomDocuments
             $regimeniva = $this->randomizeDocumentVenta($presu, $eje, $clientes, $generated);
             $presu->finoferta = date('d-m-Y', strtotime($presu->fecha . ' +' . random_int(1, 18) . ' months'));
             if ($presu->save()) {
-                $this->randomLineas($presu, 'idpresupuesto', self::MODEL_NAMESPACE . 'LineaPresupuestoCliente', $regimeniva, $recargo);
+                $this->randomLineas($presu, 'idpresupuesto', 'LineaPresupuestoCliente', $regimeniva, $recargo);
                 ++$generated;
             } else {
                 break;

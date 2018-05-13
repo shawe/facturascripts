@@ -38,7 +38,14 @@ class LineaPedidoProveedor extends Base\BusinessDocumentLine
      */
     public $idpedido;
 
-    public function install()
+    /**
+     * This function is called when creating the model table. Returns the SQL
+     * that will be executed after the creation of the table. Useful to insert values
+     * default.
+     *
+     * @return string
+     */
+    public function install(): string
     {
         new PedidoProveedor();
 

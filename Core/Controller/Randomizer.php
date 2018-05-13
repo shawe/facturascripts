@@ -21,6 +21,7 @@ namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base;
 use FacturaScripts\Core\Lib\RandomDataGenerator;
+use FacturaScripts\Core\Model\Base\ModelClass;
 use FacturaScripts\Core\Model\User;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -215,7 +216,9 @@ class Randomizer extends Base\Controller
 
         foreach ($models as $tag => $modelName) {
             $model = new $modelName();
-            $this->totalCounter[$tag] = $model->count();
+            if ($model instanceof ModelClass) {
+                $this->totalCounter[$tag] = $model->count();
+            }
         }
     }
 }

@@ -10,7 +10,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
@@ -22,7 +22,6 @@ namespace FacturaScripts\Core\Base;
 /**
  * Class to check integrity system
  *
- * @package FacturaScripts\Core\Base
  * @author Francesc Pineda Segarra <francesc.pineda.segarra@gmail.com>
  */
 class IntegrityCheck
@@ -44,10 +43,10 @@ class IntegrityCheck
         $resources = [];
         $fileManager = new FileManager();
         // Ignore the minimum files/folders possible.
-        $excluded = ['.', '..', 'Dinamic', 'Documentation', 'MyFiles', 'node_modules', 'Plugins', 'Test', 'vendor'];
-        $excluded[] = '.htaccess';
-        $excluded[] = 'config.php';
-        $files = $fileManager->getAllFrom([FS_FOLDER], \SCANDIR_SORT_ASCENDING, $excluded);
+        $exclude = ['.', '..', 'Dinamic', 'Documentation', 'MyFiles', 'node_modules', 'Plugins', 'Test', 'vendor'];
+        $exclude[] = '.htaccess';
+        $exclude[] = 'config.php';
+        $files = $fileManager::scanFolder(FS_FOLDER, true, $exclude);
         foreach ($files as $fileName) {
             $resources[$fileName] = self::getFileHash($fileName);
         }
@@ -127,7 +126,22 @@ class IntegrityCheck
             $result[$type] = [];
         }
 
-        // Check if user integrity files have missing or invalid hashes
+        self::getAlteredUserFiles($result, $origArray, $userArray);
+        self::getExtraUserFiles($result, $origArray, $userArray);
+        self::cleanResults($result, $types);
+
+        return $result;
+    }
+
+    /**
+     * Add items if user integrity files have missing or invalid hashes.
+     *
+     * @param array $result
+     * @param array $origArray
+     * @param array $userArray
+     */
+    private static function getAlteredUserFiles(array &$result, array $origArray = [], array $userArray = [])
+    {
         foreach ($origArray as $item => $hash) {
             if (!isset($userArray[$item])) {
                 $result['MISSING_FILE'][] = $item;
@@ -135,22 +149,36 @@ class IntegrityCheck
                 $result['INVALID_HASH'][] = $item;
             }
         }
+    }
 
-        // Check if user integrity files have no needed files
+    /**
+     * Add items if user integrity files have no needed files.
+     *
+     * @param array $result
+     * @param array $origArray
+     * @param array $userArray
+     */
+    private static function getExtraUserFiles(array &$result, array $origArray = [], array $userArray = [])
+    {
         foreach ($userArray as $item => $hash) {
             if (!isset($origArray[$item])) {
                 $result['EXTRA_FILE'][] = $item;
             }
         }
+    }
 
-        // Unset empty validations
+    /**
+     * Unset empty validations that are unneeded.
+     *
+     * @param array $result
+     * @param array $types
+     */
+    private static function cleanResults(array &$result, array $types)
+    {
         foreach ($types as $type) {
             if (empty($result[$type])) {
                 unset($result[$type]);
             }
         }
-
-        // If exists any inconsistency and user is admin, notify user
-        return $result;
     }
 }

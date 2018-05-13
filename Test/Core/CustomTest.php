@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2018 Carlos Garcia Gomez <carlos@facturascripts.com>
+ * Copyright (C) 2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -19,6 +19,7 @@
 namespace FacturaScripts\Test\Core;
 
 use FacturaScripts\Core\Base\MiniLog;
+use FacturaScripts\Core\Model\Base\ModelClass;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -29,67 +30,99 @@ use PHPUnit\Framework\TestCase;
 class CustomTest extends TestCase
 {
 
+    /**
+     * @var ModelClass
+     */
     public $model;
 
     public function testInit()
     {
-        $this->assertNotNull($this->model);
+        $this::assertNotNull($this->model);
     }
 
+    /**
+     * @covers \FacturaScripts\Core\Model\Base\ModelClass::tableName()
+     */
     public function testTableName()
     {
-        $this->assertInternalType(
-            'string', $this->model->tableName()
+        $this::assertInternalType(
+            'string',
+            $this->model::tableName(),
+            'The table name is not a string'
         );
     }
 
+    /**
+     * @covers \FacturaScripts\Core\Model\Base\ModelClass::primaryColumn()
+     */
     public function testPrimaryColumn()
     {
-        $this->assertInternalType(
-            'string', $this->model->primaryColumn()
+        $this::assertInternalType(
+            'string',
+            $this->model::primaryColumn(),
+            'The primary column is not a string'
         );
     }
 
+    /**
+     * @covers \FacturaScripts\Core\Model\Base\ModelClass::primaryDescription()
+     */
     public function testPrimaryDescription()
     {
-        $this->assertInternalType(
-            'string', $this->model->primaryDescription()
+        $this::assertInternalType(
+            'string',
+            $this->model->primaryDescription(),
+            'The description is not a string'
         );
     }
 
+    /**
+     * @covers \FacturaScripts\Core\Model\Base\ModelClass::getModelFields()
+     */
     public function testFields()
     {
-        $this->assertNotEmpty($this->model->getModelFields());
+        $this::assertNotEmpty($this->model->getModelFields());
     }
 
     public function testInstall()
     {
         $install = $this->model->install();
-        $this->assertInternalType('string', $install);
+        $this::assertInternalType('string', $install);
 
         if (strlen($install) > 0) {
-            $this->assertNotEmpty($this->model->all());
+            $this::assertNotEmpty($this->model->all());
         }
     }
 
+    /**
+     * @covers \FacturaScripts\Core\Model\Base\ModelClass::url()
+     */
     public function testUrl()
     {
-        $this->assertInternalType(
-            'string', $this->model->url()
+        $this::assertInternalType(
+            'string',
+            $this->model->url(),
+            'The URL is not a string'
         );
     }
 
+    /**
+     * @covers \FacturaScripts\Core\Model\Base\ModelClass::exists()
+     */
     public function testExists()
     {
         $this->model->clear();
-        $this->assertFalse($this->model->exists());
+        $this::assertFalse($this->model->exists());
     }
 
+    /**
+     * @covers \FacturaScripts\Core\Model\Base\ModelClass::all()
+     */
     public function testAll()
     {
         foreach ($this->model->all() as $model) {
-            $this->assertTrue($model->test());
-            $this->assertTrue($model->exists());
+            $this::assertTrue($model->test());
+            $this::assertTrue($model->exists());
         }
     }
 

@@ -64,7 +64,7 @@ class Clientes extends AbstractRandomPeople
                 $cliente->codagente = null;
             }
 
-            if (random_int(0, 2) > 0 && !empty($this->grupos)) {
+            if (!empty($this->grupos) && random_int(0, 2) > 0) {
                 shuffle($this->grupos);
                 $cliente->codgrupo = $this->grupos[0]->codgrupo;
             } else {

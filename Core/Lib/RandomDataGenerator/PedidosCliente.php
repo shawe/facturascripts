@@ -54,7 +54,7 @@ class PedidosCliente extends AbstractRandomDocuments
         while ($generated < $num) {
             $ped->clear();
             $this->randomizeDocument($ped);
-            $eje = $this->ejercicio->getByFecha($ped->fecha);
+            $eje = $this->ejercicio::getByFecha($ped->fecha);
             if (false === $eje) {
                 break;
             }
@@ -65,7 +65,7 @@ class PedidosCliente extends AbstractRandomDocuments
                 $ped->fechasalida = date('d-m-Y', strtotime($ped->fecha . ' +' . random_int(1, 3) . ' months'));
             }
             if ($ped->save()) {
-                $this->randomLineas($ped, 'idpedido', self::MODEL_NAMESPACE . 'LineaPedidoCliente', $regimeniva, $recargo);
+                $this->randomLineas($ped, 'idpedido', 'LineaPedidoCliente', $regimeniva, $recargo);
                 ++$generated;
             } else {
                 break;

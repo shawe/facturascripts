@@ -69,7 +69,7 @@ class Updater extends Controller
      *
      * @return float
      */
-    public function getVersion()
+    public function getVersion(): float
     {
         return self::CORE_VERSION;
     }
@@ -145,10 +145,15 @@ class Updater extends Controller
         }
     }
 
+    /**
+     * Returns a list of upgradable items.
+     *
+     * @return array
+     */
     private function getUpdateItems(): array
     {
         $cacheData = $this->cache->get('UPDATE_ITEMS');
-        if (is_array($cacheData)) {
+        if (\is_array($cacheData)) {
             return $cacheData;
         }
 
@@ -159,7 +164,7 @@ class Updater extends Controller
         }
 
         $items = [];
-        foreach ($json as $projectData) {
+        foreach ((array) $json as $projectData) {
             if ($projectData['project'] === self::CORE_PROJECT_ID) {
                 $this->getUpdateItemsCore($items, $projectData);
             }
@@ -177,7 +182,7 @@ class Updater extends Controller
      */
     private function getUpdateItemsCore(array &$items, array $projectData)
     {
-        foreach ($projectData['builds'] as $build) {
+        foreach ((array) $projectData['builds'] as $build) {
             if ($build['stable'] && $build['version'] > self::CORE_VERSION) {
                 $items[] = [
                     'id' => 'CORE',

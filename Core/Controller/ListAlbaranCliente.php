@@ -75,7 +75,7 @@ class ListAlbaranCliente extends ExtendedController\ListController
         $paymentValues = $this->codeModel::all('formaspago', 'codpago', 'descripcion');
         $this->addFilterSelect('ListAlbaranCliente', 'codpago', 'payment-method', 'codpago', $paymentValues);
 
-        $this->addFilterAutocomplete('ListAlbaranCliente', 'codcliente', 'customer', 'codcliente', 'clientes', 'codcliente', 'nombre');
+        $this->addFilterAutocomplete('ListAlbaranCliente', 'clientes', 'codcliente', 'customer', 'nombre');
 
         // Delivery notes lines
         $this->createViewLines();

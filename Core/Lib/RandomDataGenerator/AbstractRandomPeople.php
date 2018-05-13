@@ -55,7 +55,7 @@ abstract class AbstractRandomPeople extends AbstractRandom
     /**
      * AbstractRandomPeople constructor.
      *
-     * @param $model
+     * @param mixed $model
      */
     public function __construct($model)
     {
