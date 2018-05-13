@@ -52,6 +52,13 @@ class LineaPedidoCliente extends Base\SalesDocumentLine
      */
     public $idpresupuesto;
 
+    public function install()
+    {
+        new PedidoCliente();
+
+        return parent::install();
+    }
+
     /**
      * Returns the name of the table that uses this model.
      *

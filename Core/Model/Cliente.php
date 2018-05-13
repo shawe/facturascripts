@@ -57,7 +57,7 @@ class Cliente extends Base\ComercialContact
     /**
      * True -> equivalence surcharge is applied to the client.
      *
-     * @var boolean
+     * @var bool
      */
     public $recargo;
 

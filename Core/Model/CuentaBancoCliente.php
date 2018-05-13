@@ -40,7 +40,7 @@ class CuentaBancoCliente extends Base\BankAccount
     /**
      * Is it the customer's main account?
      *
-     * @var boolean
+     * @var bool
      */
     public $principal;
 

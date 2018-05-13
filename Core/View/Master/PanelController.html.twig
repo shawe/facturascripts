@@ -213,6 +213,7 @@
                             {% set active = (indexView == fsc.active) ? ' active' : '' %}
                             {% set disable = fsc.getSettings(indexView, 'active') ? '' : ' disabled' %}
                             <a class="nav-link{{ active }}{{ disable }}" id="{{ indexView }}-tab" data-toggle="pill" href="#{{ indexView }}" role="tab" aria-controls="{{ indexView }}" aria-expanded="true">
+                                {% if view.count > 1 %}<span class='badge badge-secondary float-right'>{{ view.count }}</span>{% endif %}
                                 <i class="fa {{ fsc.getSettings(indexView, 'icon') }} fa-fw" aria-hidden="true"></i>
                                 &nbsp;{{ view.title }}
                             </a>
@@ -238,6 +239,10 @@
                                         <a href="{{ view.getURL('new') | raw }}" class="btn btn-sm btn-success">
                                             <i class="fa fa-plus" aria-hidden="true"></i>
                                             <span class="d-none d-sm-inline-block">&nbsp;{{ i18n.trans('new') }}</span>
+                                        </a>
+                                        <a href="{{ view.getURL('list') | raw }}" class="btn btn-sm btn-light float-right">
+                                            <span class="d-none d-sm-inline-block">{{ i18n.trans('all') }}&nbsp;</span>
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
                                         </a>
                                         {{ BaseController.columnsForListView(_context, view) }}
                                     {% elseif viewType == 'EditView' %}

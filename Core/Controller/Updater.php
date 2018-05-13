@@ -22,6 +22,7 @@ namespace FacturaScripts\Core\Controller;
 use FacturaScripts\Core\Base\Controller;
 use FacturaScripts\Core\Base\ControllerPermissions;
 use FacturaScripts\Core\Base\DownloadTools;
+use FacturaScripts\Core\Base\FileManager;
 use FacturaScripts\Core\Base\PluginManager;
 use FacturaScripts\Core\Model\User;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,7 +38,7 @@ class Updater extends Controller
 {
 
     const CORE_PROJECT_ID = 1;
-    const CORE_VERSION = 2018.001;
+    const CORE_VERSION = 2018.002;
     const UPDATE_CORE_URL = 'https://beta.facturascripts.com/DownloadBuild';
 
     /**
@@ -85,7 +86,7 @@ class Updater extends Controller
         parent::privateCore($response, $user, $permissions);
 
         /// Folders writables?
-        $folders = $this->notWritablefolders();
+        $folders = FileManager::notWritableFolders();
         if (!empty($folders)) {
             $this->miniLog->alert($this->i18n->trans('folder-not-writable'));
             foreach ($folders as $folder) {
@@ -101,30 +102,13 @@ class Updater extends Controller
     }
 
     /**
-     * Erase $dir folder and all its subfolders.
-     *
-     * @param string $dir
-     *
-     * @return bool
-     */
-    private function delTree(string $dir): bool
-    {
-        $files = array_diff(scandir($dir, \SCANDIR_SORT_ASCENDING), ['.', '..']);
-        foreach ($files as $file) {
-            is_dir("$dir/$file") ? $this->delTree("$dir/$file") : unlink("$dir/$file");
-        }
-
-        return rmdir($dir);
-    }
-
-    /**
      * Downloads core zip.
      */
     private function download()
     {
         $idItem = $this->request->get('item', '');
         foreach ($this->updaterItems as $key => $item) {
-            if($item['id'] != $idItem) {
+            if ($item['id'] != $idItem) {
                 continue;
             }
 
@@ -161,36 +145,6 @@ class Updater extends Controller
         }
     }
 
-    /**
-     * Returns an array with all subforder of $baseDir folder.
-     *
-     * @param string $baseDir
-     *
-     * @return array
-     */
-    private function foldersFrom(string $baseDir): array
-    {
-        $directories = [];
-        foreach (scandir($baseDir, \SCANDIR_SORT_ASCENDING) as $file) {
-            if ($file === '.' || $file === '..') {
-                continue;
-            }
-            $dir = $baseDir . DIRECTORY_SEPARATOR . $file;
-            if (is_dir($dir)) {
-                $directories[] = $dir;
-                /** @noinspection SlowArrayOperationsInLoopInspection */
-                $directories = array_merge($directories, $this->foldersFrom($dir));
-            }
-        }
-
-        return $directories;
-    }
-
-    /**
-     * TODO: Undocumented function.
-     *
-     * @return array
-     */
     private function getUpdateItems(): array
     {
         $cacheData = $this->cache->get('UPDATE_ITEMS');
@@ -238,49 +192,6 @@ class Updater extends Controller
     }
 
     /**
-     * Returns an array with all not writable folders.
-     *
-     * @return array
-     */
-    private function notWritablefolders(): array
-    {
-        $notwritable = [];
-        foreach ($this->foldersFrom(FS_FOLDER) as $dir) {
-            if (!is_writable($dir)) {
-                $notwritable[] = $dir;
-            }
-        }
-
-        return $notwritable;
-    }
-
-    /**
-     * Copy all files and folders from $src to $dst
-     *
-     * @param string $src
-     * @param string $dst
-     */
-    private function recurseCopy(string $src, string $dst)
-    {
-        $dir = opendir($src);
-        @mkdir($dst);
-        while (false !== ($file = readdir($dir))) {
-            if ($file === '.' || $file === '..') {
-                continue;
-            }
-
-            if (is_dir($src . '/' . $file)) {
-                $this->recurseCopy($src . '/' . $file, $dst . '/' . $file);
-            } else {
-                copy($src . '/' . $file, $dst . '/' . $file);
-            }
-        }
-        if (\is_resource($dir)) {
-            closedir($dir);
-        }
-    }
-
-    /**
      * Extract zip file and update all files.
      *
      * @return bool
@@ -306,11 +217,11 @@ class Updater extends Controller
                 break;
             }
 
-            $this->delTree($dest);
-            $this->recurseCopy($origin, $dest);
+            FileManager::delTree($dest);
+            FileManager::recurseCopy($origin, $dest);
         }
 
-        $this->delTree(FS_FOLDER . DIRECTORY_SEPARATOR . 'facturascripts');
+        FileManager::delTree(FS_FOLDER . DIRECTORY_SEPARATOR . 'facturascripts');
         return true;
     }
 }

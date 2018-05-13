@@ -38,6 +38,13 @@ class LineaPedidoProveedor extends Base\BusinessDocumentLine
      */
     public $idpedido;
 
+    public function install()
+    {
+        new PedidoProveedor();
+
+        return parent::install();
+    }
+
     /**
      * Returns the name of the table that uses this model.
      *

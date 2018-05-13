@@ -29,6 +29,70 @@ use PHPUnit\Framework\TestCase;
 class CustomTest extends TestCase
 {
 
+    public $model;
+
+    public function testInit()
+    {
+        $this->assertNotNull($this->model);
+    }
+
+    public function testTableName()
+    {
+        $this->assertInternalType(
+            'string', $this->model->tableName()
+        );
+    }
+
+    public function testPrimaryColumn()
+    {
+        $this->assertInternalType(
+            'string', $this->model->primaryColumn()
+        );
+    }
+
+    public function testPrimaryDescription()
+    {
+        $this->assertInternalType(
+            'string', $this->model->primaryDescription()
+        );
+    }
+
+    public function testFields()
+    {
+        $this->assertNotEmpty($this->model->getModelFields());
+    }
+
+    public function testInstall()
+    {
+        $install = $this->model->install();
+        $this->assertInternalType('string', $install);
+
+        if (strlen($install) > 0) {
+            $this->assertNotEmpty($this->model->all());
+        }
+    }
+
+    public function testUrl()
+    {
+        $this->assertInternalType(
+            'string', $this->model->url()
+        );
+    }
+
+    public function testExists()
+    {
+        $this->model->clear();
+        $this->assertFalse($this->model->exists());
+    }
+
+    public function testAll()
+    {
+        foreach ($this->model->all() as $model) {
+            $this->assertTrue($model->test());
+            $this->assertTrue($model->exists());
+        }
+    }
+
     protected function tearDown()
     {
         $minilog = new MiniLog();

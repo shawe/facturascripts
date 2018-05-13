@@ -51,14 +51,11 @@ class ContactoProveedor extends Base\ModelClass
      */
     public $idcontacto;
 
-    /**
-     * Returns the name of the table that uses this model.
-     *
-     * @return string
-     */
-    public static function tableName(): string
+    public function install(): string
     {
-        return 'contactosproveedores';
+        new Contacto();
+
+        return parent::install();
     }
 
     /**
@@ -69,5 +66,15 @@ class ContactoProveedor extends Base\ModelClass
     public static function primaryColumn(): string
     {
         return 'id';
+    }
+
+    /**
+     * Returns the name of the table that uses this model.
+     *
+     * @return string
+     */
+    public static function tableName(): string
+    {
+        return 'contactosproveedores';
     }
 }

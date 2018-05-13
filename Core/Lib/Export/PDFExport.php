@@ -193,7 +193,7 @@ class PDFExport implements ExportInterface
         $orientation = 'portrait';
         $tableCols = [];
         $tableColsTitle = [];
-        $tableOptions = ['cols' => [], 'shadeHeadingCol' => [0.8, 0.8, 0.8]];
+        $tableOptions = ['cols' => [], 'shadeCol' => [0.95, 0.95, 0.95], 'shadeHeadingCol' => [0.95, 0.95, 0.95]];
         $tableData = [];
         $longTitles = [];
 
@@ -267,7 +267,8 @@ class PDFExport implements ExportInterface
                 'tax' => ['justification' => 'right'],
                 'total' => ['justification' => 'right'],
             ],
-            'shadeHeadingCol' => [0.8, 0.8, 0.8],
+            'shadeCol' => [0.95, 0.95, 0.95],
+            'shadeHeadingCol' => [0.95, 0.95, 0.95],
             'width' => $this->tableWidth
         ];
         $this->removeEmptyCols($tableData, $headers);

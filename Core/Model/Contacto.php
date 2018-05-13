@@ -23,7 +23,7 @@ use FacturaScripts\Core\App\AppSettings;
 use FacturaScripts\Core\Base\Utils;
 
 /**
- * Description of crm_contacto
+ * Description of Contacto
  *
  * @package FacturaScripts\Core\Model
  * @author Carlos García Gómez <carlos@facturascripts.com>

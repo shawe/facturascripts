@@ -43,3 +43,9 @@ $sam['filter'] = function () {
 };
 
 return $sam;
+
+/**
+ * How to use it:
+ * curl -O http://get.sensiolabs.org/sami.phar
+ * php sami.phar generateDoc.php
+ */

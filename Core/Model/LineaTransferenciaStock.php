@@ -31,6 +31,20 @@ class LineaTransferenciaStock extends Base\ModelClass
     use Base\ModelTrait;
 
     /**
+     * Quantity.
+     *
+     * @var float|int
+     */
+    public $cantidad;
+
+    /**
+     * Description of the transfer.
+     *
+     * @var string
+     */
+    public $descripcion;
+
+    /**
      * Primary key. Integer.
      *
      * @var int
@@ -52,46 +66,12 @@ class LineaTransferenciaStock extends Base\ModelClass
     public $referencia;
 
     /**
-     * Quantity.
-     *
-     * @var float|int
-     */
-    public $cantidad;
-
-    /**
-     * Description of the transfer.
-     *
-     * @var string
-     */
-    public $descripcion;
-
-    /**
-     * Returns the name of the table that uses this model.
-     *
-     * @return string
-     */
-    public static function tableName(): string
-    {
-        return 'lineastranstocks';
-    }
-
-    /**
-     * Returns the name of the column that is the model's primary key.
-     *
-     * @return string
-     */
-    public static function primaryColumn(): string
-    {
-        return 'idlinea';
-    }
-
-    /**
      * Reset the values of all model properties.
      */
     public function clear()
     {
         parent::clear();
-        $this->cantidad = 0;
+        $this->cantidad = 0.0;
     }
 
     /**
@@ -107,5 +87,25 @@ class LineaTransferenciaStock extends Base\ModelClass
         new TransferenciaStock();
 
         return '';
+    }
+
+    /**
+     * Returns the name of the column that is the model's primary key.
+     *
+     * @return string
+     */
+    public static function primaryColumn()
+    {
+        return 'idlinea';
+    }
+
+    /**
+     * Returns the name of the table that uses this model.
+     *
+     * @return string
+     */
+    public static function tableName()
+    {
+        return 'lineastransstock';
     }
 }

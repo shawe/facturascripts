@@ -54,7 +54,7 @@ class DireccionProveedor extends Base\Address
     /**
      * True -> main address.
      *
-     * @var boolean
+     * @var bool
      */
     public $direccionppal;
 
