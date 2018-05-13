@@ -276,7 +276,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
     private function buttonHTMLColumn($data, $formName): string
     {
         return '<div class="form-group' . $data['ColumnClass'] . '"><label>&nbsp;</label>'
-            . $this->widget->getHTML(null, $formName, $data['ColumnHint'], 'col')
+            . $this->widget->getHTML($this->widget->label, $formName, $data['ColumnHint'], 'col')
             . $data['ColumnDescription']
             . '</div>';
     }

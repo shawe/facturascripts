@@ -146,13 +146,13 @@ class WidgetButton implements VisualItemInterface
     {
         switch ($this->type) {
             case 'calculate':
-                return $this->getCalculateHTML($label ?? $this->label, $value, $hint);
+                return $this->getCalculateHTML($label, $value, $hint);
 
             case 'action':
-                return $this->getActionHTML($label ?? $this->label, $hint, $value, $class);
+                return $this->getActionHTML($label, $hint, $value, $class);
 
             case 'modal':
-                return $this->getModalHTML($label ?? $this->label, $class);
+                return $this->getModalHTML($label, $class);
 
             default:
                 return '';

@@ -96,7 +96,7 @@ class Postgresql implements DataBaseEngine
      *
      * @param string $error
      *
-     * @return bool|null
+     * @return null|resource
      */
     public function connect(&$error)
     {
