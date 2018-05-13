@@ -116,9 +116,9 @@ abstract class BaseView
      *
      * @param string $fieldName
      *
-     * @return ColumnItem
+     * @return ColumnItem|null
      */
-    public function columnForField(string $fieldName): ColumnItem
+    public function columnForField(string $fieldName)
     {
         $result = null;
         foreach ($this->pageOption->columns as $group) {

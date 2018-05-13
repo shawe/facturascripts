@@ -109,7 +109,7 @@ class Controller
     /**
      * Name of the file for the template.
      *
-     * @var string|false nombre_archivo.html.twig
+     * @var string|false FileName.html.twig
      */
     private $template;
 

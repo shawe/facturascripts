@@ -110,7 +110,11 @@ class Dashboard extends Base\Controller
     private function loadDataComponents()
     {
         foreach ($this->components as $component) {
-            $component->loadData();
+            if ($component instanceof Lib\Dashboard\InfoStateComponent
+                || $component instanceof Lib\Dashboard\MessagesComponent
+                || $component instanceof Lib\Dashboard\TasksComponent) {
+                $component->loadData();
+            }
         }
     }
 }

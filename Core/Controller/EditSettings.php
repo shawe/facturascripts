@@ -21,6 +21,7 @@ namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Lib\EmailTools;
 use FacturaScripts\Core\Lib\ExtendedController;
+use FacturaScripts\Core\Model\Settings;
 
 /**
  * Controller to edit main settings
@@ -202,7 +203,7 @@ class EditSettings extends ExtendedController\PanelController
         $view->loadData($code);
 
         $model = $view->getModel();
-        if ($model->name === null) {
+        if ($model instanceof Settings && $model->name === null) {
             $model->description = $model->name = strtolower(substr($viewName, 8));
             $model->save();
         }

@@ -162,7 +162,7 @@ abstract class ModelClass extends ModelCore
      * meet the above conditions.
      * Returns True if the record exists and False otherwise.
      *
-     * @param string                   $cod
+     * @param string|false             $cod
      * @param DataBase\DataBaseWhere[] $where
      * @param array                    $orderBy
      *
@@ -400,7 +400,7 @@ abstract class ModelClass extends ModelCore
      * Read the record whose primary column corresponds to the value $cod
      * or the first that meets the indicated condition.
      *
-     * @param string                   $cod
+     * @param string|false             $cod
      * @param DataBase\DataBaseWhere[] $where
      * @param array                    $orderBy
      *

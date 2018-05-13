@@ -144,8 +144,10 @@ class GridView extends BaseView
                 $item['visibleRows'] = 5;
                 $item['allowInvalid'] = true;
                 $item['trimDropdown'] = false;
-                $item['strict'] = $this->getAutocompeteStrict($column->widget->values[0]);
-                $item['data-source'] = $this->getAutocompleteSource($column->widget->values[0]);
+                if ($column->widget instanceof WidgetItemAutocomplete) {
+                    $item['strict'] = $this->getAutocompeteStrict($column->widget->values[0]);
+                    $item['data-source'] = $this->getAutocompleteSource($column->widget->values[0]);
+                }
                 break;
 
             case 'number':

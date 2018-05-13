@@ -23,6 +23,7 @@ use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Base\DivisaTools;
 use FacturaScripts\Core\Base\Utils;
 use FacturaScripts\Core\Lib\ExportManager;
+use FacturaScripts\Dinamic\Model\Base\BusinessDocument;
 use FacturaScripts\Dinamic\Model\Base\BusinessDocumentLine;
 use FacturaScripts\Dinamic\Model\EstadoDocumento;
 
@@ -160,9 +161,11 @@ class BusinessDocumentView extends BaseView
         }
 
         $this->model->loadFromCode($code);
-        $this->count = empty($this->model->primaryColumnValue()) ? 0 : 1;
-        $this->lines = empty($this->model->primaryColumnValue()) ? [] : $this->model->getLines();
-        $this->title = $this->model->codigo;
+        if ($this->model instanceof BusinessDocument) {
+            $this->count = empty($this->model->primaryColumnValue()) ? 0 : 1;
+            $this->lines = empty($this->model->primaryColumnValue()) ? [] : $this->model->getLines();
+            $this->title = $this->model->codigo;
+        }
     }
 
     /**

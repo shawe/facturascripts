@@ -357,9 +357,9 @@ abstract class BusinessDocument extends ModelClass
      * meet the above conditions.
      * Returns True if the record exists and False otherwise.
      *
-     * @param string $cod
-     * @param array  $where
-     * @param array  $orderBy
+     * @param string|false $cod
+     * @param array        $where
+     * @param array        $orderBy
      *
      * @return bool
      */

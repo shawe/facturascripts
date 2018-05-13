@@ -184,9 +184,9 @@ class AccountingPlanImport
      *
      * @param string $filePath
      *
-     * @return \SimpleXMLElement
+     * @return \SimpleXMLElement|false
      */
-    private function getData(string $filePath): \SimpleXMLElement
+    private function getData(string $filePath)
     {
         if (file_exists($filePath)) {
             $txt = file_get_contents($filePath);

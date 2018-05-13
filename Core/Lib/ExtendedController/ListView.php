@@ -242,7 +242,7 @@ class ListView extends BaseView implements DataViewInterface
     /**
      * List of columns and its configuration
      *
-     * @return GroupItem[]
+     * @return ColumnItem[]
      */
     public function getColumns(): array
     {

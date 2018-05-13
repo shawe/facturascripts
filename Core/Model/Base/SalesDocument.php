@@ -266,7 +266,7 @@ abstract class SalesDocument extends BusinessDocument
     /**
      * Updates subjects data in this document.
      *
-     * @return boolean
+     * @return bool
      */
     public function updateSubject(): bool
     {

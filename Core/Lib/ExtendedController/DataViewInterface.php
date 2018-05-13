@@ -41,7 +41,7 @@ interface DataViewInterface
     /**
      * Column list and its configuration
      *
-     * @return GroupItem[]
+     * @return GroupItem[]|ColumnItem[]
      */
     public function getColumns(): array;
 

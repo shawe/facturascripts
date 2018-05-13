@@ -163,6 +163,7 @@ class BaseComponent
             ];
 
             /** @noinspection PhpUndefinedMethodInspection */
+            /** @scrutinizer ignore-call */
             $this->saveData($data);
         }
         $this->randomData = false;

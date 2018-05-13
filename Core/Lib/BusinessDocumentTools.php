@@ -81,8 +81,8 @@ class BusinessDocumentTools
     /**
      * Calculate document totals from form data and returns the new total and document lines.
      *
-     * @param Base\BusinessDocument       $doc
-     * @param Base\BusinessDocumentLine[] $formLines
+     * @param Base\BusinessDocument $doc
+     * @param array                 $formLines
      *
      * @return string
      */
@@ -91,9 +91,7 @@ class BusinessDocumentTools
         $this->clearTotals($doc);
         $lines = [];
         foreach ($formLines as $fLine) {
-            if ($fLine instanceof Base\BusinessDocumentLine) {
-                $lines[] = $this->recalculateLine($fLine, $doc);
-            }
+            $lines[] = $this->recalculateLine($fLine, $doc);
         }
 
         foreach ($this->getSubtotals($lines) as $subt) {

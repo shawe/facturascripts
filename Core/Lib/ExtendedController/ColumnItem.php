@@ -74,7 +74,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      */
     public function applySpecialOperations()
     {
-        if ($this->widget->type === 'select') {
+        if ($this->widget->type === 'select' && $this->widget instanceof WidgetItemSelect) {
             if (isset($this->widget->values[0]['source'])) {
                 $this->widget->loadValuesFromModel();
 
@@ -276,7 +276,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
     private function buttonHTMLColumn($data, $formName): string
     {
         return '<div class="form-group' . $data['ColumnClass'] . '"><label>&nbsp;</label>'
-            . $this->widget->getHTML($this->widget->label, $formName, $data['ColumnHint'], 'col')
+            . $this->widget->getHTML(null, $formName, $data['ColumnHint'], 'col')
             . $data['ColumnDescription']
             . '</div>';
     }
@@ -344,7 +344,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
             $description = $this->i18n->trans($this->description);
         }
 
-        if ($this->widget->type === 'filechooser') {
+        if ($this->widget->type === 'filechooser' && $this->widget instanceof WidgetItemFileChooser) {
             $description = ' ' . $this->i18n->trans(
                 'help-server-accepts-filesize',
                 ['%size%' => $this->widget->getMaxFileUpload()]
@@ -393,16 +393,18 @@ class ColumnItem extends VisualItem implements VisualItemInterface
             . '<label>' . $header . '</label>';
 
         $input = $this->widget->getEditHTML($value);
-        foreach ($this->widget->values as $optionValue) {
-            $checked = ($optionValue['value'] === $value) ? ' checked="checked"' : '';
-            ++$index;
-            $values = [$index . '"', $optionValue['value'], $checked];
-            $html .= '<div class="form-check">'
-                . '<label class="form-check-label custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0" '
-                . $data['ColumnHint'] . '>' . \str_replace($template_var, $values, $input)
-                . '&nbsp;' . $optionValue['title']
-                . '</label>'
-                . '</div>';
+        if ($this->widget instanceof WidgetItemRadio) {
+            foreach ($this->widget->values as $optionValue) {
+                $checked = ($optionValue['value'] === $value) ? ' checked="checked"' : '';
+                ++$index;
+                $values = [$index . '"', $optionValue['value'], $checked];
+                $html .= '<div class="form-check">'
+                    . '<label class="form-check-label custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0" '
+                    . $data['ColumnHint'] . '>' . \str_replace($template_var, $values, $input)
+                    . '&nbsp;' . $optionValue['title']
+                    . '</label>'
+                    . '</div>';
+            }
         }
 
         $result .= $html . $data['ColumnRequired'] . '</div>';

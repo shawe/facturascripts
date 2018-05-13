@@ -22,6 +22,9 @@ namespace FacturaScripts\Core\Lib\ExtendedController;
 use FacturaScripts\Core\Base;
 use FacturaScripts\Core\Model\Base\ModelClass;
 use FacturaScripts\Dinamic\Lib\BusinessDocumentTools;
+use FacturaScripts\Dinamic\Model\Base\BusinessDocument;
+use FacturaScripts\Dinamic\Model\Base\PurchaseDocument;
+use FacturaScripts\Dinamic\Model\Base\SalesDocument;
 use FacturaScripts\Dinamic\Model\Cliente;
 use FacturaScripts\Dinamic\Model\Proveedor;
 
@@ -165,8 +168,8 @@ abstract class BusinessDocumentController extends PanelController
     /**
      * Load view data procedure
      *
-     * @param string            $viewName
-     * @param BaseView|EditView $view
+     * @param string   $viewName
+     * @param EditView $view
      */
     protected function loadData($viewName, $view)
     {
@@ -244,17 +247,19 @@ abstract class BusinessDocumentController extends PanelController
      */
     protected function saveDocumentResult(BusinessDocumentView $view, array &$data, array &$newLines): string
     {
-        if (!$view->model->setDate($data['fecha'], $data['hora'])) {
-            return 'ERROR: BAD DATE';
-        }
+        if ($view->model instanceof BusinessDocument) {
+            if (!$view->model->setDate($data['fecha'], $data['hora'])) {
+                return 'ERROR: BAD DATE';
+            }
 
-        /// sets subjects
-        $result = 'OK';
-        if (\in_array('codcliente', $view->model->getSubjectColumns(), false)) {
-            $result = $this->setCustomer($view, $data['codcliente'], $data['new_cliente'], $data['new_cifnif']);
-        }
-        if (\in_array('codproveedor', $view->model->getSubjectColumns(), false)) {
-            $result = $this->setSupplier($view, $data['codproveedor'], $data['new_proveedor'], $data['new_cifnif']);
+            /// sets subjects
+            $result = 'OK';
+            if (\in_array('codcliente', $view->model->getSubjectColumns(), false)) {
+                $result = $this->setCustomer($view, $data['codcliente'], $data['new_cliente'], $data['new_cifnif']);
+            }
+            if (\in_array('codproveedor', $view->model->getSubjectColumns(), false)) {
+                $result = $this->setSupplier($view, $data['codproveedor'], $data['new_proveedor'], $data['new_cifnif']);
+            }
         }
 
         if ($result !== 'OK') {
@@ -320,7 +325,7 @@ abstract class BusinessDocumentController extends PanelController
                 continue;
             }
 
-            if (empty($fLine['idlinea'])) {
+            if ($view->model instanceof BusinessDocument && empty($fLine['idlinea'])) {
                 $newDocLine = $view->model->getNewLine($fLine);
                 $newDocLine->pvpsindto = $newDocLine->pvpunitario * $newDocLine->cantidad;
                 $newDocLine->pvptotal = $newDocLine->pvpsindto * (100 - $newDocLine->dtopor) / 100;
@@ -349,12 +354,12 @@ abstract class BusinessDocumentController extends PanelController
      */
     protected function setCustomer(BusinessDocumentView $view, string $codcliente, string $newCliente = '', string $newCifnif = ''): string
     {
-        if ($view->model->codcliente === $codcliente && !empty($view->model->codcliente)) {
+        if ($view->model instanceof SalesDocument && $view->model->codcliente === $codcliente && !empty($view->model->codcliente)) {
             return 'OK';
         }
 
         $cliente = new Cliente();
-        if ($cliente->loadFromCode($codcliente)) {
+        if ($view->model instanceof SalesDocument && $cliente->loadFromCode($codcliente)) {
             $view->model->setSubject([$cliente]);
             return 'OK';
         }
@@ -382,12 +387,12 @@ abstract class BusinessDocumentController extends PanelController
      */
     protected function setSupplier(BusinessDocumentView $view, string $codproveedor, string $newProveedor = '', string $newCifnif = ''): string
     {
-        if ($view->model->codproveedor === $codproveedor && !empty($view->model->codproveedor)) {
+        if ($view->model instanceof PurchaseDocument && $view->model->codproveedor === $codproveedor && !empty($view->model->codproveedor)) {
             return 'OK';
         }
 
         $proveedor = new Proveedor();
-        if ($proveedor->loadFromCode($codproveedor)) {
+        if ($view->model instanceof PurchaseDocument && $proveedor->loadFromCode($codproveedor)) {
             $view->model->setSubject([$proveedor]);
             return 'OK';
         }

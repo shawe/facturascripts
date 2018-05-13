@@ -27,12 +27,41 @@ namespace FacturaScripts\Core\Model;
  */
 class PartidaImpuestoResumen extends Base\ModelView
 {
+
     /**
      * TODO: Undocummented property.
      *
      * @var float
      */
     public $baseimponible;
+
+    /**
+     * TODO: Undocummented property.
+     *
+     * @var string
+     */
+    public $codejercicio;
+
+    /**
+     * TODO: Undocummented property.
+     *
+     * @var string
+     */
+    public $codcuentaesp;
+
+    /**
+     * TODO: Undocummented property.
+     *
+     * @var string
+     */
+    public $codimpuesto;
+
+    /**
+     * TODO: Undocummented property.
+     *
+     * @var string
+     */
+    public $descripcion;
 
     /**
      * TODO: Undocummented property.

@@ -36,3 +36,4 @@ define('FS_CACHE_PREFIX', 'tFlqb1s1');
 define('FS_ITEM_LIMIT', 50);
 define('FS_CODPAIS', 'ESP');
 define('FS_NF0', 2);
+define('FS_HIDDEN_PLUGINS', '');

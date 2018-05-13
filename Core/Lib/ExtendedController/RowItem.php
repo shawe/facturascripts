@@ -76,9 +76,9 @@ abstract class RowItem implements VisualItemInterface
      *
      * @param array $row
      *
-     * @return RowItem
+     * @return RowItem|null
      */
-    public static function newFromJSON($row): RowItem
+    public static function newFromJSON($row)
     {
         $type = (string) $row['type'];
         $result = self::rowItemFromType($type);
@@ -94,9 +94,9 @@ abstract class RowItem implements VisualItemInterface
      *
      * @param \SimpleXMLElement $row
      *
-     * @return RowItem
+     * @return RowItem|null
      */
-    public static function newFromXML($row): RowItem
+    public static function newFromXML($row)
     {
         $rowAtributes = $row->attributes();
         $type = (string) $rowAtributes->type;
