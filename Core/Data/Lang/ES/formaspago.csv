@@ -1,5 +1,5 @@
 codpago;descripcion;genrecibos;codcuenta;domiciliado;vencimiento
-"CONT";"Al contado";"Pagados";null;false;"+0day"
-"TRANS";"Transferencia bancaria";"Emitidos";null;false;"+1month"
-"TARJETA";"Tarjeta de crédito";"Pagados";null;false;"+0day"
-"PAYPAL";"PayPal";"Pagados";null;false;"+0day"
+CONT;Al contado;Pagados;NULL;false;+0day
+TRANS;Transferencia bancaria;Emitidos;NULL;false;+1month
+TARJETA;Tarjeta de crédito;Pagados;NULL;false;+0day
+PAYPAL;PayPal;Pagados;NULL;false;+0day

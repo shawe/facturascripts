@@ -49,3 +49,7 @@ echo "\n" . 'Pass: ' . FS_DB_PASS . "\n\n";
 /// clean cache
 $cache = new FacturaScripts\Core\Base\Cache();
 $cache->clear();
+
+/// Generate Dinamic
+$pluginManager = new FacturaScripts\Core\Base\PluginManager();
+$pluginManager->deploy();

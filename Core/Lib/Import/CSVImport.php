@@ -76,8 +76,12 @@ class CSVImport
      */
     private static function valueToSql(DataBase $dataBase, string $value): string
     {
-        if ($value === 'false' || $value === 'true') {
-            return $value;
+        // On CSV file, this strings are considered 'reserved' for us
+        if (\in_array(strtolower($value), ['false', 'true'])) {
+            return strtolower($value);
+        }
+        if ('NULL' === strtoupper($value)) {
+            return 'NULL';
         }
 
         return $dataBase->var2str($value);

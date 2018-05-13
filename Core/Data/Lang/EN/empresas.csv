@@ -1,2 +1,2 @@
 administrador;apartado;cifnif;ciudad;codpais;codpostal;direccion;email;fax;idempresa;nombre;nombrecorto;provincia;personafisica;recequivalencia;telefono1;telefono2;web;fechaalta;observaciones;regimeniva
-;;00000014Z;Washington D. C.;USA;;Street, 123;;;1;DEMO Company;DEMO;Washington D. C.;0;0;;;https://www.facturascripts.com;NULL;;NULL
+Admin DEMO;;00000014Z;Washington D. C.;USA;20001;Street 123;NULL;NULL;1;DEMO Company;DEMO;Washington D. C.;0;0;NULL;NULL;https://www.facturascripts.com;NULL;NULL;NULL
