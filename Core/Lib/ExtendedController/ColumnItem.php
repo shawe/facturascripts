@@ -54,7 +54,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
     /**
      * Field display object configuration
      *
-     * @var WidgetButton|WidgetItemCheckBox|WidgetItemColor|WidgetItemDateTime|WidgetItemMoney|WidgetItemNumber|WidgetItemRadio|WidgetItemSelect|WidgetItemText|WidgetItemFileChooser
+     * @var WidgetButton|WidgetItemCheckBox|WidgetItemColor|WidgetItemDateTime|WidgetItemMoney|WidgetItemNumber|WidgetItemRadio|WidgetItemSelect|WidgetItemText|WidgetItemFileChooser|WidgetItemAutocomplete
      */
     public $widget;
 

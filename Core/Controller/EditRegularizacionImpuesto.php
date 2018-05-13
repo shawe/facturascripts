@@ -112,7 +112,7 @@ class EditRegularizacionImpuesto extends ExtendedController\PanelController
 
             case 'ListPartidaImpuestoResumen':
                 $id = $this->getViewModelValue('EditRegularizacionImpuesto', 'idregularizacion');
-                if (!empty($id)) {
+                if (!empty($id) && $view instanceof ExtendedController\ListView) {
                     $exercise = $this->getViewModelValue('EditRegularizacionImpuesto', 'codejercicio');
                     $startDate = $this->getViewModelValue('EditRegularizacionImpuesto', 'fechainicio');
                     $endDate = $this->getViewModelValue('EditRegularizacionImpuesto', 'fechafin');

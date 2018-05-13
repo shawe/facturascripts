@@ -21,10 +21,10 @@ namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base;
 use FacturaScripts\Core\Model\Base\ModelClass;
+use FacturaScripts\Core\Model\Base\PurchaseDocument;
+use FacturaScripts\Core\Model\Base\SalesDocument;
 use FacturaScripts\Dinamic\Lib\BusinessDocumentTools;
 use FacturaScripts\Dinamic\Model\Base\BusinessDocument;
-use FacturaScripts\Dinamic\Model\Base\PurchaseDocument;
-use FacturaScripts\Dinamic\Model\Base\SalesDocument;
 use FacturaScripts\Dinamic\Model\Cliente;
 use FacturaScripts\Dinamic\Model\Proveedor;
 
@@ -247,13 +247,13 @@ abstract class BusinessDocumentController extends PanelController
      */
     protected function saveDocumentResult(BusinessDocumentView $view, array &$data, array &$newLines): string
     {
+        $result = 'OK';
         if ($view->model instanceof BusinessDocument) {
             if (!$view->model->setDate($data['fecha'], $data['hora'])) {
                 return 'ERROR: BAD DATE';
             }
 
             /// sets subjects
-            $result = 'OK';
             if (\in_array('codcliente', $view->model->getSubjectColumns(), false)) {
                 $result = $this->setCustomer($view, $data['codcliente'], $data['new_cliente'], $data['new_cifnif']);
             }
@@ -359,7 +359,7 @@ abstract class BusinessDocumentController extends PanelController
         }
 
         $cliente = new Cliente();
-        if ($view->model instanceof SalesDocument && $cliente->loadFromCode($codcliente)) {
+        if ($cliente->loadFromCode($codcliente) && $view->model instanceof SalesDocument) {
             $view->model->setSubject([$cliente]);
             return 'OK';
         }
@@ -392,7 +392,7 @@ abstract class BusinessDocumentController extends PanelController
         }
 
         $proveedor = new Proveedor();
-        if ($view->model instanceof PurchaseDocument && $proveedor->loadFromCode($codproveedor)) {
+        if ($proveedor->loadFromCode($codproveedor) && $view->model instanceof PurchaseDocument) {
             $view->model->setSubject([$proveedor]);
             return 'OK';
         }

@@ -109,7 +109,7 @@ class Postgresql implements DataBaseEngine
         $string = 'host=' . \FS_DB_HOST . ' dbname=' . \FS_DB_NAME . ' port=' . \FS_DB_PORT
             . ' user=' . \FS_DB_USER . ' password=' . \FS_DB_PASS;
         $result = pg_connect($string);
-        if (!$result) {
+        if (!\is_resource($result)) {
             $error = pg_last_error();
 
             return null;
@@ -223,7 +223,7 @@ class Postgresql implements DataBaseEngine
 
         try {
             $aux = @pg_query($link, $sql);
-            if ($aux) {
+            if (\is_resource($aux)) {
                 $result = true;
                 if ($selectRows) {
                     $result = pg_fetch_all($aux);

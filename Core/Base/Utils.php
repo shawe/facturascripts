@@ -145,14 +145,16 @@ class Utils
      * Do not be tempted to substitute by htmlentities or htmlspecialshars
      * because you will find many unpleasant surprises.
      *
-     * @param string $txt
+     * @param null|string $txt
      *
      * @return null|string
      */
     public static function noHtml($txt)
     {
         $newt = \str_replace(
-            ['<', '>', '"', "'"], ['&lt;', '&gt;', '&quot;', '&#39;'], $txt
+            ['<', '>', '"', "'"],
+            ['&lt;', '&gt;', '&quot;', '&#39;'],
+            $txt
         );
 
         return ($txt === null) ? null : trim($newt);
