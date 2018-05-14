@@ -14,7 +14,7 @@
 config.php
 config-mysql.php
 config-postgresql.php
-generateDoc.sh
+generateDoc.*
 package-lock.json
 *.cache
 *.lock
