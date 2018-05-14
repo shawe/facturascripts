@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>FacturaScripts\Core\Lib\ExtendedController\ColumnItem | FacturaScripts</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:FacturaScripts_Core_Lib_ExtendedController_ColumnItem" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">FacturaScripts</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../FacturaScripts.html">FacturaScripts</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core.html">Core</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core/Lib.html">Lib</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core/Lib/ExtendedController.html">ExtendedController</a></li><li class="backslash">\</li><li>ColumnItem</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            ColumnItem
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>ColumnItem</strong>        extends <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/VisualItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\VisualItem">VisualItem</abbr></a>        implements
+        <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/VisualItemInterface.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\VisualItemInterface">VisualItemInterface</abbr></a>        (<a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/ColumnItem.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Description of ColumnItem</p>                                </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_i18n">
+                                        protected                                        <a href="../../../../FacturaScripts/Core/Base/Translator.html"><abbr title="FacturaScripts\Core\Base\Translator">Translator</abbr></a>
+                </td>
+                <td>$i18n</td>
+                <td class="last">Translation engine</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/VisualItem.html#property_i18n"><abbr title="FacturaScripts\Core\Lib\ExtendedController\VisualItem">VisualItem</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_name">
+                                                                                string
+                </td>
+                <td>$name</td>
+                <td class="last">Column identifier</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/VisualItem.html#property_name"><abbr title="FacturaScripts\Core\Lib\ExtendedController\VisualItem">VisualItem</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_numColumns">
+                                                                                int
+                </td>
+                <td>$numColumns</td>
+                <td class="last">Number of columns that it occupies on display
+([1, 2, 4, 6, 8, 10, 12])</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/VisualItem.html#property_numColumns"><abbr title="FacturaScripts\Core\Lib\ExtendedController\VisualItem">VisualItem</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_order">
+                                                                                int
+                </td>
+                <td>$order</td>
+                <td class="last">Position to render ( from lowes to highest )</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/VisualItem.html#property_order"><abbr title="FacturaScripts\Core\Lib\ExtendedController\VisualItem">VisualItem</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_title">
+                                                                                string
+                </td>
+                <td>$title</td>
+                <td class="last">Group tag or title</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/VisualItem.html#property_title"><abbr title="FacturaScripts\Core\Lib\ExtendedController\VisualItem">VisualItem</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_titleURL">
+                                                                                string
+                </td>
+                <td>$titleURL</td>
+                <td class="last">Title link URL</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/VisualItem.html#property_titleURL"><abbr title="FacturaScripts\Core\Lib\ExtendedController\VisualItem">VisualItem</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_description">
+                                                                                string
+                </td>
+                <td>$description</td>
+                <td class="last">Additional text that explains the field to the user</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_display">
+                                                                                string
+                </td>
+                <td>$display</td>
+                <td class="last">State and alignment of the display configuration
+(left|right|center|none)</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_level">
+                                                                                integer
+                </td>
+                <td>$level</td>
+                <td class="last">Indicates the security level of the column</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_widget">
+                                                                                <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetButton.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetButton">WidgetButton</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemCheckBox.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemCheckBox">WidgetItemCheckBox</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemColor.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemColor">WidgetItemColor</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemDateTime.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemDateTime">WidgetItemDateTime</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemMoney.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemMoney">WidgetItemMoney</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemNumber.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemNumber">WidgetItemNumber</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemRadio.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemRadio">WidgetItemRadio</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemSelect.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemSelect">WidgetItemSelect</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemText.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemText">WidgetItemText</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemFileChooser.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemFileChooser">WidgetItemFileChooser</abbr></a>
+                </td>
+                <td>$widget</td>
+                <td class="last">Field display object configuration</td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_applySpecialOperations">applySpecialOperations</a>()
+        
+                                            <p>Check and apply special operations on the columns</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p>Constructs and initializes the class</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getHeaderHTML">getHeaderHTML</a>(string $value)
+        
+                                            <p>Generates HTML code for the element's header display</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_loadFromJSON">loadFromJSON</a>(array $column)
+        
+                                            <p>Loads the attributes structure from a JSON file</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_loadFromXML">loadFromXML</a>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $column)
+        
+                                            <p>Loads the attributes structure from a XML file</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ColumnItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ColumnItem">ColumnItem</abbr></a>[]
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_columnsFromJSON">columnsFromJSON</a>(array $columns)
+        
+                                            <p>Loads a group of database columns from a JSON file</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getEditHTML">getEditHTML</a>(string $value, bool $withLabel = true, string $formName = &#039;main_form&#039;)
+        
+                                            <p>Generates the HTML code to display the data from the model for Edit controllers</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getListHTML">getListHTML</a>(string $value)
+        
+                                            <p>Generates the HTML code to display the model data for the List controllers</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_newFromJSON">newFromJSON</a>(array $column)
+        
+                                            <p>Create and load the structure of a column based on the database</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_newFromXML">newFromXML</a>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $column)
+        
+                                            <p>Create and load the structure of a column based on an XML file</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_buttonHTMLColumn">buttonHTMLColumn</a>(array $data, string $formName)
+        
+                                            <p>Returns the HTML code to display a button</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_checkboxHTMLColumn">checkboxHTMLColumn</a>(string $header, string $value, array $data)
+        
+                                            <p>Returns the HTML code to display a checkbox field</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getColumnClass">getColumnClass</a>()
+        
+                                            <p>Returns the column class</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getColumnData">getColumnData</a>(string[] $properties)
+        
+                                            <p>Executes the function list ($properties) to get the column properties</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getColumnDescription">getColumnDescription</a>()
+        
+                                            <p>Returns the HTML code to display a description</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getColumnHint">getColumnHint</a>()
+        
+                                            <p>Returns the HTML code to display a popover with the specified string</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getColumnRequired">getColumnRequired</a>()
+        
+                                            <p>Returns the HTML code to display if a column is required or not</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_radioHTMLColumn">radioHTMLColumn</a>(string $header, array $data, string $value)
+        
+                                            <p>Returns the HTML code to display a list of options</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_standardHTMLColumn">standardHTMLColumn</a>(string $header, string $value, array $data)
+        
+                                            <p>Returns the HTML code to display a non special field</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method_applySpecialOperations">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/ColumnItem.php#L73">line 73</a></div>
+        <code>                    
+    <strong>applySpecialOperations</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Check and apply special operations on the columns</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/ColumnItem.php#L62">line 62</a></div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Constructs and initializes the class</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getHeaderHTML">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/ColumnItem.php#L151">line 151</a></div>
+        <code>                    string
+    <strong>getHeaderHTML</strong>(string $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Generates HTML code for the element's header display</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_loadFromJSON">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/ColumnItem.php#L179">line 179</a></div>
+        <code>                    
+    <strong>loadFromJSON</strong>(array $column)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Loads the attributes structure from a JSON file</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_loadFromXML">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/ColumnItem.php#L206">line 206</a></div>
+        <code>                    
+    <strong>loadFromXML</strong>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $column)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Loads the attributes structure from a XML file</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a></td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_columnsFromJSON">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/ColumnItem.php#L95">line 95</a></div>
+        <code>                    <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ColumnItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ColumnItem">ColumnItem</abbr></a>[]
+    <strong>columnsFromJSON</strong>(array $columns)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Loads a group of database columns from a JSON file</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$columns</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ColumnItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ColumnItem">ColumnItem</abbr></a>[]</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getEditHTML">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/ColumnItem.php#L116">line 116</a></div>
+        <code>                    string
+    <strong>getEditHTML</strong>(string $value, bool $withLabel = true, string $formName = &#039;main_form&#039;)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Generates the HTML code to display the data from the model for Edit controllers</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>bool</td>
+                <td>$withLabel</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$formName</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getListHTML">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/ColumnItem.php#L169">line 169</a></div>
+        <code>                    string
+    <strong>getListHTML</strong>(string $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Generates the HTML code to display the model data for the List controllers</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_newFromJSON">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/ColumnItem.php#L243">line 243</a></div>
+        <code>        static            
+    <strong>newFromJSON</strong>(array $column)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Create and load the structure of a column based on the database</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_newFromXML">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/ColumnItem.php#L258">line 258</a></div>
+        <code>        static            
+    <strong>newFromXML</strong>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $column)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Create and load the structure of a column based on an XML file</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a></td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_buttonHTMLColumn">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/ColumnItem.php#L274">line 274</a></div>
+        <code>                private    string
+    <strong>buttonHTMLColumn</strong>(array $data, string $formName)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the HTML code to display a button</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$formName</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_checkboxHTMLColumn">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/ColumnItem.php#L291">line 291</a></div>
+        <code>                private    string
+    <strong>checkboxHTMLColumn</strong>(string $header, string $value, array $data)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the HTML code to display a checkbox field</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$header</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getColumnClass">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/ColumnItem.php#L310">line 310</a></div>
+        <code>            protected        string
+    <strong>getColumnClass</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the column class</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getColumnData">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/ColumnItem.php#L322">line 322</a></div>
+        <code>                private    array
+    <strong>getColumnData</strong>(string[] $properties)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Executes the function list ($properties) to get the column properties</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string[]</td>
+                <td>$properties</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getColumnDescription">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/ColumnItem.php#L338">line 338</a></div>
+        <code>            protected        string
+    <strong>getColumnDescription</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the HTML code to display a description</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getColumnHint">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/ColumnItem.php#L357">line 357</a></div>
+        <code>            protected        string
+    <strong>getColumnHint</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the HTML code to display a popover with the specified string</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getColumnRequired">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/ColumnItem.php#L367">line 367</a></div>
+        <code>            protected        string
+    <strong>getColumnRequired</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the HTML code to display if a column is required or not</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_radioHTMLColumn">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/ColumnItem.php#L381">line 381</a></div>
+        <code>                private    string
+    <strong>radioHTMLColumn</strong>(string $header, array $data, string $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the HTML code to display a list of options</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$header</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_standardHTMLColumn">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/ColumnItem.php#L417">line 417</a></div>
+        <code>                private    string
+    <strong>standardHTMLColumn</strong>(string $header, string $value, array $data)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the HTML code to display a non special field</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$header</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

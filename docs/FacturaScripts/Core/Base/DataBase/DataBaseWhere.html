@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>FacturaScripts\Core\Base\DataBase\DataBaseWhere | FacturaScripts</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:FacturaScripts_Core_Base_DataBase_DataBaseWhere" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">FacturaScripts</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../FacturaScripts.html">FacturaScripts</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core.html">Core</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core/Base.html">Base</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core/Base/DataBase.html">DataBase</a></li><li class="backslash">\</li><li>DataBaseWhere</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            DataBaseWhere
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>DataBaseWhere</strong>        (<a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/DataBase/DataBaseWhere.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Structure that defines a WHERE condition to filter the model data</p>                                </div>
+    
+    
+            <h2>Constants</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td>MATCH_DATE</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+                    <tr>
+                <td>MATCH_DATETIME</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+            </table>
+
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_dataBase">
+                                                            private                    <a href="../../../../FacturaScripts/Core/Base/DataBase.html"><abbr title="FacturaScripts\Core\Base\DataBase">DataBase</abbr></a>
+                </td>
+                <td>$dataBase</td>
+                <td class="last">Link with the active database</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_fields">
+                                                            private                    string
+                </td>
+                <td>$fields</td>
+                <td class="last">Field list to apply the filters to, separated by '|'</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_operator">
+                                                            private                    string
+                </td>
+                <td>$operator</td>
+                <td class="last">Arithmetic operator that is being used</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_value">
+                                                            private                    string|bool
+                </td>
+                <td>$value</td>
+                <td class="last">Filter value</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_operation">
+                                                            private                    string
+                </td>
+                <td>$operation</td>
+                <td class="last">Logic operator that will be applied to the condition</td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(string $fields, string|bool $value, string $operator = &#039;=&#039;, string $operation = &#039;AND&#039;)
+        
+                                            <p>DataBaseWhere constructor.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_format2Date">format2Date</a>(bool $addTime = false)
+        
+                                            <p>Formats the date value with the database format</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getValueFromOperator">getValueFromOperator</a>()
+        
+                                            <p>Returns the value for the operator</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getValueFromType">getValueFromType</a>()
+        
+                                            <p>Returns the value for the type</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getValue">getValue</a>()
+        
+                                            <p>Returns the filter value formatted according to the type</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSQLWhereItem">getSQLWhereItem</a>(bool $applyOperation = false)
+        
+                                            <p>Returns a string to apply to the WHERE clause</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSQLWhere">getSQLWhere</a>(<a href="../../../../FacturaScripts/Core/Base/DataBase/DataBaseWhere.html"><abbr title="FacturaScripts\Core\Base\DataBase\DataBaseWhere">DataBaseWhere</abbr></a>[] $whereItems)
+        
+                                            <p>Given a DataBaseWhere array, it returns the full WHERE clause</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getFieldsFilter">getFieldsFilter</a>(array $whereItems)
+        
+                                            <p>Given a DataBaseWhere array, it returns the field list with their values
+that will be applied as a filter. (It only returns filters with the '=' operator)</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/DataBase/DataBaseWhere.php#L78">line 78</a></div>
+        <code>                    
+    <strong>__construct</strong>(string $fields, string|bool $value, string $operator = &#039;=&#039;, string $operation = &#039;AND&#039;)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>DataBaseWhere constructor.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$fields</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string|bool</td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$operator</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$operation</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_format2Date">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/DataBase/DataBaseWhere.php#L94">line 94</a></div>
+        <code>                private    string
+    <strong>format2Date</strong>(bool $addTime = false)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Formats the date value with the database format</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>bool</td>
+                <td>$addTime</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getValueFromOperator">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/DataBase/DataBaseWhere.php#L106">line 106</a></div>
+        <code>                private    string
+    <strong>getValueFromOperator</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the value for the operator</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getValueFromType">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/DataBase/DataBaseWhere.php#L152">line 152</a></div>
+        <code>                private    string
+    <strong>getValueFromType</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the value for the type</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getValue">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/DataBase/DataBaseWhere.php#L181">line 181</a></div>
+        <code>                private    string
+    <strong>getValue</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the filter value formatted according to the type</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSQLWhereItem">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/DataBase/DataBaseWhere.php#L197">line 197</a></div>
+        <code>                    string
+    <strong>getSQLWhereItem</strong>(bool $applyOperation = false)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns a string to apply to the WHERE clause</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>bool</td>
+                <td>$applyOperation</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSQLWhere">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/DataBase/DataBaseWhere.php#L231">line 231</a></div>
+        <code>        static            string
+    <strong>getSQLWhere</strong>(<a href="../../../../FacturaScripts/Core/Base/DataBase/DataBaseWhere.html"><abbr title="FacturaScripts\Core\Base\DataBase\DataBaseWhere">DataBaseWhere</abbr></a>[] $whereItems)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Given a DataBaseWhere array, it returns the full WHERE clause</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../FacturaScripts/Core/Base/DataBase/DataBaseWhere.html"><abbr title="FacturaScripts\Core\Base\DataBase\DataBaseWhere">DataBaseWhere</abbr></a>[]</td>
+                <td>$whereItems</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getFieldsFilter">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/DataBase/DataBaseWhere.php#L257">line 257</a></div>
+        <code>        static            array
+    <strong>getFieldsFilter</strong>(array $whereItems)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Given a DataBaseWhere array, it returns the field list with their values
+that will be applied as a filter. (It only returns filters with the '=' operator)</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$whereItems</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

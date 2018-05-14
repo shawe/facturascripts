@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>FacturaScripts\Core\Base\DataBase\DataBaseTools | FacturaScripts</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:FacturaScripts_Core_Base_DataBase_DataBaseTools" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">FacturaScripts</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../FacturaScripts.html">FacturaScripts</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core.html">Core</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core/Base.html">Base</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core/Base/DataBase.html">DataBase</a></li><li class="backslash">\</li><li>DataBaseTools</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            DataBaseTools
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>DataBaseTools</strong>        (<a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/DataBase/DataBaseTools.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>This class group all method for DataBase, tools like check/generate table, compare constraints/columns, .</p>            <p>..</p>                    </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_dataBase">
+                    static                                        private                    <a href="../../../../FacturaScripts/Core/Base/DataBase.html"><abbr title="FacturaScripts\Core\Base\DataBase">DataBase</abbr></a>
+                </td>
+                <td>$dataBase</td>
+                <td class="last">DataBase object.</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_i18n">
+                    static                                        private                    <a href="../../../../FacturaScripts/Core/Base/Translator.html"><abbr title="FacturaScripts\Core\Base\Translator">Translator</abbr></a>
+                </td>
+                <td>$i18n</td>
+                <td class="last">System translator.</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_miniLog">
+                    static                                        private                    <a href="../../../../FacturaScripts/Core/Base/MiniLog.html"><abbr title="FacturaScripts\Core\Base\MiniLog">MiniLog</abbr></a>
+                </td>
+                <td>$miniLog</td>
+                <td class="last">Manage the log of the entire application.</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_sql">
+                    static                                        private                    <a href="../../../../FacturaScripts/Core/Base/DataBase/DataBaseSQL.html"><abbr title="FacturaScripts\Core\Base\DataBase\DataBaseSQL">DataBaseSQL</abbr></a>
+                </td>
+                <td>$sql</td>
+                <td class="last">The DataBaseSQL object.</td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p>DataBaseTools constructor.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_checkTable">checkTable</a>($tableName, $xmlCols, $xmlCons)
+        
+                                            <p>Checks to the database table</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_generateTable">generateTable</a>(string $tableName, array $xmlCols, array $xmlCons)
+        
+                                            <p>Create the table with the structure received.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_compareConstraints">compareConstraints</a>(string $tableName, array $xmlCons, array $dbCons, bool $deleteOnly = false)
+        
+                                            <p>Compare two arrays with restrictions, return a SQL statement if founded differencies.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_searchInArray">searchInArray</a>(array $items, string $index, string $value)
+        
+                                            <p>Look for a column with a value by his name in array.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_compareColumns">compareColumns</a>(string $tableName, array $xmlCols, array $dbCols)
+        
+                                            <p>Compare two arrays of columns, return a SQL statement if founded differencies.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_compareDataTypes">compareDataTypes</a>(string $dbType, string $xmlType)
+        
+                                            <p>Compares data types from a column.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getXmlTable">getXmlTable</a>(string $tableName, array $columns, array $constraints)
+        
+                                            <p>Extract columns and restrictions form the XML definition file of a Table.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getXmlTableLocation">getXmlTableLocation</a>(string $tableName)
+        
+                                            <p>Return the full file path for table XML file.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_checkXmlColumns">checkXmlColumns</a>($columns, $xml)
+        
+                                            <p>Update the name and type foreach column from the XML</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_checkXmlConstraints">checkXmlConstraints</a>(array $constraints, <a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $xml)
+        
+                                            <p>Update the name and constraint foreach constraint from the XML</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/DataBase/DataBaseTools.php#L64">line 64</a></div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>DataBaseTools constructor.</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_checkTable">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/DataBase/DataBaseTools.php#L83">line 83</a></div>
+        <code>                    string
+    <strong>checkTable</strong>($tableName, $xmlCols, $xmlCons)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Checks to the database table</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$tableName</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$xmlCols</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$xmlCons</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_generateTable">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/DataBase/DataBaseTools.php#L123">line 123</a></div>
+        <code>                    bool
+    <strong>generateTable</strong>(string $tableName, array $xmlCols, array $xmlCons)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Create the table with the structure received.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$tableName</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$xmlCols</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$xmlCons</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_compareConstraints">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/DataBase/DataBaseTools.php#L138">line 138</a></div>
+        <code>                private    string
+    <strong>compareConstraints</strong>(string $tableName, array $xmlCons, array $dbCons, bool $deleteOnly = false)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Compare two arrays with restrictions, return a SQL statement if founded differencies.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$tableName</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$xmlCons</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$dbCons</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>bool</td>
+                <td>$deleteOnly</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_searchInArray">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/DataBase/DataBaseTools.php#L176">line 176</a></div>
+        <code>                private    array
+    <strong>searchInArray</strong>(array $items, string $index, string $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Look for a column with a value by his name in array.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$items</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$index</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_compareColumns">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/DataBase/DataBaseTools.php#L198">line 198</a></div>
+        <code>                private    string
+    <strong>compareColumns</strong>(string $tableName, array $xmlCols, array $dbCols)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Compare two arrays of columns, return a SQL statement if founded differencies.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$tableName</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$xmlCols</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$dbCols</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_compareDataTypes">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/DataBase/DataBaseTools.php#L240">line 240</a></div>
+        <code>                private    bool
+    <strong>compareDataTypes</strong>(string $dbType, string $xmlType)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Compares data types from a column.</p>                    <p>Returns True if they are the same.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$dbType</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$xmlType</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getXmlTable">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/DataBase/DataBaseTools.php#L267">line 267</a></div>
+        <code>                    bool
+    <strong>getXmlTable</strong>(string $tableName, array $columns, array $constraints)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Extract columns and restrictions form the XML definition file of a Table.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$tableName</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$columns</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$constraints</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getXmlTableLocation">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/DataBase/DataBaseTools.php#L302">line 302</a></div>
+        <code>                private    string
+    <strong>getXmlTableLocation</strong>(string $tableName)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Return the full file path for table XML file.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$tableName</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_checkXmlColumns">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/DataBase/DataBaseTools.php#L318">line 318</a></div>
+        <code>                private    
+    <strong>checkXmlColumns</strong>($columns, $xml)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Update the name and type foreach column from the XML</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$columns</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$xml</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_checkXmlConstraints">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/DataBase/DataBaseTools.php#L346">line 346</a></div>
+        <code>                private    
+    <strong>checkXmlConstraints</strong>(array $constraints, <a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $xml)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Update the name and constraint foreach constraint from the XML</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$constraints</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a></td>
+                <td>$xml</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

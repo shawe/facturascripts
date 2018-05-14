@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>FacturaScripts\Core\Base\MenuManager | FacturaScripts</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
+        <script src="../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script src="../../../js/typeahead.min.js"></script>
+        <script src="../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:FacturaScripts_Core_Base_MenuManager" data-root-path="../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../index.html">FacturaScripts</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../traits.html">Traits</a></li>
+                    <li><a href="../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../FacturaScripts.html">FacturaScripts</a></li><li class="backslash">\</li><li><a href="../../../FacturaScripts/Core.html">Core</a></li><li class="backslash">\</li><li><a href="../../../FacturaScripts/Core/Base.html">Base</a></li><li class="backslash">\</li><li>MenuManager</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            MenuManager
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>MenuManager</strong>        (<a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/MenuManager.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Manage the use of the Facturascripts menu.</p>                                </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_menu">
+                    static                                        private                    <abbr title="FacturaScripts\Dinamic\Lib\MenuItem">MenuItem</abbr>[]
+                </td>
+                <td>$menu</td>
+                <td class="last">Contains the structure of the menu for the user.</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_menuActive">
+                    static                                        private                    bool
+                </td>
+                <td>$menuActive</td>
+                <td class="last">True when there is a menu active. Only for optimization purpose.</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_pageModel">
+                    static                                        private                    <a href="../../../FacturaScripts/Core/Model/Page.html"><abbr title="FacturaScripts\Core\Model\Page">Page</abbr></a>
+                </td>
+                <td>$pageModel</td>
+                <td class="last">Controller associated with the page</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_user">
+                    static                                        private                    <a href="../../../FacturaScripts/Core/Model/User.html"><abbr title="FacturaScripts\Core\Model\User">User</abbr></a>|<abbr title="FacturaScripts\Core\Base\false">false</abbr>
+                </td>
+                <td>$user</td>
+                <td class="last">User for whom the menu has been created.</td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getMenu">getMenu</a>()
+        
+                                            <p>Returns the user's menu, the set of pages to which he has access.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_init">init</a>()
+        
+                                            <p>Call only when you have connected to the database.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_removeOld">removeOld</a>(string[] $currentPageNames)
+        
+                                            <p>Removes all pages not present in $currentPaneNames.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_selectPage">selectPage</a>(array $pageData)
+        
+                                            <p>Mark menu and menuitem as selected, and updates the data in the Model\Page
+model based on the data in the getPageData() of the controller.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setUser">setUser</a>(<a href="../../../FacturaScripts/Core/Model/User.html"><abbr title="FacturaScripts\Core\Model\User">User</abbr></a>|<abbr title="FacturaScripts\Core\Base\false">false</abbr> $user)
+        
+                                            <p>Assign the user to load their menu.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_reload">reload</a>()
+        
+                                            <p>Reloads menu from database.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../FacturaScripts/Core/Model/RoleAccess.html"><abbr title="FacturaScripts\Core\Model\RoleAccess">RoleAccess</abbr></a>[]
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getUserAccess">getUserAccess</a>(string $nick)
+        
+                                            <p>Returns all access data from the user.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../FacturaScripts/Core/Model/Page.html"><abbr title="FacturaScripts\Core\Model\Page">Page</abbr></a>[]
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_loadPages">loadPages</a>()
+        
+                                            <p>Load the list of pages for the user.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_loadUserMenu">loadUserMenu</a>()
+        
+                                            <p>Load the menu structure for the user.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_pageNeedSave">pageNeedSave</a>(<a href="../../../FacturaScripts/Core/Model/Page.html"><abbr title="FacturaScripts\Core\Model\Page">Page</abbr></a> $pageModel, array $pageData)
+        
+                                            <p>Returns if the page should be saved.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setActiveMenu">setActiveMenu</a>(<a href="../../../FacturaScripts/Core/Model/Page.html"><abbr title="FacturaScripts\Core\Model\Page">Page</abbr></a> $pageModel)
+        
+                                            <p>Set the active menu.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setActiveMenuItem">setActiveMenuItem</a>(<abbr title="FacturaScripts\Dinamic\Lib\MenuItem">MenuItem</abbr>[] $menu, <a href="../../../FacturaScripts/Core/Model/Page.html"><abbr title="FacturaScripts\Core\Model\Page">Page</abbr></a> $pageModel)
+        
+                                            <p>Assign active menu item.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_sortMenu">sortMenu</a>(array $sortMenu, array $result)
+        
+                                            <p>Sorts menu and submenus by title.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method_getMenu">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/MenuManager.php#L66">line 66</a></div>
+        <code>                    array
+    <strong>getMenu</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the user's menu, the set of pages to which he has access.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_init">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/MenuManager.php#L74">line 74</a></div>
+        <code>                    
+    <strong>init</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Call only when you have connected to the database.</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_removeOld">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/MenuManager.php#L90">line 90</a></div>
+        <code>                    
+    <strong>removeOld</strong>(string[] $currentPageNames)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Removes all pages not present in $currentPaneNames.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string[]</td>
+                <td>$currentPageNames</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_selectPage">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/MenuManager.php#L105">line 105</a></div>
+        <code>                    
+    <strong>selectPage</strong>(array $pageData)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Mark menu and menuitem as selected, and updates the data in the Model\Page
+model based on the data in the getPageData() of the controller.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$pageData</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setUser">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/MenuManager.php#L133">line 133</a></div>
+        <code>                    
+    <strong>setUser</strong>(<a href="../../../FacturaScripts/Core/Model/User.html"><abbr title="FacturaScripts\Core\Model\User">User</abbr></a>|<abbr title="FacturaScripts\Core\Base\false">false</abbr> $user)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Assign the user to load their menu.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../FacturaScripts/Core/Model/User.html"><abbr title="FacturaScripts\Core\Model\User">User</abbr></a>|<abbr title="FacturaScripts\Core\Base\false">false</abbr></td>
+                <td>$user</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_reload">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/MenuManager.php#L142">line 142</a></div>
+        <code>                    
+    <strong>reload</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Reloads menu from database.</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getUserAccess">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/MenuManager.php#L154">line 154</a></div>
+        <code>                private    <a href="../../../FacturaScripts/Core/Model/RoleAccess.html"><abbr title="FacturaScripts\Core\Model\RoleAccess">RoleAccess</abbr></a>[]
+    <strong>getUserAccess</strong>(string $nick)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns all access data from the user.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$nick</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../FacturaScripts/Core/Model/RoleAccess.html"><abbr title="FacturaScripts\Core\Model\RoleAccess">RoleAccess</abbr></a>[]</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_loadPages">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/MenuManager.php#L173">line 173</a></div>
+        <code>                private    <a href="../../../FacturaScripts/Core/Model/Page.html"><abbr title="FacturaScripts\Core\Model\Page">Page</abbr></a>[]
+    <strong>loadPages</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Load the list of pages for the user.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../FacturaScripts/Core/Model/Page.html"><abbr title="FacturaScripts\Core\Model\Page">Page</abbr></a>[]</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_loadUserMenu">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/MenuManager.php#L207">line 207</a></div>
+        <code>                private    array
+    <strong>loadUserMenu</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Load the menu structure for the user.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_pageNeedSave">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/MenuManager.php#L255">line 255</a></div>
+        <code>                private    bool
+    <strong>pageNeedSave</strong>(<a href="../../../FacturaScripts/Core/Model/Page.html"><abbr title="FacturaScripts\Core\Model\Page">Page</abbr></a> $pageModel, array $pageData)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns if the page should be saved.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../FacturaScripts/Core/Model/Page.html"><abbr title="FacturaScripts\Core\Model\Page">Page</abbr></a></td>
+                <td>$pageModel</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$pageData</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setActiveMenu">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/MenuManager.php#L269">line 269</a></div>
+        <code>                private    
+    <strong>setActiveMenu</strong>(<a href="../../../FacturaScripts/Core/Model/Page.html"><abbr title="FacturaScripts\Core\Model\Page">Page</abbr></a> $pageModel)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Set the active menu.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../FacturaScripts/Core/Model/Page.html"><abbr title="FacturaScripts\Core\Model\Page">Page</abbr></a></td>
+                <td>$pageModel</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setActiveMenuItem">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/MenuManager.php#L286">line 286</a></div>
+        <code>                private    
+    <strong>setActiveMenuItem</strong>(<abbr title="FacturaScripts\Dinamic\Lib\MenuItem">MenuItem</abbr>[] $menu, <a href="../../../FacturaScripts/Core/Model/Page.html"><abbr title="FacturaScripts\Core\Model\Page">Page</abbr></a> $pageModel)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Assign active menu item.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="FacturaScripts\Dinamic\Lib\MenuItem">MenuItem</abbr>[]</td>
+                <td>$menu</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../../FacturaScripts/Core/Model/Page.html"><abbr title="FacturaScripts\Core\Model\Page">Page</abbr></a></td>
+                <td>$pageModel</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_sortMenu">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Base/MenuManager.php#L308">line 308</a></div>
+        <code>                private    array
+    <strong>sortMenu</strong>(array $sortMenu, array $result)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Sorts menu and submenus by title.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$sortMenu</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$result</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

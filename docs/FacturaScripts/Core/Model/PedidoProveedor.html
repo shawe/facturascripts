@@ -1,0 +1,2149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>FacturaScripts\Core\Model\PedidoProveedor | FacturaScripts</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
+        <script src="../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script src="../../../js/typeahead.min.js"></script>
+        <script src="../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:FacturaScripts_Core_Model_PedidoProveedor" data-root-path="../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../index.html">FacturaScripts</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../traits.html">Traits</a></li>
+                    <li><a href="../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../FacturaScripts.html">FacturaScripts</a></li><li class="backslash">\</li><li><a href="../../../FacturaScripts/Core.html">Core</a></li><li class="backslash">\</li><li><a href="../../../FacturaScripts/Core/Model.html">Model</a></li><li class="backslash">\</li><li>PedidoProveedor</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            PedidoProveedor
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>PedidoProveedor</strong>        extends <a href="../../../FacturaScripts/Core/Model/Base/PurchaseDocument.html"><abbr title="FacturaScripts\Core\Model\Base\PurchaseDocument">PurchaseDocument</abbr></a>        (<a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/PedidoProveedor.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Supplier order.</p>                                </div>
+    
+            <h2>Traits</h2>
+
+        
+    <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../../FacturaScripts/Core/Model/Base/ModelTrait.html"><abbr title="FacturaScripts\Core\Model\Base\ModelTrait">ModelTrait</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The class from which all models inherit, connects to the database,
+check the structure of the table and if necessary create or adapt.
+                </div>
+            </div>
+            </div>
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_cache">
+                    static                    protected                                        <a href="../../../FacturaScripts/Core/Base/Cache.html"><abbr title="FacturaScripts\Core\Base\Cache">Cache</abbr></a>
+                </td>
+                <td>$cache</td>
+                <td class="last">It allows to connect and interact with the cache system.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelCore.html#property_cache"><abbr title="FacturaScripts\Core\Model\Base\ModelCore">ModelCore</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_checkedTables">
+                    static                                        private                    array
+                </td>
+                <td>$checkedTables</td>
+                <td class="last">List of already tested tables.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelCore.html#property_checkedTables"><abbr title="FacturaScripts\Core\Model\Base\ModelCore">ModelCore</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_dataBase">
+                    static                    protected                                        <a href="../../../FacturaScripts/Core/Base/DataBase.html"><abbr title="FacturaScripts\Core\Base\DataBase">DataBase</abbr></a>
+                </td>
+                <td>$dataBase</td>
+                <td class="last">It provides direct access to the database.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelCore.html#property_dataBase"><abbr title="FacturaScripts\Core\Model\Base\ModelCore">ModelCore</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_i18n">
+                    static                    protected                                        <a href="../../../FacturaScripts/Core/Base/Translator.html"><abbr title="FacturaScripts\Core\Base\Translator">Translator</abbr></a>
+                </td>
+                <td>$i18n</td>
+                <td class="last">Multi-language translator.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelCore.html#property_i18n"><abbr title="FacturaScripts\Core\Model\Base\ModelCore">ModelCore</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_miniLog">
+                    static                    protected                                        <a href="../../../FacturaScripts/Core/Base/MiniLog.html"><abbr title="FacturaScripts\Core\Base\MiniLog">MiniLog</abbr></a>
+                </td>
+                <td>$miniLog</td>
+                <td class="last">Manage the log of all controllers, models and database.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelCore.html#property_miniLog"><abbr title="FacturaScripts\Core\Model\Base\ModelCore">ModelCore</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_cifnif">
+                                                                                string
+                </td>
+                <td>$cifnif</td>
+                <td class="last">VAT number of the supplier.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#property_cifnif"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_codalmacen">
+                                                                                string
+                </td>
+                <td>$codalmacen</td>
+                <td class="last">Warehouse in which the merchandise enters.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#property_codalmacen"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_coddivisa">
+                                                                                string
+                </td>
+                <td>$coddivisa</td>
+                <td class="last">Currency of the document.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#property_coddivisa"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_codejercicio">
+                                                                                string
+                </td>
+                <td>$codejercicio</td>
+                <td class="last">Related exercise. The one that corresponds to the date.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#property_codejercicio"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_codigo">
+                                                                                string
+                </td>
+                <td>$codigo</td>
+                <td class="last">Unique identifier for humans.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#property_codigo"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_codpago">
+                                                                                string
+                </td>
+                <td>$codpago</td>
+                <td class="last">Payment method associated.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#property_codpago"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_codserie">
+                                                                                string
+                </td>
+                <td>$codserie</td>
+                <td class="last">Related serie.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#property_codserie"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_editable">
+                                                                                bool
+                </td>
+                <td>$editable</td>
+                <td class="last">indicates whether the document can be modified</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#property_editable"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_estados">
+                    static                                        private                    <abbr title="FacturaScripts\Dinamic\Model\EstadoDocumento">EstadoDocumento</abbr>[]
+                </td>
+                <td>$estados</td>
+                <td class="last"></td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#property_estados"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_fecha">
+                                                                                string
+                </td>
+                <td>$fecha</td>
+                <td class="last">Date of the document.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#property_fecha"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_femail">
+                                                                                string
+                </td>
+                <td>$femail</td>
+                <td class="last">Date on which the document was sent by email.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#property_femail"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_hora">
+                                                                                string
+                </td>
+                <td>$hora</td>
+                <td class="last">Document time.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#property_hora"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_idempresa">
+                                                                                int
+                </td>
+                <td>$idempresa</td>
+                <td class="last">Company id. of the document.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#property_idempresa"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_idestado">
+                                                                                int
+                </td>
+                <td>$idestado</td>
+                <td class="last">Document state, from EstadoDocumento model.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#property_idestado"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_idestadoAnt">
+                                                            private                    int
+                </td>
+                <td>$idestadoAnt</td>
+                <td class="last"></td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#property_idestadoAnt"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_irpf">
+                                                                                float|int
+                </td>
+                <td>$irpf</td>
+                <td class="last">% IRPF retention of the document. It is obtained from the series.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#property_irpf"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_neto">
+                                                                                float|int
+                </td>
+                <td>$neto</td>
+                <td class="last">Sum of the pvptotal of lines. Total of the document before taxes.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#property_neto"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_numero">
+                                                                                string
+                </td>
+                <td>$numero</td>
+                <td class="last">Number of the document.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#property_numero"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_observaciones">
+                                                                                string
+                </td>
+                <td>$observaciones</td>
+                <td class="last">Notes of the document.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#property_observaciones"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_tasaconv">
+                                                                                float|int
+                </td>
+                <td>$tasaconv</td>
+                <td class="last">Rate of conversion to Euros of the selected currency.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#property_tasaconv"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_total">
+                                                                                float|int
+                </td>
+                <td>$total</td>
+                <td class="last">Total sum of the document, with taxes.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#property_total"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_totaliva">
+                                                                                float|int
+                </td>
+                <td>$totaliva</td>
+                <td class="last">Sum of the VAT of the lines.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#property_totaliva"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_totaleuros">
+                                                                                float|int
+                </td>
+                <td>$totaleuros</td>
+                <td class="last">Total expressed in euros, if it were not the currency of the document.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#property_totaleuros"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_totalirpf">
+                                                                                float|int
+                </td>
+                <td>$totalirpf</td>
+                <td class="last">Total sum of the IRPF withholdings of the lines.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#property_totalirpf"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_totalrecargo">
+                                                                                float|int
+                </td>
+                <td>$totalrecargo</td>
+                <td class="last">Total sum of the equivalence surcharge of the lines.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#property_totalrecargo"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_codproveedor">
+                                                                                string
+                </td>
+                <td>$codproveedor</td>
+                <td class="last">Supplier code for this document.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/PurchaseDocument.html#property_codproveedor"><abbr title="FacturaScripts\Core\Model\Base\PurchaseDocument">PurchaseDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_nombre">
+                                                                                string
+                </td>
+                <td>$nombre</td>
+                <td class="last">Provider's name.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/PurchaseDocument.html#property_nombre"><abbr title="FacturaScripts\Core\Model\Base\PurchaseDocument">PurchaseDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_numproveedor">
+                                                                                string
+                </td>
+                <td>$numproveedor</td>
+                <td class="last">Supplier's document number, if any.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/PurchaseDocument.html#property_numproveedor"><abbr title="FacturaScripts\Core\Model\Base\PurchaseDocument">PurchaseDocument</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_fields">
+                    static                    protected                                        array
+                </td>
+                <td>$fields</td>
+                <td class="last">List of fields in the table.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelTrait.html#property_fields"><abbr title="FacturaScripts\Core\Model\Base\ModelTrait">ModelTrait</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_idalbaran">
+                                                                                int
+                </td>
+                <td>$idalbaran</td>
+                <td class="last">Related delivery note ID.</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_idpedido">
+                                                                                int
+                </td>
+                <td>$idpedido</td>
+                <td class="last">Primary key.</td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getModelFields">getModelFields</a>()
+        
+                                            <p>Returns the list of fields in the table.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelTrait.html#method_getModelFields"><abbr title="FacturaScripts\Core\Model\Base\ModelTrait">ModelTrait</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_loadModelFields">loadModelFields</a>(<a href="../../../FacturaScripts/Core/Base/DataBase.html"><abbr title="FacturaScripts\Core\Base\DataBase">DataBase</abbr></a> $dataBase, string $tableName)
+        
+                                            <p>Loads table fields if is necessary.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelTrait.html#method_loadModelFields"><abbr title="FacturaScripts\Core\Model\Base\ModelTrait">ModelTrait</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_primaryColumn">primaryColumn</a>()
+        
+                                            <p>Returns the name of the column that is the model's primary key.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_tableName">tableName</a>()
+        
+                                            <p>Returns the name of the table that uses this model.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(array $data = [])
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#method___construct"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_clear">clear</a>()
+        
+                                            <p>Reset the values of all model properties.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#method_clear"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_install">install</a>()
+        
+                                            <p>This function is called when creating the model table. Returns the SQL
+that will be executed after the creation of the table. Useful to insert values
+default.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_loadFromData">loadFromData</a>(array $data = [], array $exclude = [])
+        
+                                            <p>Assign the values of the $data array to the model properties.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelCore.html#method_loadFromData"><abbr title="FacturaScripts\Core\Model\Base\ModelCore">ModelCore</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_primaryColumnValue">primaryColumnValue</a>()
+        
+                                            <p>Returns the current value of the main column of the model.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelCore.html#method_primaryColumnValue"><abbr title="FacturaScripts\Core\Model\Base\ModelCore">ModelCore</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_checkTable">checkTable</a>()
+        
+                                            <p>Check and update the structure of the table if necessary.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelCore.html#method_checkTable"><abbr title="FacturaScripts\Core\Model\Base\ModelCore">ModelCore</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    integer|NULL
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getIntergerValueForField">getIntergerValueForField</a>(array $field, string $value)
+        
+                                            <p>Returns the integer value by controlling special cases for the PK and FK.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelCore.html#method_getIntergerValueForField"><abbr title="FacturaScripts\Core\Model\Base\ModelCore">ModelCore</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_modelClassName">modelClassName</a>()
+        
+                                            <p>Returns the name of the class of the model.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelTrait.html#method_modelClassName"><abbr title="FacturaScripts\Core\Model\Base\ModelTrait">ModelTrait</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_modelName">modelName</a>()
+        
+                                            <p>Returns the name of the model.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelTrait.html#method_modelName"><abbr title="FacturaScripts\Core\Model\Base\ModelTrait">ModelTrait</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_all">all</a>(array $where = [], array $order = [], int $offset = 0, int $limit = 50)
+        
+                                            <p>Returns all models that correspond to the selected filters.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelClass.html#method_all"><abbr title="FacturaScripts\Core\Model\Base\ModelClass">ModelClass</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_checkArrayData">checkArrayData</a>(array $data)
+        
+                                            <p>Check an array of data so that it has the correct structure of the model.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelClass.html#method_checkArrayData"><abbr title="FacturaScripts\Core\Model\Base\ModelClass">ModelClass</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_count">count</a>(array $where = [])
+        
+                                            <p>Returns the number of records in the model that meet the condition.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelClass.html#method_count"><abbr title="FacturaScripts\Core\Model\Base\ModelClass">ModelClass</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_delete">delete</a>()
+        
+                                            <p>Remove the model data from the database.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#method_delete"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_exists">exists</a>()
+        
+                                            <p>Returns true if the model data is stored in the database.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelClass.html#method_exists"><abbr title="FacturaScripts\Core\Model\Base\ModelClass">ModelClass</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_get">get</a>(string $cod)
+        
+                                            <p>Returns the model whose primary column corresponds to the value $cod</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelClass.html#method_get"><abbr title="FacturaScripts\Core\Model\Base\ModelClass">ModelClass</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_loadFromCode">loadFromCode</a>(string $cod, array $where = [], array $orderby = [])
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#method_loadFromCode"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_newCode">newCode</a>(string $field = &#039;&#039;, array $where = [])
+        
+                                            <p>Returns the following code for the reported field or the primary key of the model.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelClass.html#method_newCode"><abbr title="FacturaScripts\Core\Model\Base\ModelClass">ModelClass</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_primaryDescriptionColumn">primaryDescriptionColumn</a>()
+        
+                                            <p>Returns the description of the column that is the model's primary key.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#method_primaryDescriptionColumn"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_primaryDescription">primaryDescription</a>()
+        
+                                            <p>Descriptive identifier for humans of the data record</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelClass.html#method_primaryDescription"><abbr title="FacturaScripts\Core\Model\Base\ModelClass">ModelClass</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_save">save</a>()
+        
+                                            <p>Stores the model data in the database.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#method_save"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_test">test</a>()
+        
+                                            <p>Returns True if there is no errors on properties values.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/PurchaseDocument.html#method_test"><abbr title="FacturaScripts\Core\Model\Base\PurchaseDocument">PurchaseDocument</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_url">url</a>(string $type = &#039;auto&#039;, string $list = &#039;List&#039;)
+        
+                                            <p>Returns the url where to see / modify the data.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelClass.html#method_url"><abbr title="FacturaScripts\Core\Model\Base\ModelClass">ModelClass</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_saveInsert">saveInsert</a>(array $values = [])
+        
+                                            <p>Insert the model data in the database.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelClass.html#method_saveInsert"><abbr title="FacturaScripts\Core\Model\Base\ModelClass">ModelClass</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_saveUpdate">saveUpdate</a>(array $values = [])
+        
+                                            <p>Update the model data in the database.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelClass.html#method_saveUpdate"><abbr title="FacturaScripts\Core\Model\Base\ModelClass">ModelClass</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getOrderBy">getOrderBy</a>(array $order)
+        
+                                            <p>Convert an array of filters order by in string.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelClass.html#method_getOrderBy"><abbr title="FacturaScripts\Core\Model\Base\ModelClass">ModelClass</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getRecord">getRecord</a>(string $cod, array $where = [], array $orderby = [])
+        
+                                            <p>Read the record whose primary column corresponds to the value $cod
+or the first that meets the indicated condition.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelClass.html#method_getRecord"><abbr title="FacturaScripts\Core\Model\Base\ModelClass">ModelClass</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getLines">getLines</a>()
+        
+                                            <p>Returns the lines associated with the order.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../FacturaScripts/Core/Model/Base/BusinessDocumentLine.html"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocumentLine">BusinessDocumentLine</abbr></a>[]
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getNewLine">getNewLine</a>(array $data = [])
+        
+                                            <p>Returns a new line for this document.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../FacturaScripts/Core/Model/Base/BusinessDocumentLine.html"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocumentLine">BusinessDocumentLine</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSubjectColumns">getSubjectColumns</a>()
+        
+                                            <p>Returns an array with the column for identify the subject(s),</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/PurchaseDocument.html#method_getSubjectColumns"><abbr title="FacturaScripts\Core\Model\Base\PurchaseDocument">PurchaseDocument</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setSubject">setSubject</a>($subjects)
+        
+                                            <p>Assign the supplier to the document.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/PurchaseDocument.html#method_setSubject"><abbr title="FacturaScripts\Core\Model\Base\PurchaseDocument">PurchaseDocument</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_updateSubject">updateSubject</a>()
+        
+                                            <p>Updates subjects data in this document.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/PurchaseDocument.html#method_updateSubject"><abbr title="FacturaScripts\Core\Model\Base\PurchaseDocument">PurchaseDocument</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="FacturaScripts\Dinamic\Model\EstadoDocumento">EstadoDocumento</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getState">getState</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#method_getState"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setDate">setDate</a>(string $date, string $hour)
+        
+                                            <p>Assign the date and find an accounting exercise.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#method_setDate"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_checkState">checkState</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#method_checkState"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_newCodigo">newCodigo</a>()
+        
+                                            <p>Generates a new code.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#method_newCodigo"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a></small></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method_getModelFields">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelTrait.html#method_getModelFields"><abbr title="FacturaScripts\Core\Model\Base\ModelTrait">ModelTrait</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/ModelTrait.php#L44">line 44</a></div>
+        <code>                    array
+    <strong>getModelFields</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the list of fields in the table.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_loadModelFields">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelTrait.html#method_loadModelFields"><abbr title="FacturaScripts\Core\Model\Base\ModelTrait">ModelTrait</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/ModelTrait.php#L76">line 76</a></div>
+        <code>            protected        
+    <strong>loadModelFields</strong>(<a href="../../../FacturaScripts/Core/Base/DataBase.html"><abbr title="FacturaScripts\Core\Base\DataBase">DataBase</abbr></a> $dataBase, string $tableName)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Loads table fields if is necessary.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../FacturaScripts/Core/Base/DataBase.html"><abbr title="FacturaScripts\Core\Base\DataBase">DataBase</abbr></a></td>
+                <td>$dataBase</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$tableName</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_primaryColumn">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/PedidoProveedor.php#L92">line 92</a></div>
+        <code>        static            string
+    <strong>primaryColumn</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the name of the column that is the model's primary key.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_tableName">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/PedidoProveedor.php#L102">line 102</a></div>
+        <code>        static            string
+    <strong>tableName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the name of the table that uses this model.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#method___construct"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/BusinessDocument.php#L250">line 250</a></div>
+        <code>                    
+    <strong>__construct</strong>(array $data = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_clear">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#method_clear"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/BusinessDocument.php#L259">line 259</a></div>
+        <code>                    
+    <strong>clear</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Reset the values of all model properties.</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_install">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/PedidoProveedor.php#L79">line 79</a></div>
+        <code>                    string
+    <strong>install</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>This function is called when creating the model table. Returns the SQL
+that will be executed after the creation of the table. Useful to insert values
+default.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_loadFromData">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelCore.html#method_loadFromData"><abbr title="FacturaScripts\Core\Model\Base\ModelCore">ModelCore</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/ModelCore.php#L163">line 163</a></div>
+        <code>                    
+    <strong>loadFromData</strong>(array $data = [], array $exclude = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Assign the values of the $data array to the model properties.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$exclude</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_primaryColumnValue">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelCore.html#method_primaryColumnValue"><abbr title="FacturaScripts\Core\Model\Base\ModelCore">ModelCore</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/ModelCore.php#L210">line 210</a></div>
+        <code>                    mixed
+    <strong>primaryColumnValue</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the current value of the main column of the model.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_checkTable">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelCore.html#method_checkTable"><abbr title="FacturaScripts\Core\Model\Base\ModelCore">ModelCore</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/ModelCore.php#L220">line 220</a></div>
+        <code>                private    bool
+    <strong>checkTable</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Check and update the structure of the table if necessary.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getIntergerValueForField">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelCore.html#method_getIntergerValueForField"><abbr title="FacturaScripts\Core\Model\Base\ModelCore">ModelCore</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/ModelCore.php#L257">line 257</a></div>
+        <code>                private    integer|NULL
+    <strong>getIntergerValueForField</strong>(array $field, string $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the integer value by controlling special cases for the PK and FK.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$field</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>integer|NULL</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_modelClassName">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelTrait.html#method_modelClassName"><abbr title="FacturaScripts\Core\Model\Base\ModelTrait">ModelTrait</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/ModelTrait.php#L54">line 54</a></div>
+        <code>                    string
+    <strong>modelClassName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the name of the class of the model.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_modelName">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelTrait.html#method_modelName"><abbr title="FacturaScripts\Core\Model\Base\ModelTrait">ModelTrait</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/ModelTrait.php#L65">line 65</a></div>
+        <code>                    string
+    <strong>modelName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the name of the model.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_all">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelClass.html#method_all"><abbr title="FacturaScripts\Core\Model\Base\ModelClass">ModelClass</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/ModelClass.php#L56">line 56</a></div>
+        <code>                    array
+    <strong>all</strong>(array $where = [], array $order = [], int $offset = 0, int $limit = 50)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns all models that correspond to the selected filters.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$where</td>
+                <td>filters to apply to model records.</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$order</td>
+                <td>fields to use in the sorting. For example ['code' => 'ASC']</td>
+            </tr>
+                    <tr>
+                <td>int</td>
+                <td>$offset</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>int</td>
+                <td>$limit</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_checkArrayData">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelClass.html#method_checkArrayData"><abbr title="FacturaScripts\Core\Model\Base\ModelClass">ModelClass</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/ModelClass.php#L77">line 77</a></div>
+        <code>                    
+    <strong>checkArrayData</strong>(array $data)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Check an array of data so that it has the correct structure of the model.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_count">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelClass.html#method_count"><abbr title="FacturaScripts\Core\Model\Base\ModelClass">ModelClass</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/ModelClass.php#L96">line 96</a></div>
+        <code>                    int
+    <strong>count</strong>(array $where = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the number of records in the model that meet the condition.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$where</td>
+                <td>filters to apply to model records.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_delete">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#method_delete"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/BusinessDocument.php#L294">line 294</a></div>
+        <code>                    bool
+    <strong>delete</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Remove the model data from the database.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_exists">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelClass.html#method_exists"><abbr title="FacturaScripts\Core\Model\Base\ModelClass">ModelClass</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/ModelClass.php#L125">line 125</a></div>
+        <code>                    bool
+    <strong>exists</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns true if the model data is stored in the database.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_get">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelClass.html#method_get"><abbr title="FacturaScripts\Core\Model\Base\ModelClass">ModelClass</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/ModelClass.php#L144">line 144</a></div>
+        <code>                    mixed
+    <strong>get</strong>(string $cod)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the model whose primary column corresponds to the value $cod</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$cod</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_loadFromCode">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#method_loadFromCode"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/BusinessDocument.php#L347">line 347</a></div>
+        <code>                    bool
+    <strong>loadFromCode</strong>(string $cod, array $where = [], array $orderby = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$cod</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$where</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$orderby</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_newCode">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelClass.html#method_newCode"><abbr title="FacturaScripts\Core\Model\Base\ModelClass">ModelClass</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/ModelClass.php#L189">line 189</a></div>
+        <code>                    int
+    <strong>newCode</strong>(string $field = &#039;&#039;, array $where = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the following code for the reported field or the primary key of the model.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$field</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$where</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_primaryDescriptionColumn">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#method_primaryDescriptionColumn"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/BusinessDocument.php#L362">line 362</a></div>
+        <code>                    string
+    <strong>primaryDescriptionColumn</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the description of the column that is the model's primary key.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_primaryDescription">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelClass.html#method_primaryDescription"><abbr title="FacturaScripts\Core\Model\Base\ModelClass">ModelClass</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/ModelClass.php#L231">line 231</a></div>
+        <code>                    string
+    <strong>primaryDescription</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Descriptive identifier for humans of the data record</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_save">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#method_save"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/BusinessDocument.php#L372">line 372</a></div>
+        <code>                    bool
+    <strong>save</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Stores the model data in the database.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_test">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/PurchaseDocument.html#method_test"><abbr title="FacturaScripts\Core\Model\Base\PurchaseDocument">PurchaseDocument</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/PurchaseDocument.php#L83">line 83</a></div>
+        <code>                    bool
+    <strong>test</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns True if there is no errors on properties values.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_url">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelClass.html#method_url"><abbr title="FacturaScripts\Core\Model\Base\ModelClass">ModelClass</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/ModelClass.php#L288">line 288</a></div>
+        <code>                    string
+    <strong>url</strong>(string $type = &#039;auto&#039;, string $list = &#039;List&#039;)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the url where to see / modify the data.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$type</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$list</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_saveInsert">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelClass.html#method_saveInsert"><abbr title="FacturaScripts\Core\Model\Base\ModelClass">ModelClass</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/ModelClass.php#L314">line 314</a></div>
+        <code>            protected        bool
+    <strong>saveInsert</strong>(array $values = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Insert the model data in the database.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$values</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_saveUpdate">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelClass.html#method_saveUpdate"><abbr title="FacturaScripts\Core\Model\Base\ModelClass">ModelClass</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/ModelClass.php#L348">line 348</a></div>
+        <code>            protected        bool
+    <strong>saveUpdate</strong>(array $values = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Update the model data in the database.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$values</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getOrderBy">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelClass.html#method_getOrderBy"><abbr title="FacturaScripts\Core\Model\Base\ModelClass">ModelClass</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/ModelClass.php#L375">line 375</a></div>
+        <code>                private    string
+    <strong>getOrderBy</strong>(array $order)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Convert an array of filters order by in string.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$order</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getRecord">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelClass.html#method_getRecord"><abbr title="FacturaScripts\Core\Model\Base\ModelClass">ModelClass</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/ModelClass.php#L399">line 399</a></div>
+        <code>                private    array
+    <strong>getRecord</strong>(string $cod, array $where = [], array $orderby = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Read the record whose primary column corresponds to the value $cod
+or the first that meets the indicated condition.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$cod</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$where</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$orderby</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getLines">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/PedidoProveedor.php#L52">line 52</a></div>
+        <code>                    mixed
+    <strong>getLines</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the lines associated with the order.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getNewLine">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/PedidoProveedor.php#L68">line 68</a></div>
+        <code>                    <a href="../../../FacturaScripts/Core/Model/Base/BusinessDocumentLine.html"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocumentLine">BusinessDocumentLine</abbr></a>[]
+    <strong>getNewLine</strong>(array $data = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns a new line for this document.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../FacturaScripts/Core/Model/Base/BusinessDocumentLine.html"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocumentLine">BusinessDocumentLine</abbr></a>[]</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSubjectColumns">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/PurchaseDocument.html#method_getSubjectColumns"><abbr title="FacturaScripts\Core\Model\Base\PurchaseDocument">PurchaseDocument</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/PurchaseDocument.php#L54">line 54</a></div>
+        <code>                    <a href="../../../FacturaScripts/Core/Model/Base/BusinessDocumentLine.html"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocumentLine">BusinessDocumentLine</abbr></a>
+    <strong>getSubjectColumns</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns an array with the column for identify the subject(s),</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../FacturaScripts/Core/Model/Base/BusinessDocumentLine.html"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocumentLine">BusinessDocumentLine</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setSubject">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/PurchaseDocument.html#method_setSubject"><abbr title="FacturaScripts\Core\Model\Base\PurchaseDocument">PurchaseDocument</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/PurchaseDocument.php#L66">line 66</a></div>
+        <code>                    
+    <strong>setSubject</strong>($subjects)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Assign the supplier to the document.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$subjects</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_updateSubject">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/PurchaseDocument.html#method_updateSubject"><abbr title="FacturaScripts\Core\Model\Base\PurchaseDocument">PurchaseDocument</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/PurchaseDocument.php#L96">line 96</a></div>
+        <code>                    
+    <strong>updateSubject</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Updates subjects data in this document.</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getState">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#method_getState"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/BusinessDocument.php#L313">line 313</a></div>
+        <code>                    <abbr title="FacturaScripts\Dinamic\Model\EstadoDocumento">EstadoDocumento</abbr>
+    <strong>getState</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="FacturaScripts\Dinamic\Model\EstadoDocumento">EstadoDocumento</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_setDate">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#method_setDate"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/BusinessDocument.php#L397">line 397</a></div>
+        <code>                    bool
+    <strong>setDate</strong>(string $date, string $hour)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Assign the date and find an accounting exercise.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$date</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$hour</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_checkState">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#method_checkState"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/BusinessDocument.php#L439">line 439</a></div>
+        <code>                private    
+    <strong>checkState</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_newCodigo">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/BusinessDocument.html#method_newCodigo"><abbr title="FacturaScripts\Core\Model\Base\BusinessDocument">BusinessDocument</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Model/Base/BusinessDocument.php#L466">line 466</a></div>
+        <code>                private    
+    <strong>newCodigo</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Generates a new code.</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

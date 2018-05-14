@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>FacturaScripts\Core\Lib\ExtendedController\EditView | FacturaScripts</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:FacturaScripts_Core_Lib_ExtendedController_EditView" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">FacturaScripts</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../FacturaScripts.html">FacturaScripts</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core.html">Core</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core/Lib.html">Lib</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core/Lib/ExtendedController.html">ExtendedController</a></li><li class="backslash">\</li><li>EditView</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            EditView
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>EditView</strong>        extends <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/BaseView.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\BaseView">BaseView</abbr></a>        implements
+        <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/DataViewInterface.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\DataViewInterface">DataViewInterface</abbr></a>        (<a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/EditView.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>View definition for its use in ExtendedControllers</p>                                </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_count">
+                                                                                int
+                </td>
+                <td>$count</td>
+                <td class="last">Total count of read rows.</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/BaseView.html#property_count"><abbr title="FacturaScripts\Core\Lib\ExtendedController\BaseView">BaseView</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_i18n">
+                    static                    protected                                        <a href="../../../../FacturaScripts/Core/Base/Translator.html"><abbr title="FacturaScripts\Core\Base\Translator">Translator</abbr></a>
+                </td>
+                <td>$i18n</td>
+                <td class="last">Contains the translator.</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/BaseView.html#property_i18n"><abbr title="FacturaScripts\Core\Lib\ExtendedController\BaseView">BaseView</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_model">
+                                                                                mixed
+                </td>
+                <td>$model</td>
+                <td class="last">Model to use in this view.</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/BaseView.html#property_model"><abbr title="FacturaScripts\Core\Lib\ExtendedController\BaseView">BaseView</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_newCode">
+                                                                                string
+                </td>
+                <td>$newCode</td>
+                <td class="last">Stores the new code from the save() procedure, to use in loadData().</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/BaseView.html#property_newCode"><abbr title="FacturaScripts\Core\Lib\ExtendedController\BaseView">BaseView</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_pageOption">
+                                        protected                                        <a href="../../../../FacturaScripts/Core/Model/PageOption.html"><abbr title="FacturaScripts\Core\Model\PageOption">PageOption</abbr></a>
+                </td>
+                <td>$pageOption</td>
+                <td class="last">Columns and filters configuration</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/BaseView.html#property_pageOption"><abbr title="FacturaScripts\Core\Lib\ExtendedController\BaseView">BaseView</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_title">
+                                                                                string
+                </td>
+                <td>$title</td>
+                <td class="last">View title</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/BaseView.html#property_title"><abbr title="FacturaScripts\Core\Lib\ExtendedController\BaseView">BaseView</abbr></a></small></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_export">export</a>($exportManager)
+        
+                                            <p>Method to export the view data.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(string $title, string $modelName, string $viewName, string $userNick)
+        
+                                            <p>EditView constructor and initialization.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_clear">clear</a>()
+        
+                                            <p>Clears the model and set new code for the PK.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/BaseView.html#method_clear"><abbr title="FacturaScripts\Core\Lib\ExtendedController\BaseView">BaseView</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ColumnItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ColumnItem">ColumnItem</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_columnForField">columnForField</a>(string $fieldName)
+        
+                                            <p>Gets the column by the given field name</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/BaseView.html#method_columnForField"><abbr title="FacturaScripts\Core\Lib\ExtendedController\BaseView">BaseView</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ColumnItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ColumnItem">ColumnItem</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_columnForName">columnForName</a>(string $columnName)
+        
+                                            <p>Gets the column by the column name</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/BaseView.html#method_columnForName"><abbr title="FacturaScripts\Core\Lib\ExtendedController\BaseView">BaseView</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getModals">getModals</a>()
+        
+                                            <p>Returns the list of modal forms</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/BaseView.html#method_getModals"><abbr title="FacturaScripts\Core\Lib\ExtendedController\BaseView">BaseView</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getModel">getModel</a>()
+        
+                                            <p>Returns the pointer to the data model</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/BaseView.html#method_getModel"><abbr title="FacturaScripts\Core\Lib\ExtendedController\BaseView">BaseView</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/RowItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\RowItem">RowItem</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getRow">getRow</a>(string $key)
+        
+                                            <p>If it exists, return the specified row type</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/BaseView.html#method_getRow"><abbr title="FacturaScripts\Core\Lib\ExtendedController\BaseView">BaseView</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getURL">getURL</a>(string $type)
+        
+                                            <p>Returns the url for the requested model type</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/BaseView.html#method_getURL"><abbr title="FacturaScripts\Core\Lib\ExtendedController\BaseView">BaseView</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getViewName">getViewName</a>()
+        
+                                            <p>Returns the name.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/BaseView.html#method_getViewName"><abbr title="FacturaScripts\Core\Lib\ExtendedController\BaseView">BaseView</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_loadFromData">loadFromData</a>(array $data)
+        
+                                            <p>Verifies the structure and loads into the model the given data array</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/BaseView.html#method_loadFromData"><abbr title="FacturaScripts\Core\Lib\ExtendedController\BaseView">BaseView</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_disableColumn">disableColumn</a>(string $columnName, bool $disabled)
+        
+                                            <p>Establishes the column edit state</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/GroupItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\GroupItem">GroupItem</abbr></a>[]
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getColumns">getColumns</a>()
+        
+                                            <p>Returns the column configuration</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getPanelHeader">getPanelHeader</a>()
+        
+                                            <p>Returns the text for the data panel header</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getPanelFooter">getPanelFooter</a>()
+        
+                                            <p>Returns the text for the data panel footer</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_loadData">loadData</a>(mixed $code = &#039;&#039;, <a href="../../../../FacturaScripts/Core/Base/DataBase/DataBaseWhere.html"><abbr title="FacturaScripts\Core\Base\DataBase\DataBaseWhere">DataBaseWhere</abbr></a>[] $where = [], array $order = [], int $offset = 0, int $limit = FS_ITEM_LIMIT)
+        
+                                            <p>Load the data in the model property, according to the code specified.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method_export">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/EditView.php#L68">line 68</a></div>
+        <code>                    
+    <strong>export</strong>($exportManager)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Method to export the view data.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td></td>
+                <td>$exportManager</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/EditView.php#L41">line 41</a></div>
+        <code>                    
+    <strong>__construct</strong>(string $title, string $modelName, string $viewName, string $userNick)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>EditView constructor and initialization.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$title</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$modelName</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$viewName</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$userNick</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_clear">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/BaseView.html#method_clear"><abbr title="FacturaScripts\Core\Lib\ExtendedController\BaseView">BaseView</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/BaseView.php#L99">line 99</a></div>
+        <code>                    
+    <strong>clear</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Clears the model and set new code for the PK.</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_columnForField">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/BaseView.html#method_columnForField"><abbr title="FacturaScripts\Core\Lib\ExtendedController\BaseView">BaseView</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/BaseView.php#L112">line 112</a></div>
+        <code>                    <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ColumnItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ColumnItem">ColumnItem</abbr></a>
+    <strong>columnForField</strong>(string $fieldName)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Gets the column by the given field name</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$fieldName</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ColumnItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ColumnItem">ColumnItem</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_columnForName">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/BaseView.html#method_columnForName"><abbr title="FacturaScripts\Core\Lib\ExtendedController\BaseView">BaseView</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/BaseView.php#L137">line 137</a></div>
+        <code>                    <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ColumnItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ColumnItem">ColumnItem</abbr></a>
+    <strong>columnForName</strong>(string $columnName)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Gets the column by the column name</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$columnName</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ColumnItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ColumnItem">ColumnItem</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getModals">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/BaseView.html#method_getModals"><abbr title="FacturaScripts\Core\Lib\ExtendedController\BaseView">BaseView</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/BaseView.php#L160">line 160</a></div>
+        <code>                    array
+    <strong>getModals</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the list of modal forms</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getModel">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/BaseView.html#method_getModel"><abbr title="FacturaScripts\Core\Lib\ExtendedController\BaseView">BaseView</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/BaseView.php#L170">line 170</a></div>
+        <code>                    mixed
+    <strong>getModel</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the pointer to the data model</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getRow">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/BaseView.html#method_getRow"><abbr title="FacturaScripts\Core\Lib\ExtendedController\BaseView">BaseView</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/BaseView.php#L182">line 182</a></div>
+        <code>                    <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/RowItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\RowItem">RowItem</abbr></a>
+    <strong>getRow</strong>(string $key)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>If it exists, return the specified row type</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$key</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../FacturaScripts/Core/Lib/ExtendedController/RowItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\RowItem">RowItem</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getURL">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/BaseView.html#method_getURL"><abbr title="FacturaScripts\Core\Lib\ExtendedController\BaseView">BaseView</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/BaseView.php#L194">line 194</a></div>
+        <code>                    string
+    <strong>getURL</strong>(string $type)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the url for the requested model type</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$type</td>
+                <td>(edit / list / auto)</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getViewName">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/BaseView.html#method_getViewName"><abbr title="FacturaScripts\Core\Lib\ExtendedController\BaseView">BaseView</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/BaseView.php#L204">line 204</a></div>
+        <code>                    string
+    <strong>getViewName</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the name.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_loadFromData">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/BaseView.html#method_loadFromData"><abbr title="FacturaScripts\Core\Lib\ExtendedController\BaseView">BaseView</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/BaseView.php#L214">line 214</a></div>
+        <code>                    
+    <strong>loadFromData</strong>(array $data)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Verifies the structure and loads into the model the given data array</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_disableColumn">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/EditView.php#L55">line 55</a></div>
+        <code>                    
+    <strong>disableColumn</strong>(string $columnName, bool $disabled)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Establishes the column edit state</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$columnName</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>bool</td>
+                <td>$disabled</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getColumns">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/EditView.php#L78">line 78</a></div>
+        <code>                    <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/GroupItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\GroupItem">GroupItem</abbr></a>[]
+    <strong>getColumns</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the column configuration</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../FacturaScripts/Core/Lib/ExtendedController/GroupItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\GroupItem">GroupItem</abbr></a>[]</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getPanelHeader">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/EditView.php#L88">line 88</a></div>
+        <code>                    string
+    <strong>getPanelHeader</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the text for the data panel header</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getPanelFooter">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/EditView.php#L98">line 98</a></div>
+        <code>                    string
+    <strong>getPanelFooter</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the text for the data panel footer</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_loadData">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/ExtendedController/EditView.php#L112">line 112</a></div>
+        <code>                    
+    <strong>loadData</strong>(mixed $code = &#039;&#039;, <a href="../../../../FacturaScripts/Core/Base/DataBase/DataBaseWhere.html"><abbr title="FacturaScripts\Core\Base\DataBase\DataBaseWhere">DataBaseWhere</abbr></a>[] $where = [], array $order = [], int $offset = 0, int $limit = FS_ITEM_LIMIT)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Load the data in the model property, according to the code specified.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>mixed</td>
+                <td>$code</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../../../FacturaScripts/Core/Base/DataBase/DataBaseWhere.html"><abbr title="FacturaScripts\Core\Base\DataBase\DataBaseWhere">DataBaseWhere</abbr></a>[]</td>
+                <td>$where</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$order</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>int</td>
+                <td>$offset</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>int</td>
+                <td>$limit</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>
