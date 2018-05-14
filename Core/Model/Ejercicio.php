@@ -176,7 +176,6 @@ class Ejercicio extends Base\ModelClass
                     return $eje;
                 }
             }
-            self::$miniLog->alert(self::$i18n->trans('invalid-date', ['%date%' => $fecha]));
             return false;
         }
 

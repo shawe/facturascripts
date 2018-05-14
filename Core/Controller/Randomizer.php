@@ -47,7 +47,7 @@ class Randomizer extends Base\Controller
      *
      * @var array
      */
-    public $totalCounter;
+    public $totalCounter = [];
 
     /**
      * Runs the controller's private logic.
@@ -192,8 +192,6 @@ class Randomizer extends Base\Controller
      */
     private function getTotals()
     {
-        $this->totalCounter = [];
-
         $models = [
             'agentes' => self::MODEL_NAMESPACE . 'Agente',
             'albaranescli' => self::MODEL_NAMESPACE . 'AlbaranCliente',
