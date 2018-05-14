@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2018 Carlos Garcia Gomez <carlos@facturascripts.com>
+ * Copyright (C) 2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -40,8 +40,8 @@ class IntegrityCheckTest extends \PHPUnit_Framework_TestCase
      */
     public function testSaveIntegrity()
     {
-        $this->assertTrue($this->object::saveIntegrity());
-        $this->assertFileExists($this->object::INTEGRITY_FILE, 'File not exists');
+        $this::assertTrue($this->object::saveIntegrity());
+        $this::assertFileExists($this->object::INTEGRITY_FILE, 'File not exists');
     }
 
     /**
@@ -51,8 +51,8 @@ class IntegrityCheckTest extends \PHPUnit_Framework_TestCase
      */
     public function testSaveUserIntegrity()
     {
-        $this->assertTrue($this->object::saveIntegrity($this->object::INTEGRITY_USER_FILE));
-        $this->assertFileExists($this->object::INTEGRITY_USER_FILE, 'File not exists');
+        $this::assertTrue($this->object::saveIntegrity($this->object::INTEGRITY_USER_FILE));
+        $this::assertFileExists($this->object::INTEGRITY_USER_FILE, 'File not exists');
     }
 
     /**
@@ -62,7 +62,7 @@ class IntegrityCheckTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetIntegrityFiles()
     {
-        $this->assertNotEmpty($this->object::getIntegrityFiles(), 'integrity.json is empty');
+        $this::assertNotEmpty($this->object::getIntegrityFiles(), 'integrity.json is empty');
     }
 
     /**
@@ -72,7 +72,7 @@ class IntegrityCheckTest extends \PHPUnit_Framework_TestCase
      */
     public function testLoadIntegrityFiles()
     {
-        $this->assertNotEmpty($this->object::loadIntegrity(), 'Is empty');
+        $this::assertNotEmpty($this->object::loadIntegrity(), 'Is empty');
     }
 
     /**
@@ -80,7 +80,7 @@ class IntegrityCheckTest extends \PHPUnit_Framework_TestCase
      */
     public function testUserLoadIntegrityFiles()
     {
-        $this->assertNotEmpty($this->object::loadIntegrity($this->object::INTEGRITY_USER_FILE), 'Is empty');
+        $this::assertNotEmpty($this->object::loadIntegrity($this->object::INTEGRITY_USER_FILE), 'Is empty');
     }
 
     /**
@@ -90,11 +90,11 @@ class IntegrityCheckTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetFileHash()
     {
-        $this->assertNotEmpty(
+        $this::assertNotEmpty(
             $this->object::getFileHash(),
             'Is not a string "' . print_r($this->object::getFileHash() . '"', true)
         );
-        $this->assertNotEmpty(
+        $this::assertNotEmpty(
             $this->object::getFileHash($this->object::INTEGRITY_USER_FILE),
             'Is not a string "' . print_r($this->object::getFileHash($this->object::INTEGRITY_USER_FILE) . '"', true)
         );
@@ -116,7 +116,7 @@ class IntegrityCheckTest extends \PHPUnit_Framework_TestCase
         }
 
         // Must be equals
-        $this->assertEmpty(
+        $this::assertEmpty(
             $list,
             'Integrity check test not passed. A false positive on development width IDE files? '
             . print_r($this->object::compareIntegrity(), true)
@@ -127,7 +127,7 @@ class IntegrityCheckTest extends \PHPUnit_Framework_TestCase
         if (\file_exists(\FS_FOLDER . '/MyFiles/integrity-validation.json')) {
             unlink(\FS_FOLDER . '/MyFiles/integrity-validation.json');
         }
-        $this->assertNotEmpty(
+        $this::assertNotEmpty(
             $this->object::compareIntegrity(),
             'Integrity check test not passed: "' . print_r($this->object::compareIntegrity(), true) . '"'
         );

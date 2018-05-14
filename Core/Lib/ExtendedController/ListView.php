@@ -258,9 +258,9 @@ class ListView extends BaseView implements DataViewInterface
     /**
      * Returns the read data list in Model format
      *
-     * @return ModelClass[]
+     * @return ModelClass[]|null
      */
-    public function getCursor(): array
+    public function getCursor()
     {
         return $this->cursor;
     }

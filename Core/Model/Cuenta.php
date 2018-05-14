@@ -111,7 +111,7 @@ class Cuenta extends Base\ModelClass
 
         // Search open exercise for current date
         $exerciseModel = new Ejercicio();
-        $exercise = $exerciseModel->getByFecha(date('d-m-Y'), true, false);
+        $exercise = $exerciseModel::getByFecha(date('d-m-Y'), true, false);
         if ($exercise !== false ) {
             $this->codejercicio = $exercise->codejercicio;
         }

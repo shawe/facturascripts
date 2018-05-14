@@ -36,7 +36,7 @@ class EditListView extends BaseView implements DataViewInterface
     /**
      * Cursor with the display model's data
      *
-     * @var ModelClass[]
+     * @var ModelClass[]|null
      */
     private $cursor;
 
@@ -127,9 +127,9 @@ class EditListView extends BaseView implements DataViewInterface
     /**
      * Returns the list of read data in the Model format
      *
-     * @return ModelClass[]
+     * @return ModelClass[]|null
      */
-    public function getCursor(): array
+    public function getCursor()
     {
         return $this->cursor;
     }
