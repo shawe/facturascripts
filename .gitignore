@@ -15,6 +15,7 @@ config.php
 config-mysql.php
 config-postgresql.php
 generateDoc.*
+sami.phar
 package-lock.json
 *.cache
 *.lock
