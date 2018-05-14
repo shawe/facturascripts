@@ -19,6 +19,7 @@ package-lock.json
 MINILOG.json
 *.cache
 *.lock
+sami.phar
 
 # Eclipse config files
 .project
