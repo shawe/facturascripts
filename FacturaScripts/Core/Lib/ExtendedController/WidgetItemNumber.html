@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>FacturaScripts\Core\Lib\ExtendedController\WidgetItemNumber | FacturaScripts</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:FacturaScripts_Core_Lib_ExtendedController_WidgetItemNumber" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">FacturaScripts</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../FacturaScripts.html">FacturaScripts</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core.html">Core</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core/Lib.html">Lib</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core/Lib/ExtendedController.html">ExtendedController</a></li><li class="backslash">\</li><li>WidgetItemNumber</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            WidgetItemNumber
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>WidgetItemNumber</strong>        extends <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a>        (<a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/WidgetItemNumber.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>This class manage all specific method for a WidgetItem of Number type.</p>                                </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_autofocus">
+                    static                                        private                    bool
+                </td>
+                <td>$autofocus</td>
+                <td class="last">To put the focus on the first editable input.</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#property_autofocus"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_fieldName">
+                                                                                string
+                </td>
+                <td>$fieldName</td>
+                <td class="last">Field name with the data that the widget displays</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#property_fieldName"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_hint">
+                                                                                string
+                </td>
+                <td>$hint</td>
+                <td class="last">Additional information for the user</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#property_hint"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_icon">
+                                                                                string
+                </td>
+                <td>$icon</td>
+                <td class="last">Icon used as a value or to accompany the widget</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#property_icon"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_maxLength">
+                                                                                int
+                </td>
+                <td>$maxLength</td>
+                <td class="last">Indicates that the max length of value</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#property_maxLength"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_onClick">
+                                                                                string
+                </td>
+                <td>$onClick</td>
+                <td class="last">Destination controller to go to when the displayed data is clicked</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#property_onClick"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_options">
+                                                                                array
+                </td>
+                <td>$options</td>
+                <td class="last">Visual options to configure the widget</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#property_options"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_readOnly">
+                                                                                bool
+                </td>
+                <td>$readOnly</td>
+                <td class="last">Indicates that the field is read only</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#property_readOnly"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_required">
+                                                                                bool
+                </td>
+                <td>$required</td>
+                <td class="last">Indicates that the field is mandatory and it must have a value</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#property_required"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_type">
+                                                                                string
+                </td>
+                <td>$type</td>
+                <td class="last">Type of widget displayed</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#property_type"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_decimal">
+                                                                                int
+                </td>
+                <td>$decimal</td>
+                <td class="last">Number of decimals for numeric types</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_max">
+                                                                                string
+                </td>
+                <td>$max</td>
+                <td class="last">Maximum value</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_min">
+                                                                                string
+                </td>
+                <td>$min</td>
+                <td class="last">Minimum value</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_numberTools">
+                    static                                        private                    <a href="../../../../FacturaScripts/Core/Base/NumberTools.html"><abbr title="FacturaScripts\Core\Base\NumberTools">NumberTools</abbr></a>
+                </td>
+                <td>$numberTools</td>
+                <td class="last">Class that formats the display and provides tools to manage numeric values</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_step">
+                                                                                string
+                </td>
+                <td>$step</td>
+                <td class="last">Increment/decrement value</td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getEditHTML">getEditHTML</a>(string $value)
+        
+                                            <p>Generates the html code to display the model data for Edit controller</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getListHTML">getListHTML</a>(string $value)
+        
+                                            <p>Generates the html code to display the model data for List controller</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p>WidgetItem constructor.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_columnFunction">columnFunction</a>()
+        
+                                            <p>Array with list of personalization functions of the column</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#method_columnFunction"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getHeaderHTML">getHeaderHTML</a>(string $value)
+        
+                                            <p>Generate the html code to visualize the visual element header</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#method_getHeaderHTML"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getHintHTML">getHintHTML</a>(string $hint)
+        
+                                            <p>Returns the HTML code to display a popover with the given text</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#method_getHintHTML"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_loadFromJSON">loadFromJSON</a>(array $widget)
+        
+                                            <p>Loads the attributes structure from the database</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_loadFromXML">loadFromXML</a>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $column)
+        
+                                            <p>Loads the attributes structure from a XML file</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_newFromJSON">newFromJSON</a>(array $widget)
+        
+                                            <p>Creates and loads the attributes structure from the database</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#method_newFromJSON"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_newFromXML">newFromXML</a>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $column)
+        
+                                            <p>Creates and loads the attributes structure from a XML file</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#method_newFromXML"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_canApplyOptions">canApplyOptions</a>(string $optionValue, string $valueItem)
+        
+                                            <p>Indicates if the conditions to apply an Option Text are met</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#method_canApplyOptions"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAttributesGroup">getAttributesGroup</a>(array $property, <a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $group)
+        
+                                            <p>Loads the attribute dictionary for a widget's group of options or values</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#method_getAttributesGroup"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getIconHTML">getIconHTML</a>()
+        
+                                            <p>Generates the HTML code to display an icon on the left side of the data</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#method_getIconHTML"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getTextOptionsHTML">getTextOptionsHTML</a>(string $valueItem)
+        
+                                            <p>Generates the CSS code for the widget style from the options</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#method_getTextOptionsHTML"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_specialAttributes">specialAttributes</a>()
+        
+                                            <p>Generates the HTML code for special attributes like:
+hint
+read only
+mandatory value</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_standardEditHTMLWidget">standardEditHTMLWidget</a>(string $value, string $specialAttributes, string $extraClass = &#039;&#039;, string $type = &#039;&#039;)
+        
+                                            <p>Returns the HTML code to edit non special controls</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#method_standardEditHTMLWidget"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_standardListHTMLWidget">standardListHTMLWidget</a>(string $value, string $text = &#039;&#039;)
+        
+                                            <p>Returns the HTML code for the list of non special controls</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#method_standardListHTMLWidget"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemAutocomplete.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemAutocomplete">WidgetItemAutocomplete</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemCheckBox.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemCheckBox">WidgetItemCheckBox</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemColor.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemColor">WidgetItemColor</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemDateTime.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemDateTime">WidgetItemDateTime</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemFileChooser.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemFileChooser">WidgetItemFileChooser</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemMoney.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemMoney">WidgetItemMoney</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemNumber.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemNumber">WidgetItemNumber</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemRadio.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemRadio">WidgetItemRadio</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemSelect.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemSelect">WidgetItemSelect</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemText.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemText">WidgetItemText</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_widgetItemFromType">widgetItemFromType</a>(string $type)
+        
+                                            <p>Class dynamic constructor. It creates a widget of the given type</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#method_widgetItemFromType"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a></small></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method_getEditHTML">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/WidgetItemNumber.php#L93">line 93</a></div>
+        <code>                    
+    <strong>getEditHTML</strong>(string $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Generates the html code to display the model data for Edit controller</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getListHTML">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/WidgetItemNumber.php#L106">line 106</a></div>
+        <code>                    
+    <strong>getListHTML</strong>(string $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Generates the html code to display the model data for List controller</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/WidgetItemNumber.php#L71">line 71</a></div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>WidgetItem constructor.</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_columnFunction">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#method_columnFunction"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/WidgetItem.php#L134">line 134</a></div>
+        <code>                    
+    <strong>columnFunction</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Array with list of personalization functions of the column</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getHeaderHTML">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#method_getHeaderHTML"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/WidgetItem.php#L146">line 146</a></div>
+        <code>                    
+    <strong>getHeaderHTML</strong>(string $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Generate the html code to visualize the visual element header</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getHintHTML">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#method_getHintHTML"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/WidgetItem.php#L158">line 158</a></div>
+        <code>                    string
+    <strong>getHintHTML</strong>(string $hint)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the HTML code to display a popover with the given text</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$hint</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_loadFromJSON">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/WidgetItemNumber.php#L121">line 121</a></div>
+        <code>                    
+    <strong>loadFromJSON</strong>(array $widget)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Loads the attributes structure from the database</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$widget</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_loadFromXML">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/WidgetItemNumber.php#L136">line 136</a></div>
+        <code>                    
+    <strong>loadFromXML</strong>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $column)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Loads the attributes structure from a XML file</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a></td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_newFromJSON">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#method_newFromJSON"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/WidgetItem.php#L207">line 207</a></div>
+        <code>        static            
+    <strong>newFromJSON</strong>(array $widget)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates and loads the attributes structure from the database</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$widget</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_newFromXML">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#method_newFromXML"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/WidgetItem.php#L223">line 223</a></div>
+        <code>        static            
+    <strong>newFromXML</strong>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $column)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates and loads the attributes structure from a XML file</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a></td>
+                <td>$column</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_canApplyOptions">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#method_canApplyOptions"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/WidgetItem.php#L241">line 241</a></div>
+        <code>                private    bool
+    <strong>canApplyOptions</strong>(string $optionValue, string $valueItem)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Indicates if the conditions to apply an Option Text are met</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$optionValue</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$valueItem</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAttributesGroup">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#method_getAttributesGroup"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/WidgetItem.php#L268">line 268</a></div>
+        <code>            protected        
+    <strong>getAttributesGroup</strong>(array $property, <a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $group)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Loads the attribute dictionary for a widget's group of options or values</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$property</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a></td>
+                <td>$group</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getIconHTML">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#method_getIconHTML"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/WidgetItem.php#L286">line 286</a></div>
+        <code>            protected        string
+    <strong>getIconHTML</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Generates the HTML code to display an icon on the left side of the data</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getTextOptionsHTML">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#method_getTextOptionsHTML"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/WidgetItem.php#L307">line 307</a></div>
+        <code>            protected        string
+    <strong>getTextOptionsHTML</strong>(string $valueItem)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Generates the CSS code for the widget style from the options</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$valueItem</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_specialAttributes">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/WidgetItemNumber.php#L155">line 155</a></div>
+        <code>            protected        string
+    <strong>specialAttributes</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Generates the HTML code for special attributes like:
+hint
+read only
+mandatory value</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_standardEditHTMLWidget">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#method_standardEditHTMLWidget"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/WidgetItem.php#L359">line 359</a></div>
+        <code>            protected        string
+    <strong>standardEditHTMLWidget</strong>(string $value, string $specialAttributes, string $extraClass = &#039;&#039;, string $type = &#039;&#039;)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the HTML code to edit non special controls</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$specialAttributes</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$extraClass</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$type</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_standardListHTMLWidget">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#method_standardListHTMLWidget"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/WidgetItem.php#L381">line 381</a></div>
+        <code>            protected        string
+    <strong>standardListHTMLWidget</strong>(string $value, string $text = &#039;&#039;)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the HTML code for the list of non special controls</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$text</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_widgetItemFromType">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItem.html#method_widgetItemFromType"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItem">WidgetItem</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/WidgetItem.php#L400">line 400</a></div>
+        <code>        static        private    <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemAutocomplete.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemAutocomplete">WidgetItemAutocomplete</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemCheckBox.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemCheckBox">WidgetItemCheckBox</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemColor.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemColor">WidgetItemColor</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemDateTime.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemDateTime">WidgetItemDateTime</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemFileChooser.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemFileChooser">WidgetItemFileChooser</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemMoney.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemMoney">WidgetItemMoney</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemNumber.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemNumber">WidgetItemNumber</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemRadio.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemRadio">WidgetItemRadio</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemSelect.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemSelect">WidgetItemSelect</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemText.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemText">WidgetItemText</abbr></a>
+    <strong>widgetItemFromType</strong>(string $type)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Class dynamic constructor. It creates a widget of the given type</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$type</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemAutocomplete.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemAutocomplete">WidgetItemAutocomplete</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemCheckBox.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemCheckBox">WidgetItemCheckBox</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemColor.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemColor">WidgetItemColor</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemDateTime.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemDateTime">WidgetItemDateTime</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemFileChooser.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemFileChooser">WidgetItemFileChooser</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemMoney.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemMoney">WidgetItemMoney</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemNumber.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemNumber">WidgetItemNumber</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemRadio.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemRadio">WidgetItemRadio</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemSelect.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemSelect">WidgetItemSelect</abbr></a>|<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetItemText.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetItemText">WidgetItemText</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>FacturaScripts\Core\Lib\Accounting\AccountingPlanImport | FacturaScripts</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:FacturaScripts_Core_Lib_Accounting_AccountingPlanImport" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">FacturaScripts</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../FacturaScripts.html">FacturaScripts</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core.html">Core</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core/Lib.html">Lib</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core/Lib/Accounting.html">Accounting</a></li><li class="backslash">\</li><li>AccountingPlanImport</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            AccountingPlanImport
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>AccountingPlanImport</strong>        (<a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/Accounting/AccountingPlanImport.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Description of AccountingPlanImport</p>                                </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_ejercicio">
+                                                            private                    <abbr title="FacturaScripts\Dinamic\Model\Ejercicio">Ejercicio</abbr>
+                </td>
+                <td>$ejercicio</td>
+                <td class="last">Exercise related to the accounting plan.</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_i18n">
+                                                            private                    <a href="../../../../FacturaScripts/Core/Base/Translator.html"><abbr title="FacturaScripts\Core\Base\Translator">Translator</abbr></a>
+                </td>
+                <td>$i18n</td>
+                <td class="last">System translator.</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_miniLog">
+                                                            private                    <a href="../../../../FacturaScripts/Core/Base/MiniLog.html"><abbr title="FacturaScripts\Core\Base\MiniLog">MiniLog</abbr></a>
+                </td>
+                <td>$miniLog</td>
+                <td class="last">Manage the log of the entire application.</td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p>AccountingPlanImport constructor.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_importCSV">importCSV</a>(string $filePath, string $codejercicio)
+        
+                                            <p>Import data from CSV file.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_importXML">importXML</a>(string $filePath, string $codejercicio)
+        
+                                            <p>Import data from XML file.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_createAccount">createAccount</a>(string $code, string $definition, string $parentCode = &#039;&#039;)
+        
+                                            <p>Insert/update and account in accounting plan.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_createSubaccount">createSubaccount</a>(string $code, string $description, string $parentCode)
+        
+                                            <p>Insert or update an account in accounting Plan.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a>|<abbr title="FacturaScripts\Core\Lib\Accounting\false">false</abbr>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getData">getData</a>(string $filePath)
+        
+                                            <p>returns an array width the content of xml file</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_importEpigrafeGroup">importEpigrafeGroup</a>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $data)
+        
+                                            <p>Insert Groups of accounting plan</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_importEpigrafe">importEpigrafe</a>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $data)
+        
+                                            <p>insert Epigrafe of accounting plan</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_importCuenta">importCuenta</a>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $data)
+        
+                                            <p>insert Cuenta of accounting plan</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_importSubcuenta">importSubcuenta</a>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $data)
+        
+                                            <p>Import subaccounts of accounting plan</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_processCsvData">processCsvData</a>(string $filePath)
+        
+                                            <p>Load accounting plan from CSV File and imports in accounting plan.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_searchParent">searchParent</a>(array $accountCodes, string $account)
+        
+                                            <p>Search the parent of account in a accounting Plan.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/Accounting/AccountingPlanImport.php#L62">line 62</a></div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>AccountingPlanImport constructor.</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_importCSV">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/Accounting/AccountingPlanImport.php#L75">line 75</a></div>
+        <code>                    
+    <strong>importCSV</strong>(string $filePath, string $codejercicio)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Import data from CSV file.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$filePath</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$codejercicio</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_importXML">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/Accounting/AccountingPlanImport.php#L91">line 91</a></div>
+        <code>                    
+    <strong>importXML</strong>(string $filePath, string $codejercicio)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Import data from XML file.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$filePath</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$codejercicio</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_createAccount">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/Accounting/AccountingPlanImport.php#L114">line 114</a></div>
+        <code>                private    
+    <strong>createAccount</strong>(string $code, string $definition, string $parentCode = &#039;&#039;)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Insert/update and account in accounting plan.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$code</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$definition</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$parentCode</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_createSubaccount">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/Accounting/AccountingPlanImport.php#L152">line 152</a></div>
+        <code>                private    
+    <strong>createSubaccount</strong>(string $code, string $description, string $parentCode)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Insert or update an account in accounting Plan.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$code</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$description</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$parentCode</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getData">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/Accounting/AccountingPlanImport.php#L189">line 189</a></div>
+        <code>                private    <a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a>|<abbr title="FacturaScripts\Core\Lib\Accounting\false">false</abbr>
+    <strong>getData</strong>(string $filePath)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>returns an array width the content of xml file</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$filePath</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a>|<abbr title="FacturaScripts\Core\Lib\Accounting\false">false</abbr></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_importEpigrafeGroup">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/Accounting/AccountingPlanImport.php#L204">line 204</a></div>
+        <code>                private    
+    <strong>importEpigrafeGroup</strong>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $data)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Insert Groups of accounting plan</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a></td>
+                <td>$data</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_importEpigrafe">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/Accounting/AccountingPlanImport.php#L217">line 217</a></div>
+        <code>                private    
+    <strong>importEpigrafe</strong>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $data)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>insert Epigrafe of accounting plan</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a></td>
+                <td>$data</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_importCuenta">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/Accounting/AccountingPlanImport.php#L230">line 230</a></div>
+        <code>                private    
+    <strong>importCuenta</strong>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $data)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>insert Cuenta of accounting plan</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a></td>
+                <td>$data</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_importSubcuenta">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/Accounting/AccountingPlanImport.php#L243">line 243</a></div>
+        <code>                private    
+    <strong>importSubcuenta</strong>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $data)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Import subaccounts of accounting plan</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a></td>
+                <td>$data</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_processCsvData">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/Accounting/AccountingPlanImport.php#L256">line 256</a></div>
+        <code>                private    
+    <strong>processCsvData</strong>(string $filePath)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Load accounting plan from CSV File and imports in accounting plan.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$filePath</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_searchParent">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/Accounting/AccountingPlanImport.php#L308">line 308</a></div>
+        <code>                private    string
+    <strong>searchParent</strong>(array $accountCodes, string $account)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Search the parent of account in a accounting Plan.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$accountCodes</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$account</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

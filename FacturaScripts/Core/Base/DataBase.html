@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>FacturaScripts\Core\Base\DataBase | FacturaScripts</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
+        <script src="../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script src="../../../js/typeahead.min.js"></script>
+        <script src="../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:FacturaScripts_Core_Base_DataBase" data-root-path="../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../index.html">FacturaScripts</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../traits.html">Traits</a></li>
+                    <li><a href="../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../FacturaScripts.html">FacturaScripts</a></li><li class="backslash">\</li><li><a href="../../../FacturaScripts/Core.html">Core</a></li><li class="backslash">\</li><li><a href="../../../FacturaScripts/Core/Base.html">Base</a></li><li class="backslash">\</li><li>DataBase</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            DataBase
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>DataBase</strong>        (<a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Generic class of access to the database, either MySQL or PostgreSQL.</p>                                </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_link">
+                    static                                        private                    resource
+                </td>
+                <td>$link</td>
+                <td class="last">The link with de database.</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_engine">
+                    static                                        private                    <a href="../../../FacturaScripts/Core/Base/DataBase/DataBaseEngine.html"><abbr title="FacturaScripts\Core\Base\DataBase\DataBaseEngine">DataBaseEngine</abbr></a>
+                </td>
+                <td>$engine</td>
+                <td class="last">Link to the database engine selected in the configuration.</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_miniLog">
+                    static                                        private                    <a href="../../../FacturaScripts/Core/Base/MiniLog.html"><abbr title="FacturaScripts\Core\Base\MiniLog">MiniLog</abbr></a>
+                </td>
+                <td>$miniLog</td>
+                <td class="last">Manage the log of all controllers, models and database.</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_tables">
+                    static                                        private                    array
+                </td>
+                <td>$tables</td>
+                <td class="last">List of tables in the database.</td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p>DataBase constructor and prepare the class to use it.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../FacturaScripts/Core/Base/DataBase/DataBaseEngine.html"><abbr title="FacturaScripts\Core\Base\DataBase\DataBaseEngine">DataBaseEngine</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getEngine">getEngine</a>()
+        
+                                            <p>Return the database engine used</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getOperator">getOperator</a>(string $operator)
+        
+                                            <p>Gets the operator for the database engine</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getTables">getTables</a>()
+        
+                                            <p>Returns an array with the names of the tables in the database.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getColumns">getColumns</a>(string $tableName)
+        
+                                            <p>Returns an array with the columns of a given table.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getConstraints">getConstraints</a>(string $tableName, bool $extended = false)
+        
+                                            <p>Returns an array with the constraints of a table.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getIndexes">getIndexes</a>(string $tableName)
+        
+                                            <p>Returns an array with the indices of a given table.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_connected">connected</a>()
+        
+                                            <p>Returns True if it is connected to the database.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_connect">connect</a>()
+        
+                                            <p>Connect to the database.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_close">close</a>()
+        
+                                            <p>Disconnect from the database.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_inTransaction">inTransaction</a>()
+        
+                                            <p>Indicates if there is an open transaction.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_beginTransaction">beginTransaction</a>()
+        
+                                            <p>Start a transaction in the database.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_commit">commit</a>()
+        
+                                            <p>Record the statements executed in the database.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_rollback">rollback</a>()
+        
+                                            <p>Undo the statements executed in the database.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_select">select</a>(string $sql)
+        
+                                            <p>Execute a SQL statement of type select, and return
+an array with the results, or false in case of failure.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_selectLimit">selectLimit</a>(string $sql, int $limit = \FS_ITEM_LIMIT, int $offset = 0)
+        
+                                            <p>Execute a SQL statement of type select, but with pagination,
+and return an array with the results or empty array in case of failure.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_exec">exec</a>(string $sql)
+        
+                                            <p>Execute SQL statements on the database (inserts, updates or deletes).</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    integer|bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_lastval">lastval</a>()
+        
+                                            <p>Returns the last ID assigned when doing an INSERT in the database.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_version">version</a>()
+        
+                                            <p>Returns the used database engine and the version.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_tableExists">tableExists</a>(string $tableName, array $list = [])
+        
+                                            <p>Returns True if the table exists, False otherwise.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_checkTableAux">checkTableAux</a>(string $tableName)
+        
+                                            <p>Make extra checks on the table.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_var2str">var2str</a>(mixed $val)
+        
+                                            <p>Transforms a variable into a valid text string to be used in a SQL query.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_escapeString">escapeString</a>(string $str)
+        
+                                            <p>Escape the quotes from the text string.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_dateStyle">dateStyle</a>()
+        
+                                            <p>Returns the date style of the database engine.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_sql2Int">sql2Int</a>(string $colName)
+        
+                                            <p>Returns the SQL needed to convert the column to integer.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php#L66">line 66</a></div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>DataBase constructor and prepare the class to use it.</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getEngine">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php#L95">line 95</a></div>
+        <code>                    <a href="../../../FacturaScripts/Core/Base/DataBase/DataBaseEngine.html"><abbr title="FacturaScripts\Core\Base\DataBase\DataBaseEngine">DataBaseEngine</abbr></a>
+    <strong>getEngine</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Return the database engine used</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../FacturaScripts/Core/Base/DataBase/DataBaseEngine.html"><abbr title="FacturaScripts\Core\Base\DataBase\DataBaseEngine">DataBaseEngine</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getOperator">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php#L107">line 107</a></div>
+        <code>                    string
+    <strong>getOperator</strong>(string $operator)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Gets the operator for the database engine</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$operator</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getTables">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php#L117">line 117</a></div>
+        <code>                    array
+    <strong>getTables</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns an array with the names of the tables in the database.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getColumns">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php#L133">line 133</a></div>
+        <code>                    array
+    <strong>getColumns</strong>(string $tableName)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns an array with the columns of a given table.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$tableName</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getConstraints">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php#L155">line 155</a></div>
+        <code>                    array
+    <strong>getConstraints</strong>(string $tableName, bool $extended = false)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns an array with the constraints of a table.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$tableName</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>bool</td>
+                <td>$extended</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getIndexes">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php#L174">line 174</a></div>
+        <code>                    array
+    <strong>getIndexes</strong>(string $tableName)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns an array with the indices of a given table.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$tableName</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_connected">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php#L192">line 192</a></div>
+        <code>                    bool
+    <strong>connected</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns True if it is connected to the database.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_connect">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php#L202">line 202</a></div>
+        <code>                    bool
+    <strong>connect</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Connect to the database.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_close">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php#L223">line 223</a></div>
+        <code>                    bool
+    <strong>close</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Disconnect from the database.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_inTransaction">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php#L245">line 245</a></div>
+        <code>                    bool
+    <strong>inTransaction</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Indicates if there is an open transaction.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_beginTransaction">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php#L255">line 255</a></div>
+        <code>                    bool
+    <strong>beginTransaction</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Start a transaction in the database.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_commit">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php#L271">line 271</a></div>
+        <code>                    bool
+    <strong>commit</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Record the statements executed in the database.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_rollback">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php#L286">line 286</a></div>
+        <code>                    bool
+    <strong>rollback</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Undo the statements executed in the database.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_select">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php#L302">line 302</a></div>
+        <code>                    array
+    <strong>select</strong>(string $sql)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Execute a SQL statement of type select, and return
+an array with the results, or false in case of failure.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$sql</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_selectLimit">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php#L319">line 319</a></div>
+        <code>                    array
+    <strong>selectLimit</strong>(string $sql, int $limit = \FS_ITEM_LIMIT, int $offset = 0)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Execute a SQL statement of type select, but with pagination,
+and return an array with the results or empty array in case of failure.</p>                    <p>Limit is the number of items you want to return. Offset is the result
+number from which you want it to start.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$sql</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>int</td>
+                <td>$limit</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>int</td>
+                <td>$offset</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_exec">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php#L352">line 352</a></div>
+        <code>                    bool
+    <strong>exec</strong>(string $sql)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Execute SQL statements on the database (inserts, updates or deletes).</p>                    <p>To make selects, it is better to use select () or selecLimit ().
+If there is no open transaction, one starts, queries are executed
+If the transaction has opened it in the call, it closes it confirming
+or discarding according to whether it has gone well or has given an error</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$sql</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_lastval">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php#L383">line 383</a></div>
+        <code>                    integer|bool
+    <strong>lastval</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the last ID assigned when doing an INSERT in the database.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>integer|bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_version">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php#L394">line 394</a></div>
+        <code>                    string
+    <strong>version</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the used database engine and the version.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_tableExists">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php#L407">line 407</a></div>
+        <code>                    bool
+    <strong>tableExists</strong>(string $tableName, array $list = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns True if the table exists, False otherwise.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$tableName</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$list</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_checkTableAux">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php#L423">line 423</a></div>
+        <code>                    bool
+    <strong>checkTableAux</strong>(string $tableName)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Make extra checks on the table.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$tableName</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_var2str">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php#L441">line 441</a></div>
+        <code>                    string
+    <strong>var2str</strong>(mixed $val)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Transforms a variable into a valid text string to be used in a SQL query.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>mixed</td>
+                <td>$val</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_escapeString">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php#L471">line 471</a></div>
+        <code>                    string
+    <strong>escapeString</strong>(string $str)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Escape the quotes from the text string.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$str</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_dateStyle">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php#L485">line 485</a></div>
+        <code>                    string
+    <strong>dateStyle</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the date style of the database engine.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_sql2Int">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Base/DataBase.php#L497">line 497</a></div>
+        <code>                    string
+    <strong>sql2Int</strong>(string $colName)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the SQL needed to convert the column to integer.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$colName</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

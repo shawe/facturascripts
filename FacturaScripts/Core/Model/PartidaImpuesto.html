@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>FacturaScripts\Core\Model\PartidaImpuesto | FacturaScripts</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
+        <script src="../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script src="../../../js/typeahead.min.js"></script>
+        <script src="../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:FacturaScripts_Core_Model_PartidaImpuesto" data-root-path="../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../index.html">FacturaScripts</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../traits.html">Traits</a></li>
+                    <li><a href="../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../FacturaScripts.html">FacturaScripts</a></li><li class="backslash">\</li><li><a href="../../../FacturaScripts/Core.html">Core</a></li><li class="backslash">\</li><li><a href="../../../FacturaScripts/Core/Model.html">Model</a></li><li class="backslash">\</li><li>PartidaImpuesto</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            PartidaImpuesto
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>PartidaImpuesto</strong>        extends <a href="../../../FacturaScripts/Core/Model/Base/ModelView.html"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a>        (<a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Model/PartidaImpuesto.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Auxiliary model to load a list of accounting entries with VAT</p>                                </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_dataBase">
+                    static                                        private                    <a href="../../../FacturaScripts/Core/Base/DataBase.html"><abbr title="FacturaScripts\Core\Base\DataBase">DataBase</abbr></a>
+                </td>
+                <td>$dataBase</td>
+                <td class="last">It provides direct access to the database.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelView.html#property_dataBase"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_values">
+                                                            private                    array
+                </td>
+                <td>$values</td>
+                <td class="last">List of values for record view</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelView.html#property_values"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_baseimponible">
+                                                                                float
+                </td>
+                <td>$baseimponible</td>
+                <td class="last">TODO: Undocumented property</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_iva">
+                                                                                float
+                </td>
+                <td>$iva</td>
+                <td class="last">TODO: Undocumented property</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_cuotaiva">
+                                                                                float
+                </td>
+                <td>$cuotaiva</td>
+                <td class="last">TODO: Undocumented property</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_recargo">
+                                                                                float
+                </td>
+                <td>$recargo</td>
+                <td class="last">TODO: Undocumented property</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_cuotarecargo">
+                                                                                float
+                </td>
+                <td>$cuotarecargo</td>
+                <td class="last">TODO: Undocumented property</td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getTables">getTables</a>()
+        
+                                            <p>List of tables required for the execution of the view.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getFields">getFields</a>()
+        
+                                            <p>List of fields or columns to select clausule</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSQLFrom">getSQLFrom</a>()
+        
+                                            <p>List of tables related to from clausule</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(array $data = [])
+        
+                                            <p>Constructor and class initializer.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelView.html#method___construct"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___isset">__isset</a>(string $name)
+        
+                                            <p>Check if exits value to property</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelView.html#method___isset"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___set">__set</a>(string $name, mixed $value)
+        
+                                            <p>Set value to modal view field</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelView.html#method___set"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___get">__get</a>(string $name)
+        
+                                            <p>Return modal view field value</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelView.html#method___get"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_clear">clear</a>()
+        
+                                            <p>Reset the values of all model view properties.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_loadFromData">loadFromData</a>(array $data)
+        
+                                            <p>Assign the values of the $data array to the model view properties.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getGroupBy">getGroupBy</a>()
+        
+                                            <p>Return Group By clausule</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelView.html#method_getGroupBy"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getOrderBy">getOrderBy</a>(array $order)
+        
+                                            <p>Convert an array of filters order by in string.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelView.html#method_getOrderBy"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_checkTables">checkTables</a>()
+        
+                                            <p>Check list of tables required.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelView.html#method_checkTables"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_count">count</a>(array $where = [])
+        
+                                            <p>Returns the number of records that meet the condition.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelView.html#method_count"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_fieldsList">fieldsList</a>()
+        
+                                            <p>Convert the list of fields into a string to use as a select clause</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelView.html#method_fieldsList"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../FacturaScripts/Core/Model/Base/ModelView.html"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a>[]
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_all">all</a>(array $where, array $order = [], int $offset = 0, int $limit = 0)
+        
+                                            <p>Load data for the indicated where.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/Model/Base/ModelView.html#method_all"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a></small></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method_getTables">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Model/PartidaImpuesto.php#L68">line 68</a></div>
+        <code>            protected        
+    <strong>getTables</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>List of tables required for the execution of the view.</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getFields">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Model/PartidaImpuesto.php#L80">line 80</a></div>
+        <code>            protected        
+    <strong>getFields</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>List of fields or columns to select clausule</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSQLFrom">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Model/PartidaImpuesto.php#L106">line 106</a></div>
+        <code>            protected        
+    <strong>getSQLFrom</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>List of tables related to from clausule</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelView.html#method___construct"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Model/Base/ModelView.php#L71">line 71</a></div>
+        <code>                    
+    <strong>__construct</strong>(array $data = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Constructor and class initializer.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___isset">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelView.html#method___isset"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Model/Base/ModelView.php#L92">line 92</a></div>
+        <code>                    bool
+    <strong>__isset</strong>(string $name)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Check if exits value to property</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___set">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelView.html#method___set"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Model/Base/ModelView.php#L103">line 103</a></div>
+        <code>                    
+    <strong>__set</strong>(string $name, mixed $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Set value to modal view field</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>mixed</td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___get">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelView.html#method___get"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Model/Base/ModelView.php#L114">line 114</a></div>
+        <code>                    mixed
+    <strong>__get</strong>(string $name)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Return modal view field value</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$name</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_clear">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Model/PartidaImpuesto.php#L118">line 118</a></div>
+        <code>            protected        
+    <strong>clear</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Reset the values of all model view properties.</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_loadFromData">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Model/PartidaImpuesto.php#L134">line 134</a></div>
+        <code>            protected        
+    <strong>loadFromData</strong>(array $data)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Assign the values of the $data array to the model view properties.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$data</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getGroupBy">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelView.html#method_getGroupBy"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Model/Base/ModelView.php#L150">line 150</a></div>
+        <code>            protected        string
+    <strong>getGroupBy</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Return Group By clausule</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getOrderBy">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelView.html#method_getOrderBy"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Model/Base/ModelView.php#L162">line 162</a></div>
+        <code>                private    string
+    <strong>getOrderBy</strong>(array $order)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Convert an array of filters order by in string.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$order</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_checkTables">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelView.html#method_checkTables"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Model/Base/ModelView.php#L178">line 178</a></div>
+        <code>                private    bool
+    <strong>checkTables</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Check list of tables required.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_count">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelView.html#method_count"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Model/Base/ModelView.php#L197">line 197</a></div>
+        <code>                    int
+    <strong>count</strong>(array $where = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the number of records that meet the condition.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$where</td>
+                <td>filters to apply to records.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_fieldsList">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelView.html#method_fieldsList"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Model/Base/ModelView.php#L209">line 209</a></div>
+        <code>                private    string
+    <strong>fieldsList</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Convert the list of fields into a string to use as a select clause</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_all">
+        <div class="location">in <a href="../../../FacturaScripts/Core/Model/Base/ModelView.html#method_all"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Model/Base/ModelView.php#L230">line 230</a></div>
+        <code>                    <a href="../../../FacturaScripts/Core/Model/Base/ModelView.html"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a>[]
+    <strong>all</strong>(array $where, array $order = [], int $offset = 0, int $limit = 0)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Load data for the indicated where.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$where</td>
+                <td>filters to apply to model records.</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$order</td>
+                <td>fields to use in the sorting. For example ['code' => 'ASC']</td>
+            </tr>
+                    <tr>
+                <td>int</td>
+                <td>$offset</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>int</td>
+                <td>$limit</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../FacturaScripts/Core/Model/Base/ModelView.html"><abbr title="FacturaScripts\Core\Model\Base\ModelView">ModelView</abbr></a>[]</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

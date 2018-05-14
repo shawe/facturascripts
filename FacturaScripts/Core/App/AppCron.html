@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>FacturaScripts\Core\App\AppCron | FacturaScripts</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../css/sami.css">
+        <script src="../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../js/bootstrap.min.js"></script>
+        <script src="../../../js/typeahead.min.js"></script>
+        <script src="../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:FacturaScripts_Core_App_AppCron" data-root-path="../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../index.html">FacturaScripts</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../traits.html">Traits</a></li>
+                    <li><a href="../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../FacturaScripts.html">FacturaScripts</a></li><li class="backslash">\</li><li><a href="../../../FacturaScripts/Core.html">Core</a></li><li class="backslash">\</li><li><a href="../../../FacturaScripts/Core/App.html">App</a></li><li class="backslash">\</li><li>AppCron</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            AppCron
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>AppCron</strong>        extends <a href="../../../FacturaScripts/Core/App/App.html"><abbr title="FacturaScripts\Core\App\App">App</abbr></a>        (<a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/App/AppCron.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>App description</p>                                </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_cache">
+                                        protected                                        <a href="../../../FacturaScripts/Core/Base/Cache.html"><abbr title="FacturaScripts\Core\Base\Cache">Cache</abbr></a>
+                </td>
+                <td>$cache</td>
+                <td class="last">Cache access manager.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/App/App.html#property_cache"><abbr title="FacturaScripts\Core\App\App">App</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_dataBase">
+                                        protected                                        <a href="../../../FacturaScripts/Core/Base/DataBase.html"><abbr title="FacturaScripts\Core\Base\DataBase">DataBase</abbr></a>
+                </td>
+                <td>$dataBase</td>
+                <td class="last">Database access manager.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/App/App.html#property_dataBase"><abbr title="FacturaScripts\Core\App\App">App</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_i18n">
+                                        protected                                        <a href="../../../FacturaScripts/Core/Base/Translator.html"><abbr title="FacturaScripts\Core\Base\Translator">Translator</abbr></a>
+                </td>
+                <td>$i18n</td>
+                <td class="last">Translation engine.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/App/App.html#property_i18n"><abbr title="FacturaScripts\Core\App\App">App</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_ipFilter">
+                                        protected                                        <a href="../../../FacturaScripts/Core/Lib/IPFilter.html"><abbr title="FacturaScripts\Core\Lib\IPFilter">IPFilter</abbr></a>
+                </td>
+                <td>$ipFilter</td>
+                <td class="last">IP filter.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/App/App.html#property_ipFilter"><abbr title="FacturaScripts\Core\App\App">App</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_miniLog">
+                                        protected                                        <a href="../../../FacturaScripts/Core/Base/MiniLog.html"><abbr title="FacturaScripts\Core\Base\MiniLog">MiniLog</abbr></a>
+                </td>
+                <td>$miniLog</td>
+                <td class="last">App log manager.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/App/App.html#property_miniLog"><abbr title="FacturaScripts\Core\App\App">App</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_pluginManager">
+                                        protected                                        <a href="../../../FacturaScripts/Core/Base/PluginManager.html"><abbr title="FacturaScripts\Core\Base\PluginManager">PluginManager</abbr></a>
+                </td>
+                <td>$pluginManager</td>
+                <td class="last">Plugin manager.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/App/App.html#property_pluginManager"><abbr title="FacturaScripts\Core\App\App">App</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_request">
+                                        protected                                        <abbr title="Symfony\Component\HttpFoundation\Request">Request</abbr>
+                </td>
+                <td>$request</td>
+                <td class="last">Gives us access to the HTTP request parameters.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/App/App.html#property_request"><abbr title="FacturaScripts\Core\App\App">App</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_response">
+                                        protected                                        <abbr title="Symfony\Component\HttpFoundation\Response">Response</abbr>
+                </td>
+                <td>$response</td>
+                <td class="last">HTTP response object.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/App/App.html#property_response"><abbr title="FacturaScripts\Core\App\App">App</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_settings">
+                                        protected                                        <a href="../../../FacturaScripts/Core/App/AppSettings.html"><abbr title="FacturaScripts\Core\App\AppSettings">AppSettings</abbr></a>
+                </td>
+                <td>$settings</td>
+                <td class="last">Stored defaut configuration with the application settings.</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/App/App.html#property_settings"><abbr title="FacturaScripts\Core\App\App">App</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_uri">
+                                        protected                                        string
+                </td>
+                <td>$uri</td>
+                <td class="last">Requested Uri</td>
+                <td><small>from&nbsp;<a href="../../../FacturaScripts/Core/App/App.html#property_uri"><abbr title="FacturaScripts\Core\App\App">App</abbr></a></small></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(string $uri = &#039;/&#039;)
+        
+                                            <p>Initializes the app.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/App/App.html#method___construct"><abbr title="FacturaScripts\Core\App\App">App</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_connect">connect</a>()
+        
+                                            <p>Connects to the database and loads the configuration.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/App/App.html#method_connect"><abbr title="FacturaScripts\Core\App\App">App</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_close">close</a>()
+        
+                                            <p>Disconnects from the database.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/App/App.html#method_close"><abbr title="FacturaScripts\Core\App\App">App</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_run">run</a>()
+        
+                                            <p>Runs cron.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_render">render</a>()
+        
+                                            <p>Returns the data into the standard output.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/App/App.html#method_render"><abbr title="FacturaScripts\Core\App\App">App</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getUriParam">getUriParam</a>(int $num)
+        
+                                            <p>Returns param number $num in uri.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/App/App.html#method_getUriParam"><abbr title="FacturaScripts\Core\App\App">App</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_isIPBanned">isIPBanned</a>()
+        
+                                            <p>Returns true if the client IP has been banned.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../FacturaScripts/Core/App/App.html#method_isIPBanned"><abbr title="FacturaScripts\Core\App\App">App</abbr></a></small></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">in <a href="../../../FacturaScripts/Core/App/App.html#method___construct"><abbr title="FacturaScripts\Core\App\App">App</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/App/App.php#L110">line 110</a></div>
+        <code>                    
+    <strong>__construct</strong>(string $uri = &#039;/&#039;)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Initializes the app.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$uri</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_connect">
+        <div class="location">in <a href="../../../FacturaScripts/Core/App/App.html#method_connect"><abbr title="FacturaScripts\Core\App\App">App</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/App/App.php#L140">line 140</a></div>
+        <code>                    bool
+    <strong>connect</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Connects to the database and loads the configuration.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_close">
+        <div class="location">in <a href="../../../FacturaScripts/Core/App/App.html#method_close"><abbr title="FacturaScripts\Core\App\App">App</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/App/App.php#L154">line 154</a></div>
+        <code>                    
+    <strong>close</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Disconnects from the database.</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_run">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/App/AppCron.php#L35">line 35</a></div>
+        <code>                    bool
+    <strong>run</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Runs cron.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_render">
+        <div class="location">in <a href="../../../FacturaScripts/Core/App/App.html#method_render"><abbr title="FacturaScripts\Core\App\App">App</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/App/App.php#L169">line 169</a></div>
+        <code>                    
+    <strong>render</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the data into the standard output.</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getUriParam">
+        <div class="location">in <a href="../../../FacturaScripts/Core/App/App.html#method_getUriParam"><abbr title="FacturaScripts\Core\App\App">App</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/App/App.php#L181">line 181</a></div>
+        <code>            protected        string
+    <strong>getUriParam</strong>(int $num)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns param number $num in uri.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$num</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_isIPBanned">
+        <div class="location">in <a href="../../../FacturaScripts/Core/App/App.html#method_isIPBanned"><abbr title="FacturaScripts\Core\App\App">App</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/App/App.php#L192">line 192</a></div>
+        <code>            protected        bool
+    <strong>isIPBanned</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns true if the client IP has been banned.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

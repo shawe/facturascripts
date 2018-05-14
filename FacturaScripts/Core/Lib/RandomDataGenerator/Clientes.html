@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>FacturaScripts\Core\Lib\RandomDataGenerator\Clientes | FacturaScripts</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:FacturaScripts_Core_Lib_RandomDataGenerator_Clientes" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">FacturaScripts</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../FacturaScripts.html">FacturaScripts</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core.html">Core</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core/Lib.html">Lib</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator.html">RandomDataGenerator</a></li><li class="backslash">\</li><li>Clientes</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            Clientes
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>Clientes</strong>        extends <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a>        (<a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/Clientes.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Generate random data for the customers (clientes) file</p>                                </div>
+    
+    
+            <h2>Constants</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td>MODEL_NAMESPACE</td>
+                <td class="last">
+                    <p><em></em></p>
+                    <p></p>
+                </td>
+            </tr>
+            </table>
+
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_dataBase">
+                                                            private                    <a href="../../../../FacturaScripts/Core/Base/DataBase.html"><abbr title="FacturaScripts\Core\Base\DataBase">DataBase</abbr></a>
+                </td>
+                <td>$dataBase</td>
+                <td class="last">Link with the active database</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#property_dataBase"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_model">
+                                        protected                                        mixed
+                </td>
+                <td>$model</td>
+                <td class="last">Contains the model to generate random data.</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#property_model"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_agentes">
+                                        protected                                        <a href="../../../../FacturaScripts/Core/Model/Agente.html"><abbr title="FacturaScripts\Core\Model\Agente">Agente</abbr></a>[]
+                </td>
+                <td>$agentes</td>
+                <td class="last">List of agents.</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#property_agentes"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_grupos">
+                                        protected                                        <a href="../../../../FacturaScripts/Core/Model/GrupoClientes.html"><abbr title="FacturaScripts\Core\Model\GrupoClientes">GrupoClientes</abbr></a>[]
+                </td>
+                <td>$grupos</td>
+                <td class="last">List of client groups.</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#property_grupos"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_paises">
+                                        protected                                        <a href="../../../../FacturaScripts/Core/Model/Pais.html"><abbr title="FacturaScripts\Core\Model\Pais">Pais</abbr></a>[]
+                </td>
+                <td>$paises</td>
+                <td class="last">List of countries.</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#property_paises"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a></small></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_generate">generate</a>(int $num = 50)
+        
+                                            <p>Generate random data.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p>Clientes constructor.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    float
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_cantidad">cantidad</a>(int $min, int $max1, int $max2)
+        
+                                            <p>Returns a random number between $min and $max1
+1 out of 10 times returns a value between $min and $max2
+1 out of 5 times it returns a value with decimal points</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_cantidad"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_descripcion">descripcion</a>()
+        
+                                            <p>Returns a random product description</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_descripcion"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_familia">familia</a>()
+        
+                                            <p>Returns a random category description</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_familia"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\false">false</abbr>|string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_fecha">fecha</a>(int $start = 2013, int $end = 2018)
+        
+                                            <p>Return a date between $start and $end.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_fecha"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getOneItem">getOneItem</a>(array $array)
+        
+                                            <p>Return one random item from given array.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_getOneItem"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_iban">iban</a>()
+        
+                                            <p>Return an IBAN number.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_iban"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_observaciones">observaciones</a>()
+        
+                                            <p>Returns random comments</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_observaciones"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    float
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_precio">precio</a>(int $min, int $max1, int $max2)
+        
+                                            <p>Returns a random number between $min and $max1
+1 out of 10 times returns a value between $min and $max2
+1 out of 3 times it returns a value with decimal points</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_precio"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_shuffle">shuffle</a>(array $variable, mixed $model)
+        
+                                            <p>Suffle all items from $model and put it to $variable.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_shuffle"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_txt2codigo">txt2codigo</a>(string $txt, int $len = 8)
+        
+                                            <p>Shortens a string to $len and replaces special characters</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_txt2codigo"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_randomModel">randomModel</a>(string $modelName, string $tableName, string $functionName, bool $recursivo = true)
+        
+                                            <p>Devuelve listados de datos del model indicado.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_randomModel"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../FacturaScripts/Core/Model/Cliente.html"><abbr title="FacturaScripts\Core\Model\Cliente">Cliente</abbr></a>[]
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_randomClientes">randomClientes</a>(bool $recursivo = true)
+        
+                                            <p>Returns an array with random clientes.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_randomClientes"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../FacturaScripts/Core/Model/Proveedor.html"><abbr title="FacturaScripts\Core\Model\Proveedor">Proveedor</abbr></a>[]
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_randomProveedores">randomProveedores</a>(bool $recursivo = true)
+        
+                                            <p>Returns an array with random proveedores.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_randomProveedores"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../FacturaScripts/Core/Model/Agente.html"><abbr title="FacturaScripts\Core\Model\Agente">Agente</abbr></a>[]
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_randomAgentes">randomAgentes</a>(bool $recursivo = true)
+        
+                                            <p>Returns an array with random empleados.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_randomAgentes"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../FacturaScripts/Core/Model/Articulo.html"><abbr title="FacturaScripts\Core\Model\Articulo">Articulo</abbr></a>[]
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_randomArticulos">randomArticulos</a>(bool $recursivo = true)
+        
+                                            <p>Returns an array with random artículos.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_randomArticulos"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_cif">cif</a>()
+        
+                                            <p>Return a random CIF.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#method_cif"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_telefono">telefono</a>()
+        
+                                            <p>Return a random phone number.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#method_telefono"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_seguridadSocial">seguridadSocial</a>()
+        
+                                            <p>Return a random</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#method_seguridadSocial"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_nombre">nombre</a>()
+        
+                                            <p>Returns a random name</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#method_nombre"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_apellidos">apellidos</a>()
+        
+                                            <p>Returns two random surnames</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#method_apellidos"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_cargo">cargo</a>()
+        
+                                            <p>Returns a job position</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#method_cargo"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_empresa">empresa</a>()
+        
+                                            <p>Returns a random commercial name</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#method_empresa"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_email">email</a>()
+        
+                                            <p>Returns a random email</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#method_email"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_provincia">provincia</a>()
+        
+                                            <p>Returns a random province</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#method_provincia"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_ciudad">ciudad</a>()
+        
+                                            <p>Returns a random city</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#method_ciudad"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_direccion">direccion</a>()
+        
+                                            <p>Returns a random address</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#method_direccion"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_fillCliPro">fillCliPro</a>(<a href="../../../../FacturaScripts/Core/Model/Cliente.html"><abbr title="FacturaScripts\Core\Model\Cliente">Cliente</abbr></a>|<a href="../../../../FacturaScripts/Core/Model/Proveedor.html"><abbr title="FacturaScripts\Core\Model\Proveedor">Proveedor</abbr></a> $clipro)
+        
+                                            <p>Rellena un cliente con datos aleatorios.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#method_fillCliPro"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_cuentasBancoCliente">cuentasBancoCliente</a>(<a href="../../../../FacturaScripts/Core/Model/Cliente.html"><abbr title="FacturaScripts\Core\Model\Cliente">Cliente</abbr></a> $cliente, int $max = 3)
+        
+                                            <p>Rellena cuentas bancarias de un cliente con datos aleatorios.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_direccionesCliente">direccionesCliente</a>(<a href="../../../../FacturaScripts/Core/Model/Cliente.html"><abbr title="FacturaScripts\Core\Model\Cliente">Cliente</abbr></a> $cliente, int $max = 3)
+        
+                                            <p>Rellena direcciones de un cliente con datos aleatorios.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method_generate">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/Clientes.php#L50">line 50</a></div>
+        <code>                    int
+    <strong>generate</strong>(int $num = 50)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Generate random data.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$num</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/Clientes.php#L38">line 38</a></div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Clientes constructor.</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_cantidad">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_cantidad"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandom.php#L81">line 81</a></div>
+        <code>                    float
+    <strong>cantidad</strong>(int $min, int $max1, int $max2)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns a random number between $min and $max1
+1 out of 10 times returns a value between $min and $max2
+1 out of 5 times it returns a value with decimal points</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$min</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>int</td>
+                <td>$max1</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>int</td>
+                <td>$max2</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>float</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_descripcion">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_descripcion"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandom.php#L100">line 100</a></div>
+        <code>                    string
+    <strong>descripcion</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns a random product description</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_familia">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_familia"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandom.php#L158">line 158</a></div>
+        <code>                    string
+    <strong>familia</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns a random category description</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_fecha">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_fecha"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandom.php#L181">line 181</a></div>
+        <code>            protected        <abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\false">false</abbr>|string
+    <strong>fecha</strong>(int $start = 2013, int $end = 2018)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Return a date between $start and $end.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$start</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>int</td>
+                <td>$end</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\false">false</abbr>|string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getOneItem">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_getOneItem"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandom.php#L193">line 193</a></div>
+        <code>                    mixed
+    <strong>getOneItem</strong>(array $array)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Return one random item from given array.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$array</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_iban">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_iban"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandom.php#L203">line 203</a></div>
+        <code>                    string
+    <strong>iban</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Return an IBAN number.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_observaciones">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_observaciones"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandom.php#L229">line 229</a></div>
+        <code>                    string
+    <strong>observaciones</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns random comments</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_precio">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_precio"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandom.php#L259">line 259</a></div>
+        <code>                    float
+    <strong>precio</strong>(int $min, int $max1, int $max2)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns a random number between $min and $max1
+1 out of 10 times returns a value between $min and $max2
+1 out of 3 times it returns a value with decimal points</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>int</td>
+                <td>$min</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>int</td>
+                <td>$max1</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>int</td>
+                <td>$max2</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>float</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_shuffle">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_shuffle"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandom.php#L279">line 279</a></div>
+        <code>                    
+    <strong>shuffle</strong>(array $variable, mixed $model)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Suffle all items from $model and put it to $variable.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$variable</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>mixed</td>
+                <td>$model</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_txt2codigo">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_txt2codigo"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandom.php#L295">line 295</a></div>
+        <code>                    string
+    <strong>txt2codigo</strong>(string $txt, int $len = 8)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Shortens a string to $len and replaces special characters</p>                    <p>Devuelve el string acortado.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$txt</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>int</td>
+                <td>$len</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_randomModel">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_randomModel"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandom.php#L319">line 319</a></div>
+        <code>            protected        array
+    <strong>randomModel</strong>(string $modelName, string $tableName, string $functionName, bool $recursivo = true)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Devuelve listados de datos del model indicado.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$modelName</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$tableName</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$functionName</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>bool</td>
+                <td>$recursivo</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_randomClientes">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_randomClientes"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandom.php#L346">line 346</a></div>
+        <code>            protected        <a href="../../../../FacturaScripts/Core/Model/Cliente.html"><abbr title="FacturaScripts\Core\Model\Cliente">Cliente</abbr></a>[]
+    <strong>randomClientes</strong>(bool $recursivo = true)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns an array with random clientes.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>bool</td>
+                <td>$recursivo</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../FacturaScripts/Core/Model/Cliente.html"><abbr title="FacturaScripts\Core\Model\Cliente">Cliente</abbr></a>[]</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_randomProveedores">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_randomProveedores"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandom.php#L358">line 358</a></div>
+        <code>            protected        <a href="../../../../FacturaScripts/Core/Model/Proveedor.html"><abbr title="FacturaScripts\Core\Model\Proveedor">Proveedor</abbr></a>[]
+    <strong>randomProveedores</strong>(bool $recursivo = true)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns an array with random proveedores.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>bool</td>
+                <td>$recursivo</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../FacturaScripts/Core/Model/Proveedor.html"><abbr title="FacturaScripts\Core\Model\Proveedor">Proveedor</abbr></a>[]</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_randomAgentes">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_randomAgentes"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandom.php#L370">line 370</a></div>
+        <code>            protected        <a href="../../../../FacturaScripts/Core/Model/Agente.html"><abbr title="FacturaScripts\Core\Model\Agente">Agente</abbr></a>[]
+    <strong>randomAgentes</strong>(bool $recursivo = true)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns an array with random empleados.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>bool</td>
+                <td>$recursivo</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../FacturaScripts/Core/Model/Agente.html"><abbr title="FacturaScripts\Core\Model\Agente">Agente</abbr></a>[]</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_randomArticulos">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandom.html#method_randomArticulos"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandom">AbstractRandom</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandom.php#L382">line 382</a></div>
+        <code>            protected        <a href="../../../../FacturaScripts/Core/Model/Articulo.html"><abbr title="FacturaScripts\Core\Model\Articulo">Articulo</abbr></a>[]
+    <strong>randomArticulos</strong>(bool $recursivo = true)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns an array with random artículos.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>bool</td>
+                <td>$recursivo</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../FacturaScripts/Core/Model/Articulo.html"><abbr title="FacturaScripts\Core\Model\Articulo">Articulo</abbr></a>[]</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_cif">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#method_cif"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandomPeople.php#L74">line 74</a></div>
+        <code>            protected        string
+    <strong>cif</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Return a random CIF.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_telefono">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#method_telefono"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandomPeople.php#L84">line 84</a></div>
+        <code>            protected        string
+    <strong>telefono</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Return a random phone number.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_seguridadSocial">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#method_seguridadSocial"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandomPeople.php#L94">line 94</a></div>
+        <code>            protected        string
+    <strong>seguridadSocial</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Return a random</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_nombre">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#method_nombre"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandomPeople.php#L104">line 104</a></div>
+        <code>                    string
+    <strong>nombre</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns a random name</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_apellidos">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#method_apellidos"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandomPeople.php#L123">line 123</a></div>
+        <code>                    string
+    <strong>apellidos</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns two random surnames</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_cargo">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#method_cargo"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandomPeople.php#L141">line 141</a></div>
+        <code>                    string
+    <strong>cargo</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns a job position</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_empresa">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#method_empresa"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandomPeople.php#L153">line 153</a></div>
+        <code>                    string
+    <strong>empresa</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns a random commercial name</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_email">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#method_email"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandomPeople.php#L177">line 177</a></div>
+        <code>                    string
+    <strong>email</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns a random email</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_provincia">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#method_provincia"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandomPeople.php#L193">line 193</a></div>
+        <code>                    string
+    <strong>provincia</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns a random province</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_ciudad">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#method_ciudad"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandomPeople.php#L212">line 212</a></div>
+        <code>                    string
+    <strong>ciudad</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns a random city</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_direccion">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#method_direccion"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandomPeople.php#L231">line 231</a></div>
+        <code>                    string
+    <strong>direccion</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns a random address</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_fillCliPro">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/RandomDataGenerator/AbstractRandomPeople.html#method_fillCliPro"><abbr title="FacturaScripts\Core\Lib\RandomDataGenerator\AbstractRandomPeople">AbstractRandomPeople</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/AbstractRandomPeople.php#L256">line 256</a></div>
+        <code>            protected        
+    <strong>fillCliPro</strong>(<a href="../../../../FacturaScripts/Core/Model/Cliente.html"><abbr title="FacturaScripts\Core\Model\Cliente">Cliente</abbr></a>|<a href="../../../../FacturaScripts/Core/Model/Proveedor.html"><abbr title="FacturaScripts\Core\Model\Proveedor">Proveedor</abbr></a> $clipro)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Rellena un cliente con datos aleatorios.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../FacturaScripts/Core/Model/Cliente.html"><abbr title="FacturaScripts\Core\Model\Cliente">Cliente</abbr></a>|<a href="../../../../FacturaScripts/Core/Model/Proveedor.html"><abbr title="FacturaScripts\Core\Model\Proveedor">Proveedor</abbr></a></td>
+                <td>$clipro</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_cuentasBancoCliente">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/Clientes.php#L97">line 97</a></div>
+        <code>            protected        
+    <strong>cuentasBancoCliente</strong>(<a href="../../../../FacturaScripts/Core/Model/Cliente.html"><abbr title="FacturaScripts\Core\Model\Cliente">Cliente</abbr></a> $cliente, int $max = 3)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Rellena cuentas bancarias de un cliente con datos aleatorios.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../FacturaScripts/Core/Model/Cliente.html"><abbr title="FacturaScripts\Core\Model\Cliente">Cliente</abbr></a></td>
+                <td>$cliente</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>int</td>
+                <td>$max</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_direccionesCliente">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/RandomDataGenerator/Clientes.php#L121">line 121</a></div>
+        <code>            protected        
+    <strong>direccionesCliente</strong>(<a href="../../../../FacturaScripts/Core/Model/Cliente.html"><abbr title="FacturaScripts\Core\Model\Cliente">Cliente</abbr></a> $cliente, int $max = 3)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Rellena direcciones de un cliente con datos aleatorios.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../FacturaScripts/Core/Model/Cliente.html"><abbr title="FacturaScripts\Core\Model\Cliente">Cliente</abbr></a></td>
+                <td>$cliente</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>int</td>
+                <td>$max</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

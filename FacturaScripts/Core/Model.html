@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>FacturaScripts\Core\Model | FacturaScripts</title>
+
+            <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/sami.css">
+        <script src="../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/typeahead.min.js"></script>
+        <script src="../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="namespace" data-name="namespace:FacturaScripts_Core_Model" data-root-path="../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../index.html">FacturaScripts</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../classes.html">Classes</a></li>
+                                            <li><a href="../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../traits.html">Traits</a></li>
+                    <li><a href="../../doc-index.html">Index</a></li>
+                    <li><a href="../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                <div class="namespace-breadcrumbs">
+        <ol class="breadcrumb">
+            <li><span class="label label-default">Namespace</span></li>
+                    <li><a href="../../FacturaScripts.html">FacturaScripts</a></li><li class="backslash">\</li><li><a href="../../FacturaScripts/Core.html">Core</a></li><li class="backslash">\</li><li><a href="../../FacturaScripts/Core/Model.html">Model</a></li><li class="backslash">\</li>
+        </ol>
+    </div>
+            <div id="page-content">
+                
+    <div class="page-header">
+        <h1>FacturaScripts\Core\Model</h1>
+    </div>
+
+            <h2>Namespaces</h2>
+        <div class="namespace-list">
+            <a href="../../FacturaScripts/Core/Model/Base.html">FacturaScripts\Core\Model\Base</a>        </div>
+    
+            <h2>Classes</h2>
+        
+    <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/AgenciaTransporte.html"><abbr title="FacturaScripts\Core\Model\AgenciaTransporte">AgenciaTransporte</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Merchandise transport agency.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Agente.html"><abbr title="FacturaScripts\Core\Model\Agente">Agente</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The agent/employee is the one associated with a delivery note, invoice o box.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/AlbaranCliente.html"><abbr title="FacturaScripts\Core\Model\AlbaranCliente">AlbaranCliente</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Customer's delivery note or delivery note. Represents delivery to a customer
+of a material that has been sold to you. It implies the exit of this material
+from the company's warehouse.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/AlbaranProveedor.html"><abbr title="FacturaScripts\Core\Model\AlbaranProveedor">AlbaranProveedor</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Delivery note or purchase order. Represents the reception
+of a material that has been purchased. It implies the entry of that material
+to the warehouse.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Almacen.html"><abbr title="FacturaScripts\Core\Model\Almacen">Almacen</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The warehouse where the items are physically.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/ApiKey.html"><abbr title="FacturaScripts\Core\Model\ApiKey">ApiKey</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    ApiKey model to manage the connection tokens through the api
+that will be generated to synchronize different applications.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Articulo.html"><abbr title="FacturaScripts\Core\Model\Articulo">Articulo</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Stores the data of an article.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/ArticuloProveedor.html"><abbr title="FacturaScripts\Core\Model\ArticuloProveedor">ArticuloProveedor</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Artículo vendido por un proveedor.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Asiento.html"><abbr title="FacturaScripts\Core\Model\Asiento">Asiento</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The accounting entry. It is related to an exercise and consists of games.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Atributo.html"><abbr title="FacturaScripts\Core\Model\Atributo">Atributo</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Un atributo para artículos.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/AtributoValor.html"><abbr title="FacturaScripts\Core\Model\AtributoValor">AtributoValor</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A Value for an article attribute.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/AttachedFile.html"><abbr title="FacturaScripts\Core\Model\AttachedFile">AttachedFile</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Class to manage attached files.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Balance.html"><abbr title="FacturaScripts\Core\Model\Balance">Balance</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Defines which accounts must be used to generate the different accounting reports.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/BalanceCuenta.html"><abbr title="FacturaScripts\Core\Model\BalanceCuenta">BalanceCuenta</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Detail of a balance.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/BalanceCuentaA.html"><abbr title="FacturaScripts\Core\Model\BalanceCuentaA">BalanceCuentaA</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Abbreviated detail of a balance.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Cliente.html"><abbr title="FacturaScripts\Core\Model\Cliente">Cliente</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The client. You can have one or more associated addresses and sub-accounts.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/CodeModel.html"><abbr title="FacturaScripts\Core\Model\CodeModel">CodeModel</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Auxiliary model to load a list of codes and their descriptions
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/ConceptoPartida.html"><abbr title="FacturaScripts\Core\Model\ConceptoPartida">ConceptoPartida</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A predefined concept for a line item (the line of an accounting entry).
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Contacto.html"><abbr title="FacturaScripts\Core\Model\Contacto">Contacto</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Description of Contacto
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/ContactoCliente.html"><abbr title="FacturaScripts\Core\Model\ContactoCliente">ContactoCliente</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Description of ContactoCliente
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/ContactoProveedor.html"><abbr title="FacturaScripts\Core\Model\ContactoProveedor">ContactoProveedor</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Description of ContactoProveedor
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Cuenta.html"><abbr title="FacturaScripts\Core\Model\Cuenta">Cuenta</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Element of the third level of the accounting plan.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/CuentaBanco.html"><abbr title="FacturaScripts\Core\Model\CuentaBanco">CuentaBanco</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A bank account of the company itself.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/CuentaBancoCliente.html"><abbr title="FacturaScripts\Core\Model\CuentaBancoCliente">CuentaBancoCliente</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A bank account of a client.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/CuentaBancoProveedor.html"><abbr title="FacturaScripts\Core\Model\CuentaBancoProveedor">CuentaBancoProveedor</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A bank account of a provider.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/CuentaEspecial.html"><abbr title="FacturaScripts\Core\Model\CuentaEspecial">CuentaEspecial</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Allows to relate special accounts (SALES, for example)
+with the real account or sub-account.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Dashboard.html"><abbr title="FacturaScripts\Core\Model\Dashboard">Dashboard</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Components to use into the Dashboard of FacturaScripts.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/DashboardData.html"><abbr title="FacturaScripts\Core\Model\DashboardData">DashboardData</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Components data to show into the Dashboard of FacturaScripts.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/DireccionCliente.html"><abbr title="FacturaScripts\Core\Model\DireccionCliente">DireccionCliente</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    An address of a client. It can have several.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/DireccionProveedor.html"><abbr title="FacturaScripts\Core\Model\DireccionProveedor">DireccionProveedor</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    An address of a provider. It can have several.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Divisa.html"><abbr title="FacturaScripts\Core\Model\Divisa">Divisa</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A currency with its symbol and its conversion rate with respect to the euro.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Ejercicio.html"><abbr title="FacturaScripts\Core\Model\Ejercicio">Ejercicio</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Accounting year. It is the period in which accounting entry, invoices, delivery notes are grouped .
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Empresa.html"><abbr title="FacturaScripts\Core\Model\Empresa">Empresa</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    This class stores the main data of the company.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/EstadoDocumento.html"><abbr title="FacturaScripts\Core\Model\EstadoDocumento">EstadoDocumento</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A state associated with documents to distinguish them by groups.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Fabricante.html"><abbr title="FacturaScripts\Core\Model\Fabricante">Fabricante</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A manufacturer of products.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/FacturaCliente.html"><abbr title="FacturaScripts\Core\Model\FacturaCliente">FacturaCliente</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Invoice of a client.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/FacturaProveedor.html"><abbr title="FacturaScripts\Core\Model\FacturaProveedor">FacturaProveedor</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Invoice from a supplier.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Familia.html"><abbr title="FacturaScripts\Core\Model\Familia">Familia</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A family of products.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/FormaPago.html"><abbr title="FacturaScripts\Core\Model\FormaPago">FormaPago</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Payment method of an invoice, delivery note, order or estimation.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/GrupoClientes.html"><abbr title="FacturaScripts\Core\Model\GrupoClientes">GrupoClientes</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A group of customers, which may be associated with a rate.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Impuesto.html"><abbr title="FacturaScripts\Core\Model\Impuesto">Impuesto</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A tax (VAT) that can be associated to articles, delivery notes lines,
+invoices, etc.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/LineaAlbaranCliente.html"><abbr title="FacturaScripts\Core\Model\LineaAlbaranCliente">LineaAlbaranCliente</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Line of a customer's delivery note.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/LineaAlbaranProveedor.html"><abbr title="FacturaScripts\Core\Model\LineaAlbaranProveedor">LineaAlbaranProveedor</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Line of a supplier's delivery note.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/LineaFacturaCliente.html"><abbr title="FacturaScripts\Core\Model\LineaFacturaCliente">LineaFacturaCliente</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Line of a customer invoice.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/LineaFacturaProveedor.html"><abbr title="FacturaScripts\Core\Model\LineaFacturaProveedor">LineaFacturaProveedor</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Line of a supplier invoice.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/LineaPedidoCliente.html"><abbr title="FacturaScripts\Core\Model\LineaPedidoCliente">LineaPedidoCliente</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Customer order line
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/LineaPedidoProveedor.html"><abbr title="FacturaScripts\Core\Model\LineaPedidoProveedor">LineaPedidoProveedor</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Supplier order line.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/LineaPresupuestoCliente.html"><abbr title="FacturaScripts\Core\Model\LineaPresupuestoCliente">LineaPresupuestoCliente</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Customer estimation line.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/LineaPresupuestoProveedor.html"><abbr title="FacturaScripts\Core\Model\LineaPresupuestoProveedor">LineaPresupuestoProveedor</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Supplier order line.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/LineaTransferenciaStock.html"><abbr title="FacturaScripts\Core\Model\LineaTransferenciaStock">LineaTransferenciaStock</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Description of linea_transferencia_stock
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/LogMessage.html"><abbr title="FacturaScripts\Core\Model\LogMessage">LogMessage</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    First aprox to persist data from logs.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Page.html"><abbr title="FacturaScripts\Core\Model\Page">Page</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Element of the menu of InvoiceScripts, each corresponds to a controller.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/PageOption.html"><abbr title="FacturaScripts\Core\Model\PageOption">PageOption</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Visual configuration of the FacturaScripts views,
+each PageOption corresponds to a controller.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Pais.html"><abbr title="FacturaScripts\Core\Model\Pais">Pais</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A country, for example Spain.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Partida.html"><abbr title="FacturaScripts\Core\Model\Partida">Partida</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The line of a accounting entry.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/PartidaImpuesto.html"><abbr title="FacturaScripts\Core\Model\PartidaImpuesto">PartidaImpuesto</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Auxiliary model to load a list of accounting entries with VAT
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/PartidaImpuestoResumen.html"><abbr title="FacturaScripts\Core\Model\PartidaImpuestoResumen">PartidaImpuestoResumen</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Auxiliary model to load a resume of accounting entries with VAT
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/PedidoCliente.html"><abbr title="FacturaScripts\Core\Model\PedidoCliente">PedidoCliente</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Customer order.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/PedidoProveedor.html"><abbr title="FacturaScripts\Core\Model\PedidoProveedor">PedidoProveedor</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Supplier order.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/PresupuestoCliente.html"><abbr title="FacturaScripts\Core\Model\PresupuestoCliente">PresupuestoCliente</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Customer estimation.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/PresupuestoProveedor.html"><abbr title="FacturaScripts\Core\Model\PresupuestoProveedor">PresupuestoProveedor</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Supplier order.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Proveedor.html"><abbr title="FacturaScripts\Core\Model\Proveedor">Proveedor</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A supplier. It can be related to several addresses or sub-accounts.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Provincia.html"><abbr title="FacturaScripts\Core\Model\Provincia">Provincia</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A province.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/RegularizacionImpuesto.html"><abbr title="FacturaScripts\Core\Model\RegularizacionImpuesto">RegularizacionImpuesto</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A VAT regularization.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/RegularizacionImpuestos.html"><abbr title="FacturaScripts\Core\Model\RegularizacionImpuestos">RegularizacionImpuestos</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A VAT regularization.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/RegularizacionStock.html"><abbr title="FacturaScripts\Core\Model\RegularizacionStock">RegularizacionStock</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Regularization of the stock of a warehouse of articles on a specific date.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Role.html"><abbr title="FacturaScripts\Core\Model\Role">Role</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Define a permission package to quickly assign users.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/RoleAccess.html"><abbr title="FacturaScripts\Core\Model\RoleAccess">RoleAccess</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Defines the individual permissions for each page within a user role.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/RoleUser.html"><abbr title="FacturaScripts\Core\Model\RoleUser">RoleUser</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Defines the relationship between a user and a role.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Serie.html"><abbr title="FacturaScripts\Core\Model\Serie">Serie</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A series of invoicing or accounting, to have different numbering
+in each series.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Settings.html"><abbr title="FacturaScripts\Core\Model\Settings">Settings</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Description of Settings
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Stock.html"><abbr title="FacturaScripts\Core\Model\Stock">Stock</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    The quantity in inventory of an item in a particular warehouse.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Subcuenta.html"><abbr title="FacturaScripts\Core\Model\Subcuenta">Subcuenta</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Detail level of an accounting plan. It is related to a single account.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/SubcuentaSaldo.html"><abbr title="FacturaScripts\Core\Model\SubcuentaSaldo">SubcuentaSaldo</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Description of SubcuentaSaldo
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/Tarifa.html"><abbr title="FacturaScripts\Core\Model\Tarifa">Tarifa</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A fee for the products.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/TotalModel.html"><abbr title="FacturaScripts\Core\Model\TotalModel">TotalModel</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Auxiliary model to load a list of totals
+with or without grouping by code.
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/TransferenciaStock.html"><abbr title="FacturaScripts\Core\Model\TransferenciaStock">TransferenciaStock</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Description of transferencia_stock
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <a href="../../FacturaScripts/Core/Model/User.html"><abbr title="FacturaScripts\Core\Model\User">User</abbr></a>
+                                            
+                </div>
+                <div class="col-md-6">
+                    Usuario de FacturaScripts.
+                </div>
+            </div>
+            </div>
+    
+    
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

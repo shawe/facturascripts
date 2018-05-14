@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>FacturaScripts\Core\Lib\ExtendedController\ListFilter | FacturaScripts</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:FacturaScripts_Core_Lib_ExtendedController_ListFilter" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">FacturaScripts</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../FacturaScripts.html">FacturaScripts</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core.html">Core</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core/Lib.html">Lib</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core/Lib/ExtendedController.html">ExtendedController</a></li><li class="backslash">\</li><li>ListFilter</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            ListFilter
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>ListFilter</strong>        (<a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/ListFilter.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>LisFilter definition for its use in ListController.</p>                                </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_codeModel">
+                    static                                        private                    <a href="../../../../FacturaScripts/Core/Model/CodeModel.html"><abbr title="FacturaScripts\Core\Model\CodeModel">CodeModel</abbr></a>
+                </td>
+                <td>$codeModel</td>
+                <td class="last">Model to use with select and autocomplete filters.</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_options">
+                                                                                array
+                </td>
+                <td>$options</td>
+                <td class="last">Values and configuration options for the filter</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_type">
+                                                                                string
+                </td>
+                <td>$type</td>
+                <td class="last">Indicates the filter type</td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(string $type, array $options)
+        
+                                            <p>ListFilter constructor.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getDataBaseWhere">getDataBaseWhere</a>(array $where)
+        
+                                            <p>Adds $where to the informed filters in DataBaseWhere format</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed|string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getCurrentValue">getCurrentValue</a>()
+        
+                                            <p>Return the current value.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getFilterOperators">getFilterOperators</a>()
+        
+                                            <p>List of available operators.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getKeyboardFilter">getKeyboardFilter</a>()
+        
+                                            <p>Returns the onekeypress JavaScript function in case the inputs accept only a value set.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getParams">getParams</a>(string $key, string $join)
+        
+                                            <p>Builds a string with the parameters contained in the URL of the controller call.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getSpecialClass">getSpecialClass</a>()
+        
+                                            <p>Returns the special class to add to the input in the filters form.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ListFilter.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ListFilter">ListFilter</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_newAutocompleteFilter">newAutocompleteFilter</a>(string $label, string $field, string $table, string $fieldCode, string $fieldTitle, string $value, array $where = [])
+        
+                                            <p>Creates and returns an autocomplete type filter.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ListFilter.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ListFilter">ListFilter</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_newCheckboxFilter">newCheckboxFilter</a>(string $field, string $value, string $label, bool $inverse, mixed $matchValue)
+        
+                                            <p>Creates and returns a checkbox type filter.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ListFilter.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ListFilter">ListFilter</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_newSelectFilter">newSelectFilter</a>(string $label, string $field, array $values, string $value)
+        
+                                            <p>Creates and returns a select type filter.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ListFilter.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ListFilter">ListFilter</abbr></a>
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_newStandardFilter">newStandardFilter</a>(string $type, array $options)
+        
+                                            <p>Creates and returns a filter of the specified type [text|number|datepicker]</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_checkNumberValue">checkNumberValue</a>(mixed $value)
+        
+                                            <p>If number is integer, return the number without decimal part.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    bool
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_hasValue">hasValue</a>(string $key = &#039;value&#039;)
+        
+                                            <p>Check if option value is not null or empty</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/ListFilter.php#L62">line 62</a></div>
+        <code>                    
+    <strong>__construct</strong>(string $type, array $options)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>ListFilter constructor.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$type</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getDataBaseWhere">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/ListFilter.php#L77">line 77</a></div>
+        <code>                    
+    <strong>getDataBaseWhere</strong>(array $where)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Adds $where to the informed filters in DataBaseWhere format</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$where</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getCurrentValue">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/ListFilter.php#L120">line 120</a></div>
+        <code>                    mixed|string
+    <strong>getCurrentValue</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Return the current value.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed|string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getFilterOperators">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/ListFilter.php#L141">line 141</a></div>
+        <code>                    array
+    <strong>getFilterOperators</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>List of available operators.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getKeyboardFilter">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/ListFilter.php#L156">line 156</a></div>
+        <code>                    string
+    <strong>getKeyboardFilter</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the onekeypress JavaScript function in case the inputs accept only a value set.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getParams">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/ListFilter.php#L185">line 185</a></div>
+        <code>                    string
+    <strong>getParams</strong>(string $key, string $join)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Builds a string with the parameters contained in the URL of the controller call.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$key</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$join</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getSpecialClass">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/ListFilter.php#L218">line 218</a></div>
+        <code>                    string
+    <strong>getSpecialClass</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the special class to add to the input in the filters form.</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_newAutocompleteFilter">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/ListFilter.php#L242">line 242</a></div>
+        <code>        static            <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ListFilter.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ListFilter">ListFilter</abbr></a>
+    <strong>newAutocompleteFilter</strong>(string $label, string $field, string $table, string $fieldCode, string $fieldTitle, string $value, array $where = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates and returns an autocomplete type filter.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$label</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$field</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$table</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$fieldCode</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$fieldTitle</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$where</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ListFilter.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ListFilter">ListFilter</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_newCheckboxFilter">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/ListFilter.php#L268">line 268</a></div>
+        <code>        static            <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ListFilter.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ListFilter">ListFilter</abbr></a>
+    <strong>newCheckboxFilter</strong>(string $field, string $value, string $label, bool $inverse, mixed $matchValue)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates and returns a checkbox type filter.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$field</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$label</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>bool</td>
+                <td>$inverse</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>mixed</td>
+                <td>$matchValue</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ListFilter.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ListFilter">ListFilter</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_newSelectFilter">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/ListFilter.php#L291">line 291</a></div>
+        <code>        static            <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ListFilter.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ListFilter">ListFilter</abbr></a>
+    <strong>newSelectFilter</strong>(string $label, string $field, array $values, string $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates and returns a select type filter.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$label</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$field</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$values</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ListFilter.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ListFilter">ListFilter</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_newStandardFilter">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/ListFilter.php#L311">line 311</a></div>
+        <code>        static            <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ListFilter.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ListFilter">ListFilter</abbr></a>
+    <strong>newStandardFilter</strong>(string $type, array $options)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates and returns a filter of the specified type [text|number|datepicker]</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$type</td>
+                <td>('text' | 'datepicker' | 'number')</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$options</td>
+                <td>(['field', 'label', 'valueFrom', 'operatorFrom', 'valueTo', 'operatorTo'])</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ListFilter.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ListFilter">ListFilter</abbr></a></td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_checkNumberValue">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/ListFilter.php#L329">line 329</a></div>
+        <code>        static        private    string
+    <strong>checkNumberValue</strong>(mixed $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>If number is integer, return the number without decimal part.</p>                    <p>Else, return the number with decimal part.</p>                            </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>mixed</td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_hasValue">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/ListFilter.php#L343">line 343</a></div>
+        <code>                private    bool
+    <strong>hasValue</strong>(string $key = &#039;value&#039;)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Check if option value is not null or empty</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$key</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>bool</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>FacturaScripts\Core\Lib\ExtendedController\RowItemCards | FacturaScripts</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:FacturaScripts_Core_Lib_ExtendedController_RowItemCards" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">FacturaScripts</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../FacturaScripts.html">FacturaScripts</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core.html">Core</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core/Lib.html">Lib</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core/Lib/ExtendedController.html">ExtendedController</a></li><li class="backslash">\</li><li>RowItemCards</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            RowItemCards
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>RowItemCards</strong>        extends <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/RowItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\RowItem">RowItem</abbr></a>        (<a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/RowItemCards.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Description of RowItemCards</p>                                </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_type">
+                                                                                string
+                </td>
+                <td>$type</td>
+                <td class="last">Displayed row type</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/RowItem.html#property_type"><abbr title="FacturaScripts\Core\Lib\ExtendedController\RowItem">RowItem</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_buttons">
+                                                                                <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetButton.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetButton">WidgetButton</abbr></a>[]
+                </td>
+                <td>$buttons</td>
+                <td class="last">Buttons lists.</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_panels">
+                                                                                array
+                </td>
+                <td>$panels</td>
+                <td class="last">Panels lists.</td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_loadFromJSON">loadFromJSON</a>(array $items)
+        
+                                            <p>Load the row structurefrom a JSON file.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_loadFromXML">loadFromXML</a>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $row)
+        
+                                            <p>Loads the attributes structure from a XML file</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>(string $type)
+        
+                                            <p>Class constructor</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getHeaderHTML">getHeaderHTML</a>(string $value)
+        
+                                            <p>Generates the HTML code to display the header for the visual element</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/RowItem.html#method_getHeaderHTML"><abbr title="FacturaScripts\Core\Lib\ExtendedController\RowItem">RowItem</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_newFromJSON">newFromJSON</a>(array $row)
+        
+                                            <p>Creates and loads the row structure from the database</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/RowItem.html#method_newFromJSON"><abbr title="FacturaScripts\Core\Lib\ExtendedController\RowItem">RowItem</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_newFromXML">newFromXML</a>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $row)
+        
+                                            <p>Creates and loads the row structure from an XML file</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/RowItem.html#method_newFromXML"><abbr title="FacturaScripts\Core\Lib\ExtendedController\RowItem">RowItem</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    array
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getAttributesFromXML">getAttributesFromXML</a>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $item)
+        
+                                            <p>Return the attributes of an element from the XML.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/RowItem.html#method_getAttributesFromXML"><abbr title="FacturaScripts\Core\Lib\ExtendedController\RowItem">RowItem</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetButton.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetButton">WidgetButton</abbr></a>[]
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_loadButtonsFromJSON">loadButtonsFromJSON</a>(array $buttonsJSON)
+        
+                                            <p>Returns a list of WidgetButton loaded from JSON.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/RowItem.html#method_loadButtonsFromJSON"><abbr title="FacturaScripts\Core\Lib\ExtendedController\RowItem">RowItem</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetButton.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetButton">WidgetButton</abbr></a>[]
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_loadButtonsFromXML">loadButtonsFromXML</a>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $buttonsXML)
+        
+                                            <p>Return a list of WidgetButtons from the XML.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/RowItem.html#method_loadButtonsFromXML"><abbr title="FacturaScripts\Core\Lib\ExtendedController\RowItem">RowItem</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/RowItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\RowItem">RowItem</abbr></a>|null
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_rowItemFromType">rowItemFromType</a>(string $type)
+        
+                                            <p>Dynamic class constructor. Creates a RowItem objec of the given type.</p>                </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/RowItem.html#method_rowItemFromType"><abbr title="FacturaScripts\Core\Lib\ExtendedController\RowItem">RowItem</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    mixed
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getButtons">getButtons</a>(string $key)
+        
+                                            <p>Return the buttons for the received key.</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method_loadFromJSON">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/RowItemCards.php#L74">line 74</a></div>
+        <code>                    
+    <strong>loadFromJSON</strong>(array $items)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Load the row structurefrom a JSON file.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$items</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_loadFromXML">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/RowItemCards.php#L87">line 87</a></div>
+        <code>                    
+    <strong>loadFromXML</strong>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $row)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Loads the attributes structure from a XML file</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a></td>
+                <td>$row</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/RowItemCards.php#L50">line 50</a></div>
+        <code>                    
+    <strong>__construct</strong>(string $type)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Class constructor</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$type</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getHeaderHTML">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/RowItem.html#method_getHeaderHTML"><abbr title="FacturaScripts\Core\Lib\ExtendedController\RowItem">RowItem</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/RowItem.php#L69">line 69</a></div>
+        <code>                    
+    <strong>getHeaderHTML</strong>(string $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Generates the HTML code to display the header for the visual element</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_newFromJSON">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/RowItem.html#method_newFromJSON"><abbr title="FacturaScripts\Core\Lib\ExtendedController\RowItem">RowItem</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/RowItem.php#L81">line 81</a></div>
+        <code>        static            
+    <strong>newFromJSON</strong>(array $row)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates and loads the row structure from the database</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$row</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_newFromXML">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/RowItem.html#method_newFromXML"><abbr title="FacturaScripts\Core\Lib\ExtendedController\RowItem">RowItem</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/RowItem.php#L99">line 99</a></div>
+        <code>        static            
+    <strong>newFromXML</strong>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $row)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Creates and loads the row structure from an XML file</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a></td>
+                <td>$row</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getAttributesFromXML">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/RowItem.html#method_getAttributesFromXML"><abbr title="FacturaScripts\Core\Lib\ExtendedController\RowItem">RowItem</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/RowItem.php#L118">line 118</a></div>
+        <code>            protected        array
+    <strong>getAttributesFromXML</strong>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $item)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Return the attributes of an element from the XML.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a></td>
+                <td>$item</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>array</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_loadButtonsFromJSON">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/RowItem.html#method_loadButtonsFromJSON"><abbr title="FacturaScripts\Core\Lib\ExtendedController\RowItem">RowItem</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/RowItem.php#L135">line 135</a></div>
+        <code>            protected        <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetButton.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetButton">WidgetButton</abbr></a>[]
+    <strong>loadButtonsFromJSON</strong>(array $buttonsJSON)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns a list of WidgetButton loaded from JSON.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$buttonsJSON</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetButton.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetButton">WidgetButton</abbr></a>[]</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_loadButtonsFromXML">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/RowItem.html#method_loadButtonsFromXML"><abbr title="FacturaScripts\Core\Lib\ExtendedController\RowItem">RowItem</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/RowItem.php#L153">line 153</a></div>
+        <code>            protected        <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetButton.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetButton">WidgetButton</abbr></a>[]
+    <strong>loadButtonsFromXML</strong>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $buttonsXML)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Return a list of WidgetButtons from the XML.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a></td>
+                <td>$buttonsXML</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../FacturaScripts/Core/Lib/ExtendedController/WidgetButton.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\WidgetButton">WidgetButton</abbr></a>[]</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_rowItemFromType">
+        <div class="location">in <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/RowItem.html#method_rowItemFromType"><abbr title="FacturaScripts\Core\Lib\ExtendedController\RowItem">RowItem</abbr></a> at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/RowItem.php#L171">line 171</a></div>
+        <code>        static        private    <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/RowItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\RowItem">RowItem</abbr></a>|null
+    <strong>rowItemFromType</strong>(string $type)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Dynamic class constructor. Creates a RowItem objec of the given type.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$type</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a href="../../../../FacturaScripts/Core/Lib/ExtendedController/RowItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\RowItem">RowItem</abbr></a>|null</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getButtons">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/RowItemCards.php#L64">line 64</a></div>
+        <code>                    mixed
+    <strong>getButtons</strong>(string $key)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Return the buttons for the received key.</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$key</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>mixed</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>FacturaScripts\Core\Lib\ExtendedController\GroupItem | FacturaScripts</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:FacturaScripts_Core_Lib_ExtendedController_GroupItem" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">FacturaScripts</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">class</span></li>
+                        <li><a href="../../../../FacturaScripts.html">FacturaScripts</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core.html">Core</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core/Lib.html">Lib</a></li><li class="backslash">\</li><li><a href="../../../../FacturaScripts/Core/Lib/ExtendedController.html">ExtendedController</a></li><li class="backslash">\</li><li>GroupItem</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            GroupItem
+                
+        </h1>
+    </div>
+
+    <p>    class
+    <strong>GroupItem</strong>        extends <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/VisualItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\VisualItem">VisualItem</abbr></a>        implements
+        <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/VisualItemInterface.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\VisualItemInterface">VisualItemInterface</abbr></a>        (<a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/GroupItem.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p>Description of GroupItem</p>                                </div>
+    
+    
+    
+            <h2>Properties</h2>
+
+            <table class="table table-condensed">
+                    <tr>
+                <td class="type" id="property_i18n">
+                                        protected                                        <a href="../../../../FacturaScripts/Core/Base/Translator.html"><abbr title="FacturaScripts\Core\Base\Translator">Translator</abbr></a>
+                </td>
+                <td>$i18n</td>
+                <td class="last">Translation engine</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/VisualItem.html#property_i18n"><abbr title="FacturaScripts\Core\Lib\ExtendedController\VisualItem">VisualItem</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_name">
+                                                                                string
+                </td>
+                <td>$name</td>
+                <td class="last">Column identifier</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/VisualItem.html#property_name"><abbr title="FacturaScripts\Core\Lib\ExtendedController\VisualItem">VisualItem</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_numColumns">
+                                                                                int
+                </td>
+                <td>$numColumns</td>
+                <td class="last">Number of columns that it occupies on display
+([1, 2, 4, 6, 8, 10, 12])</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/VisualItem.html#property_numColumns"><abbr title="FacturaScripts\Core\Lib\ExtendedController\VisualItem">VisualItem</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_order">
+                                                                                int
+                </td>
+                <td>$order</td>
+                <td class="last">Position to render ( from lowes to highest )</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/VisualItem.html#property_order"><abbr title="FacturaScripts\Core\Lib\ExtendedController\VisualItem">VisualItem</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_title">
+                                                                                string
+                </td>
+                <td>$title</td>
+                <td class="last">Group tag or title</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/VisualItem.html#property_title"><abbr title="FacturaScripts\Core\Lib\ExtendedController\VisualItem">VisualItem</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_titleURL">
+                                                                                string
+                </td>
+                <td>$titleURL</td>
+                <td class="last">Title link URL</td>
+                <td><small>from&nbsp;<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/VisualItem.html#property_titleURL"><abbr title="FacturaScripts\Core\Lib\ExtendedController\VisualItem">VisualItem</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_columns">
+                                                                                <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ColumnItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ColumnItem">ColumnItem</abbr></a>[]
+                </td>
+                <td>$columns</td>
+                <td class="last">Define the columns that the group includes</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_icon">
+                                                                                string
+                </td>
+                <td>$icon</td>
+                <td class="last">Icon used as the value or accompaining the group title</td>
+                <td></td>
+            </tr>
+            </table>
+
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_applySpecialOperations">applySpecialOperations</a>()
+        
+                                            <p>Check and apply special operations on the group</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p>Class construct and initialization</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getHeaderHTML">getHeaderHTML</a>(string $value)
+        
+                                            <p>Generates the HTML code to display the visual element's header</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_loadFromJSON">loadFromJSON</a>(array $group)
+        
+                                            <p>Loads the attributes structure from a JSON file</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_loadFromXML">loadFromXML</a>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $group)
+        
+                                            <p>Loads the attributes structure from a XML file</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_loadFromXMLColumns">loadFromXMLColumns</a>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $group)
+        
+                                            <p>Loads the groups from the columns</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_newFromJSON">newFromJSON</a>(array $group)
+        
+                                            <p>Create and load the group structure from the database</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_newFromXML">newFromXML</a>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $group)
+        
+                                            <p>Create and load the group structure from a XML file</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    static&nbsp;int
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_sortColumns">sortColumns</a>(<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ColumnItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ColumnItem">ColumnItem</abbr></a> $column1, <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ColumnItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ColumnItem">ColumnItem</abbr></a> $column2)
+        
+                                            <p>Sorts the columns</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    string
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getIconHTML">getIconHTML</a>()
+        
+                                            <p>Returns the HTML code to display an icon</p>                </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method_applySpecialOperations">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/GroupItem.php#L59">line 59</a></div>
+        <code>                    
+    <strong>applySpecialOperations</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Check and apply special operations on the group</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/GroupItem.php#L48">line 48</a></div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Class construct and initialization</p>                                                </div>
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getHeaderHTML">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/GroupItem.php#L73">line 73</a></div>
+        <code>                    string
+    <strong>getHeaderHTML</strong>(string $value)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Generates the HTML code to display the visual element's header</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$value</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_loadFromJSON">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/GroupItem.php#L83">line 83</a></div>
+        <code>                    
+    <strong>loadFromJSON</strong>(array $group)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Loads the attributes structure from a JSON file</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$group</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_loadFromXML">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/GroupItem.php#L100">line 100</a></div>
+        <code>                    
+    <strong>loadFromXML</strong>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $group)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Loads the attributes structure from a XML file</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a></td>
+                <td>$group</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_loadFromXMLColumns">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/GroupItem.php#L114">line 114</a></div>
+        <code>                    
+    <strong>loadFromXMLColumns</strong>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $group)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Loads the groups from the columns</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a></td>
+                <td>$group</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_newFromJSON">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/GroupItem.php#L132">line 132</a></div>
+        <code>        static            
+    <strong>newFromJSON</strong>(array $group)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Create and load the group structure from the database</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>array</td>
+                <td>$group</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_newFromXML">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/GroupItem.php#L147">line 147</a></div>
+        <code>        static            
+    <strong>newFromXML</strong>(<a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a> $group)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Create and load the group structure from a XML file</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a target="_blank" href="http://php.net/SimpleXMLElement">SimpleXMLElement</a></td>
+                <td>$group</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_sortColumns">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/GroupItem.php#L163">line 163</a></div>
+        <code>        static            int
+    <strong>sortColumns</strong>(<a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ColumnItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ColumnItem">ColumnItem</abbr></a> $column1, <a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ColumnItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ColumnItem">ColumnItem</abbr></a> $column2)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Sorts the columns</p>                                                </div>
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ColumnItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ColumnItem">ColumnItem</abbr></a></td>
+                <td>$column1</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td><a href="../../../../FacturaScripts/Core/Lib/ExtendedController/ColumnItem.html"><abbr title="FacturaScripts\Core\Lib\ExtendedController\ColumnItem">ColumnItem</abbr></a></td>
+                <td>$column2</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>int</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getIconHTML">
+        <div class="location">at         <a href="https://github.com/NeoRazorX/facturascripts/blob/a-lot-of-changes/Lib/ExtendedController/GroupItem.php#L177">line 177</a></div>
+        <code>                private    string
+    <strong>getIconHTML</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                    <div class="method-description">
+                                    <p>Returns the HTML code to display an icon</p>                                                </div>
+                <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td>string</td>
+            <td></td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>
