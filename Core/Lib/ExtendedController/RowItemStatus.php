@@ -55,13 +55,17 @@ class RowItemStatus extends RowItem
     /**
      * Returns the status for a given value
      *
-     * @param string $value
+     * @param ModelClass $model
      *
      * @return string
      */
-    public function getStatus($value): string
+    public function getStatus(&$model)
     {
+        $rowValue = empty($this->fieldName) ? '' : $model->{$this->fieldName};
+
         foreach ($this->options as $option) {
+            $value = isset($option['fieldname']) ? $model->{$option['fieldname']} : $rowValue;
+
             switch ($option['value'][0]) {
                 case '>':
                     if ($value > (float) substr($option['value'], 1)) {
