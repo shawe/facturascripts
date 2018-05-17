@@ -40,7 +40,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
     public function testCreateWritableFolder()
     {
         $this::assertTrue(
-            @mkdir(\FS_FOLDER . '/MyFiles/TestWritable/Test1/Test2/Test3', 0775, true),
+            @mkdir(\FS_FOLDER . '/MyFiles/TestWritable1/Test1/Test2/Test3', 0775, true),
             'Recursive folder creation fails.'
         );
         $scan = $this->object::scanFolder(\FS_FOLDER . '/MyFiles/TestWritable1', true, []);
@@ -52,7 +52,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testRecurseCopy()
     {
-        $this->object::recurseCopy(\FS_FOLDER . '/MyFiles/TestWritable', \FS_FOLDER . '/MyFiles/TestWritable2');
+        $this->object::recurseCopy(\FS_FOLDER . '/MyFiles/TestWritable1', \FS_FOLDER . '/MyFiles/TestWritable2');
         $this::assertNotEmpty($this->object::scanFolder(\FS_FOLDER . '/MyFiles/TestWritable2'));
     }
 
@@ -62,7 +62,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
     public function testScanFolder()
     {
         $this::assertEquals(
-            $this->object::scanFolder(\FS_FOLDER . '/MyFiles/TestWritable'),
+            $this->object::scanFolder(\FS_FOLDER . '/MyFiles/TestWritable1'),
             $this->object::scanFolder(\FS_FOLDER . '/MyFiles/TestWritable2'),
             'Folder not equals'
         );
@@ -89,7 +89,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
      */
     public function testDelTreeWritableFolder()
     {
-        $this::assertTrue($this->object::delTree(\FS_FOLDER . '/MyFiles/TestWritable'), 'Recursive delete dir fails.');
+        $this::assertTrue($this->object::delTree(\FS_FOLDER . '/MyFiles/TestWritable1'), 'Recursive delete dir fails.');
         $this::assertTrue($this->object::delTree(\FS_FOLDER . '/MyFiles/TestWritable2'), 'Recursive delete dir fails.');
     }
 
