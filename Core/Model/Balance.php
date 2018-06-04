@@ -116,16 +116,6 @@ class Balance extends Base\ModelClass
     public $naturaleza;
 
     /**
-     * Returns the name of the table that uses this model.
-     *
-     * @return string
-     */
-    public static function tableName(): string
-    {
-        return 'co_codbalances08';
-    }
-
-    /**
      * Returns the name of the column that is the model's primary key.
      *
      * @return string
@@ -133,6 +123,16 @@ class Balance extends Base\ModelClass
     public static function primaryColumn(): string
     {
         return 'codbalance';
+    }
+
+    /**
+     * Returns the name of the table that uses this model.
+     *
+     * @return string
+     */
+    public static function tableName(): string
+    {
+        return 'balances';
     }
 
     /**
