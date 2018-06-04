@@ -40,7 +40,7 @@ final class UserTest extends CustomTest
      * @covers \FacturaScripts\Core\Model\User::newLogkey()
      * @covers \FacturaScripts\Core\Model\User::verifyLogkey()
      */
-    public function testNewLogkey()
+    public function testNewLogkey(): void
     {
         $logKey = $this->model->newLogkey('192.168.1.1');
         self::assertNotEmpty($logKey);
@@ -50,10 +50,10 @@ final class UserTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\User::setPassword()
      */
-    public function testSetPassword()
+    public function testSetPassword(): void
     {
         $this->model = $this->model->get('admin');
-        if ($this->model !== false) {
+        if ($this->model !== null) {
             $this->model->setPassword('admin');
         }
     }

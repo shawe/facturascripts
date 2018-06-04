@@ -19,12 +19,12 @@
 
 namespace FacturaScripts\Core\Controller;
 
-use Exception;
 use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Base\DivisaTools;
 use FacturaScripts\Dinamic\Lib\ExtendedController;
 use FacturaScripts\Dinamic\Model;
+use RuntimeException;
 
 /**
  * Controller to edit a single item from the Asiento model
@@ -70,7 +70,7 @@ class EditAsiento extends ExtendedController\PanelController
      * @param ExtendedController\EditView $view
      */
 
-    protected function loadData(string $viewName, $view): void
+    protected function loadData($viewName, $view): void
     {
         switch ($viewName) {
             case 'EditAsiento':
@@ -104,14 +104,14 @@ class EditAsiento extends ExtendedController\PanelController
                 return true;
 
             case 'recalculate-document':
-                $this->setTemplate(false);
+                $this->setTemplate(null);
                 $data = $this->request->request->all();
                 $result = $this->recalculateDocument($data);
                 $this->response->setContent(json_encode($result));
                 return false;
 
             case 'account-data':
-                $this->setTemplate(false);
+                $this->setTemplate(null);
                 $subaccount = $this->request->get('codsubcuenta', '');
                 $exercise = $this->request->get('codejercicio', '');
                 $result = $this->getAccountData($exercise, $subaccount);
@@ -122,7 +122,7 @@ class EditAsiento extends ExtendedController\PanelController
                 $data = $this->request->request->all();
                 $result = $this->cloneDocument($data);
                 if (!empty($result)) {
-                    $this->setTemplate(false);
+                    $this->setTemplate(null);
                     $this->response->headers->set('Refresh', '0;' . $result);
                     return false;
                 }
@@ -179,7 +179,10 @@ class EditAsiento extends ExtendedController\PanelController
                 $result['subaccount'] = $this->getAccountData($data['document']['codejercicio'], $line['codsubcuenta']);
 
                 $result['vat'] = $this->recalculateVatRegister(
-                    $line, $data['document'], $result['subaccount']['codevat'], $result['unbalance']
+                    $line,
+                    $data['document'],
+                    $result['subaccount']['codevat'],
+                    $result['unbalance']
                 );
             }
         }
@@ -218,7 +221,7 @@ class EditAsiento extends ExtendedController\PanelController
         if ($subAccount->loadFromCode(null, $where)) {
             $balance = new Model\SubcuentaSaldo();
             $result['description'] = $subAccount->descripcion;
-            $result['codevat'] = ($subAccount->codimpuesto === null) ? '' : $subAccount->codimpuesto;
+            $result['codevat'] = $subAccount->codimpuesto ?? '';
             $result['balance'] = $balance->setSubAccountBalance($subAccount->idsubcuenta, $result['detail']);
             $result['balance'] = DivisaTools::format($result['balance']);
         }
@@ -234,7 +237,7 @@ class EditAsiento extends ExtendedController\PanelController
      */
     private function calculateAmounts(array &$data, float $credit, float $debit): void
     {
-        $unbalance = round(($credit - $debit), (int) FS_NF0);
+        $unbalance = round($credit - $debit, FS_NF0);
         $index = count($data['lines']) - 1;
         $line = &$data['lines'][$index];
 
@@ -250,7 +253,7 @@ class EditAsiento extends ExtendedController\PanelController
             }
         }
         $data['unbalance'] = $unbalance;
-        $data['total'] = ($credit > $debit) ? round($credit, (int) FS_NF0) : round($debit, (int) FS_NF0);
+        $data['total'] = ($credit > $debit) ? round($credit, FS_NF0) : round($debit, FS_NF0);
     }
 
     /**
@@ -439,20 +442,20 @@ class EditAsiento extends ExtendedController\PanelController
             $accounting->fecha = date('d-m-Y');
             $accounting->numero = $accounting->newCode('numero');
             if (!$accounting->save()) {
-                throw new Exception($this->i18n->trans('clone-document-error'));
+                throw new RuntimeException($this->i18n->trans('clone-document-error'));
             }
 
             foreach ($entries as $line) {
                 $line->idpartida = null;
                 $line->idasiento = $accounting->idasiento;
                 if (!$line->save()) {
-                    throw new Exception($this->i18n->trans('clone-line-document-error'));
+                    throw new RuntimeException($this->i18n->trans('clone-line-document-error'));
                 }
             }
             // confirm data
             $dataBase->commit();
             $result = $accounting->url('type') . '&action=save-ok';
-        } catch (Exception $e) {
+        } catch (RuntimeException $e) {
             $this->miniLog->alert($e->getMessage());
             $result = '';
         } finally {
@@ -467,11 +470,11 @@ class EditAsiento extends ExtendedController\PanelController
     /**
      * Replace concept in concepts array with macro values
      *
-     * @param array array
+     * @param array $results
      *
      * @return array
      */
-    private function replaceConcept($results): array
+    private function replaceConcept(array $results): array
     {
         $finalResults = [];
         $idasiento = $this->request->get('code');

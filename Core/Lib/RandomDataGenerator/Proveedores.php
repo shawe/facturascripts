@@ -45,7 +45,7 @@ class Proveedores extends AbstractRandomPeople
      *
      * @return int
      */
-    public function generate($num = 50): int
+    public function generate(int $num = 50): int
     {
         $proveedor = $this->model;
         for ($generated = 0; $generated < $num; ++$generated) {
@@ -79,7 +79,7 @@ class Proveedores extends AbstractRandomPeople
      * @param Model\Proveedor $proveedor
      * @param int             $max
      */
-    protected function cuentasBancoProveedor(Model\Proveedor $proveedor, int $max = 3)
+    protected function cuentasBancoProveedor(Model\Proveedor $proveedor, int $max = 3): void
     {
         while ($max > 0) {
             $cuenta = new Model\CuentaBancoProveedor();
@@ -106,7 +106,7 @@ class Proveedores extends AbstractRandomPeople
      * @param Model\Proveedor $proveedor
      * @param int             $max
      */
-    protected function direccionesProveedor(Model\Proveedor $proveedor, int $max = 3)
+    protected function direccionesProveedor(Model\Proveedor $proveedor, int $max = 3): void
     {
         while ($max) {
             $dir = new Model\DireccionProveedor();

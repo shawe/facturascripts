@@ -20,7 +20,7 @@
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
-use FacturaScripts\Dinamic\Model\LineaFacturaCliente;
+use FacturaScripts\Dinamic\Model\LineaFacturaCliente as DLineaFacturaCliente;
 
 /**
  * Invoice of a client.
@@ -46,11 +46,11 @@ class FacturaCliente extends Base\SalesDocument
     /**
      * Returns the lines associated with the invoice.
      *
-     * @return LineaFacturaCliente[]
+     * @return DLineaFacturaCliente[]
      */
     public function getLines(): array
     {
-        $lineaModel = new LineaFacturaCliente();
+        $lineaModel = new DLineaFacturaCliente();
         $where = [new DataBaseWhere('idfactura', $this->idfactura)];
         $order = ['orden' => 'DESC', 'idlinea' => 'ASC'];
 
@@ -62,11 +62,11 @@ class FacturaCliente extends Base\SalesDocument
      *
      * @param array $data
      *
-     * @return LineaFacturaCliente
+     * @return DLineaFacturaCliente
      */
-    public function getNewLine(array $data = []): LineaFacturaCliente
+    public function getNewLine(array $data = []): DLineaFacturaCliente
     {
-        $newLine = new LineaFacturaCliente($data);
+        $newLine = new DLineaFacturaCliente($data);
         $newLine->idfactura = $this->idfactura;
 
         $state = $this->getState();

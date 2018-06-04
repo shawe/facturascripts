@@ -39,7 +39,7 @@ final class FamiliaTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Familia::hijas()
      */
-    public function testHijas()
+    public function testHijas(): void
     {
         self::assertEmpty($this->model->hijas());
     }
@@ -47,7 +47,7 @@ final class FamiliaTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Familia::madres()
      */
-    public function testMadres()
+    public function testMadres(): void
     {
         self::assertNotEmpty($this->model->madres());
     }

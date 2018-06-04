@@ -103,7 +103,7 @@ class ProfitAndLoss extends AccountingBase
      * @param array  $balance
      * @param string $description
      */
-    protected function processDescription(array &$linea, array &$balance, string $description)
+    protected function processDescription(array &$linea, array &$balance, string $description): void
     {
         $index = $linea[$description];
         if (empty($index)) {

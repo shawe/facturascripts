@@ -39,7 +39,7 @@ final class FormaPagoTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\FormaPago::isDefault()
      */
-    public function testIsDefault()
+    public function testIsDefault(): void
     {
         $this->model->isDefault();
     }
@@ -47,7 +47,7 @@ final class FormaPagoTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\FormaPago::calcularVencimiento()
      */
-    public function testCalcularVencimiento()
+    public function testCalcularVencimiento(): void
     {
         self::assertNotEmpty($this->model->calcularVencimiento(date('d-m-Y')));
         self::assertNotEmpty($this->model->calcularVencimiento(date('d-m-Y'), '5'));

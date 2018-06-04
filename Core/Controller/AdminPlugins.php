@@ -94,7 +94,7 @@ class AdminPlugins extends Base\Controller
     public function getPlugins(): array
     {
         $installedPlugins = $this->pluginManager->installedPlugins();
-        if (!defined('FS_HIDDEN_PLUGINS')) {
+        if (!\defined('FS_HIDDEN_PLUGINS')) {
             return $installedPlugins;
         }
 

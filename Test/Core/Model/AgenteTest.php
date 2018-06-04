@@ -37,7 +37,7 @@ final class AgenteTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Agente::primaryDescriptionColumn()
      */
-    public function getPrimaryDescriptionColumn()
+    public function getPrimaryDescriptionColumn(): void
     {
         self::assertNotEmpty($this->model->primaryDescriptionColumn());
     }

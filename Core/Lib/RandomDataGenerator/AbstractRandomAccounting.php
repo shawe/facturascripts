@@ -19,6 +19,7 @@
 
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
+use FacturaScripts\Core\Model\Base\ModelClass;
 use FacturaScripts\Dinamic\Model;
 
 /**
@@ -39,7 +40,7 @@ abstract class AbstractRandomAccounting extends AbstractRandom
     /**
      * AbstractRandomAccounting constructor.
      *
-     * @param mixed $model
+     * @param ModelClass $model
      */
     public function __construct($model)
     {

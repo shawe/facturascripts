@@ -37,7 +37,7 @@ final class AlmacenTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Almacen::isDefault()
      */
-    public function testIsDefault()
+    public function testIsDefault(): void
     {
         $this->model->isDefault();
     }
@@ -45,7 +45,7 @@ final class AlmacenTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Almacen::primaryDescriptionColumn()
      */
-    public function testprimaryDescriptionColumn()
+    public function testprimaryDescriptionColumn(): void
     {
         self::assertInternalType(
             'string', $this->model->primaryDescriptionColumn()

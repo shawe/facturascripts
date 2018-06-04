@@ -24,6 +24,9 @@ use FacturaScripts\Core\Base\PluginManager;
 use FacturaScripts\Core\Base\Translator;
 use FacturaScripts\Dinamic\Lib\AssetManager;
 use Twig_Environment;
+use Twig_Error_Loader;
+use Twig_Error_Runtime;
+use Twig_Error_Syntax;
 use Twig_Extension_Debug;
 use Twig_Function;
 use Twig_Loader_Filesystem;
@@ -101,7 +104,7 @@ class WebRender
         /// asset functions
         $assetFunction = new Twig_Function('asset', function ($string) {
             $path = FS_ROUTE . '/';
-            if (substr($string, 0, strlen($path)) == $path) {
+            if (0 === strpos($string, $path)) {
                 return $string;
             }
             return $path . $string;
@@ -128,7 +131,7 @@ class WebRender
         /// Core namespace
         try {
             $this->loader->addPath(FS_FOLDER . '/Core/View', 'Core');
-        } catch (\Twig_Error_Loader $e) {
+        } catch (Twig_Error_Loader $e) {
             $this->miniLog->critical($this->i18n->trans('twig-error-loader', ['%error%' => $e->getMessage()]));
         }
 
@@ -143,7 +146,7 @@ class WebRender
                 try {
                     $this->loader->addPath($pluginPath, 'Plugin' . $pluginName);
                     $this->loader->prependPath($pluginPath);
-                } catch (\Twig_Error_Loader $e) {
+                } catch (Twig_Error_Loader $e) {
                     $this->miniLog->critical($this->i18n->trans('twig-error-loader', ['%error%' => $e->getMessage()]));
                 }
             }
@@ -158,7 +161,7 @@ class WebRender
      *
      * @return string
      */
-    public function render($template, $params): string
+    public function render(string $template, array $params): string
     {
         $templateVars = [
             'i18n' => $this->i18n,
@@ -171,13 +174,13 @@ class WebRender
         $twig = $this->getTwig();
         try {
             return $twig->render($template, $templateVars);
-        } catch (\Twig_Error_Loader $e) {
+        } catch (Twig_Error_Loader $e) {
             $this->miniLog->critical($this->i18n->trans('twig-error-loader', ['%error%' => $e->getMessage()]));
             return '';
-        } catch (\Twig_Error_Runtime $e) {
+        } catch (Twig_Error_Runtime $e) {
             $this->miniLog->critical($this->i18n->trans('twig-error-runtime', ['%error%' => $e->getMessage()]));
             return '';
-        } catch (\Twig_Error_Syntax $e) {
+        } catch (Twig_Error_Syntax $e) {
             $this->miniLog->critical($this->i18n->trans('twig-error-syntax', ['%error%' => $e->getMessage()]));
             return '';
         }

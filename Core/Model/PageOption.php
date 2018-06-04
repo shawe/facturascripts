@@ -117,7 +117,7 @@ class PageOption extends Base\ModelClass
      * @param array $data
      * @param array $exclude
      */
-    public function loadFromData(array $data = [], array $exclude = [])
+    public function loadFromData(array $data = [], array $exclude = []): void
     {
         array_push($exclude, 'columns', 'modals', 'filters', 'rows', 'code', 'action');
         parent::loadFromData($data, $exclude);
@@ -178,7 +178,7 @@ class PageOption extends Base\ModelClass
      * @param string $name
      * @param string $nick
      */
-    public function getForUser(string $name, string $nick)
+    public function getForUser(string $name, string $nick): void
     {
         $viewName = explode('-', $name)[0];
         $where = $this->getPageFilter($viewName, $nick);

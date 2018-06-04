@@ -39,7 +39,7 @@ final class ConceptoPartidaTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\ConceptoPartida::primaryDescriptionColumn()
      */
-    public function testPrimaryDescriptionColumn()
+    public function testPrimaryDescriptionColumn(): void
     {
         self::assertNotEmpty($this->model->primaryDescriptionColumn());
     }
@@ -52,7 +52,7 @@ final class ConceptoPartidaTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\ConceptoPartida::url()
      */
-    public function testUrl()
+    public function testUrl(): void
     {
         self::assertNotEmpty($this->model->url());
     }

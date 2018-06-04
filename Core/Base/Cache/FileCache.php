@@ -92,11 +92,6 @@ class FileCache implements AdaptorInterface
         $this->minilog->debug($this->i18n->trans('filecache-get-key-item', ['%item%' => $key]));
         if (!$this->fileExpired($file = $this->getRoute($key), $custom_time)) {
             $content = file_get_contents($file);
-            /**
-             * FIXME: Perhaps it's possible to exploit the unserialize via: file_get_contents(...).
-             * Documentation can be found here:
-             * https://github.com/kalessil/phpinspectionsea/blob/master/docs/security.md#exploiting-unserialize
-             */
             /** @noinspection UnserializeExploitsInspection */
             return $raw ? $content : unserialize($content);
         }

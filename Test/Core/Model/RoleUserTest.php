@@ -39,7 +39,7 @@ final class RoleUserTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\RoleUser::getRoleAccess()
      */
-    public function testGetRoleAccess()
+    public function testGetRoleAccess(): void
     {
         self::assertEmpty($this->model->getRoleAccess('AdminPlugins'));
     }

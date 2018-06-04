@@ -39,7 +39,7 @@ final class EjercicioTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Ejercicio::abierto()
      */
-    public function testAbierto()
+    public function testAbierto(): void
     {
         $this->model->abierto();
     }
@@ -47,7 +47,7 @@ final class EjercicioTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Ejercicio::getBestFecha()
      */
-    public function testGetBestFecha()
+    public function testGetBestFecha(): void
     {
         $this->model->getBestFecha(\date('d-m-Y'));
     }
@@ -55,7 +55,7 @@ final class EjercicioTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Ejercicio::getByFecha()
      */
-    public function testGetByFecha()
+    public function testGetByFecha(): void
     {
         $this->model::getByFecha(\date('d-m-Y'));
     }
@@ -63,7 +63,7 @@ final class EjercicioTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Ejercicio::inRange()
      */
-    public function testInRange()
+    public function testInRange(): void
     {
         $this->model->inRange(\date('d-m-Y'));
     }
@@ -71,7 +71,7 @@ final class EjercicioTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Ejercicio::newCodigo()
      */
-    public function testNewCodigo()
+    public function testNewCodigo(): void
     {
         $this->model->newCodigo();
     }
@@ -79,7 +79,7 @@ final class EjercicioTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Ejercicio::year()
      */
-    public function testYear()
+    public function testYear(): void
     {
         $this->model->year();
     }

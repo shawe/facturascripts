@@ -65,7 +65,7 @@ class BusinessDocumentTools
      *
      * @param BusinessDocument $doc
      */
-    public function recalculate(BusinessDocument $doc)
+    public function recalculate(BusinessDocument $doc): void
     {
         $this->clearTotals($doc);
         $lines = $doc->getLines();
@@ -118,7 +118,7 @@ class BusinessDocumentTools
      *
      * @param BusinessDocument $doc
      */
-    private function clearTotals(BusinessDocument $doc)
+    private function clearTotals(BusinessDocument $doc): void
     {
         $this->irpf = $doc->irpf;
 
@@ -253,7 +253,7 @@ class BusinessDocumentTools
      *
      * @param array $fLine
      */
-    private function setProductData(array &$fLine)
+    private function setProductData(array &$fLine): void
     {
         $articulo = new Articulo();
         if ($articulo->loadFromCode($fLine['referencia'])) {

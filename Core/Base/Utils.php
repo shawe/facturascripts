@@ -115,7 +115,7 @@ class Utils
      */
     public static function floatcmp($f1, $f2, $precision = 10, $round = false): bool
     {
-        if ($round || !function_exists('bccomp')) {
+        if ($round || !\function_exists('bccomp')) {
             return abs($f1 - $f2) < 6 / 10 ** ($precision + 1);
         }
 
@@ -218,7 +218,7 @@ class Utils
             if (mb_strlen($description . ' ' . $aux) >= $maxWidth - 3) {
                 break;
             }
-            if ($description == '') {
+            if ($description === '') {
                 $description = $aux;
             } else {
                 $description .= ' ' . $aux;

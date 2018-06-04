@@ -30,7 +30,7 @@ class AppRouter
     /**
      * Path to list of routes stored on file.
      */
-    const ROUTE_LIST_FILE = FS_FOLDER . DIRECTORY_SEPARATOR . 'MyFiles' . DIRECTORY_SEPARATOR . 'routes.json';
+    public const ROUTE_LIST_FILE = FS_FOLDER . DIRECTORY_SEPARATOR . 'MyFiles' . DIRECTORY_SEPARATOR . 'routes.json';
 
     /**
      * List of routes.
@@ -84,7 +84,7 @@ class AppRouter
                 continue;
             }
 
-            if (0 === strncmp($uri, $key, strlen($key) - 1)) {
+            if (0 === strncmp($uri, $key, \strlen($key) - 1)) {
                 return new AppController($uri, $data['controller']);
             }
         }

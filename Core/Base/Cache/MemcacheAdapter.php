@@ -105,7 +105,7 @@ class MemcacheAdapter implements AdaptorInterface
             return self::$memcache->get(\FS_CACHE_PREFIX . $key);
         }
 
-        return false;
+        return null;
     }
 
     /**

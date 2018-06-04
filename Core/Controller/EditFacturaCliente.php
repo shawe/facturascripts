@@ -74,7 +74,7 @@ class EditFacturaCliente extends ExtendedController\BusinessDocumentController
      * @param string                                  $viewName
      * @param ExtendedController\BusinessDocumentView $view
      */
-    protected function loadData(string $viewName, $view): void
+    protected function loadData($viewName, $view): void
     {
         if ($viewName === 'EditFacturaCliente') {
             $idfactura = $this->getViewModelValue('Document', 'idfactura');

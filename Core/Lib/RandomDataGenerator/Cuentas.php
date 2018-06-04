@@ -45,7 +45,7 @@ class Cuentas extends AbstractRandomAccounting
      *
      * @return int
      */
-    public function generate($num = 25): int
+    public function generate(int $num = 25): int
     {
         $cuenta = $this->model;
         for ($i = 0; $i < $num; ++$i) {

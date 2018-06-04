@@ -66,7 +66,7 @@ class Asientos extends AbstractRandomAccounting
                 shuffle($subcuentas);
                 $lines = random_int(1, 20) * 2;
                 $debe = true;
-                foreach ($subcuentas as $pos => $lineaValue) {
+                foreach ((array) $subcuentas as $pos => $lineaValue) {
                     $partida->clear();
                     $partida->idasiento = $asiento->idasiento;
                     $partida->idsubcuenta = $lineaValue->idsubcuenta;

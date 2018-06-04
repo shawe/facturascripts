@@ -323,7 +323,7 @@ abstract class WidgetItem implements VisualItemInterface
         foreach ($this->options as $option) {
             if ($this->canApplyOptions($option['value'], $valueItem)) {
                 $html = ' style="';
-                foreach ($option as $key => $value) {
+                foreach ((array) $option as $key => $value) {
                     if ($key !== 'value') {
                         $html .= $key . ':' . $value . '; ';
                     }

@@ -133,7 +133,7 @@ class EditRole extends ExtendedController\PanelController
     {
         // add Pages to Rol
         if (!Model\RoleAccess::addPagesToRole($codrole, $pages)) {
-            throw new \Exception($this->i18n->trans('cancel-process'));
+            throw new \RuntimeException($this->i18n->trans('cancel-process'));
         }
     }
 

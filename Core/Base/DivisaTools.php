@@ -104,7 +104,7 @@ class DivisaTools extends NumberTools
      *
      * @return array
      */
-    public static function gridMoneyFormat($decimals = FS_NF0): array
+    public static function gridMoneyFormat(int $decimals = \FS_NF0): array
     {
         $moneyFormat = '0.';
         for ($num = 0; $num < $decimals; $num++) {

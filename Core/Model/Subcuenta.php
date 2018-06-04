@@ -139,6 +139,7 @@ class Subcuenta extends Base\ModelClass
      */
     public function install(): string
     {
+        new Ejercicio();
         new CuentaEspecial();
         new Cuenta();
         return '';
@@ -360,6 +361,6 @@ class Subcuenta extends Base\ModelClass
     {
         $exercise = new Ejercicio();
         $exercise->loadFromCode($this->codejercicio);
-        return empty($exercise->codejercicio) || (strlen($this->codsubcuenta) <> $exercise->longsubcuenta);
+        return empty($exercise->codejercicio) || (\strlen($this->codsubcuenta) <> $exercise->longsubcuenta);
     }
 }

@@ -38,7 +38,7 @@ class IntegrityCheckTest extends \PHPUnit_Framework_TestCase
      *
      * @covers \FacturaScripts\Core\Base\IntegrityCheck::saveIntegrity()
      */
-    public function testSaveIntegrity()
+    public function testSaveIntegrity(): void
     {
         self::assertTrue($this->object::saveIntegrity());
         self::assertFileExists($this->object::INTEGRITY_FILE, 'File not exists');
@@ -49,7 +49,7 @@ class IntegrityCheckTest extends \PHPUnit_Framework_TestCase
      *
      * @covers \FacturaScripts\Core\Base\IntegrityCheck::saveIntegrity()
      */
-    public function testSaveUserIntegrity()
+    public function testSaveUserIntegrity(): void
     {
         self::assertTrue($this->object::saveIntegrity($this->object::INTEGRITY_USER_FILE));
         self::assertFileExists($this->object::INTEGRITY_USER_FILE, 'File not exists');
@@ -60,7 +60,7 @@ class IntegrityCheckTest extends \PHPUnit_Framework_TestCase
      *
      * @covers \FacturaScripts\Core\Base\IntegrityCheck::getIntegrityFiles()
      */
-    public function testGetIntegrityFiles()
+    public function testGetIntegrityFiles(): void
     {
         self::assertNotEmpty($this->object::getIntegrityFiles(), 'integrity.json is empty');
     }
@@ -70,7 +70,7 @@ class IntegrityCheckTest extends \PHPUnit_Framework_TestCase
      *
      * @covers \FacturaScripts\Core\Base\IntegrityCheck::loadIntegrity()
      */
-    public function testLoadIntegrityFiles()
+    public function testLoadIntegrityFiles(): void
     {
         self::assertNotEmpty($this->object::loadIntegrity(), 'Is empty');
     }
@@ -80,7 +80,7 @@ class IntegrityCheckTest extends \PHPUnit_Framework_TestCase
      *
      * @covers \FacturaScripts\Core\Base\IntegrityCheck::loadIntegrity()
      */
-    public function testUserLoadIntegrityFiles()
+    public function testUserLoadIntegrityFiles(): void
     {
         self::assertNotEmpty($this->object::loadIntegrity($this->object::INTEGRITY_USER_FILE), 'Is empty');
     }
@@ -90,7 +90,7 @@ class IntegrityCheckTest extends \PHPUnit_Framework_TestCase
      *
      * @covers \FacturaScripts\Core\Base\IntegrityCheck::getFileHash()
      */
-    public function testGetFileHash()
+    public function testGetFileHash(): void
     {
         self::assertNotEmpty(
             $this->object::getFileHash(),
@@ -107,7 +107,7 @@ class IntegrityCheckTest extends \PHPUnit_Framework_TestCase
      *
      * @covers \FacturaScripts\Core\Base\IntegrityCheck::compareIntegrity()
      */
-    public function testCompareIntegrity()
+    public function testCompareIntegrity(): void
     {
         $list = $this->object::compareIntegrity();
         $excludes = ['.idea', '.vscode'];

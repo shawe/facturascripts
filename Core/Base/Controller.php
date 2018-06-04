@@ -36,7 +36,7 @@ class Controller
     /**
      * Constant for dinamic models.
      */
-    const MODEL_NAMESPACE = '\\FacturaScripts\\Dinamic\\Model\\';
+    public const MODEL_NAMESPACE = '\\FacturaScripts\\Dinamic\\Model\\';
 
     /**
      * Contains a list of extra files to load: javascript, css, etc.
@@ -132,7 +132,7 @@ class Controller
     /**
      * Name of the file for the template.
      *
-     * @var string|bool nombre_archivo.html.twig
+     * @var string|null nombre_archivo.html.twig
      */
     private $template;
 
@@ -182,9 +182,9 @@ class Controller
     /**
      * Return the template to use for this controller.
      *
-     * @return string|bool
+     * @return string|null
      */
-    public function getTemplate()
+    public function getTemplate(): ?string
     {
         return $this->template;
     }
@@ -234,14 +234,14 @@ class Controller
     /**
      * Set the template to use for this controller.
      *
-     * @param string|bool $template
+     * @param string|null $template
      *
      * @return bool
      */
     public function setTemplate($template): bool
     {
-        if ($template === false) {
-            $this->template = false;
+        if ($template === null) {
+            $this->template = null;
 
             return true;
         }

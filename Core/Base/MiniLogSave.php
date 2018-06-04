@@ -38,7 +38,7 @@ class MiniLogSave
      *
      * @var array
      */
-    const TYPES_LOG = [
+    public const TYPES_LOG = [
         'info', 'notice', 'warning', 'error',
         'critical', 'alert', 'emergency'
     ];
@@ -54,9 +54,9 @@ class MiniLogSave
         $miniLog = new MiniLog();
         foreach ($miniLog->read($this->getActiveSettingsLog()) as $value) {
             $logMessage = new LogMessage();
-            $logMessage->time = date('d-m-Y H:i:s', $value["time"]);
-            $logMessage->level = $value["level"];
-            $logMessage->message = $value["message"];
+            $logMessage->time = date('d-m-Y H:i:s', $value['time']);
+            $logMessage->level = $value['level'];
+            $logMessage->message = $value['message'];
             $logMessage->ip = empty($ip) ? null : $ip;
             $logMessage->nick = empty($nick) ? null : $nick;
             $logMessage->save();

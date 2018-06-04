@@ -53,7 +53,7 @@ class CSVImport
         foreach ($csv->data as $row) {
             $sql .= $sep . '(';
             $sep2 = '';
-            foreach ($row as $value) {
+            foreach ((array) $row as $value) {
                 $sql .= $sep2 . self::valueToSql($dataBase, $value);
                 $sep2 = ', ';
             }

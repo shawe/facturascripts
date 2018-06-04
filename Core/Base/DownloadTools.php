@@ -29,7 +29,7 @@ use Exception;
 class DownloadTools
 {
 
-    const USERAGENT = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36';
+    public const USERAGENT = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36';
 
     /**
      * Downloads and returns url content with curl or file_get_contents.
@@ -116,7 +116,7 @@ class DownloadTools
         $data = curl_exec($ch);
         $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         if ($http_code === 301 || $http_code === 302) {
-            list($header) = explode("\r\n\r\n", $data, 2);
+            [$header] = explode("\r\n\r\n", $data, 2);
             $matches = [];
             preg_match("/(Location:|URI:)[^(\n)]*/", $header, $matches);
             $url = trim(str_replace($matches[1], '', $matches[0]));
@@ -133,7 +133,7 @@ class DownloadTools
             return $data;
         }
 
-        list(, $body) = explode("\r\n\r\n", $data, 2);
+        [, $body] = explode("\r\n\r\n", $data, 2);
         curl_close($ch);
         return $body;
     }

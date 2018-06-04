@@ -29,9 +29,9 @@ class IntegrityCheck
     /**
      * Path to list of integrity file.
      */
-    const BASE = FS_FOLDER . DIRECTORY_SEPARATOR . 'MyFiles' . DIRECTORY_SEPARATOR;
-    const INTEGRITY_FILE = self::BASE . 'integrity.json';
-    const INTEGRITY_USER_FILE = self::BASE . 'integrity-validation.json';
+    public const BASE = FS_FOLDER . DIRECTORY_SEPARATOR . 'MyFiles' . DIRECTORY_SEPARATOR;
+    public const INTEGRITY_FILE = self::BASE . 'integrity.json';
+    public const INTEGRITY_USER_FILE = self::BASE . 'integrity-validation.json';
 
     /**
      * Return an array with integrity files hash.
@@ -140,7 +140,7 @@ class IntegrityCheck
      * @param array $origArray
      * @param array $userArray
      */
-    private static function getAlteredUserFiles(array &$result, array $origArray = [], array $userArray = [])
+    private static function getAlteredUserFiles(array &$result, array $origArray = [], array $userArray = []): void
     {
         foreach ($origArray as $item => $hash) {
             if (!isset($userArray[$item])) {
@@ -158,7 +158,7 @@ class IntegrityCheck
      * @param array $origArray
      * @param array $userArray
      */
-    private static function getExtraUserFiles(array &$result, array $origArray = [], array $userArray = [])
+    private static function getExtraUserFiles(array &$result, array $origArray = [], array $userArray = []): void
     {
         foreach ($userArray as $item => $hash) {
             if (!isset($origArray[$item])) {
@@ -173,7 +173,7 @@ class IntegrityCheck
      * @param array $result
      * @param array $types
      */
-    private static function cleanResults(array &$result, array $types)
+    private static function cleanResults(array &$result, array $types): void
     {
         foreach ($types as $type) {
             if (empty($result[$type])) {

@@ -35,7 +35,7 @@ use Symfony\Component\HttpFoundation\Response;
 class Wizard extends Controller
 {
 
-    const ITEM_SELECT_LIMIT = 500;
+    public const ITEM_SELECT_LIMIT = 500;
 
     /**
      * Returns basic page attributes

@@ -40,7 +40,7 @@ final class BalanceCuentaATest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\BalanceCuentaA::allFromCodbalance()
      */
-    public function testAllFromCodbalance()
+    public function testAllFromCodbalance(): void
     {
         $this->model->allFromCodbalance('a');
     }
@@ -48,7 +48,7 @@ final class BalanceCuentaATest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\BalanceCuentaA::searchByCodbalance()
      */
-    public function testSearchByCodbalance()
+    public function testSearchByCodbalance(): void
     {
         $this->model->searchByCodbalance('a');
     }
@@ -56,7 +56,7 @@ final class BalanceCuentaATest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\BalanceCuentaA::saldo()
      */
-    public function testSaldo()
+    public function testSaldo(): void
     {
         $ejercicio = new Ejercicio();
         $this->model->saldo($ejercicio);

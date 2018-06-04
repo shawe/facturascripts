@@ -96,7 +96,7 @@ class EditView extends BaseView implements DataViewInterface
             $this->model->loadFromCode($code);
         }
 
-        $fieldName = $this->model->primaryColumn();
+        $fieldName = $this->model::primaryColumn();
         $this->count = empty($this->model->{$fieldName}) ? 0 : 1;
 
         /// if not a new reg. we lock primary key

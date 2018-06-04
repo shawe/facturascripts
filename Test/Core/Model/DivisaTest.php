@@ -39,7 +39,7 @@ final class DivisaTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Divisa::isDefault()
      */
-    public function testIsDefault()
+    public function testIsDefault(): void
     {
         $this->model->isDefault();
     }

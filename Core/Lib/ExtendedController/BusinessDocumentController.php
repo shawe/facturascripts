@@ -36,7 +36,7 @@ abstract class BusinessDocumentController extends PanelController
     /**
      * Default item limit for selects.
      */
-    const ITEM_SELECT_LIMIT = 500;
+    public const ITEM_SELECT_LIMIT = 500;
 
     /**
      *
@@ -131,7 +131,7 @@ abstract class BusinessDocumentController extends PanelController
     {
         switch ($action) {
             case 'export':
-                $this->setTemplate(false);
+                $this->setTemplate(null);
                 $this->exportManager->newDoc($this->request->get('option'));
                 foreach ($this->views as $selectedView) {
                     $selectedView->export($this->exportManager);
@@ -179,7 +179,7 @@ abstract class BusinessDocumentController extends PanelController
      */
     protected function recalculateDocumentAction(): bool
     {
-        $this->setTemplate(false);
+        $this->setTemplate(null);
         $view = $this->views[$this->active];
 
         /// gets data form and separate lines data
@@ -201,7 +201,7 @@ abstract class BusinessDocumentController extends PanelController
      */
     protected function saveDocumentAction(): bool
     {
-        $this->setTemplate(false);
+        $this->setTemplate(null);
         $view = $this->views[$this->active];
 
         /// gets data form and separate date, hour, codcliente, codproveedor and lines data
@@ -242,10 +242,10 @@ abstract class BusinessDocumentController extends PanelController
 
         /// sets subjects
         $result = 'OK';
-        if (\in_array('codcliente', $view->model->getSubjectColumns())) {
+        if (\in_array('codcliente', $view->model->getSubjectColumns(), false)) {
             $result = $this->setCustomer($view, $data['codcliente'], $data['new_cliente'], $data['new_cifnif']);
         }
-        if (\in_array('codproveedor', $view->model->getSubjectColumns())) {
+        if (\in_array('codproveedor', $view->model->getSubjectColumns(), false)) {
             $result = $this->setSupplier($view, $data['codproveedor'], $data['new_proveedor'], $data['new_cifnif']);
         }
 
@@ -286,6 +286,7 @@ abstract class BusinessDocumentController extends PanelController
         foreach ($view->lines as $oldLine) {
             $found = false;
             foreach ($newLines as $newLine) {
+                /** @noinspection TypeUnsafeComparisonInspection */
                 if ($newLine['idlinea'] != $oldLine->idlinea) {
                     continue;
                 }
@@ -318,7 +319,7 @@ abstract class BusinessDocumentController extends PanelController
                 if ($newDocLine->save()) {
                     $newDocLine->updateStock($view->model->codalmacen);
                 } else {
-                    $result = "ERROR ON NEW LINE";
+                    $result = 'ERROR ON NEW LINE';
                 }
                 $skip = false;
             }

@@ -85,7 +85,7 @@ class DocumentReportsFilterList
             return null;
         }
 
-        return new DataBase\DataBaseWhere($this->model->primaryColumn(), $this->selectedValue);
+        return new DataBase\DataBaseWhere($this->model::primaryColumn(), $this->selectedValue);
     }
 
     /**
@@ -95,8 +95,8 @@ class DocumentReportsFilterList
      */
     private function loadValuesFromModel($allowEmpty = true): void
     {
-        $tableName = $this->model->tableName();
-        $fieldCode = $this->model->primaryColumn();
+        $tableName = $this->model::tableName();
+        $fieldCode = $this->model::primaryColumn();
         $fieldDesc = $this->model->primaryDescriptionColumn();
         $rows = Model\CodeModel::all($tableName, $fieldCode, $fieldDesc, $allowEmpty);
 

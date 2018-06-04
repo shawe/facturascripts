@@ -91,7 +91,7 @@ class APIModel extends APIResourceClass
      */
     public function doPOST(): bool
     {
-        $cod = $this->model->primaryColumn();
+        $cod = $this->model::primaryColumn();
 
         // If editing, retrieve the current data
         $this->model->loadFromCode($this->params[0]);

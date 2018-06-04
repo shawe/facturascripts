@@ -40,7 +40,7 @@ final class RoleAccessTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\RoleAccess::addPagesToRole()
      */
-    public function testAddPagesToRole()
+    public function testAddPagesToRole(): void
     {
         $pages = new Page();
         self::assertEmpty($this->model::addPagesToRole('admin', $pages->all()));

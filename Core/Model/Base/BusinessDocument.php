@@ -363,7 +363,7 @@ abstract class BusinessDocument extends ModelClass
      */
     public function save(): bool
     {
-        if (is_null($this->codigo)) {
+        if ($this->codigo === null) {
             $this->newCodigo();
         }
 

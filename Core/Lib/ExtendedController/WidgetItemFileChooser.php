@@ -53,7 +53,7 @@ class WidgetItemFileChooser extends WidgetItem
 
         $attributes = (!empty($this->required) && empty($value)) ? ' required=""' : '';
         $html = $this->getIconHTML() . "<input type='file' name='" . $this->fieldName
-            . "' class='form-control-file' " . $attributes . " />";
+            . "' class='form-control-file' " . $attributes . ' />';
 
         if (!empty($this->icon)) {
             $html .= '</div>';

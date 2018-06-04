@@ -142,7 +142,7 @@ class AccountingReports extends Controller
             return;
         }
 
-        $this->setTemplate(false);
+        $this->setTemplate(null);
         $this->exportData($pages, $format);
     }
 

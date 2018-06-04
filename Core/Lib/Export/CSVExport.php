@@ -31,7 +31,7 @@ use Symfony\Component\HttpFoundation\Response;
 class CSVExport implements ExportInterface
 {
 
-    const LIST_LIMIT = 1000;
+    public const LIST_LIMIT = 1000;
 
     /**
      * Contains the CSV data in array format
@@ -142,7 +142,7 @@ class CSVExport implements ExportInterface
      * @param array  $columns
      * @param string $title
      */
-    public function generateModelPage($model, $columns, $title = ''): void
+    public function generateModelPage($model, array $columns, string $title = ''): void
     {
         $tableData = [];
         foreach ((array) $model as $key => $value) {
@@ -167,7 +167,7 @@ class CSVExport implements ExportInterface
      * @param array                         $columns
      * @param string                        $title
      */
-    public function generateListModelPage($model, $where, $order, $offset, $columns, $title = ''): void
+    public function generateListModelPage($model, array $where, array $order, int $offset, array $columns, string $title = ''): void
     {
         $tableCols = [];
         $sheetHeaders = [];
@@ -219,7 +219,7 @@ class CSVExport implements ExportInterface
      * @param array $headers
      * @param array $rows
      */
-    public function generateTablePage($headers, $rows): void
+    public function generateTablePage(array $headers, array $rows): void
     {
         /// Generate the headers line
         $this->csv[] = \implode($this->separator, $headers);

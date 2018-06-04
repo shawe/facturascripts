@@ -39,7 +39,7 @@ final class AtributoValorTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\AtributoValor::allFromAtributo()
      */
-    public function testAllFromAtributo()
+    public function testAllFromAtributo(): void
     {
         $this->model->allFromAtributo('a');
     }

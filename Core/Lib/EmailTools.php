@@ -94,7 +94,7 @@ class EmailTools
         $mail->SMTPSecure = $this->getSetting('enc');
         $mail->Host = $this->getSetting('host');
         $mail->Port = $this->getSetting('port');
-        $mail->Username = $this->getSetting('user') ? $this->getSetting('user') : $this->getSetting('email');
+        $mail->Username = $this->getSetting('user') ?: $this->getSetting('email');
         $mail->Password = $this->getSetting('password');
         $mail->setFrom($this->getSetting('email'));
 
@@ -163,7 +163,7 @@ class EmailTools
      */
     private function getSetting(string $key)
     {
-        return isset(self::$settings[$key]) ? self::$settings[$key] : null;
+        return self::$settings[$key] ?? null;
     }
 
     /**

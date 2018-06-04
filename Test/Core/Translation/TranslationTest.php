@@ -40,7 +40,7 @@ class TranslationTest extends TestCase
     /**
      * Test that all files have well format.
      */
-    public function testFiles()
+    public function testFiles(): void
     {
         foreach ($this->scanFolder($this->basePath) as $fileName) {
             $fileArray = $this->readJSON($this->basePath . $fileName);
@@ -53,7 +53,7 @@ class TranslationTest extends TestCase
      * Test that secondary language don't have waste keys.
      * Must fail when user adds on wrong file.
      */
-    public function testWasteKeys()
+    public function testWasteKeys(): void
     {
         $mainLangArray = $this->readJSON($this->basePath . $this->mainLang);
 
@@ -66,7 +66,7 @@ class TranslationTest extends TestCase
     /**
      * Check that every language file have ordered keys on list.
      */
-    public function testHasOrderedKeys()
+    public function testHasOrderedKeys(): void
     {
         foreach ($this->scanFolder($this->basePath) as $fileName) {
             $fileString = $this->getJSON($this->basePath . $fileName);

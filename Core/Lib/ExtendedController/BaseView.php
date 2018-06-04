@@ -48,7 +48,7 @@ abstract class BaseView
      * Needed model to for the model method calls.
      * In the scope of EditController it contains the view data.
      *
-     * @var Model\Base\ModelClass|Model\Base\PurchaseDocument|Model\Base\SalesDocument
+     * @var Model\Base\ModelClass|Model\Base\BusinessDocument|Model\Base\PurchaseDocument|Model\Base\SalesDocument
      */
     public $model;
 
@@ -89,6 +89,10 @@ abstract class BaseView
 
     /**
      * Method to export the view data.
+     *
+     * @param ExportManager $exportManager
+     *
+     * @return mixed
      */
     abstract public function export(ExportManager $exportManager);
 
@@ -104,7 +108,7 @@ abstract class BaseView
     /**
      * Gets the column by the given field name
      *
-     * @param string $columnName
+     * @param string $fieldName
      *
      * @return ColumnItem
      */
@@ -202,7 +206,7 @@ abstract class BaseView
      */
     public function loadFromData(array &$data): void
     {
-        $fieldKey = $this->model->primaryColumn();
+        $fieldKey = $this->model::primaryColumn();
         $fieldValue = $data[$fieldKey];
         if ($fieldValue !== $this->model->primaryColumnValue() && $fieldValue !== '') {
             $this->model->loadFromCode($fieldValue);

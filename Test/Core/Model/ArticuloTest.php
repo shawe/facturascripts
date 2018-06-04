@@ -39,7 +39,7 @@ final class ArticuloTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Articulo::setPvp()
      */
-    public function testSetPhp()
+    public function testSetPhp(): void
     {
         $this->model->setPvp(100);
     }
@@ -47,7 +47,7 @@ final class ArticuloTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Articulo::setPvpIva()
      */
-    public function testSetPhpIva()
+    public function testSetPhpIva(): void
     {
         $this->model->setPvpIva(121);
     }

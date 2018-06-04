@@ -60,7 +60,7 @@ class AtributoValor extends Base\ModelClass
      *
      * @return self[]
      */
-    public function allFromAtributo($cod)
+    public function allFromAtributo($cod): array
     {
         $where = [new DataBaseWhere('codatributo', $cod)];
         $order = ['valor' => 'ASC'];

@@ -166,6 +166,20 @@ class RegularizacionImpuesto extends Base\ModelClass
     }
 
     /**
+     * This function is called when creating the model table. Returns the SQL
+     * that will be executed after the creation of the table. Useful to insert values
+     * default.
+     *
+     * @return string
+     */
+    public function install(): string
+    {
+        new Ejercicio();
+
+        return '';
+    }
+
+    /**
      * Returns true if there are no errors in the values of the model properties.
      * It runs inside the save method.
      *
@@ -244,7 +258,7 @@ class RegularizacionImpuesto extends Base\ModelClass
     public function loadNextPeriod(): void
     {
         /// Search for current exercise
-        $exercise = Ejercicio::getByFecha(date('d-m-Y'), true, false);
+        $exercise = Ejercicio::getByFecha(date('d-m-Y'), true, true);
 
         /// If we do not have the exercise we take from the current date
         if (empty($this->codejercicio)) {
@@ -291,7 +305,6 @@ class RegularizacionImpuesto extends Base\ModelClass
             $this->idsubcuentadeudora = $account->idsubcuenta;
             $this->codsubcuentadeudora = $account->codsubcuenta;
         }
-        return;
     }
 
     /**

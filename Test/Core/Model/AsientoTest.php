@@ -39,7 +39,7 @@ final class AsientoTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Base\ModelClass::primaryDescriptionColumn()
      */
-    public function testPrimaryDescriptionColumn()
+    public function testPrimaryDescriptionColumn(): void
     {
         self::assertInternalType(
             'string', $this->model->primaryDescriptionColumn()
@@ -49,7 +49,7 @@ final class AsientoTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Asiento::accumulateAmounts()
      */
-    public function testAccumulateAmounts()
+    public function testAccumulateAmounts(): void
     {
         $detail = ['haber' => 100];
         $this->model->accumulateAmounts($detail);
@@ -58,7 +58,7 @@ final class AsientoTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Asiento::cronJob()
      */
-    public function testCronJob()
+    public function testCronJob(): void
     {
         $this->model->cronJob();
     }
@@ -66,7 +66,7 @@ final class AsientoTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Asiento::initTotals()
      */
-    public function testInitTotals()
+    public function testInitTotals(): void
     {
         $this->model->initTotals();
     }
@@ -74,7 +74,7 @@ final class AsientoTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Asiento::renumber()
      */
-    public function testRenumber()
+    public function testRenumber(): void
     {
         $this->model->renumber();
     }
@@ -87,7 +87,7 @@ final class AsientoTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Asiento::delete()
      */
-    public function testDelete()
+    public function testDelete(): void
     {
         $this->model->delete();
     }

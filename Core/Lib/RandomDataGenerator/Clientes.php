@@ -45,42 +45,45 @@ class Clientes extends AbstractRandomPeople
      *
      * @return int
      */
-    public function generate($num = 50): int
+    public function generate(int $num = 50): int
     {
         $cliente = $this->model;
-        for ($i = 0; $i < $num; ++$i) {
-            $cliente->clear();
-            $this->fillCliPro($cliente);
+        $i = 0;
+        if ($cliente instanceof Model\Cliente) {
+            for ($i = 0; $i < $num; ++$i) {
+                $cliente->clear();
+                $this->fillCliPro($cliente);
 
-            $cliente->fechaalta = date((string) random_int(1, 28) . '-' . (string) random_int(1, 12) . '-' . (string) random_int(2013, date('Y')));
-            $cliente->regimeniva = (random_int(0, 9) === 0) ? 'Exento' : 'General';
+                $cliente->fechaalta = date((string) random_int(1, 28) . '-' . (string) random_int(1, 12) . '-' . (string) random_int(2013, (int) date('Y')));
+                $cliente->regimeniva = (random_int(0, 9) === 0) ? 'Exento' : 'General';
 
-            if (random_int(0, 2) > 0) {
-                shuffle($this->agentes);
-                $cliente->codagente = $this->agentes[0]->codagente;
-            } else {
-                $cliente->codagente = null;
+                if (random_int(0, 2) > 0) {
+                    shuffle($this->agentes);
+                    $cliente->codagente = $this->agentes[0]->codagente;
+                } else {
+                    $cliente->codagente = null;
+                }
+
+                if (random_int(0, 2) > 0 && !empty($this->grupos)) {
+                    shuffle($this->grupos);
+                    $cliente->codgrupo = $this->grupos[0]->codgrupo;
+                } else {
+                    $cliente->codgrupo = null;
+                }
+
+                $cliente->codcliente = $cliente->newCode();
+                if (!$cliente->save()) {
+                    break;
+                }
+
+                /// añadimos direcciones
+                $numDirs = random_int(0, 3);
+                $this->direccionesCliente($cliente, $numDirs);
+
+                /// Añadimos cuentas bancarias
+                $numCuentas = random_int(0, 3);
+                $this->cuentasBancoCliente($cliente, $numCuentas);
             }
-
-            if (random_int(0, 2) > 0 && !empty($this->grupos)) {
-                shuffle($this->grupos);
-                $cliente->codgrupo = $this->grupos[0]->codgrupo;
-            } else {
-                $cliente->codgrupo = null;
-            }
-
-            $cliente->codcliente = $cliente->newCode();
-            if (!$cliente->save()) {
-                break;
-            }
-
-            /// añadimos direcciones
-            $numDirs = random_int(0, 3);
-            $this->direccionesCliente($cliente, $numDirs);
-
-            /// Añadimos cuentas bancarias
-            $numCuentas = random_int(0, 3);
-            $this->cuentasBancoCliente($cliente, $numCuentas);
         }
 
         return $i;
@@ -92,7 +95,7 @@ class Clientes extends AbstractRandomPeople
      * @param Model\Cliente $cliente
      * @param int           $max
      */
-    protected function cuentasBancoCliente(Model\Cliente $cliente, int $max = 3)
+    protected function cuentasBancoCliente(Model\Cliente $cliente, int $max = 3): void
     {
         while ($max > 0) {
             $cuenta = new Model\CuentaBancoCliente();
@@ -116,12 +119,12 @@ class Clientes extends AbstractRandomPeople
      * @param Model\Cliente $cliente
      * @param int           $max
      */
-    protected function direccionesCliente(Model\Cliente $cliente, int $max = 3)
+    protected function direccionesCliente(Model\Cliente $cliente, int $max = 3): void
     {
         while ($max > 0) {
             $dir = new Model\DireccionCliente();
             $dir->codcliente = $cliente->codcliente;
-            $dir->codpais = (random_int(0, 2) === 0) ? $this->paises[0]->codpais : AppSettings::get('default', 'codpais');
+            $dir->codpais = random_int(0, 2) === 0 ? $this->paises[0]->codpais : AppSettings::get('default', 'codpais');
 
             $dir->provincia = $this->provincia();
             $dir->ciudad = $this->ciudad();

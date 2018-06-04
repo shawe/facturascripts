@@ -39,7 +39,7 @@ final class PageOptionTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\PageOption::getForUser()
      */
-    public function testGetForUser()
+    public function testGetForUser(): void
     {
         $this->model->getForUser('ListAlmacen', 'admin');
     }
@@ -52,7 +52,7 @@ final class PageOptionTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\PageOption::loadFromData()
      */
-    public function testLoadFromData()
+    public function testLoadFromData(): void
     {
         $data = [
             'columns' => \json_encode([]),

@@ -31,8 +31,8 @@ use FacturaScripts\Core\Base\Utils;
 class DataBaseWhere
 {
 
-    const MATCH_DATE = "/^([\d]{1,2})-([\d]{1,2})-([\d]{4})$/i";
-    const MATCH_DATETIME = "/^([\d]{1,2})-([\d]{1,2})-([\d]{4}) ([\d]{1,2}):([\d]{1,2}):([\d]{1,2})$/i";
+    public const MATCH_DATE = "/^([\d]{1,2})-([\d]{1,2})-([\d]{4})$/i";
+    public const MATCH_DATETIME = "/^([\d]{1,2})-([\d]{1,2})-([\d]{4}) ([\d]{1,2}):([\d]{1,2}):([\d]{1,2})$/i";
 
     /**
      * Link with the active database.
@@ -243,7 +243,7 @@ class DataBaseWhere
     private function getValueFromOperatorLike(string $value): string
     {
         // FIXME: Makes no sense, because this type is not defined in annotations
-        if (is_bool($value)) {
+        if (\is_bool($value)) {
             return $value ? 'TRUE' : 'FALSE';
         }
 
@@ -257,7 +257,7 @@ class DataBaseWhere
     /**
      * Returns the value for the operator.
      *
-     * @param string $values
+     * @param string $value
      *
      * @return string
      */

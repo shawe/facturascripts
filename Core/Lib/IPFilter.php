@@ -30,12 +30,12 @@ class IPFilter
     /**
      * Maximum number of access attempts.
      */
-    const MAX_ATTEMPTS = 5;
+    public const MAX_ATTEMPTS = 5;
 
     /**
      * The number of seconds the system blocks access.
      */
-    const BAN_SECONDS = 600;
+    public const BAN_SECONDS = 600;
 
     /**
      * Path of the file with the list.

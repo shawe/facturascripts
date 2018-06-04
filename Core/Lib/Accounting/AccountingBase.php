@@ -70,6 +70,12 @@ abstract class AccountingBase
 
     /**
      * Generate the balance ammounts between two dates.
+     *
+     * @param string $dateFrom
+     * @param string $dateTo
+     * @param array  $params
+     *
+     * @return mixed
      */
     abstract public function generate(string $dateFrom, string $dateTo, array $params = []);
 

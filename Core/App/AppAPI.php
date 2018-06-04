@@ -73,7 +73,7 @@ class AppAPI extends App
      *
      * @return void
      */
-    protected function fatalError(string $text, int $status)
+    protected function fatalError(string $text, int $status): void
     {
         $this->response->setStatusCode($status);
         $this->response->setContent(json_encode(['error' => $text]));

@@ -36,7 +36,7 @@ class AppCronTest extends TestCase
     /**
      * @covers \FacturaScripts\Core\App\AppCron::connect()
      */
-    public function testConnect()
+    public function testConnect(): void
     {
         self::assertTrue($this->object->connect());
     }
@@ -44,7 +44,7 @@ class AppCronTest extends TestCase
     /**
      * @covers \FacturaScripts\Core\App\AppCron::run()
      */
-    public function testRun()
+    public function testRun(): void
     {
         self::assertTrue($this->object->run());
     }

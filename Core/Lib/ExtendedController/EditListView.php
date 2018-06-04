@@ -71,7 +71,7 @@ class EditListView extends BaseView implements DataViewInterface
     {
         parent::__construct($title, $modelName);
 
-        $this->order = [$this->model->primaryColumn() => 'ASC'];
+        $this->order = [$this->model::primaryColumn() => 'ASC'];
         $this->offset = 0;
         $this->where = [];
 
@@ -114,7 +114,7 @@ class EditListView extends BaseView implements DataViewInterface
      * @param int             $offset
      * @param int             $limit
      */
-    public function loadData($code = false, array $where = [], array $order = [], $offset = 0, $limit = FS_ITEM_LIMIT): void
+    public function loadData($code = false, array $where = [], array $order = [], int $offset = 0, int $limit = FS_ITEM_LIMIT): void
     {
         $this->order = empty($order) ? $this->order : $order;
         $this->count = $this->model->count($where);
@@ -136,7 +136,12 @@ class EditListView extends BaseView implements DataViewInterface
     {
         if ($this->count > 0) {
             $exportManager->generateListModelPage(
-                $this->model, $this->where, $this->order, $this->offset, $this->getColumns(), $this->title
+                $this->model,
+                $this->where,
+                $this->order,
+                $this->offset,
+                $this->getColumns(),
+                $this->title
             );
         }
     }

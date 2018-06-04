@@ -56,7 +56,7 @@ interface ExportInterface
      * @param array  $columns
      * @param string $title
      */
-    public function generateModelPage($model, $columns, $title = '');
+    public function generateModelPage($model, array $columns, string $title = ''): void;
 
     /**
      * Adds a new page with a table listing the models data.
@@ -68,14 +68,14 @@ interface ExportInterface
      * @param array           $columns
      * @param string          $title
      */
-    public function generateListModelPage($model, $where, $order, $offset, $columns, $title = '');
+    public function generateListModelPage($model, array $where, array $order, int $offset, array $columns, string $title = ''): void;
 
     /**
      * Adds a new page with the document data.
      *
      * @param mixed $model
      */
-    public function generateDocumentPage($model);
+    public function generateDocumentPage($model): void;
 
     /**
      * Adds a new page with the table.
@@ -83,5 +83,5 @@ interface ExportInterface
      * @param array $headers
      * @param array $rows
      */
-    public function generateTablePage($headers, $rows);
+    public function generateTablePage(array $headers, array $rows): void;
 }

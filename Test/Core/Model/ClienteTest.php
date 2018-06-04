@@ -39,7 +39,7 @@ final class ClienteTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Cliente::primaryDescriptionColumn()
      */
-    public function getPrimaryDescriptionColumn()
+    public function getPrimaryDescriptionColumn(): void
     {
         self::assertNotEmpty($this->model->primaryDescriptionColumn());
     }
@@ -47,7 +47,7 @@ final class ClienteTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Cliente::getDirecciones()
      */
-    public function testGetDirecciones()
+    public function testGetDirecciones(): void
     {
         $this->model->getDirecciones();
     }

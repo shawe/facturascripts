@@ -38,7 +38,7 @@ class MiniLogTest extends TestCase
      * @covers \FacturaScripts\Core\Base\MiniLog::emergency()
      * @covers \FacturaScripts\Core\Base\MiniLog::read()
      */
-    public function testEmergency()
+    public function testEmergency(): void
     {
         $level = ['emergency'];
         $this->object->clear();
@@ -56,7 +56,7 @@ class MiniLogTest extends TestCase
      * @covers \FacturaScripts\Core\Base\MiniLog::alert()
      * @covers \FacturaScripts\Core\Base\MiniLog::read()
      */
-    public function testAlert()
+    public function testAlert(): void
     {
         $level = ['alert'];
         $this->object->clear();
@@ -74,7 +74,7 @@ class MiniLogTest extends TestCase
      * @covers \FacturaScripts\Core\Base\MiniLog::critical()
      * @covers \FacturaScripts\Core\Base\MiniLog::read()
      */
-    public function testCritical()
+    public function testCritical(): void
     {
         $level = ['critical'];
         $this->object->clear();
@@ -92,7 +92,7 @@ class MiniLogTest extends TestCase
      * @covers \FacturaScripts\Core\Base\MiniLog::error()
      * @covers \FacturaScripts\Core\Base\MiniLog::read()
      */
-    public function testError()
+    public function testError(): void
     {
         $level = ['error'];
         $this->object->clear();
@@ -110,7 +110,7 @@ class MiniLogTest extends TestCase
      * @covers \FacturaScripts\Core\Base\MiniLog::warning()
      * @covers \FacturaScripts\Core\Base\MiniLog::read()
      */
-    public function testWarning()
+    public function testWarning(): void
     {
         $level = ['warning'];
         $this->object->clear();
@@ -128,7 +128,7 @@ class MiniLogTest extends TestCase
      * @covers \FacturaScripts\Core\Base\MiniLog::notice()
      * @covers \FacturaScripts\Core\Base\MiniLog::read()
      */
-    public function testNotice()
+    public function testNotice(): void
     {
         $level = ['notice'];
         $this->object->clear();
@@ -146,7 +146,7 @@ class MiniLogTest extends TestCase
      * @covers \FacturaScripts\Core\Base\MiniLog::info()
      * @covers \FacturaScripts\Core\Base\MiniLog::read()
      */
-    public function testInfo()
+    public function testInfo(): void
     {
         $level = ['info'];
         $this->object->clear();
@@ -164,7 +164,7 @@ class MiniLogTest extends TestCase
      * @covers \FacturaScripts\Core\Base\MiniLog::debug()
      * @covers \FacturaScripts\Core\Base\MiniLog::read()
      */
-    public function testDebug()
+    public function testDebug(): void
     {
         $level = ['debug'];
         $this->object->clear();
@@ -182,7 +182,7 @@ class MiniLogTest extends TestCase
      * @covers \FacturaScripts\Core\Base\MiniLog::sql()
      * @covers \FacturaScripts\Core\Base\MiniLog::read()
      */
-    public function testSql()
+    public function testSql(): void
     {
         $level = ['sql'];
         $this->object->clear();
@@ -200,7 +200,7 @@ class MiniLogTest extends TestCase
      * @covers \FacturaScripts\Core\Base\MiniLog::clear()
      * @covers \FacturaScripts\Core\Base\MiniLog::read()
      */
-    public function testClear()
+    public function testClear(): void
     {
         $this->object->sql('sql');
         $this->object->clear();

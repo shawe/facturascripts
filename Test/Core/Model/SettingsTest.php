@@ -44,7 +44,7 @@ final class SettingsTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Settings::checkArrayData()
      */
-    public function testCheckArrayData()
+    public function testCheckArrayData(): void
     {
         $data = [
             'name' => '',
@@ -57,7 +57,7 @@ final class SettingsTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Settings::loadFromData()
      */
-    public function testLoadFromData()
+    public function testLoadFromData(): void
     {
         $data = [
             'properties' => 'test',

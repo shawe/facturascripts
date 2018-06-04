@@ -45,7 +45,7 @@ class Subcuentas extends AbstractRandomAccounting
      *
      * @return int
      */
-    public function generate($num = 50): int
+    public function generate(int $num = 50): int
     {
         $subcuenta = $this->model;
         $this->shuffle($cuentas, new Model\Cuenta());

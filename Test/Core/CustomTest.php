@@ -36,7 +36,7 @@ class CustomTest extends TestCase
      */
     public $model;
 
-    public function testInit()
+    public function testInit(): void
     {
         self::assertNotNull(
             $this->model,
@@ -47,7 +47,7 @@ class CustomTest extends TestCase
     /**
      * @covers \FacturaScripts\Core\Model\Base\ModelClass::tableName()
      */
-    public function testTableName()
+    public function testTableName(): void
     {
         self::assertInternalType(
             'string',
@@ -59,7 +59,7 @@ class CustomTest extends TestCase
     /**
      * @covers \FacturaScripts\Core\Model\Base\ModelClass::primaryColumn()
      */
-    public function testPrimaryColumn()
+    public function testPrimaryColumn(): void
     {
         self::assertInternalType(
             'string',
@@ -71,7 +71,7 @@ class CustomTest extends TestCase
     /**
      * @covers \FacturaScripts\Core\Model\Base\ModelClass::primaryDescription()
      */
-    public function testPrimaryDescription()
+    public function testPrimaryDescription(): void
     {
         self::assertInternalType(
             'string',
@@ -83,7 +83,7 @@ class CustomTest extends TestCase
     /**
      * @covers \FacturaScripts\Core\Model\Base\ModelClass::getModelFields()
      */
-    public function testFields()
+    public function testFields(): void
     {
         // FIXME: getModelFields returns []
         //self::assertNotEmpty($this->model->getModelFields());
@@ -93,11 +93,12 @@ class CustomTest extends TestCase
      * @covers \FacturaScripts\Core\Model\Base\ModelClass::install()
      * @covers \FacturaScripts\Core\Model\Base\ModelClass::all()
      */
-    public function testInstall()
+    public function testInstall(): void
     {
         $install = $this->model->install();
         self::assertInternalType(
-            'string', $install,
+            'string',
+            $install,
             'Is not a string'
         );
 
@@ -112,7 +113,7 @@ class CustomTest extends TestCase
     /**
      * @covers \FacturaScripts\Core\Model\Base\ModelClass::checkArrayData()
      */
-    public function testCheckArrayData()
+    public function testCheckArrayData(): void
     {
         $data = [];
         $this->model->checkArrayData($data);
@@ -121,7 +122,7 @@ class CustomTest extends TestCase
     /**
      * @covers \FacturaScripts\Core\Model\Base\ModelClass::count()
      */
-    public function testCount()
+    public function testCount(): void
     {
         $this->model->count();
     }
@@ -129,7 +130,7 @@ class CustomTest extends TestCase
     /**
      * @covers \FacturaScripts\Core\Model\Base\ModelClass::url()
      */
-    public function testUrl()
+    public function testUrl(): void
     {
         self::assertInternalType(
             'string',
@@ -142,7 +143,7 @@ class CustomTest extends TestCase
      * @covers \FacturaScripts\Core\Model\Base\ModelClass::clear()
      * @covers \FacturaScripts\Core\Model\Base\ModelClass::exists()
      */
-    public function testExists()
+    public function testExists(): void
     {
         $this->model->clear();
         self::assertFalse(
@@ -156,7 +157,7 @@ class CustomTest extends TestCase
      * @covers \FacturaScripts\Core\Model\Base\ModelClass::test()
      * @covers \FacturaScripts\Core\Model\Base\ModelClass::exists()
      */
-    public function testAll()
+    public function testAll(): void
     {
         foreach ($this->model->all() as $model) {
             self::assertTrue(
@@ -173,7 +174,7 @@ class CustomTest extends TestCase
     /**
      * @covers \FacturaScripts\Core\Model\Base\ModelClass::save()
      */
-    public function testSave()
+    public function testSave(): void
     {
         $this->model->save();
 
@@ -198,7 +199,7 @@ class CustomTest extends TestCase
      * @covers \FacturaScripts\Core\Model\Base\ModelClass::get()
      * @covers \FacturaScripts\Core\Model\Base\ModelClass::primaryColumn()
      */
-    public function testGet()
+    public function testGet(): void
     {
         $this->model->get($this->model->{$this->model::primaryColumn()});
     }
@@ -207,7 +208,7 @@ class CustomTest extends TestCase
      * @covers \FacturaScripts\Core\Model\Base\ModelClass::loadFromCode()
      * @covers \FacturaScripts\Core\Model\Base\ModelClass::primaryColumn()
      */
-    public function testLoadFromCode()
+    public function testLoadFromCode(): void
     {
         $this->model->loadFromCode($this->model->{$this->model::primaryColumn()});
     }
@@ -215,7 +216,7 @@ class CustomTest extends TestCase
     /**
      * @covers \FacturaScripts\Core\Model\Base\ModelClass::loadFromData()
      */
-    public function testLoadFromData()
+    public function testLoadFromData(): void
     {
         $this->model->loadFromData();
     }
@@ -223,7 +224,7 @@ class CustomTest extends TestCase
     /**
      * @covers \FacturaScripts\Core\Model\Base\ModelClass::newCode()
      */
-    public function testNewCode()
+    public function testNewCode(): void
     {
         // FIXME: Fails because inside is used getModelFields that returns []
         //$this->model->newCode();
@@ -232,7 +233,7 @@ class CustomTest extends TestCase
     /**
      * @covers \FacturaScripts\Core\Model\Base\ModelClass::delete()
      */
-    public function testDelete()
+    public function testDelete(): void
     {
         $this->model->delete();
     }

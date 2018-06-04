@@ -54,12 +54,12 @@ class ControllerPermissions
     /**
      * ControllerPermissions constructor.
      *
-     * @param User|bool   $user
+     * @param User|null   $user
      * @param string|null $pageName
      */
-    public function __construct($user = false, string $pageName = null)
+    public function __construct(User $user = null, string $pageName = null)
     {
-        if ($user !== false && $pageName !== null) {
+        if ($user !== null && $pageName !== null) {
             $this->loadFromUser($user, $pageName);
         } else {
             $this->clear();

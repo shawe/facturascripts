@@ -349,10 +349,10 @@ class Partida extends Base\ModelClass
     protected function saveUpdate(array $values = []): bool
     {
         // Search for the difference in the amounts
-        $entry = new Partida();
+        $entry = new self();
         $entry->loadFromCode($this->idpartida);
-        $debit = (isset($values['debe']) ? $values['debe'] : $this->debe) - $entry->debe;
-        $credit = (isset($values['haber']) ? $values['haber'] : $this->haber) - $entry->haber;
+        $debit = ($values['debe'] ?? $this->debe) - $entry->debe;
+        $credit = ($values['haber'] ?? $this->haber) - $entry->haber;
 
         // Get data to update balance
         $date = $this->getAccountingDate();
@@ -409,7 +409,7 @@ class Partida extends Base\ModelClass
             }
 
             /// update account balance
-            if (!$account->updateBalance($date, ($this->debe * -1), ($this->haber * -1))) {
+            if (!$account->updateBalance($date, $this->debe * -1, $this->haber * -1)) {
                 return false;
             }
 

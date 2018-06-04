@@ -75,7 +75,7 @@ abstract class ModelClass extends ModelCore
      *
      * @param array $data
      */
-    public function checkArrayData(array &$data)
+    public function checkArrayData(array &$data): void
     {
         foreach ($this->getModelFields() as $field => $values) {
             if (\in_array($values['type'], ['boolean', 'tinyint(1)'], false) && !isset($data[$field])) {
@@ -140,9 +140,9 @@ abstract class ModelClass extends ModelCore
      *
      * @param string $cod
      *
-     * @return self|bool
+     * @return self|null
      */
-    public function get($cod)
+    public function get($cod): ?self
     {
         $data = $this->getRecord($cod);
         if (!empty($data)) {
@@ -150,7 +150,7 @@ abstract class ModelClass extends ModelCore
             return new $class($data[0]);
         }
 
-        return false;
+        return null;
     }
 
     /**
@@ -191,13 +191,13 @@ abstract class ModelClass extends ModelCore
     {
         /// if not field value take PK Field
         if (empty($field)) {
-            $field = $this->primaryColumn();
+            $field = $this::primaryColumn();
         }
         /// get fields list
         $modelFields = $this->getModelFields();
 
         /// Set Cast to Integer if field it's not
-        if (!in_array($modelFields[$field]['type'], ['integer', 'int', 'serial'])) {
+        if (!\in_array($modelFields[$field]['type'], ['integer', 'int', 'serial'])) {
             /// Set Where to Integers values only
             $where[] = new DataBase\DataBaseWhere($field, '^-?[0-9]+$', 'REGEXP');
             $field = self::$dataBase->sql2Int($field);
@@ -232,7 +232,7 @@ abstract class ModelClass extends ModelCore
     public function primaryDescription(): string
     {
         $field = $this->primaryDescriptionColumn();
-        return isset($this->{$field}) ? $this->{$field} : (string) $this->primaryColumnValue();
+        return $this->{$field} ?? (string) $this->primaryColumnValue();
     }
 
     /**
@@ -267,7 +267,7 @@ abstract class ModelClass extends ModelCore
         }
 
         foreach ($fields as $key => $value) {
-            if ($key == $this->primaryColumn()) {
+            if ($key === $this::primaryColumn()) {
                 continue;
             }
             if (null === $value['default'] && $value['is_nullable'] === 'NO' && $this->{$key} === null) {
@@ -293,7 +293,7 @@ abstract class ModelClass extends ModelCore
         $model = $this->modelClassName();
         switch ($type) {
             case 'edit':
-                return is_null($value) ? 'Edit' . $model : 'Edit' . $model . '?code=' . $value;
+                return null === $value ? 'Edit' . $model : 'Edit' . $model . '?code=' . $value;
 
             case 'list':
                 return $list . $model;
@@ -351,7 +351,7 @@ abstract class ModelClass extends ModelCore
         $coma = ' SET';
 
         foreach ($this->getModelFields() as $field) {
-            if ($field['name'] !== $this->primaryColumn()) {
+            if ($field['name'] !== $this::primaryColumn()) {
                 $fieldName = $field['name'];
                 $fieldValue = $values[$fieldName] ?? $this->{$fieldName};
                 $sql .= $coma . ' ' . $fieldName . ' = ' . self::$dataBase->var2str($fieldValue);
@@ -372,7 +372,7 @@ abstract class ModelClass extends ModelCore
      *
      * @return string
      */
-    private function getOrderBy(array $order)
+    private function getOrderBy(array $order): string
     {
         $result = '';
         $coma = ' ORDER BY ';

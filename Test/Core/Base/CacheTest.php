@@ -37,7 +37,7 @@ class CacheTest extends TestCase
      * @covers \FacturaScripts\Core\Base\Cache::set()
      * @covers \FacturaScripts\Core\Base\Cache::get()
      */
-    public function testGet()
+    public function testGet(): void
     {
         $this->object->set('TEST', 1234);
         $data = $this->object->get('TEST');
@@ -53,7 +53,7 @@ class CacheTest extends TestCase
      * @covers \FacturaScripts\Core\Base\Cache::delete()
      * @covers \FacturaScripts\Core\Base\Cache::get()
      */
-    public function testDelete()
+    public function testDelete(): void
     {
         $this->object->set('TEST', 1234);
         $this->object->delete('TEST');
@@ -65,7 +65,7 @@ class CacheTest extends TestCase
      * @covers \FacturaScripts\Core\Base\Cache::clear()
      * @covers \FacturaScripts\Core\Base\Cache::get()
      */
-    public function testClear()
+    public function testClear(): void
     {
         $this->object->set('TEST_1', 12345);
         $this->object->clear();

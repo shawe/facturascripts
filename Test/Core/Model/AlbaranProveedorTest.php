@@ -37,7 +37,7 @@ final class AlbaranProveedorTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\AlbaranProveedor::getLines()
      */
-    public function testGetLines()
+    public function testGetLines(): void
     {
         self::assertEmpty($this->model->getLines());
     }
@@ -45,7 +45,7 @@ final class AlbaranProveedorTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\AlbaranProveedor::getNewLine()
      */
-    public function testGetNewLine()
+    public function testGetNewLine(): void
     {
         self::assertNotEmpty($this->model->getNewLine());
     }

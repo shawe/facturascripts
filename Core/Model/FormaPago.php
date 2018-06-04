@@ -91,7 +91,7 @@ class FormaPago extends Base\ModelClass
      *
      * @return string
      */
-    public function calcularVencimiento(string $fechaInicio, string $diasDePago = '')
+    public function calcularVencimiento(string $fechaInicio, string $diasDePago = ''): string
     {
         $fecha = $this->calcularVencimiento2($fechaInicio);
 
@@ -146,9 +146,6 @@ class FormaPago extends Base\ModelClass
     /**
      * From a date returns the new due date based on this form of payment.
      * If $diasDePago is provided, they will be used for the new date.
-     *
-     * @param string $fechaInicio
-     * @param string $diasDePago dias de pago específicos para el cliente (separados por comas).
      *
      * @return string
      */

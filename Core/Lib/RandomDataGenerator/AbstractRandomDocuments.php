@@ -94,12 +94,12 @@ abstract class AbstractRandomDocuments extends AbstractRandomPeople
      *
      * @param mixed $doc
      */
-    protected function randomizeDocument(&$doc)
+    protected function randomizeDocument(&$doc): void
     {
         $doc->fecha = $this->fecha();
         $doc->hora = random_int(10, 20) . ':' . random_int(10, 59) . ':' . random_int(10, 59);
         $doc->codpago = $this->formasPago[0]->codpago;
-        $doc->codalmacen = (random_int(0, 2) === 0) ? $this->almacenes[0]->codalmacen : AppSettings::get('default', 'codalmacen');
+        $doc->codalmacen = random_int(0, 2) === 0 ? $this->almacenes[0]->codalmacen : AppSettings::get('default', 'codalmacen');
         $doc->idempresa = AppSettings::get('default', 'idempresa');
 
         foreach ($this->divisas as $div) {
@@ -125,12 +125,7 @@ abstract class AbstractRandomDocuments extends AbstractRandomPeople
                 $doc->codserie = $this->series[0]->codserie;
             }
 
-            /**
-             * FIXME: Method call uses 1 parameters, but method signature uses 0 parameters
-             * Detects if function/method call uses more parameters than the declaration.
-             */
-            /** @noinspection PhpMethodParametersCountMismatchInspection */
-            $doc->observaciones = $this->observaciones($doc->fecha);
+            $doc->observaciones = $this->observaciones();
         }
 
         if (isset($doc->numero2) && random_int(0, 4) === 0) {
@@ -207,7 +202,7 @@ abstract class AbstractRandomDocuments extends AbstractRandomPeople
      * @param bool   $recargo
      * @param int    $modStock
      */
-    protected function randomLineas(&$doc, $iddoc, $lineaClass, $regimeniva, $recargo, $modStock = 0)
+    protected function randomLineas(&$doc, $iddoc, $lineaClass, $regimeniva, $recargo, $modStock = 0): void
     {
         $imp = new Model\Impuesto();
 

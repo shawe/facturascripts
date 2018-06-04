@@ -21,7 +21,7 @@
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
-use FacturaScripts\Dinamic\Model\LineaPresupuestoCliente;
+use FacturaScripts\Dinamic\Model\LineaPresupuestoCliente as DLineaPresupuestoCliente;
 
 /**
  * Customer estimation.
@@ -64,11 +64,11 @@ class PresupuestoCliente extends Base\SalesDocument
     /**
      * Returns the lines associated with the estimation.
      *
-     * @return LineaPresupuestoCliente[]
+     * @return DLineaPresupuestoCliente[]
      */
     public function getLines(): array
     {
-        $lineaModel = new LineaPresupuestoCliente();
+        $lineaModel = new DLineaPresupuestoCliente();
         $where = [new DataBaseWhere('idpresupuesto', $this->idpresupuesto)];
         $order = ['orden' => 'DESC', 'idlinea' => 'ASC'];
 
@@ -80,11 +80,11 @@ class PresupuestoCliente extends Base\SalesDocument
      *
      * @param array $data
      *
-     * @return LineaPresupuestoCliente
+     * @return DLineaPresupuestoCliente
      */
-    public function getNewLine(array $data = []): LineaPresupuestoCliente
+    public function getNewLine(array $data = []): DLineaPresupuestoCliente
     {
-        $newLine = new LineaPresupuestoCliente($data);
+        $newLine = new DLineaPresupuestoCliente($data);
         $newLine->idpresupuesto = $this->idpresupuesto;
 
         $state = $this->getState();

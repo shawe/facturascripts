@@ -43,7 +43,7 @@ class WidgetItemCheckBox extends WidgetItem
      *
      * @return string
      */
-    public function getEditHTML($value): string
+    public function getEditHTML(string $value): string
     {
         $checked = \in_array(strtolower($value), ['true', 't', '1'], false) ? ' checked="" ' : '';
         $html = $this->getIconHTML()
@@ -65,10 +65,10 @@ class WidgetItemCheckBox extends WidgetItem
      *
      * @return string
      */
-    public function getListHTML($value): string
+    public function getListHTML(string $value): string
     {
         // FIXME: Makes no sense, because this type is not defined in annotations.
-        $checked = is_bool($value) ? $value : !is_null($value);
+        $checked = \is_bool($value) ? $value : !is_null($value);
         if ($checked) {
             return '<i class="fa fa-check" aria-hidden="true" ' . $this->getTextOptionsHTML($checked) . '></i>';
         }

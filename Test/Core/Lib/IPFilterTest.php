@@ -37,7 +37,7 @@ class IPFilterTest extends TestCase
      * @covers \FacturaScripts\Core\Lib\IPFilter::clear()
      * @covers \FacturaScripts\Core\Lib\IPFilter::setAttempt()
      */
-    public function testSetAttempt()
+    public function testSetAttempt(): void
     {
         $this->object->clear();
         $this->object->setAttempt('192.168.1.1');
@@ -51,7 +51,7 @@ class IPFilterTest extends TestCase
      * @covers \FacturaScripts\Core\Lib\IPFilter::setAttempt()
      * @covers \FacturaScripts\Core\Lib\IPFilter::isBanned
      */
-    public function testIsBanned()
+    public function testIsBanned(): void
     {
         /// forzamos el baneo de la IP
         $this->object->setAttempt('192.168.1.1');

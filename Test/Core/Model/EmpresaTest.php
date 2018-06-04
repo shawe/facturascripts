@@ -39,7 +39,7 @@ final class EmpresaTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Empresa::primaryDescriptionColumn()
      */
-    public function getPrimaryDescriptionColumn()
+    public function getPrimaryDescriptionColumn(): void
     {
         self::assertNotEmpty($this->model->primaryDescriptionColumn());
     }

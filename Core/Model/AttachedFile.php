@@ -175,7 +175,7 @@ class AttachedFile extends Base\ModelClass
             $this->idfile = $this->newCode();
         }
 
-        if ($this->path != $this->previousPath) {
+        if ($this->path !== $this->previousPath) {
             return $this->setFile();
         }
 

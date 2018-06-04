@@ -44,7 +44,7 @@ final class RoleTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Role::url()
      */
-    public function testUrl()
+    public function testUrl(): void
     {
         self::assertNotEmpty($this->model->url());
     }

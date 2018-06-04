@@ -68,7 +68,6 @@ class Calculate extends APIResourceClass
      * Overwrite and IGNORE the original method of the ancestor.
      *
      * @param string $name
-     * @param array  $params
      *
      * @return bool
      */

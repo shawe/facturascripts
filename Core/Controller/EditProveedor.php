@@ -39,7 +39,7 @@ class EditProveedor extends ExtendedController\PanelController
     /**
      * Returns the sum of the customer's total delivery notes.
      *
-     * @param ExtendedController\EditView $view
+     * @param ExtendedController\BusinessDocumentView $view
      *
      * @return string
      */
@@ -59,7 +59,7 @@ class EditProveedor extends ExtendedController\PanelController
     /**
      * Returns the sum of the client's total outstanding invoices.
      *
-     * @param ExtendedController\EditView $view
+     * @param ExtendedController\BusinessDocumentView $view
      *
      * @return string
      */
@@ -117,8 +117,8 @@ class EditProveedor extends ExtendedController\PanelController
     /**
      * Load view data
      *
-     * @param string                      $viewName
-     * @param ExtendedController\EditView $view
+     * @param string                                                                                          $viewName
+     * @param ExtendedController\EditView|ExtendedController\ListView|ExtendedController\BusinessDocumentView $view
      */
     protected function loadData($viewName, $view): void
     {

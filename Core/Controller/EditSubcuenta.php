@@ -61,8 +61,8 @@ class EditSubcuenta extends ExtendedController\PanelController
     /**
      * Load view data procedure
      *
-     * @param string                      $viewName
-     * @param ExtendedController\EditView $view
+     * @param string                                                  $viewName
+     * @param ExtendedController\EditView|ExtendedController\ListView $view
      */
     protected function loadData($viewName, $view): void
     {

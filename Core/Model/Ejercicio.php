@@ -161,9 +161,9 @@ class Ejercicio extends Base\ModelClass
     public function install(): string
     {
         return 'INSERT INTO ' . static::tableName() . ' (codejercicio,nombre,fechainicio,fechafin,'
-            . 'estado,longsubcuenta,plancontable,idasientoapertura,idasientopyg,idasientocierre) '
+            . 'estado,longsubcuenta,idasientoapertura,idasientopyg,idasientocierre) '
             . "VALUES ('" . date('Y') . "','" . date('Y') . "'," . self::$dataBase->var2str(date('01-01-Y'))
-            . ', ' . self::$dataBase->var2str(date('31-12-Y')) . ",'ABIERTO',10,'08',null,null,null);";
+            . ', ' . self::$dataBase->var2str(date('31-12-Y')) . ",'ABIERTO',10,NULL,NULL,NULL);";
     }
 
     /**
@@ -179,7 +179,7 @@ class Ejercicio extends Base\ModelClass
     /**
      * Name of the exercise.
      *
-     * @var string
+     * @return string
      */
     public static function tableName(): string
     {

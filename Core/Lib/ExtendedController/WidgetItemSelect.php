@@ -57,7 +57,7 @@ class WidgetItemSelect extends WidgetItem
      *
      * @return string
      */
-    public function getEditHTML($value): string
+    public function getEditHTML(string $value): string
     {
         $specialAttributes = $this->specialAttributes();
 
@@ -99,7 +99,7 @@ class WidgetItemSelect extends WidgetItem
      *
      * @return string
      */
-    public function getListHTML($value): string
+    public function getListHTML(string $value): string
     {
         if ($value === null || $value === '') {
             return '-';

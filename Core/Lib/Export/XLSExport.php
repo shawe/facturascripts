@@ -30,7 +30,7 @@ use Symfony\Component\HttpFoundation\Response;
 class XLSExport implements ExportInterface
 {
 
-    const LIST_LIMIT = 1000;
+    public const LIST_LIMIT = 1000;
 
     /**
      * XLSX object.
@@ -99,7 +99,7 @@ class XLSExport implements ExportInterface
      * @param array                         $columns
      * @param string                        $title
      */
-    public function generateListModelPage($model, array $where = [], array $order = [], int $offset, array $columns = [], string $title = ''): void
+    public function generateListModelPage($model, array $where, array $order, int $offset, array $columns, string $title = ''): void
     {
         /// Get the columns
         $tableCols = [];

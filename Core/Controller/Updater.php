@@ -36,9 +36,9 @@ use ZipArchive;
 class Updater extends Controller
 {
 
-    const CORE_PROJECT_ID = 1;
-    const CORE_VERSION = 2018.003;
-    const UPDATE_CORE_URL = 'https://beta.facturascripts.com/DownloadBuild';
+    public const CORE_PROJECT_ID = 1;
+    public const CORE_VERSION = 2018.003;
+    public const UPDATE_CORE_URL = 'https://beta.facturascripts.com/DownloadBuild';
 
     /**
      * List of items to be updated.
@@ -105,6 +105,7 @@ class Updater extends Controller
     {
         $idItem = $this->request->get('item', '');
         foreach ($this->updaterItems as $key => $item) {
+            /** @noinspection TypeUnsafeComparisonInspection */
             if ($item['id'] != $idItem) {
                 continue;
             }
@@ -148,7 +149,7 @@ class Updater extends Controller
     private function getUpdateItems(): array
     {
         $cacheData = $this->cache->get('UPDATE_ITEMS');
-        if (is_array($cacheData)) {
+        if (\is_array($cacheData)) {
             return $cacheData;
         }
 
@@ -159,7 +160,7 @@ class Updater extends Controller
         }
 
         $items = [];
-        foreach ($json as $projectData) {
+        foreach ((array) $json as $projectData) {
             if ($projectData['project'] === self::CORE_PROJECT_ID) {
                 $this->getUpdateItemsCore($items, $projectData);
             }
@@ -175,7 +176,7 @@ class Updater extends Controller
      */
     private function getUpdateItemsCore(array &$items, array $projectData): void
     {
-        foreach ($projectData['builds'] as $build) {
+        foreach ((array) $projectData['builds'] as $build) {
             if ($build['stable'] && $build['version'] > self::CORE_VERSION) {
                 $items[] = [
                     'id' => 'CORE',

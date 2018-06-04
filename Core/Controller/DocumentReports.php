@@ -212,11 +212,6 @@ class DocumentReports extends Controller
         foreach ($this->sources as $source) {
             $data = $this->populateTable($source, $step, $format);
             $this->dataTable[$source->source] = $data;
-            /**
-             * FIXME: Perhaps array_merge/array_replace can be used instead.
-             * Feel free to disable the inspection if '+' is intended.
-             * https://github.com/kalessil/phpinspectionsea/blob/master/docs/probable-bugs.md#addition-operator-applied-to-arrays
-             */
             /** @noinspection AdditionOperationOnArraysInspection */
             $this->labels += array_keys($data);
             unset($data);

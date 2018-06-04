@@ -31,7 +31,7 @@ class PluginDeploy
     /**
      * The directory separator.
      */
-    const DS = \DIRECTORY_SEPARATOR;
+    public const DS = \DIRECTORY_SEPARATOR;
 
     /**
      *
@@ -132,7 +132,7 @@ class PluginDeploy
         $menuManager->reload();
 
         /// checks app homepage
-        if (!in_array(AppSettings::get('default', 'homepage', ''), $pageNames)) {
+        if (!\in_array(AppSettings::get('default', 'homepage', ''), $pageNames, false)) {
             $appSettings = new AppSettings();
             $appSettings->set('default', 'homepage', 'AdminPlugins');
             $appSettings->save();
@@ -148,7 +148,7 @@ class PluginDeploy
      */
     private function createFolder(string $folder): bool
     {
-        if (!file_exists($folder) && !@mkdir($folder, 0775, true)) {
+        if (!file_exists($folder) && !mkdir($folder, 0775, true) && !is_dir($folder)) {
             $this->minilog->critical($this->i18n->trans('cant-create-folder', ['%folderName%' => $folder]));
             return false;
         }

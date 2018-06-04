@@ -45,6 +45,8 @@ interface VisualItemInterface
      * Generates the HTML code to display the header for the visual element
      *
      * @param string $value
+     *
+     * @return string
      */
     public function getHeaderHTML(string $value): string;
 

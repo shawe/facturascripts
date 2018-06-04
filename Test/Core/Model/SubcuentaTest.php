@@ -39,7 +39,7 @@ final class SubcuentaTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Subcuenta::getSpecialAccountCode()
      */
-    public function testGetSpecialAccountCode()
+    public function testGetSpecialAccountCode(): void
     {
         foreach ($this->model->all() as $subcuenta) {
             $subcuenta->getSpecialAccountCode();
@@ -49,7 +49,7 @@ final class SubcuentaTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Subcuenta::getIdAccount()
      */
-    public function testGetIdAccount()
+    public function testGetIdAccount(): void
     {
         foreach ($this->model->all() as $subcuenta) {
             $subcuenta->getIdAccount();
@@ -59,7 +59,7 @@ final class SubcuentaTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Subcuenta::updateBalance()
      */
-    public function testUpdateBalance()
+    public function testUpdateBalance(): void
     {
         foreach ($this->model->all() as $subcuenta) {
             $subcuenta->updateBalance(\date('d-m-Y'), 0, 0);
@@ -74,7 +74,7 @@ final class SubcuentaTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Subcuenta::url()
      */
-    public function testUrl()
+    public function testUrl(): void
     {
         self::assertNotEmpty($this->model->url());
     }

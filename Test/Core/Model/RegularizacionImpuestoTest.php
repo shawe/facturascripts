@@ -39,7 +39,7 @@ final class RegularizacionImpuestoTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\RegularizacionImpuesto::getPartidas()
      */
-    public function testGetPartidas()
+    public function testGetPartidas(): void
     {
         $this->model->getPartidas();
     }
@@ -47,7 +47,7 @@ final class RegularizacionImpuestoTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\RegularizacionImpuesto::getFechaInside()
      */
-    public function testGetFechaInside()
+    public function testGetFechaInside(): void
     {
         $this->model->getFechaInside(\date('d-m-Y'));
     }
@@ -55,7 +55,7 @@ final class RegularizacionImpuestoTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\RegularizacionImpuesto::loadNextPeriod()
      */
-    public function testLoadNextPeriod()
+    public function testLoadNextPeriod(): void
     {
         $this->model->loadNextPeriod();
     }

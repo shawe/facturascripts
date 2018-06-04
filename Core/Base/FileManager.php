@@ -75,21 +75,23 @@ class FileManager
      * @param string $src
      * @param string $dst
      */
-    public static function recurseCopy(string $src, string $dst)
+    public static function recurseCopy(string $src, string $dst): void
     {
         $folder = opendir($src);
-        @mkdir($dst);
-        while (false !== ($file = readdir($folder))) {
-            if ($file === '.' || $file === '..') {
-                continue;
+        if (\is_resource($folder)) {
+            @mkdir($dst);
+            while (false !== ($file = readdir($folder))) {
+                if ($file === '.' || $file === '..') {
+                    continue;
+                }
+                if (is_dir($src . DIRECTORY_SEPARATOR . $file)) {
+                    static::recurseCopy($src . DIRECTORY_SEPARATOR . $file, $dst . DIRECTORY_SEPARATOR . $file);
+                } else {
+                    copy($src . DIRECTORY_SEPARATOR . $file, $dst . DIRECTORY_SEPARATOR . $file);
+                }
             }
-            if (is_dir($src . DIRECTORY_SEPARATOR . $file)) {
-                static::recurseCopy($src . DIRECTORY_SEPARATOR . $file, $dst . DIRECTORY_SEPARATOR . $file);
-            } else {
-                copy($src . DIRECTORY_SEPARATOR . $file, $dst . DIRECTORY_SEPARATOR . $file);
-            }
+            closedir($folder);
         }
-        closedir($folder);
     }
 
     /**
@@ -104,7 +106,7 @@ class FileManager
     public static function scanFolder(string $folder, bool $recursive = false, array $exclude = ['.', '..']): array
     {
         $scan = scandir($folder, SCANDIR_SORT_ASCENDING);
-        if (!is_array($scan)) {
+        if (!\is_array($scan)) {
             return [];
         }
 

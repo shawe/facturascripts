@@ -67,7 +67,7 @@ class AccountingPlanImport
      * @param string $filePath
      * @param string $codejercicio
      */
-    public function importCSV(string $filePath, string $codejercicio)
+    public function importCSV(string $filePath, string $codejercicio): void
     {
         if (!$this->ejercicio->loadFromCode($codejercicio)) {
             $this->miniLog->error($this->i18n->trans('error'));
@@ -83,7 +83,7 @@ class AccountingPlanImport
      * @param string $filePath
      * @param string $codejercicio
      */
-    public function importXML(string $filePath, string $codejercicio)
+    public function importXML(string $filePath, string $codejercicio): void
     {
         if (!$this->ejercicio->loadFromCode($codejercicio)) {
             $this->miniLog->error($this->i18n->trans('error'));
@@ -106,7 +106,7 @@ class AccountingPlanImport
      * @param string $definition
      * @param string $parentCode
      */
-    private function createAccount(string $code, string $definition, string $parentCode = '')
+    private function createAccount(string $code, string $definition, string $parentCode = ''): void
     {
         $account = new Model\Cuenta();
         $parent = new Model\Cuenta();
@@ -144,7 +144,7 @@ class AccountingPlanImport
      * @param string $description
      * @param string $parentCode
      */
-    private function createSubaccount(string $code, string $description, string $parentCode)
+    private function createSubaccount(string $code, string $description, string $parentCode): void
     {
         $subaccount = new Model\Subcuenta();
         $account = new Model\Cuenta();
@@ -181,13 +181,14 @@ class AccountingPlanImport
      *
      * @return \SimpleXMLElement
      */
-    private function getData(string $filePath)
+    private function getData(string $filePath): \SimpleXMLElement
     {
         if (file_exists($filePath)) {
-            return simplexml_load_string(file_get_contents($filePath)) ? : simplexml_load_string('');
+            $content = simplexml_load_string(file_get_contents($filePath));
+            return $content !== false ? $content : new \SimpleXMLElement('');
         }
 
-        return simplexml_load_string('');
+        return new \SimpleXMLElement('');
     }
 
     /**
@@ -259,8 +260,8 @@ class AccountingPlanImport
         $length = [];
         foreach ($csv->data as $value) {
             $key = $value[$csv->titles[0]];
-            if (strlen($key) > 0) {
-                $length[] = strlen($key);
+            if (\strlen($key) > 0) {
+                $length[] = \strlen($key);
                 $accountPlan[$key] = utf8_encode($value[$csv->titles[1]]);
             }
         }
@@ -273,7 +274,7 @@ class AccountingPlanImport
         ksort($accountPlan);
 
         foreach ($accountPlan as $key => $value) {
-            switch (strlen($key)) {
+            switch (\strlen($key)) {
                 case $minLength:
                     $this->createAccount($key, $value);
                     break;
@@ -307,7 +308,7 @@ class AccountingPlanImport
             if ($strCode === $account) {
                 continue;
             }
-            if (strpos($account, $strCode) === 0 && strlen($strCode) > strlen($parentCode)) {
+            if (strpos($account, $strCode) === 0 && \strlen($strCode) > \strlen($parentCode)) {
                 $parentCode = $code;
             }
         }

@@ -63,10 +63,10 @@ class EditArticulo extends ExtendedController\PanelController
     /**
      * Load view data procedure
      *
-     * @param string                      $viewName
-     * @param ExtendedController\EditView $view
+     * @param string                                                  $viewName
+     * @param ExtendedController\EditView|ExtendedController\ListView $view
      */
-    protected function loadData(string $viewName, $view): void
+    protected function loadData($viewName, $view): void
     {
         if ($this->getViewModelValue('EditArticulo', 'secompra') === false) {
             unset($this->views['ListArticuloProveedor']);

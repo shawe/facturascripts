@@ -71,10 +71,10 @@ class EditAlbaranProveedor extends ExtendedController\BusinessDocumentController
     /**
      * Load data view procedure
      *
-     * @param string                                  $keyView
+     * @param string                                  $viewName
      * @param ExtendedController\BusinessDocumentView $view
      */
-    protected function loadData(string $viewName, $view): void
+    protected function loadData($viewName, $view): void
     {
         if ($viewName === 'EditAlbaranProveedor') {
             $idalbaran = $this->getViewModelValue('Document', 'idalbaran');

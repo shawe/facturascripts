@@ -44,7 +44,7 @@ final class DashboardDataTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\DashboardData::checkArrayData()
      */
-    public function testCheckArrayData()
+    public function testCheckArrayData(): void
     {
         $data = [
             'id' => 10,
@@ -59,7 +59,7 @@ final class DashboardDataTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\DashboardData::loadFromData()
      */
-    public function testLoadFromData()
+    public function testLoadFromData(): void
     {
         $data = [
             'properties' => 'test',

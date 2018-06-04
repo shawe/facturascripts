@@ -39,7 +39,7 @@ final class AtributoTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Atributo::getByNombre()
      */
-    public function testGetByNombre()
+    public function testGetByNombre(): void
     {
         $this->model->getByNombre('a');
     }
@@ -47,7 +47,7 @@ final class AtributoTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Atributo::valores()
      */
-    public function testValores()
+    public function testValores(): void
     {
         $this->model->valores();
     }

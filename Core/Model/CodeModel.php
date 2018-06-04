@@ -31,8 +31,8 @@ use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 class CodeModel
 {
 
-    const ALL_LIMIT = 500;
-    const SEARCH_LIMIT = 50;
+    public const ALL_LIMIT = 500;
+    public const SEARCH_LIMIT = 50;
 
     /**
      * It provides direct access to the database.

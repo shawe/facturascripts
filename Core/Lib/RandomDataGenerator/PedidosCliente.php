@@ -44,7 +44,7 @@ class PedidosCliente extends AbstractRandomDocuments
      *
      * @return int
      */
-    public function generate($num = 50): int
+    public function generate(int $num = 50): int
     {
         $ped = $this->model;
         $this->shuffle($clientes, new Model\Cliente());

@@ -33,7 +33,7 @@ class EditSettings extends ExtendedController\PanelController
     /**
      * Constant start of name for generic settings.
      */
-    const KEY_SETTINGS = 'Settings';
+    public const KEY_SETTINGS = 'Settings';
 
     /**
      * Returns the configuration property value for a specified $field
@@ -43,7 +43,7 @@ class EditSettings extends ExtendedController\PanelController
      *
      * @return mixed
      */
-    public function getViewModelValue($model, string $field)
+    public function getFieldValue($model, string $field)
     {
         if (isset($model->{$field})) {
             return $model->{$field};
@@ -116,7 +116,7 @@ class EditSettings extends ExtendedController\PanelController
     {
         switch ($action) {
             case 'export':
-                $this->setTemplate(false);
+                $this->setTemplate(null);
                 $this->exportAction();
                 break;
 

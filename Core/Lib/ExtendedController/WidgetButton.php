@@ -42,6 +42,13 @@ class WidgetButton implements VisualItemInterface
     public $color;
 
     /**
+     * Field name with the data that the widget displays
+     *
+     * @var string
+     */
+    public $fieldName;
+
+    /**
      * Aditional code for the button.
      *
      * @var string
@@ -84,17 +91,26 @@ class WidgetButton implements VisualItemInterface
     public $type;
 
     /**
+     * Indicates that the field is read only
+     *
+     * @var bool
+     */
+    public $readOnly;
+
+    /**
      * WidgetButton constructor.
      */
     public function __construct()
     {
         $this->action = '';
         $this->color = 'light';
+        $this->fieldName = '';
         $this->hint = '';
         $this->icon = '';
         $this->id = '';
         $this->label = '';
         $this->onClick = '';
+        $this->readOnly = false;
         $this->type = 'action';
     }
 
@@ -244,9 +260,9 @@ class WidgetButton implements VisualItemInterface
         $onclick = empty($this->onClick) ? 'execActionForm()' : $this->onClick;
         $param = '\'' . $this->action . '\',\'' . $formName . '\'';
 
-        return '<button type="button" name="' . $this->action . '" class="' . $class . ' btn btn-' . $this->color . '"'
+        return '<button type="button" name="' . $this->action . '" class="' . $class . ' btn btn-' . $this->color . '" '
             . $this->getIdHTML()
-            . $this->getOnClickHTML($onclick, $param) . $hint . '>'
+            . $this->getOnClickHTML($onclick, $param) . $hint . ' >'
             . $this->getIconHTML()
             . $label
             . '</button>';

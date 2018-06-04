@@ -170,7 +170,7 @@ class InfoStateComponent extends BaseComponent implements ComponentInterface
         $modelObj = new $model();
 
         if ($modelObj instanceof Model\Base\ModelClass) {
-            return ['table' => $modelObj->tableName(), 'url' => $modelObj->url('list')];
+            return ['table' => $modelObj::tableName(), 'url' => $modelObj->url('list')];
         }
         return [];
     }

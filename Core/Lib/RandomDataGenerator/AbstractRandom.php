@@ -21,6 +21,7 @@ namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
 use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Dinamic\Model;
+use FacturaScripts\Dinamic\Model\Base\ModelClass;
 
 /**
  * Abstract class that contains the basic methods to populate a table with random data.
@@ -33,12 +34,12 @@ abstract class AbstractRandom
     /**
      * Constant for dinamic models.
      */
-    const MODEL_NAMESPACE = '\\FacturaScripts\\Dinamic\\Model\\';
+    public const MODEL_NAMESPACE = '\\FacturaScripts\\Dinamic\\Model\\';
 
     /**
      * Contains the model to generate random data.
      *
-     * @var mixed
+     * @var ModelClass
      */
     protected $model;
 
@@ -67,7 +68,7 @@ abstract class AbstractRandom
      *
      * @return mixed
      */
-    abstract public function generate($num = 50): int;
+    abstract public function generate(int $num = 50): int;
 
     /**
      * Returns a random number between $min and $max1
@@ -85,7 +86,7 @@ abstract class AbstractRandom
         $cantidad = random_int($min, $max1);
 
         if (random_int(0, 9) === 0) {
-            $cantidad = random_int($min, $max2);
+            $cantidad = random_int($min, (int) $max2);
         } elseif ($cantidad < $max1 && random_int(0, 4) === 0) {
             $cantidad += round(random_int(1, 5) / random_int(1, 10), random_int(0, 3));
             $cantidad = min([$max1, $cantidad]);
@@ -261,13 +262,15 @@ abstract class AbstractRandom
     /**
      * Suffle all items from $model and put it to $variable.
      *
-     * @param array                 $variable
-     * @param Model\Base\ModelClass $model
+     * @param array $variable
+     * @param mixed $model
      */
-    public function shuffle(&$variable, $model)
+    public function shuffle(&$variable, $model): void
     {
-        $variable = $model->all();
-        shuffle($variable);
+        if ($model instanceof ModelClass) {
+            $variable = $model->all();
+            shuffle($variable);
+        }
     }
 
     /**

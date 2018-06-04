@@ -444,7 +444,7 @@ class DataBase
             return 'NULL';
         }
 
-        if (is_bool($val)) {
+        if (\is_bool($val)) {
             return $val ? 'TRUE' : 'FALSE';
         }
 

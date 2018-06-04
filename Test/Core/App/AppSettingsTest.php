@@ -37,7 +37,7 @@ class AppSettingsTest extends TestCase
     /**
      * @covers \FacturaScripts\Core\App\AppSettings::load()
      */
-    public function testLoad()
+    public function testLoad(): void
     {
         $this->object->load();
     }
@@ -45,7 +45,7 @@ class AppSettingsTest extends TestCase
     /**
      * @covers \FacturaScripts\Core\App\AppSettings::get()
      */
-    public function testGet()
+    public function testGet(): void
     {
         // FIXME: Must return 'ESP' because is previously call to load()
         //self::assertNotNull($this->object::get('default', 'codpais'));
@@ -56,7 +56,7 @@ class AppSettingsTest extends TestCase
     /**
      * @covers \FacturaScripts\Core\App\AppSettings::set()
      */
-    public function testSet()
+    public function testSet(): void
     {
         $this->object->set('default', 'prop1', 'val1');
         $this->object->set('not-default', 'prop2', 'val2');
@@ -65,7 +65,7 @@ class AppSettingsTest extends TestCase
     /**
      * @covers \FacturaScripts\Core\App\AppSettings::save()
      */
-    public function testSave()
+    public function testSave(): void
     {
         $this->object->save();
     }

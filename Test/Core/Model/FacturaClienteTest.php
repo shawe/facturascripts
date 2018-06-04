@@ -39,7 +39,7 @@ final class FacturaClienteTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\FacturaCliente::getLines()
      */
-    public function testGetLines()
+    public function testGetLines(): void
     {
         self::assertEmpty($this->model->getLines());
     }
@@ -47,7 +47,7 @@ final class FacturaClienteTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\FacturaCliente::getNewLine()
      */
-    public function testGetNewLine()
+    public function testGetNewLine(): void
     {
         self::assertNotEmpty($this->model->getNewLine());
     }

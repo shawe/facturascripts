@@ -76,7 +76,7 @@ class Articulos extends AbstractRandom
      *
      * @return int
      */
-    public function generate($num = 50): int
+    public function generate(int $num = 50): int
     {
         $art = $this->model;
         for ($generated = 0; $generated < $num; ++$generated) {
@@ -90,7 +90,7 @@ class Articulos extends AbstractRandom
                 break;
             }
 
-            if (random_int(0, 2) == 0) {
+            if (random_int(0, 2) === 0) {
                 $this->sumStock($art, random_int(0, 1000));
             } else {
                 $this->sumStock($art, random_int(0, 20));
@@ -105,7 +105,7 @@ class Articulos extends AbstractRandom
      *
      * @param Model\Articulo $art
      */
-    private function setArticuloData(Model\Articulo $art)
+    private function setArticuloData(Model\Articulo $art): void
     {
         $art->descripcion = $this->descripcion();
         $art->codimpuesto = $this->impuestos[0]->codimpuesto;

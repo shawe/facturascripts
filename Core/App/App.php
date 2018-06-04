@@ -152,7 +152,7 @@ abstract class App
      *
      * @param string $nick
      */
-    public function close(string $nick = '')
+    public function close(string $nick = ''): void
     {
         new Base\MiniLogSave($this->request->getClientIp(), $nick);
         $this->dataBase->close();
@@ -176,7 +176,7 @@ abstract class App
     /**
      * Returns param number $num in uri.
      *
-     * @param int $num
+     * @param string $num
      *
      * @return string
      */

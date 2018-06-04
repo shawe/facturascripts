@@ -44,7 +44,7 @@ class Fabricantes extends AbstractRandomPeople
      *
      * @return int
      */
-    public function generate($num = 50): int
+    public function generate(int $num = 50): int
     {
         $fabri = $this->model;
         for ($generated = 0; $generated < $num; ++$generated) {

@@ -62,7 +62,7 @@ class Settings extends Base\ModelClass
      *
      * @param array $data
      */
-    public function checkArrayData(array &$data)
+    public function checkArrayData(array &$data): void
     {
         $properties = [];
         foreach ($data as $key => $value) {
@@ -89,7 +89,7 @@ class Settings extends Base\ModelClass
      * @param array $data
      * @param array $exclude
      */
-    public function loadFromData(array $data = [], array $exclude = [])
+    public function loadFromData(array $data = [], array $exclude = []): void
     {
         parent::loadFromData($data, ['properties', 'action']);
         $this->properties = isset($data['properties']) ? json_decode($data['properties'], true) : [];

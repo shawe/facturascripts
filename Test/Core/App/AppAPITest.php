@@ -37,7 +37,7 @@ class AppAPITest extends TestCase
     /**
      * @covers \FacturaScripts\Core\App\AppAPI::connect()
      */
-    public function testConnect()
+    public function testConnect(): void
     {
         self::assertTrue($this->object->connect());
     }
@@ -46,7 +46,7 @@ class AppAPITest extends TestCase
      * @covers \FacturaScripts\Core\App\AppAPI::run()
      * @covers \FacturaScripts\Core\App\AppSettings::get()
      */
-    public function testRun()
+    public function testRun(): void
     {
         $mustRun = ('true' === AppSettings::get('default', 'enable_api', 'false'));
         self::assertEquals($this->object->run(), $mustRun);

@@ -39,7 +39,7 @@ final class GrupoClientesTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\GrupoClientes::primaryDescriptionColumn()
      */
-    public function getPrimaryDescriptionColumn()
+    public function getPrimaryDescriptionColumn(): void
     {
         self::assertNotEmpty($this->model->primaryDescriptionColumn());
     }
@@ -52,7 +52,7 @@ final class GrupoClientesTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\GrupoClientes::url()
      */
-    public function testUrl()
+    public function testUrl(): void
     {
         self::assertNotEmpty($this->model->url());
     }

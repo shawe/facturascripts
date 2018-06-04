@@ -30,9 +30,9 @@ use FacturaScripts\Dinamic\Model;
 class BaseComponent
 {
 
-    const MODEL_NAMESPACE = 'FacturaScripts\\Dinamic\\Model\\';
-    const DIR_COMPONENTS = 'FacturaScripts\\Dinamic\\Lib\\Dashboard\\';
-    const SUFIX_COMPONENTS = 'Component';
+    public const MODEL_NAMESPACE = 'FacturaScripts\\Dinamic\\Model\\';
+    public const DIR_COMPONENTS = 'FacturaScripts\\Dinamic\\Lib\\Dashboard\\';
+    public const SUFIX_COMPONENTS = 'Component';
 
     /**
      * Name of visual component.
@@ -86,9 +86,9 @@ class BaseComponent
     /**
      * Return the template to use for this component.
      *
-     * @return string
+     * @return string|null
      */
-    public function getTemplate(): string
+    public function getTemplate(): ?string
     {
         return $this->component . self::SUFIX_COMPONENTS . '.html.twig';
     }

@@ -35,7 +35,7 @@ interface DataViewInterface
      * @param string $columnName
      * @param bool   $disabled
      */
-    public function disableColumn($columnName, $disabled);
+    public function disableColumn(string $columnName, bool $disabled): void;
 
     /**
      * Column list and its configuration
@@ -43,7 +43,7 @@ interface DataViewInterface
      *
      * @return GroupItem[]
      */
-    public function getColumns();
+    public function getColumns(): array;
 
     /**
      * Load the data in the cursor property, according to the where filter specified.
@@ -55,5 +55,5 @@ interface DataViewInterface
      * @param int             $offset
      * @param int             $limit
      */
-    public function loadData($code = false, array $where = [], array $order = [], $offset = 0, $limit = FS_ITEM_LIMIT);
+    public function loadData($code = false, array $where = [], array $order = [], int $offset = 0, int $limit = FS_ITEM_LIMIT);
 }

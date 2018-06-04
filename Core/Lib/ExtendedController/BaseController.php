@@ -56,7 +56,7 @@ abstract class BaseController extends Base\Controller
     /**
      * List of views displayed by the controller.
      *
-     * @var EditListView[]|EditView[]|GridView[]|ListView[]
+     * @var BaseView[]|EditListView[]|EditView[]|GridView[]|ListView[]|BusinessDocumentView[]
      */
     public $views;
 
@@ -80,7 +80,7 @@ abstract class BaseController extends Base\Controller
      * @param string          $className
      * @param string          $uri
      */
-    public function __construct(Cache $cache, Translator $i18n, MiniLog $miniLog, string $className, string $uri = '')
+    public function __construct(Base\Cache $cache, Base\Translator $i18n, Base\MiniLog $miniLog, string $className, string $uri = '')
     {
         parent::__construct($cache, $i18n, $miniLog, $className, $uri);
 
@@ -167,7 +167,7 @@ abstract class BaseController extends Base\Controller
 
         /// get file uploads
         foreach ($this->request->files->all() as $key => $uploadFile) {
-            if (is_null($uploadFile)) {
+            if (\is_null($uploadFile)) {
                 continue;
             }
             if ($uploadFile instanceof UploadedFile) {

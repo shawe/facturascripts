@@ -45,7 +45,7 @@ final class StockTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Stock::totalFromArticulo()
      */
-    public function testLoadFromData()
+    public function testLoadFromData(): void
     {
         $ref = 'test';
 
@@ -63,7 +63,7 @@ final class StockTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Stock::url()
      */
-    public function testUrl()
+    public function testUrl(): void
     {
         self::assertNotEmpty($this->model->url());
     }

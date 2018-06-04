@@ -54,7 +54,7 @@ class Ledger extends AccountingBase
         $ledgerAccount = [];
         //Process each line of the results
         foreach ($results as $line) {
-            $account = ($grouping) ? $line['codcuenta'] : 0;
+            $account = $grouping ? $line['codcuenta'] : 0;
             if ($grouping) {
                 $this->processHeader($ledgerAccount[$account], $line);
                 $ledger[$account][0] = $this->processLine($ledgerAccount[$account], $grouping);
@@ -124,7 +124,7 @@ class Ledger extends AccountingBase
      * @param array $ledgerAccount
      * @param array $line
      */
-    protected function processHeader(array &$ledgerAccount, array $line)
+    protected function processHeader(array &$ledgerAccount, array $line): void
     {
         $ledgerAccount['fecha'] = false;
         $ledgerAccount['numero'] = false;
@@ -148,14 +148,14 @@ class Ledger extends AccountingBase
      *
      * @return array
      */
-    protected function processLine(array $line, bool $grouping)
+    protected function processLine(array $line, bool $grouping): array
     {
         $item = [];
         if (!$grouping) {
-            $item['fecha'] = ($line['fecha']) ?? date('d-m-Y', strtotime($line['fecha']));
-            $item['numero'] = ($line['numero']) ?? $line['numero'];
+            $item['fecha'] = $line['fecha'] ?? date('d-m-Y', strtotime($line['fecha']));
+            $item['numero'] = $line['numero'] ?? $line['numero'];
         }
-        $item['cuenta'] = (isset($line['cuenta'])) ? $line['cuenta'] : $line['codsubcuenta'];
+        $item['cuenta'] = $line['cuenta'] ?? $line['codsubcuenta'];
         $item['concepto'] = Utils::fixHtml($line['concepto']);
         $item['debe'] = $this->divisaTools::format($line['debe'], FS_NF0, '');
         $item['haber'] = $this->divisaTools::format($line['haber'], FS_NF0, '');

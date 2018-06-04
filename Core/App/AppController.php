@@ -42,7 +42,7 @@ class AppController extends App
     /**
      * Time for generate new log key.
      */
-    const USER_UPDATE_ACTIVITY_PERIOD = 3600;
+    public const USER_UPDATE_ACTIVITY_PERIOD = 3600;
 
     /**
      * Controller loaded
@@ -104,9 +104,9 @@ class AppController extends App
     /**
      * @param string $nick
      */
-    public function close(string $nick = '')
+    public function close(string $nick = ''): void
     {
-        parent::close(false !== $this->user ? $this->user->nick : '');
+        parent::close(null !== $this->user ? $this->user->nick : $nick);
     }
 
     /**
@@ -188,7 +188,7 @@ class AppController extends App
      *
      * @param string $pageName
      */
-    private function loadController(string $pageName)
+    private function loadController(string $pageName): void
     {
         if (FS_DEBUG) {
             $this->debugBar['time']->stopMeasure('init');
@@ -207,7 +207,7 @@ class AppController extends App
 
             try {
                 $this->controller = new $controllerName($this->cache, $this->i18n, $this->miniLog, $pageName, $this->uri);
-                if ($this->user === false) {
+                if ($this->user === null) {
                     $this->controller->publicCore($this->response);
                     $template = $this->controller->getTemplate();
                 } elseif ($permissions->allowAccess) {
@@ -228,7 +228,7 @@ class AppController extends App
         }
 
         $this->response->setStatusCode($httpStatus);
-        if ($template) {
+        if ($template !== null) {
             if (FS_DEBUG) {
                 $this->debugBar['time']->stopMeasure('loadController');
                 $this->debugBar['time']->startMeasure('renderHtml', 'AppController::renderHtml()');
@@ -245,7 +245,7 @@ class AppController extends App
      * @param string $template html file to use
      * @param string $controllerName
      */
-    private function renderHtml(string $template, string $controllerName = '')
+    private function renderHtml(string $template, string $controllerName = ''): void
     {
         /// HTML template variables
         $templateVars = [
@@ -285,9 +285,9 @@ class AppController extends App
     /**
      * User authentication, returns the user when successful, or false when not.
      *
-     * @return User|bool
+     * @return User|null
      */
-    private function userAuth()
+    private function userAuth(): ?User
     {
         $user = new User();
         $nick = $this->request->request->get('fsNick', '');
@@ -305,12 +305,12 @@ class AppController extends App
 
             $this->ipFilter->setAttempt($this->request->getClientIp());
             $this->miniLog->alert($this->i18n->trans('login-password-fail'));
-            return false;
+            return null;
         }
 
         $this->ipFilter->setAttempt($this->request->getClientIp());
         $this->miniLog->alert($this->i18n->trans('login-user-not-found'));
-        return false;
+        return null;
     }
 
     /**
@@ -318,13 +318,13 @@ class AppController extends App
      *
      * @param User $user
      *
-     * @return User|bool
+     * @return User|null
      */
-    private function cookieAuth(User $user)
+    private function cookieAuth(User $user): ?User
     {
         $cookieNick = $this->request->cookies->get('fsNick', '');
         if ($cookieNick === '') {
-            return false;
+            return null;
         }
 
         if ($user->loadFromCode($cookieNick)) {
@@ -336,11 +336,11 @@ class AppController extends App
 
             $this->miniLog->alert($this->i18n->trans('login-cookie-fail'));
             $this->response->headers->clearCookie('fsNick');
-            return false;
+            return null;
         }
 
         $this->miniLog->alert($this->i18n->trans('login-user-not-found'));
-        return false;
+        return null;
     }
 
     /**

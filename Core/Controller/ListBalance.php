@@ -65,7 +65,7 @@ class ListBalance extends ExtendedController\ListController
      * @param array  $where
      * @param int    $offset
      */
-    protected function loadData($viewName, $where, $offset): void
+    protected function loadData($viewName, array $where = [], int $offset): void
     {
         switch ($viewName) {
             case 'ListBalance-1':

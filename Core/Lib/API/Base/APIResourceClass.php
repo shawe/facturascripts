@@ -130,7 +130,6 @@ abstract class APIResourceClass
      * Process the resource, allowing POST/PUT/DELETE/GET ALL actions
      *
      * @param string $name   of resource, used only if are several.
-     * @param array  $params . Params are URI segments. Can be an empty array, not null.
      *
      * @return bool
      */

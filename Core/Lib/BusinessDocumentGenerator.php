@@ -31,7 +31,7 @@ class BusinessDocumentGenerator
     /**
      * Constant for dinamic models.
      */
-    const MODEL_NAMESPACE = '\\FacturaScripts\\Dinamic\\Model\\';
+    public const MODEL_NAMESPACE = '\\FacturaScripts\\Dinamic\\Model\\';
 
     /**
      * Generates a new business document.

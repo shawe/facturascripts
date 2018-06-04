@@ -45,14 +45,14 @@ interface ComponentInterface
      *
      * @param array $data
      */
-    public function saveData($data);
+    public function saveData(array $data);
 
     /**
      * Return the template to use for this component.
      *
-     * @return string|false
+     * @return string|null
      */
-    public function getTemplate();
+    public function getTemplate(): ?string;
 
     /**
      * Return the number of columns to display width this component.
@@ -75,5 +75,5 @@ interface ComponentInterface
      *
      * @return string
      */
-    public function url($id): string;
+    public function url(string $id): string;
 }

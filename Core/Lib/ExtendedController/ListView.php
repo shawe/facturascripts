@@ -36,8 +36,8 @@ class ListView extends BaseView implements DataViewInterface
     /**
      * Order constants
      */
-    const ICON_ASC = 'fa-sort-amount-asc';
-    const ICON_DESC = 'fa-sort-amount-desc';
+    public const ICON_ASC = 'fa-sort-amount-asc';
+    public const ICON_DESC = 'fa-sort-amount-desc';
 
     /**
      * Tools to work with currencies.
@@ -172,9 +172,6 @@ class ListView extends BaseView implements DataViewInterface
     public function addSearchIn(array $fields): void
     {
         if (\is_array($fields)) {
-            // TODO: Error: Perhaps array_merge/array_replace can be used instead.
-            // Feel free to disable the inspection if '+' is intended.
-            //$this->searchIn = array_merge($this->searchIn, $fields);
             /** @noinspection AdditionOperationOnArraysInspection */
             $this->searchIn += $fields;
         }
@@ -223,7 +220,7 @@ class ListView extends BaseView implements DataViewInterface
     public function loadData($code = false, array $where = [], array $order = [], int $offset = 0, int $limit = FS_ITEM_LIMIT): void
     {
         $this->order = empty($order) ? $this->getSQLOrderBy($this->selectedOrderBy) : $order;
-        $this->count = is_null($this->model) ? 0 : $this->model->count($where);
+        $this->count = null === $this->model ? 0 : $this->model->count($where);
         /// needed when megasearch force data reload
         $this->cursor = [];
         if ($this->count > 0) {
@@ -344,7 +341,7 @@ class ListView extends BaseView implements DataViewInterface
      *
      * @return array
      */
-    public function getSQLOrderBy(string $orderKey = ''): void
+    public function getSQLOrderBy(string $orderKey = ''): array
     {
         $result = [];
         if (!empty($this->orderBy)) {
@@ -352,7 +349,7 @@ class ListView extends BaseView implements DataViewInterface
                 $orderKey = array_keys($this->orderBy)[0];
             }
 
-            $direction = (substr($orderKey, -5) == '_desc') ? 'DESC' : 'ASC';
+            $direction = (substr($orderKey, -5) === '_desc') ? 'DESC' : 'ASC';
             foreach ($this->orderBy[$orderKey]['fields'] as $field) {
                 $result[$field] = $direction;
             }

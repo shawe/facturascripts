@@ -74,7 +74,7 @@ trait ModelTrait
      * @param DataBase $dataBase
      * @param string   $tableName
      */
-    protected function loadModelFields(DataBase $dataBase, string $tableName)
+    protected function loadModelFields(DataBase $dataBase, string $tableName): void
     {
         if (empty(self::$fields)) {
             self::$fields = $dataBase->tableExists($tableName) ? $dataBase->getColumns($tableName) : [];

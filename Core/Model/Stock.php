@@ -31,7 +31,7 @@ class Stock extends Base\ModelClass
 
     use Base\ModelTrait;
 
-    const MAX_DECIMALS = 3;
+    public const MAX_DECIMALS = 3;
 
     /**
      * Quantity.

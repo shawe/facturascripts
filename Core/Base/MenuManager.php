@@ -78,7 +78,7 @@ class MenuManager
             self::$pageModel = new Model\Page();
         }
 
-        if (self::$user !== false && self::$menu === null) {
+        if (self::$user !== null && self::$menu === null) {
             self::$menu = $this->loadUserMenu();
         }
     }

@@ -91,7 +91,7 @@ class Retencion extends Base\ModelClass
     public function test(): bool
     {
         $this->descripcion = Utils::noHtml($this->descripcion);
-        if (empty($this->descripcion) || strlen($this->descripcion) > 50) {
+        if (empty($this->descripcion) || \strlen($this->descripcion) > 50) {
             self::$miniLog->alert(self::$i18n->trans('not-valid-description-retention'));
             return false;
         }

@@ -144,7 +144,7 @@ class BusinessDocumentView extends BaseView
      *
      * @param string $code
      */
-    public function loadData(string $code)
+    public function loadData(string $code): void
     {
         if ($this->newCode !== null) {
             $code = $this->newCode;
@@ -164,7 +164,7 @@ class BusinessDocumentView extends BaseView
      *
      * @return array
      */
-    protected function processFormLines(array $formLines)
+    protected function processFormLines(array $formLines): array
     {
         $newLines = [];
         $order = count($formLines);

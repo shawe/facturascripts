@@ -34,22 +34,22 @@ use Symfony\Component\HttpFoundation\Response;
 class PDFExport implements ExportInterface
 {
 
-    const LIST_LIMIT = 500;
+    public const LIST_LIMIT = 500;
 
     /**
      * Y position to start footer
      */
-    const FOOTER_Y = 10;
+    public const FOOTER_Y = 10;
 
     /**
      * X position to start writting.
      */
-    const CONTENT_X = 30;
+    public const CONTENT_X = 30;
 
     /**
      * Default text size for footer and header.
      */
-    const TEXT_SIZE_FH = 9;
+    public const TEXT_SIZE_FH = 9;
     /**
      * PDF object.
      *
@@ -104,7 +104,8 @@ class PDFExport implements ExportInterface
             $this->pdf->ezText('');
         }
 
-        return $this->pdf->ezStream(['Content-Disposition' => 'doc_' . random_int(1, 999999) . '.pdf']);
+        $this->pdf->ezStream(['Content-Disposition' => 'doc_' . random_int(1, 999999) . '.pdf']);
+        return '';
     }
 
     /**
@@ -119,10 +120,10 @@ class PDFExport implements ExportInterface
      *
      * @param Response $response
      */
-    public function show(Response $response)
+    public function show(Response $response): void
     {
         $response->headers->set('Content-type', 'application/pdf');
-        $response->setContent($this->getDoc());
+        $this->getDoc();
     }
 
     /**
@@ -181,7 +182,7 @@ class PDFExport implements ExportInterface
      * @param array                         $columns
      * @param string                        $title
      */
-    public function generateListModelPage($model, array $where = [], array $order = [], int $offset, array $columns = [], string $title = ''): void
+    public function generateListModelPage($model, array $where, array $order, int $offset, array $columns, string $title = ''): void
     {
         $orientation = 'portrait';
         $tableCols = [];
@@ -274,7 +275,7 @@ class PDFExport implements ExportInterface
      * @param array $headers
      * @param array $rows
      */
-    public function generateTablePage(array $headers, array $rows)
+    public function generateTablePage(array $headers, array $rows): void
     {
         $orientation = 'portrait';
         if (count($headers) > 5) {
@@ -291,7 +292,7 @@ class PDFExport implements ExportInterface
      *
      * @param string $orientation
      */
-    protected function newPage(string $orientation = 'portrait')
+    protected function newPage(string $orientation = 'portrait'): void
     {
         if ($this->pdf === null) {
             $this->pdf = new \Cezpdf('a4', $orientation);

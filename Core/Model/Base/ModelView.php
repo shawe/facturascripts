@@ -134,7 +134,7 @@ abstract class ModelView
     {
         $result = [];
         if ($this->checkTables()) {
-            $class = get_class($this);
+            $class = \get_class($this);
             $sqlWhere = DataBaseWhere::getSQLWhere($where);
             $sqlOrderBy = $this->getOrderBy($order);
             $sql = 'SELECT ' . $this->fieldsList()

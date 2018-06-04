@@ -29,7 +29,7 @@ class MiniLog
     /**
      *
      */
-    const LEVELS = ['info', 'notice', 'warning', 'error', 'critical', 'alert', 'emergency'];
+    public const LEVELS = ['info', 'notice', 'warning', 'error', 'critical', 'alert', 'emergency'];
 
     /**
      * Contains the log data.

@@ -29,8 +29,8 @@ class Pagination
     /**
      * Constants for paging.
      */
-    const FS_ITEM_LIMIT = FS_ITEM_LIMIT;
-    const FS_PAGE_MARGIN = 5;
+    public const FS_ITEM_LIMIT = FS_ITEM_LIMIT;
+    public const FS_PAGE_MARGIN = 5;
 
     /**
      * URL target

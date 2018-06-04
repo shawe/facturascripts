@@ -153,7 +153,7 @@ abstract class ModelCore
      * @param array $data
      * @param array $exclude
      */
-    public function loadFromData(array $data = [], array $exclude = [])
+    public function loadFromData(array $data = [], array $exclude = []): void
     {
         $fields = $this->getModelFields();
         foreach ($data as $key => $value) {
@@ -203,7 +203,7 @@ abstract class ModelCore
      */
     public function primaryColumnValue()
     {
-        return $this->{$this->primaryColumn()};
+        return $this->{$this::primaryColumn()};
     }
 
     /**

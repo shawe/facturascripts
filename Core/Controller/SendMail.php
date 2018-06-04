@@ -79,7 +79,7 @@ class SendMail extends Controller
         parent::privateCore($response, $user, $permissions);
 
         // Check if the email is configurate
-        if (AppSettings::get('email', 'host', '') == "") {
+        if (AppSettings::get('email', 'host', '') === '') {
             $this->miniLog->alert('email-not-configure');
         }
 
@@ -167,7 +167,7 @@ class SendMail extends Controller
     {
         switch ($action) {
             case 'autocomplete':
-                $this->setTemplate(false);
+                $this->setTemplate(null);
                 $this->codeModel = new CodeModel();
                 $results = $this->autocompleteAction();
                 $this->response->setContent(json_encode($results));
@@ -196,7 +196,7 @@ class SendMail extends Controller
      */
     protected function removeOld(): void
     {
-        $regex = '/Mail_([0-9]+).pdf/';
+        $regex = '/Mail_([\d]+).pdf/';
         foreach (glob(FS_FOLDER . '/MyFiles/Mail_*.pdf') as $fileName) {
             $fileTime = [];
             preg_match($regex, $fileName, $fileTime);

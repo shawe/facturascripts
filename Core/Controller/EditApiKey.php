@@ -105,7 +105,7 @@ class EditApiKey extends ExtendedController\PanelController
     /**
      * Returns the model name
      */
-    public function getModelClassName(): void
+    public function getModelClassName(): string
     {
         return 'ApiKey';
     }
@@ -123,7 +123,7 @@ class EditApiKey extends ExtendedController\PanelController
     {
         // add Pages to Rol
         if (!Model\ApiAccess::addResourcesToApiKey($idApiKey, $apiAccess, $state)) {
-            throw new \Exception($this->i18n->trans('cancel-process'));
+            throw new \RuntimeException($this->i18n->trans('cancel-process'));
         }
     }
 
@@ -164,7 +164,8 @@ class EditApiKey extends ExtendedController\PanelController
     private function getResources(): array
     {
         $resources = [];
-        foreach (FileManager::scanFolder(FS_FOLDER . DIRECTORY_SEPARATOR . 'Dinamic' . DIRECTORY_SEPARATOR . 'Lib' . DIRECTORY_SEPARATOR . 'API') as $resource) {
+        $folder = FS_FOLDER . DIRECTORY_SEPARATOR . 'Dinamic' . DIRECTORY_SEPARATOR . 'Lib' . DIRECTORY_SEPARATOR . 'API';
+        foreach (FileManager::scanFolder($folder) as $resource) {
             if (substr($resource, -4) === '.php') {
                 $class = substr('FacturaScripts\\Dinamic\\Lib\\API\\' . $resource, 0, -4);
                 $APIClass = new $class($this->response, $this->request, $this->miniLog, $this->i18n, []);

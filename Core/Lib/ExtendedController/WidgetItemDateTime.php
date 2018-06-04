@@ -44,7 +44,7 @@ class WidgetItemDateTime extends WidgetItem
      *
      * @return string
      */
-    public function getEditHTML($value): string
+    public function getEditHTML(string $value): string
     {
         $specialClass = $this->readOnly ? '' : ' datepicker';
 
@@ -58,7 +58,7 @@ class WidgetItemDateTime extends WidgetItem
      *
      * @return string
      */
-    public function getListHTML($value): string
+    public function getListHTML(string $value): string
     {
         if (is_numeric($value)) {
             $value = date('d-m-Y', (int) $value);

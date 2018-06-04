@@ -39,7 +39,7 @@ final class PaisTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Pais::isDefault()
      */
-    public function testIsDefault()
+    public function testIsDefault(): void
     {
         $this->model->isDefault();
     }
@@ -47,7 +47,7 @@ final class PaisTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Pais::primaryDescriptionColumn()
      */
-    public function getPrimaryDescriptionColumn()
+    public function getPrimaryDescriptionColumn(): void
     {
         self::assertNotEmpty($this->model->primaryDescriptionColumn());
     }

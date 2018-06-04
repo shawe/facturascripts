@@ -64,10 +64,10 @@ class EditGrupoClientes extends ExtendedController\PanelController
     /**
      * Procedure responsible for loading the data to be displayed.
      *
-     * @param string                      $viewName
-     * @param ExtendedController\EditView $view
+     * @param string                                                  $viewName
+     * @param ExtendedController\EditView|ExtendedController\ListView $view
      */
-    protected function loadData(string $viewName, $view): void
+    protected function loadData($viewName, $view): void
     {
         switch ($viewName) {
             case 'EditGrupoClientes':

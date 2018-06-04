@@ -33,17 +33,17 @@ class PluginManager
     /**
      * Minimum version required of FacturaScripts.
      */
-    const MIN_VERSION = 2018;
+    public const MIN_VERSION = 2018;
 
     /**
      * Path to list plugins on file.
      */
-    const PLUGIN_LIST_FILE = FS_FOLDER . \DIRECTORY_SEPARATOR . 'MyFiles' . \DIRECTORY_SEPARATOR . 'plugins.json';
+    public const PLUGIN_LIST_FILE = FS_FOLDER . \DIRECTORY_SEPARATOR . 'MyFiles' . \DIRECTORY_SEPARATOR . 'plugins.json';
 
     /**
      * Plugin path folder.
      */
-    const PLUGIN_PATH = FS_FOLDER . \DIRECTORY_SEPARATOR . 'Plugins' . \DIRECTORY_SEPARATOR;
+    public const PLUGIN_PATH = FS_FOLDER . \DIRECTORY_SEPARATOR . 'Plugins' . \DIRECTORY_SEPARATOR;
 
     /**
      * List of active plugins.
@@ -77,12 +77,12 @@ class PluginManager
             self::$minilog = new MiniLog();
         }
 
-        if (!defined('FS_DISABLE_ADD_PLUGINS')) {
-            define('FS_DISABLE_ADD_PLUGINS', false);
+        if (!\defined('FS_DISABLE_ADD_PLUGINS')) {
+            \define('FS_DISABLE_ADD_PLUGINS', false);
         }
 
-        if (!defined('FS_DISABLE_RM_PLUGINS')) {
-            define('FS_DISABLE_RM_PLUGINS', false);
+        if (!\defined('FS_DISABLE_RM_PLUGINS')) {
+            \define('FS_DISABLE_RM_PLUGINS', false);
         }
     }
 
@@ -93,7 +93,7 @@ class PluginManager
      * @param bool $clean
      * @param bool $initControllers
      */
-    public function deploy(bool $clean = true, bool $initControllers = false)
+    public function deploy(bool $clean = true, bool $initControllers = false): void
     {
         $pluginDeploy = new PluginDeploy();
         $pluginDeploy->deploy(self::PLUGIN_PATH, $this->enabledPlugins(), $clean);
@@ -108,7 +108,7 @@ class PluginManager
      *
      * @param string $pluginName
      */
-    public function disable(string $pluginName)
+    public function disable(string $pluginName): void
     {
         foreach (self::$enabledPlugins as $key => $value) {
             if ($value['name'] !== $pluginName) {
@@ -129,7 +129,7 @@ class PluginManager
      *
      * @param string $pluginName
      */
-    public function enable(string $pluginName)
+    public function enable(string $pluginName): void
     {
         /// is pluginName enabled?
         foreach (self::$enabledPlugins as $value) {
@@ -308,10 +308,10 @@ class PluginManager
      *
      * @param string $pluginDisabled
      */
-    private function disableByDependecy(string $pluginDisabled)
+    private function disableByDependecy(string $pluginDisabled): void
     {
         foreach (self::$enabledPlugins as $key => $value) {
-            if (\in_array($pluginDisabled, $value['require'])) {
+            if (\in_array($pluginDisabled, $value['require'], false)) {
                 self::$minilog->info(self::$i18n->trans('plugin-disabled', ['%pluginName%' => $value['name']]));
                 unset(self::$enabledPlugins[$key]);
                 $this->disableByDependecy($value['name']);

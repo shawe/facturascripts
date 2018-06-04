@@ -180,7 +180,7 @@ class ListFilter
      *
      * @param array $where
      */
-    public function getDataBaseWhere(array &$where)
+    public function getDataBaseWhere(array &$where): void
     {
         switch ($this->type) {
             case 'autocomplete':

@@ -113,7 +113,7 @@ class TasksComponent extends BaseComponent implements ComponentInterface
      *
      * @param array $data
      */
-    public function saveData($data): void
+    public function saveData(array $data): void
     {
         $newItem = new Model\DashboardData();
         $newItem->component = 'Tasks';

@@ -34,7 +34,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
     protected $object;
 
 
-    public function testCreateWritableFolder()
+    public function testCreateWritableFolder(): void
     {
         self::assertTrue(
             @\mkdir(\FS_FOLDER . '/MyFiles/TestWritable/Test1/Test2/Test3', 0775, true),
@@ -45,7 +45,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers \FacturaScripts\Core\Base\FileManager::recurseCopy()
      */
-    public function testRecurseCopy()
+    public function testRecurseCopy(): void
     {
         $this->object::recurseCopy(\FS_FOLDER . '/MyFiles/TestWritable', \FS_FOLDER . '/MyFiles/TestWritable2');
     }
@@ -53,7 +53,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers \FacturaScripts\Core\Base\FileManager::notWritableFolders()
      */
-    public function testCreateNonWriteableFolder()
+    public function testCreateNonWriteableFolder(): void
     {
         self::assertFalse(
             @mkdir(\FS_FOLDER . '/MyFiles/TestNonWritable/Test1/Test2/Test3', 0555, true),
@@ -73,7 +73,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers \FacturaScripts\Core\Base\FileManager::scanFolder()
      */
-    public function testScanFolder()
+    public function testScanFolder(): void
     {
         self::assertEquals(
             $this->object::scanFolder(\FS_FOLDER . '/MyFiles/TestWritable', true),
@@ -90,7 +90,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers \FacturaScripts\Core\Base\FileManager::delTree()
      */
-    public function testDelTreeWritableFolder()
+    public function testDelTreeWritableFolder(): void
     {
         self::assertTrue($this->object::delTree(\FS_FOLDER . '/MyFiles/TestWritable'), 'Recursive delete dir fails.');
         self::assertTrue($this->object::delTree(\FS_FOLDER . '/MyFiles/TestWritable2'), 'Recursive delete dir fails.');
@@ -99,7 +99,7 @@ class FileManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers \FacturaScripts\Core\Base\FileManager::delTree()
      */
-    public function testDelTreeNonWritableFolder()
+    public function testDelTreeNonWritableFolder(): void
     {
         self::assertFalse(
             $this->object::delTree(\FS_FOLDER . '/MyFiles/TestNonWritable'),

@@ -56,7 +56,7 @@ abstract class PanelController extends BaseController
      * @param string          $className
      * @param string          $uri
      */
-    public function __construct(Cache $cache, Translator $i18n, MiniLog $miniLog, string $className, string $uri = '')
+    public function __construct(Base\Cache $cache, Base\Translator $i18n, Base\MiniLog $miniLog, string $className, string $uri = '')
     {
         parent::__construct($cache, $i18n, $miniLog, $className, $uri);
 
@@ -99,7 +99,7 @@ abstract class PanelController extends BaseController
     public function getViewModelValue(string $viewName, string $fieldName)
     {
         $model = $this->views[$viewName]->model;
-        return isset($model->{$fieldName}) ? $model->{$fieldName} : null;
+        return $model->{$fieldName} ?? null;
     }
 
     /**
@@ -130,7 +130,7 @@ abstract class PanelController extends BaseController
             $this->loadData($viewName, $view);
 
             // check if we are processing the main view
-            if ($viewName == $mainViewName) {
+            if ($viewName === $mainViewName) {
                 $this->hasData = $view->count > 0;
                 continue;
             }
@@ -177,8 +177,8 @@ abstract class PanelController extends BaseController
      */
     public function viewClass(string $view): string
     {
-        $result = explode('\\', get_class($view));
-        return end($result);
+        $result = explode('\\', \get_class($view));
+        return (string) end($result);
     }
 
     /**
@@ -292,7 +292,7 @@ abstract class PanelController extends BaseController
             return false;
         }
         $model = $this->views[$this->active]->model;
-        $code = $this->request->get($model->primaryColumn(), '');
+        $code = $this->request->get($model::primaryColumn(), '');
         if ($model->loadFromCode($code) && $model->delete()) {
             $this->miniLog->notice($this->i18n->trans('record-deleted-correctly'));
             return true;
@@ -331,7 +331,7 @@ abstract class PanelController extends BaseController
     {
         switch ($action) {
             case 'export':
-                $this->setTemplate(false);
+                $this->setTemplate(null);
                 $this->exportManager->newDoc($this->request->get('option', ''));
                 foreach ($this->views as $selectedView) {
                     $selectedView->export($this->exportManager);
@@ -356,7 +356,7 @@ abstract class PanelController extends BaseController
     {
         switch ($action) {
             case 'autocomplete':
-                $this->setTemplate(false);
+                $this->setTemplate(null);
                 $results = $this->autocompleteAction();
                 $this->response->setContent(json_encode($results));
                 return false;
@@ -373,7 +373,7 @@ abstract class PanelController extends BaseController
             case 'save-document':
                 $viewName = $this->searchGridView();
                 if (!empty($viewName)) {
-                    $this->setTemplate(false);
+                    $this->setTemplate(null);
                     $data = $this->getFormData();
                     $result = $this->views[$viewName]->saveData($data);
                     $this->response->setContent(json_encode($result, JSON_FORCE_OBJECT));
@@ -400,8 +400,6 @@ abstract class PanelController extends BaseController
 
     /**
      * Returns the view class
-     *
-     * @param string $view
      *
      * @return string
      */

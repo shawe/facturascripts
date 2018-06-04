@@ -39,7 +39,7 @@ final class SerieTest extends CustomTest
     /**
      * @covers \FacturaScripts\Core\Model\Serie::isDefault()
      */
-    public function testIsDefault()
+    public function testIsDefault(): void
     {
         $this->model->isDefault();
     }

@@ -19,11 +19,11 @@
 
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
-use Exception;
 use FacturaScripts\Core\Base;
 use FacturaScripts\Core\Base\DataBase;
+use FacturaScripts\Core\Model\Base\ModelClass;
 use FacturaScripts\Dinamic\Lib\ExportManager;
-use FacturaScripts\Dinamic\Model\Asiento;
+use RuntimeException;
 
 /**
  * Description of GridView
@@ -43,7 +43,7 @@ class GridView extends BaseView
     /**
      * Model of parent data
      *
-     * @var Asiento
+     * @var ModelClass
      */
     private $parentModel;
 
@@ -101,7 +101,7 @@ class GridView extends BaseView
      * @param DataBase\DataBaseWhere[] $where
      * @param array                    $order
      */
-    public function loadData(array $where = [], array $order = [])
+    public function loadData(array $where = [], array $order = []): void
     {
         // load columns configuration
         $this->gridData = $this->getColumns();
@@ -129,11 +129,12 @@ class GridView extends BaseView
             'url' => ''
         ];
 
+        $dataBase = new DataBase();
         try {
             // load master document data and test it's ok
-            $parentPK = $this->parentModel->primaryColumn();
+            $parentPK = $this->parentmodel::primaryColumn();
             if (!$this->loadDocumentDataFromArray($parentPK, $data['document'])) {
-                throw new Exception(self::$i18n->trans('parent-document-test-error'));
+                throw new RuntimeException(self::$i18n->trans('parent-document-test-error'));
             }
 
             // load detail document data (old)
@@ -141,30 +142,29 @@ class GridView extends BaseView
             $linesOld = $this->model->all([new DataBase\DataBaseWhere($parentPK, $parentValue)]);
 
             // start transaction
-            $dataBase = new DataBase();
             $dataBase->beginTransaction();
 
             // delete old lines not used
             if (!$this->deleteLinesOld($linesOld, $data['lines'])) {
-                throw new Exception(self::$i18n->trans('lines-delete-error'));
+                throw new RuntimeException(self::$i18n->trans('lines-delete-error'));
             }
 
             // Proccess detail document data (new)
             $this->parentModel->initTotals();
-            foreach ($data['lines'] as $newLine) {
+            foreach ((array) $data['lines'] as $newLine) {
                 $this->model->loadFromData($newLine);
                 if (empty($this->model->primaryColumnValue())) {
                     $this->model->{$parentPK} = $parentValue;
                 }
                 if (!$this->model->save()) {
-                    throw new Exception(self::$i18n->trans('lines-save-error'));
+                    throw new RuntimeException(self::$i18n->trans('lines-save-error'));
                 }
                 $this->parentModel->accumulateAmounts($newLine);
             }
 
             // save master document
             if (!$this->parentModel->save()) {
-                throw new Exception(self::$i18n->trans('parent-document-save-error'));
+                throw new RuntimeException(self::$i18n->trans('parent-document-save-error'));
             }
 
             // confirm save data into database
@@ -172,7 +172,7 @@ class GridView extends BaseView
 
             // URL for refresh data
             $result['url'] = $this->parentView->getURL('edit') . '&action=save-ok';
-        } catch (Exception $e) {
+        } catch (RuntimeException $e) {
             $result['error'] = true;
             $result['message'] = $e->getMessage();
         } finally {
@@ -191,13 +191,14 @@ class GridView extends BaseView
     public function processFormLines(array &$lines): array
     {
         $result = [];
-        $primaryKey = $this->model->primaryColumn();
+        $primaryKey = $this->model::primaryColumn();
         foreach ($lines as $data) {
             if (!isset($data[$primaryKey])) {
                 foreach ($this->pageOption->columns as $group) {
                     foreach ($group->columns as $col) {
                         if (!isset($data[$col->widget->fieldName])) {
-                            $data[$col->widget->fieldName] = null;   // TODO: maybe the widget can have a default value method instead of null
+                            // TODO: maybe the widget can have a default value method instead of null
+                            $data[$col->widget->fieldName] = null;
                         }
                     }
                 }
@@ -251,8 +252,8 @@ class GridView extends BaseView
     private function getItemForColumn(ColumnItem $column): array
     {
         $item = ['data' => $column->widget->fieldName];
-        switch ($column->widget->type) {
-            case 'autocomplete':
+        switch (\get_class($column->widget)) {
+            case 'WidgetItemAutocomplete':
                 $item['type'] = 'autocomplete';
                 $item['visibleRows'] = 5;
                 $item['allowInvalid'] = true;
@@ -261,8 +262,8 @@ class GridView extends BaseView
                 $item['data-source'] = $this->getAutocompleteSource($column->widget->values[0]);
                 break;
 
-            case 'number':
-            case 'money':
+            case 'WidgetItemNumber':
+            case 'WidgetItemMoney':
                 $item['type'] = 'numeric';
                 $item['numericFormat'] = Base\DivisaTools::gridMoneyFormat();
                 break;
@@ -317,7 +318,8 @@ class GridView extends BaseView
     private function loadDocumentDataFromArray(string $fieldPK, array &$data): bool
     {
         if ($this->parentModel->loadFromCode($data[$fieldPK])) {    // old data
-            $this->parentModel->loadFromData($data, ['action', 'active']);  // new data (the web form may not have all the fields)
+            // new data (the web form may not have all the fields)
+            $this->parentModel->loadFromData($data, ['action', 'active']);
             return $this->parentModel->test();
         }
         return false;
@@ -334,7 +336,7 @@ class GridView extends BaseView
     private function deleteLinesOld(array &$linesOld, array &$linesNew): bool
     {
         if (!empty($linesOld)) {
-            $fieldPK = $this->model->primaryColumn();
+            $fieldPK = $this->model::primaryColumn();
             $oldIDs = array_column($linesOld, $fieldPK);
             $newIDs = array_column($linesNew, $fieldPK);
             $deletedIDs = array_diff($oldIDs, $newIDs);

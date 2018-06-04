@@ -35,12 +35,6 @@ abstract class ListController extends BaseController
 {
 
     /**
-     * Tools to work with numbers.
-     *
-     * @var Base\NumberTools
-     */
-    public $numberTools;
-    /**
      * This string contains the text sent as a query parameter, used to filter the model data.
      *
      * @var string
@@ -62,7 +56,7 @@ abstract class ListController extends BaseController
      * @param string          $className
      * @param string          $uri
      */
-    public function __construct(Cache $cache, Translator $i18n, MiniLog $miniLog, string $className, string $uri = '')
+    public function __construct(Base\Cache $cache, Base\Translator $i18n, Base\MiniLog $miniLog, string $className, string $uri = '')
     {
         parent::__construct($cache, $i18n, $miniLog, $className, $uri);
 
@@ -165,9 +159,9 @@ abstract class ListController extends BaseController
      * @param string $fieldtitle (Column to show name or description)
      * @param array  $where      (Extra where conditions)
      */
-    protected function addFilterAutocomplete(string $viewName, string $key, string $label, string $field, string $table, string $fieldcode = '', string $fieldtitle = '', array $where = []): voi
+    protected function addFilterAutocomplete(string $viewName, string $key, string $label, string $field, string $table, string $fieldcode = '', string $fieldtitle = '', array $where = []): void
     {
-        $value = ($viewName == $this->active) ? $this->request->get($key, '') : '';
+        $value = $viewName === $this->active ? $this->request->get($key, '') : '';
         $fcode = empty($fieldcode) ? $field : $fieldcode;
         $ftitle = empty($fieldtitle) ? $fcode : $fieldtitle;
         $this->views[$viewName]->addFilter($key, ListFilter::newAutocompleteFilter($label, $field, $table, $fcode, $ftitle, $value, $where));
@@ -185,7 +179,7 @@ abstract class ListController extends BaseController
      */
     protected function addFilterCheckbox(string $viewName, string $key, string $label, string $field, bool $inverse = false, $matchValue = true): void
     {
-        $value = ($viewName == $this->active) ? $this->request->get($key, '') : '';
+        $value = $viewName === $this->active ? $this->request->get($key, '') : '';
         $this->views[$viewName]->addFilter($key, ListFilter::newCheckboxFilter($field, $value, $label, $inverse, $matchValue));
     }
 
@@ -205,7 +199,7 @@ abstract class ListController extends BaseController
     /**
      * Adds a numeric type filter to the ListView.
      *
-     * @param string $indexView
+     * @param string $viewName
      * @param string $key   (Filter identifier)
      * @param string $label (Human reader description)
      * @param string $field (Field of the table to apply filter)
@@ -226,7 +220,7 @@ abstract class ListController extends BaseController
      */
     protected function addFilterSelect(string $indexView, string $key, string $label, string $field, array $values = []): void
     {
-        $value = ($indexView == $this->active) ? $this->request->get($key, '') : '';
+        $value = $indexView === $this->active ? $this->request->get($key, '') : '';
         $this->views[$indexView]->addFilter($key, ListFilter::newSelectFilter($label, $field, $values, $value));
     }
 
@@ -247,13 +241,13 @@ abstract class ListController extends BaseController
      * Adds an order field to the ListView.
      *
      * @param string       $viewName
-     * @param string|array $field
+     * @param string|array $fields
      * @param string       $label
      * @param int          $default (0 = None, 1 = ASC, 2 = DESC)
      */
     protected function addOrderBy(string $viewName, $fields, string $label = '', int $default = 0): void
     {
-        $orderFields = is_array($fields) ? $fields : [$fields];
+        $orderFields = \is_array($fields) ? $fields : [$fields];
         $orderLabel = empty($label) ? $orderFields[0] : $label;
         $this->views[$viewName]->addOrderBy($orderFields, $orderLabel, $default);
     }
@@ -328,7 +322,7 @@ abstract class ListController extends BaseController
     {
         switch ($action) {
             case 'export':
-                $this->setTemplate(false);
+                $this->setTemplate(null);
                 $this->exportManager->newDoc($this->request->get('option', ''));
                 $this->views[$this->active]->export($this->exportManager);
                 $this->exportManager->show($this->response);
@@ -351,7 +345,7 @@ abstract class ListController extends BaseController
     {
         switch ($action) {
             case 'autocomplete':
-                $this->setTemplate(false);
+                $this->setTemplate(null);
                 $results = $this->autocompleteAction();
                 $this->response->setContent(json_encode($results));
                 return false;
@@ -392,7 +386,7 @@ abstract class ListController extends BaseController
      * @param array  $where
      * @param int    $offset
      */
-    protected function loadData(string $viewName, array $where = [], int $offset): void
+    protected function loadData($viewName, array $where, int $offset): void
     {
         $this->views[$viewName]->loadData(false, $where, [], $offset, Base\Pagination::FS_ITEM_LIMIT);
     }
@@ -402,7 +396,7 @@ abstract class ListController extends BaseController
      */
     protected function megaSearchAction(): void
     {
-        $this->setTemplate(false);
+        $this->setTemplate(null);
         $json = [
             $this->active => [
                 'title' => $this->i18n->trans($this->title),
@@ -515,7 +509,7 @@ abstract class ListController extends BaseController
     {
         $result = [];
         foreach ($view->getColumns() as $col) {
-            if ($col->display === 'none' || !in_array($col->widget->type, ['text', 'money'], false)) {
+            if ($col->display === 'none' || !\in_array($col->widget->type, ['text', 'money'], false)) {
                 continue;
             }
 

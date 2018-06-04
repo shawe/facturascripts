@@ -103,7 +103,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      */
     public function applySpecialOperations(): void
     {
-        if ($this->widget->type === 'select') {
+        if (\get_class($this->widget) === 'WidgetItemSelect') {
             if (isset($this->widget->values[0]['source'])) {
                 $this->widget->loadValuesFromModel();
 
@@ -229,12 +229,12 @@ class ColumnItem extends VisualItem implements VisualItemInterface
         $header = $withLabel ? $this->getHeaderHTML($this->title) : '';
         $data = $this->getColumnData($this->widget->columnFunction());
 
-        switch ($this->widget->type) {
-            case 'checkbox':
+        switch (\get_class($this->widget)) {
+            case 'WidgetItemCheckBox':
                 $html = $this->checkboxHTMLColumn($header, $value, $data);
                 break;
 
-            case 'radio':
+            case 'WidgetItemRadio':
                 $html = $this->radioHTMLColumn($header, $data, $value);
                 break;
 
@@ -259,7 +259,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @return string
      */
-    public function getListHTML($value): string
+    public function getListHTML(string $value): string
     {
         return $this->widget->getListHTML($value);
     }
@@ -286,7 +286,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
             $description = $this->i18n->trans($this->description);
         }
 
-        if ($this->widget->type === 'filechooser') {
+        if (\get_class($this->widget) === 'WidgetItemFileChooser') {
             $description = ' ' . $this->i18n->trans('help-server-accepts-filesize', ['%size%' => $this->widget->getMaxFileUpload()]);
         }
 

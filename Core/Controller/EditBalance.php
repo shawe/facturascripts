@@ -62,7 +62,7 @@ class EditBalance extends ExtendedController\PanelController
      * @param string                      $viewName
      * @param ExtendedController\EditView $view
      */
-    protected function loadData(string $viewName, $view): void
+    protected function loadData($viewName, $view): void
     {
         switch ($viewName) {
             case 'EditBalance':

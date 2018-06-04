@@ -252,7 +252,7 @@ abstract class AbstractRandomPeople extends AbstractRandom
      *
      * @param Model\Cliente|Model\Proveedor $clipro
      */
-    protected function fillCliPro(&$clipro)
+    protected function fillCliPro(&$clipro): void
     {
         $clipro->cifnif = (random_int(0, 14) === 0) ? '' : random_int(0, 99999999);
 

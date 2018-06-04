@@ -44,7 +44,7 @@ class Agentes extends AbstractRandomPeople
      *
      * @return int
      */
-    public function generate($num = 50): int
+    public function generate(int $num = 50): int
     {
         $agente = $this->model;
         for ($generated = 0; $generated < $num; ++$generated) {
@@ -62,7 +62,7 @@ class Agentes extends AbstractRandomPeople
     /**
      * @param Model\Agente $agente
      */
-    private function setAgenteData(Model\Agente $agente)
+    private function setAgenteData(Model\Agente $agente): void
     {
         $agente->fechanacimiento = $this->fecha(1970, 1997);
         $agente->fechaalta = $this->fecha(2013, 2016);
