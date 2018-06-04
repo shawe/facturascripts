@@ -20,11 +20,11 @@
 
 namespace FacturaScripts\Test\Core\Model;
 
-use FacturaScripts\Core\Model\PageOption;
+use FacturaScripts\Dinamic\Model\PageOption;
 use FacturaScripts\Test\Core\CustomTest;
 
 /**
- * @covers \FacturaScripts\Core\Model\PageOption
+ * @covers \FacturaScripts\Dinamic\Model\PageOption
  *
  * @author Francesc Pineda Segarra <francesc.pineda.segarra@gmail.com>
  */
@@ -37,7 +37,7 @@ final class PageOptionTest extends CustomTest
     public $model;
 
     /**
-     * @covers \FacturaScripts\Core\Model\PageOption::getForUser()
+     * @covers \FacturaScripts\Dinamic\Model\PageOption::getForUser()
      */
     public function testGetForUser(): void
     {
@@ -50,7 +50,7 @@ final class PageOptionTest extends CustomTest
     }
 
     /**
-     * @covers \FacturaScripts\Core\Model\PageOption::loadFromData()
+     * @covers \FacturaScripts\Dinamic\Model\PageOption::loadFromData()
      */
     public function testLoadFromData(): void
     {
