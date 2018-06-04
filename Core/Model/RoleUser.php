@@ -123,7 +123,7 @@ class RoleUser extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         if (empty($this->nick)) {
             self::$miniLog->alert(self::$i18n->trans('nick-is-empty'));

@@ -1,6 +1,6 @@
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -26,7 +26,7 @@ const documentLineData = [];
 let gridObject = null;
 const autocompleteColumns = [];
 const eventManager = {};
-const cellSelected = { row: null, column: null };
+const cellSelected = {row: null, column: null};
 
 /**
  * Generate a single source function for autocomplete columns
@@ -40,10 +40,10 @@ function assignSource(data) {
     const title = data.title.slice(0);
 
     return function (query, process) {
-        query = query.split(' | ', 1)[0];
+        query = query.split(" | ", 1)[0];
         const ajaxData = {
             term: query,
-            action: 'autocomplete',
+            action: "autocomplete",
             source: source,
             field: field,
             title: title
@@ -51,7 +51,7 @@ function assignSource(data) {
         $.ajax({
             type: "POST",
             url: data.url,
-            dataType: 'json',
+            dataType: "json",
             data: ajaxData,
             success: function (response) {
                 const values = [];
@@ -170,8 +170,8 @@ function getColumnSelected() {
  */
 function addEvent(name, fn) {
     switch (name) {
-        case 'afterSelection':
-        case 'beforeChange':
+        case "afterSelection":
+        case "beforeChange":
             eventManager[name] = fn;
             break;
 
@@ -205,7 +205,7 @@ function eventBeforeChange(changes, source) {
     if (autocompleteColumns.length > 0) {
         for (let i = 0, max = changes.length; i < max; i++) {
             if (autocompleteColumns.includes(changes[i][1])) {
-                const values = changes[i][3].split(' | ');
+                const values = changes[i][3].split(" | ");
                 changes[i][3] = values[0];
                 isAutoComplete = (values.length > 1);
             }
@@ -234,11 +234,11 @@ function saveDocument(mainFormName) {
     try {
         const data = {
             action: "save-document",
-            lines: getGridData('order'),
+            lines: getGridData("order"),
             document: {}
         };
         const mainForm = $("form[name=" + mainFormName + "]");
-        $.each(mainForm.serializeArray(), function(key, value) {
+        $.each(mainForm.serializeArray(), function (key, value) {
             data.document[value.name] = value.value;
         });
 

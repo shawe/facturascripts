@@ -16,9 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core;
 
 use FacturaScripts\Core\Base\MiniLog;
+use FacturaScripts\Core\Model\Base\ModelClass;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -29,67 +31,74 @@ use PHPUnit\Framework\TestCase;
 class CustomTest extends TestCase
 {
 
+    /**
+     * @var ModelClass
+     */
     public $model;
 
     public function testInit()
     {
-        $this->assertNotNull($this->model);
+        self::assertNotNull($this->model);
     }
 
     public function testTableName()
     {
-        $this->assertInternalType(
-            'string', $this->model->tableName()
+        self::assertInternalType(
+            'string',
+            $this->model->tableName()
         );
     }
 
     public function testPrimaryColumn()
     {
-        $this->assertInternalType(
-            'string', $this->model->primaryColumn()
+        self::assertInternalType(
+            'string',
+            $this->model->primaryColumn()
         );
     }
 
     public function testPrimaryDescription()
     {
-        $this->assertInternalType(
-            'string', $this->model->primaryDescription()
+        self::assertInternalType(
+            'string',
+            $this->model->primaryDescription()
         );
     }
 
     public function testFields()
     {
-        $this->assertNotEmpty($this->model->getModelFields());
+        self::assertNotEmpty($this->model->getModelFields());
     }
 
     public function testInstall()
     {
         $install = $this->model->install();
-        $this->assertInternalType('string', $install);
+        self::assertInternalType('string', $install);
 
         if (strlen($install) > 0) {
-            $this->assertNotEmpty($this->model->all());
+            self::assertNotEmpty($this->model->all());
         }
     }
 
     public function testUrl()
     {
-        $this->assertInternalType(
-            'string', $this->model->url()
+        self::assertInternalType(
+            'string',
+            $this->model->url()
         );
     }
 
     public function testExists()
     {
         $this->model->clear();
-        $this->assertFalse($this->model->exists());
+        self::assertFalse($this->model->exists());
     }
 
     public function testAll()
     {
         foreach ($this->model->all() as $model) {
-            $this->assertTrue($model->test());
-            $this->assertTrue($model->exists());
+            self::assertTrue($model->test());
+            self::assertTrue($model->exists());
         }
     }
 

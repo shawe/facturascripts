@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model\Base;
 
 use FacturaScripts\Core\Base\DataBase;
@@ -47,21 +48,6 @@ abstract class ModelView
     private $values;
 
     /**
-     * List of tables required for the execution of the view.
-     */
-    abstract protected function getTables(): array;
-
-    /**
-     * List of fields or columns to select clausule
-     */
-    abstract protected function getFields(): array;
-
-    /**
-     * List of tables related to from clausule
-     */
-    abstract protected function getSQLFrom(): string;
-
-    /**
      * Constructor and class initializer.
      *
      * @param array $data
@@ -85,6 +71,7 @@ abstract class ModelView
      * Check if exits value to property
      *
      * @param string $name
+     *
      * @return bool
      */
     public function __isset($name)
@@ -96,7 +83,7 @@ abstract class ModelView
      * Set value to modal view field
      *
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function __set($name, $value)
     {
@@ -107,6 +94,7 @@ abstract class ModelView
      * Return modal view field value
      *
      * @param string $name
+     *
      * @return mixed
      */
     public function __get($name)
@@ -117,6 +105,66 @@ abstract class ModelView
 
         return $this->values[$name];
     }
+
+    /**
+     * Returns the number of records that meet the condition.
+     *
+     * @param DataBaseWhere[] $where filters to apply to records.
+     *
+     * @return int
+     */
+    public function count(array $where = [])
+    {
+        $sql = 'SELECT COUNT(1) AS total FROM ' . $this->getSQLFrom() . DataBaseWhere::getSQLWhere($where);
+        $data = self::$dataBase->select($sql);
+        return empty($data) ? 0 : $data[0]['total'];
+    }
+
+    /**
+     * Load data for the indicated where.
+     *
+     * @param DataBaseWhere[] $where filters to apply to model records.
+     * @param array           $order fields to use in the sorting. For example ['code' => 'ASC']
+     * @param int             $offset
+     * @param int             $limit
+     *
+     * @return self[]
+     */
+    public function all(array $where, array $order = [], int $offset = 0, int $limit = 0)
+    {
+        $result = [];
+        if ($this->checkTables()) {
+            $class = get_class($this);
+            $sqlWhere = DataBaseWhere::getSQLWhere($where);
+            $sqlOrderBy = $this->getOrderBy($order);
+            $sql = 'SELECT ' . $this->fieldsList()
+                . ' FROM ' . $this->getSQLFrom()
+                . $sqlWhere
+                . ' '
+                . $this->getGroupBy()
+                . ' '
+                . $sqlOrderBy;
+            foreach (self::$dataBase->selectLimit($sql, $limit, $offset) as $d) {
+                $result[] = new $class($d);
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * List of tables required for the execution of the view.
+     */
+    abstract protected function getTables(): array;
+
+    /**
+     * List of fields or columns to select clausule
+     */
+    abstract protected function getFields(): array;
+
+    /**
+     * List of tables related to from clausule
+     */
+    abstract protected function getSQLFrom(): string;
 
     /**
      * Reset the values of all model properties.
@@ -186,20 +234,6 @@ abstract class ModelView
     }
 
     /**
-     * Returns the number of records that meet the condition.
-     *
-     * @param DataBaseWhere[] $where filters to apply to records.
-     *
-     * @return int
-     */
-    public function count(array $where = [])
-    {
-        $sql = 'SELECT COUNT(1) AS total FROM ' . $this->getSQLFrom() . DataBaseWhere::getSQLWhere($where);
-        $data = self::$dataBase->select($sql);
-        return empty($data) ? 0 : $data[0]['total'];
-    }
-
-    /**
      * Convert the list of fields into a string to use as a select clause
      *
      * @return string
@@ -211,37 +245,6 @@ abstract class ModelView
         foreach ($this->getFields() as $key => $value) {
             $result = $result . $comma . $value . ' ' . $key;
             $comma = ',';
-        }
-        return $result;
-    }
-
-    /**
-     * Load data for the indicated where.
-     *
-     * @param DataBaseWhere[] $where  filters to apply to model records.
-     * @param array           $order  fields to use in the sorting. For example ['code' => 'ASC']
-     * @param int             $offset
-     * @param int             $limit
-     *
-     * @return self[]
-     */
-    public function all(array $where, array $order = [], int $offset = 0, int $limit = 0)
-    {
-        $result = [];
-        if ($this->checkTables()) {
-            $class = get_class($this);
-            $sqlWhere = DataBaseWhere::getSQLWhere($where);
-            $sqlOrderBy = $this->getOrderBy($order);
-            $sql = 'SELECT ' . $this->fieldsList()
-                . ' FROM ' . $this->getSQLFrom()
-                . $sqlWhere
-                . ' '
-                . $this->getGroupBy()
-                . ' '
-                . $sqlOrderBy;
-            foreach (self::$dataBase->selectLimit($sql, $limit, $offset) as $d) {
-                $result[] = new $class($d);
-            }
         }
         return $result;
     }

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -20,6 +20,7 @@
 namespace FacturaScripts\Core\Model\Base;
 
 use FacturaScripts\Core\App\AppSettings;
+use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Base\Utils;
 use FacturaScripts\Core\Lib\BusinessDocumentGenerator;
 use FacturaScripts\Dinamic\Model;
@@ -329,9 +330,9 @@ abstract class BusinessDocument extends ModelClass
      * meet the above conditions.
      * Returns True if the record exists and False otherwise.
      *
-     * @param string          $cod
-     * @param DataBaseWhere[] $where
-     * @param array           $orderBy
+     * @param string                   $cod
+     * @param DataBase\DataBaseWhere[] $where
+     * @param array                    $orderBy
      *
      * @return bool
      */
@@ -404,7 +405,7 @@ abstract class BusinessDocument extends ModelClass
     public function setDate(string $date, string $hour): bool
     {
         $ejercicioModel = new Model\Ejercicio();
-        $ejercicio = $ejercicioModel->getByFecha($date);
+        $ejercicio = $ejercicioModel::getByFecha($date);
         if ($ejercicio) {
             $this->codejercicio = $ejercicio->codejercicio;
             $this->fecha = $date;

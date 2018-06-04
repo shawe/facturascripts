@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -119,7 +120,7 @@ class ApiAccess extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         new ApiKey();
 
@@ -131,7 +132,7 @@ class ApiAccess extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'id';
     }
@@ -141,7 +142,7 @@ class ApiAccess extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'api_access';
     }

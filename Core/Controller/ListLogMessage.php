@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController;
@@ -33,15 +34,15 @@ class ListLogMessage extends ExtendedController\ListController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['title'] = 'logs';
-        $pagedata['icon'] = 'fa-file-text-o';
-        $pagedata['menu'] = 'admin';
-        $pagedata['submenu'] = 'control-panel';
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'logs';
+        $pageData['icon'] = 'fa-file-text-o';
+        $pageData['menu'] = 'admin';
+        $pageData['submenu'] = 'control-panel';
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**
@@ -55,7 +56,7 @@ class ListLogMessage extends ExtendedController\ListController
         $this->addOrderBy('ListLogMessage', 'time', 'date', 2);
         $this->addOrderBy('ListLogMessage', 'level', 'level');
 
-        $values = $this->codeModel->all('logs', 'level', 'level');
+        $values = $this->codeModel::all('logs', 'level', 'level');
         $this->addFilterSelect('ListLogMessage', 'level', 'level', 'level', $values);
         $this->addFilterAutocomplete('ListLogMessage', 'nick', 'user', 'nick', 'users');
         $this->addFilterAutocomplete('ListLogMessage', 'ip', 'ip', 'ip', 'logs');

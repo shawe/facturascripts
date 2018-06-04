@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -20,8 +20,8 @@
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base;
-use FacturaScripts\Dinamic\Lib\BusinessDocumentTools;
 use FacturaScripts\Core\Model\Base\ModelClass;
+use FacturaScripts\Dinamic\Lib\BusinessDocumentTools;
 use FacturaScripts\Dinamic\Model\Cliente;
 use FacturaScripts\Dinamic\Model\Proveedor;
 
@@ -76,7 +76,7 @@ abstract class BusinessDocumentController extends PanelController
     public function getSelectValues($modelName)
     {
         $values = [];
-        $modelName = self::DIR_MODEL . $modelName;
+        $modelName = self::MODEL_NAMESPACE . $modelName;
         $model = new $modelName();
 
         if ($model instanceof ModelClass) {
@@ -94,7 +94,7 @@ abstract class BusinessDocumentController extends PanelController
      */
     protected function createViews()
     {
-        $modelName = self::DIR_MODEL . $this->getModelClassName();
+        $modelName = self::MODEL_NAMESPACE . $this->getModelClassName();
         $view = new BusinessDocumentView('new', $modelName, $this->getLineXMLView(), $this->user->nick);
         $this->addView('Document', $view, 'fa-file');
 
@@ -108,7 +108,7 @@ abstract class BusinessDocumentController extends PanelController
      *
      * @return bool
      */
-    protected function execPreviousAction($action): bool
+    protected function execPreviousAction(string $action): bool
     {
         switch ($action) {
             case 'recalculate-document':
@@ -127,7 +127,7 @@ abstract class BusinessDocumentController extends PanelController
      *
      * @param string $action
      */
-    protected function execAfterAction($action)
+    protected function execAfterAction(string $action)
     {
         switch ($action) {
             case 'export':
@@ -163,7 +163,7 @@ abstract class BusinessDocumentController extends PanelController
     /**
      * Load view data procedure
      *
-     * @param string   $viewName
+     * @param string               $viewName
      * @param BusinessDocumentView $view
      */
     protected function loadData($viewName, $view)

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -20,9 +20,9 @@
 namespace FacturaScripts\Core\Controller;
 
 use Exception;
-use FacturaScripts\Core\Base\DivisaTools;
 use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
+use FacturaScripts\Core\Base\DivisaTools;
 use FacturaScripts\Core\Lib\ExtendedController;
 use FacturaScripts\Core\Model;
 
@@ -66,12 +66,13 @@ class EditAsiento extends ExtendedController\PanelController
     /**
      * Load data view procedure
      *
-     * @param string                      $keyView
+     * @param string                      $viewName
      * @param ExtendedController\EditView $view
      */
-    protected function loadData($keyView, $view)
+
+    protected function loadData($viewName, $view)
     {
-        switch ($keyView) {
+        switch ($viewName) {
             case 'EditAsiento':
                 $code = $this->request->get('code');
                 $view->loadData($code);
@@ -91,11 +92,11 @@ class EditAsiento extends ExtendedController\PanelController
     /**
      * Run the actions that alter data before reading it
      *
-     * @param string   $action
+     * @param string $action
      *
      * @return bool
      */
-    protected function execPreviousAction($action)
+    protected function execPreviousAction(string $action): bool
     {
         switch ($action) {
             case 'save-ok':
@@ -261,7 +262,7 @@ class EditAsiento extends ExtendedController\PanelController
      * Search for VAT Data into Client model
      *
      * @param string $codeSubAccount
-     * @param array $values
+     * @param array  $values
      */
     private function searchVatDataFromClient($codeSubAccount, &$values)
     {
@@ -279,7 +280,7 @@ class EditAsiento extends ExtendedController\PanelController
      * Search for VAT Data into Supplier model
      *
      * @param string $codeSubAccount
-     * @param array $values
+     * @param array  $values
      */
     private function searchVatDataFromSupplier($codeSubAccount, &$values)
     {
@@ -298,6 +299,7 @@ class EditAsiento extends ExtendedController\PanelController
      *
      * @param string $exercise
      * @param string $codeSubAccount
+     *
      * @return array
      */
     private function getAccountVatID($exercise, $codeSubAccount): array
@@ -425,21 +427,21 @@ class EditAsiento extends ExtendedController\PanelController
             $accounting->fecha = date('d-m-Y');
             $accounting->numero = $accounting->newCode('numero');
             if (!$accounting->save()) {
-                throw new Exception(self::$i18n->trans('clone-document-error'));
+                throw new Exception($this->i18n->trans('clone-document-error'));
             }
 
             foreach ($entries as $line) {
                 $line->idpartida = null;
                 $line->idasiento = $accounting->idasiento;
                 if (!$line->save()) {
-                    throw new Exception(self::$i18n->trans('clone-line-document-error'));
+                    throw new Exception($this->i18n->trans('clone-line-document-error'));
                 }
             }
             // confirm data
             $dataBase->commit();
             $result = $accounting->url('type') . '&action=save-ok';
         } catch (Exception $e) {
-            self::$miniLog->alert($e->getMessage());
+            $this->miniLog->alert($e->getMessage());
             $result = '';
         } finally {
             if ($dataBase->inTransaction()) {
@@ -448,31 +450,6 @@ class EditAsiento extends ExtendedController\PanelController
         }
 
         return $result;
-    }
-
-    /**
-     * Load data view procedure
-     *
-     * @param string                      $viewName
-     * @param ExtendedController\BaseView $view
-     */
-    protected function loadData($viewName, $view)
-    {
-        switch ($viewName) {
-            case 'EditAsiento':
-                $code = $this->request->get('code');
-                $view->loadData($code);
-                break;
-
-            case 'EditPartida':
-                $idasiento = $this->getViewModelValue('EditAsiento', 'idasiento');
-                if (!empty($idasiento)) {
-                    $where = [new DataBaseWhere('idasiento', $idasiento)];
-                    $orderby = ['idpartida' => 'ASC'];
-                    $view->loadData($where, $orderby);
-                }
-                break;
-        }
     }
 
     /**
@@ -489,9 +466,9 @@ class EditAsiento extends ExtendedController\PanelController
 
     /**
      * Replace concept in concepts array with macro values
-     * 
+     *
      * @param array array
-     * 
+     *
      * @return array
      */
     private function replaceConcept($results): array
@@ -505,7 +482,7 @@ class EditAsiento extends ExtendedController\PanelController
             $search = ['%document%', '%date%', '%date-entry%', '%month%'];
             $replace = [$accounting->documento, date('d-m-Y'), $accounting->fecha, $this->i18n->trans(date('F', strtotime($accounting->fecha)))];
             foreach ($results as $result) {
-                $finalValue = array('key' => str_replace($search, $replace, $result['key']), 'value' => $result['value']);
+                $finalValue = ['key' => str_replace($search, $replace, $result['key']), 'value' => $result['value']];
                 $finalResults[] = $finalValue;
             }
         }

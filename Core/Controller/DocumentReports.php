@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -96,10 +96,10 @@ class DocumentReports extends Controller
         ];
 
         $this->filters = [
-            'employee' => new DRB\DocumentReportsFilterList(self::DIR_MODEL . 'Agente', '', 'fa-users'),
-            'serie' => new DRB\DocumentReportsFilterList(self::DIR_MODEL . 'Serie', AppSettings::get('default', 'codserie')),
-            'currency' => new DRB\DocumentReportsFilterList(self::DIR_MODEL . 'Divisa', AppSettings::get('default', 'coddivisa')),
-            'payment-method' => new DRB\DocumentReportsFilterList(self::DIR_MODEL . 'FormaPago'),
+            'employee' => new DRB\DocumentReportsFilterList(self::MODEL_NAMESPACE . 'Agente', '', 'fa-users'),
+            'serie' => new DRB\DocumentReportsFilterList(self::MODEL_NAMESPACE . 'Serie', AppSettings::get('default', 'codserie')),
+            'currency' => new DRB\DocumentReportsFilterList(self::MODEL_NAMESPACE . 'Divisa', AppSettings::get('default', 'coddivisa')),
+            'payment-method' => new DRB\DocumentReportsFilterList(self::MODEL_NAMESPACE . 'FormaPago'),
         ];
     }
 

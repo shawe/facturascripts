@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -54,7 +54,7 @@ class AccountingReports extends Controller
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
         $pageData = parent::getPageData();
         $pageData['menu'] = 'reports';
@@ -69,7 +69,7 @@ class AccountingReports extends Controller
      *
      * @return array
      */
-    public function getReports()
+    public function getReports(): array
     {
         return [
             'ledger' => ['description' => 'ledger', 'grouping' => true],
@@ -101,36 +101,6 @@ class AccountingReports extends Controller
     }
 
     /**
-     * Return the basic data for this page.
-     *
-     * @return array
-     */
-    public function getPageData(): array
-    {
-        $pageData = parent::getPageData();
-        $pageData['menu'] = 'reports';
-        $pageData['title'] = 'accounting-reports';
-        $pageData['icon'] = 'fa-balance-scale';
-
-        return $pageData;
-    }
-
-    /**
-     * Return list of accounting documents
-     *
-     * @return array
-     */
-    public function getReports(): array
-    {
-        return [
-            'libro-mayor' => 'ledger',
-            'sumas-saldos' => 'balance-ammounts',
-            'situacion' => 'balance-sheet',
-            'pyg' => 'profit-and-loss-balance',
-        ];
-    }
-
-    /**
      * Execute main actions.
      * Filter by date-from date-to format and grouping
      *
@@ -142,7 +112,7 @@ class AccountingReports extends Controller
         $dateFrom = $this->request->get('date-from', '');
         $dateTo = $this->request->get('date-to', '');
         $format = $this->request->get('format', '');
-        $params = ['grouping' => ('YES' == $this->request->get('grouping', 'YES'))];
+        $params = ['grouping' => 'YES' === $this->request->get('grouping', 'YES')];
 
         switch ($action) {
             case 'ledger':

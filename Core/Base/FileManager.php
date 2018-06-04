@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Base;
 
 /**
@@ -23,8 +24,8 @@ namespace FacturaScripts\Core\Base;
  *
  * @package FacturaScripts\Core\Base
  *
- * @author Carlos García Gómez <carlos@facturascripts.com>
- * @author Cristo M. Estévez Hernández <cristom.estevez@gmail.com>
+ * @author  Carlos García Gómez <carlos@facturascripts.com>
+ * @author  Cristo M. Estévez Hernández <cristom.estevez@gmail.com>
  */
 class FileManager
 {
@@ -81,7 +82,8 @@ class FileManager
         while (false !== ($file = readdir($folder))) {
             if ($file === '.' || $file === '..') {
                 continue;
-            } elseif (is_dir($src . DIRECTORY_SEPARATOR . $file)) {
+            }
+            if (is_dir($src . DIRECTORY_SEPARATOR . $file)) {
                 static::recurseCopy($src . DIRECTORY_SEPARATOR . $file, $dst . DIRECTORY_SEPARATOR . $file);
             } else {
                 copy($src . DIRECTORY_SEPARATOR . $file, $dst . DIRECTORY_SEPARATOR . $file);

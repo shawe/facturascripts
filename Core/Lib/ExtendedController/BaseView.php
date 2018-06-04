@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -49,16 +49,16 @@ abstract class BaseView
      * Needed model to for the model method calls.
      * In the scope of EditController it contains the view data.
      *
-     * @var Model\Base\PurchaseDocument|Model\Base\SalesDocument
+     * @var Model\Base\PurchaseDocument|Model\Base\SalesDocument|Model\Settings|Model\Asiento
      */
-    protected $model;
+    public $model;
 
     /**
      * Stores the new code from the save() procedure, to use in loadData().
      *
      * @var string
      */
-    protected $newCode;
+    public $newCode;
 
     /**
      * Columns and filters configuration

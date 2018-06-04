@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -189,7 +189,7 @@ class Ejercicio extends Base\ModelClass
      *
      * @return string
      */
-    public function install()
+    public function install(): string
     {
         return 'INSERT INTO ' . static::tableName() . ' (codejercicio,nombre,fechainicio,fechafin,'
             . 'estado,longsubcuenta,plancontable,idasientoapertura,idasientopyg,idasientocierre) '
@@ -237,11 +237,11 @@ class Ejercicio extends Base\ModelClass
     /**
      * Returns the name of the column that is the model's primary key.
      *
-     * @return bool
+     * @return string
      */
     public static function primaryColumn(): string
     {
-        return $this->estado === 'ABIERTO';
+        return 'codejercicio';
     }
 
     /**
@@ -259,7 +259,7 @@ class Ejercicio extends Base\ModelClass
      *
      * @return bool
      */
-    public function test()
+    public function test(): bool
     {
         /// TODO: Change dates verify to $this->inRange() call
         $this->codejercicio = trim($this->codejercicio);

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -156,12 +156,15 @@ class Subcuenta extends Base\ModelClass
 
         // Search open exercise for current date
         $exerciseModel = new Ejercicio();
-        $exercise = $exerciseModel->getByFecha(date('d-m-Y'), true, false);
-        if ($exercise !== false ) {
+        $exercise = $exerciseModel::getByFecha(date('d-m-Y'), true, false);
+        if ($exercise !== false) {
             $this->codejercicio = $exercise->codejercicio;
         }
     }
 
+    /**
+     * @return string
+     */
     public function getSpecialAccountCode()
     {
         $result = $this->codcuentaesp;
@@ -250,7 +253,7 @@ class Subcuenta extends Base\ModelClass
      *
      * @return bool
      */
-    protected function saveInsert(array $values = [])
+    protected function saveInsert(array $values = []): bool
     {
         $accountDetail = new SubcuentaSaldo();
         $inTransaction = self::$dataBase->inTransaction();
@@ -355,7 +358,7 @@ class Subcuenta extends Base\ModelClass
      *
      * @return string
      */
-    public function url(string $type = 'auto', string $list = 'List')
+    public function url(string $type = 'auto', string $list = 'List'): string
     {
         return parent::url($type, 'ListCuenta?active=List');
     }

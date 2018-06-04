@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2016-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2016-2017  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -59,7 +59,10 @@ class Agentes extends AbstractRandomPeople
         return $generated;
     }
 
-    private function setAgenteData(Model\Agente &$agente)
+    /**
+     * @param Model\Agente $agente
+     */
+    private function setAgenteData(Model\Agente $agente)
     {
         $agente->fechanacimiento = $this->fecha(1970, 1997);
         $agente->fechaalta = $this->fecha(2013, 2016);
@@ -69,14 +72,14 @@ class Agentes extends AbstractRandomPeople
         $agente->provincia = $this->provincia();
         $agente->ciudad = $this->ciudad();
         $agente->direccion = $this->direccion();
-        $agente->codpostal = (string) mt_rand(11111, 99999);
-        $agente->fechabaja = (mt_rand(0, 24) == 0) ? date('d-m-Y') : null;
-        $agente->telefono1 = (mt_rand(0, 1) == 0) ? $this->telefono() : '';
-        $agente->telefono2 = (mt_rand(0, 1) == 0) ? $this->telefono() : '';
-        $agente->email = (mt_rand(0, 2) > 0) ? $this->email() : '';
-        $agente->cargo = (mt_rand(0, 2) > 0) ? $this->cargo() : '';
-        $agente->seg_social = (mt_rand(0, 1) == 0) ? $this->seguridadSocial() : '';
+        $agente->codpostal = (string) random_int(11111, 99999);
+        $agente->fechabaja = (random_int(0, 24) === 0) ? date('d-m-Y') : null;
+        $agente->telefono1 = (random_int(0, 1) === 0) ? $this->telefono() : '';
+        $agente->telefono2 = (random_int(0, 1) === 0) ? $this->telefono() : '';
+        $agente->email = (random_int(0, 2) > 0) ? $this->email() : '';
+        $agente->cargo = (random_int(0, 2) > 0) ? $this->cargo() : '';
+        $agente->seg_social = (random_int(0, 1) === 0) ? $this->seguridadSocial() : '';
         $agente->porcomision = $this->cantidad(0, 5, 20);
-        $agente->banco = mt_rand(0, 5) ? $this->iban() : '';
+        $agente->banco = random_int(0, 5) ? $this->iban() : '';
     }
 }

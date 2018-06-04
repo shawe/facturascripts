@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2016-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2016-2017  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -53,7 +53,7 @@ class PedidosProveedor extends AbstractRandomDocuments
         while ($generated < $num) {
             $ped->clear();
             $this->randomizeDocument($ped);
-            $eje = $this->ejercicio->getByFecha($ped->fecha);
+            $eje = $this->ejercicio::getByFecha($ped->fecha);
             if (false === $eje) {
                 break;
             }
@@ -61,7 +61,7 @@ class PedidosProveedor extends AbstractRandomDocuments
             $recargo = (random_int(0, 4) === 0);
             $regimeniva = $this->randomizeDocumentCompra($ped, $eje, $proveedores, $generated);
             if ($ped->save()) {
-                $this->randomLineas($ped, 'idpedido', self::DIR_MODEL . 'LineaPedidoProveedor', $regimeniva, $recargo);
+                $this->randomLineas($ped, 'idpedido', self::MODEL_NAMESPACE . 'LineaPedidoProveedor', $regimeniva, $recargo);
                 ++$generated;
             } else {
                 break;

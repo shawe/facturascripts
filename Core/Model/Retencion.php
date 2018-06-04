@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2015-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2015-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\Utils;
@@ -55,7 +56,7 @@ class Retencion extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn() :string
+    public static function primaryColumn(): string
     {
         return 'codretencion';
     }
@@ -65,7 +66,7 @@ class Retencion extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName() : string
+    public static function tableName(): string
     {
         return 'retenciones';
     }
@@ -75,7 +76,7 @@ class Retencion extends Base\ModelClass
      *
      * @return void
      */
-    public function clear() : void
+    public function clear(): void
     {
         parent::clear();
         $this->descripcion = '';
@@ -87,7 +88,7 @@ class Retencion extends Base\ModelClass
      *
      * @return boolean
      */
-    public function test() : bool
+    public function test(): bool
     {
         $this->descripcion = Utils::noHtml($this->descripcion);
         if (empty($this->descripcion) || strlen($this->descripcion) > 50) {
@@ -95,7 +96,7 @@ class Retencion extends Base\ModelClass
             return false;
         }
 
-        if (empty($this->porcentaje) || intval($this->porcentaje) <= 0) {
+        if (empty($this->porcentaje) || (int) $this->porcentaje <= 0) {
             self::$miniLog->alert(self::$i18n->trans('not-valid-percentage-retention'));
             return false;
         }

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -75,10 +75,10 @@ abstract class APIResourceClass
      * APIResourceClass constructor.
      *
      * @param \Symfony\Component\HttpFoundation\Response $response
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param MiniLog $miniLog
-     * @param Translator $i18n
-     * @param array $params is an array with URI parameters
+     * @param \Symfony\Component\HttpFoundation\Request  $request
+     * @param MiniLog                                    $miniLog
+     * @param Translator                                 $i18n
+     * @param array                                      $params is an array with URI parameters
      */
     public function __construct($response, $request, MiniLog $miniLog, Translator $i18n, array $params)
     {
@@ -128,8 +128,8 @@ abstract class APIResourceClass
     /**
      * Process the resource, allowing POST/PUT/DELETE/GET ALL actions
      *
-     * @param string $name of resource, used only if are several.
-     * @param array $params . Params are URI segments. Can be an empty array, not null.
+     * @param string $name   of resource, used only if are several.
+     * @param array  $params . Params are URI segments. Can be an empty array, not null.
      *
      * @return bool
      */
@@ -181,6 +181,7 @@ abstract class APIResourceClass
      * Return the array with the result, and HTTP_OK status code.
      *
      * @param array $data
+     *
      * @return void
      */
     protected function returnResult(array $data)
@@ -194,13 +195,14 @@ abstract class APIResourceClass
      * Can return an array with additional information.
      *
      * @param string $string is an informative text of the confirmation message
-     * @param array $data with additional information.
+     * @param array  $data   with additional information.
+     *
      * @return void
      */
     protected function setOk(string $string, array $data = null)
     {
         $this->response->setStatusCode(Response::HTTP_OK);
-        $res = array();
+        $res = [];
         $res['ok'] = $string;
         if ($data !== null) {
             $res['data'] = $data;
@@ -213,14 +215,15 @@ abstract class APIResourceClass
      * Can also return an array with additional information.
      *
      * @param string $message
-     * @param array $data
-     * @param int $status
+     * @param array  $data
+     * @param int    $status
+     *
      * @return void
      */
     protected function setError(string $message, array $data = null, int $status = Response::HTTP_BAD_REQUEST)
     {
         $this->response->setStatusCode($status);
-        $res = array();
+        $res = [];
         $res['error'] = $message;
         if ($data !== null) {
             $res['data'] = $data;

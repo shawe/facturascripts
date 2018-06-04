@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -129,8 +129,8 @@ abstract class ListController extends BaseController
 
         // Operations with data, before execute action
         if (!$this->execPreviousAction($action)) {
-            return;
-        }
+        return;
+    }
 
         // Load data for every view
         foreach (array_keys($this->views) as $viewName) {
@@ -138,10 +138,10 @@ abstract class ListController extends BaseController
             $orderKey = '';
 
                 // If processing the selected view, calculate order and filters
-                if ($this->active === $viewName) {
-                    $orderKey = $this->request->get('order', '');
-                    $where = $this->getWhere();
-                }
+            if ($this->active === $viewName) {
+                $orderKey = $this->request->get('order', '');
+                $where = $this->getWhere();
+            }
 
             // Set selected order by
             $this->views[$viewName]->setSelectedOrderBy($orderKey);
@@ -194,9 +194,9 @@ abstract class ListController extends BaseController
      * Adds a date type filter to the ListView.
      *
      * @param string $viewName
-     * @param string $key       (Filter identifier)
-     * @param string $label     (Human reader description)
-     * @param string $field     (Field of the table to apply filter)
+     * @param string $key   (Filter identifier)
+     * @param string $label (Human reader description)
+     * @param string $field (Field of the table to apply filter)
      */
     protected function addFilterDatePicker($viewName, $key, $label, $field)
     {
@@ -207,9 +207,9 @@ abstract class ListController extends BaseController
      * Adds a filter to a type of field to the ListView.
      *
      * @param string $viewName
-     * @param string $key       (Filter identifier)
-     * @param string $label     (Human reader description)
-     * @param string $field     (Field of the table to apply filter)
+     * @param string $key   (Filter identifier)
+     * @param string $label (Human reader description)
+     * @param string $field (Field of the table to apply filter)
      * @param string $type
      */
     private function addFilterFromType($viewName, $key, $label, $field, $type)
@@ -217,9 +217,9 @@ abstract class ListController extends BaseController
         $config = [
             'field' => $field,
             'label' => $label,
-            'valueFrom' => ($viewName == $this->active) ? $this->request->get($key . '-from', '') : '',
+            'valueFrom' => $viewName === $this->active ? $this->request->get($key . '-from', '') : '',
             'operatorFrom' => $this->request->get($key . '-from-operator', '>='),
-            'valueTo' => ($viewName == $this->active) ? $this->request->get($key . '-to', '') : '',
+            'valueTo' => $viewName === $this->active ? $this->request->get($key . '-to', '') : '',
             'operatorTo' => $this->request->get($key . '-to-operator', '<='),
         ];
 
@@ -230,9 +230,9 @@ abstract class ListController extends BaseController
      * Adds a numeric type filter to the ListView.
      *
      * @param string $indexView
-     * @param string $key       (Filter identifier)
-     * @param string $label     (Human reader description)
-     * @param string $field     (Field of the table to apply filter)
+     * @param string $key   (Filter identifier)
+     * @param string $label (Human reader description)
+     * @param string $field (Field of the table to apply filter)
      */
     protected function addFilterNumber($viewName, $key, $label, $field)
     {
@@ -243,10 +243,10 @@ abstract class ListController extends BaseController
      * Add a select type filter to a ListView.
      * 
      * @param string $indexView
-     * @param string $key       (Filter identifier)
-     * @param string $label     (Human reader description)
-     * @param string $field     (Field of the table to apply filter)
-     * @param array  $values    (Values to show)
+     * @param string $key    (Filter identifier)
+     * @param string $label  (Human reader description)
+     * @param string $field  (Field of the table to apply filter)
+     * @param array  $values (Values to show)
      */
     protected function addFilterSelect($indexView, $key, $label, $field, $values = [])
     {
@@ -258,9 +258,9 @@ abstract class ListController extends BaseController
      * Adds a text type filter to the ListView.
      *
      * @param string $viewName
-     * @param string $key       (Filter identifier)
-     * @param string $label     (Human reader description)
-     * @param string $field     (Field of the table to apply filter)
+     * @param string $key   (Filter identifier)
+     * @param string $label (Human reader description)
+     * @param string $field (Field of the table to apply filter)
      */
     protected function addFilterText($viewName, $key, $label, $field)
     {
@@ -270,10 +270,10 @@ abstract class ListController extends BaseController
     /**
      * Adds an order field to the ListView.
      *
-     * @param string $viewName
+     * @param string       $viewName
      * @param string|array $field
-     * @param string $label
-     * @param int    $default   (0 = None, 1 = ASC, 2 = DESC)
+     * @param string       $label
+     * @param int          $default (0 = None, 1 = ASC, 2 = DESC)
      */
     protected function addOrderBy($viewName, $fields, $label = '', $default = 0)
     {
@@ -348,7 +348,7 @@ abstract class ListController extends BaseController
      *
      * @param string $action
      */
-    protected function execAfterAction($action)
+    protected function execAfterAction(string $action)
     {
         switch ($action) {
             case 'export':
@@ -371,7 +371,7 @@ abstract class ListController extends BaseController
      *
      * @return bool
      */
-    protected function execPreviousAction($action): bool
+    protected function execPreviousAction(string $action): bool
     {
         switch ($action) {
             case 'autocomplete':

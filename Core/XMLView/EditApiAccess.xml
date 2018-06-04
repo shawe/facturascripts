@@ -26,7 +26,7 @@
     <columns>
         <group name="data" numcolumns="12">
             <column name="id" display="none" order="100">
-                <widget type="text" fieldname="id"/>
+                <widget type="text" fieldname="id" />
             </column>
             <column name="api-key" display="none" order="110">
                 <widget type="select" fieldname="idapikey" required="true">
@@ -34,7 +34,7 @@
                 </widget>
             </column>
             <column name="resource" order="120">
-                <widget type="text" fieldname="resource"/>
+                <widget type="text" fieldname="resource" />
             </column>
             <column name="allow-delete-data" order="130">
                 <widget type="checkbox" fieldname="allowdelete" />

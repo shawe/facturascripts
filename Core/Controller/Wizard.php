@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -92,7 +92,7 @@ class Wizard extends Controller
     public function getSelectValues($modelName)
     {
         $values = [];
-        $modelName = self::DIR_MODEL . $modelName;
+        $modelName = self::MODEL_NAMESPACE . $modelName;
         $model = new $modelName();
 
         if ($model instanceof Model\Base\ModelClass) {

@@ -57,7 +57,7 @@ text string: **tableName** and **primaryColumn**.
         return 'agentes';
     }
 
-    public function primaryColumn()
+    public function primaryColumn(): string
     {
         return 'codagente';
     }

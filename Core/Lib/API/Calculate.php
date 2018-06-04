@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -38,7 +38,7 @@ class Calculate extends APIResourceClass
 
     public function help()
     {
-        $data = array();
+        $data = [];
         $data['name'] = 'Perform simple arithmetic operations';
         $data['subname'] = 'Indicate operator and two or more operands';
         $data['options'] = 'Available operators:';
@@ -59,20 +59,50 @@ class Calculate extends APIResourceClass
      */
     public function getResources(): array
     {
-        $ret = array();
+        $ret = [];
         $ret['calculates'] = $this->setResource('Calculadora');
         return $ret;
+    }
+
+    /**
+     * Overwrite and IGNORE the original method of the ancestor.
+     *
+     * @param string $name
+     * @param array  $params
+     *
+     * @return bool
+     */
+    public function processResource(string $name): bool
+    {
+        $this->error = false;
+        $params = $this->params;
+        if (count($params) === 0) {
+            $this->help();
+            return true;
+        }
+
+        $operator = array_shift($params);
+        $result = (float) array_shift($params);
+        foreach ($params as $value) {
+            $result = $this->getOperation($operator, $result, (float) $value);
+        }
+        if (!$this->error) {
+            $this->returnResult([$operator => $result]);
+        }
+
+        return !$this->error;
     }
 
     /**
      * Obtains the result or failure of the arithmetic operation
      *
      * @param string $operator
-     * @param float $result
-     * @param float $value
+     * @param float  $result
+     * @param float  $value
+     *
      * @return float
      */
-    private function getOperation(string $operator, float $result, float $value) : float
+    private function getOperation(string $operator, float $result, float $value): float
     {
         switch ($operator) {
             case 'sum':
@@ -97,33 +127,5 @@ class Calculate extends APIResourceClass
                 $this->error = true;
         }
         return $result;
-    }
-
-    /**
-     * Overwrite and IGNORE the original method of the ancestor.
-     *
-     * @param string $name
-     * @param array $params
-     * @return bool
-     */
-    public function processResource(string $name): bool
-    {
-        $this->error = false;
-        $params = $this->params;
-        if (count($params) === 0) {
-            $this->help();
-            return true;
-        }
-
-        $operator = array_shift($params);
-        $result = (float) array_shift($params);
-        foreach ($params as $value) {
-            $result = $this->getOperation($operator, $result, (float) $value);
-        }
-        if (!$this->error) {
-            $this->returnResult(array($operator => $result));
-        }
-
-        return !$this->error;
     }
 }

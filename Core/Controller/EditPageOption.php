@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -125,7 +125,7 @@ class EditPageOption extends Base\Controller
     private function getParams()
     {
         $this->selectedViewName = $this->request->get('code', '');
-        $this->backPage = $this->request->get('url') ? : $this->selectedViewName;
+        $this->backPage = $this->request->get('url') ?: $this->selectedViewName;
 
         $this->selectedUser = $this->user->admin ? $this->request->get('nick', '') : $this->user->nick;
     }

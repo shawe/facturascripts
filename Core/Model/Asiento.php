@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2014-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2014-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -157,7 +157,7 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
         /// TODO: Check if accounting entry have VAT Accounts
         $regularization = new RegularizacionImpuesto();
         if ($regularization->getFechaInside($this->fecha)) {
-            self::$miniLog->alert(self::$i18n->trans('acounting-within-regularization', ['%tax%' => FS_IVA]));
+            self::$miniLog->alert(self::$i18n->trans('acounting-within-regularization', ['%tax%' => \FS_IVA]));
             return false;
         }
         unset($regularization);
@@ -233,11 +233,11 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
      * Returns the following code for the reported field or the primary key of the model.
      *
      * @param string $field
-     * @param array $where
+     * @param array  $where
      *
      * @return int
      */
-    public function newCode(string $field = '', array $where = [])
+    public function newCode(string $field = '', array $where = []): int
     {
         if (!empty($field) && $field !== static::primaryColumn()) {
             $where[] = new DataBase\DataBaseWhere('codejercicio', $this->codejercicio);
@@ -390,7 +390,7 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
     private function testErrorInExercise(): string
     {
         $exerciseModel = new Ejercicio();
-        $exercise = $exerciseModel->getByFecha($this->fecha);
+        $exercise = $exerciseModel::getByFecha($this->fecha);
         if (empty($exercise) || empty($exercise->codejercicio)) {
             return 'exercise-data-missing';
         }

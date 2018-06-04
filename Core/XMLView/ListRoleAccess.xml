@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -51,7 +51,7 @@
         <group name="add-rol-access" icon="fa-user-plus">
             <column name="select-menu" title="menu">
                 <widget type="select" fieldname="menu">
-                    <values source="pages" fieldcode="menu" fieldtitle="menu" translate="true" translate="true"></values>
+                    <values source="pages" fieldcode="menu" fieldtitle="menu" translate="true"></values>
                 </widget>
             </column>
         </group>

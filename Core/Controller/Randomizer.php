@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -192,23 +192,23 @@ class Randomizer extends Base\Controller
     private function getTotals()
     {
         $models = [
-            'agentes' => self::DIR_MODEL . 'Agente',
-            'albaranescli' => self::DIR_MODEL . 'AlbaranCliente',
-            'albaranesprov' => self::DIR_MODEL . 'AlbaranProveedor',
-            'asientos' => self::DIR_MODEL . 'Asiento',
-            'articulos' => self::DIR_MODEL . 'Articulo',
-            'articulosprov' => self::DIR_MODEL . 'ArticuloProveedor',
-            'clientes' => self::DIR_MODEL . 'Cliente',
-            'cuentas' => self::DIR_MODEL . 'Cuenta',
-            'grupos' => self::DIR_MODEL . 'GrupoClientes',
-            'fabricantes' => self::DIR_MODEL . 'Fabricante',
-            'familias' => self::DIR_MODEL . 'Familia',
-            'pedidoscli' => self::DIR_MODEL . 'PedidoCliente',
-            'pedidosprov' => self::DIR_MODEL . 'PedidoProveedor',
-            'presupuestoscli' => self::DIR_MODEL . 'PresupuestoCliente',
-            'presupuestosprov' => self::DIR_MODEL . 'PresupuestoProveedor',
-            'proveedores' => self::DIR_MODEL . 'Proveedor',
-            'subcuentas' => self::DIR_MODEL . 'Subcuenta'
+            'agentes' => self::MODEL_NAMESPACE . 'Agente',
+            'albaranescli' => self::MODEL_NAMESPACE . 'AlbaranCliente',
+            'albaranesprov' => self::MODEL_NAMESPACE . 'AlbaranProveedor',
+            'asientos' => self::MODEL_NAMESPACE . 'Asiento',
+            'articulos' => self::MODEL_NAMESPACE . 'Articulo',
+            'articulosprov' => self::MODEL_NAMESPACE . 'ArticuloProveedor',
+            'clientes' => self::MODEL_NAMESPACE . 'Cliente',
+            'cuentas' => self::MODEL_NAMESPACE . 'Cuenta',
+            'grupos' => self::MODEL_NAMESPACE . 'GrupoClientes',
+            'fabricantes' => self::MODEL_NAMESPACE . 'Fabricante',
+            'familias' => self::MODEL_NAMESPACE . 'Familia',
+            'pedidoscli' => self::MODEL_NAMESPACE . 'PedidoCliente',
+            'pedidosprov' => self::MODEL_NAMESPACE . 'PedidoProveedor',
+            'presupuestoscli' => self::MODEL_NAMESPACE . 'PresupuestoCliente',
+            'presupuestosprov' => self::MODEL_NAMESPACE . 'PresupuestoProveedor',
+            'proveedores' => self::MODEL_NAMESPACE . 'Proveedor',
+            'subcuentas' => self::MODEL_NAMESPACE . 'Subcuenta'
         ];
 
         foreach ($models as $tag => $modelName) {

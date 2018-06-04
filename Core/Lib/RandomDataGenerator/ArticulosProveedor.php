@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2016-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2016-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -48,7 +48,7 @@ class ArticulosProveedor extends AbstractRandom
     {
         $this->shuffle($articulos, new Model\Articulo());
         $this->shuffle($proveedores, new Model\Proveedor());
-        if(empty($proveedores)) {
+        if (empty($proveedores)) {
             return 0;
         }
         

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2014-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2014-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -113,7 +114,7 @@ class RegularizacionImpuesto extends Base\ModelClass
      *
      * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'regularizacionimpuestos';
     }
@@ -123,7 +124,7 @@ class RegularizacionImpuesto extends Base\ModelClass
      *
      * @return string
      */
-    public static function primaryColumn()
+    public static function primaryColumn(): string
     {
         return 'idregularizacion';
     }
@@ -133,49 +134,9 @@ class RegularizacionImpuesto extends Base\ModelClass
      *
      * @return string
      */
-    public function primaryDescription()
+    public function primaryDescription(): string
     {
         return $this->codejercicio . ' - ' . $this->periodo;
-    }
-
-    /**
-     * Returns the items per accounting entry.
-     *
-     * @return Partida[]|bool
-     */
-    public function getPartidas()
-    {
-        if ($this->idasiento !== null) {
-            $partida = new Partida();
-
-            return $partida->all([new DataBaseWhere('idasiento', $this->idasiento)]);
-        }
-
-        return false;
-    }
-
-    /**
-     * Returns the VAT regularization corresponding to that date,
-           * that is, the regularization whose start date is earlier
-           * to the date provided and its end date is after the date
-           * provided. So you can know if the period is still open to be able
-           * check in.
-     *
-     * @param string $fecha
-     *
-     * @return bool|RegularizacionImpuesto
-     */
-    public function getFechaInside($fecha)
-    {
-        $sql = 'SELECT * FROM ' . static::tableName() . ' WHERE fechainicio <= ' . self::$dataBase->var2str($fecha)
-            . ' AND fechafin >= ' . self::$dataBase->var2str($fecha) . ';';
-
-        $data = self::$dataBase->select($sql);
-        if (!empty($data)) {
-            return new self($data[0]);
-        }
-
-        return false;
     }
 
     /**
@@ -183,7 +144,7 @@ class RegularizacionImpuesto extends Base\ModelClass
      *
      * @return bool
      */
-    public function delete()
+    public function delete(): bool
     {
         // TODO: Apply transactions
         $sql = 'DELETE FROM ' . static::tableName()
@@ -205,11 +166,141 @@ class RegularizacionImpuesto extends Base\ModelClass
     }
 
     /**
+     * Returns true if there are no errors in the values of the model properties.
+     * It runs inside the save method.
+     *
+     * @return bool
+     */
+    public function test(): bool
+    {
+        if (!parent::test()) {
+            return false;
+        }
+
+        if (!empty($this->codejercicio)) {
+            /// Calculate dates to selected period
+            $exercise = new Ejercicio();
+            $exercise->loadFromCode($this->codejercicio);
+            $period = $this->getPeriod($this->periodo, $exercise->fechainicio, false);
+
+            $this->fechainicio = $period['start'];
+            $this->fechafin = $period['end'];
+
+            /// Calculate Id Accounts
+            $account = new Subcuenta();
+            $account->codejercicio = $this->codejercicio;
+            $account->codsubcuenta = $this->codsubcuentaacreedora;
+            $this->idsubcuentaacreedora = $account->getIdAccount();
+
+            $account->codsubcuenta = $this->codsubcuentadeudora;
+            $this->idsubcuentadeudora = $account->getIdAccount();
+        }
+        return true;
+    }
+
+    /**
+     * Returns the items per accounting entry.
+     *
+     * @return Partida[]|bool
+     */
+    public function getPartidas()
+    {
+        if ($this->idasiento !== null) {
+            $partida = new Partida();
+
+            return $partida->all([new DataBaseWhere('idasiento', $this->idasiento)]);
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns the VAT regularization corresponding to that date,
+     *      * that is, the regularization whose start date is earlier
+     *      * to the date provided and its end date is after the date
+     *      * provided. So you can know if the period is still open to be able
+     *      * check in.
+     *
+     * @param string $fecha
+     *
+     * @return bool|RegularizacionImpuesto
+     */
+    public function getFechaInside($fecha)
+    {
+        $sql = 'SELECT * FROM ' . static::tableName() . ' WHERE fechainicio <= ' . self::$dataBase->var2str($fecha)
+            . ' AND fechafin >= ' . self::$dataBase->var2str($fecha) . ';';
+
+        $data = self::$dataBase->select($sql);
+        if (!empty($data)) {
+            return new self($data[0]);
+        }
+
+        return false;
+    }
+
+    /**
+     * Load data from previous regularization for period
+     */
+    public function loadNextPeriod()
+    {
+        /// Search for current exercise
+        $exercise = Ejercicio::getByFecha(date('d-m-Y'), true, false);
+
+        /// If we do not have the exercise we take from the current date
+        if (empty($this->codejercicio)) {
+            $this->codejercicio = $exercise->codejercicio;
+        }
+
+        /// Look for the data of the last regularization
+        $where = [new DataBaseWhere('codejercicio', $this->codejercicio)];
+        $regularization = new self();
+        if ($regularization->loadFromCode(null, $where, ['periodo' => 'DESC'])) {
+            /// Load next period regularization values
+            $period = $this->getPeriod($regularization->periodo, $regularization->fechainicio, true);
+            $this->periodo = $period['period'];
+            $this->fechainicio = $period['start'];
+            $this->fechafin = $period['end'];
+            $this->idsubcuentaacreedora = $regularization->idsubcuentaacreedora;
+            $this->codsubcuentaacreedora = $regularization->codsubcuentaacreedora;
+            $this->idsubcuentadeudora = $regularization->idsubcuentadeudora;
+            $this->codsubcuentadeudora = $regularization->codsubcuentadeudora;
+            return;
+        }
+
+        /// Load data from current exercise
+        $period = $this->getPeriod('T1', $exercise->fechainicio, false);
+        $this->periodo = $period['period'];
+        $this->fechainicio = $period['start'];
+        $this->fechafin = $period['end'];
+
+        $account = new Subcuenta();
+        $where1 = [
+            new DataBaseWhere('codejercicio', $this->codejercicio),
+            new DataBaseWhere('codcuentaesp', 'IVAACR')
+        ];
+        if ($account->loadFromCode(null, $where1)) {
+            $this->idsubcuentaacreedora = $account->idsubcuenta;
+            $this->codsubcuentaacreedora = $account->codsubcuenta;
+        }
+
+        $where2 = [
+            new DataBaseWhere('codejercicio', $this->codejercicio),
+            new DataBaseWhere('codcuentaesp', 'IVADEU')
+        ];
+        if ($account->loadFromCode(null, $where2)) {
+            $this->idsubcuentadeudora = $account->idsubcuenta;
+            $this->codsubcuentadeudora = $account->codsubcuenta;
+        }
+        return;
+    }
+
+    /**
      * Calculate Period data
      *
-     * @param string $period
-     * @param date|null $date
-     * @param bool $add
+     * @param string      $period
+     * @param string|null $date
+     * @param bool        $add
+     *
      * @return array
      */
     private function getPeriod($period, $date = null, $add = false): array
@@ -253,94 +344,5 @@ class RegularizacionImpuesto extends Base\ModelClass
                 break;
         }
         return $result;
-    }
-
-    /**
-     * Load data from previous regularization for period
-     */
-    public function loadNextPeriod()
-    {
-        /// Search for current exercise
-        $exercise = Ejercicio::getByFecha(date('d-m-Y'), true, false);
-
-        /// If we do not have the exercise we take from the current date
-        if (empty($this->codejercicio)) {
-            $this->codejercicio = $exercise->codejercicio;
-        }
-
-        /// Look for the data of the last regularization
-        $where = [ new DataBaseWhere('codejercicio', $this->codejercicio) ];
-        $regularization = new self();
-        if ($regularization->loadFromCode(null, $where, [ 'periodo' => 'DESC' ])) {
-            /// Load next period regularization values
-            $period = $this->getPeriod($regularization->periodo, $regularization->fechainicio, true);
-            $this->periodo = $period['period'];
-            $this->fechainicio = $period['start'];
-            $this->fechafin = $period['end'];
-            $this->idsubcuentaacreedora = $regularization->idsubcuentaacreedora;
-            $this->codsubcuentaacreedora = $regularization->codsubcuentaacreedora;
-            $this->idsubcuentadeudora = $regularization->idsubcuentadeudora;
-            $this->codsubcuentadeudora = $regularization->codsubcuentadeudora;
-            return;
-        }
-
-        /// Load data from current exercise
-        $period = $this->getPeriod('T1', $exercise->fechainicio, false);
-        $this->periodo = $period['period'];
-        $this->fechainicio = $period['start'];
-        $this->fechafin = $period['end'];
-
-        $account = new Subcuenta();
-        $where1 = [
-            new DataBaseWhere('codejercicio', $this->codejercicio),
-            new DataBaseWhere('codcuentaesp', 'IVAACR')
-        ];
-        if ($account->loadFromCode(null, $where1)) {
-            $this->idsubcuentaacreedora = $account->idsubcuenta;
-            $this->codsubcuentaacreedora = $account->codsubcuenta;
-        }
-
-        $where2 = [
-            new DataBaseWhere('codejercicio', $this->codejercicio),
-            new DataBaseWhere('codcuentaesp', 'IVADEU')
-        ];
-        if ($account->loadFromCode(null, $where2)) {
-            $this->idsubcuentadeudora = $account->idsubcuenta;
-            $this->codsubcuentadeudora = $account->codsubcuenta;
-        }
-        return;
-    }
-
-    /**
-     * Returns true if there are no errors in the values of the model properties.
-     * It runs inside the save method.
-     *
-     * @return bool
-     */
-    public function test()
-    {
-        if (!parent::test()) {
-            return false;
-        }
-
-        if (!empty($this->codejercicio)) {
-            /// Calculate dates to selected period
-            $exercise = new Ejercicio();
-            $exercise->loadFromCode($this->codejercicio);
-            $period = $this->getPeriod($this->periodo, $exercise->fechainicio, false);
-
-            $this->fechainicio = $period['start'];
-            $this->fechafin = $period['end'];
-
-            /// Calculate Id Accounts
-            $account = new Subcuenta();
-            $account->codejercicio = $this->codejercicio;
-            $account->codsubcuenta = $this->codsubcuentaacreedora;
-            $this->idsubcuentaacreedora = $account->getIdAccount();
-
-            $account->codsubcuenta = $this->codsubcuentadeudora;
-            $this->idsubcuentadeudora = $account->getIdAccount();
-        }
-        return true;
     }
 }

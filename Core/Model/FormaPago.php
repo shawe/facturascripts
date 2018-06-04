@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -87,7 +87,7 @@ class FormaPago extends Base\ModelClass
      * If $diasDePago is provided, they will be used for the new date.
      *
      * @param string $fechaInicio
-     * @param string $diasDePago  dias de pago específicos para el cliente (separados por comas).
+     * @param string $diasDePago dias de pago específicos para el cliente (separados por comas).
      *
      * @return string
      */
@@ -158,7 +158,7 @@ class FormaPago extends Base\ModelClass
      * If $diasDePago is provided, they will be used for the new date.
      *
      * @param string $fechaInicio
-     * @param string $diasDePago  dias de pago específicos para el cliente (separados por comas).
+     * @param string $diasDePago dias de pago específicos para el cliente (separados por comas).
      *
      * @return string
      */

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -91,7 +91,7 @@ class ListPresupuestoProveedor extends ExtendedController\ListController
         $this->addOrderBy('ListLineaPresupuestoProveedor', 'pvptotal', 'ammount');
         $this->addOrderBy('ListLineaPresupuestoProveedor', 'idpresupuesto', 'code', 2);
 
-        $taxValues = $this->codeModel->all('impuestos', 'codimpuesto', 'descripcion');
+        $taxValues = $this->codeModel::all('impuestos', 'codimpuesto', 'descripcion');
         $this->addFilterSelect('ListLineaPresupuestoProveedor', 'codimpuesto', 'tax', 'codimpuesto', $taxValues);
 
         $this->addFilterNumber('ListLineaPresupuestoProveedor', 'cantidad', 'quantity', 'cantidad');

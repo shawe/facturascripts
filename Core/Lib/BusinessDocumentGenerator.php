@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -31,7 +31,7 @@ class BusinessDocumentGenerator
     /**
      * Constant for dinamic models.
      */
-    const DIR_MODEL = '\\FacturaScripts\\Dinamic\\Model\\';
+    const MODEL_NAMESPACE = '\\FacturaScripts\\Dinamic\\Model\\';
 
     /**
      * Generates a new business document.
@@ -44,7 +44,7 @@ class BusinessDocumentGenerator
     public function generate(BusinessDocument $prototype, string $newClass): bool
     {
         $exclude = ['idestado', 'fecha', 'hora'];
-        $newDocClass = self::DIR_MODEL . $newClass;
+        $newDocClass = self::MODEL_NAMESPACE . $newClass;
         $newDoc = new $newDocClass();
         if ($newDoc instanceof BusinessDocument) {
             foreach ($prototype->getModelFields() as $field => $value) {

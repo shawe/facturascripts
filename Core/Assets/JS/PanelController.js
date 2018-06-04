@@ -1,6 +1,6 @@
 /*
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -21,9 +21,9 @@
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
 
-var tabActive = '';
-var settings = {};
-var url = '#';
+let tabActive = "";
+const settings = {};
+let url = "#";
 
 /**
  * Send a action to controller
@@ -32,7 +32,7 @@ var url = '#';
  * @param {string} formName
  */
 function execActionForm(actionValue, formName) {
-    var form = document.forms[formName];
+    const form = document.forms[formName];
     form.action.value = actionValue;
     form.submit();
 }
@@ -48,16 +48,16 @@ function execActionForm(actionValue, formName) {
  * @returns {Object}
  */
 function getAutocompleteData(formName, source, field, title, term) {
-    var formData = {};
-    var rawForm = $('form[name="' + formName + '"]').serializeArray();
+    const formData = {};
+    const rawForm = $("form[name=\"" + formName + "\"]").serializeArray();
     $.each(rawForm, function (i, input) {
         formData[input.name] = input.value;
     });
-    formData['action'] = 'autocomplete';
-    formData['source'] = source;
-    formData['field'] = field;
-    formData['title'] = title;
-    formData['term'] = term;
+    formData["action"] = "autocomplete";
+    formData["source"] = source;
+    formData["field"] = field;
+    formData["title"] = title;
+    formData["term"] = term;
     console.log(formData);
     return formData;
 }
@@ -75,7 +75,7 @@ function insertRecord() {
  */
 $(document).ready(function () {
     // update tabActive on tab change
-    $('#mainTabs').on('shown.bs.tab', function (e) {
+    $("#mainTabs").on("shown.bs.tab", function (e) {
         tabActive = e.target.hash.substring(1);
     });
 });

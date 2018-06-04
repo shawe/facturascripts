@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,11 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base;
 use FacturaScripts\Core\Lib\ExportManager;
 use FacturaScripts\Core\Model\CodeModel;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Description of BaseController
@@ -29,8 +31,6 @@ use FacturaScripts\Core\Model\CodeModel;
  */
 abstract class BaseController extends Base\Controller
 {
-
-    const MODEL_NAMESPACE = '\\FacturaScripts\\Dinamic\\Model\\';
 
     /**
      * Indicates the active view.
@@ -56,7 +56,7 @@ abstract class BaseController extends Base\Controller
     /**
      * List of views displayed by the controller.
      *
-     * @var mixed
+     * @var EditListView[]|EditView[]|GridView[]|ListView[]
      */
     public $views;
 
@@ -69,12 +69,7 @@ abstract class BaseController extends Base\Controller
      *
      * @var array
      */
-    private $settings;
-
-    /**
-     * Inserts the views to display.
-     */
-    abstract protected function createViews();
+    public $settings;
 
     /**
      * Initializes all the objects and properties.
@@ -122,7 +117,7 @@ abstract class BaseController extends Base\Controller
      *
      * @param string $viewName
      * @param string $property
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function setSettings($viewName, $property, $value)
     {
@@ -143,6 +138,11 @@ abstract class BaseController extends Base\Controller
     }
 
     /**
+     * Inserts the views to display.
+     */
+    abstract protected function createViews();
+
+    /**
      * Run the autocomplete action.
      * Returns a JSON string for the searched values.
      *
@@ -152,12 +152,15 @@ abstract class BaseController extends Base\Controller
     {
         $results = [];
         $data = $this->requestGet(['source', 'field', 'title', 'term']);
-        foreach ($this->codeModel->search($data['source'], $data['field'], $data['title'], $data['term']) as $value) {
+        foreach ($this->codeModel::search($data['source'], $data['field'], $data['title'], $data['term']) as $value) {
             $results[] = ['key' => $value->code, 'value' => $value->description];
         }
         return $results;
     }
 
+    /**
+     * @return array
+     */
     protected function getFormData(): array
     {
         $data = $this->request->request->all();
@@ -166,19 +169,22 @@ abstract class BaseController extends Base\Controller
         foreach ($this->request->files->all() as $key => $uploadFile) {
             if (is_null($uploadFile)) {
                 continue;
-            } elseif (!$uploadFile->isValid()) {
-                $this->miniLog->error($uploadFile->getErrorMessage());
-                continue;
             }
+            if ($uploadFile instanceof UploadedFile) {
+                if (!$uploadFile->isValid()) {
+                    $this->miniLog->error($uploadFile->getErrorMessage());
+                    continue;
+                }
 
-            /// exclude php files
-            if (\in_array($uploadFile->getClientMimeType(), ['application/x-php', 'text/x-php'])) {
-                $this->miniLog->error($this->i18n->trans('php-files-blocked'));
-                continue;
-            }
+                /// exclude php files
+                if (\in_array($uploadFile->getClientMimeType(), ['application/x-php', 'text/x-php'])) {
+                    $this->miniLog->error($this->i18n->trans('php-files-blocked'));
+                    continue;
+                }
 
-            if ($uploadFile->move(FS_FOLDER . DIRECTORY_SEPARATOR . 'MyFiles', $uploadFile->getClientOriginalName())) {
-                $data[$key] = $uploadFile->getClientOriginalName();
+                if ($uploadFile->move(FS_FOLDER . DIRECTORY_SEPARATOR . 'MyFiles', $uploadFile->getClientOriginalName())) {
+                    $data[$key] = $uploadFile->getClientOriginalName();
+                }
             }
         }
 

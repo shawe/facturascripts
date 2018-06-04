@@ -43,7 +43,7 @@ class AppControllerTest extends TestCase
 
     public function testConnect()
     {
-        $this->assertTrue($this->object->connect());
+        self::assertTrue($this->object->connect());
     }
 
     /**
@@ -51,6 +51,6 @@ class AppControllerTest extends TestCase
      */
     public function testRun()
     {
-        $this->assertTrue($this->object->run());
+        self::assertTrue($this->object->run());
     }
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -92,7 +92,7 @@ class ListAlbaranCliente extends ExtendedController\ListController
         $this->addOrderBy('ListLineaAlbaranCliente', 'pvptotal', 'ammount');
         $this->addOrderBy('ListLineaAlbaranCliente', 'idalbaran', 'delivery-note', 2);
 
-        $taxValues = $this->codeModel->all('impuestos', 'codimpuesto', 'descripcion');
+        $taxValues = $this->codeModel::all('impuestos', 'codimpuesto', 'descripcion');
         $this->addFilterSelect('ListLineaAlbaranCliente', 'codimpuesto', 'tax', 'codimpuesto', $taxValues);
 
         $this->addFilterNumber('ListLineaAlbaranCliente', 'cantidad', 'quantity', 'cantidad');

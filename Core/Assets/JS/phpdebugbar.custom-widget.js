@@ -20,7 +20,7 @@
  * Customized style to have numbered lines in PHP Debug Bar's Database tab
  */
 (function ($) {
-    var csscls = PhpDebugBar.utils.makecsscls("phpdebugbar-widgets-");
+    const csscls = PhpDebugBar.utils.makecsscls("phpdebugbar-widgets-");
 
     /**
      * Displays array element in a <ul> list
@@ -29,7 +29,7 @@
      *  - data
      *  - itemRenderer: a function used to render list items (optional)
      */
-    var ListWidget = PhpDebugBar.Widgets.ListWidget = PhpDebugBar.Widget.extend({
+    const ListWidget = PhpDebugBar.Widgets.ListWidget = PhpDebugBar.Widget.extend({
         tagName: "ol",
         className: csscls("list"),
         initialize: function (options) {
@@ -44,9 +44,9 @@
                 if (!this.has("data")) {
                     return;
                 }
-                var data = this.get("data");
-                for (var i = 0; i < data.length; i++) {
-                    var li = $("<li />")
+                const data = this.get("data");
+                for (let i = 0; i < data.length; i++) {
+                    let li = $("<li />")
                         .addClass(csscls("list-item"))
                         .appendTo(this.$el);
                     this.get("itemRenderer")(li, data[i]);
@@ -71,11 +71,11 @@
      * Options:
      *  - data
      */
-    var SQLQueriesWidget = PhpDebugBar.Widgets.SQLQueriesWidget = PhpDebugBar.Widget.extend({
+    const SQLQueriesWidget = PhpDebugBar.Widgets.SQLQueriesWidget = PhpDebugBar.Widget.extend({
         className: csscls("sqlqueries"),
         onFilterClick: function (el) {
             $(el).toggleClass(csscls("excluded"));
-            var excludedLabels = [];
+            const excludedLabels = [];
             this.$toolbar.find(csscls(".filter") + csscls(".excluded"))
                 .each(function () {
                     excludedLabels.push(this.rel);
@@ -91,7 +91,7 @@
             this.$toolbar = $("<div></div>")
                 .addClass(csscls("toolbar"))
                 .appendTo(this.$el);
-            var filters = [], self = this;
+            const filters = [], self = this;
             this.$list = new PhpDebugBar.Widgets.ListWidget({
                 itemRenderer: function (li, stmt) {
                     $("<code />")
@@ -151,10 +151,10 @@
                             .text("[" + stmt.error_code + "] " + stmt.error_message));
                     }
                     if (stmt.params && !$.isEmptyObject(stmt.params)) {
-                        var table = $("<table><tr><th colspan='2'>Params</th></tr></table>")
+                        const table = $("<table><tr><th colspan='2'>Params</th></tr></table>")
                             .addClass(csscls("params"))
                             .appendTo(li);
-                        for (var key in stmt.params) {
+                        for (const key in stmt.params) {
                             if (typeof stmt.params[key] !== "function") {
                                 table.append("<tr><td class='" + csscls("name") + "'>" + key + "</td><td class='" + csscls("value") +
                                     "'>" + stmt.params[key] + "</td></tr>");
@@ -175,9 +175,9 @@
             this.bindAttr("data", function (data) {
                 this.$list.set("data", data.statements);
                 this.$status.empty();
-                var stmt;
+                let stmt;
                 // Search for duplicate statements.
-                for (var sql = {}, unique = 0, i = 0; i < data.statements.length; i++) {
+                for (let sql = {}, unique = 0, i = 0; i < data.statements.length; i++) {
                     stmt = data.statements[i].sql;
                     if (data.statements[i].params && !$.isEmptyObject(data.statements[i].params)) {
                         stmt += " {" + $.param(data.statements[i].params, false) + "}";
@@ -189,7 +189,7 @@
                 for (stmt in sql) {
                     if (sql[stmt].keys.length > 1) {
                         unique++;
-                        for (var j = 0; j < sql[stmt].keys.length; j++) {
+                        for (let j = 0; j < sql[stmt].keys.length; j++) {
                             this.$list.$el.find("." + csscls("list-item"))
                                 .eq(sql[stmt].keys[j])
                                 .addClass(csscls("sql-duplicate"))
@@ -198,7 +198,7 @@
                     }
                 }
 
-                var t = $("<span />")
+                const t = $("<span />")
                     .text(data.nb_statements + " statements were executed")
                     .appendTo(this.$status);
                 if (data.nb_failed_statements) {
@@ -229,7 +229,7 @@
      * Options:
      *  - data
      */
-    var TranslationsWidget = PhpDebugBar.Widgets.TranslationsWidget = PhpDebugBar.Widget.extend({
+    const TranslationsWidget = PhpDebugBar.Widgets.TranslationsWidget = PhpDebugBar.Widget.extend({
         className: csscls("translations"),
         render: function () {
             this.$status = $("<div />")
@@ -237,8 +237,8 @@
                 .appendTo(this.$el);
             this.$list = new PhpDebugBar.Widgets.ListWidget({
                 itemRenderer: function (li, translation) {
-                    var text = translation.key + " => " + translation.value;
-                    var $line;
+                    const text = translation.key + " => " + translation.value;
+                    let $line;
                     if (translation.key === translation.value) {
                         $line = $("<span/>")
                             .addClass(csscls("name"))
@@ -259,7 +259,7 @@
             this.bindAttr("data", function (data) {
                 this.$list.set("data", data.translations);
                 if (data.translations) {
-                    var sentence = data.sentence || "translations were missed";
+                    const sentence = data.sentence || "translations were missed";
                     this.$status.empty()
                         .append($("<span />")
                             .text(data.translations.length + " " + sentence));
@@ -274,7 +274,7 @@
      * Options:
      *  - data
      */
-    var LinkIndicator = PhpDebugBar.DebugBar.Indicator.extend({
+    const LinkIndicator = PhpDebugBar.DebugBar.Indicator.extend({
         tagName: "a",
         render: function () {
             LinkIndicator.__super__.render.apply(this);

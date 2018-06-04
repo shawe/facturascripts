@@ -6,7 +6,7 @@
      * in different formats.
      *
      * This file is part of FacturaScripts
-     * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+     * Copyright (C) 2013-2018  Carlos García Gómez  <carlos@facturascripts.com>
      *
      * This program is free software: you can redistribute it and/or modify
      * it under the terms of the GNU Lesser General Public License as
@@ -32,9 +32,9 @@
 {% endblock %}
 
 {% block javascripts %}
-{{ parent() }}
-<script src="{{ asset('node_modules/handsontable/dist/handsontable.full.min.js') }}"></script>
-<script src="{{ asset('Dinamic/Assets/JS/businessDocumentController.js') }}"></script>
+    {{ parent() }}
+    <script src="{{ asset('node_modules/handsontable/dist/handsontable.full.min.js') }}"></script>
+    <script src="{{ asset('Dinamic/Assets/JS/businessDocumentController.js') }}"></script>
 {% endblock %}
 
 {% block body %}
@@ -78,11 +78,11 @@
                                 {# Statistical buttons bar #}
                                 {{ BaseMacros.rowStatisticsForEditView(_context, view) }}
 
-                            {# Main Form #}
-                            {{ BaseMacros.columnsForEditView(_context, view, view.model, TRUE) }}
-                        {% elseif viewType == 'EditListView' %}
-                            {# Information Cards Header #}
-                            {{ BaseMacros.rowCardsForEditView(_context, view, 'header') }}
+                                {# Main Form #}
+                                {{ BaseMacros.columnsForEditView(_context, view, view.model, TRUE) }}
+                            {% elseif viewType == 'EditListView' %}
+                                {# Information Cards Header #}
+                                {{ BaseMacros.rowCardsForEditView(_context, view, 'header') }}
 
                                 {# Main Form #}
                                 {{ BaseMacros.columnsForEditListView(_context, view) }}

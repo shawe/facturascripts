@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright (C) 2017   Joe Nilson          <joenilson at gmail.com>
- * Copyright (C) 2018   Carlos Garcia Gomez <carlos@facturascripts.com>
+ * Copyright (C) 2018   Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

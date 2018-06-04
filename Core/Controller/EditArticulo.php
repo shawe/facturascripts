@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -36,7 +36,7 @@ class EditArticulo extends ExtendedController\PanelController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
         $pageData = parent::getPageData();
         $pageData['title'] = 'product';
@@ -82,7 +82,7 @@ class EditArticulo extends ExtendedController\PanelController
             /** @noinspection PhpMissingBreakStatementInspection */
             case 'EditStock':
                 $limit = 0;
-                /// no break
+            /// no break
             case 'ListArticuloProveedor':
                 $referencia = $this->getViewModelValue('EditArticulo', 'referencia');
                 $where = [new DataBaseWhere('referencia', $referencia)];

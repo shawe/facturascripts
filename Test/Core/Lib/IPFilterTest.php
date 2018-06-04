@@ -43,7 +43,7 @@ class IPFilterTest extends TestCase
     }
 
     /**
-     * @covers \FacturaScripts\Core\Base\IPFilter::setAttempt
+     * @covers \FacturaScripts\Core\Lib\IPFilter::setAttempt
      */
     public function testSetAttempt()
     {
@@ -52,11 +52,11 @@ class IPFilterTest extends TestCase
 
         /// leemos directamente del archivo para ver si hay algo
         $data = file_get_contents(FS_FOLDER . '/MyFiles/Cache/ip.list');
-        $this->assertNotEmpty($data);
+        self::assertNotEmpty($data);
     }
 
     /**
-     * @covers \FacturaScripts\Core\Base\IPFilter::isBanned
+     * @covers \FacturaScripts\Core\Lib\IPFilter::isBanned
      */
     public function testIsBanned()
     {
@@ -68,6 +68,6 @@ class IPFilterTest extends TestCase
         $this->object->setAttempt('192.168.1.1');
         $this->object->setAttempt('192.168.1.1');
 
-        $this->assertTrue($this->object->isBanned('192.168.1.1'));
+        self::assertTrue($this->object->isBanned('192.168.1.1'));
     }
 }

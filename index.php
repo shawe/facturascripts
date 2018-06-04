@@ -37,9 +37,10 @@ register_shutdown_function("fatal_handler");
 
 /// Preliminary checks
 if (!file_exists(__DIR__ . '/config.php')) {
-    if ((int) substr(phpversion(), 0, 1) < 7) {
+    if (PHP_MAJOR_VERSION < 7) {
         die('You need PHP 7<br/>You have PHP ' . phpversion());
-    } elseif (!file_exists(__DIR__ . '/vendor')) {
+    }
+    if (!file_exists(__DIR__ . '/vendor')) {
         die('<h1>COMPOSER ERROR</h1><p>You need to run: composer install</p>');
     }
 

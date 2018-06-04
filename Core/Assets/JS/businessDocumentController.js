@@ -1,6 +1,6 @@
 /*
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -24,11 +24,11 @@ let hsTable = null;
 function beforeChange(changes, source) {
     // Check if the value has changed. Not Multiselection
     if (changes !== null && changes[0][2] !== changes[0][3]) {
-        for (const i = 0; i < autocompleteColumns.length; i++) {
+        for (let i = 0; i < autocompleteColumns.length; i++) {
             if (changes[0][1] === autocompleteColumns[i]) {
                 // aply for autocomplete columns
-                if (typeof changes[0][3] === 'string') {
-                    changes[0][3] = changes[0][3].split(' | ', 1)[0];
+                if (typeof changes[0][3] === "string") {
+                    changes[0][3] = changes[0][3].split(" | ", 1)[0];
                 }
             }
         }
@@ -99,7 +99,7 @@ function documentSave() {
 function getGridData() {
     let rowIndex;
     const lines = [];
-    for (const i = 0, max = documentLineData.rows.length; i < max; i++) {
+    for (let i = 0, max = documentLineData.rows.length; i < max; i++) {
         rowIndex = hsTable.toVisualRow(i);
         if (hsTable.isEmptyRow(rowIndex)) {
             continue;
@@ -111,7 +111,7 @@ function getGridData() {
 }
 
 function setAutocompletes(columns) {
-    for (const key = 0; key < columns.length; key++) {
+    for (let key = 0; key < columns.length; key++) {
         if (columns[key].type === "autocomplete") {
             autocompleteColumns.push(columns[key].data);
             columns[key].source = function (query, process) {

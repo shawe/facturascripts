@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
     Document   : cuentas.xml
-    Author     : Carlos Garcia Gomez
+    Author     : Carlos García Gómez
     Description:
         Structure for the cuentas table.
 -->
@@ -52,7 +52,8 @@
     </constraint>
     <constraint>
         <name>ca_cuentas_cuentasesp</name>
-        <type>FOREIGN KEY (codcuentaesp) REFERENCES cuentasesp (codcuentaesp) ON DELETE SET NULL ON UPDATE CASCADE</type>
+        <type>FOREIGN KEY (codcuentaesp) REFERENCES cuentasesp (codcuentaesp) ON DELETE SET NULL ON UPDATE CASCADE
+        </type>
     </constraint>
     <constraint>
         <name>ca_cuentas_parent</name>

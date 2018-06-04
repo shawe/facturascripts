@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -19,8 +19,8 @@
 
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
-use FacturaScripts\Core\Model;
 use FacturaScripts\Core\Base\Translator;
+use FacturaScripts\Core\Model;
 
 /**
  * This class manage all specific method for a WidgetItem of Select type.
@@ -192,7 +192,7 @@ class WidgetItemSelect extends WidgetItem
      * - If it's a multidimensional array, the indexes value and title must be set for each element
      *
      * @param array $values
-     * @param bool $translate
+     * @param bool  $translate
      */
     public function setValuesFromArray($values, $translate = true)
     {
@@ -217,9 +217,9 @@ class WidgetItemSelect extends WidgetItem
      * Loads the value list from an array with value and title (description)
      *
      * @param array $rows
-     * @param bool $translate
+     * @param bool  $translate
      */
-    public function setValuesFromCodeModel(&$rows, $translate = False)
+    public function setValuesFromCodeModel(&$rows, $translate = false)
     {
         $this->values = [];
         $i18n = new Translator();

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -20,10 +20,7 @@
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base;
-use FacturaScripts\Core\Lib\ExportManager;
-use FacturaScripts\Core\Model\CodeModel;
 use FacturaScripts\Core\Model\User;
-use FacturaScripts\Dinamic\Lib\ExportManager;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -34,8 +31,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 abstract class PanelController extends BaseController
 {
-
-    const DIR_MODEL = '\\FacturaScripts\\Dinamic\\Model\\';
 
     /**
      * Indicates if the main view has data or is empty.
@@ -152,7 +147,7 @@ abstract class PanelController extends BaseController
         }
 
         // General operations with the loaded data
-        $this->execAfterAction($view, $action);
+        $this->execAfterAction($action);
     }
 
     /**
@@ -223,10 +218,10 @@ abstract class PanelController extends BaseController
     /**
      * Adds a Grid type view to the controller.
      *
-     * @param $viewName
-     * @param $parentView
-     * @param $modelName
-     * @param $viewTitle
+     * @param        $viewName
+     * @param        $parentView
+     * @param        $modelName
+     * @param        $viewTitle
      * @param string $viewIcon
      */
     protected function addGridView($viewName, $parentView, $modelName, $viewTitle, $viewIcon = 'fa-list')
@@ -287,37 +282,42 @@ abstract class PanelController extends BaseController
     /**
      * Action to delete data
      *
-     * @return string
+     * @return bool
      */
-    protected function deleteAction($view): bool
+    protected function deleteAction(): bool
     {
-        $result = explode('\\', get_class($view));
-        return end($result);
+        if (!$this->permissions->allowDelete) {
+            $this->miniLog->alert($this->i18n->trans('not-allowed-delete'));
+            return false;
+        }
+        $model = $this->views[$this->active]->model;
+        $code = $this->request->get($model->primaryColumn(), '');
+        if ($model->loadFromCode($code) && $model->delete()) {
+            $this->miniLog->notice($this->i18n->trans('record-deleted-correctly'));
+            return true;
+        }
+        return false;
     }
 
     /**
-     * Adds a EditList type view to the controller.
-     *
-     * @param BaseView $view
+     * Run the data edits.
      *
      * @return bool
      */
-    protected function editAction($view)
+    protected function editAction(): bool
     {
+        $data = $this->getFormData();
+        $this->views[$this->active]->loadFromData($data);
         if (!$this->permissions->allowUpdate) {
             $this->miniLog->alert($this->i18n->trans('not-allowed-modify'));
-
             return false;
         }
-
-        if ($view->save()) {
+        if ($this->views[$this->active]->model->save()) {
+            $this->views[$this->active]->newCode = $this->views[$this->active]->model->primaryColumnValue();
             $this->miniLog->notice($this->i18n->trans('record-updated-correctly'));
-
             return true;
         }
-
         $this->miniLog->error($this->i18n->trans('record-save-error'));
-
         return false;
     }
 
@@ -326,7 +326,7 @@ abstract class PanelController extends BaseController
      *
      * @param string $action
      */
-    protected function execAfterAction($action)
+    protected function execAfterAction(string $action)
     {
         switch ($action) {
             case 'export':
@@ -347,9 +347,11 @@ abstract class PanelController extends BaseController
     /**
      * Sets the tabs position, by default is setted to 'left', also supported 'bottom' and 'top'.
      *
-     * @param string $position
+     * @param string $action
+     *
+     * @return bool
      */
-    protected function execPreviousAction($view, $action): bool
+    protected function execPreviousAction(string $action): bool
     {
         switch ($action) {
             case 'autocomplete':

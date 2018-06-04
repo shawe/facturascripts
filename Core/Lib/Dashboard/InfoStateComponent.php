@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2017  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -166,7 +166,7 @@ class InfoStateComponent extends BaseComponent implements ComponentInterface
      */
     private function getModelInfo($modelName): array
     {
-        $model = self::DIR_MODEL . $modelName;
+        $model = self::MODEL_NAMESPACE . $modelName;
         $modelObj = new $model();
 
         if ($modelObj instanceof Model\Base\ModelClass) {

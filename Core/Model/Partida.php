@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -349,7 +349,7 @@ class Partida extends Base\ModelClass
      *
      * @return bool
      */
-    protected function saveInsert(array $values = [])
+    protected function saveInsert(array $values = []): bool
     {
         $date = $this->getAccountingDate();
         $account = new Subcuenta();
@@ -387,7 +387,12 @@ class Partida extends Base\ModelClass
         return true;
     }
 
-    protected function saveUpdate(array $values = [])
+    /**
+     * @param array $values
+     *
+     * @return bool
+     */
+    protected function saveUpdate(array $values = []): bool
     {
         // Search for the difference in the amounts
         $entry = new Partida();

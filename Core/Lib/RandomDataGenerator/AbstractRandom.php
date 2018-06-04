@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2016-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2016-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -33,7 +33,7 @@ abstract class AbstractRandom
     /**
      * Constant for dinamic models.
      */
-    const DIR_MODEL = '\\FacturaScripts\\Dinamic\\Model\\';
+    const MODEL_NAMESPACE = '\\FacturaScripts\\Dinamic\\Model\\';
 
     /**
      * Contains the model to generate random data.
@@ -358,7 +358,7 @@ abstract class AbstractRandom
      */
     protected function randomClientes($recursivo = true): array
     {
-        return $this->randomModel(self::DIR_MODEL . 'Cliente', 'clientes', 'clientes', $recursivo);
+        return $this->randomModel(self::MODEL_NAMESPACE . 'Cliente', 'clientes', 'clientes', $recursivo);
     }
 
     /**
@@ -370,7 +370,7 @@ abstract class AbstractRandom
      */
     protected function randomProveedores($recursivo = true): array
     {
-        return $this->randomModel(self::DIR_MODEL . 'Proveedor', 'proveedores', 'proveedores', $recursivo);
+        return $this->randomModel(self::MODEL_NAMESPACE . 'Proveedor', 'proveedores', 'proveedores', $recursivo);
     }
 
     /**
@@ -382,7 +382,7 @@ abstract class AbstractRandom
      */
     protected function randomAgentes($recursivo = true): array
     {
-        return $this->randomModel(self::DIR_MODEL . 'Agente', 'agentes', 'agentes', $recursivo);
+        return $this->randomModel(self::MODEL_NAMESPACE . 'Agente', 'agentes', 'agentes', $recursivo);
     }
 
     /**
@@ -394,6 +394,6 @@ abstract class AbstractRandom
      */
     protected function randomArticulos($recursivo = true): array
     {
-        return $this->randomModel(self::DIR_MODEL . 'Articulo', 'articulos', 'articulos', $recursivo);
+        return $this->randomModel(self::MODEL_NAMESPACE . 'Articulo', 'articulos', 'articulos', $recursivo);
     }
 }

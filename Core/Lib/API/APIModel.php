@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -40,49 +40,6 @@ class APIModel extends APIResourceClass
     private $model;
 
     /**
-     * Convert $text to plural
-     *
-     * TODO: The conversion to the plural is language dependent.
-     *
-     * @param $text
-     * @return string
-     */
-    private function pluralize($text): string
-    {
-        /// Conversion to plural
-        if (substr($text, -1) === 's') {
-            return strtolower($text);
-        }
-        if (substr($text, -3) === 'ser' || substr($text, -4) === 'tion') {
-            return strtolower($text) . 's';
-        }
-        if (\in_array(substr($text, -1), ['a', 'e', 'i', 'o', 'u', 'k'], false)) {
-            return strtolower($text) . 's';
-        }
-        return strtolower($text) . 'es';
-    }
-
-    /**
-     * Load resource map from a folder
-     *
-     * @param string $folder
-     *
-     * @return array
-     */
-    private function getResourcesFromFolder($folder): array
-    {
-        $resources = [];
-        foreach (scandir(FS_FOLDER . '/Dinamic/' . $folder, SCANDIR_SORT_ASCENDING) as $fName) {
-            if (substr($fName, -4) === '.php') {
-                $modelName = substr($fName, 0, -4);
-                $plural = $this->pluralize($modelName);
-                $resources[$plural] = $this->setResource($modelName);
-            }
-        }
-        return $resources;
-    }
-
-    /**
      * Returns an associative array with the resources, where the index is
      * the public name of the resource.
      *
@@ -91,63 +48,6 @@ class APIModel extends APIResourceClass
     public function getResources(): array
     {
         return $this->getResourcesFromFolder('Model');
-    }
-
-    /**
-     * This method is equivalent to $this->request->get($key, $default),
-     * but always return an array, as expected for some parameters like operation, filter or sort.
-     *
-     * @param string $key
-     * @param string $default
-     *
-     * @return array
-     */
-    private function getRequestArray($key, $default = ''): array
-    {
-        $array = $this->request->get($key, $default);
-
-        return \is_array($array) ? $array : []; /// if is string has bad format
-    }
-
-    /**
-     * Returns the where clauses.
-     *
-     * @param array $filter
-     * @param array $operation
-     * @param string $defaultOperation
-     *
-     * @return DataBaseWhere[]
-     */
-    private function getWhereValues($filter, $operation, $defaultOperation = 'AND'): array
-    {
-        $where = [];
-        foreach ($filter as $key => $value) {
-            if (!isset($operation[$key])) {
-                $operation[$key] = $defaultOperation;
-            }
-            $where[] = new DataBaseWhere($key, $value, 'LIKE', $operation[$key]);
-        }
-        return $where;
-    }
-
-    protected function listAll(): bool
-    {
-        if ($this->method === 'GET') {
-            $offset = (int) $this->request->get('offset', 0);
-            $limit = (int) $this->request->get('limit', 50);
-            $operation = $this->getRequestArray('operation');
-            $filter = $this->getRequestArray('filter');
-            $order = $this->getRequestArray('sort');
-            $where = $this->getWhereValues($filter, $operation);
-
-            $data = $this->model->all($where, $order, $offset, $limit);
-
-            $this->returnResult($data);
-            return true;
-        }
-
-        $this->setError('List all only in GET method');
-        return false;
     }
 
     /**
@@ -261,6 +161,110 @@ class APIModel extends APIResourceClass
             $this->setError('api-error', null, Response::HTTP_INTERNAL_SERVER_ERROR);
             return false;
         }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function listAll(): bool
+    {
+        if ($this->method === 'GET') {
+            $offset = (int) $this->request->get('offset', 0);
+            $limit = (int) $this->request->get('limit', 50);
+            $operation = $this->getRequestArray('operation');
+            $filter = $this->getRequestArray('filter');
+            $order = $this->getRequestArray('sort');
+            $where = $this->getWhereValues($filter, $operation);
+
+            $data = $this->model->all($where, $order, $offset, $limit);
+
+            $this->returnResult($data);
+            return true;
+        }
+
+        $this->setError('List all only in GET method');
+        return false;
+    }
+
+    /**
+     * Convert $text to plural
+     *
+     * TODO: The conversion to the plural is language dependent.
+     *
+     * @param $text
+     *
+     * @return string
+     */
+    private function pluralize($text): string
+    {
+        /// Conversion to plural
+        if (substr($text, -1) === 's') {
+            return strtolower($text);
+        }
+        if (substr($text, -3) === 'ser' || substr($text, -4) === 'tion') {
+            return strtolower($text) . 's';
+        }
+        if (\in_array(substr($text, -1), ['a', 'e', 'i', 'o', 'u', 'k'], false)) {
+            return strtolower($text) . 's';
+        }
+        return strtolower($text) . 'es';
+    }
+
+    /**
+     * Load resource map from a folder
+     *
+     * @param string $folder
+     *
+     * @return array
+     */
+    private function getResourcesFromFolder($folder): array
+    {
+        $resources = [];
+        foreach (scandir(FS_FOLDER . '/Dinamic/' . $folder, SCANDIR_SORT_ASCENDING) as $fName) {
+            if (substr($fName, -4) === '.php') {
+                $modelName = substr($fName, 0, -4);
+                $plural = $this->pluralize($modelName);
+                $resources[$plural] = $this->setResource($modelName);
+            }
+        }
+        return $resources;
+    }
+
+    /**
+     * This method is equivalent to $this->request->get($key, $default),
+     * but always return an array, as expected for some parameters like operation, filter or sort.
+     *
+     * @param string $key
+     * @param string $default
+     *
+     * @return array
+     */
+    private function getRequestArray($key, $default = ''): array
+    {
+        $array = $this->request->get($key, $default);
+
+        return \is_array($array) ? $array : []; /// if is string has bad format
+    }
+
+    /**
+     * Returns the where clauses.
+     *
+     * @param array  $filter
+     * @param array  $operation
+     * @param string $defaultOperation
+     *
+     * @return DataBaseWhere[]
+     */
+    private function getWhereValues($filter, $operation, $defaultOperation = 'AND'): array
+    {
+        $where = [];
+        foreach ($filter as $key => $value) {
+            if (!isset($operation[$key])) {
+                $operation[$key] = $defaultOperation;
+            }
+            $where[] = new DataBaseWhere($key, $value, 'LIKE', $operation[$key]);
+        }
+        return $where;
     }
 
     /**

@@ -49,11 +49,11 @@ class CacheTest extends TestCase
     {
         $this->object->set('TEST', 1234);
         $data = $this->object->get('TEST');
-        $this->assertEquals(1234, $data);
-        $this->assertSame(1234, $data);
-        $this->assertNotSame('1234', $data);
-        $this->assertNotNull($data);
-        $this->assertNotFalse($data);
+        self::assertEquals(1234, $data);
+        self::assertSame(1234, $data);
+        self::assertNotSame('1234', $data);
+        self::assertNotNull($data);
+        self::assertNotFalse($data);
     }
 
     /**
@@ -63,7 +63,7 @@ class CacheTest extends TestCase
     {
         $this->object->set('TEST', 1234);
         $this->object->delete('TEST');
-        $this->assertEmpty($this->object->get('TEST'));
+        self::assertEmpty($this->object->get('TEST'));
     }
 
     /**
@@ -73,7 +73,7 @@ class CacheTest extends TestCase
     {
         $this->object->set('TEST_1', 12345);
         $this->object->clear();
-        $this->assertEmpty($this->object->get('TEST_1'));
-        $this->assertNull($this->object->get('TEST_1'));
+        self::assertEmpty($this->object->get('TEST_1'));
+        self::assertNull($this->object->get('TEST_1'));
     }
 }

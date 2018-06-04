@@ -51,10 +51,10 @@ class MiniLogTest extends TestCase
         $this->object->emergency('emergency');
         $data = $this->object->read($level);
 
-        $this->assertEquals(1, count($data));
-        $this->assertEquals($data[0]['level'], $level[0]);
-        $this->assertEquals($data[0]['message'], 'emergency');
-        $this->assertEmpty($data[0]['context']);
+        self::assertEquals(1, count($data));
+        self::assertEquals($data[0]['level'], $level[0]);
+        self::assertEquals($data[0]['message'], 'emergency');
+        self::assertEmpty($data[0]['context']);
     }
 
     /**
@@ -67,10 +67,10 @@ class MiniLogTest extends TestCase
         $this->object->alert('alert');
         $data = $this->object->read($level);
 
-        $this->assertEquals(1, count($data));
-        $this->assertEquals($data[0]['level'], $level[0]);
-        $this->assertEquals($data[0]['message'], 'alert');
-        $this->assertEmpty($data[0]['context']);
+        self::assertEquals(1, count($data));
+        self::assertEquals($data[0]['level'], $level[0]);
+        self::assertEquals($data[0]['message'], 'alert');
+        self::assertEmpty($data[0]['context']);
     }
 
     /**
@@ -83,10 +83,10 @@ class MiniLogTest extends TestCase
         $this->object->critical('critical');
         $data = $this->object->read($level);
 
-        $this->assertEquals(1, count($data));
-        $this->assertEquals($data[0]['level'], $level[0]);
-        $this->assertEquals($data[0]['message'], 'critical');
-        $this->assertEmpty($data[0]['context']);
+        self::assertEquals(1, count($data));
+        self::assertEquals($data[0]['level'], $level[0]);
+        self::assertEquals($data[0]['message'], 'critical');
+        self::assertEmpty($data[0]['context']);
     }
 
     /**
@@ -99,10 +99,10 @@ class MiniLogTest extends TestCase
         $this->object->error('error');
         $data = $this->object->read($level);
 
-        $this->assertEquals(1, count($data));
-        $this->assertEquals($data[0]['level'], $level[0]);
-        $this->assertEquals($data[0]['message'], 'error');
-        $this->assertEmpty($data[0]['context']);
+        self::assertEquals(1, count($data));
+        self::assertEquals($data[0]['level'], $level[0]);
+        self::assertEquals($data[0]['message'], 'error');
+        self::assertEmpty($data[0]['context']);
     }
 
     /**
@@ -115,10 +115,10 @@ class MiniLogTest extends TestCase
         $this->object->warning('warning');
         $data = $this->object->read($level);
 
-        $this->assertEquals(1, count($data));
-        $this->assertEquals($data[0]['level'], $level[0]);
-        $this->assertEquals($data[0]['message'], 'warning');
-        $this->assertEmpty($data[0]['context']);
+        self::assertEquals(1, count($data));
+        self::assertEquals($data[0]['level'], $level[0]);
+        self::assertEquals($data[0]['message'], 'warning');
+        self::assertEmpty($data[0]['context']);
     }
 
     /**
@@ -131,10 +131,10 @@ class MiniLogTest extends TestCase
         $this->object->notice('notice');
         $data = $this->object->read($level);
 
-        $this->assertEquals(1, count($data));
-        $this->assertEquals($data[0]['level'], $level[0]);
-        $this->assertEquals($data[0]['message'], 'notice');
-        $this->assertEmpty($data[0]['context']);
+        self::assertEquals(1, count($data));
+        self::assertEquals($data[0]['level'], $level[0]);
+        self::assertEquals($data[0]['message'], 'notice');
+        self::assertEmpty($data[0]['context']);
     }
 
     /**
@@ -147,10 +147,10 @@ class MiniLogTest extends TestCase
         $this->object->info('info');
         $data = $this->object->read($level);
 
-        $this->assertEquals(1, count($data));
-        $this->assertEquals($data[0]['level'], $level[0]);
-        $this->assertEquals($data[0]['message'], 'info');
-        $this->assertEmpty($data[0]['context']);
+        self::assertEquals(1, count($data));
+        self::assertEquals($data[0]['level'], $level[0]);
+        self::assertEquals($data[0]['message'], 'info');
+        self::assertEmpty($data[0]['context']);
     }
 
     /**
@@ -163,10 +163,10 @@ class MiniLogTest extends TestCase
         $this->object->debug('debug');
         $data = $this->object->read($level);
 
-        $this->assertEquals(1, count($data));
-        $this->assertEquals($data[0]['level'], $level[0]);
-        $this->assertEquals($data[0]['message'], 'debug');
-        $this->assertEmpty($data[0]['context']);
+        self::assertEquals(1, count($data));
+        self::assertEquals($data[0]['level'], $level[0]);
+        self::assertEquals($data[0]['message'], 'debug');
+        self::assertEmpty($data[0]['context']);
     }
 
     /**
@@ -179,16 +179,16 @@ class MiniLogTest extends TestCase
         $this->object->sql('sql');
         $data = $this->object->read($level);
 
-        $this->assertEquals(1, count($data));
-        $this->assertEquals($data[0]['level'], $level[0]);
-        $this->assertEquals($data[0]['message'], 'sql');
-        $this->assertEmpty($data[0]['context']);
+        self::assertEquals(1, count($data));
+        self::assertEquals($data[0]['level'], $level[0]);
+        self::assertEquals($data[0]['message'], 'sql');
+        self::assertEmpty($data[0]['context']);
     }
 
     public function testClear()
     {
         $this->object->sql('sql');
         $this->object->clear();
-        $this->assertEmpty($this->object->read());
+        self::assertEmpty($this->object->read());
     }
 }

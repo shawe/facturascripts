@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core\Translation;
 
 use PHPUnit\Framework\TestCase;
@@ -37,16 +38,6 @@ class TranslationTest extends TestCase
     protected $mainLang;
 
     /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
-    protected function setUp()
-    {
-        $this->basePath = FS_FOLDER . '/Core/Translation/';
-        $this->mainLang = 'en_EN.json';
-    }
-
-    /**
      * Test that all files have well format.
      */
     public function testFiles()
@@ -54,7 +45,7 @@ class TranslationTest extends TestCase
         foreach ($this->scanFolder($this->basePath) as $fileName) {
             $fileArray = $this->readJSON($this->basePath . $fileName);
             $msg = 'File ' . $fileName . ' is wrong';
-            $this->assertNotNull($fileArray, $msg);
+            self::assertNotNull($fileArray, $msg);
         }
     }
 
@@ -84,15 +75,25 @@ class TranslationTest extends TestCase
             $orderedString = json_encode($orderedArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
             $msg = 'File ' . $fileName . ' have no ordered keys.';
-            //$this->assertEquals($fileString, $orderedString, $msg);
+            //self::assertEquals($fileString, $orderedString, $msg);
         }
+    }
+
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     */
+    protected function setUp()
+    {
+        $this->basePath = FS_FOLDER . '/Core/Translation/';
+        $this->mainLang = 'en_EN.json';
     }
 
     /**
      * Verify that all language keys are also on main language.
      *
-     * @param array $primaryArray
-     * @param array $secondaryArray
+     * @param array  $primaryArray
+     * @param array  $secondaryArray
      * @param string $fileName
      */
     private function compareKeys(array $primaryArray, array &$secondaryArray, string $fileName)
@@ -101,7 +102,7 @@ class TranslationTest extends TestCase
             $exists = array_key_exists($key, $primaryArray);
             $msg = 'Key \'' . $key . '\' not exists on ' . $this->mainLang . '.';
             // Require remove unneeded translations
-            //$this->assertTrue($exists, $msg);
+            //self::assertTrue($exists, $msg);
         }
     }
 

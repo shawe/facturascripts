@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018 Carlos Garcia Gomez <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -250,8 +250,8 @@ class AppInstaller
         $file = fopen(FS_FOLDER . '/config.php', 'wb');
         if (\is_resource($file)) {
             fwrite($file, '<?php' . \PHP_EOL);
-            fwrite($file, "\define('FS_COOKIES_EXPIRE', " . $this->request->request->get('fs_cookie_expire', 604800) . ");" . \PHP_EOL);
-            fwrite($file, "\define('FS_ROUTE', '" . $this->request->request->get('fs_route', $this->getUri()) . "');\n");
+            fwrite($file, "\define('FS_COOKIES_EXPIRE', " . $request->get('fs_cookie_expire', 604800) . ");" . \PHP_EOL);
+            fwrite($file, "\define('FS_ROUTE', '" . $request->get('fs_route', $this->getUri()) . "');\n");
             fwrite($file, "\define('FS_DB_FOREIGN_KEYS', true);" . \PHP_EOL);
             fwrite($file, "\define('FS_DB_INTEGER', 'INTEGER');" . \PHP_EOL);
             fwrite($file, "\define('FS_DB_TYPE_CHECK', true);" . \PHP_EOL);
@@ -261,16 +261,16 @@ class AppInstaller
                 'db_pass', 'cache_host', 'cache_port', 'cache_prefix', 'hidden_plugins'
             ];
             foreach ($fields as $field) {
-                fwrite($file, "\define('FS_" . strtoupper($field) . "', '" . $this->request->request->get('fs_' . $field, '') . "');" . \PHP_EOL);
+                fwrite($file, "\define('FS_" . strtoupper($field) . "', '" . $request->get('fs_' . $field, '') . "');" . \PHP_EOL);
             }
 
             $booleanFields = ['debug', 'disable_add_plugins', 'disable_rm_plugins'];
             foreach ($booleanFields as $field) {
-                fwrite($file, "\define('FS_" . strtoupper($field) . "', " . $this->request->request->get('fs_' . $field, 'false') . ");" . \PHP_EOL);
+                fwrite($file, "\define('FS_" . strtoupper($field) . "', " . $request->get('fs_' . $field, 'false') . ");" . \PHP_EOL);
             }
 
-            if ($this->request->request->get('db_type') === 'MYSQL' && $this->request->request->get('mysql_socket') !== '') {
-                fwrite($file, "\nini_set('mysqli.default_socket', '" . $this->request->request->get('mysql_socket') . "');" . \PHP_EOL);
+            if ($request->get('db_type') === 'MYSQL' && $request->get('mysql_socket') !== '') {
+                fwrite($file, "\nini_set('mysqli.default_socket', '" . $request->get('mysql_socket') . "');" . \PHP_EOL);
             }
 
             fwrite($file, \PHP_EOL);

@@ -8,7 +8,7 @@
      * {% from 'Macro/BaseController.html.twig' import filterForTextInput as filterForTextInput %}
      *
      * This file is part of FacturaScripts
-     * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+     * Copyright (C) 2017-2018  Carlos García Gómez  <carlos@facturascripts.com>
      *
      * This program is free software: you can redistribute it and/or modify
      * it under the terms of the GNU Lesser General Public License as
@@ -124,25 +124,25 @@
         <div class="row">
     {% endif %}
 
-            {% for group in view.getColumns() %}
-                <div class="{{ group.numColumns == 0 ? 'col' : 'col-md-' ~ group.numColumns }}">
-                    <div class="form-row">
-                        {% if group.title is not empty %}
-                            <legend>{{ group.getHeaderHTML(group.title)|raw }}</legend>
+    {% for group in view.getColumns() %}
+        <div class="{{ group.numColumns == 0 ? 'col' : 'col-md-' ~ group.numColumns }}">
+            <div class="form-row">
+                {% if group.title is not empty %}
+                    <legend>{{ group.getHeaderHTML(group.title)|raw }}</legend>
+                {% endif %}
+                {% for column in group.columns %}
+                    {% set value = context.fsc.getFieldValue(model, column.widget.fieldName) %}
+                    {% if column.display == 'none' %}
+                        <input type="hidden" name="{{ column.widget.fieldName }}" value="{{ value }}">
+                    {% else %}
+                        {% if column.level <= context.fsc.user.level %}
+                            {{ column.getEditHTML(value, TRUE, formName)|raw }}
                         {% endif %}
-                        {% for column in group.columns %}
-                            {% set value = context.fsc.getFieldValue(model, column.widget.fieldName) %}
-                            {% if column.display == 'none' %}
-                                <input type="hidden" name="{{ column.widget.fieldName }}" value="{{ value }}">
-                            {% else %}
-                                {% if column.level <= context.fsc.user.level %}
-                                    {{ column.getEditHTML(value, TRUE, formName)|raw }}
-                                {% endif %}
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
 
     {% if withForm == TRUE %}
         </div>
@@ -209,13 +209,13 @@
         </tr>
         </thead>
         <tbody class="tab{{ context.indexView }}">
-            {% for model in view.getCursor() %}
-                {# Set background status #}
-                {% set rowClass = 'table-light' %}
-                {% set rowStatus = view.getRow('status') %}
-                {% if rowStatus is not empty %}
-                    {% set rowClass = rowStatus.getStatus( model ) %}
-                {% endif %}
+        {% for model in view.getCursor() %}
+            {# Set background status #}
+            {% set rowClass = 'table-light' %}
+            {% set rowStatus = view.getRow('status') %}
+            {% if rowStatus is not empty %}
+                {% set rowClass = rowStatus.getStatus( model ) %}
+            {% endif %}
 
             {# checks model url #}
             {% set rowDataHref = view.getClickEvent(model) %}

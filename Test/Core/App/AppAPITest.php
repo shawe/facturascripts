@@ -44,7 +44,7 @@ class AppAPITest extends TestCase
 
     public function testConnect()
     {
-        $this->assertTrue($this->object->connect());
+        self::assertTrue($this->object->connect());
     }
 
     /**
@@ -52,7 +52,7 @@ class AppAPITest extends TestCase
      */
     public function testRun()
     {
-        $mustRun = ('true' == AppSettings::get('default', 'enable_api', false));
-        $this->assertEquals($this->object->run(), $mustRun);
+        $mustRun = ('true' === AppSettings::get('default', 'enable_api', 'false'));
+        self::assertEquals($this->object->run(), $mustRun);
     }
 }

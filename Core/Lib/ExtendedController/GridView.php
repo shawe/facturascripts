@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -23,7 +23,7 @@ use Exception;
 use FacturaScripts\Core\Base;
 use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Lib\ExportManager;
-use FacturaScripts\Core\Model\Base\ModelClass;
+use FacturaScripts\Core\Model\Asiento;
 
 /**
  * Description of GridView
@@ -43,7 +43,7 @@ class GridView extends BaseView
     /**
      * Model of parent data
      *
-     * @var ModelClass
+     * @var Asiento
      */
     private $parentModel;
 
@@ -196,8 +196,8 @@ class GridView extends BaseView
     /**
      * Load the data in the cursor property, according to the where filter specified.
      *
-     * @param DataBaseWhere[] $where
-     * @param array           $order
+     * @param DataBase\DataBaseWhere[] $where
+     * @param array                    $order
      */
     public function loadData(array $where = [], array $order = [])
     {
@@ -218,7 +218,7 @@ class GridView extends BaseView
      * Load data of master document and set data from array
      *
      * @param string $fieldPK
-     * @param array $data
+     * @param array  $data
      *
      * @return bool
      */

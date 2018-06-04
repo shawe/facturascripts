@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController;
@@ -34,15 +35,15 @@ class ListRegularizacionImpuesto extends ExtendedController\ListController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
-        $pagedata = parent::getPageData();
-        $pagedata['menu'] = 'accounting';
-        $pagedata['submenu'] = 'taxes';
-        $pagedata['title'] = 'vat-regularization';
-        $pagedata['icon'] = 'fa-map-signs';
+        $pageData = parent::getPageData();
+        $pageData['menu'] = 'accounting';
+        $pageData['submenu'] = 'taxes';
+        $pageData['title'] = 'vat-regularization';
+        $pageData['icon'] = 'fa-map-signs';
 
-        return $pagedata;
+        return $pageData;
     }
 
     /**

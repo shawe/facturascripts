@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2014-2018    Carlos Garcia Gomez       <carlos@facturascripts.com>
+ * Copyright (C) 2014-2018    Carlos García Gómez       <carlos@facturascripts.com>
  * Copyright (C) 2014         Francesc Pineda Segarra   <shawe.ewahs@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -36,7 +36,14 @@ class LineaPresupuestoCliente extends Base\SalesDocumentLine
      */
     public $idpresupuesto;
 
-    public function install()
+    /**
+     * This function is called when creating the model table. Returns the SQL
+     * that will be executed after the creation of the table. Useful to insert values
+     * default.
+     *
+     * @return string
+     */
+    public function install(): string
     {
         new PresupuestoCliente();
 

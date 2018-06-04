@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -59,7 +59,7 @@ class Almacen extends Base\Address
      *
      * @return bool
      */
-    public function isDefault()
+    public function isDefault(): bool
     {
         return $this->codalmacen === AppSettings::get('default', 'codalmacen');
     }
@@ -109,15 +109,5 @@ class Almacen extends Base\Address
         }
 
         return parent::test();
-    }
-
-    /**
-     * Returns True if is the default wharehouse for the company.
-     *
-     * @return bool
-     */
-    public function isDefault(): bool
-    {
-        return $this->codalmacen === AppSettings::get('default', 'codalmacen');
     }
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -121,9 +121,8 @@ class Ledger extends AccountingBase
     /**
      * Process the header data to use the appropiate formats.
      *
+     * @param array $ledgerAccount
      * @param array $line
-     *
-     * @return array
      */
     protected function processHeader(&$ledgerAccount, $line)
     {

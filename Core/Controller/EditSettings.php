@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018 Carlos Garcia Gomez <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -21,7 +21,7 @@ namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Lib\EmailTools;
 use FacturaScripts\Core\Lib\ExtendedController;
-use FacturaScripts\Core\Model\Base\ModelClass;
+use FacturaScripts\Core\Model\Settings;
 
 /**
  * Controller to edit main settings
@@ -38,7 +38,7 @@ class EditSettings extends ExtendedController\PanelController
     /**
      * Returns the configuration property value for a specified $field
      *
-     * @param ModelClass $model
+     * @param Settings $model
      * @param string     $field
      *
      * @return mixed
@@ -130,7 +130,7 @@ class EditSettings extends ExtendedController\PanelController
      *
      * @param string $action
      */
-    protected function execAfterAction($action)
+    protected function execAfterAction(string $action)
     {
         switch ($action) {
             case 'export':
@@ -192,13 +192,13 @@ class EditSettings extends ExtendedController\PanelController
      * @param string                      $viewName
      * @param ExtendedController\EditView $view
      */
-    protected function loadData($keyView, $view)
+    protected function loadData($viewName, $view)
     {
         if (empty($view->getModel())) {
             return;
         }
 
-        $code = $this->getKeyFromViewName($keyView);
+        $code = $this->getKeyFromViewName($viewName);
         $view->loadData($code);
 
         if ($view->model->name === null) {

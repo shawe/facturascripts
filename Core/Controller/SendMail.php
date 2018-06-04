@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2018 Carlos Garcia Gomez <carlos@facturascripts.com>
+ * Copyright (C) 2018 Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -16,12 +16,13 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Controller;
 
+use FacturaScripts\Core\App\AppSettings;
 use FacturaScripts\Core\Base\Controller;
 use FacturaScripts\Core\Lib\EmailTools;
 use FacturaScripts\Core\Model\CodeModel;
-use FacturaScripts\Core\App\AppSettings;
 
 /**
  * Description of SendMail
@@ -52,7 +53,7 @@ class SendMail extends Controller
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
         $pageData = parent::getPageData();
         $pageData['menu'] = 'reports';
@@ -100,7 +101,7 @@ class SendMail extends Controller
      *
      * @return string
      */
-    public function url()
+    public function url(): string
     {
         $sendParams = [
             'fileName' => $this->request->get('fileName', '')
@@ -159,7 +160,7 @@ class SendMail extends Controller
      *
      * @return bool
      */
-    protected function execPreviousAction($action)
+    protected function execPreviousAction(string $action): bool
     {
         switch ($action) {
             case 'autocomplete':
@@ -220,6 +221,8 @@ class SendMail extends Controller
 
     /**
      * Send and email with data posted from form.
+     *
+     * @throws \PHPMailer\PHPMailer\Exception
      */
     protected function send()
     {

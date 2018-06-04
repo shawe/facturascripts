@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -60,7 +60,7 @@ class EditRole extends ExtendedController\PanelController
     {
         // add Pages to Rol
         if (!Model\RoleAccess::addPagesToRole($codrole, $pages)) {
-            throw new \Exception(self::$i18n->trans('cancel-process'));
+            throw new \Exception($this->i18n->trans('cancel-process'));
         }
     }
 
@@ -81,11 +81,11 @@ class EditRole extends ExtendedController\PanelController
     /**
      * Run the actions that alter data before reading it
      *
-     * @param string   $action
+     * @param string $action
      *
      * @return bool
      */
-    protected function execPreviousAction($action): bool
+    protected function execPreviousAction(string $action): bool
     {
         switch ($action) {
             case 'add-rol-access':

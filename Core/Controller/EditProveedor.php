@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018  Carlos García Gómez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -53,7 +53,7 @@ class EditProveedor extends ExtendedController\PanelController
         $totalModel = Model\TotalModel::all('albaranesprov', $where, ['total' => 'SUM(total)'], '')[0];
 
         $divisaTools = new DivisaTools();
-        return $divisaTools->format($totalModel->totals['total'], 2);
+        return $divisaTools::format($totalModel->totals['total'], 2);
     }
 
     /**
@@ -72,7 +72,7 @@ class EditProveedor extends ExtendedController\PanelController
         $totalModel = Model\TotalModel::all('recibosprov', $where, ['total' => 'SUM(importe)'], '')[0];
 
         $divisaTools = new DivisaTools();
-        return $divisaTools->format($totalModel->totals['total'], 2);
+        return $divisaTools::format($totalModel->totals['total'], 2);
     }
 
     /**
@@ -80,7 +80,7 @@ class EditProveedor extends ExtendedController\PanelController
      *
      * @return array
      */
-    public function getPageData()
+    public function getPageData(): array
     {
         $pageData = parent::getPageData();
         $pageData['title'] = 'supplier';
