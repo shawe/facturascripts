@@ -66,7 +66,7 @@ class APCAdapter implements AdaptorInterface
     public function get($key)
     {
         $this->minilog->debug($this->i18n->trans('apc-get-key-item', ['%item%' => $key]));
-        if (apc_exists( \FS_CACHE_PREFIX . $key)) {
+        if (apc_exists(\FS_CACHE_PREFIX . $key)) {
             $result = apc_fetch(\FS_CACHE_PREFIX . $key);
 
             return ($result === false) ? null : $result;

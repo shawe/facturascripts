@@ -131,7 +131,7 @@ class Controller
     /**
      * Name of the file for the template.
      *
-     * @var string|false nombre_archivo.html.twig
+     * @var string|bool nombre_archivo.html.twig
      */
     private $template;
 
@@ -181,7 +181,7 @@ class Controller
     /**
      * Return the template to use for this controller.
      *
-     * @return string|false
+     * @return string|bool
      */
     public function getTemplate()
     {
@@ -195,7 +195,7 @@ class Controller
      * @param Model\User            $user
      * @param ControllerPermissions $permissions
      */
-    public function privateCore(&$response, $user, $permissions)
+    public function privateCore(&$response, $user, $permissions): void
     {
         $this->permissions = $permissions;
         $this->response = &$response;
@@ -224,7 +224,7 @@ class Controller
      *
      * @param Response $response
      */
-    public function publicCore(&$response)
+    public function publicCore(&$response): void
     {
         $this->response = &$response;
         $this->template = 'Login/Login.html.twig';
@@ -233,11 +233,11 @@ class Controller
     /**
      * Set the template to use for this controller.
      *
-     * @param string|false $template
+     * @param string|bool $template
      *
      * @return bool
      */
-    public function setTemplate($template)
+    public function setTemplate($template): bool
     {
         if ($template === false) {
             $this->template = false;
@@ -265,7 +265,7 @@ class Controller
      *
      * @return string
      */
-    protected function getClassName()
+    protected function getClassName(): string
     {
         return $this->className;
     }
