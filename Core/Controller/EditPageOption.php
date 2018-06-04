@@ -20,8 +20,10 @@
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base;
+use FacturaScripts\Core\Base\ControllerPermissions;
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Dinamic\Model;
+use FacturaScripts\Dinamic\Model\User;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -81,11 +83,11 @@ class EditPageOption extends Base\Controller
     /**
      * Runs the controller's private logic.
      *
-     * @param Response                   $response
-     * @param Model\User                 $user
-     * @param Base\ControllerPermissions $permissions
+     * @param Response              $response
+     * @param User                  $user
+     * @param ControllerPermissions $permissions
      */
-    public function privateCore(&$response, $user, $permissions)
+    public function privateCore(Response $response, User $user, ControllerPermissions $permissions): void
     {
         parent::privateCore($response, $user, $permissions);
 
@@ -149,7 +151,7 @@ class EditPageOption extends Base\Controller
     /**
      * Load and initialize the parameters sent by the form
      */
-    private function getParams()
+    private function getParams(): void
     {
         $this->selectedViewName = $this->request->get('code', '');
         $this->backPage = $this->request->get('url') ?: $this->selectedViewName;
@@ -162,7 +164,7 @@ class EditPageOption extends Base\Controller
      * It determines if we edit a configuration for all the users or one,
      * and if there is already configuration for the nick
      */
-    private function checkNickAndID()
+    private function checkNickAndID(): void
     {
         if ($this->model->nick !== $this->selectedUser) {
             $this->model->id = null;
@@ -177,7 +179,7 @@ class EditPageOption extends Base\Controller
     /**
      * Delete configuration for view
      */
-    private function deleteData()
+    private function deleteData(): void
     {
         $nick = $this->request->get('nick');
         $where = [
@@ -202,7 +204,7 @@ class EditPageOption extends Base\Controller
     /**
      * Save new configuration for view
      */
-    private function saveData()
+    private function saveData(): void
     {
         $this->checkNickAndID();
         $data = $this->request->request->all();

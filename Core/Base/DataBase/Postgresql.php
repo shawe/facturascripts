@@ -80,7 +80,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return array
      */
-    public function columnFromData($colData): array
+    public function columnFromData(array $colData): array
     {
         $colData['extra'] = null;
 
@@ -96,9 +96,9 @@ class Postgresql implements DataBaseEngine
      *
      * @param string $error
      *
-     * @return bool|null
+     * @return null|resource
      */
-    public function connect(&$error)
+    public function connect(string &$error)
     {
         if (!\function_exists('pg_connect')) {
             $error = $this->i18n->trans('php-postgresql-not-found');
@@ -215,7 +215,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return array
      */
-    public function select($link, $sql): array
+    public function select($link, string $sql): array
     {
         $results = $this->runSql($link, $sql);
 
@@ -231,7 +231,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return bool
      */
-    public function exec($link, $sql): bool
+    public function exec($link, string $sql): bool
     {
         return $this->runSql($link, $sql, false) === true;
     }
@@ -244,7 +244,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return string
      */
-    public function escapeString($link, $str): string
+    public function escapeString($link, string $str): string
     {
         return pg_escape_string($link, $str);
     }
@@ -267,7 +267,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return bool
      */
-    public function compareDataTypes($dbType, $xmlType): bool
+    public function compareDataTypes(string $dbType, string $xmlType): bool
     {
         return $dbType === $xmlType;
     }
@@ -307,7 +307,7 @@ class Postgresql implements DataBaseEngine
      * @param string   $default
      * @param string   $colname
      */
-    public function checkSequence($link, $tableName, $default, $colname)
+    public function checkSequence($link, string $tableName, string $default, string $colname): void
     {
         $aux = explode("'", $default);
         if (count($aux) === 3) {
@@ -328,7 +328,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return bool
      */
-    public function checkTableAux($link, $tableName, &$error): bool
+    public function checkTableAux($link, string $tableName, string &$error): bool
     {
         return true;
     }
@@ -350,7 +350,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return string
      */
-    public function getOperator($operator): string
+    public function getOperator(string $operator): string
     {
         switch ($operator) {
             case 'REGEXP':
@@ -371,7 +371,7 @@ class Postgresql implements DataBaseEngine
      *
      * @return array|bool
      */
-    private function runSql($link, $sql, $selectRows = true)
+    private function runSql($link, string $sql, bool $selectRows = true)
     {
         $result = $selectRows ? [] : false;
 

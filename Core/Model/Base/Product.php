@@ -98,7 +98,7 @@ abstract class Product extends ModelClass
     /**
      * Reset the values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
         $this->codimpuesto = AppSettings::get('default', 'codimpuesto');
@@ -155,7 +155,7 @@ abstract class Product extends ModelClass
      *
      * @return float|null
      */
-    public function getIva(bool $reload = false)
+    public function getIva(bool $reload = false): ?float
     {
         if ($reload) {
             $this->iva = null;
@@ -185,7 +185,7 @@ abstract class Product extends ModelClass
      *
      * @param string $codimpuesto
      */
-    public function setImpuesto(string $codimpuesto)
+    public function setImpuesto(string $codimpuesto): void
     {
         if ($codimpuesto !== $this->codimpuesto) {
             $this->codimpuesto = $codimpuesto;

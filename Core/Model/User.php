@@ -133,7 +133,7 @@ class User extends Base\ModelClass
     /**
      * Reset the values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
         $this->enabled = true;
@@ -218,7 +218,7 @@ class User extends Base\ModelClass
      *
      * @return string
      */
-    public function newLogkey($ipAddress): string
+    public function newLogkey(string $ipAddress): string
     {
         $this->lastactivity = date('d-m-Y H:i:s');
         $this->lastip = $ipAddress;
@@ -232,7 +232,7 @@ class User extends Base\ModelClass
      *
      * @param string $value
      */
-    public function setPassword($value)
+    public function setPassword(string $value): void
     {
         $this->password = password_hash($value, PASSWORD_DEFAULT);
     }
@@ -244,7 +244,7 @@ class User extends Base\ModelClass
      *
      * @return bool
      */
-    public function verifyLogkey($value): bool
+    public function verifyLogkey(string $value): bool
     {
         return $this->logkey === $value;
     }
@@ -256,7 +256,7 @@ class User extends Base\ModelClass
      *
      * @return bool
      */
-    public function verifyPassword($value): bool
+    public function verifyPassword(string $value): bool
     {
         if (password_verify($value, $this->password)) {
             if (password_needs_rehash($this->password, PASSWORD_DEFAULT)) {
@@ -272,7 +272,7 @@ class User extends Base\ModelClass
     /**
      * Check the null value of the fields
      */
-    private function checkEmptyValues()
+    private function checkEmptyValues(): void
     {
         if ($this->lastactivity === '') {
             $this->lastactivity = null;

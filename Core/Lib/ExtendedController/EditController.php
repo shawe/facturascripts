@@ -20,6 +20,7 @@
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base;
+use FacturaScripts\Core\Model\Base\ModelClass;
 
 /**
  * Controller to manage the data editing
@@ -39,7 +40,7 @@ abstract class EditController extends PanelController
      * @param string          $className
      * @param string          $uri
      */
-    public function __construct(&$cache, &$i18n, &$miniLog, $className, $uri = '')
+    public function __construct(Base\Cache $cache, Base\Translator $i18n, Base\MiniLog $miniLog, string $className, string $uri = '')
     {
         parent::__construct($cache, $i18n, $miniLog, $className, $uri);
         $this->setTabsPosition('bottom');
@@ -48,14 +49,14 @@ abstract class EditController extends PanelController
     /**
      * Returns the class name of the model to use in the editView.
      */
-    abstract public function getModelClassName();
+    abstract public function getModelClassName(): string;
 
     /**
      * Pointer to the data model
      *
-     * @return mixed
+     * @return ModelClass
      */
-    public function getModel()
+    public function getModel(): ModelClass
     {
         $viewKey = array_keys($this->views)[0];
         return $this->views[$viewKey]->model;
@@ -64,7 +65,7 @@ abstract class EditController extends PanelController
     /**
      * Create the view to display
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $modelName = $this->getModelClassName();
         $viewName = 'Edit' . $this->getModelClassName();
@@ -80,7 +81,7 @@ abstract class EditController extends PanelController
      * @param string   $viewName
      * @param EditView $view
      */
-    protected function loadData($viewName, $view)
+    protected function loadData($viewName, $view): void
     {
         $code = $this->request->get('code');
         $view->loadData($code);

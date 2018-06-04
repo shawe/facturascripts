@@ -80,7 +80,7 @@ abstract class BaseController extends Base\Controller
      * @param string          $className
      * @param string          $uri
      */
-    public function __construct(&$cache, &$i18n, &$miniLog, $className, $uri = '')
+    public function __construct(Cache $cache, Translator $i18n, MiniLog $miniLog, string $className, string $uri = '')
     {
         parent::__construct($cache, $i18n, $miniLog, $className, $uri);
 
@@ -94,12 +94,12 @@ abstract class BaseController extends Base\Controller
     /**
      * Returns the configuration value for the indicated view.
      *
-     * @param string|null $viewName
-     * @param string|null $property
+     * @param string $viewName
+     * @param string $property
      *
-     * @return mixed
+     * @return array|mixed
      */
-    public function getSettings($viewName, $property)
+    public function getSettings(string $viewName = '', string $property = '')
     {
         if (empty($viewName)) {
             return $this->settings;
@@ -119,7 +119,7 @@ abstract class BaseController extends Base\Controller
      * @param string $property
      * @param mixed  $value
      */
-    public function setSettings($viewName, $property, $value)
+    public function setSettings($viewName, $property, $value): void
     {
         $this->settings[$viewName][$property] = $value;
     }
@@ -132,15 +132,15 @@ abstract class BaseController extends Base\Controller
      *
      * @return mixed
      */
-    public function getFieldValue($model, $field)
+    public function getFieldValue($model, string $field)
     {
-        return isset($model->{$field}) ? $model->{$field} : null;
+        return $model->{$field} ?? null;
     }
 
     /**
      * Inserts the views to display.
      */
-    abstract protected function createViews();
+    abstract protected function createViews(): void;
 
     /**
      * Run the autocomplete action.

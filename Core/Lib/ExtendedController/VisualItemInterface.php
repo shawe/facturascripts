@@ -32,33 +32,33 @@ interface VisualItemInterface
      *
      * @param array $item
      */
-    public static function newFromJSON($item);
+    public static function newFromJSON(array $item);
 
     /**
      * Create and load element structure from XML file
      *
      * @param \SimpleXMLElement $item
      */
-    public static function newFromXML($item);
+    public static function newFromXML(\SimpleXMLElement $item);
 
     /**
      * Generates the HTML code to display the header for the visual element
      *
      * @param string $value
      */
-    public function getHeaderHTML($value);
+    public function getHeaderHTML(string $value): string;
 
     /**
      * Loads the attributes structure from a JSON file
      *
      * @param array $items
      */
-    public function loadFromJSON($items);
+    public function loadFromJSON(array $items): void;
 
     /**
      * Loads the attributes structure from a XML file
      *
      * @param \SimpleXMLElement $items
      */
-    public function loadFromXML($items);
+    public function loadFromXML(\SimpleXMLElement $items): void;
 }

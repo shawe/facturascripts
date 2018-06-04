@@ -48,7 +48,7 @@ class ListAgente extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addView('ListAgente', 'Agente');
         $this->addSearchFields('ListAgente', ['nombre', 'apellidos', 'codagente', 'email']);

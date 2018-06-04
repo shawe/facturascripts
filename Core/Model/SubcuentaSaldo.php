@@ -103,7 +103,7 @@ class SubcuentaSaldo extends Base\ModelClass
     /**
      * Reset the values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
 
@@ -154,7 +154,7 @@ class SubcuentaSaldo extends Base\ModelClass
      *
      * @return bool
      */
-    public function updateBalance($month, $debit, $credit): bool
+    public function updateBalance(int $month, float $debit, float $credit): bool
     {
         $balance = $debit - $credit;
         $sql = 'UPDATE ' . static::tableName() . ' SET '
@@ -176,7 +176,7 @@ class SubcuentaSaldo extends Base\ModelClass
      *
      * @return float
      */
-    public function setSubAccountBalance($idSubAccount, &$detail): float
+    public function setSubAccountBalance(int $idSubAccount, array &$detail): float
     {
         $result = 0;
         $where = [new DataBaseWhere('idsubcuenta', $idSubAccount)];

@@ -44,7 +44,7 @@ class Grupos extends AbstractRandomPeople
      *
      * @return int
      */
-    public function generate($num = 50): int
+    public function generate(int $num = 50): int
     {
         $nombres = [
             'Profesionales', 'Profesional', 'Grandes compradores', 'Preferentes',

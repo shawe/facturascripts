@@ -199,7 +199,7 @@ class AppInstaller
      *
      * @return bool|string
      */
-    private function randomString($length = 20)
+    private function randomString(int $length = 20)
     {
         return substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, $length);
     }
@@ -207,7 +207,7 @@ class AppInstaller
     /**
      * Renders HTML.
      */
-    private function render()
+    private function render(): void
     {
         /// HTML template variables
         $templateVars = [
@@ -323,7 +323,7 @@ class AppInstaller
      *
      * @return bool
      */
-    private function testMysql($dbData): bool
+    private function testMysql(array $dbData): bool
     {
         if ($dbData['socket'] !== '') {
             ini_set('mysqli.default_socket', $dbData['socket']);
@@ -356,7 +356,7 @@ class AppInstaller
      *
      * @return bool
      */
-    private function testPostgreSql($dbData): bool
+    private function testPostgreSql(array $dbData): bool
     {
         $connectionStr = 'host=' . $dbData['host'] . ' port=' . $dbData['port'];
         $connection = @\pg_connect(

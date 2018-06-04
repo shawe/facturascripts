@@ -50,7 +50,7 @@ class EditFabricante extends ExtendedController\PanelController
     /**
      * Load views.
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addEditView('EditFabricante', 'Fabricante', 'manufacturer');
         $this->addListView('EditFabricanteListArticulos', 'Articulo', 'products');
@@ -62,7 +62,7 @@ class EditFabricante extends ExtendedController\PanelController
      * @param string                      $viewName
      * @param ExtendedController\EditView $view
      */
-    protected function loadData($viewName, $view)
+    protected function loadData($viewName, $view): void
     {
         switch ($viewName) {
             case 'EditFabricante':

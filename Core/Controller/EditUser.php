@@ -51,7 +51,7 @@ class EditUser extends ExtendedController\PanelController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         /// Add all views
         $this->addEditView('EditUser', 'User', 'user', 'fa-user');
@@ -71,7 +71,7 @@ class EditUser extends ExtendedController\PanelController
      * @param string                      $viewName
      * @param ExtendedController\EditView $view
      */
-    protected function loadData($viewName, $view)
+    protected function loadData($viewName, $view): void
     {
         switch ($viewName) {
             case 'EditUser':
@@ -125,7 +125,7 @@ class EditUser extends ExtendedController\PanelController
     /**
      * Load a list of pages where user has access that can be setted as homepage.
      */
-    private function loadHomepageValues()
+    private function loadHomepageValues(): void
     {
         $user = new Model\User();
         $code = $this->request->get('code');
@@ -144,7 +144,7 @@ class EditUser extends ExtendedController\PanelController
     /**
      * Load the available language values from translator.
      */
-    private function loadLanguageValues()
+    private function loadLanguageValues(): void
     {
         $columnLangCode = $this->views['EditUser']->columnForName('lang-code');
         $langs = [];

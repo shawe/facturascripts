@@ -112,7 +112,7 @@ class ListView extends BaseView implements DataViewInterface
      * @param string $viewName
      * @param string $userNick
      */
-    public function __construct($title, $modelName, $viewName, $userNick)
+    public function __construct(string $title, string $modelName, string $viewName, string $userNick)
     {
         parent::__construct($title, $modelName);
 
@@ -133,7 +133,7 @@ class ListView extends BaseView implements DataViewInterface
      * @param string     $key
      * @param ListFilter $filter
      */
-    public function addFilter(string $key, ListFilter $filter)
+    public function addFilter(string $key, ListFilter $filter): void
     {
         $this->filters[$key] = $filter;
     }
@@ -145,7 +145,7 @@ class ListView extends BaseView implements DataViewInterface
      * @param string $label
      * @param int    $default (0 = None, 1 = ASC, 2 = DESC)
      */
-    public function addOrderBy($fields, $label, $default = 0)
+    public function addOrderBy(array $fields, string $label, int $default = 0): void
     {
         $key1 = strtolower(implode('|', $fields)) . '_asc';
         $key2 = strtolower(implode('|', $fields)) . '_desc';
@@ -169,7 +169,7 @@ class ListView extends BaseView implements DataViewInterface
      *
      * @param array $fields
      */
-    public function addSearchIn($fields)
+    public function addSearchIn(array $fields): void
     {
         if (\is_array($fields)) {
             // TODO: Error: Perhaps array_merge/array_replace can be used instead.
@@ -186,7 +186,7 @@ class ListView extends BaseView implements DataViewInterface
      * @param string $columnName
      * @param bool   $disabled
      */
-    public function disableColumn($columnName, $disabled)
+    public function disableColumn(string $columnName, bool $disabled): void
     {
         $column = $this->columnForName($columnName);
         if (!empty($column)) {
@@ -220,7 +220,7 @@ class ListView extends BaseView implements DataViewInterface
      * @param int             $offset
      * @param int             $limit
      */
-    public function loadData($code = false, array $where = [], array $order = [], $offset = 0, $limit = FS_ITEM_LIMIT)
+    public function loadData($code = false, array $where = [], array $order = [], int $offset = 0, int $limit = FS_ITEM_LIMIT): void
     {
         $this->order = empty($order) ? $this->getSQLOrderBy($this->selectedOrderBy) : $order;
         $this->count = is_null($this->model) ? 0 : $this->model->count($where);
@@ -240,7 +240,7 @@ class ListView extends BaseView implements DataViewInterface
      *
      * @param ExportManager $exportManager
      */
-    public function export(&$exportManager)
+    public function export(ExportManager $exportManager): void
     {
         if ($this->count > 0) {
             $exportManager->generateListModelPage(
@@ -286,7 +286,7 @@ class ListView extends BaseView implements DataViewInterface
      *
      * @return string
      */
-    public function getClickEvent($data)
+    public function getClickEvent($data): string
     {
         foreach ($this->getColumns() as $col) {
             if ($col->widget->onClick !== null && $col->widget->onClick !== '') {
@@ -344,7 +344,7 @@ class ListView extends BaseView implements DataViewInterface
      *
      * @return array
      */
-    public function getSQLOrderBy($orderKey = '')
+    public function getSQLOrderBy(string $orderKey = ''): void
     {
         $result = [];
         if (!empty($this->orderBy)) {
@@ -365,7 +365,7 @@ class ListView extends BaseView implements DataViewInterface
      *
      * @param string $orderKey
      */
-    public function setSelectedOrderBy($orderKey)
+    public function setSelectedOrderBy(string $orderKey): void
     {
         $keys = array_keys($this->orderBy);
         if (empty($orderKey) || !\in_array($orderKey, $keys, false)) {

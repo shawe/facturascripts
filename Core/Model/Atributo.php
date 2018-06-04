@@ -85,7 +85,7 @@ class Atributo extends Base\ModelClass
      *
      * @return Atributo|bool
      */
-    public function getByNombre($nombre, $minusculas = false)
+    public function getByNombre(string $nombre, bool $minusculas = false)
     {
         $sql = 'SELECT * FROM ' . static::tableName() . ' WHERE nombre = ' . self::$dataBase->var2str($nombre) . ';';
         if ($minusculas) {
@@ -107,7 +107,7 @@ class Atributo extends Base\ModelClass
      *
      * @return AtributoValor[]
      */
-    public function valores()
+    public function valores(): array
     {
         $valor0 = new AtributoValor();
 

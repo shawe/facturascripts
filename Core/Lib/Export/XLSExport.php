@@ -52,7 +52,7 @@ class XLSExport implements ExportInterface
     /**
      * Blank document.
      */
-    public function newDoc()
+    public function newDoc(): void
     {
         $this->writer = new \XLSXWriter();
         $this->writer->setAuthor('FacturaScripts');
@@ -63,7 +63,7 @@ class XLSExport implements ExportInterface
      *
      * @param Response $response
      */
-    public function show(Response $response)
+    public function show(Response $response): void
     {
         $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
         $response->headers->set('Content-Disposition', 'attachment;filename=doc.xlsx');
@@ -77,7 +77,7 @@ class XLSExport implements ExportInterface
      * @param array  $columns
      * @param string $title
      */
-    public function generateModelPage($model, $columns, $title = '')
+    public function generateModelPage($model, array $columns, string $title = ''): void
     {
         $tableData = [];
         foreach ((array) $model as $key => $value) {
@@ -99,7 +99,7 @@ class XLSExport implements ExportInterface
      * @param array                         $columns
      * @param string                        $title
      */
-    public function generateListModelPage($model, $where, $order, $offset, $columns, $title = '')
+    public function generateListModelPage($model, array $where = [], array $order = [], int $offset, array $columns = [], string $title = ''): void
     {
         /// Get the columns
         $tableCols = [];
@@ -128,7 +128,7 @@ class XLSExport implements ExportInterface
      *
      * @param mixed $model
      */
-    public function generateDocumentPage($model)
+    public function generateDocumentPage($model): void
     {
         $tableData = [];
         foreach ((array) $model as $key => $value) {
@@ -146,7 +146,7 @@ class XLSExport implements ExportInterface
      * @param array $headers
      * @param array $rows
      */
-    public function generateTablePage($headers, $rows)
+    public function generateTablePage(array $headers, array $rows): void
     {
         $this->writer->writeSheetRow('sheet1', $headers);
 
@@ -162,7 +162,7 @@ class XLSExport implements ExportInterface
      * @param array $tableCols
      * @param array $sheetHeaders
      */
-    private function setTableColumns(&$columns, &$tableCols, &$sheetHeaders)
+    private function setTableColumns(array &$columns, array &$tableCols, array &$sheetHeaders): void
     {
         foreach ($columns as $col) {
             if (isset($col->columns)) {
@@ -185,7 +185,7 @@ class XLSExport implements ExportInterface
      *
      * @return array
      */
-    private function getTableData($cursor, $tableCols): array
+    private function getTableData(array $cursor, array $tableCols): array
     {
         $tableData = [];
 

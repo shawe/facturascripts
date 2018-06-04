@@ -70,7 +70,7 @@ class Updater extends Controller
      * @param User                  $user
      * @param ControllerPermissions $permissions
      */
-    public function privateCore(&$response, $user, $permissions)
+    public function privateCore(Response $response, User $user, ControllerPermissions $permissions): void
     {
         parent::privateCore($response, $user, $permissions);
 
@@ -93,7 +93,7 @@ class Updater extends Controller
     /**
      * @return float
      */
-    public function getVersion()
+    public function getVersion(): float
     {
         return self::CORE_VERSION;
     }
@@ -101,7 +101,7 @@ class Updater extends Controller
     /**
      * Downloads core zip.
      */
-    private function download()
+    private function download(): void
     {
         $idItem = $this->request->get('item', '');
         foreach ($this->updaterItems as $key => $item) {
@@ -127,7 +127,7 @@ class Updater extends Controller
      *
      * @param string $action
      */
-    private function execAction(string $action)
+    private function execAction(string $action): void
     {
         switch ($action) {
             case 'download':
@@ -173,7 +173,7 @@ class Updater extends Controller
      * @param array $items
      * @param array $projectData
      */
-    private function getUpdateItemsCore(array &$items, array $projectData)
+    private function getUpdateItemsCore(array &$items, array $projectData): void
     {
         foreach ($projectData['builds'] as $build) {
             if ($build['stable'] && $build['version'] > self::CORE_VERSION) {

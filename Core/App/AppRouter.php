@@ -54,7 +54,7 @@ class AppRouter
     /**
      * Clear the App routes.
      */
-    public function clear()
+    public function clear(): void
     {
         $this->routes = [];
     }
@@ -64,7 +64,7 @@ class AppRouter
      *
      * @return App
      */
-    public function getApp()
+    public function getApp(): App
     {
         $uri = $this->getUri();
         if ('/api' === $uri || 0 === strpos($uri, '/api/')) {
@@ -127,7 +127,7 @@ class AppRouter
      * @param string $controllerName
      * @param string $optionalId
      */
-    public function setRoute(string $newRoute, string $controllerName, string $optionalId = '')
+    public function setRoute(string $newRoute, string $controllerName, string $optionalId = ''): void
     {
         if (!empty($optionalId)) {
             /// if optionaId, then remove previous items with that data

@@ -20,6 +20,7 @@
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base;
+use FacturaScripts\Core\Base\ControllerPermissions;
 use FacturaScripts\Dinamic\Model\User;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -55,7 +56,7 @@ abstract class PanelController extends BaseController
      * @param string          $className
      * @param string          $uri
      */
-    public function __construct(&$cache, &$i18n, &$miniLog, $className, $uri = '')
+    public function __construct(Cache $cache, Translator $i18n, MiniLog $miniLog, string $className, string $uri = '')
     {
         parent::__construct($cache, $i18n, $miniLog, $className, $uri);
 
@@ -68,7 +69,7 @@ abstract class PanelController extends BaseController
      *
      * @return string
      */
-    public function getPrimaryDescription()
+    public function getPrimaryDescription(): string
     {
         $viewName = array_keys($this->views)[0];
         return $this->views[$viewName]->model->primaryDescription();
@@ -81,7 +82,7 @@ abstract class PanelController extends BaseController
      *
      * @return string
      */
-    public function getURL($type)
+    public function getURL($type): string
     {
         $view = array_values($this->views)[0];
         return $view->getURL($type);
@@ -95,7 +96,7 @@ abstract class PanelController extends BaseController
      *
      * @return mixed
      */
-    public function getViewModelValue($viewName, $fieldName)
+    public function getViewModelValue(string $viewName, string $fieldName)
     {
         $model = $this->views[$viewName]->model;
         return isset($model->{$fieldName}) ? $model->{$fieldName} : null;
@@ -104,11 +105,11 @@ abstract class PanelController extends BaseController
     /**
      * Runs the controller's private logic.
      *
-     * @param Response                   $response
-     * @param User                       $user
-     * @param Base\ControllerPermissions $permissions
+     * @param Response              $response
+     * @param User                  $user
+     * @param ControllerPermissions $permissions
      */
-    public function privateCore(&$response, $user, $permissions)
+    public function privateCore(Response $response, User $user, ControllerPermissions $permissions): void
     {
         parent::privateCore($response, $user, $permissions);
 
@@ -147,7 +148,7 @@ abstract class PanelController extends BaseController
      *
      * @param string $position
      */
-    public function setTabsPosition($position)
+    public function setTabsPosition(string $position): void
     {
         $this->tabsPosition = $position;
 
@@ -174,7 +175,7 @@ abstract class PanelController extends BaseController
      *
      * @return string
      */
-    public function viewClass($view)
+    public function viewClass(string $view): string
     {
         $result = explode('\\', get_class($view));
         return end($result);
@@ -195,7 +196,7 @@ abstract class PanelController extends BaseController
      * @param string $viewTitle
      * @param string $viewIcon
      */
-    protected function addEditListView($viewName, $modelName, $viewTitle, $viewIcon = 'fa-bars')
+    protected function addEditListView(string $viewName, string $modelName, string $viewTitle, string $viewIcon = 'fa-bars'): void
     {
         $view = new EditListView($viewTitle, self::MODEL_NAMESPACE . $modelName, $viewName, $this->user->nick);
         $this->addView($viewName, $view, $viewIcon);
@@ -209,7 +210,7 @@ abstract class PanelController extends BaseController
      * @param string $viewTitle
      * @param string $viewIcon
      */
-    protected function addEditView($viewName, $modelName, $viewTitle, $viewIcon = 'fa-list-alt')
+    protected function addEditView(string $viewName, string $modelName, string $viewTitle, string $viewIcon = 'fa-list-alt'): void
     {
         $view = new EditView($viewTitle, self::MODEL_NAMESPACE . $modelName, $viewName, $this->user->nick);
         $this->addView($viewName, $view, $viewIcon);
@@ -224,7 +225,7 @@ abstract class PanelController extends BaseController
      * @param        $viewTitle
      * @param string $viewIcon
      */
-    protected function addGridView($viewName, $parentView, $modelName, $viewTitle, $viewIcon = 'fa-list')
+    protected function addGridView(string $viewName, $parentView, string $modelName, string $viewTitle, string $viewIcon = 'fa-list'): void
     {
         $parent = $this->views[$parentView];
         if (isset($parent)) {
@@ -242,7 +243,7 @@ abstract class PanelController extends BaseController
      * @param string $viewTitle
      * @param string $viewIcon
      */
-    protected function addHtmlView($viewName, $fileName, $modelName, $viewTitle, $viewIcon = 'fa-html5')
+    protected function addHtmlView(string $viewName, string $fileName, string $modelName, string $viewTitle, string $viewIcon = 'fa-html5'): void
     {
         $view = new HtmlView($viewTitle, self::MODEL_NAMESPACE . $modelName, $fileName);
         $this->addView($viewName, $view, $viewIcon);
@@ -256,7 +257,7 @@ abstract class PanelController extends BaseController
      * @param string $viewTitle
      * @param string $viewIcon
      */
-    protected function addListView($viewName, $modelName, $viewTitle, $viewIcon = 'fa-bars')
+    protected function addListView(string $viewName, string $modelName, string $viewTitle, string $viewIcon = 'fa-bars'): void
     {
         $view = new ListView($viewTitle, self::MODEL_NAMESPACE . $modelName, $viewName, $this->user->nick);
         $this->addView($viewName, $view, $viewIcon);
@@ -269,7 +270,7 @@ abstract class PanelController extends BaseController
      * @param BaseView $view
      * @param string   $icon
      */
-    protected function addView($keyView, $view, $icon)
+    protected function addView(string $keyView, $view, string $icon): void
     {
         $this->views[$keyView] = $view;
         $this->settings[$keyView] = ['active' => true, 'icon' => $icon];
@@ -326,7 +327,7 @@ abstract class PanelController extends BaseController
      *
      * @param string $action
      */
-    protected function execAfterAction(string $action)
+    protected function execAfterAction(string $action): void
     {
         switch ($action) {
             case 'export':
@@ -387,7 +388,7 @@ abstract class PanelController extends BaseController
     /**
      * Run the data insert action.
      */
-    protected function insertAction()
+    protected function insertAction(): void
     {
         $this->views[$this->active]->clear();
         foreach ($this->request->query->all() as $field => $value) {

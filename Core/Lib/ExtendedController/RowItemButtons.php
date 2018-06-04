@@ -39,7 +39,7 @@ class RowItemButtons extends RowItem
      *
      * @param string $type
      */
-    public function __construct($type)
+    public function __construct(string $type)
     {
         parent::__construct($type);
         $this->buttons = [];
@@ -50,7 +50,7 @@ class RowItemButtons extends RowItem
      *
      * @param array $row
      */
-    public function loadFromJSON($row)
+    public function loadFromJSON(array $row): void
     {
         $this->type = (string) $row['type'];
         foreach ($row['buttons'] as $button) {
@@ -64,7 +64,7 @@ class RowItemButtons extends RowItem
      *
      * @param \SimpleXMLElement $row
      */
-    public function loadFromXML($row)
+    public function loadFromXML(\SimpleXMLElement $row): void
     {
         $this->buttons = $this->loadButtonsFromXML($row);
     }

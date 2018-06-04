@@ -71,7 +71,7 @@ class Translator
      *
      * @param string $lang
      */
-    public function __construct($lang = FS_LANG)
+    public function __construct(string $lang = FS_LANG)
     {
         if (self::$translator === null) {
             self::$defaultLang = $lang;
@@ -92,7 +92,7 @@ class Translator
      *
      * @return string
      */
-    public function trans($txt, array $parameters = []): string
+    public function trans(string $txt, array $parameters = []): string
     {
         if (empty($txt)) {
             return '';
@@ -186,7 +186,7 @@ class Translator
      *
      * @param string $lang
      */
-    private function locateFiles($lang)
+    private function locateFiles(string $lang): void
     {
         self::$languages[] = $lang;
 

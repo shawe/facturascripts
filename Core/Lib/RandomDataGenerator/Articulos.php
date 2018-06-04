@@ -147,7 +147,7 @@ class Articulos extends AbstractRandom
      * @param Model\Articulo $art
      * @param float|int      $quantity
      */
-    private function sumStock($art, $quantity)
+    private function sumStock(Model\Articulo $art, $quantity): void
     {
         $stock = new Model\Stock();
         $stock->referencia = $art->referencia;

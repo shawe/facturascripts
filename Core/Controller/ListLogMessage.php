@@ -48,7 +48,7 @@ class ListLogMessage extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addView('ListLogMessage', 'LogMessage');
         $this->addSearchFields('ListLogMessage', ['level', 'message']);

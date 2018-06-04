@@ -54,7 +54,7 @@ class MiniLog
      * @param string $message
      * @param array  $context
      */
-    public function emergency($message, array $context = [])
+    public function emergency(string $message, array $context = []): void
     {
         $this->log('emergency', $message, $context);
     }
@@ -68,7 +68,7 @@ class MiniLog
      * @param string $message
      * @param array  $context
      */
-    public function alert($message, array $context = [])
+    public function alert(string $message, array $context = []): void
     {
         $this->log('alert', $message, $context);
     }
@@ -81,7 +81,7 @@ class MiniLog
      * @param string $message
      * @param array  $context
      */
-    public function critical($message, array $context = [])
+    public function critical(string $message, array $context = []): void
     {
         $this->log('critical', $message, $context);
     }
@@ -93,7 +93,7 @@ class MiniLog
      * @param string $message
      * @param array  $context
      */
-    public function error($message, array $context = [])
+    public function error(string $message, array $context = []): void
     {
         $this->log('error', $message, $context);
     }
@@ -107,7 +107,7 @@ class MiniLog
      * @param string $message
      * @param array  $context
      */
-    public function warning($message, array $context = [])
+    public function warning(string $message, array $context = []): void
     {
         $this->log('warning', $message, $context);
     }
@@ -118,7 +118,7 @@ class MiniLog
      * @param string $message
      * @param array  $context
      */
-    public function notice($message, array $context = [])
+    public function notice(string $message, array $context = []): void
     {
         $this->log('notice', $message, $context);
     }
@@ -131,7 +131,7 @@ class MiniLog
      * @param string $message
      * @param array  $context
      */
-    public function info($message, array $context = [])
+    public function info(string $message, array $context = []): void
     {
         $this->log('info', $message, $context);
     }
@@ -142,7 +142,7 @@ class MiniLog
      * @param string $message
      * @param array  $context
      */
-    public function debug($message, array $context = [])
+    public function debug(string $message, array $context = []): void
     {
         $this->log('debug', $message, $context);
     }
@@ -153,7 +153,7 @@ class MiniLog
      * @param string $message
      * @param array  $context
      */
-    public function sql($message, array $context = [])
+    public function sql(string $message, array $context = []): void
     {
         $this->log('sql', $message, $context);
     }
@@ -165,7 +165,7 @@ class MiniLog
      * @param string $message
      * @param array  $context
      */
-    public function log($level, $message, array $context = [])
+    public function log(string $level, string $message, array $context = []): void
     {
         self::$dataLog[] = [
             'time' => time(),
@@ -198,7 +198,7 @@ class MiniLog
     /**
      * Clean the log.
      */
-    public function clear()
+    public function clear(): void
     {
         self::$dataLog = [];
     }

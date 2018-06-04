@@ -56,7 +56,7 @@ class AtributoValor extends Base\ModelClass
     /**
      * Select all attributes of an attribute code
      *
-     * @param string $cod
+     * @param string|null $cod
      *
      * @return self[]
      */

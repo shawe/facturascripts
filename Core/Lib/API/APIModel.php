@@ -191,11 +191,11 @@ class APIModel extends APIResourceClass
      *
      * TODO: The conversion to the plural is language dependent.
      *
-     * @param $text
+     * @param string $text
      *
      * @return string
      */
-    private function pluralize($text): string
+    private function pluralize(string $text): string
     {
         /// Conversion to plural
         if (substr($text, -1) === 's') {
@@ -217,7 +217,7 @@ class APIModel extends APIResourceClass
      *
      * @return array
      */
-    private function getResourcesFromFolder($folder): array
+    private function getResourcesFromFolder(string $folder): array
     {
         $resources = [];
         foreach (scandir(FS_FOLDER . '/Dinamic/' . $folder, SCANDIR_SORT_ASCENDING) as $fName) {
@@ -239,7 +239,7 @@ class APIModel extends APIResourceClass
      *
      * @return array
      */
-    private function getRequestArray($key, $default = ''): array
+    private function getRequestArray(string $key, string $default = ''): array
     {
         $array = $this->request->get($key, $default);
 
@@ -255,7 +255,7 @@ class APIModel extends APIResourceClass
      *
      * @return DataBaseWhere[]
      */
-    private function getWhereValues($filter, $operation, $defaultOperation = 'AND'): array
+    private function getWhereValues(array $filter, array $operation, string $defaultOperation = 'AND'): array
     {
         $where = [];
         foreach ($filter as $key => $value) {
@@ -272,7 +272,7 @@ class APIModel extends APIResourceClass
      *
      * @return void
      */
-    private function fixTypes()
+    private function fixTypes(): void
     {
         foreach ($this->model->getModelFields() as $key => $value) {
             $fieldType = $value['type'];

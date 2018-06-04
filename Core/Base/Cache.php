@@ -65,7 +65,7 @@ class Cache
      *
      * @return mixed
      */
-    public function get($key)
+    public function get(string $key)
     {
         return self::$engine->get($key);
     }
@@ -78,7 +78,7 @@ class Cache
      *
      * @return bool
      */
-    public function set($key, $content): bool
+    public function set(string $key, $content): bool
     {
         return self::$engine->set($key, $content);
     }
@@ -90,7 +90,7 @@ class Cache
      *
      * @return bool
      */
-    public function delete($key): bool
+    public function delete(string $key): bool
     {
         return self::$engine->delete($key);
     }

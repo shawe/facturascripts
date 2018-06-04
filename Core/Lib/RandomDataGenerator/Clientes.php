@@ -92,7 +92,7 @@ class Clientes extends AbstractRandomPeople
      * @param Model\Cliente $cliente
      * @param int           $max
      */
-    protected function cuentasBancoCliente($cliente, $max = 3)
+    protected function cuentasBancoCliente(Model\Cliente $cliente, int $max = 3)
     {
         while ($max > 0) {
             $cuenta = new Model\CuentaBancoCliente();
@@ -116,7 +116,7 @@ class Clientes extends AbstractRandomPeople
      * @param Model\Cliente $cliente
      * @param int           $max
      */
-    protected function direccionesCliente($cliente, $max = 3)
+    protected function direccionesCliente(Model\Cliente $cliente, int $max = 3)
     {
         while ($max > 0) {
             $dir = new Model\DireccionCliente();

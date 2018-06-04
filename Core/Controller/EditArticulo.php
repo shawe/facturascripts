@@ -50,7 +50,7 @@ class EditArticulo extends ExtendedController\PanelController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addEditView('EditArticulo', 'Articulo', 'products', 'fa-cubes');
         $this->addEditListView('EditStock', 'Stock', 'stock', 'fa-tasks');
@@ -66,7 +66,7 @@ class EditArticulo extends ExtendedController\PanelController
      * @param string                      $viewName
      * @param ExtendedController\EditView $view
      */
-    protected function loadData($viewName, $view)
+    protected function loadData(string $viewName, $view): void
     {
         if ($this->getViewModelValue('EditArticulo', 'secompra') === false) {
             unset($this->views['ListArticuloProveedor']);

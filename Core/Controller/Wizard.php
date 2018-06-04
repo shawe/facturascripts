@@ -24,6 +24,7 @@ use FacturaScripts\Core\Base\Controller;
 use FacturaScripts\Core\Base\ControllerPermissions;
 use FacturaScripts\Core\Base\PluginManager;
 use FacturaScripts\Dinamic\Model;
+use FacturaScripts\Dinamic\Model\User;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -55,10 +56,10 @@ class Wizard extends Controller
      * Runs the controller's private logic.
      *
      * @param Response              $response
-     * @param Model\User            $user
+     * @param User                  $user
      * @param ControllerPermissions $permissions
      */
-    public function privateCore(&$response, $user, $permissions)
+    public function privateCore(Response $response, User $user, ControllerPermissions $permissions): void
     {
         parent::privateCore($response, $user, $permissions);
 
@@ -89,7 +90,7 @@ class Wizard extends Controller
      *
      * @return mixed
      */
-    public function getSelectValues($modelName)
+    public function getSelectValues(string $modelName)
     {
         $values = [];
         $modelName = self::MODEL_NAMESPACE . $modelName;
@@ -108,7 +109,7 @@ class Wizard extends Controller
     /**
      * Initialize required models.
      */
-    private function initModels()
+    private function initModels(): void
     {
         new Model\FormaPago();
         new Model\Impuesto();
@@ -124,7 +125,7 @@ class Wizard extends Controller
      * @param AppSettings $appSettings
      * @param string      $codpais
      */
-    private function saveAddress(&$appSettings, $codpais)
+    private function saveAddress(AppSettings $appSettings, string $codpais): void
     {
         $this->empresa->codpais = $codpais;
         $this->empresa->provincia = $this->request->request->get('provincia');

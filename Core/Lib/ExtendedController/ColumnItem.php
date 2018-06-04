@@ -75,7 +75,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @return ColumnItem
      */
-    public static function newFromJSON($column): ColumnItem
+    public static function newFromJSON(array $column): ColumnItem
     {
         $result = new self();
         $result->loadFromJSON($column);
@@ -88,9 +88,9 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @param \SimpleXMLElement $column
      *
-     * @return GroupItem|ColumnItem
+     * @return ColumnItem
      */
-    public static function newFromXML($column)
+    public static function newFromXML(\SimpleXMLElement $column): ColumnItem
     {
         $result = new self();
         $result->loadFromXML($column);
@@ -101,7 +101,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
     /**
      * Check and apply special operations on the columns
      */
-    public function applySpecialOperations()
+    public function applySpecialOperations(): void
     {
         if ($this->widget->type === 'select') {
             if (isset($this->widget->values[0]['source'])) {
@@ -123,7 +123,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @return string
      */
-    public function getHeaderHTML($value): string
+    public function getHeaderHTML(string $value): string
     {
         $html = parent::getHeaderHTML($value);
 
@@ -139,7 +139,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @param array $column
      */
-    public function loadFromJSON($column)
+    public function loadFromJSON(array $column): void
     {
         parent::loadFromJSON($column);
         $this->description = (string) $column['description'];
@@ -166,7 +166,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      *
      * @param \SimpleXMLElement $column
      */
-    public function loadFromXML($column)
+    public function loadFromXML(\SimpleXMLElement $column): void
     {
         parent::loadFromXML($column);
 

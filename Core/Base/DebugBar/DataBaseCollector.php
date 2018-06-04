@@ -43,7 +43,7 @@ class DataBaseCollector extends DataCollector implements Renderable, AssetProvid
      *
      * @param MiniLog $miniLog
      */
-    public function __construct($miniLog)
+    public function __construct(MiniLog $miniLog)
     {
         $this->miniLog = $miniLog;
     }

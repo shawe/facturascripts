@@ -157,7 +157,7 @@ abstract class ComercialContact extends Contact
     /**
      * Reset the values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
         $this->codpago = AppSettings::get('default', 'codpago');

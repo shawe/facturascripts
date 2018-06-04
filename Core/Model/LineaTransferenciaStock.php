@@ -67,7 +67,7 @@ class LineaTransferenciaStock extends Base\ModelClass
     /**
      * Reset the values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
         $this->cantidad = 0.0;

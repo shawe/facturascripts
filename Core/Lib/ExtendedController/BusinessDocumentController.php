@@ -53,7 +53,7 @@ abstract class BusinessDocumentController extends PanelController
      * @param string          $className
      * @param string          $uri
      */
-    public function __construct(&$cache, &$i18n, &$miniLog, $className, $uri = '')
+    public function __construct(Base\Cache $cache, Base\Translator $i18n, Base\MiniLog $miniLog, string $className, string $uri = '')
     {
         parent::__construct($cache, $i18n, $miniLog, $className, $uri);
         $this->documentTools = new BusinessDocumentTools();
@@ -66,7 +66,7 @@ abstract class BusinessDocumentController extends PanelController
      *
      * @return mixed
      */
-    public function getSelectValues($modelName)
+    public function getSelectValues(string $modelName)
     {
         $values = [];
         $modelName = self::MODEL_NAMESPACE . $modelName;
@@ -92,7 +92,7 @@ abstract class BusinessDocumentController extends PanelController
     /**
      * Load views and document.
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $modelName = self::MODEL_NAMESPACE . $this->getModelClassName();
         $view = new BusinessDocumentView('new', $modelName, $this->getLineXMLView(), $this->user->nick);
@@ -127,7 +127,7 @@ abstract class BusinessDocumentController extends PanelController
      *
      * @param string $action
      */
-    protected function execAfterAction(string $action)
+    protected function execAfterAction(string $action): void
     {
         switch ($action) {
             case 'export':
@@ -156,7 +156,7 @@ abstract class BusinessDocumentController extends PanelController
      * @param string               $viewName
      * @param BusinessDocumentView $view
      */
-    protected function loadData($viewName, $view)
+    protected function loadData($viewName, $view): void
     {
         $iddoc = $this->request->get('code', '');
         if ($viewName === 'Document' && !empty($iddoc)) {
@@ -397,7 +397,7 @@ abstract class BusinessDocumentController extends PanelController
      *
      * @return bool
      */
-    protected function updateLine($oldLine, array $newLine)
+    protected function updateLine($oldLine, array $newLine): bool
     {
         foreach ($newLine as $key => $value) {
             $oldLine->{$key} = $value;

@@ -75,7 +75,7 @@ class BaseComponent
      * @param Model\DashboardData $data
      * @param string              $userNick
      */
-    public function __construct($data, $userNick)
+    public function __construct(Model\DashboardData $data, string $userNick)
     {
         $this->component = $data->component;
         $this->version = $data->version;
@@ -119,7 +119,7 @@ class BaseComponent
      *
      * @param array $data
      */
-    public function saveData($data)
+    public function saveData(array $data): void
     {
     }
 
@@ -158,7 +158,7 @@ class BaseComponent
      * @param int $numRecords
      * @param int $maxWord
      */
-    protected function generateRandomData($numRecords, $maxWord)
+    protected function generateRandomData(int $numRecords, int $maxWord): void
     {
         $this->randomData = true;
         $colors = ['info', 'primary', 'warning', 'danger'];
@@ -183,7 +183,7 @@ class BaseComponent
      *
      * @return string
      */
-    private function getRandomText($maxWord = 20)
+    private function getRandomText(int $maxWord = 20): string
     {
         $words = ['lorem', 'ipsum', 'trastis', 'tus', 'turum', 'maruk', 'tartor', 'isis', 'osiris', 'morowik'];
         $txt = $words[random_int(0, 9)];

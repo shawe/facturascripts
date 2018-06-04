@@ -20,6 +20,7 @@
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base;
+use FacturaScripts\Core\Base\ControllerPermissions;
 use FacturaScripts\Dinamic\Model\User;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
@@ -70,9 +71,9 @@ class AdminPlugins extends Base\Controller
      *
      * @param Response                   $response
      * @param User                       $user
-     * @param Base\ControllerPermissions $permissions
+     * @param ControllerPermissions $permissions
      */
-    public function privateCore(&$response, $user, $permissions)
+    public function privateCore(Response $response, User $user, ControllerPermissions $permissions): void
     {
         parent::privateCore($response, $user, $permissions);
 
@@ -90,7 +91,7 @@ class AdminPlugins extends Base\Controller
      *
      * @return array
      */
-    public function getPlugins()
+    public function getPlugins(): array
     {
         $installedPlugins = $this->pluginManager->installedPlugins();
         if (!defined('FS_HIDDEN_PLUGINS')) {
@@ -148,7 +149,7 @@ class AdminPlugins extends Base\Controller
      *
      * @param string $action
      */
-    private function execAction($action)
+    private function execAction($action): void
     {
         switch ($action) {
             case 'disable':
@@ -192,7 +193,7 @@ class AdminPlugins extends Base\Controller
      *
      * @param UploadedFile[] $uploadFiles
      */
-    private function uploadPlugin($uploadFiles)
+    private function uploadPlugin($uploadFiles): void
     {
         foreach ($uploadFiles as $uploadFile) {
             if (!$uploadFile->isValid()) {

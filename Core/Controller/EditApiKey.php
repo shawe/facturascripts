@@ -51,7 +51,7 @@ class EditApiKey extends ExtendedController\PanelController
     /**
      * Load views.
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addEditView('EditApiKey', 'ApiKey', 'api-key', 'fa-key');
         $this->addEditListView('EditApiAccess', 'ApiAccess', 'rules', 'fa fa-check-square');
@@ -84,7 +84,7 @@ class EditApiKey extends ExtendedController\PanelController
      * @param string                      $viewName
      * @param ExtendedController\EditView $view
      */
-    protected function loadData($viewName, $view)
+    protected function loadData($viewName, $view): void
     {
         $order = [];
         switch ($viewName) {
@@ -105,7 +105,7 @@ class EditApiKey extends ExtendedController\PanelController
     /**
      * Returns the model name
      */
-    public function getModelClassName()
+    public function getModelClassName(): void
     {
         return 'ApiKey';
     }
@@ -119,7 +119,7 @@ class EditApiKey extends ExtendedController\PanelController
      *
      * @throws \Exception
      */
-    private function addResourcesToApiKey($idApiKey, $apiAccess, $state = false)
+    private function addResourcesToApiKey($idApiKey, $apiAccess, $state = false): void
     {
         // add Pages to Rol
         if (!Model\ApiAccess::addResourcesToApiKey($idApiKey, $apiAccess, $state)) {
@@ -134,7 +134,7 @@ class EditApiKey extends ExtendedController\PanelController
      *
      * @return bool
      */
-    private function addResourcesWith($state = false)
+    private function addResourcesWith($state = false): bool
     {
         $idApiKey = $this->request->get('code', '');
         $resources = $this->getResources();

@@ -195,7 +195,7 @@ class AccountingPlanImport
      *
      * @param \SimpleXMLElement $data
      */
-    private function importEpigrafeGroup($data)
+    private function importEpigrafeGroup(\SimpleXMLElement $data): void
     {
         foreach ($data as $xmlEpigrafeGroup) {
             $epigrafeGroupElement = (array) $xmlEpigrafeGroup;
@@ -208,7 +208,7 @@ class AccountingPlanImport
      *
      * @param \SimpleXMLElement $data
      */
-    private function importEpigrafe($data)
+    private function importEpigrafe(\SimpleXMLElement $data): void
     {
         foreach ($data as $xmlEpigrafeElement) {
             $epigrafeElement = (array) $xmlEpigrafeElement;
@@ -221,7 +221,7 @@ class AccountingPlanImport
      *
      * @param \SimpleXMLElement $data
      */
-    private function importCuenta($data)
+    private function importCuenta(\SimpleXMLElement $data): void
     {
         foreach ($data as $xmlAccount) {
             $accountElement = (array) $xmlAccount;
@@ -234,7 +234,7 @@ class AccountingPlanImport
      *
      * @param \SimpleXMLElement $data
      */
-    private function importSubcuenta($data)
+    private function importSubcuenta(\SimpleXMLElement $data): void
     {
         foreach ($data as $xmlSubaccountElement) {
             $subaccountElement = (array) $xmlSubaccountElement;
@@ -247,7 +247,7 @@ class AccountingPlanImport
      *
      * @param string $filePath
      */
-    private function processCsvData(string $filePath)
+    private function processCsvData(string $filePath): void
     {
         if (!file_exists($filePath)) {
             $this->miniLog->error($this->i18n->trans('error'));

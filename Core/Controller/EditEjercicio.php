@@ -52,7 +52,7 @@ class EditEjercicio extends ExtendedController\PanelController
     /**
      * Load views.
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addEditView('EditEjercicio', 'Ejercicio', 'exercise');
         $this->addListView('ListCuenta', 'Cuenta', 'accounts', 'fa-book');
@@ -69,7 +69,7 @@ class EditEjercicio extends ExtendedController\PanelController
      * @param string                      $viewName
      * @param ExtendedController\EditView $view
      */
-    protected function loadData($viewName, $view)
+    protected function loadData($viewName, $view): void
     {
         $codejercicio = $this->getViewModelValue('EditEjercicio', 'codejercicio');
         $where = [new DataBaseWhere('codejercicio', $codejercicio)];
@@ -95,7 +95,7 @@ class EditEjercicio extends ExtendedController\PanelController
      *
      * @param string $action
      */
-    protected function execAfterAction(string $action)
+    protected function execAfterAction(string $action): void
     {
         switch ($action) {
             case 'import-accounting':

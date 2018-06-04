@@ -87,7 +87,7 @@ class FileCache implements AdaptorInterface
      *
      * @return mixed the content you put in, or null if expired or not found
      */
-    public function get($key, $raw = false, $custom_time = null)
+    public function get(string $key, bool $raw = false, int $custom_time = null)
     {
         $this->minilog->debug($this->i18n->trans('filecache-get-key-item', ['%item%' => $key]));
         if (!$this->fileExpired($file = $this->getRoute($key), $custom_time)) {
@@ -113,7 +113,7 @@ class FileCache implements AdaptorInterface
      *
      * @return bool whether if the operation was successful or not
      */
-    public function set($key, $content, $raw = false): bool
+    public function set(string $key, $content, bool $raw = false): bool
     {
         $this->minilog->debug($this->i18n->trans('filecache-set-key-item', ['%item%' => $key]));
         $dest_file_name = $this->getRoute($key);
@@ -135,7 +135,7 @@ class FileCache implements AdaptorInterface
      *
      * @return bool true if the data was removed successfully
      */
-    public function delete($key): bool
+    public function delete(string $key): bool
     {
         $this->minilog->debug($this->i18n->trans('filecache-delete-key-item', ['%item%' => $key]));
         $ruta = $this->getRoute($key);
@@ -170,7 +170,7 @@ class FileCache implements AdaptorInterface
      *
      * @return string the filename of the php file
      */
-    private function getRoute($key): string
+    private function getRoute(string $key): string
     {
         return self::$config['cache_path'] . '/' . md5($key) . '.php';
     }
@@ -183,7 +183,7 @@ class FileCache implements AdaptorInterface
      *
      * @return bool if the file has expired or not
      */
-    private function fileExpired($file, $time = null): bool
+    private function fileExpired(string $file, int $time = null): bool
     {
         if (file_exists($file)) {
             return time() > (filemtime($file) + 60 * ($time ?: self::$config['expires']));

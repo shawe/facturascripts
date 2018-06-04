@@ -48,7 +48,7 @@ class ListFormaPago extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         /* Payment Methods */
         $this->addView('ListFormaPago', 'FormaPago', 'payment-methods', 'fa-credit-card');

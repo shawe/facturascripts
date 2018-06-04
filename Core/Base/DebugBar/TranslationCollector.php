@@ -51,7 +51,7 @@ class TranslationCollector extends DataCollector implements Renderable, AssetPro
      *
      * @param Translator $i18n
      */
-    public function __construct(&$i18n)
+    public function __construct(Translator $i18n)
     {
         static::$i18n = $i18n;
         $this->translations = [];
@@ -123,7 +123,7 @@ class TranslationCollector extends DataCollector implements Renderable, AssetPro
     /**
      * Add a translation key to the collector
      */
-    private function addTranslations()
+    private function addTranslations(): void
     {
         foreach (static::$i18n->getMissingStrings() as $key => $value) {
             $this->translations[] = [

@@ -50,7 +50,7 @@ class WidgetItemRadio extends WidgetItem
      *
      * @param \SimpleXMLElement $column
      */
-    public function loadFromXML($column)
+    public function loadFromXML(\SimpleXMLElement $column): void
     {
         parent::loadFromXML($column);
         $this->getAttributesGroup($this->values, $column->widget->values);
@@ -61,7 +61,7 @@ class WidgetItemRadio extends WidgetItem
      *
      * @param array $widget
      */
-    public function loadFromJSON($widget)
+    public function loadFromJSON(array $widget): void
     {
         parent::loadFromJSON($widget);
         $this->values = (array) $widget['values'];

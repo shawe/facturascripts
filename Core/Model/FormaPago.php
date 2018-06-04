@@ -91,7 +91,7 @@ class FormaPago extends Base\ModelClass
      *
      * @return string
      */
-    public function calcularVencimiento($fechaInicio, $diasDePago = '')
+    public function calcularVencimiento(string $fechaInicio, string $diasDePago = '')
     {
         $fecha = $this->calcularVencimiento2($fechaInicio);
 
@@ -123,7 +123,7 @@ class FormaPago extends Base\ModelClass
     /**
      * Reset the values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
         $this->genrecibos = 'Emitidos';
@@ -195,7 +195,7 @@ class FormaPago extends Base\ModelClass
      *
      * @return string
      */
-    private function calcularVencimiento2($fechaInicio, $diaDePago = 0): string
+    private function calcularVencimiento2(string $fechaInicio, int $diaDePago = 0): string
     {
         if ($diaDePago === 0) {
             return date('d-m-Y', strtotime($fechaInicio . ' ' . $this->vencimiento));

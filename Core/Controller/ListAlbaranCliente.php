@@ -49,7 +49,7 @@ class ListAlbaranCliente extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         // Delivery notes
         $this->addView('ListAlbaranCliente', 'AlbaranCliente');
@@ -82,7 +82,7 @@ class ListAlbaranCliente extends ExtendedController\ListController
         $this->createViewLines();
     }
 
-    protected function createViewLines()
+    protected function createViewLines(): void
     {
         $this->addView('ListLineaAlbaranCliente', 'LineaAlbaranCliente', 'lines', 'fa-list');
         $this->addSearchFields('ListLineaAlbaranCliente', ['referencia', 'descripcion']);

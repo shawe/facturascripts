@@ -20,6 +20,7 @@
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base;
+use FacturaScripts\Core\Base\ControllerPermissions;
 use FacturaScripts\Dinamic\Lib\RandomDataGenerator;
 use FacturaScripts\Dinamic\Model\Base\ModelClass;
 use FacturaScripts\Dinamic\Model\User;
@@ -51,11 +52,11 @@ class Randomizer extends Base\Controller
     /**
      * Runs the controller's private logic.
      *
-     * @param Response                   $response
-     * @param User                       $user
-     * @param Base\ControllerPermissions $permissions
+     * @param Response              $response
+     * @param User                  $user
+     * @param ControllerPermissions $permissions
      */
-    public function privateCore(&$response, $user, $permissions)
+    public function privateCore(Response $response, User $user, ControllerPermissions $permissions): void
     {
         parent::privateCore($response, $user, $permissions);
 
@@ -88,7 +89,7 @@ class Randomizer extends Base\Controller
      *
      * @param string $option
      */
-    private function execAction($option)
+    private function execAction(string $option): void
     {
         switch ($option) {
             case 'agentes':
@@ -189,7 +190,7 @@ class Randomizer extends Base\Controller
     /**
      * Set totalCounter key for each model.
      */
-    private function getTotals()
+    private function getTotals(): void
     {
         $models = [
             'agentes' => self::MODEL_NAMESPACE . 'Agente',

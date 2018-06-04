@@ -103,7 +103,7 @@ class BalanceSheet extends AccountingBase
      * @param array  $balance
      * @param string $description
      */
-    protected function processDescription(&$linea, &$balance, $description)
+    protected function processDescription(array &$linea, array &$balance, string $description)
     {
         $index = $linea[$description];
         if (empty($index)) {
@@ -129,7 +129,7 @@ class BalanceSheet extends AccountingBase
      *
      * @return array
      */
-    protected function processLine($line): array
+    protected function processLine(array $line): array
     {
         $line['descripcion'] = Utils::fixHtml($line['descripcion']);
         $line['saldo'] = $this->divisaTools::format($line['saldo'], FS_NF0, '');
@@ -145,7 +145,7 @@ class BalanceSheet extends AccountingBase
      *
      * @return array
      */
-    private function calcSheetBalance($data): array
+    private function calcSheetBalance(array $data): array
     {
         $balanceCalculado = [];
         foreach ($data as $lineaBalance) {

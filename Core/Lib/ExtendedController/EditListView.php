@@ -67,7 +67,7 @@ class EditListView extends BaseView implements DataViewInterface
      * @param string $viewName
      * @param string $userNick
      */
-    public function __construct($title, $modelName, $viewName, $userNick)
+    public function __construct(string $title, string $modelName, string $viewName, string $userNick)
     {
         parent::__construct($title, $modelName);
 
@@ -85,7 +85,7 @@ class EditListView extends BaseView implements DataViewInterface
      * @param string $columnName
      * @param bool   $disabled
      */
-    public function disableColumn($columnName, $disabled)
+    public function disableColumn(string $columnName, bool $disabled): void
     {
         $column = $this->columnForName($columnName);
         if (!empty($column)) {
@@ -114,7 +114,7 @@ class EditListView extends BaseView implements DataViewInterface
      * @param int             $offset
      * @param int             $limit
      */
-    public function loadData($code = false, array $where = [], array $order = [], $offset = 0, $limit = FS_ITEM_LIMIT)
+    public function loadData($code = false, array $where = [], array $order = [], $offset = 0, $limit = FS_ITEM_LIMIT): void
     {
         $this->order = empty($order) ? $this->order : $order;
         $this->count = $this->model->count($where);
@@ -132,7 +132,7 @@ class EditListView extends BaseView implements DataViewInterface
      *
      * @param ExportManager $exportManager
      */
-    public function export(&$exportManager)
+    public function export(ExportManager $exportManager): void
     {
         if ($this->count > 0) {
             $exportManager->generateListModelPage(
@@ -146,15 +146,17 @@ class EditListView extends BaseView implements DataViewInterface
      *
      * @return array|null
      */
-    public function getCursor()
+    public function getCursor(): ?array
     {
         return $this->cursor;
     }
 
     /**
      * Returns True if have less than 5 columns, else returns False.
+     *
+     * @return bool
      */
-    public function isBasicEditList()
+    public function isBasicEditList(): bool
     {
         if (count($this->pageOption->columns) !== 1) {
             return false;

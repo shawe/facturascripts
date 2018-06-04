@@ -69,7 +69,7 @@ class CSVExport implements ExportInterface
      *
      * @param string $sep
      */
-    public function setSeparator($sep)
+    public function setSeparator(string $sep): void
     {
         $this->separator = $sep;
     }
@@ -80,7 +80,7 @@ class CSVExport implements ExportInterface
      *
      * @param string $del
      */
-    public function setDelimiter($del)
+    public function setDelimiter(string $del): void
     {
         $this->delimiter = $del;
     }
@@ -118,7 +118,7 @@ class CSVExport implements ExportInterface
     /**
      * Blank document.
      */
-    public function newDoc()
+    public function newDoc(): void
     {
         $this->csv = [];
     }
@@ -128,7 +128,7 @@ class CSVExport implements ExportInterface
      *
      * @param Response $response
      */
-    public function show(Response $response)
+    public function show(Response $response): void
     {
         $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
         $response->headers->set('Content-Disposition', 'attachment;filename=doc.csv');
@@ -142,7 +142,7 @@ class CSVExport implements ExportInterface
      * @param array  $columns
      * @param string $title
      */
-    public function generateModelPage($model, $columns, $title = '')
+    public function generateModelPage($model, $columns, $title = ''): void
     {
         $tableData = [];
         foreach ((array) $model as $key => $value) {
@@ -167,7 +167,7 @@ class CSVExport implements ExportInterface
      * @param array                         $columns
      * @param string                        $title
      */
-    public function generateListModelPage($model, $where, $order, $offset, $columns, $title = '')
+    public function generateListModelPage($model, $where, $order, $offset, $columns, $title = ''): void
     {
         $tableCols = [];
         $sheetHeaders = [];
@@ -198,7 +198,7 @@ class CSVExport implements ExportInterface
      *
      * @param mixed $model
      */
-    public function generateDocumentPage($model)
+    public function generateDocumentPage($model): void
     {
         $tableData = [];
         foreach ((array) $model as $key => $value) {
@@ -219,7 +219,7 @@ class CSVExport implements ExportInterface
      * @param array $headers
      * @param array $rows
      */
-    public function generateTablePage($headers, $rows)
+    public function generateTablePage($headers, $rows): void
     {
         /// Generate the headers line
         $this->csv[] = \implode($this->separator, $headers);
@@ -239,7 +239,7 @@ class CSVExport implements ExportInterface
      * @param array $tableData
      * @param array $sheetHeaders
      */
-    public function writeSheet($tableData, $sheetHeaders)
+    public function writeSheet($tableData, $sheetHeaders): void
     {
         $this->csv = [];
         $header = [];

@@ -50,7 +50,7 @@ class ListBalance extends ExtendedController\ListController
     /**
      * Create views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addViewBalance('ListBalance-1', 'asset');
         $this->addViewBalance('ListBalance-2', 'liabilities');
@@ -65,7 +65,7 @@ class ListBalance extends ExtendedController\ListController
      * @param array  $where
      * @param int    $offset
      */
-    protected function loadData($viewName, $where, $offset)
+    protected function loadData($viewName, $where, $offset): void
     {
         switch ($viewName) {
             case 'ListBalance-1':
@@ -93,7 +93,7 @@ class ListBalance extends ExtendedController\ListController
      * @param string $viewName
      * @param string $viewTitle
      */
-    private function addViewBalance($viewName, $viewTitle)
+    private function addViewBalance($viewName, $viewTitle): void
     {
         $this->addView($viewName, 'Balance', $viewTitle);
         $fields = [

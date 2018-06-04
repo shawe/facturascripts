@@ -49,7 +49,7 @@ class ListRegularizacionImpuesto extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addView('ListRegularizacionImpuesto', 'RegularizacionImpuesto');
         $this->addSearchFields('ListRegularizacionImpuesto', ['periodo', 'fechainicio']);

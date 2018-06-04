@@ -82,7 +82,7 @@ class CodeModel
      *
      * @return self[]
      */
-    public static function all($tableName, $fieldCode, $fieldDescription, $addEmpty = true, array $where = []): array
+    public static function all(string $tableName, string $fieldCode, string $fieldDescription, bool $addEmpty = true, array $where = []): array
     {
         $result = [];
         if ($addEmpty) {
@@ -114,7 +114,7 @@ class CodeModel
      *
      * @return self[]
      */
-    public static function search($tableName, $fieldCode, $fieldDescription, $search): array
+    public static function search(string $tableName, string $fieldCode, string $fieldDescription, string $search): array
     {
         $fields = $fieldCode . '|' . $fieldDescription;
         $where = [new DataBaseWhere($fields, mb_strtolower($search), 'LIKE')];
@@ -131,7 +131,7 @@ class CodeModel
      *
      * @return self
      */
-    public function get($tableName, $fieldCode, $code, $fieldDescription): self
+    public function get(string $tableName, string $fieldCode, string $code, string $fieldDescription): self
     {
         if (self::$dataBase === null) {
             self::$dataBase = new Base\DataBase();
@@ -159,7 +159,7 @@ class CodeModel
      *
      * @return string
      */
-    public function getDescription($tableName, $fieldCode, $code, $fieldDescription): string
+    public function getDescription(string $tableName, string $fieldCode, string $code, string $fieldDescription): string
     {
         return $this->get($tableName, $fieldCode, $code, $fieldDescription)->description;
     }

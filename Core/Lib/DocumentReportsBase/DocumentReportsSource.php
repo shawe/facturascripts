@@ -65,7 +65,7 @@ class DocumentReportsSource
      * @param string $source
      * @param string $color
      */
-    public function __construct($source, $color)
+    public function __construct(string $source, string $color)
     {
         $this->source = $source;
         $this->color = $color;
@@ -78,7 +78,7 @@ class DocumentReportsSource
      *
      * @return string
      */
-    public function getTableName()
+    public function getTableName(): ?string
     {
         switch ($this->source) {
             case 'customer-estimations':

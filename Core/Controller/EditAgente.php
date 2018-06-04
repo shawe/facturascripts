@@ -49,7 +49,7 @@ class EditAgente extends ExtendedController\PanelController
     /**
      * Load Views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addEditView('EditAgente', 'Agente', 'agent');
         $this->addListView('EditAgenteFacturas', 'FacturaCliente', 'invoices', 'fa-files-o');
@@ -64,7 +64,7 @@ class EditAgente extends ExtendedController\PanelController
      * @param string                      $viewName
      * @param ExtendedController\EditView $view
      */
-    protected function loadData($viewName, $view)
+    protected function loadData($viewName, $view): void
     {
         switch ($viewName) {
             case 'EditAgente':

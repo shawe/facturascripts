@@ -147,7 +147,7 @@ class Subcuenta extends Base\ModelClass
     /**
      * Reset the values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
         $this->debe = 0.0;
@@ -256,7 +256,7 @@ class Subcuenta extends Base\ModelClass
     /**
      * @return string
      */
-    public function getSpecialAccountCode()
+    public function getSpecialAccountCode(): string
     {
         $result = $this->codcuentaesp;
         if (empty($result)) {

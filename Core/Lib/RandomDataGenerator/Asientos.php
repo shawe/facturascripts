@@ -44,7 +44,7 @@ class Asientos extends AbstractRandomAccounting
      *
      * @return int
      */
-    public function generate($num = 25): int
+    public function generate(int $num = 25): int
     {
         $asiento = $this->model;
         $partida = new Model\Partida();

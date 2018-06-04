@@ -21,6 +21,7 @@ namespace FacturaScripts\Core\Base;
 
 use FacturaScripts\Dinamic\Lib\AssetManager;
 use FacturaScripts\Dinamic\Model;
+use FacturaScripts\Dinamic\Model\User;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -144,7 +145,7 @@ class Controller
      * @param string     $className
      * @param string     $uri
      */
-    public function __construct(&$cache, &$i18n, &$miniLog, $className, $uri = '')
+    public function __construct(Cache $cache, Translator $i18n, MiniLog $miniLog, string $className, string $uri = '')
     {
         $this->assets = AssetManager::getAssetsForPage($className);
         $this->cache = &$cache;
@@ -192,10 +193,10 @@ class Controller
      * Runs the controller's private logic.
      *
      * @param Response              $response
-     * @param Model\User            $user
+     * @param User            $user
      * @param ControllerPermissions $permissions
      */
-    public function privateCore(&$response, $user, $permissions): void
+    public function privateCore(Response $response, User $user, ControllerPermissions $permissions): void
     {
         $this->permissions = $permissions;
         $this->response = &$response;
@@ -224,7 +225,7 @@ class Controller
      *
      * @param Response $response
      */
-    public function publicCore(&$response): void
+    public function publicCore(Response $response): void
     {
         $this->response = &$response;
         $this->template = 'Login/Login.html.twig';

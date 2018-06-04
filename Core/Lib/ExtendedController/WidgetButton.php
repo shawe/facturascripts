@@ -113,7 +113,7 @@ class WidgetButton implements VisualItemInterface
      *
      * @return string
      */
-    public function getHeaderHTML($value): string
+    public function getHeaderHTML(string $value): string
     {
         return '';
     }
@@ -123,7 +123,7 @@ class WidgetButton implements VisualItemInterface
      *
      * @param array $button
      */
-    public function loadFromJSON($button)
+    public function loadFromJSON(array $button): void
     {
         $this->type = (string) $button['type'];
         $this->label = (string) $button['label'];
@@ -142,7 +142,7 @@ class WidgetButton implements VisualItemInterface
      *
      * @param \SimpleXMLElement $button
      */
-    public function loadFromXML($button)
+    public function loadFromXML(\SimpleXMLElement $button): void
     {
         $widgetAtributes = $button->attributes();
         $this->type = (string) $widgetAtributes->type;
@@ -166,7 +166,7 @@ class WidgetButton implements VisualItemInterface
      *
      * @return WidgetButton
      */
-    public static function newFromJSON($button): WidgetButton
+    public static function newFromJSON(array $button): WidgetButton
     {
         $widget = new self();
         $widget->loadFromJSON($button);
@@ -181,7 +181,7 @@ class WidgetButton implements VisualItemInterface
      *
      * @return WidgetButton
      */
-    public static function newFromXML($button): WidgetButton
+    public static function newFromXML(\SimpleXMLElement $button): WidgetButton
     {
         $widget = new self();
         $widget->loadFromXML($button);
@@ -196,7 +196,7 @@ class WidgetButton implements VisualItemInterface
      *
      * @return string
      */
-    public function getHintHTML($hint): string
+    public function getHintHTML(string $hint): string
     {
         return empty($hint) ? '' : ' data-toggle="popover" data-placement="auto" data-trigger="hover" data-content="'
             . $hint . '" ';
@@ -212,7 +212,7 @@ class WidgetButton implements VisualItemInterface
      *
      * @return string
      */
-    public function getHTML($label, $value = '', $hint = '', $class = 'col-sm-auto'): string
+    public function getHTML(string $label, string $value = '', string $hint = '', string $class = 'col-sm-auto'): string
     {
         switch ($this->type) {
             case 'calculate':
@@ -239,7 +239,7 @@ class WidgetButton implements VisualItemInterface
      *
      * @return string
      */
-    private function getActionHTML($label, $hint, $formName = 'main_form', $class = 'col-sm-auto')
+    private function getActionHTML(string $label, string $hint, string $formName = 'main_form', string $class = 'col-sm-auto')
     {
         $onclick = empty($this->onClick) ? 'execActionForm()' : $this->onClick;
         $param = '\'' . $this->action . '\',\'' . $formName . '\'';
@@ -261,7 +261,7 @@ class WidgetButton implements VisualItemInterface
      *
      * @return string
      */
-    private function getCalculateHTML($label, $value, $hint): string
+    private function getCalculateHTML(string $label, string $value, string $hint): string
     {
         return '<button type="button" class="btn btn-' . $this->color . '" '
             . $this->getIdHTML()
@@ -315,7 +315,7 @@ class WidgetButton implements VisualItemInterface
      *
      * @return string
      */
-    private function getOnClickHTML($onclick, $addParam = ''): string
+    private function getOnClickHTML(string $onclick, string $addParam = ''): string
     {
         if (empty($onclick)) {
             return '';
@@ -344,7 +344,7 @@ class WidgetButton implements VisualItemInterface
      *
      * @return string
      */
-    private function getOptionalAtribute($field, &$atributes): string
+    private function getOptionalAtribute(string $field, &$atributes): string
     {
         return empty($atributes->{$field}) ? '' : (string) $atributes->{$field};
     }

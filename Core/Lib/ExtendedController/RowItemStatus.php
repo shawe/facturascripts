@@ -60,7 +60,7 @@ class RowItemStatus extends RowItem
      *
      * @return string
      */
-    public function getStatus(&$model): string
+    public function getStatus(ModelClass $model): string
     {
         $rowValue = empty($this->fieldName) ? '' : $model->{$this->fieldName};
 
@@ -97,7 +97,7 @@ class RowItemStatus extends RowItem
      *
      * @param array $row
      */
-    public function loadFromJSON($row)
+    public function loadFromJSON(array $row): void
     {
         $this->type = (string) $row['type'];
         $this->fieldName = (string) $row['fieldName'];
@@ -109,7 +109,7 @@ class RowItemStatus extends RowItem
      *
      * @param \SimpleXMLElement $row
      */
-    public function loadFromXML($row)
+    public function loadFromXML(\SimpleXMLElement $row): void
     {
         $row_atributes = $row->attributes();
         $this->fieldName = (string) $row_atributes->fieldname;

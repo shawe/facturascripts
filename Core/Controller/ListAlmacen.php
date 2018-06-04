@@ -48,7 +48,7 @@ class ListAlmacen extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addView('ListAlmacen', 'Almacen');
         $this->addSearchFields('ListAlmacen', ['nombre', 'codalmacen']);

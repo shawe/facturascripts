@@ -47,7 +47,7 @@ class ListProveedor extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         /* Supplier */
         $this->addView('ListProveedor', 'Proveedor', 'suppliers', 'fa-users');

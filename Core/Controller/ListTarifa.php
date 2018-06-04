@@ -48,7 +48,7 @@ class ListTarifa extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addView('ListTarifa', 'Tarifa');
         $this->addSearchFields('ListTarifa', ['nombre', 'codtarifa']);

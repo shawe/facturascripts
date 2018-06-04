@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : tarifas.xml
+    Author     : Carlos Garcia Gomez
+    Description:
+        Structure for the tarifas table.
+-->
+<table>
+    <column>
+        <name>aplicar</name>
+        <type>character varying(12)</type>
+    </column>
+    <column>
+        <name>codtarifa</name>
+        <type>character varying(6)</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>inclineal</name>
+        <type>double precision</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>incporcentual</name>
+        <type>double precision</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>maxpvp</name>
+        <type>boolean</type>
+        <default>false</default>
+    </column>
+    <column>
+        <name>mincoste</name>
+        <type>boolean</type>
+        <default>false</default>
+    </column>
+    <column>
+        <name>nombre</name>
+        <type>character varying(50)</type>
+        <null>NO</null>
+    </column>
+    <constraint>
+        <name>tarifas_pkey</name>
+        <type>PRIMARY KEY (codtarifa)</type>
+    </constraint>
+</table>

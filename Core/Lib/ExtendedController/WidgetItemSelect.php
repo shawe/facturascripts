@@ -126,7 +126,7 @@ class WidgetItemSelect extends WidgetItem
      *
      * @param array $widget
      */
-    public function loadFromJSON($widget)
+    public function loadFromJSON(array $widget): void
     {
         parent::loadFromJSON($widget);
         $this->values = (array) $widget['values'];
@@ -138,7 +138,7 @@ class WidgetItemSelect extends WidgetItem
      *
      * @param \SimpleXMLElement $column
      */
-    public function loadFromXML($column)
+    public function loadFromXML(\SimpleXMLElement $column): void
     {
         parent::loadFromXML($column);
         $this->getAttributesGroup($this->values, $column->widget->values);
@@ -148,7 +148,7 @@ class WidgetItemSelect extends WidgetItem
     /**
      * Load values from model.
      */
-    public function loadValuesFromModel()
+    public function loadValuesFromModel(): void
     {
         $tableName = $this->values[0]['source'];
         $fieldCode = $this->values[0]['fieldcode'];
@@ -162,7 +162,7 @@ class WidgetItemSelect extends WidgetItem
     /**
      * Load values from array.
      */
-    public function loadValuesFromRange()
+    public function loadValuesFromRange(): void
     {
         $start = $this->values[0]['start'];
         $end = $this->values[0]['end'];
@@ -180,7 +180,7 @@ class WidgetItemSelect extends WidgetItem
      * @param array $values
      * @param bool  $translate
      */
-    public function setValuesFromArray($values, $translate = true)
+    public function setValuesFromArray($values, $translate = true): void
     {
         $this->values = [];
         foreach ($values as $value) {
@@ -205,7 +205,7 @@ class WidgetItemSelect extends WidgetItem
      * @param array $rows
      * @param bool  $translate
      */
-    public function setValuesFromCodeModel(&$rows, $translate = false)
+    public function setValuesFromCodeModel(&$rows, $translate = false): void
     {
         $this->values = [];
         $i18n = new Translator();
@@ -226,7 +226,7 @@ class WidgetItemSelect extends WidgetItem
     /**
      *  Translate the fixed titles, if they exist
      */
-    private function applyTranslations()
+    private function applyTranslations(): void
     {
         $i18n = new Translator();
         $count = count($this->values);

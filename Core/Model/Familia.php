@@ -115,7 +115,7 @@ class Familia extends Base\ModelClass
      *
      * @return self[]
      */
-    public function hijas($codmadre = ''): array
+    public function hijas(string $codmadre = ''): array
     {
         $famlist = [];
 
@@ -170,7 +170,7 @@ class Familia extends Base\ModelClass
      *
      * @return self[]
      */
-    private function auxAll(&$familias, $madre, $nivel): array
+    private function auxAll(array &$familias, string $madre, string $nivel): array
     {
         $subfamilias = [];
 

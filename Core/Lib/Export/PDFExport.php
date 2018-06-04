@@ -110,7 +110,7 @@ class PDFExport implements ExportInterface
     /**
      * Blank document.
      */
-    public function newDoc()
+    public function newDoc(): void
     {
     }
 
@@ -132,7 +132,7 @@ class PDFExport implements ExportInterface
      * @param array  $columns
      * @param string $title
      */
-    public function generateModelPage($model, $columns, $title = '')
+    public function generateModelPage($model, array $columns, string $title = ''): void
     {
         $this->newPage();
         $tableCols = [];
@@ -181,7 +181,7 @@ class PDFExport implements ExportInterface
      * @param array                         $columns
      * @param string                        $title
      */
-    public function generateListModelPage($model, $where, $order, $offset, $columns, $title = '')
+    public function generateListModelPage($model, array $where = [], array $order = [], int $offset, array $columns = [], string $title = ''): void
     {
         $orientation = 'portrait';
         $tableCols = [];
@@ -222,7 +222,7 @@ class PDFExport implements ExportInterface
      *
      * @param BusinessDocument $model
      */
-    public function generateDocumentPage($model)
+    public function generateDocumentPage($model): void
     {
         $columns = [];
         foreach (array_keys((array) $model) as $key) {
@@ -274,7 +274,7 @@ class PDFExport implements ExportInterface
      * @param array $headers
      * @param array $rows
      */
-    public function generateTablePage($headers, $rows)
+    public function generateTablePage(array $headers, array $rows)
     {
         $orientation = 'portrait';
         if (count($headers) > 5) {
@@ -291,7 +291,7 @@ class PDFExport implements ExportInterface
      *
      * @param string $orientation
      */
-    protected function newPage($orientation = 'portrait')
+    protected function newPage(string $orientation = 'portrait')
     {
         if ($this->pdf === null) {
             $this->pdf = new \Cezpdf('a4', $orientation);
@@ -315,7 +315,7 @@ class PDFExport implements ExportInterface
     /**
      * Insert header details.
      */
-    protected function insertHeader()
+    protected function insertHeader(): void
     {
         $headerPos = $this->pdf->ez['pageHeight'] - 25;
         $header = $this->pdf->openObject();
@@ -332,7 +332,7 @@ class PDFExport implements ExportInterface
     /**
      * Insert footer details.
      */
-    protected function insertFooter()
+    protected function insertFooter(): void
     {
         $footer = $this->pdf->openObject();
         // Bottom Left
@@ -349,7 +349,7 @@ class PDFExport implements ExportInterface
     /**
      * Adds a new line to the PDF.
      */
-    private function newLine()
+    private function newLine(): void
     {
         $posY = $this->pdf->y + 5;
         $this->pdf->line(self::CONTENT_X, $posY, $this->tableWidth + self::CONTENT_X, $posY);
@@ -360,7 +360,7 @@ class PDFExport implements ExportInterface
      *
      * @param array $titles
      */
-    private function newLongTitles(&$titles)
+    private function newLongTitles(array &$titles): void
     {
         $txt = '';
         foreach ($titles as $key => $value) {
@@ -384,7 +384,7 @@ class PDFExport implements ExportInterface
      * @param array $tableColsTitle
      * @param array $tableOptions
      */
-    private function setTableColumns(&$columns, &$tableCols, &$tableColsTitle, &$tableOptions)
+    private function setTableColumns(array &$columns, array &$tableCols, array &$tableColsTitle, array &$tableOptions): void
     {
         foreach ($columns as $col) {
             if (\is_string($col)) {
@@ -418,7 +418,7 @@ class PDFExport implements ExportInterface
      *
      * @return array
      */
-    private function getTableData($cursor, $tableCols, $tableOptions): array
+    private function getTableData(array $cursor, array $tableCols, array $tableOptions): array
     {
         $tableData = [];
 
@@ -457,7 +457,7 @@ class PDFExport implements ExportInterface
      * @param array $longTitles
      * @param array $titles
      */
-    private function removeLongTitles(&$longTitles, &$titles)
+    private function removeLongTitles(array &$longTitles, array &$titles): void
     {
         $num = 1;
         foreach ($titles as $key => $value) {
@@ -475,7 +475,7 @@ class PDFExport implements ExportInterface
      * @param array $tableData
      * @param array $tableColsTitle
      */
-    private function removeEmptyCols(&$tableData, &$tableColsTitle)
+    private function removeEmptyCols(array &$tableData, array &$tableColsTitle): void
     {
         foreach (array_keys($tableColsTitle) as $key) {
             $remove = true;
@@ -503,7 +503,7 @@ class PDFExport implements ExportInterface
      *
      * @return array
      */
-    private function paralellTableData($table, $colName1, $colName2, $finalColName1, $finalColName2): array
+    private function paralellTableData(array $table, string $colName1, string $colName2, string $finalColName1, string $finalColName2): array
     {
         $tableData = [];
         $key = 0;
@@ -530,7 +530,7 @@ class PDFExport implements ExportInterface
      *
      * @return string
      */
-    private function getCompanyName($idEmpresa = null)
+    private function getCompanyName($idEmpresa = null): string
     {
         $idEmpresa = $idEmpresa ?? AppSettings::get('default', 'idempresa', '');
         $empresa = new Empresa();

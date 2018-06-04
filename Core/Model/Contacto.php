@@ -140,7 +140,7 @@ class Contacto extends Base\Contact
     /**
      * Reset the values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
         $this->admitemarketing = false;
@@ -200,7 +200,7 @@ class Contacto extends Base\Contact
      *
      * @return string
      */
-    public function fullName()
+    public function fullName(): string
     {
         return $this->nombre . ' ' . $this->apellidos;
     }

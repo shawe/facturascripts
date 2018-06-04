@@ -48,7 +48,7 @@ class ListAgenciaTransporte extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addView('ListAgenciaTransporte', 'AgenciaTransporte');
         $this->addSearchFields('ListAgenciaTransporte', ['nombre', 'codtrans']);

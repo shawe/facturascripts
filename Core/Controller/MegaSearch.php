@@ -20,7 +20,9 @@
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base;
+use FacturaScripts\Core\Base\ControllerPermissions;
 use FacturaScripts\Dinamic\Model;
+use FacturaScripts\Dinamic\Model\User;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -70,11 +72,11 @@ class MegaSearch extends Base\Controller
     /**
      * Runs the controller's private logic.
      *
-     * @param Response                   $response
-     * @param Model\User                 $user
-     * @param Base\ControllerPermissions $permissions
+     * @param Response              $response
+     * @param User                  $user
+     * @param ControllerPermissions $permissions
      */
-    public function privateCore(&$response, $user, $permissions)
+    public function privateCore(Response $response, User $user, ControllerPermissions $permissions): void
     {
         parent::privateCore($response, $user, $permissions);
 
@@ -90,7 +92,7 @@ class MegaSearch extends Base\Controller
     /**
      * Proceeds to search in the whole page
      */
-    private function pageSearch()
+    private function pageSearch(): void
     {
         $pageModel = new Model\Page();
         foreach ($pageModel->all([], [], 0, 500) as $page) {

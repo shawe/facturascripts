@@ -48,7 +48,7 @@ class ListImpuesto extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addView('ListImpuesto', 'Impuesto');
         $this->addSearchFields('ListImpuesto', ['descripcion', 'codimpuesto']);

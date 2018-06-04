@@ -97,7 +97,7 @@ class Mysql implements DataBaseEngine
      *
      * @return null|mysqli
      */
-    public function connect(&$error)
+    public function connect(string &$error): ?mysqli
     {
         if (!class_exists('mysqli')) {
             $error = $this->i18n->trans('php-mysql-not-found');
@@ -222,7 +222,7 @@ class Mysql implements DataBaseEngine
      *
      * @return array
      */
-    public function select($link, $sql): array
+    public function select($link, string $sql): array
     {
         $result = [];
         try {
@@ -251,7 +251,7 @@ class Mysql implements DataBaseEngine
      *
      * @return bool
      */
-    public function exec($link, $sql): bool
+    public function exec($link, string $sql): bool
     {
         try {
             if ($link->multi_query($sql)) {
@@ -276,7 +276,7 @@ class Mysql implements DataBaseEngine
      *
      * @return string
      */
-    public function escapeString($link, $str): string
+    public function escapeString($link, string $str): string
     {
         return $link->escape_string($str);
     }
@@ -299,7 +299,7 @@ class Mysql implements DataBaseEngine
      *
      * @return bool
      */
-    public function compareDataTypes($dbType, $xmlType): bool
+    public function compareDataTypes(string $dbType, string $xmlType): bool
     {
         $result = (
             ($dbType === $xmlType) ||
@@ -354,7 +354,7 @@ class Mysql implements DataBaseEngine
      *
      * @return bool
      */
-    public function checkSequence($link, $tableName, $default, $colname): bool
+    public function checkSequence($link, string $tableName, string $default, string $colname): bool
     {
         return true;
     }
@@ -368,7 +368,7 @@ class Mysql implements DataBaseEngine
      *
      * @return bool
      */
-    public function checkTableAux($link, $tableName, &$error): bool
+    public function checkTableAux($link, string $tableName, string &$error): bool
     {
         $result = true;
 
@@ -391,7 +391,7 @@ class Mysql implements DataBaseEngine
      *
      * @return array
      */
-    public function columnFromData($colData): array
+    public function columnFromData(array $colData): array
     {
         $result = array_change_key_case($colData);
         $result['is_nullable'] = $result['null'];
@@ -419,7 +419,7 @@ class Mysql implements DataBaseEngine
      *
      * @return string
      */
-    public function getOperator($operator): string
+    public function getOperator(string $operator): string
     {
         return $operator;
     }
@@ -427,7 +427,7 @@ class Mysql implements DataBaseEngine
     /**
      * Rollback all active transactions
      */
-    private function rollbackTransactions()
+    private function rollbackTransactions(): void
     {
         foreach ($this->transactions as $link) {
             $this->rollback($link);
@@ -439,7 +439,7 @@ class Mysql implements DataBaseEngine
      *
      * @param \mysqli $link
      */
-    private function unsetTransaction($link)
+    private function unsetTransaction($link): void
     {
         $count = 0;
         foreach ($this->transactions as $trans) {
@@ -459,7 +459,7 @@ class Mysql implements DataBaseEngine
      *
      * @return bool
      */
-    private function compareDataTypeNumeric($dbType, $xmlType): bool
+    private function compareDataTypeNumeric(string $dbType, string $xmlType): bool
     {
         return (0 === strpos($dbType, 'int(') && $xmlType === 'INTEGER') ||
             (0 === strpos($dbType, 'double') && $xmlType === 'double precision');
@@ -473,7 +473,7 @@ class Mysql implements DataBaseEngine
      *
      * @return bool
      */
-    private function compareDataTypeChar($dbType, $xmlType): bool
+    private function compareDataTypeChar(string $dbType, string $xmlType): bool
     {
         $result = 0 === strpos($xmlType, 'character varying(');
         if ($result) {

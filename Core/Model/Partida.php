@@ -227,7 +227,7 @@ class Partida extends Base\ModelClass
     /**
      * Reset the values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
         $this->punteada = false;
@@ -443,7 +443,7 @@ class Partida extends Base\ModelClass
      *
      * @return int|null
      */
-    private function getIdSubAccount($code, $exercise)
+    private function getIdSubAccount(string $code, string $exercise): ?int
     {
         if (empty($code) || empty($exercise)) {
             return null;

@@ -44,7 +44,7 @@ class HtmlView extends BaseView
      * @param string $modelName
      * @param string $fileName
      */
-    public function __construct($title, $modelName, $fileName)
+    public function __construct(string $title, string $modelName, string $fileName)
     {
         parent::__construct($title, $modelName);
         $this->fileName = $fileName . '.html.twig';
@@ -55,7 +55,7 @@ class HtmlView extends BaseView
      *
      * @param ExportManager $exportManager
      */
-    public function export(&$exportManager)
+    public function export(ExportManager $exportManager): void
     {
         /// TODO: complete this method
     }

@@ -123,7 +123,7 @@ class WebRender
     /**
      * Add all paths from Core and Plugins folders.
      */
-    public function loadPluginFolders()
+    public function loadPluginFolders(): void
     {
         /// Core namespace
         try {

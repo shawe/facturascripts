@@ -79,7 +79,7 @@ class TotalModel
      *
      * @return self[]
      */
-    public static function all($tableName, $where, $fieldList, $fieldCode = ''): array
+    public static function all(string $tableName, array $where = [], array $fieldList = [], string $fieldCode = ''): array
     {
         $result = [];
 
@@ -139,7 +139,7 @@ class TotalModel
      *
      * @param array $totalFields
      */
-    private function clearTotals($totalFields)
+    private function clearTotals($totalFields): void
     {
         foreach ($totalFields as $fieldName) {
             $this->totals[$fieldName] = 0;

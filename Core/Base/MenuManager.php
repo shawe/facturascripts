@@ -72,7 +72,7 @@ class MenuManager
     /**
      * Call only when you have connected to the database.
      */
-    public function init()
+    public function init(): void
     {
         if (self::$pageModel === null) {
             self::$pageModel = new Model\Page();
@@ -88,7 +88,7 @@ class MenuManager
      *
      * @param string[] $currentPageNames
      */
-    public function removeOld($currentPageNames)
+    public function removeOld(array $currentPageNames): void
     {
         foreach (self::$pageModel->all([], [], 0, 0) as $page) {
             if (!\in_array($page->name, $currentPageNames, false)) {
@@ -103,7 +103,7 @@ class MenuManager
      *
      * @param array $pageData
      */
-    public function selectPage($pageData)
+    public function selectPage(array $pageData): void
     {
         $pageModel = self::$pageModel->get($pageData['name']);
         if ($pageModel instanceof Model\Page) {
@@ -133,7 +133,7 @@ class MenuManager
      *
      * @param Model\User|false $user
      */
-    public function setUser($user)
+    public function setUser($user): void
     {
         self::$user = $user;
         $this->init();
@@ -142,7 +142,7 @@ class MenuManager
     /**
      * Reloads menu from database.
      */
-    public function reload()
+    public function reload(): void
     {
         self::$menu = $this->loadUserMenu();
     }
@@ -154,7 +154,7 @@ class MenuManager
      *
      * @return Model\RoleAccess[]
      */
-    private function getUserAccess($nick): array
+    private function getUserAccess(string $nick): array
     {
         $access = [];
         $roleUserModel = new Model\RoleUser();
@@ -257,7 +257,7 @@ class MenuManager
      *
      * @return bool
      */
-    private function pageNeedSave($pageModel, $pageData): bool
+    private function pageNeedSave(Model\Page $pageModel, array $pageData): bool
     {
         return
             ($pageModel->menu !== $pageData['menu']) || ($pageModel->submenu !== $pageData['submenu']) ||
@@ -270,7 +270,7 @@ class MenuManager
      *
      * @param Model\Page $pageModel
      */
-    private function setActiveMenu($pageModel)
+    private function setActiveMenu(Model\Page $pageModel): void
     {
         foreach (self::$menu as $key => $menuItem) {
             if ($menuItem->name === $pageModel->menu) {
@@ -287,7 +287,7 @@ class MenuManager
      * @param MenuItem[] $menu
      * @param Model\Page $pageModel
      */
-    private function setActiveMenuItem(&$menu, $pageModel)
+    private function setActiveMenuItem(array &$menu, Model\Page $pageModel): void
     {
         foreach ($menu as $key => $menuItem) {
             if ($menuItem->name === $pageModel->name) {
@@ -310,7 +310,7 @@ class MenuManager
      *
      * @return array
      */
-    private function sortMenu(&$sortMenu, &$result): array
+    private function sortMenu(array &$sortMenu, array &$result): array
     {
         /// Reorder menu by title
         array_multisort($sortMenu, SORT_ASC, $result);

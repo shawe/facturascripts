@@ -66,7 +66,7 @@ class BalanceCuentaA extends Base\ModelClass
      *
      * @return self[]
      */
-    public function allFromCodbalance($cod)
+    public function allFromCodbalance(string $cod): array
     {
         $balist = [];
         $sql = 'SELECT * FROM ' . static::tableName()

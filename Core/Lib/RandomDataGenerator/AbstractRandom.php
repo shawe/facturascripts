@@ -178,7 +178,7 @@ abstract class AbstractRandom
      *
      * @return mixed
      */
-    public function getOneItem($array)
+    public function getOneItem(array $array)
     {
         return $array[random_int(0, count($array) - 1)];
     }
@@ -280,7 +280,7 @@ abstract class AbstractRandom
      *
      * @return string
      */
-    public function txt2codigo($txt, $len = 8): string
+    public function txt2codigo(string $txt, int $len = 8): string
     {
         $result = str_replace(
             [' ', '-', '_', '&', 'ó', ':', 'ñ', '"', "'", '*'],
@@ -301,7 +301,7 @@ abstract class AbstractRandom
      *
      * @return string la cadena aleatoria
      */
-    public function randomString($length = 30): string
+    public function randomString(int $length = 30): string
     {
         return mb_substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, $length);
     }
@@ -314,7 +314,7 @@ abstract class AbstractRandom
      *
      * @return false|string
      */
-    protected function fecha($start = 2013, $end = 2018)
+    protected function fecha(int $start = 2013, int $end = 2018)
     {
         return date(random_int(1, 28) . '-' . random_int(1, 12) . '-' . random_int($start, $end));
     }
@@ -329,7 +329,7 @@ abstract class AbstractRandom
      *
      * @return array
      */
-    protected function randomModel($modelName, $tableName, $functionName, $recursivo = true): array
+    protected function randomModel(string $modelName, string $tableName, string $functionName, bool $recursivo = true): array
     {
         $lista = [];
 

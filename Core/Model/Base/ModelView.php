@@ -52,7 +52,7 @@ abstract class ModelView
      *
      * @param array $data
      */
-    public function __construct($data = [])
+    public function __construct(array $data = [])
     {
         if (self::$dataBase === null) {
             self::$dataBase = new DataBase();
@@ -74,7 +74,7 @@ abstract class ModelView
      *
      * @return bool
      */
-    public function __isset($name)
+    public function __isset(string $name)
     {
         return array_key_exists($name, $this->values);
     }
@@ -85,7 +85,7 @@ abstract class ModelView
      * @param string $name
      * @param mixed  $value
      */
-    public function __set($name, $value)
+    public function __set(string $name, $value)
     {
         $this->values[$name] = $value;
     }
@@ -97,7 +97,7 @@ abstract class ModelView
      *
      * @return mixed
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         if (!isset($this->values[$name])) {
             $this->values[$name] = null;
@@ -113,7 +113,7 @@ abstract class ModelView
      *
      * @return int
      */
-    public function count(array $where = [])
+    public function count(array $where = []): int
     {
         $sql = 'SELECT COUNT(1) AS total FROM ' . $this->getSQLFrom() . DataBaseWhere::getSQLWhere($where);
         $data = self::$dataBase->select($sql);
@@ -130,7 +130,7 @@ abstract class ModelView
      *
      * @return self[]
      */
-    public function all(array $where, array $order = [], int $offset = 0, int $limit = 0)
+    public function all(array $where, array $order = [], int $offset = 0, int $limit = 0): array
     {
         $result = [];
         if ($this->checkTables()) {
@@ -169,7 +169,7 @@ abstract class ModelView
     /**
      * Reset the values of all model properties.
      */
-    protected function clear()
+    protected function clear(): void
     {
         foreach (array_keys($this->getFields()) as $field) {
             $this->values[$field] = null;
@@ -181,7 +181,7 @@ abstract class ModelView
      *
      * @param array $data
      */
-    protected function loadFromData($data)
+    protected function loadFromData(array $data): void
     {
         foreach ($data as $field => $value) {
             $this->values[$field] = $value;

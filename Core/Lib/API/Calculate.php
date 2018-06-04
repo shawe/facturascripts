@@ -36,7 +36,7 @@ class Calculate extends APIResourceClass
      */
     private $error;
 
-    public function help()
+    public function help(): void
     {
         $data = [];
         $data['name'] = 'Perform simple arithmetic operations';

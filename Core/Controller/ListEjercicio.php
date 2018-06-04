@@ -48,7 +48,7 @@ class ListEjercicio extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addView('ListEjercicio', 'Ejercicio');
         $this->addSearchFields('ListEjercicio', ['nombre', 'codejercicio']);

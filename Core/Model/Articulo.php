@@ -150,7 +150,7 @@ class Articulo extends Base\Product
     /**
      * Reset the values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
         $this->costemedio = 0.0;
@@ -228,7 +228,7 @@ class Articulo extends Base\Product
      *
      * @param float $pvp
      */
-    public function setPvp($pvp)
+    public function setPvp(float $pvp): void
     {
         $pvp2 = round($pvp, FS_NF0 + 2);
 
@@ -242,7 +242,7 @@ class Articulo extends Base\Product
      *
      * @param float $pvp
      */
-    public function setPvpIva($pvp)
+    public function setPvpIva(float $pvp):void
     {
         $this->setPvp((100 * $pvp) / (100 + $this->getIva()));
     }

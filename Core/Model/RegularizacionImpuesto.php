@@ -225,7 +225,7 @@ class RegularizacionImpuesto extends Base\ModelClass
      *
      * @return bool|RegularizacionImpuesto
      */
-    public function getFechaInside($fecha)
+    public function getFechaInside(string $fecha)
     {
         $sql = 'SELECT * FROM ' . static::tableName() . ' WHERE fechainicio <= ' . self::$dataBase->var2str($fecha)
             . ' AND fechafin >= ' . self::$dataBase->var2str($fecha) . ';';
@@ -241,7 +241,7 @@ class RegularizacionImpuesto extends Base\ModelClass
     /**
      * Load data from previous regularization for period
      */
-    public function loadNextPeriod()
+    public function loadNextPeriod(): void
     {
         /// Search for current exercise
         $exercise = Ejercicio::getByFecha(date('d-m-Y'), true, false);
@@ -297,13 +297,13 @@ class RegularizacionImpuesto extends Base\ModelClass
     /**
      * Calculate Period data
      *
-     * @param string      $period
-     * @param string|null $date
-     * @param bool        $add
+     * @param string $period
+     * @param string $date
+     * @param bool   $add
      *
      * @return array
      */
-    private function getPeriod($period, $date = null, $add = false): array
+    private function getPeriod(string $period = '', string $date = '', bool $add = false): array
     {
         /// Calculate next period
         if (!empty($period) && $add) {

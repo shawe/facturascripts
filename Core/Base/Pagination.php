@@ -58,7 +58,7 @@ class Pagination
      *
      * @param string $url
      */
-    public function __construct($url)
+    public function __construct(string $url)
     {
         $auxUrl = explode('#', $url);
         $this->url = $auxUrl[0];

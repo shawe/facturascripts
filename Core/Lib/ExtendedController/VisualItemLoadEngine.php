@@ -19,7 +19,7 @@
 
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
-use FacturaScripts\Dinamic\Model;
+use FacturaScripts\Core\Model\PageOption;
 
 /**
  * Description of VisualItemLoadEngine
@@ -35,9 +35,9 @@ class VisualItemLoadEngine
      * @param array            $columns
      * @param array            $modals
      * @param array            $rows
-     * @param Model\PageOption $model
+     * @param PageOption $model
      */
-    public static function loadJSON($columns, $modals, $rows, &$model)
+    public static function loadJSON(array $columns, array $modals, array $rows, PageOption $model): void
     {
         self::getJSONGroupsColumns($columns, $model->columns);
         self::getJSONGroupsColumns($modals, $model->modals);
@@ -55,12 +55,12 @@ class VisualItemLoadEngine
     /**
      * Add to the configuration of a controller
      *
-     * @param string           $name
-     * @param Model\PageOption $model
+     * @param string     $name
+     * @param PageOption $model
      *
      * @return bool
      */
-    public static function installXML($name, &$model): bool
+    public static function installXML(string $name, PageOption $model): bool
     {
         $fileName = FS_FOLDER . '/Dinamic/XMLView/' . $name . '.xml';
         if (FS_DEBUG && !file_exists($fileName)) {
@@ -83,9 +83,9 @@ class VisualItemLoadEngine
      * Load the list of values for a dynamic select type widget with
      * a database model or a range of values
      *
-     * @param Model\PageOption $model
+     * @param PageOption $model
      */
-    public static function applyDynamicSelectValues(&$model)
+    public static function applyDynamicSelectValues(PageOption $model): void
     {
         // Apply values to dynamic Select widgets
         foreach ($model->columns as $group) {
@@ -110,7 +110,7 @@ class VisualItemLoadEngine
      * @param array $columns
      * @param array $target
      */
-    private static function getJSONGroupsColumns($columns, &$target)
+    private static function getJSONGroupsColumns(array $columns, array &$target): void
     {
         if (!empty($columns)) {
             foreach ($columns as $item) {
@@ -126,7 +126,7 @@ class VisualItemLoadEngine
      * @param \SimpleXMLElement $columns
      * @param array             $target
      */
-    private static function getXMLGroupsColumns($columns, &$target)
+    private static function getXMLGroupsColumns(\SimpleXMLElement $columns, array &$target): void
     {
         // if group dont have elements
         if ($columns->count() === 0) {
@@ -154,7 +154,7 @@ class VisualItemLoadEngine
      * @param \SimpleXMLElement $rows
      * @param array             $target
      */
-    private static function getXMLRows($rows, &$target)
+    private static function getXMLRows(\SimpleXMLElement $rows, array &$target): void
     {
         if (!empty($rows)) {
             foreach ($rows->row as $row) {

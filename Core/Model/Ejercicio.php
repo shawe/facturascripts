@@ -104,7 +104,7 @@ class Ejercicio extends Base\ModelClass
      *
      * @return bool|Ejercicio
      */
-    public static function getByFecha($fecha, $soloAbierto = true, $crear = true)
+    public static function getByFecha(string $fecha, bool $soloAbierto = true, bool $crear = true)
     {
         $sql = 'SELECT * FROM ' . static::tableName()
             . ' WHERE ' . self::$dataBase->var2str($fecha) . ' BETWEEN fechainicio AND fechafin;';
@@ -133,7 +133,7 @@ class Ejercicio extends Base\ModelClass
      *
      * @return bool
      */
-    public function abierto()
+    public function abierto(): bool
     {
         return $this->estado === 'ABIERTO';
     }
@@ -141,7 +141,7 @@ class Ejercicio extends Base\ModelClass
     /**
      * Reset the values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
         $this->nombre = '';
@@ -266,7 +266,7 @@ class Ejercicio extends Base\ModelClass
      *
      * @return string
      */
-    public function newCodigo($cod = '0001')
+    public function newCodigo($cod = '0001'): string
     {
         $sql = 'SELECT * FROM ' . static::tableName() . ' WHERE codejercicio = ' . self::$dataBase->var2str($cod) . ';';
         if (!self::$dataBase->select($sql)) {
@@ -287,7 +287,7 @@ class Ejercicio extends Base\ModelClass
      *
      * @return string en formato año
      */
-    public function year()
+    public function year(): string
     {
         return date('Y', strtotime($this->fechainicio));
     }

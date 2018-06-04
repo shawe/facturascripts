@@ -134,7 +134,7 @@ class DataBaseTools
      *
      * @return bool
      */
-    public function getXmlTable($tableName, &$columns, &$constraints): bool
+    public function getXmlTable(string $tableName, array &$columns, array &$constraints): bool
     {
         $return = false;
         $filename = $this->getXmlTableLocation($tableName);
@@ -315,7 +315,7 @@ class DataBaseTools
      * @param array             $columns
      * @param \SimpleXMLElement $xml
      */
-    private function checkXmlColumns(&$columns, $xml)
+    private function checkXmlColumns(array &$columns, \SimpleXMLElement $xml): void
     {
         $key = 0;
         foreach ($xml->column as $col) {
@@ -343,7 +343,7 @@ class DataBaseTools
      * @param array             $constraints
      * @param \SimpleXMLElement $xml
      */
-    private function checkXmlConstraints(&$constraints, $xml)
+    private function checkXmlConstraints(array &$constraints, \SimpleXMLElement $xml): void
     {
         $key = 0;
         foreach ($xml->constraint as $col) {

@@ -48,7 +48,7 @@ class ListCuenta extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         /* Sub-Accounts */
         $this->addView('ListSubcuenta', 'Subcuenta', 'subaccounts', 'fa-th-list');

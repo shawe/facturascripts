@@ -51,7 +51,7 @@ class EditFamilia extends ExtendedController\PanelController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addEditView('EditFamilia', 'Familia', 'family');
         $this->addListView('ListFamilia', 'Familia', 'families-children', 'fa-level-down');
@@ -64,7 +64,7 @@ class EditFamilia extends ExtendedController\PanelController
      * @param string                      $viewName
      * @param ExtendedController\EditView $view
      */
-    protected function loadData($viewName, $view)
+    protected function loadData($viewName, $view): void
     {
         switch ($viewName) {
             case 'EditFamilia':

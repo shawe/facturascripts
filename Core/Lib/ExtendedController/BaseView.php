@@ -20,6 +20,7 @@
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base;
+use FacturaScripts\Dinamic\Lib\ExportManager;
 use FacturaScripts\Dinamic\Model;
 
 /**
@@ -89,12 +90,12 @@ abstract class BaseView
     /**
      * Method to export the view data.
      */
-    abstract public function export(&$exportManager);
+    abstract public function export(ExportManager $exportManager);
 
     /**
      * Clears the model and set new code for the PK.
      */
-    public function clear()
+    public function clear(): void
     {
         $this->model->clear();
         $this->model->{$this->model::primaryColumn()} = $this->model->newCode();
@@ -107,7 +108,7 @@ abstract class BaseView
      *
      * @return ColumnItem
      */
-    public function columnForField(string $fieldName)
+    public function columnForField(string $fieldName): ColumnItem
     {
         $result = null;
         foreach ($this->pageOption->columns as $group) {
@@ -132,7 +133,7 @@ abstract class BaseView
      *
      * @return ColumnItem
      */
-    public function columnForName(string $columnName)
+    public function columnForName(string $columnName): ColumnItem
     {
         $result = null;
         foreach ($this->pageOption->columns as $group) {
@@ -167,7 +168,7 @@ abstract class BaseView
      *
      * @return RowItem|null
      */
-    public function getRow(string $key)
+    public function getRow(string $key): ?RowItem
     {
         return $this->pageOption->rows[$key] ?? null;
     }
@@ -199,7 +200,7 @@ abstract class BaseView
      *
      * @param array $data
      */
-    public function loadFromData(array &$data)
+    public function loadFromData(array &$data): void
     {
         $fieldKey = $this->model->primaryColumn();
         $fieldValue = $data[$fieldKey];

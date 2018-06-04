@@ -86,7 +86,7 @@ class BusinessDocumentView extends BaseView
      *
      * @param ExportManager $exportManager
      */
-    public function export(&$exportManager)
+    public function export(ExportManager $exportManager)
     {
         $exportManager->generateDocumentPage($this->model);
     }

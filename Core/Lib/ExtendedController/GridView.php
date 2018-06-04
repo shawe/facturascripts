@@ -63,7 +63,7 @@ class GridView extends BaseView
      * @param string   $viewName
      * @param string   $userNick
      */
-    public function __construct(&$parent, $title, $modelName, $viewName, $userNick)
+    public function __construct(&$parent, string $title, string $modelName, string $viewName, string $userNick)
     {
         parent::__construct($title, $modelName);
 
@@ -80,7 +80,7 @@ class GridView extends BaseView
      *
      * @param ExportManager $exportManager
      */
-    public function export(&$exportManager)
+    public function export(ExportManager $exportManager)
     {
         /// TODO: complete this method
     }
@@ -117,11 +117,11 @@ class GridView extends BaseView
     }
 
     /**
-     * @param $data
+     * @param array $data
      *
      * @return array
      */
-    public function saveData($data): array
+    public function saveData(array $data): array
     {
         $result = [
             'error' => false,
@@ -184,11 +184,11 @@ class GridView extends BaseView
     }
 
     /**
-     * @param $lines
+     * @param array $lines
      *
      * @return array
      */
-    public function processFormLines(&$lines): array
+    public function processFormLines(array &$lines): array
     {
         $result = [];
         $primaryKey = $this->model->primaryColumn();
@@ -215,7 +215,7 @@ class GridView extends BaseView
      *
      * @return array
      */
-    private function getAutocompleteSource($values): array
+    private function getAutocompleteSource(array $values): array
     {
         // Calculate url for grid controller
         $url = $this->parentModel->url('edit');
@@ -236,7 +236,7 @@ class GridView extends BaseView
      *
      * @return bool
      */
-    private function getAutocompeteStrict($values): bool
+    private function getAutocompeteStrict(array $values): bool
     {
         return isset($values['strict']) ? $values['strict'] === 'true' : true;
     }
@@ -248,7 +248,7 @@ class GridView extends BaseView
      *
      * @return array
      */
-    private function getItemForColumn($column): array
+    private function getItemForColumn(ColumnItem $column): array
     {
         $item = ['data' => $column->widget->fieldName];
         switch ($column->widget->type) {
@@ -314,7 +314,7 @@ class GridView extends BaseView
      *
      * @return bool
      */
-    private function loadDocumentDataFromArray($fieldPK, &$data): bool
+    private function loadDocumentDataFromArray(string $fieldPK, array &$data): bool
     {
         if ($this->parentModel->loadFromCode($data[$fieldPK])) {    // old data
             $this->parentModel->loadFromData($data, ['action', 'active']);  // new data (the web form may not have all the fields)
@@ -331,7 +331,7 @@ class GridView extends BaseView
      *
      * @return bool
      */
-    private function deleteLinesOld(&$linesOld, &$linesNew): bool
+    private function deleteLinesOld(array &$linesOld, array &$linesNew): bool
     {
         if (!empty($linesOld)) {
             $fieldPK = $this->model->primaryColumn();

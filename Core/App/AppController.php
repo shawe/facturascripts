@@ -349,7 +349,7 @@ class AppController extends App
      * @param User $user
      * @param bool $force
      */
-    private function updateCookies(User $user, bool $force = false)
+    private function updateCookies(User $user, bool $force = false): void
     {
         if ($force || \time() - \strtotime($user->lastactivity) > self::USER_UPDATE_ACTIVITY_PERIOD) {
             $user->newLogkey($this->request->getClientIp());
@@ -366,7 +366,7 @@ class AppController extends App
     /**
      * Log out the user.
      */
-    private function userLogout()
+    private function userLogout(): void
     {
         $this->response->headers->clearCookie('fsNick');
         $this->response->headers->clearCookie('fsLogkey');

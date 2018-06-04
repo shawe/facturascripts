@@ -59,7 +59,7 @@ class GroupItem extends VisualItem implements VisualItemInterface
      *
      * @return GroupItem
      */
-    public static function newFromJSON($group): GroupItem
+    public static function newFromJSON(array $group): GroupItem
     {
         $result = new self();
         $result->loadFromJSON($group);
@@ -74,7 +74,7 @@ class GroupItem extends VisualItem implements VisualItemInterface
      *
      * @return GroupItem
      */
-    public static function newFromXML($group): GroupItem
+    public static function newFromXML(\SimpleXMLElement $group): GroupItem
     {
         $result = new self();
         $result->loadFromXML($group);
@@ -102,7 +102,7 @@ class GroupItem extends VisualItem implements VisualItemInterface
     /**
      * Check and apply special operations on the group
      */
-    public function applySpecialOperations()
+    public function applySpecialOperations(): void
     {
         foreach ($this->columns as $column) {
             if ($column instanceof self) {
@@ -118,7 +118,7 @@ class GroupItem extends VisualItem implements VisualItemInterface
      *
      * @return string
      */
-    public function getHeaderHTML($value): string
+    public function getHeaderHTML(string $value): string
     {
         return $this->getIconHTML() . parent::getHeaderHTML($value);
     }
@@ -128,7 +128,7 @@ class GroupItem extends VisualItem implements VisualItemInterface
      *
      * @param array $group
      */
-    public function loadFromJSON($group)
+    public function loadFromJSON(array $group): void
     {
         parent::loadFromJSON($group);
         $this->icon = (string) $group['icon'];
@@ -146,7 +146,7 @@ class GroupItem extends VisualItem implements VisualItemInterface
      *
      * @param \SimpleXMLElement $group
      */
-    public function loadFromXML($group)
+    public function loadFromXML(\SimpleXMLElement $group): void
     {
         parent::loadFromXML($group);
 
@@ -160,7 +160,7 @@ class GroupItem extends VisualItem implements VisualItemInterface
      *
      * @param \SimpleXMLElement $group
      */
-    public function loadFromXMLColumns($group)
+    public function loadFromXMLColumns($group): void
     {
         if (isset($group->column)) {
             foreach ($group->column as $column) {

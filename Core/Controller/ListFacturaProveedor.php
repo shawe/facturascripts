@@ -50,7 +50,7 @@ class ListFacturaProveedor extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addView('ListFacturaProveedor', 'FacturaProveedor');
         $this->addSearchFields('ListFacturaProveedor', ['codigo', 'numproveedor', 'observaciones']);
@@ -82,7 +82,7 @@ class ListFacturaProveedor extends ExtendedController\ListController
         $this->createViewLines();
     }
 
-    protected function createViewLines()
+    protected function createViewLines(): void
     {
         $this->addView('ListLineaFacturaProveedor', 'LineaFacturaProveedor', 'lines', 'fa-list');
         $this->addSearchFields('ListLineaFacturaProveedor', ['referencia', 'descripcion']);

@@ -20,8 +20,10 @@
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base;
+use FacturaScripts\Core\Base\ControllerPermissions;
 use FacturaScripts\Dinamic\Lib;
 use FacturaScripts\Dinamic\Model;
+use FacturaScripts\Dinamic\Model\User;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -48,7 +50,7 @@ class Dashboard extends Base\Controller
      * @param Base\MiniLog    $miniLog
      * @param string          $className
      */
-    public function __construct(&$cache, &$i18n, &$miniLog, $className)
+    public function __construct(Base\Cache $cache, Base\Translator $i18n, Base\MiniLog $miniLog, string $className)
     {
         parent::__construct($cache, $i18n, $miniLog, $className);
 
@@ -58,11 +60,11 @@ class Dashboard extends Base\Controller
     /**
      * Runs the controller's private logic.
      *
-     * @param Response                   $response
-     * @param Model\User                 $user
-     * @param Base\ControllerPermissions $permissions
+     * @param Response              $response
+     * @param User                  $user
+     * @param ControllerPermissions $permissions
      */
-    public function privateCore(&$response, $user, $permissions)
+    public function privateCore(Response $response, User $user, ControllerPermissions $permissions): void
     {
         parent::privateCore($response, $user, $permissions);
 
@@ -90,7 +92,7 @@ class Dashboard extends Base\Controller
      *
      * @param string $userNick
      */
-    private function getListComponents($userNick)
+    private function getListComponents($userNick): void
     {
         $dashboardModel = new Model\Dashboard();
         $rows = $dashboardModel->all();
@@ -106,7 +108,7 @@ class Dashboard extends Base\Controller
     /**
      * Load the needed data of components.
      */
-    private function loadDataComponents()
+    private function loadDataComponents(): void
     {
         foreach ($this->components as $component) {
             $component->loadData();

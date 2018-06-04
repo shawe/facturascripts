@@ -76,7 +76,7 @@ class IPFilter
     /**
      * Returns true if attempts to access from the IP address exceed the MAX_ATTEMPTS limit.
      *
-     * @param string $ip
+     * @param string|null $ip
      *
      * @return bool
      */
@@ -99,7 +99,7 @@ class IPFilter
      *
      * @param string $ip
      */
-    public function setAttempt($ip)
+    public function setAttempt(string $ip): void
     {
         $found = false;
         foreach ($this->ipList as $key => $line) {
@@ -125,7 +125,7 @@ class IPFilter
     /**
      * Clean the list of IP addresses and save the data.
      */
-    public function clear()
+    public function clear(): void
     {
         $this->ipList = [];
         $this->save();
@@ -136,7 +136,7 @@ class IPFilter
      *
      * @param array $line
      */
-    private function readIp($line)
+    private function readIp(array$line): void
     {
         /// si no ha expirado
         if (count($line) === 3 && (int) $line[2] > time()) {
@@ -151,7 +151,7 @@ class IPFilter
     /**
      * Stores the list of IP addresses in the file.
      */
-    private function save()
+    private function save(): void
     {
         $file = fopen($this->filePath, 'wb');
         if ($file) {

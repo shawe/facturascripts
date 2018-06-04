@@ -135,7 +135,7 @@ class Agente extends Base\Contact
     /**
      * Reset values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
         $this->porcomision = 0.00;

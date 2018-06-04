@@ -32,7 +32,7 @@ interface DataBaseEngine
      *
      * @param string $operator
      */
-    public function getOperator($operator);
+    public function getOperator(string $operator);
 
     /**
      * Returns the link to the engine's SQL class
@@ -46,7 +46,7 @@ interface DataBaseEngine
      *
      * @param array $colData
      */
-    public function columnFromData($colData);
+    public function columnFromData(array $colData);
 
     /**
      * Database engine information
@@ -62,7 +62,7 @@ interface DataBaseEngine
      *
      * @param string $error
      */
-    public function connect(&$error);
+    public function connect(string &$error);
 
     /**
      * Closes the connection to the database
@@ -114,7 +114,7 @@ interface DataBaseEngine
      *
      * @return array
      */
-    public function select($link, $sql): array;
+    public function select($link, string $sql): array;
 
     /**
      * Runs a DDL statement on the connection.
@@ -125,7 +125,7 @@ interface DataBaseEngine
      *
      * @return bool
      */
-    public function exec($link, $sql): bool;
+    public function exec($link, string $sql): bool;
 
     /**
      * Compares the columns set in the arrays
@@ -133,7 +133,7 @@ interface DataBaseEngine
      * @param string $dbType
      * @param string $xmlType
      */
-    public function compareDataTypes($dbType, $xmlType);
+    public function compareDataTypes(string $dbType, string $xmlType);
 
     /**
      * List the existing tables in the connection
@@ -148,7 +148,7 @@ interface DataBaseEngine
      * @param \mysqli|resource $link
      * @param string           $str
      */
-    public function escapeString($link, $str);
+    public function escapeString($link, string $str);
 
     /**
      * Returns the database date format
@@ -163,7 +163,7 @@ interface DataBaseEngine
      * @param string           $default
      * @param string           $colname
      */
-    public function checkSequence($link, $tableName, $default, $colname);
+    public function checkSequence($link, string $tableName, string $default, string $colname);
 
     /**
      * Additional check to see if a table exists
@@ -172,5 +172,5 @@ interface DataBaseEngine
      * @param string           $tableName
      * @param string           $error
      */
-    public function checkTableAux($link, $tableName, &$error);
+    public function checkTableAux($link, string $tableName, string &$error);
 }

@@ -97,7 +97,7 @@ abstract class VisualItem
      *
      * @return string
      */
-    public function getHeaderHTML($value): string
+    public function getHeaderHTML(string $value): string
     {
         $html = $this->i18n->trans($value);
 
@@ -114,7 +114,7 @@ abstract class VisualItem
      *
      * @param array $items
      */
-    public function loadFromJSON($items)
+    public function loadFromJSON(array $items): void
     {
         $this->name = (string) $items['name'];
         $this->title = (string) $items['title'];
@@ -128,7 +128,7 @@ abstract class VisualItem
      *
      * @param \SimpleXMLElement $items
      */
-    public function loadFromXML($items)
+    public function loadFromXML(\SimpleXMLElement $items): void
     {
         $items_atributes = $items->attributes();
         if (!empty($items_atributes->name)) {

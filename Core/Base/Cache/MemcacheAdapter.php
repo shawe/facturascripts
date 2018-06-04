@@ -97,7 +97,7 @@ class MemcacheAdapter implements AdaptorInterface
      *
      * @return mixed the content you put in, or null if expired or not found
      */
-    public function get($key)
+    public function get(string $key)
     {
         if (self::$connected) {
             $this->minilog->debug($this->i18n->trans('memcache-get-key-item', ['%item%' => $key]));
@@ -117,7 +117,7 @@ class MemcacheAdapter implements AdaptorInterface
      *
      * @return bool whether if the operation was successful or not
      */
-    public function set($key, $content, $expire = 5400): bool
+    public function set(string $key, $content, int $expire = 5400): bool
     {
         $this->minilog->debug($this->i18n->trans('memcache-set-key-item', ['%item%' => $key]));
         if (self::$connected) {
@@ -136,7 +136,7 @@ class MemcacheAdapter implements AdaptorInterface
      *
      * @return bool true if the data was removed successfully
      */
-    public function delete($key): bool
+    public function delete(string $key): bool
     {
         $this->minilog->debug($this->i18n->trans('memcache-delete-key-item', ['%item%' => $key]));
 

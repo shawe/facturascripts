@@ -96,7 +96,7 @@ abstract class Contact extends ModelClass
     /**
      * Reset the values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
         $this->fechaalta = date('d-m-Y');

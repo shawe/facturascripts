@@ -104,7 +104,7 @@ class PartidaImpuesto extends Base\ModelView
     /**
      * Reset the values of all model view properties.
      */
-    protected function clear()
+    protected function clear(): void
     {
         parent::clear();
 
@@ -120,7 +120,7 @@ class PartidaImpuesto extends Base\ModelView
      *
      * @param array $data
      */
-    protected function loadFromData($data)
+    protected function loadFromData(array $data): void
     {
         parent::loadFromData($data);
 

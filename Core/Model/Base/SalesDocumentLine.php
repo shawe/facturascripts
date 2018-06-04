@@ -44,7 +44,7 @@ abstract class SalesDocumentLine extends BusinessDocumentLine
     /**
      * Reset the values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
         $this->mostrar_cantidad = true;

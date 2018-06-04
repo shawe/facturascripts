@@ -71,7 +71,7 @@ class AccountingReports extends Controller
      * @param User                  $user
      * @param ControllerPermissions $permissions
      */
-    public function privateCore(&$response, $user, $permissions)
+    public function privateCore(Response $response, User $user, ControllerPermissions $permissions): void
     {
         parent::privateCore($response, $user, $permissions);
 
@@ -106,7 +106,7 @@ class AccountingReports extends Controller
      *
      * @param string $action
      */
-    private function execAction($action)
+    private function execAction(string $action): void
     {
         $pages = [];
         $dateFrom = $this->request->get('date-from', '');
@@ -152,7 +152,7 @@ class AccountingReports extends Controller
      * @param array  $pages
      * @param string $format
      */
-    private function exportData(&$pages, $format)
+    private function exportData(array &$pages, string $format): void
     {
         $this->exportManager->newDoc($format);
 

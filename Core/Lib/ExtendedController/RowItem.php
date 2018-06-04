@@ -39,7 +39,7 @@ abstract class RowItem implements VisualItemInterface
      *
      * @param string $type
      */
-    public function __construct($type)
+    public function __construct(string $type)
     {
         $this->type = $type;
     }
@@ -51,7 +51,7 @@ abstract class RowItem implements VisualItemInterface
      *
      * @return RowItem|null
      */
-    public static function newFromXML($row)
+    public static function newFromXML(\SimpleXMLElement $row): ?RowItem
     {
         $rowAtributes = $row->attributes();
         $type = (string) $rowAtributes->type;
@@ -69,7 +69,7 @@ abstract class RowItem implements VisualItemInterface
      *
      * @return RowItem|null
      */
-    public static function newFromJSON($row)
+    public static function newFromJSON(array $row): ?RowItem
     {
         $type = (string) $row['type'];
         $result = self::rowItemFromType($type);
@@ -84,14 +84,14 @@ abstract class RowItem implements VisualItemInterface
      *
      * @param \SimpleXMLElement $row
      */
-    abstract public function loadFromXML($row);
+    abstract public function loadFromXML(\SimpleXMLElement $row): void;
 
     /**
      * Creates and loads the attributes structure from JSON file
      *
      * @param array $row
      */
-    abstract public function loadFromJSON($row);
+    abstract public function loadFromJSON(array $row): void;
 
     /**
      * Generates the HTML code to display the header for the visual element
@@ -100,7 +100,7 @@ abstract class RowItem implements VisualItemInterface
      *
      * @return string
      */
-    public function getHeaderHTML($value): string
+    public function getHeaderHTML(string $value): string
     {
         return $value;
     }
@@ -112,7 +112,7 @@ abstract class RowItem implements VisualItemInterface
      *
      * @return RowItem|null
      */
-    private static function rowItemFromType($type)
+    private static function rowItemFromType(string $type): ?RowItem
     {
         switch ($type) {
             case 'status':
@@ -138,7 +138,7 @@ abstract class RowItem implements VisualItemInterface
      *
      * @return array
      */
-    protected function getAttributesFromXML($item): array
+    protected function getAttributesFromXML(\SimpleXMLElement $item): array
     {
         $result['value'] = trim((string) $item);
         foreach ($item->attributes() as $key => $value) {
@@ -155,7 +155,7 @@ abstract class RowItem implements VisualItemInterface
      *
      * @return WidgetButton[]
      */
-    protected function loadButtonsFromXML($buttonsXML): array
+    protected function loadButtonsFromXML(\SimpleXMLElement $buttonsXML): array
     {
         $buttons = [];
         foreach ($buttonsXML->button as $item) {
@@ -174,7 +174,7 @@ abstract class RowItem implements VisualItemInterface
      *
      * @return WidgetButton[]
      */
-    protected function loadButtonsFromJSON($buttonsJSON): array
+    protected function loadButtonsFromJSON(array $buttonsJSON): array
     {
         $buttons = [];
         foreach ($buttonsJSON as $button) {

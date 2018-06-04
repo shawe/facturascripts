@@ -60,7 +60,7 @@ class EmailTools
      *
      * @return mixed
      */
-    public function getHtml($companyName, $title, $txt, $sign)
+    public function getHtml(string $companyName, string $title, string $txt, string $sign)
     {
         $html = file_get_contents(FS_FOLDER . '/Dinamic/Assets/Email/BasicTemplate.html.twig');
         $search = [
@@ -104,7 +104,7 @@ class EmailTools
     /**
      * Reload all email settings properties.
      */
-    public function reloadConfig()
+    public function reloadConfig(): void
     {
         $settingsModel = new Settings();
         $emailSettings = $settingsModel->get('email');

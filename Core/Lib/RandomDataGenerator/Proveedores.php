@@ -79,7 +79,7 @@ class Proveedores extends AbstractRandomPeople
      * @param Model\Proveedor $proveedor
      * @param int             $max
      */
-    protected function cuentasBancoProveedor($proveedor, $max = 3)
+    protected function cuentasBancoProveedor(Model\Proveedor $proveedor, int $max = 3)
     {
         while ($max > 0) {
             $cuenta = new Model\CuentaBancoProveedor();
@@ -106,7 +106,7 @@ class Proveedores extends AbstractRandomPeople
      * @param Model\Proveedor $proveedor
      * @param int             $max
      */
-    protected function direccionesProveedor($proveedor, $max = 3)
+    protected function direccionesProveedor(Model\Proveedor $proveedor, int $max = 3)
     {
         while ($max) {
             $dir = new Model\DireccionProveedor();

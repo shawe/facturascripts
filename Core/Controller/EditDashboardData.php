@@ -42,7 +42,7 @@ class EditDashboardData extends ExtendedController\EditController
      *
      * @return mixed
      */
-    public function getFieldValue($model, $field)
+    public function getFieldValue($model, string $field)
     {
         if (isset($model->{$field})) {
             return $model->{$field};
@@ -86,7 +86,7 @@ class EditDashboardData extends ExtendedController\EditController
      * @param User                  $user
      * @param ControllerPermissions $permissions
      */
-    public function privateCore(&$response, $user, $permissions)
+    public function privateCore(Response $response, User $user, ControllerPermissions $permissions): void
     {
         parent::privateCore($response, $user, $permissions);
 
@@ -131,7 +131,7 @@ class EditDashboardData extends ExtendedController\EditController
     /**
      * Validate propierties columns.
      */
-    private function validateColumns()
+    private function validateColumns(): void
     {
         $fields = array_keys($this->getModel()->properties);
         $group = $this->views['EditDashboardData']->getColumns()['options']->columns;
@@ -147,7 +147,7 @@ class EditDashboardData extends ExtendedController\EditController
     /**
      * Validate propierties fields.
      */
-    private function validateProperties()
+    private function validateProperties(): void
     {
         $model = $this->getModel();
         $properties = $this->getPropertiesFields();

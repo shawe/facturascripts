@@ -85,7 +85,7 @@ class WidgetItemNumber extends WidgetItem
      *
      * @return string
      */
-    public function getEditHTML($value)
+    public function getEditHTML(string $value): string
     {
         return $this->standardEditHTMLWidget($value, $this->specialAttributes());
     }
@@ -97,7 +97,7 @@ class WidgetItemNumber extends WidgetItem
      *
      * @return string
      */
-    public function getListHTML($value)
+    public function getListHTML(string $value): string
     {
         if ($value === null || $value === '') {
             return '-';
@@ -112,7 +112,7 @@ class WidgetItemNumber extends WidgetItem
      *
      * @param array $widget
      */
-    public function loadFromJSON($widget)
+    public function loadFromJSON(array $widget): void
     {
         parent::loadFromJSON($widget);
 
@@ -127,7 +127,7 @@ class WidgetItemNumber extends WidgetItem
      *
      * @param \SimpleXMLElement $column
      */
-    public function loadFromXML($column)
+    public function loadFromXML(\SimpleXMLElement $column): void
     {
         parent::loadFromXML($column);
 

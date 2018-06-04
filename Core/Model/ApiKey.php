@@ -98,7 +98,7 @@ class ApiKey extends Base\ModelClass
     /**
      * Reset the values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
         $this->apikey = '';

@@ -48,7 +48,7 @@ class ListFabricante extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addView('ListFabricante', 'Fabricante');
         $this->addSearchFields('ListFabricante', ['nombre', 'codfabricante']);

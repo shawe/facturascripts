@@ -33,7 +33,7 @@ interface AdaptorInterface
      *
      * @return mixed
      */
-    public function get($key);
+    public function get(string $key);
 
     /**
      * Assign $content to the adaptor $key
@@ -43,7 +43,7 @@ interface AdaptorInterface
      *
      * @return mixed
      */
-    public function set($key, $content);
+    public function set(string $key, $content): bool;
 
     /**
      * Erases $key from the adaptor
@@ -52,7 +52,7 @@ interface AdaptorInterface
      *
      * @return mixed
      */
-    public function delete($key);
+    public function delete(string $key);
 
     /**
      * Cleans the adaptor

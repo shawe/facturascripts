@@ -43,7 +43,7 @@ class MessagesComponent extends BaseComponent implements ComponentInterface
      * @param Model\DashboardData $data
      * @param string              $userNick
      */
-    public function __construct($data, $userNick)
+    public function __construct(Model\DashboardData $data, string $userNick)
     {
         parent::__construct($data, $userNick);
         $this->messages = [];
@@ -66,7 +66,7 @@ class MessagesComponent extends BaseComponent implements ComponentInterface
     /**
      * Load data of component for user to put into dashboard
      */
-    public function loadData()
+    public function loadData(): void
     {
         $where = $this->getDataFilter();
         $orderBy = $this->getDataOrderBy();
@@ -87,7 +87,7 @@ class MessagesComponent extends BaseComponent implements ComponentInterface
      *
      * @return string
      */
-    public function url($id): string
+    public function url(string $id): string
     {
         return 'EditDashboardData?code=' . $id;
     }
@@ -98,7 +98,7 @@ class MessagesComponent extends BaseComponent implements ComponentInterface
      *
      * @param array $data
      */
-    public function saveData($data)
+    public function saveData(array $data): void
     {
         $newItem = new Model\DashboardData();
         $newItem->component = 'Messages';

@@ -78,7 +78,7 @@ class MenuItem
      * @param string $url
      * @param string $icon
      */
-    public function __construct($name, $title, $url, $icon = null)
+    public function __construct(string $name, string $title, string $url, string $icon = null)
     {
         $this->name = $name;
         $this->title = $title;
@@ -95,7 +95,7 @@ class MenuItem
      *
      * @return string
      */
-    public function getHTML($parent = ''): string
+    public function getHTML(string $parent = ''): string
     {
         $active = $this->active ? ' active' : '';
         $menuId = $this->getMenuId($parent);
@@ -125,7 +125,7 @@ class MenuItem
      *
      * @return string
      */
-    protected function getHTMLIcon()
+    protected function getHTMLIcon(): string
     {
         return empty($this->icon) ? '<i class="fa fa-file-o fa-fw" aria-hidden="true"></i> ' : '<i class="fa ' . $this->icon
             . ' fa-fw" aria-hidden="true"></i> ';
@@ -138,7 +138,7 @@ class MenuItem
      *
      * @return string
      */
-    protected function getMenuId($parent)
+    protected function getMenuId(string $parent): string
     {
         return empty($parent) ? 'menu-' . $this->title : $parent . $this->name;
     }

@@ -168,7 +168,7 @@ abstract class App
     /**
      * Returns the data into the standard output.
      */
-    public function render()
+    public function render(): void
     {
         $this->response->send();
     }

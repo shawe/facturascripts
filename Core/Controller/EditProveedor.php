@@ -43,7 +43,7 @@ class EditProveedor extends ExtendedController\PanelController
      *
      * @return string
      */
-    public function calcSupplierDeliveryNotes($view)
+    public function calcSupplierDeliveryNotes($view): string
     {
         $where = [
             new DataBaseWhere('codproveedor', $view->model->codproveedor),
@@ -63,7 +63,7 @@ class EditProveedor extends ExtendedController\PanelController
      *
      * @return string
      */
-    public function calcSupplierInvoicePending($view)
+    public function calcSupplierInvoicePending($view): string
     {
         $where = [];
         $where[] = new DataBaseWhere('codproveedor', $view->model->codproveedor);
@@ -94,7 +94,7 @@ class EditProveedor extends ExtendedController\PanelController
     /**
      * Create views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addMainView();
 
@@ -120,7 +120,7 @@ class EditProveedor extends ExtendedController\PanelController
      * @param string                      $viewName
      * @param ExtendedController\EditView $view
      */
-    protected function loadData($viewName, $view)
+    protected function loadData($viewName, $view): void
     {
         $limit = FS_ITEM_LIMIT;
         switch ($viewName) {
@@ -148,7 +148,7 @@ class EditProveedor extends ExtendedController\PanelController
     /**
      * Create and configure main view
      */
-    private function addMainView()
+    private function addMainView(): void
     {
         $this->addEditView('EditProveedor', 'Proveedor', 'supplier');
 

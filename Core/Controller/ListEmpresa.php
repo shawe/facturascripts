@@ -48,7 +48,7 @@ class ListEmpresa extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addView('ListEmpresa', 'Empresa');
         $this->addSearchFields('ListEmpresa', ['nombre', 'nombrecorto', 'CAST(idempresa AS VARCHAR)']);

@@ -47,7 +47,7 @@ class ListAttachedFile extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addView('ListAttachedFile', 'AttachedFile');
         $this->addSearchFields('ListAttachedFile', ['filename', 'mimetype']);

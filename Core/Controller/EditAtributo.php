@@ -52,7 +52,7 @@ class EditAtributo extends ExtendedController\PanelController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addEditView('EditAtributo', 'Atributo', 'attribute');
         $this->addEditListView('EditAtributoValor', 'AtributoValor', 'attribute-values', 'fa-road');
@@ -64,7 +64,7 @@ class EditAtributo extends ExtendedController\PanelController
      * @param string                      $viewName
      * @param ExtendedController\EditView $view
      */
-    protected function loadData($viewName, $view)
+    protected function loadData(string $viewName, $view): void
     {
         switch ($viewName) {
             case 'EditAtributo':

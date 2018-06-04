@@ -43,7 +43,7 @@ class EditSettings extends ExtendedController\PanelController
      *
      * @return mixed
      */
-    public function getViewModelValue($model, $field)
+    public function getViewModelValue($model, string $field)
     {
         if (isset($model->{$field})) {
             return $model->{$field};
@@ -95,7 +95,7 @@ class EditSettings extends ExtendedController\PanelController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $modelName = 'Settings';
         $icon = $this->getPageData()['icon'];
@@ -112,7 +112,7 @@ class EditSettings extends ExtendedController\PanelController
      *
      * @param string $action
      */
-    protected function execAfterAction(string $action)
+    protected function execAfterAction(string $action): void
     {
         switch ($action) {
             case 'export':
@@ -137,7 +137,7 @@ class EditSettings extends ExtendedController\PanelController
      * @param string                      $viewName
      * @param ExtendedController\EditView $view
      */
-    protected function loadData($viewName, $view)
+    protected function loadData($viewName, $view): void
     {
         if (empty($view->getModel())) {
             return;
@@ -173,7 +173,7 @@ class EditSettings extends ExtendedController\PanelController
     /**
      * Exports data from views.
      */
-    private function exportAction()
+    private function exportAction(): void
     {
         $this->exportManager->newDoc($this->request->get('option'));
         foreach ($this->views as $view) {
@@ -210,7 +210,7 @@ class EditSettings extends ExtendedController\PanelController
     /**
      * Test all view to show usefull errors.
      */
-    private function testViews()
+    private function testViews(): void
     {
         foreach ($this->views as $viewName => $view) {
             if (!$view->model) {

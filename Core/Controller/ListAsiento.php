@@ -47,7 +47,7 @@ class ListAsiento extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         /// accounting entries
         $this->addView('ListAsiento', 'Asiento', 'accounting-entries', 'fa-balance-scale');

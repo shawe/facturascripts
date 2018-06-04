@@ -29,6 +29,7 @@ use FacturaScripts\Core\Base\Translator;
 use FacturaScripts\Core\Base\Utils;
 use FacturaScripts\Dinamic\Lib\DocumentReportsBase as DRB;
 use FacturaScripts\Dinamic\Model;
+use FacturaScripts\Dinamic\Model\User;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -83,7 +84,7 @@ class DocumentReports extends Controller
      * @param MiniLog    $miniLog
      * @param string     $className
      */
-    public function __construct(&$cache, &$i18n, &$miniLog, $className)
+    public function __construct(Cache $cache, Translator $i18n, MiniLog $miniLog, string $className)
     {
         parent::__construct($cache, $i18n, $miniLog, $className);
 
@@ -107,10 +108,10 @@ class DocumentReports extends Controller
      * Runs the controller's private logic.
      *
      * @param Response              $response
-     * @param Model\User            $user
+     * @param User                  $user
      * @param ControllerPermissions $permissions
      */
-    public function privateCore(&$response, $user, $permissions)
+    public function privateCore(Response $response, User $user, ControllerPermissions $permissions): void
     {
         parent::privateCore($response, $user, $permissions);
 
@@ -182,7 +183,7 @@ class DocumentReports extends Controller
      *
      * @param string $action
      */
-    protected function execAction($action)
+    protected function execAction($action): void
     {
         if ($action === 'reload') {
             // Load sources data from params
@@ -200,7 +201,7 @@ class DocumentReports extends Controller
     /**
      * Generate daily data to show to user.
      */
-    protected function generateResults()
+    protected function generateResults(): void
     {
         $step = '+1 day';
         $format = 'd-m-Y';
@@ -229,7 +230,7 @@ class DocumentReports extends Controller
      * @param int                       $index
      * @param DRB\DocumentReportsSource $source
      */
-    private function setDefaultToSource($index, &$source)
+    private function setDefaultToSource(int $index, DRB\DocumentReportsSource $source): void
     {
         $source->source = $this->request->get('source' . $index, $source->source);
         $source->dateFrom = new \DateTime($this->request->get('date-from' . $index, date('01-m-Y')));
@@ -242,7 +243,7 @@ class DocumentReports extends Controller
      * @param string $step
      * @param string $format
      */
-    private function getStepFormat(&$step, &$format)
+    private function getStepFormat(string &$step, string &$format): void
     {
         $dateDiff1 = $this->sources[0]->dateTo->diff($this->sources[0]->dateFrom);
         $dateDiff2 = $this->sources[1]->dateTo->diff($this->sources[1]->dateFrom);
@@ -331,7 +332,7 @@ class DocumentReports extends Controller
      *
      * @return array
      */
-    private function populateTable(&$source, $step, $format): array
+    private function populateTable(DRB\DocumentReportsSource $source, string $step, string $format): array
     {
         // Init data
         $result = [];

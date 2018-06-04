@@ -32,7 +32,7 @@ class InfoStateInitialData
      *
      * @param InfoStateComponent $parent
      */
-    public static function generateData($parent)
+    public static function generateData(InfoStateComponent $parent): void
     {
         $data = new self();
         $parent->saveData($data->getCustomerData());
@@ -43,10 +43,11 @@ class InfoStateInitialData
     /**
      * Return customer related data.
      *
-     * @return mixed
+     * @return array
      */
-    protected function getCustomerData()
+    protected function getCustomerData(): array
     {
+        $result = [];
         $result['model'] = 'Cliente';
         $result['icon'] = 'fa-users';
         $result['group'] = 'customers';
@@ -74,10 +75,11 @@ class InfoStateInitialData
     /**
      * Return supplier related data.
      *
-     * @return mixed
+     * @return array
      */
-    protected function getSupplierData()
+    protected function getSupplierData(): array
     {
+        $result = [];
         $result['model'] = 'Proveedor';
         $result['icon'] = 'fa-users';
         $result['group'] = 'suppliers';
@@ -105,10 +107,11 @@ class InfoStateInitialData
     /**
      * Return product related data.
      *
-     * @return mixed
+     * @return array
      */
-    protected function getProductData()
+    protected function getProductData(): array
     {
+        $result = [];
         $result['model'] = 'Articulo';
         $result['icon'] = 'fa-cube';
         $result['group'] = 'products';

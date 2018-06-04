@@ -86,7 +86,7 @@ class ExportManager
      *
      * @param string $option
      */
-    public function newDoc($option)
+    public function newDoc(string $option): void
     {
         /// llamar a la clase apropiada para generar el archivo en función de la opción elegida
         $className = $this->getExportClassName($option);
@@ -99,7 +99,7 @@ class ExportManager
      *
      * @param Response $response
      */
-    public function show(Response $response)
+    public function show(Response $response): void
     {
         self::$engine->show($response);
     }
@@ -111,7 +111,7 @@ class ExportManager
      * @param array  $columns
      * @param string $title
      */
-    public function generateModelPage($model, $columns, $title = '')
+    public function generateModelPage($model, array $columns, string $title = ''): void
     {
         self::$engine->generateModelPage($model, $columns, $title);
     }
@@ -126,7 +126,7 @@ class ExportManager
      * @param array           $columns
      * @param string          $title
      */
-    public function generateListModelPage($model, $where, $order, $offset, $columns, $title = '')
+    public function generateListModelPage($model, array $where = [], array $order = [], int $offset, array $columns = [], string $title = ''): void
     {
         self::$engine->generateListModelPage($model, $where, $order, $offset, $columns, $title);
     }
@@ -136,7 +136,7 @@ class ExportManager
      *
      * @param mixed $model
      */
-    public function generateDocumentPage($model)
+    public function generateDocumentPage($model): void
     {
         self::$engine->generateDocumentPage($model);
     }
@@ -147,7 +147,7 @@ class ExportManager
      * @param array $headers
      * @param array $rows
      */
-    public function generateTablePage($headers, $rows)
+    public function generateTablePage(array $headers, array $rows): void
     {
         /// We need headers key to be equal to value
         $fixedHeaders = [];
@@ -165,7 +165,7 @@ class ExportManager
      *
      * @return string
      */
-    private function getExportClassName($option): string
+    private function getExportClassName(string $option): string
     {
         $className = 'FacturaScripts\\Dinamic\\Lib\\Export\\' . $option . 'Export';
         if (!class_exists($className)) {

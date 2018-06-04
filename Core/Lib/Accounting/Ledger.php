@@ -96,7 +96,7 @@ class Ledger extends AccountingBase
      *
      * @return array
      */
-    protected function getDataGrouped()
+    protected function getDataGrouped(): array
     {
         if (!$this->dataBase->tableExists('partidas')) {
             return [];
@@ -124,7 +124,7 @@ class Ledger extends AccountingBase
      * @param array $ledgerAccount
      * @param array $line
      */
-    protected function processHeader(&$ledgerAccount, $line)
+    protected function processHeader(array &$ledgerAccount, array $line)
     {
         $ledgerAccount['fecha'] = false;
         $ledgerAccount['numero'] = false;
@@ -148,7 +148,7 @@ class Ledger extends AccountingBase
      *
      * @return array
      */
-    protected function processLine($line, $grouping)
+    protected function processLine(array $line, bool $grouping)
     {
         $item = [];
         if (!$grouping) {

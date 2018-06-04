@@ -20,6 +20,7 @@
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base;
+use FacturaScripts\Core\Base\ControllerPermissions;
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Dinamic\Model\User;
 use Symfony\Component\HttpFoundation\Response;
@@ -61,7 +62,7 @@ abstract class ListController extends BaseController
      * @param string          $className
      * @param string          $uri
      */
-    public function __construct(&$cache, &$i18n, &$miniLog, $className, $uri = '')
+    public function __construct(Cache $cache, Translator $i18n, MiniLog $miniLog, string $className, string $uri = '')
     {
         parent::__construct($cache, $i18n, $miniLog, $className, $uri);
 
@@ -113,9 +114,9 @@ abstract class ListController extends BaseController
      *
      * @param Response                   $response
      * @param User                       $user
-     * @param Base\ControllerPermissions $permissions
+     * @param ControllerPermissions $permissions
      */
-    public function privateCore(&$response, $user, $permissions)
+    public function privateCore(Response $response, User $user, ControllerPermissions $permissions): void
     {
         parent::privateCore($response, $user, $permissions);
 
@@ -164,7 +165,7 @@ abstract class ListController extends BaseController
      * @param string $fieldtitle (Column to show name or description)
      * @param array  $where      (Extra where conditions)
      */
-    protected function addFilterAutocomplete($viewName, $key, $label, $field, $table, $fieldcode = '', $fieldtitle = '', $where = [])
+    protected function addFilterAutocomplete(string $viewName, string $key, string $label, string $field, string $table, string $fieldcode = '', string $fieldtitle = '', array $where = []): voi
     {
         $value = ($viewName == $this->active) ? $this->request->get($key, '') : '';
         $fcode = empty($fieldcode) ? $field : $fieldcode;
@@ -182,7 +183,7 @@ abstract class ListController extends BaseController
      * @param bool   $inverse    (If you need to invert the selected value)
      * @param mixed  $matchValue (Value to match)
      */
-    protected function addFilterCheckbox($viewName, $key, $label, $field, $inverse = false, $matchValue = true)
+    protected function addFilterCheckbox(string $viewName, string $key, string $label, string $field, bool $inverse = false, $matchValue = true): void
     {
         $value = ($viewName == $this->active) ? $this->request->get($key, '') : '';
         $this->views[$viewName]->addFilter($key, ListFilter::newCheckboxFilter($field, $value, $label, $inverse, $matchValue));
@@ -196,7 +197,7 @@ abstract class ListController extends BaseController
      * @param string $label (Human reader description)
      * @param string $field (Field of the table to apply filter)
      */
-    protected function addFilterDatePicker($viewName, $key, $label, $field)
+    protected function addFilterDatePicker(string $viewName, string $key, string $label, string $field): void
     {
         $this->addFilterFromType($viewName, $key, $label, $field, 'datepicker');
     }
@@ -209,7 +210,7 @@ abstract class ListController extends BaseController
      * @param string $label (Human reader description)
      * @param string $field (Field of the table to apply filter)
      */
-    protected function addFilterNumber($viewName, $key, $label, $field)
+    protected function addFilterNumber(string $viewName, string $key, string $label, string $field): void
     {
         $this->addFilterFromType($viewName, $key, $label, $field, 'number');
     }
@@ -223,7 +224,7 @@ abstract class ListController extends BaseController
      * @param string $field  (Field of the table to apply filter)
      * @param array  $values (Values to show)
      */
-    protected function addFilterSelect($indexView, $key, $label, $field, $values = [])
+    protected function addFilterSelect(string $indexView, string $key, string $label, string $field, array $values = []): void
     {
         $value = ($indexView == $this->active) ? $this->request->get($key, '') : '';
         $this->views[$indexView]->addFilter($key, ListFilter::newSelectFilter($label, $field, $values, $value));
@@ -237,7 +238,7 @@ abstract class ListController extends BaseController
      * @param string $label (Human reader description)
      * @param string $field (Field of the table to apply filter)
      */
-    protected function addFilterText($viewName, $key, $label, $field)
+    protected function addFilterText(string $viewName, string $key, string $label, string $field): void
     {
         $this->addFilterFromType($viewName, $key, $label, $field, 'text');
     }
@@ -250,7 +251,7 @@ abstract class ListController extends BaseController
      * @param string       $label
      * @param int          $default (0 = None, 1 = ASC, 2 = DESC)
      */
-    protected function addOrderBy($viewName, $fields, $label = '', $default = 0)
+    protected function addOrderBy(string $viewName, $fields, string $label = '', int $default = 0): void
     {
         $orderFields = is_array($fields) ? $fields : [$fields];
         $orderLabel = empty($label) ? $orderFields[0] : $label;
@@ -264,7 +265,7 @@ abstract class ListController extends BaseController
      * @param string $viewName
      * @param array  $fields
      */
-    protected function addSearchFields(string $viewName, array $fields)
+    protected function addSearchFields(string $viewName, array $fields): void
     {
         $this->views[$viewName]->addSearchIn($fields);
     }
@@ -277,7 +278,7 @@ abstract class ListController extends BaseController
      * @param string $viewTitle
      * @param string $icon
      */
-    protected function addView($viewName, $modelName, $viewTitle = 'search', $icon = 'fa-search')
+    protected function addView(string $viewName, string $modelName, string $viewTitle = 'search', string $icon = 'fa-search'): void
     {
         $this->views[$viewName] = new ListView($viewTitle, self::MODEL_NAMESPACE . $modelName, $viewName, $this->user->nick);
         $this->setSettings($viewName, 'icon', $icon);
@@ -323,7 +324,7 @@ abstract class ListController extends BaseController
      *
      * @param string $action
      */
-    protected function execAfterAction(string $action)
+    protected function execAfterAction(string $action): void
     {
         switch ($action) {
             case 'export':
@@ -391,7 +392,7 @@ abstract class ListController extends BaseController
      * @param array  $where
      * @param int    $offset
      */
-    protected function loadData($viewName, $where, $offset)
+    protected function loadData(string $viewName, array $where = [], int $offset): void
     {
         $this->views[$viewName]->loadData(false, $where, [], $offset, Base\Pagination::FS_ITEM_LIMIT);
     }
@@ -399,7 +400,7 @@ abstract class ListController extends BaseController
     /**
      * Returns a JSON response to MegaSearch.
      */
-    protected function megaSearchAction()
+    protected function megaSearchAction(): void
     {
         $this->setTemplate(false);
         $json = [
@@ -450,7 +451,7 @@ abstract class ListController extends BaseController
      * @param string $field (Field of the table to apply filter)
      * @param string $type
      */
-    private function addFilterFromType($viewName, $key, $label, $field, $type)
+    private function addFilterFromType($viewName, $key, $label, $field, $type): void
     {
         $config = [
             'field' => $field,
@@ -471,7 +472,7 @@ abstract class ListController extends BaseController
      *
      * @return int
      */
-    private function getOffSet($viewName)
+    private function getOffSet($viewName): int
     {
         return ($viewName === $this->active) ? $this->offset : 0;
     }
@@ -483,7 +484,7 @@ abstract class ListController extends BaseController
      *
      * @return string
      */
-    private function getParams($viewName)
+    private function getParams($viewName): string
     {
         $result = '';
         if ($viewName === $this->active) {
@@ -510,7 +511,7 @@ abstract class ListController extends BaseController
      *
      * @return array
      */
-    private function getTextColumns($view, $maxColumns)
+    private function getTextColumns($view, $maxColumns): array
     {
         $result = [];
         foreach ($view->getColumns() as $col) {

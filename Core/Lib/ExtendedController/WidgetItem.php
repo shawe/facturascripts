@@ -120,7 +120,7 @@ abstract class WidgetItem implements VisualItemInterface
      *
      * @return WidgetItem
      */
-    private static function widgetItemFromType($type): WidgetItem
+    private static function widgetItemFromType(string $type): WidgetItem
     {
         switch ($type) {
             case 'autocomplete':
@@ -161,14 +161,14 @@ abstract class WidgetItem implements VisualItemInterface
      *
      * @param string $value
      */
-    abstract public function getEditHTML($value);
+    abstract public function getEditHTML(string $value);
 
     /**
      * Generates the html code to display the model data for List controller
      *
      * @param string $value
      */
-    abstract public function getListHTML($value);
+    abstract public function getListHTML(string $value);
 
     /**
      * Array with list of personalization functions of the column
@@ -185,7 +185,7 @@ abstract class WidgetItem implements VisualItemInterface
      *
      * @return string
      */
-    public function getHeaderHTML($value): string
+    public function getHeaderHTML(string $value): string
     {
         return '<span title="' . $value . '"></span>';
     }
@@ -195,7 +195,7 @@ abstract class WidgetItem implements VisualItemInterface
      *
      * @param array $widget
      */
-    public function loadFromJSON($widget)
+    public function loadFromJSON(array $widget): void
     {
         $this->fieldName = (string) $widget['fieldName'];
         $this->hint = (string) $widget['hint'];
@@ -212,7 +212,7 @@ abstract class WidgetItem implements VisualItemInterface
      *
      * @param \SimpleXMLElement $column
      */
-    public function loadFromXML($column)
+    public function loadFromXML(\SimpleXMLElement $column): void
     {
         $widgetAtributes = $column->widget->attributes();
         $this->fieldName = (string) $widgetAtributes->fieldname;
@@ -233,7 +233,7 @@ abstract class WidgetItem implements VisualItemInterface
      *
      * @return WidgetItem
      */
-    public static function newFromJSON($widget): WidgetItem
+    public static function newFromJSON(array $widget): WidgetItem
     {
         $type = (string) $widget['type'];
         $widgetItem = self::widgetItemFromType($type);
@@ -249,7 +249,7 @@ abstract class WidgetItem implements VisualItemInterface
      *
      * @return WidgetItem
      */
-    public static function newFromXML($column): WidgetItem
+    public static function newFromXML(\SimpleXMLElement $column): WidgetItem
     {
         $widgetAtributes = $column->widget->attributes();
         $type = (string) $widgetAtributes->type;
@@ -266,7 +266,7 @@ abstract class WidgetItem implements VisualItemInterface
      *
      * @return string
      */
-    public function getHintHTML($hint): string
+    public function getHintHTML(string $hint): string
     {
         return empty($hint) ? '' : ' data-toggle="popover" data-placement="auto" data-trigger="hover" data-content="'
             . $hint . '" ';
@@ -278,7 +278,7 @@ abstract class WidgetItem implements VisualItemInterface
      * @param array             $property
      * @param \SimpleXMLElement $group
      */
-    protected function getAttributesGroup(&$property, $group)
+    protected function getAttributesGroup(array &$property, \SimpleXMLElement $group): void
     {
         $property = [];
         foreach ($group as $item) {
@@ -317,7 +317,7 @@ abstract class WidgetItem implements VisualItemInterface
      *
      * @return string
      */
-    protected function getTextOptionsHTML($valueItem): string
+    protected function getTextOptionsHTML(string $valueItem): string
     {
         $html = '';
         foreach ($this->options as $option) {
@@ -369,7 +369,7 @@ abstract class WidgetItem implements VisualItemInterface
      *
      * @return string
      */
-    protected function standardEditHTMLWidget($value, $specialAttributes, $extraClass = '', $type = ''): string
+    protected function standardEditHTMLWidget(string $value, string $specialAttributes, string $extraClass = '', string $type = ''): string
     {
         $type2 = empty($type) ? $this->type : $type;
         $html = $this->getIconHTML()
@@ -391,7 +391,7 @@ abstract class WidgetItem implements VisualItemInterface
      *
      * @return string
      */
-    protected function standardListHTMLWidget($value, $text = ''): string
+    protected function standardListHTMLWidget(string $value, string $text = ''): string
     {
         if ($value === null || $value === '') {
             return '';
@@ -411,7 +411,7 @@ abstract class WidgetItem implements VisualItemInterface
      *
      * @return bool
      */
-    private function canApplyOptions($optionValue, $valueItem): bool
+    private function canApplyOptions(string $optionValue, string $valueItem): bool
     {
         switch ($optionValue[0]) {
             case '<':

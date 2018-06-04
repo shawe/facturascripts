@@ -48,7 +48,7 @@ class ListFamilia extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addView('ListFamilia', 'Familia');
         $this->addSearchFields('ListFamilia', ['descripcion', 'codfamilia', 'madre']);

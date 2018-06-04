@@ -128,7 +128,7 @@ abstract class ModelCore
     /**
      * Reset the values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         foreach ($this->getModelFields() as $field) {
             $this->{$field['name']} = null;
@@ -252,11 +252,11 @@ abstract class ModelCore
      * Returns the integer value by controlling special cases for the PK and FK.
      *
      * @param array  $field
-     * @param string $value
+     * @param $value
      *
      * @return integer|NULL
      */
-    private function getIntergerValueForField($field, $value)
+    private function getIntergerValueForField(array $field, $value): ?int
     {
         if (is_numeric($value)) {
             return (int) $value;

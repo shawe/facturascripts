@@ -67,7 +67,7 @@ class ArticuloProveedor extends Base\Product
     /**
      * Reset the values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
         $this->precio = 0.0;

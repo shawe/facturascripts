@@ -32,7 +32,7 @@ class EditRetencion extends ExtendedController\EditController
     /**
      * Returns the model name
      */
-    public function getModelClassName()
+    public function getModelClassName(): string
     {
         return 'Retencion';
     }

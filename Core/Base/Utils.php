@@ -94,7 +94,7 @@ class Utils
      *
      * @return string
      */
-    public static function fixHtml($txt)
+    public static function fixHtml($txt): string
     {
         $original = ['&lt;', '&gt;', '&quot;', '&#39;'];
         $final = ['<', '>', "'", "'"];
@@ -130,7 +130,7 @@ class Utils
      *
      * @return integer
      */
-    public static function intval($str)
+    public static function intval(string $str): int
     {
         return ($str === null) ? null : (int) $str;
     }
@@ -147,12 +147,14 @@ class Utils
      *
      * @param string $txt
      *
-     * @return string
+     * @return null|string
      */
-    public static function noHtml($txt)
+    public static function noHtml($txt): ?string
     {
         $newt = str_replace(
-            ['<', '>', '"', "'"], ['&lt;', '&gt;', '&quot;', '&#39;'], $txt
+            ['<', '>', '"', "'"],
+            ['&lt;', '&gt;', '&quot;', '&#39;'],
+            $txt
         );
 
         return ($txt === null) ? null : trim($newt);
@@ -165,7 +167,7 @@ class Utils
      *
      * @return string
      */
-    public static function randomString($length = 10): string
+    public static function randomString(int $length = 10): string
     {
         return mb_substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'), 0, $length);
     }
@@ -178,7 +180,7 @@ class Utils
      *
      * @return null|string
      */
-    public static function str2bin($val)
+    public static function str2bin(string $val): ?string
     {
         return ($val === null) ? null : base64_decode($val);
     }
@@ -188,7 +190,7 @@ class Utils
      * This function returns True if the value corresponds to
      * any of the above.
      *
-     * @param string $val
+     * @param string|null $val
      *
      * @return bool
      */
@@ -205,7 +207,7 @@ class Utils
      *
      * @return string
      */
-    public static function trueTextBreak($desc, $maxWidth = 500)
+    public static function trueTextBreak(string $desc, int $maxWidth = 500): string
     {
         if (mb_strlen($desc) <= $maxWidth) {
             return $desc;

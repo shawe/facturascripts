@@ -80,7 +80,7 @@ class EditRegularizacionImpuesto extends ExtendedController\PanelController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addEditView('EditRegularizacionImpuesto', 'RegularizacionImpuesto', 'vat-regularization', 'fa-map-signs');
         $this->addListView('ListPartidaImpuestoResumen', 'PartidaImpuestoResumen', 'summary', 'fa-list-alt');
@@ -96,7 +96,7 @@ class EditRegularizacionImpuesto extends ExtendedController\PanelController
      * @param string                          $viewName
      * @param ExtendedController\EditListView $view
      */
-    protected function loadData($viewName, $view)
+    protected function loadData(string $viewName, $view): void
     {
         switch ($viewName) {
             case 'EditRegularizacionImpuesto':
@@ -193,7 +193,7 @@ class EditRegularizacionImpuesto extends ExtendedController\PanelController
      *
      * @param string $action
      */
-    protected function execAfterAction(string $action)
+    protected function execAfterAction(string $action): void
     {
         switch ($action) {
             case 'insert':
@@ -235,7 +235,7 @@ class EditRegularizacionImpuesto extends ExtendedController\PanelController
      *
      * @return string
      */
-    public function getAmount($field)
+    public function getAmount(string $field): string
     {
         $divisaTools = new DivisaTools();
         return $divisaTools::format($this->{$field}, 2);
@@ -246,7 +246,7 @@ class EditRegularizacionImpuesto extends ExtendedController\PanelController
      *
      * @param PartidaImpuestoResumen[] $data
      */
-    private function calculateAmounts($data)
+    private function calculateAmounts(array $data): void
     {
         /// Init totals values
         $this->previousBalance = 0.00;    /// TODO: Calculate previous balance from special account

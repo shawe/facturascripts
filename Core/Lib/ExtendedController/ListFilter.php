@@ -58,7 +58,7 @@ class ListFilter
      * @param string $type
      * @param array  $options
      */
-    public function __construct($type, $options)
+    public function __construct(string $type, array $options)
     {
         if (!isset(self::$codeModel)) {
             self::$codeModel = new CodeModel();
@@ -223,7 +223,7 @@ class ListFilter
      *
      * @return string
      */
-    public function getCurrentValue()
+    public function getCurrentValue(): ?string
     {
         switch ($this->type) {
             case 'autocomplete':
@@ -254,7 +254,7 @@ class ListFilter
      *
      * @return string
      */
-    public function getKeyboardFilter()
+    public function getKeyboardFilter(): ?string
     {
         switch ($this->type) {
             case 'number':
@@ -316,7 +316,7 @@ class ListFilter
      *
      * @return string
      */
-    public function getSpecialClass()
+    public function getSpecialClass(): ?string
     {
         switch ($this->type) {
             case 'datepicker':

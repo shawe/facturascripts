@@ -50,7 +50,7 @@ class ListPresupuestoCliente extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addView('ListPresupuestoCliente', 'PresupuestoCliente');
         $this->addSearchFields('ListPresupuestoCliente', ['codigo', 'numero2', 'observaciones']);
@@ -81,7 +81,7 @@ class ListPresupuestoCliente extends ExtendedController\ListController
         $this->createViewLines();
     }
 
-    protected function createViewLines()
+    protected function createViewLines(): void
     {
         $this->addView('ListLineaPresupuestoCliente', 'LineaPresupuestoCliente', 'lines', 'fa-list');
         $this->addSearchFields('ListLineaPresupuestoCliente', ['referencia', 'descripcion']);

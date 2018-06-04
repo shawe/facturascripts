@@ -89,7 +89,7 @@ class ApiAccess extends Base\ModelClass
      *
      * @return bool
      */
-    public static function addResourcesToApiKey($idApiKey, $resources, $state = false)
+    public static function addResourcesToApiKey($idApiKey, $resources, $state = false): bool
     {
         $apiAccess = new self();
 

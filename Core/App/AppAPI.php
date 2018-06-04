@@ -104,7 +104,7 @@ class AppAPI extends App
      * @throws \UnexpectedValueException
      * @return void
      */
-    private function exposeResources(&$map)
+    private function exposeResources(array &$map): void
     {
         $json = ['resources' => []];
 

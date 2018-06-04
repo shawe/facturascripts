@@ -76,7 +76,7 @@ class RoleAccess extends Base\ModelClass
      *
      * @return bool
      */
-    public static function addPagesToRole($codrole, $pages): bool
+    public static function addPagesToRole(string $codrole, array $pages): bool
     {
         $where = [new DataBaseWhere('codrole', $codrole)];
         $roleAccess = new self();

@@ -60,7 +60,7 @@ class RowItemCards extends RowItem
      *
      * @return mixed
      */
-    public function getButtons($key)
+    public function getButtons(string $key)
     {
         return $this->buttons[$key];
     }
@@ -70,7 +70,7 @@ class RowItemCards extends RowItem
      *
      * @param array $items
      */
-    public function loadFromJSON($items)
+    public function loadFromJSON(array $items): void
     {
         $this->panels = $items['panels'];
         foreach ($items['buttons'] as $key => $buttons) {
@@ -83,7 +83,7 @@ class RowItemCards extends RowItem
      *
      * @param \SimpleXMLElement $row
      */
-    public function loadFromXML($row)
+    public function loadFromXML(\SimpleXMLElement $row): void
     {
         $groupCount = 1;
         foreach ($row->group as $item) {

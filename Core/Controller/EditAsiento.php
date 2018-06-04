@@ -56,7 +56,7 @@ class EditAsiento extends ExtendedController\PanelController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addEditView('EditAsiento', 'Asiento', 'accounting-entry', 'fa-balance-scale');
         $this->addGridView('EditPartida', 'EditAsiento', 'Partida', 'accounting-items');
@@ -70,7 +70,7 @@ class EditAsiento extends ExtendedController\PanelController
      * @param ExtendedController\EditView $view
      */
 
-    protected function loadData($viewName, $view)
+    protected function loadData(string $viewName, $view): void
     {
         switch ($viewName) {
             case 'EditAsiento':
@@ -149,11 +149,11 @@ class EditAsiento extends ExtendedController\PanelController
     }
 
     /**
-     * @param $data
+     * @param array $data
      *
      * @return array
      */
-    protected function recalculateDocument(&$data): array
+    protected function recalculateDocument(array &$data): array
     {
         $result = [
             'total' => 0.00,
@@ -232,7 +232,7 @@ class EditAsiento extends ExtendedController\PanelController
      * @param float $credit
      * @param float $debit
      */
-    private function calculateAmounts(array &$data, float $credit, float $debit)
+    private function calculateAmounts(array &$data, float $credit, float $debit): void
     {
         $unbalance = round(($credit - $debit), (int) FS_NF0);
         $index = count($data['lines']) - 1;
@@ -257,7 +257,7 @@ class EditAsiento extends ExtendedController\PanelController
      * @param array $line
      * @param array $previousLine
      */
-    private function checkEmptyValues(array &$line, array $previousLine)
+    private function checkEmptyValues(array &$line, array $previousLine): void
     {
         if (empty($line['concepto'])) {
             $line['concepto'] = $previousLine['concepto'];
@@ -315,7 +315,7 @@ class EditAsiento extends ExtendedController\PanelController
      * @param string $codeSubAccount
      * @param array  $values
      */
-    private function searchVatDataFromClient($codeSubAccount, &$values)
+    private function searchVatDataFromClient(string $codeSubAccount, array &$values): void
     {
         $where = [new DataBaseWhere('codsubcuenta', $codeSubAccount)];
         $client = new Model\Cliente();
@@ -333,7 +333,7 @@ class EditAsiento extends ExtendedController\PanelController
      * @param string $codeSubAccount
      * @param array  $values
      */
-    private function searchVatDataFromSupplier($codeSubAccount, &$values)
+    private function searchVatDataFromSupplier(string $codeSubAccount, array &$values): void
     {
         $where = [new DataBaseWhere('codsubcuenta', $codeSubAccount)];
         $supplier = new Model\Proveedor();
@@ -415,11 +415,11 @@ class EditAsiento extends ExtendedController\PanelController
     }
 
     /**
-     * @param $data
+     * @param array $data
      *
      * @return string
      */
-    private function cloneDocument(&$data): string
+    private function cloneDocument(array &$data): string
     {
         // init document
         $accounting = new Model\Asiento();

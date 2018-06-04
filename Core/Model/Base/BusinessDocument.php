@@ -238,11 +238,11 @@ abstract class BusinessDocument extends ModelClass
     /**
      * Sets subjects for this document.
      *
-     * @param Model\Cliente|Model\Proveedor $subjects
+     * @param Model\Cliente[]|Model\Proveedor[] $subjects
      *
      * @return mixed
      */
-    abstract public function setSubject($subjects);
+    abstract public function setSubject(array $subjects): bool;
 
     /**
      * Updates subjects data in this document.
@@ -252,7 +252,7 @@ abstract class BusinessDocument extends ModelClass
     /**
      * Reset the values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
         $this->codalmacen = AppSettings::get('default', 'codalmacen');
@@ -477,7 +477,7 @@ abstract class BusinessDocument extends ModelClass
     /**
      * Generates a new code.
      */
-    private function newCodigo()
+    private function newCodigo(): void
     {
         $this->numero = '1';
 

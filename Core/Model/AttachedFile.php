@@ -98,7 +98,7 @@ class AttachedFile extends Base\ModelClass
     /**
      * Reset the values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
         $this->date = date('d-m-Y');
@@ -185,9 +185,9 @@ class AttachedFile extends Base\ModelClass
     /**
      * Examine and move new file setted.
      *
-     * @return boolean
+     * @return bool
      */
-    protected function setFile()
+    protected function setFile(): bool
     {
         /// remove old file
         if (!empty($this->previousPath)) {

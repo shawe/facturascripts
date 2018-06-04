@@ -49,7 +49,7 @@ class EditPresupuestoCliente extends ExtendedController\BusinessDocumentControll
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         parent::createViews();
 
@@ -74,7 +74,7 @@ class EditPresupuestoCliente extends ExtendedController\BusinessDocumentControll
      * @param string                                  $viewName
      * @param ExtendedController\BusinessDocumentView $view
      */
-    protected function loadData($viewName, $view)
+    protected function loadData($viewName, $view): void
     {
         if ($viewName === 'EditPresupuestoCliente') {
             $idpresupuesto = $this->getViewModelValue('Document', 'idpresupuesto');

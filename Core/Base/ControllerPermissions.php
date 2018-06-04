@@ -57,7 +57,7 @@ class ControllerPermissions
      * @param User|bool   $user
      * @param string|null $pageName
      */
-    public function __construct($user = false, $pageName = null)
+    public function __construct($user = false, string $pageName = null)
     {
         if ($user !== false && $pageName !== null) {
             $this->loadFromUser($user, $pageName);
@@ -69,7 +69,7 @@ class ControllerPermissions
     /**
      * Reset the values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         $this->allowAccess = false;
         $this->allowDelete = false;
@@ -82,7 +82,7 @@ class ControllerPermissions
      * @param User   $user
      * @param string $pageName
      */
-    public function loadFromUser($user, $pageName)
+    public function loadFromUser(User $user, string $pageName): void
     {
         $this->clear();
         if ($user->admin) {

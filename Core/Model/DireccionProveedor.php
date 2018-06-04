@@ -87,7 +87,7 @@ class DireccionProveedor extends Base\Address
     /**
      * Reset the values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
         $this->descripcion = 'Principal';

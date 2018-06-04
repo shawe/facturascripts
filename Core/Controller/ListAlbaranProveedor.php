@@ -49,7 +49,7 @@ class ListAlbaranProveedor extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addView('ListAlbaranProveedor', 'AlbaranProveedor');
         $this->addSearchFields('ListAlbaranProveedor', ['codigo', 'numproveedor', 'observaciones']);
@@ -81,7 +81,7 @@ class ListAlbaranProveedor extends ExtendedController\ListController
         $this->createViewLines();
     }
 
-    protected function createViewLines()
+    protected function createViewLines(): void
     {
         $this->addView('ListLineaAlbaranProveedor', 'LineaAlbaranProveedor', 'lines', 'fa-list');
         $this->addSearchFields('ListLineaAlbaranProveedor', ['referencia', 'descripcion']);

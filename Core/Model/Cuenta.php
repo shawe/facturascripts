@@ -104,7 +104,7 @@ class Cuenta extends Base\ModelClass
         return 'idcuenta';
     }
 
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
 

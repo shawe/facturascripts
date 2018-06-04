@@ -51,7 +51,7 @@ class EditCuenta extends ExtendedController\PanelController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addEditView('EditCuenta', 'Cuenta', 'account');
         $this->addListView('ListSubcuenta', 'Subcuenta', 'subaccounts');
@@ -65,7 +65,7 @@ class EditCuenta extends ExtendedController\PanelController
      * @param string                      $viewName
      * @param ExtendedController\EditView $view
      */
-    protected function loadData($viewName, $view)
+    protected function loadData(string $viewName, $view): void
     {
         switch ($viewName) {
             case 'EditCuenta':

@@ -109,7 +109,7 @@ class DownloadTools
      *
      * @return string
      */
-    private function curlRedirectExec($ch, &$redirects, $curloptHeader = false): string
+    private function curlRedirectExec($ch, int &$redirects, bool $curloptHeader = false): string
     {
         curl_setopt($ch, CURLOPT_HEADER, true);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

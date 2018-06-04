@@ -48,7 +48,7 @@ class ListDivisa extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addView('ListDivisa', 'Divisa');
         $this->addSearchFields('ListDivisa', ['descripcion', 'coddivisa']);

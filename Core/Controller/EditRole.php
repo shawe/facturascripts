@@ -50,7 +50,7 @@ class EditRole extends ExtendedController\PanelController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addEditView('Role', 'EditRole', 'rol', 'fa-id-card');
         $this->addEditListView('RoleAccess', 'EditRoleAccess', 'rules', 'fa fa-check-square');
@@ -100,7 +100,7 @@ class EditRole extends ExtendedController\PanelController
      * @param string                      $viewName
      * @param ExtendedController\EditView $view
      */
-    protected function loadData($viewName, $view)
+    protected function loadData($viewName, $view): void
     {
         $order = [];
         switch ($viewName) {
@@ -129,7 +129,7 @@ class EditRole extends ExtendedController\PanelController
      *
      * @throws \Exception
      */
-    private function addRoleAccess($codrole, $pages)
+    private function addRoleAccess($codrole, $pages): void
     {
         // add Pages to Rol
         if (!Model\RoleAccess::addPagesToRole($codrole, $pages)) {

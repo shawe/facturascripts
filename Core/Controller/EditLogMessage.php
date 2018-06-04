@@ -32,7 +32,7 @@ class EditLogMessage extends ExtendedController\EditController
     /**
      * Returns the model name
      */
-    public function getModelClassName()
+    public function getModelClassName(): void
     {
         return 'LogMessage';
     }

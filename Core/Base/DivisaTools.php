@@ -119,7 +119,7 @@ class DivisaTools extends NumberTools
      *
      * @param mixed $model
      */
-    public function findDivisa($model)
+    public function findDivisa($model): void
     {
         if (isset($model->coddivisa)) {
             foreach (self::$divisas as $div) {

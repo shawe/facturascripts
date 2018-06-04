@@ -32,7 +32,7 @@ class WidgetItemText extends WidgetItem
      *
      * @param string $type
      */
-    public function __construct($type)
+    public function __construct(string $type)
     {
         parent::__construct();
         $this->type = $type;
@@ -45,7 +45,7 @@ class WidgetItemText extends WidgetItem
      *
      * @return string
      */
-    public function getEditHTML($value): string
+    public function getEditHTML(string $value): string
     {
         $specialAttributes = $this->specialAttributes();
 
@@ -74,7 +74,7 @@ class WidgetItemText extends WidgetItem
      *
      * @return string
      */
-    public function getListHTML($value): string
+    public function getListHTML(string $value): string
     {
         if ($value === null || $value === '') {
             return '';
@@ -92,7 +92,7 @@ class WidgetItemText extends WidgetItem
      *
      * @return string
      */
-    private function getTextResume($txt, $len = 60): string
+    private function getTextResume(string $txt, int $len = 60): string
     {
         if (mb_strlen($txt) < $len) {
             return $txt;

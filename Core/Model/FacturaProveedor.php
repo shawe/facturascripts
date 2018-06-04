@@ -36,7 +36,7 @@ class FacturaProveedor extends Base\PurchaseDocument
     /**
      * Reset the values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
         $this->anulada = false;

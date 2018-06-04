@@ -95,7 +95,7 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
      *
      * @param array $detail
      */
-    public function accumulateAmounts(array &$detail)
+    public function accumulateAmounts(array &$detail): void
     {
         $this->importe += round((float) $detail['haber'], FS_NF0);
     }
@@ -103,7 +103,7 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
     /**
      * Initializes the total fields
      */
-    public function initTotals()
+    public function initTotals(): void
     {
         $this->importe = 0.00;
     }
@@ -111,7 +111,7 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
     /**
      * Reset the values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
         $this->fecha = date('d-m-Y');
@@ -291,7 +291,7 @@ class Asiento extends Base\ModelClass implements GridDocumentInterface
     /**
      * Execute a task with cron
      */
-    public function cronJob()
+    public function cronJob(): void
     {
         /**
          * We block closed exercise accounting entry or within regularizations.

@@ -49,7 +49,7 @@ class EditAlbaranProveedor extends ExtendedController\BusinessDocumentController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         parent::createViews();
 
@@ -74,7 +74,7 @@ class EditAlbaranProveedor extends ExtendedController\BusinessDocumentController
      * @param string                                  $keyView
      * @param ExtendedController\BusinessDocumentView $view
      */
-    protected function loadData($viewName, $view)
+    protected function loadData(string $viewName, $view): void
     {
         if ($viewName === 'EditAlbaranProveedor') {
             $idalbaran = $this->getViewModelValue('Document', 'idalbaran');

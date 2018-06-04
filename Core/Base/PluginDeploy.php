@@ -71,7 +71,7 @@ class PluginDeploy
      * @param array  $enabledPlugins
      * @param bool   $clean
      */
-    public function deploy(string $pluginPath, array $enabledPlugins, bool $clean = true)
+    public function deploy(string $pluginPath, array $enabledPlugins, bool $clean = true): void
     {
         $folders = ['Assets', 'Controller', 'Data', 'Lib', 'Model', 'Table', 'View', 'XMLView'];
         foreach ($folders as $folder) {
@@ -98,7 +98,7 @@ class PluginDeploy
     /**
      * Initialize the controllers dynamically.
      */
-    public function initControllers()
+    public function initControllers(): void
     {
         $cache = new Cache();
         $menuManager = new MenuManager();
@@ -184,7 +184,7 @@ class PluginDeploy
      * @param string $place
      * @param string $pluginName
      */
-    private function linkFiles(string $folder, string $place = 'Core', string $pluginName = '')
+    private function linkFiles(string $folder, string $place = 'Core', string $pluginName = ''): void
     {
         $path = FS_FOLDER . self::DS . $place;
         $path .= empty($pluginName) ? self::DS . $folder : self::DS . $pluginName . self::DS . $folder;
@@ -212,7 +212,7 @@ class PluginDeploy
      * @param string $place
      * @param string $pluginName
      */
-    private function linkClassFile(string $fileName, string $folder, string $place, string $pluginName)
+    private function linkClassFile(string $fileName, string $folder, string $place, string $pluginName): void
     {
         if (isset($this->fileList[$folder][$fileName])) {
             return;
@@ -248,7 +248,7 @@ class PluginDeploy
      * @param string $folder
      * @param string $filePath
      */
-    private function linkFile(string $fileName, string $folder, string $filePath)
+    private function linkFile(string $fileName, string $folder, string $filePath): void
     {
         if (isset($this->fileList[$folder][$fileName])) {
             return;

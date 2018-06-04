@@ -66,7 +66,7 @@ class DocumentReportsFilterList
      * @param string $icon
      * @param bool   $allowEmpty
      */
-    public function __construct($modelName, $selectedValue = '', $icon = 'fa-list', $allowEmpty = true)
+    public function __construct(string $modelName, string $selectedValue = '', string $icon = 'fa-list', bool $allowEmpty = true)
     {
         $this->model = new $modelName();
         $this->selectedValue = $selectedValue;
@@ -79,7 +79,7 @@ class DocumentReportsFilterList
      *
      * @return DataBase\DataBaseWhere|null
      */
-    public function getWhere()
+    public function getWhere(): ?DataBase\DataBaseWhere
     {
         if (empty($this->selectedValue)) {
             return null;
@@ -93,7 +93,7 @@ class DocumentReportsFilterList
      *
      * @param bool $allowEmpty
      */
-    private function loadValuesFromModel($allowEmpty = true)
+    private function loadValuesFromModel($allowEmpty = true): void
     {
         $tableName = $this->model->tableName();
         $fieldCode = $this->model->primaryColumn();

@@ -45,7 +45,7 @@ class WidgetItemFileChooser extends WidgetItem
      *
      * @return string
      */
-    public function getEditHTML($value): string
+    public function getEditHTML(string $value): string
     {
         if (!empty($this->readOnly) && !empty($value)) {
             return $this->getReadOnlyHTML($value);
@@ -73,7 +73,7 @@ class WidgetItemFileChooser extends WidgetItem
      *
      * @return string
      */
-    public function getListHTML($value): string
+    public function getListHTML(string $value): string
     {
         return $this->standardListHTMLWidget($value);
     }
@@ -89,11 +89,11 @@ class WidgetItemFileChooser extends WidgetItem
     }
 
     /**
-     * @param $value
+     * @param string $value
      *
      * @return string
      */
-    public function getReadOnlyHTML($value)
+    public function getReadOnlyHTML(string $value): string
     {
         $specialAttributes = $this->specialAttributes();
         return $this->standardEditHTMLWidget($value, $specialAttributes);

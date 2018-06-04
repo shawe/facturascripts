@@ -48,7 +48,7 @@ class ListCliente extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         /* Customers */
         $this->addView('ListCliente', 'Cliente', 'customers', 'fa-users');

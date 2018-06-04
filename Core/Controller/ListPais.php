@@ -48,7 +48,7 @@ class ListPais extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         /// Countries
         $this->addView('ListPais', 'Pais', 'countries', 'fa-globe');

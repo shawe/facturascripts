@@ -21,8 +21,11 @@ namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\App\AppSettings;
 use FacturaScripts\Core\Base\Controller;
+use FacturaScripts\Core\Base\ControllerPermissions;
 use FacturaScripts\Dinamic\Lib\EmailTools;
 use FacturaScripts\Dinamic\Model\CodeModel;
+use FacturaScripts\Dinamic\Model\User;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Description of SendMail
@@ -67,11 +70,11 @@ class SendMail extends Controller
     /**
      * Runs the controller's private logic.
      *
-     * @param \Symfony\Component\HttpFoundation\Response      $response
-     * @param \FacturaScripts\Core\Model\User                 $user
-     * @param \FacturaScripts\Core\Base\ControllerPermissions $permissions
+     * @param Response              $response
+     * @param User                  $user
+     * @param ControllerPermissions $permissions
      */
-    public function privateCore(&$response, $user, $permissions)
+    public function privateCore(Response $response, User $user, ControllerPermissions $permissions): void
     {
         parent::privateCore($response, $user, $permissions);
 
@@ -141,7 +144,7 @@ class SendMail extends Controller
      *
      * @return bool
      */
-    protected function execAction(string $action)
+    protected function execAction(string $action): ? bool
     {
         switch ($action) {
             case 'send':
@@ -191,7 +194,7 @@ class SendMail extends Controller
     /**
      * Remove old files.
      */
-    protected function removeOld()
+    protected function removeOld(): void
     {
         $regex = '/Mail_([0-9]+).pdf/';
         foreach (glob(FS_FOLDER . '/MyFiles/Mail_*.pdf') as $fileName) {
@@ -210,7 +213,7 @@ class SendMail extends Controller
      *
      * @return array
      */
-    protected function requestGet($keys): array
+    protected function requestGet(array $keys): array
     {
         $result = [];
         foreach ($keys as $value) {
@@ -223,9 +226,8 @@ class SendMail extends Controller
      * Send and email with data posted from form.
      *
      * @return bool
-     * @throws \PHPMailer\PHPMailer\Exception
      */
-    protected function send()
+    protected function send(): bool
     {
         $subject = $this->request->request->get('subject', '');
         $body = $this->request->request->get('body', '');
@@ -288,7 +290,7 @@ class SendMail extends Controller
     /**
      * Set default table name where to look for email.
      */
-    protected function setAddressee()
+    protected function setAddressee(): void
     {
         $className = '\FacturaScripts\Core\Model\\' . $this->request->get('modelClassName', '');
 

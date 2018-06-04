@@ -47,7 +47,7 @@ class ListUser extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addView('ListUser', 'User', 'users', 'fa-users');
         $this->addSearchFields('ListUser', ['nick', 'email']);

@@ -48,7 +48,7 @@ class ListEstadoDocumento extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addView('ListEstadoDocumento', 'EstadoDocumento', 'states', 'fa-tags');
         $this->addSearchFields('ListEstadoDocumento', ['nombre']);

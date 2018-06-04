@@ -187,7 +187,7 @@ abstract class SalesDocument extends BusinessDocument
     /**
      * Reset the values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
         $this->direccion = '';
@@ -211,7 +211,7 @@ abstract class SalesDocument extends BusinessDocument
      *
      * @return bool
      */
-    public function setSubject($subjects)
+    public function setSubject(array $subjects): bool
     {
         if (!isset($subjects[0]->codcliente)) {
             return false;
@@ -267,7 +267,7 @@ abstract class SalesDocument extends BusinessDocument
      *
      * @return bool
      */
-    public function updateSubject()
+    public function updateSubject(): bool
     {
         if (empty($this->codcliente)) {
             return false;

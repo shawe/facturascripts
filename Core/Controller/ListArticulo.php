@@ -47,14 +47,17 @@ class ListArticulo extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->createViewArticulo();
         $this->createViewArticuloProveedor();
         $this->createViewStock();
     }
 
-    private function createViewArticulo()
+    /**
+     *
+     */
+    private function createViewArticulo(): void
     {
         $this->addView('ListArticulo', 'Articulo', 'products');
         $this->addSearchFields('ListArticulo', ['referencia', 'descripcion']);
@@ -74,7 +77,10 @@ class ListArticulo extends ExtendedController\ListController
         $this->addOrderBy('ListArticulo', 'stockfis', 'stock');
     }
 
-    private function createViewArticuloProveedor()
+    /**
+     *
+     */
+    private function createViewArticuloProveedor(): void
     {
         $this->addView('ListArticuloProveedor', 'ArticuloProveedor', 'supplier-products', 'fa-users');
         $this->addSearchFields('ListArticuloProveedor', ['referencia', 'descripcion']);
@@ -87,7 +93,10 @@ class ListArticulo extends ExtendedController\ListController
         $this->addOrderBy('ListArticuloProveedor', 'stockfis', 'stock');
     }
 
-    private function createViewStock()
+    /**
+     *
+     */
+    private function createViewStock(): void
     {
         $this->addView('ListStock', 'Stock', 'stock', 'fa-tasks');
         $this->addSearchFields('ListStock', ['referencia', 'ubicacion']);

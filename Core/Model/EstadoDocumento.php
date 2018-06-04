@@ -92,7 +92,7 @@ class EstadoDocumento extends Base\ModelClass
     /**
      * Reset the values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
         $this->actualizastock = 0;

@@ -150,7 +150,7 @@ abstract class BusinessDocumentLine extends ModelClass
     /**
      * Reset the values of all model properties.
      */
-    public function clear()
+    public function clear(): void
     {
         parent::clear();
         $this->actualizastock = 0;
@@ -265,7 +265,7 @@ abstract class BusinessDocumentLine extends ModelClass
      * @param float $quantity
      * @param Stock $stock
      */
-    private function applyStockChanges(int $mode, float $quantity, Stock $stock)
+    private function applyStockChanges(int $mode, float $quantity, Stock $stock): void
     {
         switch ($mode) {
             case 1:

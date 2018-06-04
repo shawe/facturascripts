@@ -49,7 +49,7 @@ class InfoStateComponent extends BaseComponent implements ComponentInterface
      * @param Model\DashboardData $data
      * @param string              $userNick
      */
-    public function __construct($data, $userNick)
+    public function __construct(Model\DashboardData $data, string $userNick)
     {
         parent::__construct($data, null);
         $this->group = [];
@@ -74,7 +74,7 @@ class InfoStateComponent extends BaseComponent implements ComponentInterface
     /**
      * Load data of component for user to put into dashboard
      */
-    public function loadData()
+    public function loadData(): void
     {
         $where = $this->getDataFilter();
         $orderBy = $this->getDataOrderBy();
@@ -108,7 +108,7 @@ class InfoStateComponent extends BaseComponent implements ComponentInterface
      *
      * @return string
      */
-    public function url($id): string
+    public function url(string $id): string
     {
         return $this->group[$id]['url'];
     }
@@ -119,7 +119,7 @@ class InfoStateComponent extends BaseComponent implements ComponentInterface
      *
      * @param array $data
      */
-    public function saveData($data)
+    public function saveData(array $data): void
     {
         $newItem = new Model\DashboardData();
         $newItem->component = 'InfoState';
@@ -146,7 +146,7 @@ class InfoStateComponent extends BaseComponent implements ComponentInterface
      * @param array            $values
      * @param Model\TotalModel $totalModel
      */
-    private function addDetail($group, $values, &$totalModel)
+    private function addDetail(string $group, array $values, Model\TotalModel $totalModel): void
     {
         foreach ($values as $value) {
             $name = str_replace('-', '', $value['name']);
@@ -164,7 +164,7 @@ class InfoStateComponent extends BaseComponent implements ComponentInterface
      *
      * @return array
      */
-    private function getModelInfo($modelName): array
+    private function getModelInfo(string $modelName): array
     {
         $model = self::MODEL_NAMESPACE . $modelName;
         $modelObj = new $model();
@@ -183,7 +183,7 @@ class InfoStateComponent extends BaseComponent implements ComponentInterface
      *
      * @return Model\TotalModel
      */
-    private function getSQLData($table, $values): Model\TotalModel
+    private function getSQLData(string $table, array $values): Model\TotalModel
     {
         $fields = [];
         foreach ($values as $value) {

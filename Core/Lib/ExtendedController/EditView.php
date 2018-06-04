@@ -39,7 +39,7 @@ class EditView extends BaseView implements DataViewInterface
      * @param string $viewName
      * @param string $userNick
      */
-    public function __construct($title, $modelName, $viewName, $userNick)
+    public function __construct(string $title, string $modelName, string $viewName, string $userNick)
     {
         parent::__construct($title, $modelName);
 
@@ -53,7 +53,7 @@ class EditView extends BaseView implements DataViewInterface
      * @param string $columnName
      * @param bool   $disabled
      */
-    public function disableColumn($columnName, $disabled)
+    public function disableColumn(string $columnName, bool $disabled): void
     {
         $column = $this->columnForName($columnName);
         if (!empty($column)) {
@@ -66,7 +66,7 @@ class EditView extends BaseView implements DataViewInterface
      *
      * @return GroupItem[]
      */
-    public function getColumns()
+    public function getColumns(): array
     {
         return $this->pageOption->columns;
     }
@@ -80,7 +80,7 @@ class EditView extends BaseView implements DataViewInterface
      * @param int             $offset
      * @param int             $limit
      */
-    public function loadData($code = '', array $where = [], array $order = [], $offset = 0, $limit = FS_ITEM_LIMIT)
+    public function loadData($code = '', array $where = [], array $order = [], int $offset = 0, int $limit = FS_ITEM_LIMIT): void
     {
         if ($this->newCode !== null) {
             $code = $this->newCode;
@@ -111,7 +111,7 @@ class EditView extends BaseView implements DataViewInterface
      *
      * @param ExportManager $exportManager
      */
-    public function export(&$exportManager)
+    public function export(ExportManager $exportManager): void
     {
         $exportManager->generateModelPage($this->model, $this->getColumns(), $this->title);
     }

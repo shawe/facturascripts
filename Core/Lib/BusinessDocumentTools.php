@@ -163,7 +163,7 @@ class BusinessDocumentTools
      *
      * @return array
      */
-    private function getSubtotals($lines): array
+    private function getSubtotals(array $lines): array
     {
         $irpf = 0.0;
         $subtotals = [];

@@ -21,6 +21,7 @@ namespace FacturaScripts\Core\Lib\API\Base;
 
 use FacturaScripts\Core\Base\MiniLog;
 use FacturaScripts\Core\Base\Translator;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -74,13 +75,13 @@ abstract class APIResourceClass
     /**
      * APIResourceClass constructor.
      *
-     * @param \Symfony\Component\HttpFoundation\Response $response
-     * @param \Symfony\Component\HttpFoundation\Request  $request
-     * @param MiniLog                                    $miniLog
-     * @param Translator                                 $i18n
-     * @param array                                      $params is an array with URI parameters
+     * @param Response   $response
+     * @param Request    $request
+     * @param MiniLog    $miniLog
+     * @param Translator $i18n
+     * @param array      $params is an array with URI parameters
      */
-    public function __construct($response, $request, MiniLog $miniLog, Translator $i18n, array $params)
+    public function __construct(Response $response, Request $request, MiniLog $miniLog, Translator $i18n, array $params)
     {
         $this->response = $response;
         $this->request = $request;
@@ -184,7 +185,7 @@ abstract class APIResourceClass
      *
      * @return void
      */
-    protected function returnResult(array $data)
+    protected function returnResult(array $data): void
     {
         $this->response->setStatusCode(Response::HTTP_OK);
         $this->response->setContent(json_encode($data));
@@ -199,7 +200,7 @@ abstract class APIResourceClass
      *
      * @return void
      */
-    protected function setOk(string $string, array $data = null)
+    protected function setOk(string $string, array $data = null): void
     {
         $this->response->setStatusCode(Response::HTTP_OK);
         $res = [];
@@ -220,7 +221,7 @@ abstract class APIResourceClass
      *
      * @return void
      */
-    protected function setError(string $message, array $data = null, int $status = Response::HTTP_BAD_REQUEST)
+    protected function setError(string $message, array $data = null, int $status = Response::HTTP_BAD_REQUEST): void
     {
         $this->response->setStatusCode($status);
         $res = [];

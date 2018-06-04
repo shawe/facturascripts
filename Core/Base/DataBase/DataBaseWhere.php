@@ -77,7 +77,7 @@ class DataBaseWhere
      * @param string $operator
      * @param string $operation
      */
-    public function __construct($fields, $value, $operator = '=', $operation = 'AND')
+    public function __construct(string $fields, $value, string $operator = '=', string $operation = 'AND')
     {
         $this->dataBase = new DataBase();
         $this->fields = $fields;
@@ -94,7 +94,7 @@ class DataBaseWhere
      *
      * @return array
      */
-    public static function getFieldsFilter(array $whereItems)
+    public static function getFieldsFilter(array $whereItems): array
     {
         $result = [];
         foreach ($whereItems as $item) {
@@ -118,7 +118,7 @@ class DataBaseWhere
      *
      * @return string
      */
-    public static function getSQLWhere($whereItems): string
+    public static function getSQLWhere(array $whereItems): string
     {
         $result = '';
         $join = false;
@@ -143,7 +143,7 @@ class DataBaseWhere
      *
      * @return string
      */
-    public function getSQLWhereItem($applyOperation = false): string
+    public function getSQLWhereItem(bool $applyOperation = false): string
     {
         $fields = explode('|', $this->fields);
         $value = ($this->operator === 'LIKE') ? $this->value : $this->getValue($this->value);
@@ -171,7 +171,7 @@ class DataBaseWhere
      *
      * @return string
      */
-    private function applyValueToFields($value, $fields): string
+    private function applyValueToFields(string $value, array $fields): string
     {
         $result = '';
         $union = '';
@@ -204,7 +204,7 @@ class DataBaseWhere
      *
      * @return string
      */
-    private function format2Date($addTime = false): string
+    private function format2Date(bool $addTime = false): string
     {
         $time = $addTime ? ' H:i:s' : '';
 
@@ -218,7 +218,7 @@ class DataBaseWhere
      *
      * @return string
      */
-    private function getValueFromOperatorIn($values): string
+    private function getValueFromOperatorIn(string $values): string
     {
         if (0 === stripos($values, 'select ')) {
             return $values;
@@ -240,7 +240,7 @@ class DataBaseWhere
      *
      * @return string
      */
-    private function getValueFromOperatorLike($value): string
+    private function getValueFromOperatorLike(string $value): string
     {
         // FIXME: Makes no sense, because this type is not defined in annotations
         if (is_bool($value)) {
@@ -261,7 +261,7 @@ class DataBaseWhere
      *
      * @return string
      */
-    private function getValueFromOperator($value): string
+    private function getValueFromOperator(string $value): string
     {
         switch ($this->operator) {
             case 'LIKE':
@@ -289,7 +289,7 @@ class DataBaseWhere
      *
      * @return string
      */
-    private function getValueFromType($value): string
+    private function getValueFromType(string $value): string
     {
         switch (gettype($value)) {
             case 'boolean':

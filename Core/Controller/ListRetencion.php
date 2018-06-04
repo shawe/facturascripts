@@ -48,7 +48,7 @@ class ListRetencion extends ExtendedController\ListController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addView('ListRetencion', 'Retencion');
         $this->addSearchFields('ListRetencion', ['descripcion', 'codretencion']);

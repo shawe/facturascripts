@@ -63,7 +63,7 @@ class AppSettings
      *
      * @return mixed
      */
-    public static function get($group, $property, $default = null)
+    public static function get(string $group, string $property, $default = null)
     {
         if (!isset(self::$data[$group][$property])) {
             self::$data[$group][$property] = $default;
@@ -80,7 +80,7 @@ class AppSettings
      * @param string $property
      * @param string $value
      */
-    public function set($group, $property, $value)
+    public function set(string $group, string $property, string $value): void
     {
         if (!isset(self::$data[$group])) {
             self::$data[$group] = [];
@@ -92,7 +92,7 @@ class AppSettings
     /**
      * Load default App Settings.
      */
-    public function load()
+    public function load(): void
     {
         $settingsModel = new Settings();
         foreach ($settingsModel->all() as $group) {
@@ -118,7 +118,7 @@ class AppSettings
     /**
      * Store the model data in the database.
      */
-    public function save()
+    public function save(): void
     {
         foreach (self::$data as $key => $value) {
             $settings = new Settings();
@@ -136,7 +136,7 @@ class AppSettings
      *
      * @param array $data
      */
-    private function setConstants($data)
+    private function setConstants($data): void
     {
         foreach ($data as $key => $value) {
             if (!\defined($key)) {

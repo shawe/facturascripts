@@ -74,7 +74,7 @@ class EditCliente extends ExtendedController\PanelController
     /**
      * Create views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addMainView();
 
@@ -101,7 +101,7 @@ class EditCliente extends ExtendedController\PanelController
      * @param string                      $viewName
      * @param ExtendedController\EditView $view
      */
-    protected function loadData($viewName, $view)
+    protected function loadData($viewName, $view): void
     {
         $limit = FS_ITEM_LIMIT;
         switch ($viewName) {
@@ -143,7 +143,7 @@ class EditCliente extends ExtendedController\PanelController
     /**
      * Create and configure main view
      */
-    private function addMainView()
+    private function addMainView(): void
     {
         $this->addEditView('EditCliente', 'Cliente', 'customer');
 

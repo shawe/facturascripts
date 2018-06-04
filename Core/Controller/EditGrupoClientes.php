@@ -51,7 +51,7 @@ class EditGrupoClientes extends ExtendedController\PanelController
     /**
      * Load views
      */
-    protected function createViews()
+    protected function createViews(): void
     {
         $this->addEditView('EditGrupoClientes', 'GrupoClientes', 'customer-group');
         $this->addListView('ListCliente', 'Cliente', 'customers', 'fa-users');
@@ -67,7 +67,7 @@ class EditGrupoClientes extends ExtendedController\PanelController
      * @param string                      $viewName
      * @param ExtendedController\EditView $view
      */
-    protected function loadData($viewName, $view)
+    protected function loadData(string $viewName, $view): void
     {
         switch ($viewName) {
             case 'EditGrupoClientes':
