@@ -42,13 +42,17 @@ class AppAPITest extends TestCase
         $this->object = new AppAPI();
     }
 
+    /**
+     * @covers \FacturaScripts\Core\App\AppAPI::connect()
+     */
     public function testConnect()
     {
         self::assertTrue($this->object->connect());
     }
 
     /**
-     * @covers \FacturaScripts\Core\App\AppAPI::run
+     * @covers \FacturaScripts\Core\App\AppAPI::run()
+     * @covers \FacturaScripts\Core\App\AppSettings::get()
      */
     public function testRun()
     {

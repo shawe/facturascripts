@@ -41,13 +41,16 @@ class AppControllerTest extends TestCase
         $this->object = new AppController();
     }
 
+    /**
+     * @covers \FacturaScripts\Core\App\AppController::connect()
+     */
     public function testConnect()
     {
         self::assertTrue($this->object->connect());
     }
 
     /**
-     * @covers \FacturaScripts\Core\App\AppController::run
+     * @covers \FacturaScripts\Core\App\AppController::run()
      */
     public function testRun()
     {

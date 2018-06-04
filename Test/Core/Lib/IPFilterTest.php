@@ -43,7 +43,8 @@ class IPFilterTest extends TestCase
     }
 
     /**
-     * @covers \FacturaScripts\Core\Lib\IPFilter::setAttempt
+     * @covers \FacturaScripts\Core\Lib\IPFilter::clear()
+     * @covers \FacturaScripts\Core\Lib\IPFilter::setAttempt()
      */
     public function testSetAttempt()
     {
@@ -56,6 +57,7 @@ class IPFilterTest extends TestCase
     }
 
     /**
+     * @covers \FacturaScripts\Core\Lib\IPFilter::setAttempt()
      * @covers \FacturaScripts\Core\Lib\IPFilter::isBanned
      */
     public function testIsBanned()

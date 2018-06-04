@@ -77,6 +77,8 @@ class IntegrityCheckTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Try to load and generate the user integrity file.
+     *
+     * @covers \FacturaScripts\Core\Base\IntegrityCheck::loadIntegrity()
      */
     public function testUserLoadIntegrityFiles()
     {

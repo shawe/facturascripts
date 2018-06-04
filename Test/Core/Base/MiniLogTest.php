@@ -42,7 +42,9 @@ class MiniLogTest extends TestCase
     }
 
     /**
-     * @covers \FacturaScripts\Core\Base\MiniLog::emergency
+     * @covers \FacturaScripts\Core\Base\MiniLog::clear()
+     * @covers \FacturaScripts\Core\Base\MiniLog::emergency()
+     * @covers \FacturaScripts\Core\Base\MiniLog::read()
      */
     public function testEmergency()
     {
@@ -58,7 +60,9 @@ class MiniLogTest extends TestCase
     }
 
     /**
-     * @covers \FacturaScripts\Core\Base\MiniLog::alert
+     * @covers \FacturaScripts\Core\Base\MiniLog::clear()
+     * @covers \FacturaScripts\Core\Base\MiniLog::alert()
+     * @covers \FacturaScripts\Core\Base\MiniLog::read()
      */
     public function testAlert()
     {
@@ -74,7 +78,9 @@ class MiniLogTest extends TestCase
     }
 
     /**
-     * @covers \FacturaScripts\Core\Base\MiniLog::critical
+     * @covers \FacturaScripts\Core\Base\MiniLog::clear()
+     * @covers \FacturaScripts\Core\Base\MiniLog::critical()
+     * @covers \FacturaScripts\Core\Base\MiniLog::read()
      */
     public function testCritical()
     {
@@ -90,7 +96,9 @@ class MiniLogTest extends TestCase
     }
 
     /**
-     * @covers \FacturaScripts\Core\Base\MiniLog::error
+     * @covers \FacturaScripts\Core\Base\MiniLog::clear()
+     * @covers \FacturaScripts\Core\Base\MiniLog::error()
+     * @covers \FacturaScripts\Core\Base\MiniLog::read()
      */
     public function testError()
     {
@@ -106,7 +114,9 @@ class MiniLogTest extends TestCase
     }
 
     /**
-     * @covers \FacturaScripts\Core\Base\MiniLog::warning
+     * @covers \FacturaScripts\Core\Base\MiniLog::clear()
+     * @covers \FacturaScripts\Core\Base\MiniLog::warning()
+     * @covers \FacturaScripts\Core\Base\MiniLog::read()
      */
     public function testWarning()
     {
@@ -122,7 +132,9 @@ class MiniLogTest extends TestCase
     }
 
     /**
-     * @covers \FacturaScripts\Core\Base\MiniLog::notice
+     * @covers \FacturaScripts\Core\Base\MiniLog::clear()
+     * @covers \FacturaScripts\Core\Base\MiniLog::notice()
+     * @covers \FacturaScripts\Core\Base\MiniLog::read()
      */
     public function testNotice()
     {
@@ -138,7 +150,9 @@ class MiniLogTest extends TestCase
     }
 
     /**
-     * @covers \FacturaScripts\Core\Base\MiniLog::info
+     * @covers \FacturaScripts\Core\Base\MiniLog::clear()
+     * @covers \FacturaScripts\Core\Base\MiniLog::info()
+     * @covers \FacturaScripts\Core\Base\MiniLog::read()
      */
     public function testInfo()
     {
@@ -154,7 +168,9 @@ class MiniLogTest extends TestCase
     }
 
     /**
-     * @covers \FacturaScripts\Core\Base\MiniLog::debug
+     * @covers \FacturaScripts\Core\Base\MiniLog::clear()
+     * @covers \FacturaScripts\Core\Base\MiniLog::debug()
+     * @covers \FacturaScripts\Core\Base\MiniLog::read()
      */
     public function testDebug()
     {
@@ -170,7 +186,9 @@ class MiniLogTest extends TestCase
     }
 
     /**
-     * @covers \FacturaScripts\Core\Base\MiniLog::sql
+     * @covers \FacturaScripts\Core\Base\MiniLog::clear()
+     * @covers \FacturaScripts\Core\Base\MiniLog::sql()
+     * @covers \FacturaScripts\Core\Base\MiniLog::read()
      */
     public function testSql()
     {
@@ -185,6 +203,11 @@ class MiniLogTest extends TestCase
         self::assertEmpty($data[0]['context']);
     }
 
+    /**
+     * @covers \FacturaScripts\Core\Base\MiniLog::sql()
+     * @covers \FacturaScripts\Core\Base\MiniLog::clear()
+     * @covers \FacturaScripts\Core\Base\MiniLog::read()
+     */
     public function testClear()
     {
         $this->object->sql('sql');

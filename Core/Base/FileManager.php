@@ -49,7 +49,7 @@ class FileManager
             is_dir($path) ? static::delTree($path) : unlink($path);
         }
 
-        return is_dir($folder) ? rmdir($folder) : unlink($folder);
+        return is_dir($folder) ? @rmdir($folder) : unlink($folder);
     }
 
     /**
@@ -60,7 +60,7 @@ class FileManager
     public static function notWritableFolders(): array
     {
         $notwritable = [];
-        foreach (static::scanFolder(FS_FOLDER) as $folder) {
+        foreach (static::scanFolder(FS_FOLDER, true) as $folder) {
             if (!is_writable($folder)) {
                 $notwritable[] = $folder;
             }

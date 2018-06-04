@@ -43,7 +43,8 @@ class CacheTest extends TestCase
     }
 
     /**
-     * @covers \FacturaScripts\Core\Base\Cache::get
+     * @covers \FacturaScripts\Core\Base\Cache::set()
+     * @covers \FacturaScripts\Core\Base\Cache::get()
      */
     public function testGet()
     {
@@ -57,7 +58,9 @@ class CacheTest extends TestCase
     }
 
     /**
-     * @covers \FacturaScripts\Core\Base\Cache::delete
+     * @covers \FacturaScripts\Core\Base\Cache::set()
+     * @covers \FacturaScripts\Core\Base\Cache::delete()
+     * @covers \FacturaScripts\Core\Base\Cache::get()
      */
     public function testDelete()
     {
@@ -67,7 +70,9 @@ class CacheTest extends TestCase
     }
 
     /**
-     * @covers \FacturaScripts\Core\Base\Cache::clear
+     * @covers \FacturaScripts\Core\Base\Cache::set()
+     * @covers \FacturaScripts\Core\Base\Cache::clear()
+     * @covers \FacturaScripts\Core\Base\Cache::get()
      */
     public function testClear()
     {
