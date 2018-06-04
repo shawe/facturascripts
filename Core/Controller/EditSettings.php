@@ -19,9 +19,9 @@
 
 namespace FacturaScripts\Core\Controller;
 
-use FacturaScripts\Core\Lib\EmailTools;
-use FacturaScripts\Core\Lib\ExtendedController;
-use FacturaScripts\Core\Model\Settings;
+use FacturaScripts\Dinamic\Lib\EmailTools;
+use FacturaScripts\Dinamic\Lib\ExtendedController;
+use FacturaScripts\Dinamic\Model\Settings;
 
 /**
  * Controller to edit main settings

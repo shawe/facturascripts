@@ -20,8 +20,8 @@
 namespace FacturaScripts\Core\Lib\API;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
-use FacturaScripts\Core\Lib\API\Base\APIResourceClass;
-use FacturaScripts\Core\Model\Base\ModelClass;
+use FacturaScripts\Dinamic\Lib\API\Base\APIResourceClass;
+use FacturaScripts\Dinamic\Model\Base\ModelClass;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

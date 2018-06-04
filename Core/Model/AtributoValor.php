@@ -85,7 +85,7 @@ class AtributoValor extends Base\ModelClass
     /**
      * Returns the name of the column that is the model's primary key.
      *
-     * @return self[]
+     * @return string
      */
     public static function primaryColumn(): string
     {

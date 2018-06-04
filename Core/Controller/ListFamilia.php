@@ -19,7 +19,7 @@
 
 namespace FacturaScripts\Core\Controller;
 
-use FacturaScripts\Core\Lib\ExtendedController;
+use FacturaScripts\Dinamic\Lib\ExtendedController;
 
 /**
  * Controller to list the items in the Familia model

@@ -158,7 +158,7 @@ class XLSExport implements ExportInterface
     /**
      * Set the table content.
      *
-     * @param array array$columns
+     * @param array $columns
      * @param array $tableCols
      * @param array $sheetHeaders
      */

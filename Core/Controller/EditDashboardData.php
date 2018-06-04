@@ -21,9 +21,9 @@
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\ControllerPermissions;
-use FacturaScripts\Core\Lib\Dashboard as DashboardLib;
-use FacturaScripts\Core\Lib\ExtendedController;
-use FacturaScripts\Core\Model\User;
+use FacturaScripts\Dinamic\Lib\Dashboard as DashboardLib;
+use FacturaScripts\Dinamic\Lib\ExtendedController;
+use FacturaScripts\Dinamic\Model\User;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

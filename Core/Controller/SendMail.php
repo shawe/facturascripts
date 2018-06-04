@@ -21,8 +21,8 @@ namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\App\AppSettings;
 use FacturaScripts\Core\Base\Controller;
-use FacturaScripts\Core\Lib\EmailTools;
-use FacturaScripts\Core\Model\CodeModel;
+use FacturaScripts\Dinamic\Lib\EmailTools;
+use FacturaScripts\Dinamic\Model\CodeModel;
 
 /**
  * Description of SendMail
@@ -222,6 +222,7 @@ class SendMail extends Controller
     /**
      * Send and email with data posted from form.
      *
+     * @return bool
      * @throws \PHPMailer\PHPMailer\Exception
      */
     protected function send()
@@ -255,9 +256,11 @@ class SendMail extends Controller
             }
             $this->updateFemail();
             $this->miniLog->notice('send-mail-ok');
-        } else {
-            $this->miniLog->error('send-mail-error');
+            return true;
         }
+
+        $this->miniLog->error('send-mail-error');
+        return false;
     }
 
     /**

@@ -19,7 +19,7 @@
 
 namespace FacturaScripts\Core\Controller;
 
-use FacturaScripts\Core\Lib\ExtendedController;
+use FacturaScripts\Dinamic\Lib\ExtendedController;
 
 /**
  * Controller to edit a single item from the FormaPago model

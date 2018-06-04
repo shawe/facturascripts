@@ -20,7 +20,7 @@
 namespace FacturaScripts\Core\Lib\Dashboard;
 
 use FacturaScripts\Core\Base\DataBase;
-use FacturaScripts\Core\Model;
+use FacturaScripts\Dinamic\Model;
 
 /**
  * Description of ComponentBase
@@ -30,8 +30,8 @@ use FacturaScripts\Core\Model;
 class BaseComponent
 {
 
-    const MODEL_NAMESPACE = 'FacturaScripts\\Core\\Model\\';
-    const DIR_COMPONENTS = 'FacturaScripts\\Core\\Lib\\Dashboard\\';
+    const MODEL_NAMESPACE = 'FacturaScripts\\Dinamic\\Model\\';
+    const DIR_COMPONENTS = 'FacturaScripts\\Dinamic\\Lib\\Dashboard\\';
     const SUFIX_COMPONENTS = 'Component';
 
     /**

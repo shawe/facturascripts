@@ -179,15 +179,15 @@ class AccountingPlanImport
      *
      * @param string $filePath
      *
-     * @return \SimpleXMLElement|array
+     * @return \SimpleXMLElement
      */
     private function getData(string $filePath)
     {
         if (file_exists($filePath)) {
-            return simplexml_load_string(file_get_contents($filePath));
+            return simplexml_load_string(file_get_contents($filePath)) ? : simplexml_load_string('');
         }
 
-        return [];
+        return simplexml_load_string('');
     }
 
     /**

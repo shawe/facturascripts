@@ -173,7 +173,7 @@ class Pagination
     /**
      * Returns a paging item.
      *
-     * @param int         $page
+     * @param int|float   $page
      * @param int         $offset
      * @param string|bool $icon
      * @param bool        $active
@@ -193,12 +193,12 @@ class Pagination
     /**
      * Returns the offset for the page.
      *
-     * @param float|int $page
+     * @param int|float $page
      *
      * @return int
      */
     private function offset($page): int
     {
-        return $page * self::FS_ITEM_LIMIT;
+        return (int) $page * self::FS_ITEM_LIMIT;
     }
 }

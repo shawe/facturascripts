@@ -21,7 +21,7 @@ namespace FacturaScripts\Core\Lib;
 
 use FacturaScripts\Core\Base\MiniLog;
 use FacturaScripts\Core\Base\Translator as i18n;
-use FacturaScripts\Core\Model\Settings;
+use FacturaScripts\Dinamic\Model\Settings;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 

@@ -19,7 +19,7 @@
 
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
-use FacturaScripts\Core\Model;
+use FacturaScripts\Dinamic\Model;
 
 /**
  * Generate random data for the customer groups (grupos de clientes) file

@@ -20,8 +20,8 @@
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base;
-use FacturaScripts\Core\Model\Base\ModelClass;
 use FacturaScripts\Dinamic\Lib\BusinessDocumentTools;
+use FacturaScripts\Dinamic\Model\Base\ModelClass;
 use FacturaScripts\Dinamic\Model\Cliente;
 use FacturaScripts\Dinamic\Model\Proveedor;
 
@@ -206,10 +206,10 @@ abstract class BusinessDocumentController extends PanelController
 
         /// gets data form and separate date, hour, codcliente, codproveedor and lines data
         $data = $this->getFormData();
-        $codcliente = isset($data['codcliente']) ? $data['codcliente'] : '';
-        $codproveedor = isset($data['codproveedor']) ? $data['codproveedor'] : '';
-        $fecha = isset($data['fecha']) ? $data['fecha'] : $view->model->fecha;
-        $hora = isset($data['hora']) ? $data['hora'] : $view->model->hora;
+        $codcliente = $data['codcliente'] ?? '';
+        $codproveedor = $data['codproveedor'] ?? '';
+        $fecha = $data['fecha'] ?? $view->model->fecha;
+        $hora = $data['hora'] ?? $view->model->hora;
         $newLines = isset($data['lines']) ? $view->processFormLines($data['lines']) : [];
         unset($data['fecha'], $data['hora'], $data['codcliente'], $data['codproveedor'], $data['lines']);
 
@@ -242,10 +242,10 @@ abstract class BusinessDocumentController extends PanelController
 
         /// sets subjects
         $result = 'OK';
-        if (in_array('codcliente', $view->model->getSubjectColumns())) {
+        if (\in_array('codcliente', $view->model->getSubjectColumns())) {
             $result = $this->setCustomer($view, $data['codcliente'], $data['new_cliente'], $data['new_cifnif']);
         }
-        if (in_array('codproveedor', $view->model->getSubjectColumns())) {
+        if (\in_array('codproveedor', $view->model->getSubjectColumns())) {
             $result = $this->setSupplier($view, $data['codproveedor'], $data['new_proveedor'], $data['new_cifnif']);
         }
 

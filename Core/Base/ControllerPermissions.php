@@ -20,8 +20,8 @@
 namespace FacturaScripts\Core\Base;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
-use FacturaScripts\Core\Model\RoleUser;
-use FacturaScripts\Core\Model\User;
+use FacturaScripts\Dinamic\Model\RoleUser;
+use FacturaScripts\Dinamic\Model\User;
 
 /**
  * Description of ControllerPermissions

@@ -21,8 +21,8 @@ namespace FacturaScripts\Core\Lib\Export;
 
 use FacturaScripts\Core\App\AppSettings;
 use FacturaScripts\Core\Base;
-use FacturaScripts\Core\Model\Base\BusinessDocument;
-use FacturaScripts\Core\Model\Empresa;
+use FacturaScripts\Dinamic\Model\Base\BusinessDocument;
+use FacturaScripts\Dinamic\Model\Empresa;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

@@ -20,8 +20,8 @@
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase;
-use FacturaScripts\Core\Lib\ExtendedController;
-use FacturaScripts\Core\Lib\ExtendedController\GroupItem;
+use FacturaScripts\Dinamic\Lib\ExtendedController;
+use FacturaScripts\Dinamic\Lib\ExtendedController\GroupItem;
 
 /**
  * Visual configuration of the FacturaScripts views,

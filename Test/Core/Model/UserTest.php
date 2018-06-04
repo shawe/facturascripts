@@ -53,7 +53,7 @@ final class UserTest extends CustomTest
     public function testSetPassword()
     {
         $this->model = $this->model->get('admin');
-        if ($this->model) {
+        if ($this->model !== false) {
             $this->model->setPassword('admin');
         }
     }

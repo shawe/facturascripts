@@ -19,7 +19,7 @@
 
 namespace FacturaScripts\Core\Lib\API;
 
-use FacturaScripts\Core\Lib\API\Base\APIResourceClass;
+use FacturaScripts\Dinamic\Lib\API\Base\APIResourceClass;
 
 /**
  * TestAPI to test API functionality

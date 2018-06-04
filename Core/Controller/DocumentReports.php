@@ -27,8 +27,8 @@ use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Base\MiniLog;
 use FacturaScripts\Core\Base\Translator;
 use FacturaScripts\Core\Base\Utils;
-use FacturaScripts\Core\Lib\DocumentReportsBase as DRB;
-use FacturaScripts\Core\Model;
+use FacturaScripts\Dinamic\Lib\DocumentReportsBase as DRB;
+use FacturaScripts\Dinamic\Model;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

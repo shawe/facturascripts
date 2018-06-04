@@ -20,9 +20,9 @@
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base;
-use FacturaScripts\Core\Lib\RandomDataGenerator;
-use FacturaScripts\Core\Model\Base\ModelClass;
-use FacturaScripts\Core\Model\User;
+use FacturaScripts\Dinamic\Lib\RandomDataGenerator;
+use FacturaScripts\Dinamic\Model\Base\ModelClass;
+use FacturaScripts\Dinamic\Model\User;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

@@ -19,7 +19,7 @@
 
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
-use FacturaScripts\Core\Model;
+use FacturaScripts\Dinamic\Model;
 
 /**
  * Abstract class to randomly populate tables containing data of natural

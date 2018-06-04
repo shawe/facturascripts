@@ -21,10 +21,10 @@ namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\Controller;
 use FacturaScripts\Core\Base\ControllerPermissions;
-use FacturaScripts\Core\Lib\Accounting;
-use FacturaScripts\Core\Lib\ExportManager;
-use FacturaScripts\Core\Model\Ejercicio;
-use FacturaScripts\Core\Model\User;
+use FacturaScripts\Dinamic\Lib\Accounting;
+use FacturaScripts\Dinamic\Lib\ExportManager;
+use FacturaScripts\Dinamic\Model\Ejercicio;
+use FacturaScripts\Dinamic\Model\User;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

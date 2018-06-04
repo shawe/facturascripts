@@ -21,7 +21,7 @@ namespace FacturaScripts\Core\Model\Base;
 
 use FacturaScripts\Core\App\AppSettings;
 use FacturaScripts\Core\Base\Utils;
-use FacturaScripts\Core\Model\Impuesto;
+use FacturaScripts\Dinamic\Model\Impuesto;
 
 /**
  * Description of Product

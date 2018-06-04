@@ -19,7 +19,7 @@
 
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
-use FacturaScripts\Core\Model;
+use FacturaScripts\Dinamic\Model;
 
 /**
  *  Generates orders to suppliers with random data.

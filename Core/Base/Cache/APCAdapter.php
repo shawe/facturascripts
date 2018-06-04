@@ -66,8 +66,8 @@ class APCAdapter implements AdaptorInterface
     public function get($key)
     {
         $this->minilog->debug($this->i18n->trans('apc-get-key-item', ['%item%' => $key]));
-        if (apc_exists(FS_CACHE_PREFIX . $key)) {
-            $result = apc_fetch(FS_CACHE_PREFIX . $key);
+        if (apc_exists( \FS_CACHE_PREFIX . $key)) {
+            $result = apc_fetch(\FS_CACHE_PREFIX . $key);
 
             return ($result === false) ? null : $result;
         }
@@ -88,7 +88,7 @@ class APCAdapter implements AdaptorInterface
     {
         $this->minilog->debug($this->i18n->trans('apc-set-key-item', ['%item%' => $key]));
 
-        return (bool) apc_store(FS_CACHE_PREFIX . $key, $content, $expire);
+        return (bool) apc_store(\FS_CACHE_PREFIX . $key, $content, $expire);
     }
 
     /**
@@ -102,7 +102,7 @@ class APCAdapter implements AdaptorInterface
     {
         $this->minilog->debug($this->i18n->trans('apc-delete-key-item', ['%item%' => $key]));
 
-        return apc_delete(FS_CACHE_PREFIX . $key) || !apc_exists(FS_CACHE_PREFIX . $key);
+        return apc_delete(\FS_CACHE_PREFIX . $key) || !apc_exists(\FS_CACHE_PREFIX . $key);
     }
 
     /**

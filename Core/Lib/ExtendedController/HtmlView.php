@@ -19,7 +19,7 @@
 
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
-use FacturaScripts\Core\Lib\ExportManager;
+use FacturaScripts\Dinamic\Lib\ExportManager;
 
 /**
  * View definition for its use in ExtendedControllers

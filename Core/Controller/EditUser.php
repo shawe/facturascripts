@@ -20,8 +20,8 @@
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
-use FacturaScripts\Core\Lib\ExtendedController;
-use FacturaScripts\Core\Model;
+use FacturaScripts\Dinamic\Lib\ExtendedController;
+use FacturaScripts\Dinamic\Model;
 
 /**
  * Controller to edit a single item from the User model

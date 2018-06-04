@@ -19,7 +19,7 @@
 
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
-use FacturaScripts\Core\Model\Base\ModelClass;
+use FacturaScripts\Dinamic\Model\Base\ModelClass;
 
 /**
  * Description of RowItemStatus

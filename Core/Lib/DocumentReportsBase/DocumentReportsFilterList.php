@@ -20,7 +20,7 @@
 namespace FacturaScripts\Core\Lib\DocumentReportsBase;
 
 use FacturaScripts\Core\Base\DataBase;
-use FacturaScripts\Core\Model;
+use FacturaScripts\Dinamic\Model;
 
 /**
  * Description of DocumentReportsFilterList

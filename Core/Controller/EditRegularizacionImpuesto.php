@@ -21,9 +21,9 @@ namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Base\DivisaTools;
-use FacturaScripts\Core\Lib\ExtendedController;
-use FacturaScripts\Core\Model\CodeModel;
-use FacturaScripts\Core\Model\PartidaImpuestoResumen;
+use FacturaScripts\Dinamic\Lib\ExtendedController;
+use FacturaScripts\Dinamic\Model\CodeModel;
+use FacturaScripts\Dinamic\Model\PartidaImpuestoResumen;
 
 /**
  * Controller to list the items in the RegularizacionImpuesto model
@@ -93,8 +93,8 @@ class EditRegularizacionImpuesto extends ExtendedController\PanelController
     /**
      * Load data view procedure
      *
-     * @param string                      $viewName
-     * @param ExtendedController\BaseView $view
+     * @param string                          $viewName
+     * @param ExtendedController\EditListView $view
      */
     protected function loadData($viewName, $view)
     {

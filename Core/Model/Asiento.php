@@ -21,7 +21,7 @@ namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Base\Utils;
-use FacturaScripts\Core\Lib\ExtendedController\GridDocumentInterface;
+use FacturaScripts\Dinamic\Lib\ExtendedController\GridDocumentInterface;
 
 /**
  * The accounting entry. It is related to an exercise and consists of games.

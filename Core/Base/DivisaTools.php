@@ -20,7 +20,7 @@
 namespace FacturaScripts\Core\Base;
 
 use FacturaScripts\Core\App\AppSettings;
-use FacturaScripts\Core\Model\Divisa;
+use FacturaScripts\Dinamic\Model\Divisa;
 
 /**
  * DivisaTools give us some basic and common methods for currency numbers.

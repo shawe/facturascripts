@@ -19,8 +19,8 @@
 
 namespace FacturaScripts\Core\Base;
 
-use FacturaScripts\Core\Lib\AssetManager;
-use FacturaScripts\Core\Model;
+use FacturaScripts\Dinamic\Lib\AssetManager;
+use FacturaScripts\Dinamic\Model;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

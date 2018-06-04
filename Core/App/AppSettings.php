@@ -19,7 +19,7 @@
 
 namespace FacturaScripts\Core\App;
 
-use FacturaScripts\Core\Model\Settings;
+use FacturaScripts\Dinamic\Model\Settings;
 
 /**
  * AppSettings manage the essential data settings of the app.

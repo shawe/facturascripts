@@ -76,9 +76,9 @@ class Pais extends Base\ModelClass
     }
 
     /**
-     * Returns True if the country is the default of the company.
+     * Returns the name of the table that uses this model.
      *
-     * @return bool
+     * @return string
      */
     public static function tableName(): string
     {

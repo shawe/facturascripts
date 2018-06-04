@@ -19,7 +19,7 @@
 
 namespace FacturaScripts\Core\Lib\Dashboard;
 
-use FacturaScripts\Core\Model;
+use FacturaScripts\Dinamic\Model;
 
 /**
  * Description of TasksComponent

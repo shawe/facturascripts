@@ -27,6 +27,36 @@ namespace FacturaScripts\Core\Model;
 class PartidaImpuestoResumen extends Base\ModelView
 {
     /**
+     * @var float
+     */
+    public $baseimponible;
+
+    /**
+     * @var float
+     */
+    public $iva;
+
+    /**
+     * @var float
+     */
+    public $recargo;
+
+    /**
+     * @var float
+     */
+    public $cuotaiva;
+
+    /**
+     * @var float
+     */
+    public $cuotarecargo;
+
+    /**
+     * @var float
+     */
+    public $total;
+
+    /**
      * Return Group By clausule
      */
     protected function getGroupBy(): string

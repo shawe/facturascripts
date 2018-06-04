@@ -23,7 +23,7 @@ use FacturaScripts\Core\App\AppSettings;
 use FacturaScripts\Core\Base\Controller;
 use FacturaScripts\Core\Base\ControllerPermissions;
 use FacturaScripts\Core\Base\PluginManager;
-use FacturaScripts\Core\Model;
+use FacturaScripts\Dinamic\Model;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

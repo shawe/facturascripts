@@ -20,7 +20,7 @@
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
 use FacturaScripts\Core\Base\DataBase;
-use FacturaScripts\Core\Model;
+use FacturaScripts\Dinamic\Model;
 
 /**
  * Abstract class that contains the basic methods to populate a table with random data.
@@ -74,9 +74,9 @@ abstract class AbstractRandom
      * 1 out of 10 times returns a value between $min and $max2
      * 1 out of 5 times it returns a value with decimal points
      *
-     * @param int $min
-     * @param int $max1
-     * @param int $max2
+     * @param int       $min
+     * @param float|int $max1
+     * @param float|int $max2
      *
      * @return float
      */

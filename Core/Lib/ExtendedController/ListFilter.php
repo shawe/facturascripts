@@ -20,7 +20,7 @@
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
-use FacturaScripts\Core\Model\CodeModel;
+use FacturaScripts\Dinamic\Model\CodeModel;
 
 /**
  * LisFilter definition for its use in ListController.

@@ -20,7 +20,7 @@
 namespace FacturaScripts\Core\App;
 
 use FacturaScripts\Core\Base\FileManager;
-use FacturaScripts\Core\Model\ApiKey;
+use FacturaScripts\Dinamic\Model\ApiKey;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

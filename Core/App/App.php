@@ -20,7 +20,7 @@
 namespace FacturaScripts\Core\App;
 
 use FacturaScripts\Core\Base;
-use FacturaScripts\Core\Lib\IPFilter;
+use FacturaScripts\Dinamic\Lib\IPFilter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 

@@ -32,12 +32,12 @@ final class PresupuestoProveedorTest extends CustomTest
 {
 
     /**
-     * @var PresupuestoCliente
+     * @var PresupuestoProveedor
      */
     public $model;
 
     /**
-     * @covers \FacturaScripts\Core\Model\PresupuestoCliente::getLines()
+     * @covers \FacturaScripts\Core\Model\PresupuestoProveedor::getLines()
      */
     public function testGetLines()
     {

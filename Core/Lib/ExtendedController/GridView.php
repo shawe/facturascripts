@@ -22,8 +22,8 @@ namespace FacturaScripts\Core\Lib\ExtendedController;
 use Exception;
 use FacturaScripts\Core\Base;
 use FacturaScripts\Core\Base\DataBase;
-use FacturaScripts\Core\Lib\ExportManager;
-use FacturaScripts\Core\Model\Asiento;
+use FacturaScripts\Dinamic\Lib\ExportManager;
+use FacturaScripts\Dinamic\Model\Asiento;
 
 /**
  * Description of GridView

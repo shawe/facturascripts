@@ -20,11 +20,11 @@
 namespace FacturaScripts\Core\Lib;
 
 use FacturaScripts\Core\Base\Utils;
-use FacturaScripts\Core\Model\Base\BusinessDocument;
-use FacturaScripts\Core\Model\Base\BusinessDocumentLine;
-use FacturaScripts\Core\Model\Base\PurchaseDocument;
-use FacturaScripts\Core\Model\Base\SalesDocument;
 use FacturaScripts\Dinamic\Model\Articulo;
+use FacturaScripts\Dinamic\Model\Base\BusinessDocument;
+use FacturaScripts\Dinamic\Model\Base\BusinessDocumentLine;
+use FacturaScripts\Dinamic\Model\Base\PurchaseDocument;
+use FacturaScripts\Dinamic\Model\Base\SalesDocument;
 use FacturaScripts\Dinamic\Model\Cliente;
 use FacturaScripts\Dinamic\Model\Empresa;
 use FacturaScripts\Dinamic\Model\Impuesto;

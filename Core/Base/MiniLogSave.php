@@ -20,7 +20,7 @@
 namespace FacturaScripts\Core\Base;
 
 use FacturaScripts\Core\App\AppSettings;
-use FacturaScripts\Core\Model\LogMessage;
+use FacturaScripts\Dinamic\Model\LogMessage;
 
 /**
  * Class to read the miniLog

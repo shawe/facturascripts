@@ -21,7 +21,7 @@ namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base;
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
-use FacturaScripts\Core\Model;
+use FacturaScripts\Dinamic\Model;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
