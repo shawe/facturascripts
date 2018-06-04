@@ -19,7 +19,7 @@
 
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
 
-use FacturaScripts\Core\Model\Base\ModelClass;
+use FacturaScripts\Dinamic\Model\Base\ModelClass;
 use FacturaScripts\Dinamic\Model;
 
 /**

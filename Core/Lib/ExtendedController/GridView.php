@@ -21,7 +21,7 @@ namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base;
 use FacturaScripts\Core\Base\DataBase;
-use FacturaScripts\Core\Model\Base\ModelClass;
+use FacturaScripts\Dinamic\Model\Base\ModelClass;
 use FacturaScripts\Dinamic\Lib\ExportManager;
 use RuntimeException;
 
@@ -252,8 +252,8 @@ class GridView extends BaseView
     private function getItemForColumn(ColumnItem $column): array
     {
         $item = ['data' => $column->widget->fieldName];
-        switch (\get_class($column->widget)) {
-            case 'WidgetItemAutocomplete':
+        switch (true) {
+            case $column->widget instanceof WidgetItemAutocomplete:
                 $item['type'] = 'autocomplete';
                 $item['visibleRows'] = 5;
                 $item['allowInvalid'] = true;
@@ -262,8 +262,8 @@ class GridView extends BaseView
                 $item['data-source'] = $this->getAutocompleteSource($column->widget->values[0]);
                 break;
 
-            case 'WidgetItemNumber':
-            case 'WidgetItemMoney':
+            case $column->widget instanceof WidgetItemNumber:
+            case $column->widget instanceof WidgetItemMoney:
                 $item['type'] = 'numeric';
                 $item['numericFormat'] = Base\DivisaTools::gridMoneyFormat();
                 break;

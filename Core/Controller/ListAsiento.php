@@ -20,6 +20,7 @@
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Dinamic\Lib\ExtendedController;
+use FacturaScripts\Dinamic\Model\Asiento;
 
 /**
  * Controller to list the items in the Asiento model

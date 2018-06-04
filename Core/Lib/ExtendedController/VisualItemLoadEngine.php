@@ -19,7 +19,7 @@
 
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
-use FacturaScripts\Core\Model\PageOption;
+use FacturaScripts\Dinamic\Model\PageOption;
 
 /**
  * Description of VisualItemLoadEngine

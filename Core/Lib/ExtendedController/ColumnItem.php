@@ -103,7 +103,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
      */
     public function applySpecialOperations(): void
     {
-        if (\get_class($this->widget) === 'WidgetItemSelect') {
+        if ($this->widget instanceof WidgetItemSelect) {
             if (isset($this->widget->values[0]['source'])) {
                 $this->widget->loadValuesFromModel();
 
@@ -229,7 +229,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
         $header = $withLabel ? $this->getHeaderHTML($this->title) : '';
         $data = $this->getColumnData($this->widget->columnFunction());
 
-        switch (\get_class($this->widget)) {
+        switch (true) {
             case 'WidgetItemCheckBox':
                 $html = $this->checkboxHTMLColumn($header, $value, $data);
                 break;
@@ -286,7 +286,7 @@ class ColumnItem extends VisualItem implements VisualItemInterface
             $description = $this->i18n->trans($this->description);
         }
 
-        if (\get_class($this->widget) === 'WidgetItemFileChooser') {
+        if ($this->widget instanceof WidgetItemFileChooser) {
             $description = ' ' . $this->i18n->trans('help-server-accepts-filesize', ['%size%' => $this->widget->getMaxFileUpload()]);
         }
 

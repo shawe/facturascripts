@@ -272,7 +272,7 @@ class SendMail extends Controller
      */
     protected function updateFemail(): void
     {
-        $className = '\FacturaScripts\Core\Model\\' . $this->request->get('modelClassName');
+        $className = self::MODEL_NAMESPACE . $this->request->get('modelClassName');
         if (!class_exists($className)) {
             return;
         }
@@ -292,7 +292,7 @@ class SendMail extends Controller
      */
     protected function setAddressee(): void
     {
-        $className = '\FacturaScripts\Core\Model\\' . $this->request->get('modelClassName', '');
+        $className = self::MODEL_NAMESPACE . $this->request->get('modelClassName', '');
 
         if (class_exists($className) && property_exists($className, 'codproveedor')) {
             $this->addressee = 'proveedores';
