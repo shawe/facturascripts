@@ -33,6 +33,11 @@ final class BalanceCuentaATest extends CustomTest
 {
 
     /**
+     * @var BalanceCuentaA
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\BalanceCuentaA::allFromCodbalance()
      */
     public function testAllFromCodbalance()

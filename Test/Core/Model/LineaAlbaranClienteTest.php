@@ -31,6 +31,11 @@ use FacturaScripts\Test\Core\CustomTest;
 final class LineaAlbaranClienteTest extends CustomTest
 {
 
+    /**
+     * @var LineaAlbaranCliente
+     */
+    public $model;
+
     protected function setUp()
     {
         $this->model = new LineaAlbaranCliente();

@@ -31,6 +31,11 @@ use FacturaScripts\Test\Core\CustomTest;
 final class DashboardDataTest extends CustomTest
 {
 
+    /**
+     * @var DashboardData
+     */
+    public $model;
+
     protected function setUp()
     {
         $this->model = new DashboardData();

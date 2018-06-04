@@ -32,6 +32,11 @@ final class PedidoProveedorTest extends CustomTest
 {
 
     /**
+     * @var PedidoProveedor
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\PedidoProveedor::getLines()
      */
     public function testGetLines()

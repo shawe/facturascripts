@@ -32,6 +32,11 @@ final class ClienteTest extends CustomTest
 {
 
     /**
+     * @var Cliente
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\Cliente::primaryDescriptionColumn()
      */
     public function getPrimaryDescriptionColumn()

@@ -31,6 +31,11 @@ use FacturaScripts\Test\Core\CustomTest;
 final class PageTest extends CustomTest
 {
 
+    /**
+     * @var Page
+     */
+    public $model;
+
     protected function setUp()
     {
         $this->model = new Page();

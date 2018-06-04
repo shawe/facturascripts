@@ -32,6 +32,11 @@ final class RegularizacionImpuestoTest extends CustomTest
 {
 
     /**
+     * @var RegularizacionImpuesto
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\RegularizacionImpuesto::getPartidas()
      */
     public function testGetPartidas()

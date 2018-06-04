@@ -31,6 +31,11 @@ use FacturaScripts\Test\Core\CustomTest;
 final class RegularizacionStockTest extends CustomTest
 {
 
+    /**
+     * @var RegularizacionStock
+     */
+    public $model;
+
     protected function setUp()
     {
         $this->model = new RegularizacionStock();

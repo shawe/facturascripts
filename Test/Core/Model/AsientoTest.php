@@ -32,6 +32,11 @@ final class AsientoTest extends CustomTest
 {
 
     /**
+     * @var Asiento
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\Base\ModelClass::primaryDescriptionColumn()
      */
     public function testPrimaryDescriptionColumn()

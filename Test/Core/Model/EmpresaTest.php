@@ -32,6 +32,11 @@ final class EmpresaTest extends CustomTest
 {
 
     /**
+     * @var Empresa
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\Empresa::primaryDescriptionColumn()
      */
     public function getPrimaryDescriptionColumn()

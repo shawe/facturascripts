@@ -30,6 +30,11 @@ final class AlbaranClienteTest extends CustomTest
 {
 
     /**
+     * @var AlbaranCliente
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\AlbaranCliente::getLines()
      */
     public function testGetLines()

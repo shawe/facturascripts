@@ -32,6 +32,11 @@ final class ImpuestoTest extends CustomTest
 {
 
     /**
+     * @var Impuesto
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\Impuesto::isDefault()
      */
     public function testIsDefault()

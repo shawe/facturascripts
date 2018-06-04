@@ -31,6 +31,11 @@ use FacturaScripts\Test\Core\CustomTest;
 final class TarifaTest extends CustomTest
 {
 
+    /**
+     * @var Tarifa
+     */
+    public $model;
+
     protected function setUp()
     {
         $this->model = new Tarifa();

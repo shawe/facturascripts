@@ -31,6 +31,11 @@ use FacturaScripts\Test\Core\CustomTest;
 final class DireccionProveedorTest extends CustomTest
 {
 
+    /**
+     * @var DireccionProveedor
+     */
+    public $model;
+
     protected function setUp()
     {
         $this->model = new DireccionProveedor();

@@ -31,6 +31,11 @@ use FacturaScripts\Test\Core\CustomTest;
 final class EstadoDocumentoTest extends CustomTest
 {
 
+    /**
+     * @var EstadoDocumento
+     */
+    public $model;
+
     protected function setUp()
     {
         $this->model = new EstadoDocumento();

@@ -31,6 +31,11 @@ use FacturaScripts\Test\Core\CustomTest;
 final class LineaAlbaranProveedorTest extends CustomTest
 {
 
+    /**
+     * @var LineaAlbaranProveedor
+     */
+    public $model;
+
     protected function setUp()
     {
         $this->model = new LineaAlbaranProveedor();

@@ -31,6 +31,11 @@ use FacturaScripts\Test\Core\CustomTest;
 final class LineaTransferenciaStockTest extends CustomTest
 {
 
+    /**
+     * @var LineaTransferenciaStock
+     */
+    public $model;
+
     protected function setUp()
     {
         $this->model = new LineaTransferenciaStock();

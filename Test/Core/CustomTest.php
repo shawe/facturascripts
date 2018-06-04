@@ -38,7 +38,10 @@ class CustomTest extends TestCase
 
     public function testInit()
     {
-        self::assertNotNull($this->model);
+        self::assertNotNull(
+            $this->model,
+            'Class is null'
+    );
     }
 
     /**
@@ -48,7 +51,8 @@ class CustomTest extends TestCase
     {
         self::assertInternalType(
             'string',
-            $this->model::tableName()
+            $this->model::tableName(),
+            'Table name not setted'
         );
     }
 
@@ -59,7 +63,8 @@ class CustomTest extends TestCase
     {
         self::assertInternalType(
             'string',
-            $this->model::primaryColumn()
+            $this->model::primaryColumn(),
+            'Primary column not setted'
         );
     }
 
@@ -70,7 +75,8 @@ class CustomTest extends TestCase
     {
         self::assertInternalType(
             'string',
-            $this->model->primaryDescription()
+            $this->model->primaryDescription(),
+            'Primary description not setted'
         );
     }
 
@@ -90,12 +96,15 @@ class CustomTest extends TestCase
     public function testInstall()
     {
         $install = $this->model->install();
-        self::assertInternalType('string', $install);
+        self::assertInternalType(
+            'string', $install,
+            'Is not a string'
+        );
 
         if (\strlen($install) > 0) {
             self::assertNotEmpty(
                 $this->model->all(),
-                'Inserted: ' . $install . ' contains ' . \print_r($this->model->all(), true)
+                'Inserted: ' . $install . ' but contains ' . \print_r($this->model->all(), true)
             );
         }
     }
@@ -124,7 +133,8 @@ class CustomTest extends TestCase
     {
         self::assertInternalType(
             'string',
-            $this->model->url()
+            $this->model->url(),
+            'Is not a string'
         );
     }
 
@@ -135,7 +145,10 @@ class CustomTest extends TestCase
     public function testExists()
     {
         $this->model->clear();
-        self::assertFalse($this->model->exists());
+        self::assertFalse(
+            $this->model->exists(),
+            'Record yet exists'
+        );
     }
 
     /**
@@ -146,8 +159,14 @@ class CustomTest extends TestCase
     public function testAll()
     {
         foreach ($this->model->all() as $model) {
-            self::assertTrue($model->test());
-            self::assertTrue($model->exists());
+            self::assertTrue(
+                $model->test(),
+                'Model test not passed'
+            );
+            self::assertTrue(
+                $model->exists(),
+                'Record not exists'
+            );
         }
     }
 

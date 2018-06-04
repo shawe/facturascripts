@@ -32,6 +32,11 @@ final class PaisTest extends CustomTest
 {
 
     /**
+     * @var Pais
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\Pais::isDefault()
      */
     public function testIsDefault()

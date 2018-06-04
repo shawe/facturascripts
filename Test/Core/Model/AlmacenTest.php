@@ -30,6 +30,11 @@ final class AlmacenTest extends CustomTest
 {
 
     /**
+     * @var Almacen
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\Almacen::isDefault()
      */
     public function testIsDefault()

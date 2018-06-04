@@ -32,6 +32,11 @@ final class FormaPagoTest extends CustomTest
 {
 
     /**
+     * @var FormaPago
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\FormaPago::isDefault()
      */
     public function testIsDefault()

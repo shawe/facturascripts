@@ -32,6 +32,11 @@ final class AtributoValorTest extends CustomTest
 {
 
     /**
+     * @var AtributoValor
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\AtributoValor::allFromAtributo()
      */
     public function testAllFromAtributo()

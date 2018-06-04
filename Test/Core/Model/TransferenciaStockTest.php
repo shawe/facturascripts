@@ -31,6 +31,11 @@ use FacturaScripts\Test\Core\CustomTest;
 final class TransferenciaStockTest extends CustomTest
 {
 
+    /**
+     * @var TransferenciaStock
+     */
+    public $model;
+
     protected function setUp()
     {
         $this->model = new TransferenciaStock();

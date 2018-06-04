@@ -32,6 +32,11 @@ final class GrupoClientesTest extends CustomTest
 {
 
     /**
+     * @var GrupoClientes
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\GrupoClientes::primaryDescriptionColumn()
      */
     public function getPrimaryDescriptionColumn()

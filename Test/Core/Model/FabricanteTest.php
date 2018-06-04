@@ -31,6 +31,11 @@ use FacturaScripts\Test\Core\CustomTest;
 final class FabricanteTest extends CustomTest
 {
 
+    /**
+     * @var Fabricante
+     */
+    public $model;
+
     protected function setUp()
     {
         $this->model = new Fabricante();

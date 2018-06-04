@@ -31,6 +31,11 @@ use FacturaScripts\Test\Core\CustomTest;
 final class DireccionClienteTest extends CustomTest
 {
 
+    /**
+     * @var DireccionCliente
+     */
+    public $model;
+
     protected function setUp()
     {
         $this->model = new DireccionCliente();

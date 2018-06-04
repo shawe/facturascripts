@@ -32,6 +32,11 @@ final class AtributoTest extends CustomTest
 {
 
     /**
+     * @var Atributo
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\Atributo::getByNombre()
      */
     public function testGetByNombre()

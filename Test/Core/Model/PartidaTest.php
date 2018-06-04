@@ -31,6 +31,11 @@ use FacturaScripts\Test\Core\CustomTest;
 final class PartidaTest extends CustomTest
 {
 
+    /**
+     * @var Partida
+     */
+    public $model;
+
     protected function setUp()
     {
         $this->model = new Partida();

@@ -31,6 +31,11 @@ use FacturaScripts\Test\Core\CustomTest;
 final class RoleTest extends CustomTest
 {
 
+    /**
+     * @var Role
+     */
+    public $model;
+
     protected function setUp()
     {
         $this->model = new Role();

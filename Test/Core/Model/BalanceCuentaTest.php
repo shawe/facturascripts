@@ -31,6 +31,11 @@ use FacturaScripts\Test\Core\CustomTest;
 final class BalanceCuentaTest extends CustomTest
 {
 
+    /**
+     * @var BalanceCuenta
+     */
+    public $model;
+
     protected function setUp()
     {
         $this->model = new BalanceCuenta();

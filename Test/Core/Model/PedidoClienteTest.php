@@ -32,6 +32,11 @@ final class PedidoClienteTest extends CustomTest
 {
 
     /**
+     * @var PedidoCliente
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\PedidoCliente::getLines()
      */
     public function testGetLines()

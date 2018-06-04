@@ -32,6 +32,11 @@ final class ConceptoPartidaTest extends CustomTest
 {
 
     /**
+     * @var ConceptoPartida
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\ConceptoPartida::primaryDescriptionColumn()
      */
     public function testPrimaryDescriptionColumn()

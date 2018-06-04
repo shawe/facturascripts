@@ -29,6 +29,11 @@ use FacturaScripts\Test\Core\CustomTest;
 final class AgenciaTransporteTest extends CustomTest
 {
 
+    /**
+     * @var AgenciaTransporte
+     */
+    public $model;
+
     protected function setUp()
     {
         $this->model = new AgenciaTransporte();

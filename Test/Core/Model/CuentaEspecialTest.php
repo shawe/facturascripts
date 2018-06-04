@@ -31,6 +31,11 @@ use FacturaScripts\Test\Core\CustomTest;
 final class CuentaEspecialTest extends CustomTest
 {
 
+    /**
+     * @var CuentaEspecial
+     */
+    public $model;
+
     protected function setUp()
     {
         $this->model = new CuentaEspecial();

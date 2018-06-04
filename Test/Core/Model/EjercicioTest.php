@@ -32,6 +32,11 @@ final class EjercicioTest extends CustomTest
 {
 
     /**
+     * @var Ejercicio
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\Ejercicio::abierto()
      */
     public function testAbierto()

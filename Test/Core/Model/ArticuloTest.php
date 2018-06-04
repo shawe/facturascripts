@@ -32,6 +32,11 @@ final class ArticuloTest extends CustomTest
 {
 
     /**
+     * @var Articulo
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\Articulo::setPvp()
      */
     public function testSetPhp()

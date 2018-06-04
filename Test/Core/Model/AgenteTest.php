@@ -30,6 +30,11 @@ final class AgenteTest extends CustomTest
 {
 
     /**
+     * @var Agente
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\Agente::primaryDescriptionColumn()
      */
     public function getPrimaryDescriptionColumn()

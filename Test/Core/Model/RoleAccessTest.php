@@ -33,6 +33,11 @@ final class RoleAccessTest extends CustomTest
 {
 
     /**
+     * @var RoleAccess
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\RoleAccess::addPagesToRole()
      */
     public function testAddPagesToRole()

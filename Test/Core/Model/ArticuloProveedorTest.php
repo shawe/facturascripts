@@ -31,6 +31,11 @@ use FacturaScripts\Test\Core\CustomTest;
 final class ArticuloProveedorTest extends CustomTest
 {
 
+    /**
+     * @var ArticuloProveedor
+     */
+    public $model;
+
     protected function setUp()
     {
         $this->model = new ArticuloProveedor();

@@ -32,6 +32,11 @@ final class ProveedorTest extends CustomTest
 {
 
     /**
+     * @var Proveedor
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\Proveedor::primaryDescriptionColumn()
      */
     public function getPrimaryDescriptionColumn()

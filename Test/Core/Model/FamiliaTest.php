@@ -32,6 +32,11 @@ final class FamiliaTest extends CustomTest
 {
 
     /**
+     * @var Familia
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\Familia::hijas()
      */
     public function testHijas()

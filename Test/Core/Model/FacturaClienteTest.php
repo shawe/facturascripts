@@ -32,6 +32,11 @@ final class FacturaClienteTest extends CustomTest
 {
 
     /**
+     * @var FacturaCliente
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\FacturaCliente::getLines()
      */
     public function testGetLines()

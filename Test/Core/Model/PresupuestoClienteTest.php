@@ -32,6 +32,11 @@ final class PresupuestoClienteTest extends CustomTest
 {
 
     /**
+     * @var PresupuestoCliente
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\PresupuestoCliente::getLines()
      */
     public function testGetLines()

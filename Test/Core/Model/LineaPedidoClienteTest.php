@@ -31,6 +31,11 @@ use FacturaScripts\Test\Core\CustomTest;
 final class LineaPedidoClienteTest extends CustomTest
 {
 
+    /**
+     * @var LineaPedidoCliente
+     */
+    public $model;
+
     protected function setUp()
     {
         $this->model = new LineaPedidoCliente();

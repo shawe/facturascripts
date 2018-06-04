@@ -32,6 +32,11 @@ final class UserTest extends CustomTest
 {
 
     /**
+     * @var User
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\User::newLogkey()
      * @covers \FacturaScripts\Core\Model\User::verifyLogkey()
      */
@@ -48,7 +53,9 @@ final class UserTest extends CustomTest
     public function testSetPassword()
     {
         $this->model = $this->model->get('admin');
-        $this->model->setPassword('admin');
+        if ($this->model) {
+            $this->model->setPassword('admin');
+        }
     }
 
     protected function setUp()

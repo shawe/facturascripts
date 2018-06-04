@@ -32,6 +32,11 @@ final class SerieTest extends CustomTest
 {
 
     /**
+     * @var Serie
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\Serie::isDefault()
      */
     public function testIsDefault()

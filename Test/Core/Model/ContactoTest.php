@@ -31,6 +31,11 @@ use FacturaScripts\Test\Core\CustomTest;
 final class ContactoTest extends CustomTest
 {
 
+    /**
+     * @var Contacto
+     */
+    public $model;
+
     protected function setUp()
     {
         $this->model = new Contacto();

@@ -32,6 +32,11 @@ final class PageOptionTest extends CustomTest
 {
 
     /**
+     * @var PageOption
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\PageOption::getForUser()
      */
     public function testGetForUser()

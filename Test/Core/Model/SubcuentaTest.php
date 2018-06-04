@@ -30,6 +30,12 @@ use FacturaScripts\Test\Core\CustomTest;
  */
 final class SubcuentaTest extends CustomTest
 {
+
+    /**
+     * @var Subcuenta
+     */
+    public $model;
+
     /**
      * @covers \FacturaScripts\Core\Model\Subcuenta::getSpecialAccountCode()
      */

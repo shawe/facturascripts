@@ -31,6 +31,11 @@ use FacturaScripts\Test\Core\CustomTest;
 final class ProvinciaTest extends CustomTest
 {
 
+    /**
+     * @var Provincia
+     */
+    public $model;
+
     protected function setUp()
     {
         $this->model = new Provincia();

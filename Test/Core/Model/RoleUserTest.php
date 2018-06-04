@@ -32,6 +32,11 @@ final class RoleUserTest extends CustomTest
 {
 
     /**
+     * @var RoleUser
+     */
+    public $model;
+
+    /**
      * @covers \FacturaScripts\Core\Model\RoleUser::getRoleAccess()
      */
     public function testGetRoleAccess()
