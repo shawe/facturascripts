@@ -212,7 +212,7 @@ abstract class ModelCore
      * @param DataBase $dataBase
      * @param string   $tableName
      */
-    abstract protected function loadModelFields(DataBase $dataBase, string $tableName);
+    abstract protected function loadModelFields(DataBase $dataBase, string $tableName): void;
 
     /**
      * Check and update the structure of the table if necessary.
