@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core\Model;
 
 use FacturaScripts\Core\Model\Pais;
@@ -29,11 +30,6 @@ use FacturaScripts\Test\Core\CustomTest;
  */
 final class PaisTest extends CustomTest
 {
-
-    protected function setUp()
-    {
-        $this->model = new Pais();
-    }
 
     /**
      * @covers \FacturaScripts\Core\Model\Pais::isDefault()
@@ -49,5 +45,10 @@ final class PaisTest extends CustomTest
     public function getPrimaryDescriptionColumn()
     {
         self::assertNotEmpty($this->model->primaryDescriptionColumn());
+    }
+
+    protected function setUp()
+    {
+        $this->model = new Pais();
     }
 }

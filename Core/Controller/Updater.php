@@ -64,14 +64,6 @@ class Updater extends Controller
     }
 
     /**
-     * @return float
-     */
-    public function getVersion()
-    {
-        return self::CORE_VERSION;
-    }
-
-    /**
      * Runs the controller's private logic.
      *
      * @param Response              $response
@@ -96,6 +88,14 @@ class Updater extends Controller
 
         $action = $this->request->get('action', '');
         $this->execAction($action);
+    }
+
+    /**
+     * @return float
+     */
+    public function getVersion()
+    {
+        return self::CORE_VERSION;
     }
 
     /**

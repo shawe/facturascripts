@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core\Model;
 
 use FacturaScripts\Core\Model\Ejercicio;
@@ -29,11 +30,6 @@ use FacturaScripts\Test\Core\CustomTest;
  */
 final class EjercicioTest extends CustomTest
 {
-
-    protected function setUp()
-    {
-        $this->model = new Ejercicio();
-    }
 
     /**
      * @covers \FacturaScripts\Core\Model\Ejercicio::abierto()
@@ -81,5 +77,10 @@ final class EjercicioTest extends CustomTest
     public function testYear()
     {
         $this->model->year();
+    }
+
+    protected function setUp()
+    {
+        $this->model = new Ejercicio();
     }
 }

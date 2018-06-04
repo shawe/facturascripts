@@ -71,6 +71,31 @@ class Ledger extends AccountingBase
      *
      * @return array
      */
+    protected function getData(): array
+    {
+        if (!$this->dataBase->tableExists('partidas')) {
+            return [];
+        }
+
+        $sql = 'SELECT asto.fecha, asto.numero, subc.codcuenta, cuentas.descripcion '
+            . ' as cuenta_descripcion, part.codsubcuenta, part.concepto, part.debe, part.haber '
+            . ' FROM asientos as asto, partidas AS part, subcuentas as subc, cuentas '
+            . ' WHERE asto.idasiento = part.idasiento '
+            . ' AND asto.fecha >= ' . $this->dataBase->var2str($this->dateFrom)
+            . ' AND asto.fecha <= ' . $this->dataBase->var2str($this->dateTo)
+            . ' AND subc.codejercicio = asto.codejercicio '
+            . ' AND cuentas.codejercicio = asto.codejercicio '
+            . ' AND subc.codsubcuenta = part.codsubcuenta '
+            . ' AND subc.idcuenta = cuentas.idcuenta '
+            . ' ORDER BY asto.fecha, asto.numero ASC';
+        return $this->dataBase->select($sql);
+    }
+
+    /**
+     * Return the appropiate data from database.
+     *
+     * @return array
+     */
     protected function getDataGrouped()
     {
         if (!$this->dataBase->tableExists('partidas')) {
@@ -90,31 +115,6 @@ class Ledger extends AccountingBase
             . ' AND subc.idcuenta = cuentas.idcuenta '
             . ' GROUP BY subc.codcuenta, cuentas.descripcion, part.codsubcuenta, subc.descripcion'
             . ' ORDER BY subc.codcuenta, part.codsubcuenta ASC';
-        return $this->dataBase->select($sql);
-    }
-
-    /**
-     * Return the appropiate data from database.
-     *
-     * @return array
-     */
-    protected function getData(): array
-    {
-        if (!$this->dataBase->tableExists('partidas')) {
-            return [];
-        }
-
-        $sql = 'SELECT asto.fecha, asto.numero, subc.codcuenta, cuentas.descripcion '
-            . ' as cuenta_descripcion, part.codsubcuenta, part.concepto, part.debe, part.haber '
-            . ' FROM asientos as asto, partidas AS part, subcuentas as subc, cuentas '
-            . ' WHERE asto.idasiento = part.idasiento '
-            . ' AND asto.fecha >= ' . $this->dataBase->var2str($this->dateFrom)
-            . ' AND asto.fecha <= ' . $this->dataBase->var2str($this->dateTo)
-            . ' AND subc.codejercicio = asto.codejercicio '
-            . ' AND cuentas.codejercicio = asto.codejercicio '
-            . ' AND subc.codsubcuenta = part.codsubcuenta '
-            . ' AND subc.idcuenta = cuentas.idcuenta '
-            . ' ORDER BY asto.fecha, asto.numero ASC';
         return $this->dataBase->select($sql);
     }
 

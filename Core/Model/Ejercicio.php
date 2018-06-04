@@ -95,60 +95,6 @@ class Ejercicio extends Base\ModelClass
     public $nombre;
 
     /**
-     * Returns the state of the exercise ABIERTO -> true | CLOSED -> false
-     *
-     * @return bool
-     */
-    public function abierto()
-    {
-        return $this->estado === 'ABIERTO';
-    }
-
-    /**
-     * Reset the values of all model properties.
-     */
-    public function clear()
-    {
-        parent::clear();
-        $this->nombre = '';
-        $this->fechainicio = date('01-01-Y');
-        $this->fechafin = date('31-12-Y');
-        $this->estado = 'ABIERTO';
-        $this->longsubcuenta = 10;
-    }
-
-    /**
-     * Returns the date closest to $date that is within the range of this exercise.
-     *
-     * @param string $fecha
-     * @param bool   $showError
-     *
-     * @return string
-     */
-    public function getBestFecha($fecha, $showError = false): string
-    {
-        $fecha2 = strtotime($fecha);
-
-        if ($fecha2 >= strtotime($this->fechainicio) && $fecha2 <= strtotime($this->fechafin)) {
-            return $fecha;
-        }
-
-        if ($fecha2 > strtotime($this->fechainicio)) {
-            if ($showError) {
-                self::$miniLog->alert(self::$i18n->trans('date-out-of-rage-selected-better'));
-            }
-
-            return $this->fechafin;
-        }
-
-        if ($showError) {
-            self::$miniLog->alert(self::$i18n->trans('date-out-of-rage-selected-better'));
-        }
-
-        return $this->fechainicio;
-    }
-
-    /**
      * Returns the exercise for the indicated date.
      * If it does not exist, create it.
      *
@@ -183,6 +129,29 @@ class Ejercicio extends Base\ModelClass
     }
 
     /**
+     * Returns the state of the exercise ABIERTO -> true | CLOSED -> false
+     *
+     * @return bool
+     */
+    public function abierto()
+    {
+        return $this->estado === 'ABIERTO';
+    }
+
+    /**
+     * Reset the values of all model properties.
+     */
+    public function clear()
+    {
+        parent::clear();
+        $this->nombre = '';
+        $this->fechainicio = date('01-01-Y');
+        $this->fechafin = date('31-12-Y');
+        $this->estado = 'ABIERTO';
+        $this->longsubcuenta = 10;
+    }
+
+    /**
      * This function is called when creating the model table. Returns the SQL
      * that will be executed after the creation of the table. Useful to insert values
      * default.
@@ -195,43 +164,6 @@ class Ejercicio extends Base\ModelClass
             . 'estado,longsubcuenta,plancontable,idasientoapertura,idasientopyg,idasientocierre) '
             . "VALUES ('" . date('Y') . "','" . date('Y') . "'," . self::$dataBase->var2str(date('01-01-Y'))
             . ', ' . self::$dataBase->var2str(date('31-12-Y')) . ",'ABIERTO',10,'08',null,null,null);";
-    }
-
-    /**
-     * Check if the indicated date is within the period of the exercise dates
-     *
-     * @param string $dateToCheck (string with date format)
-     * @return bool
-     */
-    public function inRange($dateToCheck): bool
-    {
-        $start = strtotime($this->fechainicio);
-        $end = strtotime($this->fechafin);
-        $date = strtotime($dateToCheck);
-        return (($date >= $start) && ($date <= $end));
-    }
-
-    /**
-     * Returns a new code for an exercise.
-     *
-     * @param string $cod
-     *
-     * @return string
-     */
-    public function newCodigo($cod = '0001')
-    {
-        $sql = 'SELECT * FROM ' . static::tableName() . ' WHERE codejercicio = ' . self::$dataBase->var2str($cod) . ';';
-        if (!self::$dataBase->select($sql)) {
-            return $cod;
-        }
-
-        $sql = 'SELECT MAX(' . self::$dataBase->sql2Int('codejercicio') . ') as cod FROM ' . static::tableName() . ';';
-        $newCod = self::$dataBase->select($sql);
-        if (!empty($newCod)) {
-            return sprintf('%04s', 1 + (int) $newCod[0]['cod']);
-        }
-
-        return '0001';
     }
 
     /**
@@ -279,6 +211,75 @@ class Ejercicio extends Base\ModelClass
         }
 
         return false;
+    }
+
+    /**
+     * Returns the date closest to $date that is within the range of this exercise.
+     *
+     * @param string $fecha
+     * @param bool   $showError
+     *
+     * @return string
+     */
+    public function getBestFecha($fecha, $showError = false): string
+    {
+        $fecha2 = strtotime($fecha);
+
+        if ($fecha2 >= strtotime($this->fechainicio) && $fecha2 <= strtotime($this->fechafin)) {
+            return $fecha;
+        }
+
+        if ($fecha2 > strtotime($this->fechainicio)) {
+            if ($showError) {
+                self::$miniLog->alert(self::$i18n->trans('date-out-of-rage-selected-better'));
+            }
+
+            return $this->fechafin;
+        }
+
+        if ($showError) {
+            self::$miniLog->alert(self::$i18n->trans('date-out-of-rage-selected-better'));
+        }
+
+        return $this->fechainicio;
+    }
+
+    /**
+     * Check if the indicated date is within the period of the exercise dates
+     *
+     * @param string $dateToCheck (string with date format)
+     *
+     * @return bool
+     */
+    public function inRange($dateToCheck): bool
+    {
+        $start = strtotime($this->fechainicio);
+        $end = strtotime($this->fechafin);
+        $date = strtotime($dateToCheck);
+        return (($date >= $start) && ($date <= $end));
+    }
+
+    /**
+     * Returns a new code for an exercise.
+     *
+     * @param string $cod
+     *
+     * @return string
+     */
+    public function newCodigo($cod = '0001')
+    {
+        $sql = 'SELECT * FROM ' . static::tableName() . ' WHERE codejercicio = ' . self::$dataBase->var2str($cod) . ';';
+        if (!self::$dataBase->select($sql)) {
+            return $cod;
+        }
+
+        $sql = 'SELECT MAX(' . self::$dataBase->sql2Int('codejercicio') . ') as cod FROM ' . static::tableName() . ';';
+        $newCod = self::$dataBase->select($sql);
+        if (!empty($newCod)) {
+            return sprintf('%04s', 1 + (int) $newCod[0]['cod']);
+        }
+
+        return '0001';
     }
 
     /**

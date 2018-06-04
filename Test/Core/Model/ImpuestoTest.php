@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core\Model;
 
 use FacturaScripts\Core\Model\Impuesto;
@@ -30,16 +31,16 @@ use FacturaScripts\Test\Core\CustomTest;
 final class ImpuestoTest extends CustomTest
 {
 
-    protected function setUp()
-    {
-        $this->model = new Impuesto();
-    }
-
     /**
      * @covers \FacturaScripts\Core\Model\Impuesto::isDefault()
      */
     public function testIsDefault()
     {
         $this->model->isDefault();
+    }
+
+    protected function setUp()
+    {
+        $this->model = new Impuesto();
     }
 }

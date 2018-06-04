@@ -39,20 +39,18 @@ class BusinessDocumentView extends BaseView
      * @var Model\EstadoDocumento[]
      */
     public $documentStates;
-
-    /**
-     * Line columns from xmlview.
-     *
-     * @var array
-     */
-    private $lineOptions;
-
     /**
      * Lines of document, the body.
      *
      * @var Model\Base\BusinessDocumentLine[]
      */
     public $lines;
+    /**
+     * Line columns from xmlview.
+     *
+     * @var array
+     */
+    private $lineOptions;
 
     /**
      * DocumentView constructor and initialization.

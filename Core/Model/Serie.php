@@ -64,16 +64,6 @@ class Serie extends Base\ModelClass
     }
 
     /**
-     * Returns True if is the default serie for the company.
-     *
-     * @return bool
-     */
-    public function isDefault(): bool
-    {
-        return $this->codserie === AppSettings::get('default', 'codserie');
-    }
-
-    /**
      * Returns the name of the column that is the primary key of the model.
      *
      * @return string
@@ -114,5 +104,15 @@ class Serie extends Base\ModelClass
         }
 
         return parent::test();
+    }
+
+    /**
+     * Returns True if is the default serie for the company.
+     *
+     * @return bool
+     */
+    public function isDefault(): bool
+    {
+        return $this->codserie === AppSettings::get('default', 'codserie');
     }
 }

@@ -48,23 +48,6 @@ class EditRole extends ExtendedController\PanelController
     }
 
     /**
-     * Add the indicated page list to the Role group
-     * and all users who are in that group
-     *
-     * @param string       $codrole
-     * @param Model\Page[] $pages
-     *
-     * @throws \Exception
-     */
-    private function addRoleAccess($codrole, $pages)
-    {
-        // add Pages to Rol
-        if (!Model\RoleAccess::addPagesToRole($codrole, $pages)) {
-            throw new \Exception($this->i18n->trans('cancel-process'));
-        }
-    }
-
-    /**
      * Load views
      */
     protected function createViews()
@@ -112,25 +95,6 @@ class EditRole extends ExtendedController\PanelController
     }
 
     /**
-     * List of all the pages included in a menu option
-     * and, optionally, included in a submenu option
-     *
-     * @return Model\Page[]
-     */
-    private function getPages(): array
-    {
-        $menu = $this->request->get('menu', '---null---');
-        if ($menu === '---null---') {
-            return [];
-        }
-
-        $page = new Model\Page();
-        $where = [new DataBaseWhere('menu', $menu)];
-
-        return $page->all($where);
-    }
-
-    /**
      * Load view data
      *
      * @param string                      $viewName
@@ -154,5 +118,41 @@ class EditRole extends ExtendedController\PanelController
                 $view->loadData('', $where, $order, 0, 0);
                 break;
         }
+    }
+
+    /**
+     * Add the indicated page list to the Role group
+     * and all users who are in that group
+     *
+     * @param string       $codrole
+     * @param Model\Page[] $pages
+     *
+     * @throws \Exception
+     */
+    private function addRoleAccess($codrole, $pages)
+    {
+        // add Pages to Rol
+        if (!Model\RoleAccess::addPagesToRole($codrole, $pages)) {
+            throw new \Exception($this->i18n->trans('cancel-process'));
+        }
+    }
+
+    /**
+     * List of all the pages included in a menu option
+     * and, optionally, included in a submenu option
+     *
+     * @return Model\Page[]
+     */
+    private function getPages(): array
+    {
+        $menu = $this->request->get('menu', '---null---');
+        if ($menu === '---null---') {
+            return [];
+        }
+
+        $page = new Model\Page();
+        $where = [new DataBaseWhere('menu', $menu)];
+
+        return $page->all($where);
     }
 }

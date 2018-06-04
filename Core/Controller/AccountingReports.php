@@ -65,21 +65,6 @@ class AccountingReports extends Controller
     }
 
     /**
-     * Return list of accounting documents
-     *
-     * @return array
-     */
-    public function getReports(): array
-    {
-        return [
-            'ledger' => ['description' => 'ledger', 'grouping' => true],
-            'balance-ammounts' => ['description' => 'balance-ammounts', 'grouping' => false],
-            'balance-sheet' => ['description' => 'balance-sheet', 'grouping' => false],
-            'profit' => ['description' => 'profit-and-loss-balance', 'grouping' => false],
-        ];
-    }
-
-    /**
      * Runs the controller's private logic.
      *
      * @param Response              $response
@@ -98,6 +83,21 @@ class AccountingReports extends Controller
         if ($action !== '') {
             $this->execAction($action);
         }
+    }
+
+    /**
+     * Return list of accounting documents
+     *
+     * @return array
+     */
+    public function getReports(): array
+    {
+        return [
+            'ledger' => ['description' => 'ledger', 'grouping' => true],
+            'balance-ammounts' => ['description' => 'balance-ammounts', 'grouping' => false],
+            'balance-sheet' => ['description' => 'balance-sheet', 'grouping' => false],
+            'profit' => ['description' => 'profit-and-loss-balance', 'grouping' => false],
+        ];
     }
 
     /**

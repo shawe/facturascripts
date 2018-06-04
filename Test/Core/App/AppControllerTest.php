@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core\App;
 
 use FacturaScripts\Core\App\AppController;
@@ -33,15 +34,6 @@ class AppControllerTest extends TestCase
     protected $object;
 
     /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
-    protected function setUp()
-    {
-        $this->object = new AppController();
-    }
-
-    /**
      * @covers \FacturaScripts\Core\App\AppController::connect()
      */
     public function testConnect()
@@ -55,5 +47,14 @@ class AppControllerTest extends TestCase
     public function testRun()
     {
         self::assertTrue($this->object->run());
+    }
+
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     */
+    protected function setUp()
+    {
+        $this->object = new AppController();
     }
 }

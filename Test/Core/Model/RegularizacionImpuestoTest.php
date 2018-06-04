@@ -31,11 +31,6 @@ use FacturaScripts\Test\Core\CustomTest;
 final class RegularizacionImpuestoTest extends CustomTest
 {
 
-    protected function setUp()
-    {
-        $this->model = new RegularizacionImpuesto();
-    }
-
     /**
      * @covers \FacturaScripts\Core\Model\RegularizacionImpuesto::getPartidas()
      */
@@ -58,5 +53,10 @@ final class RegularizacionImpuestoTest extends CustomTest
     public function testLoadNextPeriod()
     {
         $this->model->loadNextPeriod();
+    }
+
+    protected function setUp()
+    {
+        $this->model = new RegularizacionImpuesto();
     }
 }

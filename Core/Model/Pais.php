@@ -56,16 +56,6 @@ class Pais extends Base\ModelClass
     public $nombre;
 
     /**
-     * Returns True if the country is the default of the company.
-     *
-     * @return bool
-     */
-    public function isDefault(): bool
-    {
-        return $this->codpais === AppSettings::get('default', 'codpais');
-    }
-
-    /**
      * Returns the name of the column that is the model's primary key.
      *
      * @return string
@@ -116,5 +106,15 @@ class Pais extends Base\ModelClass
         }
 
         return parent::test();
+    }
+
+    /**
+     * Returns True if the country is the default of the company.
+     *
+     * @return bool
+     */
+    public function isDefault(): bool
+    {
+        return $this->codpais === AppSettings::get('default', 'codpais');
     }
 }

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Base\DataBase;
 
 use FacturaScripts\Core\Base\DataBase;
@@ -111,6 +112,31 @@ class DataBaseWhere
     }
 
     /**
+     * Given a DataBaseWhere array, it returns the full WHERE clause
+     *
+     * @param DataBaseWhere[] $whereItems
+     *
+     * @return string
+     */
+    public static function getSQLWhere($whereItems): string
+    {
+        $result = '';
+        $join = false;
+        foreach ($whereItems as $item) {
+            if (isset($item)) {
+                $result .= $item->getSQLWhereItem($join);
+                $join = true;
+            }
+        }
+
+        if ($result !== '') {
+            $result = ' WHERE ' . $result;
+        }
+
+        return $result;
+    }
+
+    /**
      * Returns a string to apply to the WHERE clause.
      *
      * @param bool $applyOperation
@@ -132,31 +158,6 @@ class DataBaseWhere
 
         if ($applyOperation) {
             $result = ' ' . $this->operation . ' ' . $result;
-        }
-
-        return $result;
-    }
-
-    /**
-     * Given a DataBaseWhere array, it returns the full WHERE clause
-     *
-     * @param DataBaseWhere[] $whereItems
-     *
-     * @return string
-     */
-    public static function getSQLWhere($whereItems): string
-    {
-        $result = '';
-        $join = false;
-        foreach ($whereItems as $item) {
-            if (isset($item)) {
-                $result .= $item->getSQLWhereItem($join);
-                $join = true;
-            }
-        }
-
-        if ($result !== '') {
-            $result = ' WHERE ' . $result;
         }
 
         return $result;

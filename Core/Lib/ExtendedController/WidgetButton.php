@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 /**
@@ -118,46 +119,6 @@ class WidgetButton implements VisualItemInterface
     }
 
     /**
-     * Create and load the structure of attributes from a XML file.
-     *
-     * @param string $hint
-     *
-     * @return string
-     */
-    public function getHintHTML($hint): string
-    {
-        return empty($hint) ? '' : ' data-toggle="popover" data-placement="auto" data-trigger="hover" data-content="'
-            . $hint . '" ';
-    }
-
-    /**
-     * Returns the HTML code to display a button
-     *
-     * @param string $label
-     * @param string $value
-     * @param string $hint
-     * @param string $class
-     *
-     * @return string
-     */
-    public function getHTML($label, $value = '', $hint = '', $class = 'col-sm-auto'): string
-    {
-        switch ($this->type) {
-            case 'calculate':
-                return $this->getCalculateHTML($label, $value, $hint);
-
-            case 'action':
-                return $this->getActionHTML($label, $hint, $value, $class);
-
-            case 'modal':
-                return $this->getModalHTML($label, $class);
-
-            default:
-                return '';
-        }
-    }
-
-    /**
      * Loads the attributes structure from a JSON file
      *
      * @param array $button
@@ -226,6 +187,46 @@ class WidgetButton implements VisualItemInterface
         $widget->loadFromXML($button);
 
         return $widget;
+    }
+
+    /**
+     * Create and load the structure of attributes from a XML file.
+     *
+     * @param string $hint
+     *
+     * @return string
+     */
+    public function getHintHTML($hint): string
+    {
+        return empty($hint) ? '' : ' data-toggle="popover" data-placement="auto" data-trigger="hover" data-content="'
+            . $hint . '" ';
+    }
+
+    /**
+     * Returns the HTML code to display a button
+     *
+     * @param string $label
+     * @param string $value
+     * @param string $hint
+     * @param string $class
+     *
+     * @return string
+     */
+    public function getHTML($label, $value = '', $hint = '', $class = 'col-sm-auto'): string
+    {
+        switch ($this->type) {
+            case 'calculate':
+                return $this->getCalculateHTML($label, $value, $hint);
+
+            case 'action':
+                return $this->getActionHTML($label, $hint, $value, $class);
+
+            case 'modal':
+                return $this->getModalHTML($label, $class);
+
+            default:
+                return '';
+        }
     }
 
     /**

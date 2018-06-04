@@ -51,7 +51,7 @@ class ArticulosProveedor extends AbstractRandom
         if (empty($proveedores)) {
             return 0;
         }
-        
+
         $art = $this->model;
         for ($generated = 0; $generated < $num; ++$generated) {
             if (!isset($articulos[$generated])) {

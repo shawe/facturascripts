@@ -122,20 +122,6 @@ class WidgetItemSelect extends WidgetItem
     }
 
     /**
-     *  Translate the fixed titles, if they exist
-     */
-    private function applyTranslations()
-    {
-        $i18n = new Translator();
-        $count = count($this->values);
-        for ($index = 0; $index < $count; $index++) {
-            if (!empty($this->values[$index]['title'])) {
-                $this->values[$index]['title'] = $i18n->trans($this->values[$index]['title']);
-            }
-        }
-    }
-
-    /**
      * Loads the attributes structure from a JSON file
      *
      * @param array $widget
@@ -234,6 +220,20 @@ class WidgetItemSelect extends WidgetItem
                 'value' => $codeModel->code,
                 'title' => $title
             ];
+        }
+    }
+
+    /**
+     *  Translate the fixed titles, if they exist
+     */
+    private function applyTranslations()
+    {
+        $i18n = new Translator();
+        $count = count($this->values);
+        for ($index = 0; $index < $count; $index++) {
+            if (!empty($this->values[$index]['title'])) {
+                $this->values[$index]['title'] = $i18n->trans($this->values[$index]['title']);
+            }
         }
     }
 }

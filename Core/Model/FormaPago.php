@@ -134,16 +134,6 @@ class FormaPago extends Base\ModelClass
     }
 
     /**
-     * Returns True if is the default payment method for the company.
-     *
-     * @return bool
-     */
-    public function isDefault(): bool
-    {
-        return $this->codpago === AppSettings::get('default', 'codpago');
-    }
-
-    /**
      * Returns the name of the column that is the primary key of the model.
      *
      * @return string
@@ -185,6 +175,16 @@ class FormaPago extends Base\ModelClass
         }
 
         return parent::test();
+    }
+
+    /**
+     * Returns True if is the default payment method for the company.
+     *
+     * @return bool
+     */
+    public function isDefault(): bool
+    {
+        return $this->codpago === AppSettings::get('default', 'codpago');
     }
 
     /**

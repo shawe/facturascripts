@@ -79,6 +79,33 @@ class EditPageOption extends Base\Controller
     }
 
     /**
+     * Runs the controller's private logic.
+     *
+     * @param Response                   $response
+     * @param Model\User                 $user
+     * @param Base\ControllerPermissions $permissions
+     */
+    public function privateCore(&$response, $user, $permissions)
+    {
+        parent::privateCore($response, $user, $permissions);
+
+        $this->getParams();
+        $this->model = new Model\PageOption();
+        $this->model->getForUser($this->selectedViewName, $this->selectedUser);
+
+        $action = $this->request->get('action', '');
+        switch ($action) {
+            case 'save':
+                $this->saveData();
+                break;
+
+            case 'delete':
+                $this->deleteData();
+                break;
+        }
+    }
+
+    /**
      * Returns the text for the data main panel header
      *
      * @return string
@@ -128,33 +155,6 @@ class EditPageOption extends Base\Controller
         $this->backPage = $this->request->get('url') ?: $this->selectedViewName;
 
         $this->selectedUser = $this->user->admin ? $this->request->get('nick', '') : $this->user->nick;
-    }
-
-    /**
-     * Runs the controller's private logic.
-     *
-     * @param Response                   $response
-     * @param Model\User                 $user
-     * @param Base\ControllerPermissions $permissions
-     */
-    public function privateCore(&$response, $user, $permissions)
-    {
-        parent::privateCore($response, $user, $permissions);
-
-        $this->getParams();
-        $this->model = new Model\PageOption();
-        $this->model->getForUser($this->selectedViewName, $this->selectedUser);
-
-        $action = $this->request->get('action', '');
-        switch ($action) {
-            case 'save':
-                $this->saveData();
-                break;
-
-            case 'delete':
-                $this->deleteData();
-                break;
-        }
     }
 
     /**

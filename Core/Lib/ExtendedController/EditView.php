@@ -62,16 +62,6 @@ class EditView extends BaseView implements DataViewInterface
     }
 
     /**
-     * Method to export the view data.
-     *
-     * @param ExportManager $exportManager
-     */
-    public function export(&$exportManager)
-    {
-        $exportManager->generateModelPage($this->model, $this->getColumns(), $this->title);
-    }
-
-    /**
      * Returns the column configuration
      *
      * @return GroupItem[]
@@ -79,26 +69,6 @@ class EditView extends BaseView implements DataViewInterface
     public function getColumns()
     {
         return $this->pageOption->columns;
-    }
-
-    /**
-     * Returns the text for the data panel header
-     *
-     * @return string
-     */
-    public function getPanelHeader(): string
-    {
-        return $this->title;
-    }
-
-    /**
-     * Returns the text for the data panel footer
-     *
-     * @return string
-     */
-    public function getPanelFooter(): string
-    {
-        return '';
     }
 
     /**
@@ -134,5 +104,35 @@ class EditView extends BaseView implements DataViewInterface
         if (!empty($column)) {
             $column->widget->readOnly = ($this->count > 0);
         }
+    }
+
+    /**
+     * Method to export the view data.
+     *
+     * @param ExportManager $exportManager
+     */
+    public function export(&$exportManager)
+    {
+        $exportManager->generateModelPage($this->model, $this->getColumns(), $this->title);
+    }
+
+    /**
+     * Returns the text for the data panel header
+     *
+     * @return string
+     */
+    public function getPanelHeader(): string
+    {
+        return $this->title;
+    }
+
+    /**
+     * Returns the text for the data panel footer
+     *
+     * @return string
+     */
+    public function getPanelFooter(): string
+    {
+        return '';
     }
 }

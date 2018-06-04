@@ -195,6 +195,47 @@ class ListView extends BaseView implements DataViewInterface
     }
 
     /**
+     * List of columns and its configuration
+     * (Array of ColumnItem)
+     *
+     * @return ColumnItem[]
+     */
+    public function getColumns(): array
+    {
+        $keys = array_keys($this->pageOption->columns);
+        if (empty($keys)) {
+            return [];
+        }
+
+        $key = $keys[0];
+        return $this->pageOption->columns[$key]->columns;
+    }
+
+    /**
+     * Load the data in the cursor property, according to the where filter specified.
+     *
+     * @param mixed           $code
+     * @param DataBaseWhere[] $where
+     * @param array           $order
+     * @param int             $offset
+     * @param int             $limit
+     */
+    public function loadData($code = false, array $where = [], array $order = [], $offset = 0, $limit = FS_ITEM_LIMIT)
+    {
+        $this->order = empty($order) ? $this->getSQLOrderBy($this->selectedOrderBy) : $order;
+        $this->count = is_null($this->model) ? 0 : $this->model->count($where);
+        /// needed when megasearch force data reload
+        $this->cursor = [];
+        if ($this->count > 0) {
+            $this->cursor = $this->model->all($where, $this->order, $offset, $limit);
+        }
+
+        /// store values where & offset for exportation
+        $this->offset = $offset;
+        $this->where = $where;
+    }
+
+    /**
      * Method to export the view data.
      *
      * @param ExportManager $exportManager
@@ -205,6 +246,36 @@ class ListView extends BaseView implements DataViewInterface
             $exportManager->generateListModelPage(
                 $this->model, $this->where, $this->order, $this->offset, $this->getColumns(), $this->title
             );
+        }
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return string
+     */
+    public function getURL(string $type): string
+    {
+        if (empty($this->where)) {
+            return parent::getURL($type);
+        }
+
+        $extra = '';
+        foreach (DataBaseWhere::getFieldsFilter($this->where) as $field => $value) {
+            $extra .= ('' === $extra) ? '?' : '&';
+            $extra .= $field . '=' . $value;
+        }
+
+        switch ($type) {
+            case 'list':
+                return parent::getURL($type) . $extra;
+
+            case 'new':
+                $extra .= ('' === $extra) ? '?action=insert' : '&action=insert';
+                return parent::getURL($type) . $extra;
+
+            default:
+                return parent::getURL($type);
         }
     }
 
@@ -224,23 +295,6 @@ class ListView extends BaseView implements DataViewInterface
         }
 
         return '';
-    }
-
-    /**
-     * List of columns and its configuration
-     * (Array of ColumnItem)
-     *
-     * @return ColumnItem[]
-     */
-    public function getColumns(): array
-    {
-        $keys = array_keys($this->pageOption->columns);
-        if (empty($keys)) {
-            return [];
-        }
-
-        $key = $keys[0];
-        return $this->pageOption->columns[$key]->columns;
     }
 
     /**
@@ -304,60 +358,6 @@ class ListView extends BaseView implements DataViewInterface
             }
         }
         return $result;
-    }
-
-    /**
-     * @param string $type
-     *
-     * @return string
-     */
-    public function getURL(string $type): string
-    {
-        if (empty($this->where)) {
-            return parent::getURL($type);
-        }
-
-        $extra = '';
-        foreach (DataBaseWhere::getFieldsFilter($this->where) as $field => $value) {
-            $extra .= ('' === $extra) ? '?' : '&';
-            $extra .= $field . '=' . $value;
-        }
-
-        switch ($type) {
-            case 'list':
-                return parent::getURL($type) . $extra;
-
-            case 'new':
-                $extra .= ('' === $extra) ? '?action=insert' : '&action=insert';
-                return parent::getURL($type) . $extra;
-
-            default:
-                return parent::getURL($type);
-        }
-    }
-
-    /**
-     * Load the data in the cursor property, according to the where filter specified.
-     *
-     * @param mixed           $code
-     * @param DataBaseWhere[] $where
-     * @param array           $order
-     * @param int             $offset
-     * @param int             $limit
-     */
-    public function loadData($code = false, array $where = [], array $order = [], $offset = 0, $limit = FS_ITEM_LIMIT)
-    {
-        $this->order = empty($order) ? $this->getSQLOrderBy($this->selectedOrderBy) : $order;
-        $this->count = is_null($this->model) ? 0 : $this->model->count($where);
-        /// needed when megasearch force data reload
-        $this->cursor = [];
-        if ($this->count > 0) {
-            $this->cursor = $this->model->all($where, $this->order, $offset, $limit);
-        }
-
-        /// store values where & offset for exportation
-        $this->offset = $offset;
-        $this->where = $where;
     }
 
     /**

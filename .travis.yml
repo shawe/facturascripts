@@ -2,7 +2,6 @@ sudo: false
 language: php
 
 php:
-  - 7.0
   - 7.1
   - 7.2
   - nightly
@@ -32,6 +31,8 @@ script:
   - vendor/bin/phpunit --configuration phpunit.xml --coverage-text || echo 'IGNORE ON FAIL, THIS ARE COVERAGE TEST DETAILS'
 # Run PHPUnit test.
   - vendor/bin/phpunit --configuration phpunit.xml
+# Show minilog.
+  - echo MINILOG.json || echo 'SUCCESS'
 matrix:
   include:
     - php: hhvm

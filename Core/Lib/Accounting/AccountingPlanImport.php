@@ -47,6 +47,12 @@ class AccountingPlanImport
      * @var MiniLog
      */
     private $miniLog;
+    /**
+     * Exercise related to the accounting plan.
+     *
+     * @var Model\Ejercicio
+     */
+    private $ejercicio;
 
     public function __construct()
     {
@@ -70,13 +76,6 @@ class AccountingPlanImport
 
         $this->processCsvData($filePath);
     }
-
-    /**
-     * Exercise related to the accounting plan.
-     *
-     * @var Model\Ejercicio
-     */
-    private $ejercicio;
 
     /**
      * Import data from XML file.

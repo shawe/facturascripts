@@ -66,6 +66,20 @@ class AppAPI extends App
     }
 
     /**
+     * Return an array with the error message, and the corresponding status.
+     *
+     * @param string $text
+     * @param int    $status
+     *
+     * @return void
+     */
+    protected function fatalError(string $text, int $status)
+    {
+        $this->response->setStatusCode($status);
+        $this->response->setContent(json_encode(['error' => $text]));
+    }
+
+    /**
      * Returns true if the client is authenticated with the header token.
      *
      * @author Ángel Guzmán Maeso <angel@guzmanmaeso.com>
@@ -179,19 +193,5 @@ class AppAPI extends App
 
         $this->fatalError('API-VERSION-NOT-FOUND', Response::HTTP_NOT_FOUND);
         return true;
-    }
-
-    /**
-     * Return an array with the error message, and the corresponding status.
-     *
-     * @param string $text
-     * @param int    $status
-     *
-     * @return void
-     */
-    protected function fatalError(string $text, int $status)
-    {
-        $this->response->setStatusCode($status);
-        $this->response->setContent(json_encode(['error' => $text]));
     }
 }

@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core\Model;
 
 use FacturaScripts\Core\Model\Asiento;
@@ -29,11 +30,6 @@ use FacturaScripts\Test\Core\CustomTest;
  */
 final class AsientoTest extends CustomTest
 {
-
-    protected function setUp()
-    {
-        $this->model = new Asiento();
-    }
 
     /**
      * @covers \FacturaScripts\Core\Model\Base\ModelClass::primaryDescriptionColumn()
@@ -76,6 +72,11 @@ final class AsientoTest extends CustomTest
     public function testRenumber()
     {
         $this->model->renumber();
+    }
+
+    protected function setUp()
+    {
+        $this->model = new Asiento();
     }
 
     /**

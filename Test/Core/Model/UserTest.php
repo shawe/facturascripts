@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core\Model;
 
 use FacturaScripts\Core\Model\User;
@@ -29,11 +30,6 @@ use FacturaScripts\Test\Core\CustomTest;
  */
 final class UserTest extends CustomTest
 {
-
-    protected function setUp()
-    {
-        $this->model = new User();
-    }
 
     /**
      * @covers \FacturaScripts\Core\Model\User::newLogkey()
@@ -53,5 +49,10 @@ final class UserTest extends CustomTest
     {
         $this->model = $this->model->get('admin');
         $this->model->setPassword('admin');
+    }
+
+    protected function setUp()
+    {
+        $this->model = new User();
     }
 }

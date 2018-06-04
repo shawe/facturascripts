@@ -163,60 +163,6 @@ class Subcuenta extends Base\ModelClass
     }
 
     /**
-     * @return string
-     */
-    public function getSpecialAccountCode()
-    {
-        $result = $this->codcuentaesp;
-        if (empty($result)) {
-            $account = new Cuenta();
-            if ($account->loadFromCode($this->idcuenta)) {
-                $result = $account->codcuentaesp;
-            }
-        }
-        return $result;
-    }
-
-    /**
-     * Load de ID for account
-     *
-     * @return int
-     */
-    public function getIdAccount(): int
-    {
-        $where = [
-            new DataBaseWhere('codejercicio', $this->codejercicio),
-            new DataBaseWhere('codcuenta', $this->codcuenta),
-        ];
-
-        $account = new Cuenta();
-        $account->loadFromCode('', $where);
-        return $account->idcuenta;
-    }
-
-    /**
-     * Check if exists error in data of account
-     *
-     * @return bool
-     */
-    private function testErrorInData(): bool
-    {
-        return empty($this->codcuenta) || empty($this->codsubcuenta) || empty($this->descripcion) || empty($this->codejercicio);
-    }
-
-    /**
-     * Check if exists error in long of subaccount
-     *
-     * @return bool
-     */
-    private function testErrorInLengthSubAccount(): bool
-    {
-        $exercise = new Ejercicio();
-        $exercise->loadFromCode($this->codejercicio);
-        return empty($exercise->codejercicio) || (strlen($this->codsubcuenta) <> $exercise->longsubcuenta);
-    }
-
-    /**
      * Returns True if there is no erros on properties values.
      *
      * @return bool
@@ -295,6 +241,51 @@ class Subcuenta extends Base\ModelClass
     }
 
     /**
+     * Returns the url where to see / modify the data.
+     *
+     * @param string $type
+     * @param string $list
+     *
+     * @return string
+     */
+    public function url(string $type = 'auto', string $list = 'List'): string
+    {
+        return parent::url($type, 'ListCuenta?active=List');
+    }
+
+    /**
+     * @return string
+     */
+    public function getSpecialAccountCode()
+    {
+        $result = $this->codcuentaesp;
+        if (empty($result)) {
+            $account = new Cuenta();
+            if ($account->loadFromCode($this->idcuenta)) {
+                $result = $account->codcuentaesp;
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * Load de ID for account
+     *
+     * @return int
+     */
+    public function getIdAccount(): int
+    {
+        $where = [
+            new DataBaseWhere('codejercicio', $this->codejercicio),
+            new DataBaseWhere('codcuenta', $this->codcuenta),
+        ];
+
+        $account = new Cuenta();
+        $account->loadFromCode('', $where);
+        return $account->idcuenta;
+    }
+
+    /**
      * Update account balance
      *
      * @param string $date
@@ -351,15 +342,24 @@ class Subcuenta extends Base\ModelClass
     }
 
     /**
-     * Returns the url where to see / modify the data.
+     * Check if exists error in data of account
      *
-     * @param string $type
-     * @param string $list
-     *
-     * @return string
+     * @return bool
      */
-    public function url(string $type = 'auto', string $list = 'List'): string
+    private function testErrorInData(): bool
     {
-        return parent::url($type, 'ListCuenta?active=List');
+        return empty($this->codcuenta) || empty($this->codsubcuenta) || empty($this->descripcion) || empty($this->codejercicio);
+    }
+
+    /**
+     * Check if exists error in long of subaccount
+     *
+     * @return bool
+     */
+    private function testErrorInLengthSubAccount(): bool
+    {
+        $exercise = new Ejercicio();
+        $exercise->loadFromCode($this->codejercicio);
+        return empty($exercise->codejercicio) || (strlen($this->codsubcuenta) <> $exercise->longsubcuenta);
     }
 }

@@ -71,38 +71,6 @@ class BalanceSheet extends AccountingBase
     }
 
     /**
-     * Format de balance including then chapters
-     *
-     * @param array $data
-     *
-     * @return array
-     */
-    private function calcSheetBalance($data): array
-    {
-        $balanceCalculado = [];
-        foreach ($data as $lineaBalance) {
-            if (!array_key_exists($lineaBalance['naturaleza'], $balanceCalculado)) {
-                $balanceCalculado[$lineaBalance['naturaleza']] = ['descripcion' => $lineaBalance['naturaleza'] = 'A' ? 'ACTIVO' : 'PASIVO', 'saldo' => $lineaBalance['saldo'], 'saldoprev' => $lineaBalance['saldoprev']];
-            } else {
-                $balanceCalculado[$lineaBalance['naturaleza']]['saldo'] += $lineaBalance['saldo'];
-                $balanceCalculado[$lineaBalance['naturaleza']]['saldoprev'] += $lineaBalance['saldoprev'];
-            }
-
-            $this->processDescription($lineaBalance, $balanceCalculado, 'descripcion1');
-            $this->processDescription($lineaBalance, $balanceCalculado, 'descripcion2');
-            $this->processDescription($lineaBalance, $balanceCalculado, 'descripcion3');
-            $this->processDescription($lineaBalance, $balanceCalculado, 'descripcion4');
-        }
-
-        $balanceFinal = [];
-        foreach ($balanceCalculado as $lineaBalance) {
-            $balanceFinal[] = $this->processLine($lineaBalance);
-        }
-
-        return $balanceFinal;
-    }
-
-    /**
      * Obtains the balances for each one of the sections of the balance sheet according to their assigned accounts.
      *
      * @return array
@@ -168,5 +136,37 @@ class BalanceSheet extends AccountingBase
         $line['saldoprev'] = $this->divisaTools::format($line['saldoprev'], FS_NF0, '');
 
         return $line;
+    }
+
+    /**
+     * Format de balance including then chapters
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    private function calcSheetBalance($data): array
+    {
+        $balanceCalculado = [];
+        foreach ($data as $lineaBalance) {
+            if (!array_key_exists($lineaBalance['naturaleza'], $balanceCalculado)) {
+                $balanceCalculado[$lineaBalance['naturaleza']] = ['descripcion' => $lineaBalance['naturaleza'] = 'A' ? 'ACTIVO' : 'PASIVO', 'saldo' => $lineaBalance['saldo'], 'saldoprev' => $lineaBalance['saldoprev']];
+            } else {
+                $balanceCalculado[$lineaBalance['naturaleza']]['saldo'] += $lineaBalance['saldo'];
+                $balanceCalculado[$lineaBalance['naturaleza']]['saldoprev'] += $lineaBalance['saldoprev'];
+            }
+
+            $this->processDescription($lineaBalance, $balanceCalculado, 'descripcion1');
+            $this->processDescription($lineaBalance, $balanceCalculado, 'descripcion2');
+            $this->processDescription($lineaBalance, $balanceCalculado, 'descripcion3');
+            $this->processDescription($lineaBalance, $balanceCalculado, 'descripcion4');
+        }
+
+        $balanceFinal = [];
+        foreach ($balanceCalculado as $lineaBalance) {
+            $balanceFinal[] = $this->processLine($lineaBalance);
+        }
+
+        return $balanceFinal;
     }
 }

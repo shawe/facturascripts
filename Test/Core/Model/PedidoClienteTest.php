@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core\Model;
 
 use FacturaScripts\Core\Model\PedidoCliente;
@@ -29,11 +30,6 @@ use FacturaScripts\Test\Core\CustomTest;
  */
 final class PedidoClienteTest extends CustomTest
 {
-
-    protected function setUp()
-    {
-        $this->model = new PedidoCliente();
-    }
 
     /**
      * @covers \FacturaScripts\Core\Model\PedidoCliente::getLines()
@@ -49,5 +45,10 @@ final class PedidoClienteTest extends CustomTest
     public function testGetNewLine()
     {
         self::assertNotEmpty($this->model->getNewLine());
+    }
+
+    protected function setUp()
+    {
+        $this->model = new PedidoCliente();
     }
 }

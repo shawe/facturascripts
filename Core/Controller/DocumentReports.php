@@ -281,16 +281,16 @@ class DocumentReports extends Controller
             case \in_array('d', $options, false):
                 $concat[] = 'LPAD(CAST(EXTRACT(DAY FROM fecha) AS CHAR(10)), 2, \'0\')';
                 $concat[] = ' \'-\' ';
-                // no break
+            // no break
 
             case \in_array('m', $options, false):
                 $concat[] = 'LPAD(CAST(EXTRACT(MONTH FROM fecha) AS CHAR(10)), 2, \'0\')';
                 $concat[] = ' \'-\' ';
-                // no break
+            // no break
 
             case \in_array('Y', $options, false):
                 $concat[] = 'CAST(EXTRACT(YEAR FROM fecha) AS CHAR(10))';
-                // no break
+            // no break
         }
 
         if (strtolower(FS_DB_TYPE) === 'mysql') {

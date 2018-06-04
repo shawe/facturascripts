@@ -32,8 +32,8 @@
     {% set model = view.model %}
 
     <script type="text/javascript">
-        documentLineData = {{ view.getLineData() | raw }};
-        documentUrl = '{{ model.url('edit') | raw }}';
+        const documentLineData = '{{ view.getLineData() | raw }}';
+        const documentUrl = '{{ model.url('edit') | raw }}';
     </script>
 
     <form name="f_document_primary" action="#" method="post">
@@ -130,9 +130,9 @@
             <label for="{{ id }}"></label>
             <input type="{{ type }}" id="{{ id }}" name="{{ name }}" value="{{ value }}"
                 {% if attributes.class is not defined %} class="form-control"{% endif %}
-                {% for attribute,attrValue in attributes %}
-                    {{ attribute }}="{{ attrValue }}"
-                {% endfor %}
+            {% for attribute,attrValue in attributes %}
+            {{ attribute }}="{{ attrValue }}"
+            {% endfor %}
             /> {# end input #}
 
             {% if icon %}

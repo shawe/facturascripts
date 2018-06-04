@@ -55,16 +55,6 @@ class Almacen extends Base\Address
     public $telefono;
 
     /**
-     * Returns True if is the default wharehouse for the company.
-     *
-     * @return bool
-     */
-    public function isDefault(): bool
-    {
-        return $this->codalmacen === AppSettings::get('default', 'codalmacen');
-    }
-
-    /**
      * Returns the name of the column that is the primary key of the model.
      *
      * @return string
@@ -109,5 +99,15 @@ class Almacen extends Base\Address
         }
 
         return parent::test();
+    }
+
+    /**
+     * Returns True if is the default wharehouse for the company.
+     *
+     * @return bool
+     */
+    public function isDefault(): bool
+    {
+        return $this->codalmacen === AppSettings::get('default', 'codalmacen');
     }
 }

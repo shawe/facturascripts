@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core\App;
 
 use FacturaScripts\Core\App\AppCron;
@@ -33,15 +34,6 @@ class AppCronTest extends TestCase
     protected $object;
 
     /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
-    protected function setUp()
-    {
-        $this->object = new AppCron();
-    }
-
-    /**
      * @covers \FacturaScripts\Core\App\AppCron::connect()
      */
     public function testConnect()
@@ -55,5 +47,14 @@ class AppCronTest extends TestCase
     public function testRun()
     {
         self::assertTrue($this->object->run());
+    }
+
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     */
+    protected function setUp()
+    {
+        $this->object = new AppCron();
     }
 }

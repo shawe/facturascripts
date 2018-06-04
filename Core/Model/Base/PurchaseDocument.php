@@ -64,7 +64,7 @@ abstract class PurchaseDocument extends BusinessDocument
 
     /**
      * Assign the supplier to the document.
-     * 
+     *
      * @param Proveedor[] $subjects
      *
      * @return boolean

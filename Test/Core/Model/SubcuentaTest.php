@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core\Model;
 
 use FacturaScripts\Core\Model\Subcuenta;
@@ -29,12 +30,6 @@ use FacturaScripts\Test\Core\CustomTest;
  */
 final class SubcuentaTest extends CustomTest
 {
-
-    protected function setUp()
-    {
-        $this->model = new Subcuenta();
-    }
-
     /**
      * @covers \FacturaScripts\Core\Model\Subcuenta::getSpecialAccountCode()
      */
@@ -63,6 +58,11 @@ final class SubcuentaTest extends CustomTest
         foreach ($this->model->all() as $subcuenta) {
             $subcuenta->updateBalance(\date('d-m-Y'), 0, 0);
         }
+    }
+
+    protected function setUp()
+    {
+        $this->model = new Subcuenta();
     }
 
     /**

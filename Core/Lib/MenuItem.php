@@ -89,29 +89,6 @@ class MenuItem
     }
 
     /**
-     * Returns the HTML for the icon of the item.
-     *
-     * @return string
-     */
-    protected function getHTMLIcon()
-    {
-        return empty($this->icon) ? '<i class="fa fa-file-o fa-fw" aria-hidden="true"></i> ' : '<i class="fa ' . $this->icon
-            . ' fa-fw" aria-hidden="true"></i> ';
-    }
-
-    /**
-     * Returns the indintifier of the menu.
-     *
-     * @param string $parent
-     *
-     * @return string
-     */
-    protected function getMenuId($parent)
-    {
-        return empty($parent) ? 'menu-' . $this->title : $parent . $this->name;
-    }
-
-    /**
      * Returns the html for the menu / submenu.
      *
      * @param string $parent
@@ -141,5 +118,28 @@ class MenuItem
         $html .= '</ul>';
 
         return $html;
+    }
+
+    /**
+     * Returns the HTML for the icon of the item.
+     *
+     * @return string
+     */
+    protected function getHTMLIcon()
+    {
+        return empty($this->icon) ? '<i class="fa fa-file-o fa-fw" aria-hidden="true"></i> ' : '<i class="fa ' . $this->icon
+            . ' fa-fw" aria-hidden="true"></i> ';
+    }
+
+    /**
+     * Returns the indintifier of the menu.
+     *
+     * @param string $parent
+     *
+     * @return string
+     */
+    protected function getMenuId($parent)
+    {
+        return empty($parent) ? 'menu-' . $this->title : $parent . $this->name;
     }
 }

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\Utils;
@@ -45,6 +46,38 @@ class Atributo extends Base\ModelClass
     public $nombre;
 
     /**
+     * Returns the name of the column that is the model's primary key.
+     *
+     * @return string
+     */
+    public static function primaryColumn(): string
+    {
+        return 'codatributo';
+    }
+
+    /**
+     * Returns the name of the table that uses this model.
+     *
+     * @return string
+     */
+    public static function tableName(): string
+    {
+        return 'atributos';
+    }
+
+    /**
+     * Returns True if there is no errors on properties values.
+     *
+     * @return bool
+     */
+    public function test(): bool
+    {
+        $this->nombre = Utils::noHtml($this->nombre);
+
+        return parent::test();
+    }
+
+    /**
      * Get attribute by name.
      *
      * @param string $nombre
@@ -70,26 +103,6 @@ class Atributo extends Base\ModelClass
     }
 
     /**
-     * Returns the name of the column that is the model's primary key.
-     *
-     * @return string
-     */
-    public static function primaryColumn(): string
-    {
-        return 'codatributo';
-    }
-
-    /**
-     * Returns the name of the table that uses this model.
-     *
-     * @return string
-     */
-    public static function tableName(): string
-    {
-        return 'atributos';
-    }
-
-    /**
      * Obtain the attributes of an attribute code.
      *
      * @return AtributoValor[]
@@ -99,17 +112,5 @@ class Atributo extends Base\ModelClass
         $valor0 = new AtributoValor();
 
         return $valor0->allFromAtributo($this->codatributo);
-    }
-
-    /**
-     * Returns True if there is no errors on properties values.
-     *
-     * @return bool
-     */
-    public function test(): bool
-    {
-        $this->nombre = Utils::noHtml($this->nombre);
-
-        return parent::test();
     }
 }

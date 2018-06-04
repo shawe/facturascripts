@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core\Model;
 
 use FacturaScripts\Core\Model\FormaPago;
@@ -29,11 +30,6 @@ use FacturaScripts\Test\Core\CustomTest;
  */
 final class FormaPagoTest extends CustomTest
 {
-
-    protected function setUp()
-    {
-        $this->model = new FormaPago();
-    }
 
     /**
      * @covers \FacturaScripts\Core\Model\FormaPago::isDefault()
@@ -51,5 +47,10 @@ final class FormaPagoTest extends CustomTest
         self::assertNotEmpty($this->model->calcularVencimiento(date('d-m-Y')));
         self::assertNotEmpty($this->model->calcularVencimiento(date('d-m-Y'), '5'));
         self::assertNotEmpty($this->model->calcularVencimiento(date('d-m-Y'), '5,10'));
+    }
+
+    protected function setUp()
+    {
+        $this->model = new FormaPago();
     }
 }

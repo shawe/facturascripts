@@ -66,6 +66,28 @@ class EditUser extends ExtendedController\PanelController
     }
 
     /**
+     * Load view data proedure
+     *
+     * @param string                      $viewName
+     * @param ExtendedController\EditView $view
+     */
+    protected function loadData($viewName, $view)
+    {
+        switch ($viewName) {
+            case 'EditUser':
+                $code = $this->request->get('code');
+                $view->loadData($code);
+                break;
+
+            case 'EditRoleUser':
+                $nick = $this->getViewModelValue('EditUser', 'nick');
+                $where = [new DataBaseWhere('nick', $nick)];
+                $view->loadData('', $where, [], 0, 0);
+                break;
+        }
+    }
+
+    /**
      * Return a list of pages where user has access.
      *
      * @param Model\User $user
@@ -98,28 +120,6 @@ class EditUser extends ExtendedController\PanelController
         }
 
         return $pageList;
-    }
-
-    /**
-     * Load view data proedure
-     *
-     * @param string                      $viewName
-     * @param ExtendedController\EditView $view
-     */
-    protected function loadData($viewName, $view)
-    {
-        switch ($viewName) {
-            case 'EditUser':
-                $code = $this->request->get('code');
-                $view->loadData($code);
-                break;
-
-            case 'EditRoleUser':
-                $nick = $this->getViewModelValue('EditUser', 'nick');
-                $where = [new DataBaseWhere('nick', $nick)];
-                $view->loadData('', $where, [], 0, 0);
-                break;
-        }
     }
 
     /**

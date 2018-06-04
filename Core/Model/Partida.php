@@ -246,40 +246,6 @@ class Partida extends Base\ModelClass
     }
 
     /**
-     * Load de ID for subaccount
-     *
-     * @param string $code
-     * @param string $exercise
-     *
-     * @return int|null
-     */
-    private function getIdSubAccount($code, $exercise)
-    {
-        if (empty($code) || empty($exercise)) {
-            return null;
-        }
-
-        $where = [
-            new DataBaseWhere('codejercicio', $exercise),
-            new DataBaseWhere('codsubcuenta', $code)
-        ];
-
-        $account = new Subcuenta();
-        $account->loadFromCode('', $where);
-        return $account->idsubcuenta;
-    }
-
-    /**
-     * Check if exists error in accounting entry
-     *
-     * @return bool
-     */
-    private function testErrorInData(): bool
-    {
-        return empty($this->idasiento) || empty($this->codsubcuenta) || empty($this->debe + $this->haber);
-    }
-
-    /**
      * Returns True if there is no erros on properties values.
      *
      * @return bool
@@ -328,18 +294,6 @@ class Partida extends Base\ModelClass
         $this->cifnif = Utils::noHtml($this->cifnif);
 
         return parent::test();
-    }
-
-    /**
-     * Get accounting date
-     *
-     * @return string
-     */
-    private function getAccountingDate(): string
-    {
-        $accounting = new Asiento();
-        $accounting->loadFromCode($this->idasiento);
-        return $accounting->fecha;
     }
 
     /**
@@ -479,5 +433,51 @@ class Partida extends Base\ModelClass
             }
         }
         return true;
+    }
+
+    /**
+     * Load de ID for subaccount
+     *
+     * @param string $code
+     * @param string $exercise
+     *
+     * @return int|null
+     */
+    private function getIdSubAccount($code, $exercise)
+    {
+        if (empty($code) || empty($exercise)) {
+            return null;
+        }
+
+        $where = [
+            new DataBaseWhere('codejercicio', $exercise),
+            new DataBaseWhere('codsubcuenta', $code)
+        ];
+
+        $account = new Subcuenta();
+        $account->loadFromCode('', $where);
+        return $account->idsubcuenta;
+    }
+
+    /**
+     * Check if exists error in accounting entry
+     *
+     * @return bool
+     */
+    private function testErrorInData(): bool
+    {
+        return empty($this->idasiento) || empty($this->codsubcuenta) || empty($this->debe + $this->haber);
+    }
+
+    /**
+     * Get accounting date
+     *
+     * @return string
+     */
+    private function getAccountingDate(): string
+    {
+        $accounting = new Asiento();
+        $accounting->loadFromCode($this->idasiento);
+        return $accounting->fecha;
     }
 }

@@ -94,6 +94,40 @@ class EditListView extends BaseView implements DataViewInterface
     }
 
     /**
+     * Column list and its configuration
+     * (Array of ColumnItem)
+     *
+     * @return GroupItem[]
+     */
+    public function getColumns(): array
+    {
+        return $this->pageOption->columns;
+    }
+
+    /**
+     * Load the data in the cursor property, according to the where filter specified.
+     * Adds an empty row/model at the end of the loaded data.
+     *
+     * @param mixed           $code
+     * @param DataBaseWhere[] $where
+     * @param array           $order
+     * @param int             $offset
+     * @param int             $limit
+     */
+    public function loadData($code = false, array $where = [], array $order = [], $offset = 0, $limit = FS_ITEM_LIMIT)
+    {
+        $this->order = empty($order) ? $this->order : $order;
+        $this->count = $this->model->count($where);
+        if ($this->count > 0) {
+            $this->cursor = $this->model->all($where, $this->order, $offset, $limit);
+        }
+
+        // We save the values where and offset for the export
+        $this->offset = $offset;
+        $this->where = $where;
+    }
+
+    /**
      * Method to export the view data.
      *
      * @param ExportManager $exportManager
@@ -105,17 +139,6 @@ class EditListView extends BaseView implements DataViewInterface
                 $this->model, $this->where, $this->order, $this->offset, $this->getColumns(), $this->title
             );
         }
-    }
-
-    /**
-     * Column list and its configuration
-     * (Array of ColumnItem)
-     *
-     * @return GroupItem[]
-     */
-    public function getColumns(): array
-    {
-        return $this->pageOption->columns;
     }
 
     /**
@@ -146,29 +169,6 @@ class EditListView extends BaseView implements DataViewInterface
         }
 
         return $maxColumns > 0;
-    }
-
-    /**
-     * Load the data in the cursor property, according to the where filter specified.
-     * Adds an empty row/model at the end of the loaded data.
-     *
-     * @param mixed           $code
-     * @param DataBaseWhere[] $where
-     * @param array           $order
-     * @param int             $offset
-     * @param int             $limit
-     */
-    public function loadData($code = false, array $where = [], array $order = [], $offset = 0, $limit = FS_ITEM_LIMIT)
-    {
-        $this->order = empty($order) ? $this->order : $order;
-        $this->count = $this->model->count($where);
-        if ($this->count > 0) {
-            $this->cursor = $this->model->all($where, $this->order, $offset, $limit);
-        }
-
-        // We save the values where and offset for the export
-        $this->offset = $offset;
-        $this->where = $where;
     }
 
     /**

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core;
 
 use FacturaScripts\Core\Base\MiniLog;
@@ -46,7 +47,8 @@ class CustomTest extends TestCase
     public function testTableName()
     {
         self::assertInternalType(
-            'string', $this->model::tableName()
+            'string',
+            $this->model::tableName()
         );
     }
 
@@ -56,7 +58,8 @@ class CustomTest extends TestCase
     public function testPrimaryColumn()
     {
         self::assertInternalType(
-            'string', $this->model::primaryColumn()
+            'string',
+            $this->model::primaryColumn()
         );
     }
 
@@ -66,7 +69,8 @@ class CustomTest extends TestCase
     public function testPrimaryDescription()
     {
         self::assertInternalType(
-            'string', $this->model->primaryDescription()
+            'string',
+            $this->model->primaryDescription()
         );
     }
 
@@ -89,7 +93,10 @@ class CustomTest extends TestCase
         self::assertInternalType('string', $install);
 
         if (\strlen($install) > 0) {
-            self::assertNotEmpty($this->model->all());
+            self::assertNotEmpty(
+                $this->model->all(),
+                'Inserted: ' . $install . ' contains ' . \print_r($this->model->all(), true)
+            );
         }
     }
 
@@ -116,7 +123,8 @@ class CustomTest extends TestCase
     public function testUrl()
     {
         self::assertInternalType(
-            'string', $this->model->url()
+            'string',
+            $this->model->url()
         );
     }
 

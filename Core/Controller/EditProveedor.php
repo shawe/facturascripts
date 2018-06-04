@@ -92,22 +92,6 @@ class EditProveedor extends ExtendedController\PanelController
     }
 
     /**
-     * Create and configure main view
-     */
-    private function addMainView()
-    {
-        $this->addEditView('EditProveedor', 'Proveedor', 'supplier');
-
-        /// Load values option to Fiscal ID select input
-        $columnFiscalID = $this->views['EditProveedor']->columnForName('fiscal-id');
-        $columnFiscalID->widget->setValuesFromArray(IDFiscal::all());
-
-        /// Load values option to VAT Type select input
-        $columnVATType = $this->views['EditProveedor']->columnForName('vat-regime');
-        $columnVATType->widget->setValuesFromArray(RegimenIVA::all());
-    }
-
-    /**
      * Create views
      */
     protected function createViews()
@@ -159,5 +143,21 @@ class EditProveedor extends ExtendedController\PanelController
                 $view->loadData('', $where, [], 0, $limit);
                 break;
         }
+    }
+
+    /**
+     * Create and configure main view
+     */
+    private function addMainView()
+    {
+        $this->addEditView('EditProveedor', 'Proveedor', 'supplier');
+
+        /// Load values option to Fiscal ID select input
+        $columnFiscalID = $this->views['EditProveedor']->columnForName('fiscal-id');
+        $columnFiscalID->widget->setValuesFromArray(IDFiscal::all());
+
+        /// Load values option to VAT Type select input
+        $columnVATType = $this->views['EditProveedor']->columnForName('vat-regime');
+        $columnVATType->widget->setValuesFromArray(RegimenIVA::all());
     }
 }

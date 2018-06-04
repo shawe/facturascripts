@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core\Model;
 
 use FacturaScripts\Core\Model\Page;
@@ -31,11 +32,6 @@ use FacturaScripts\Test\Core\CustomTest;
 final class RoleAccessTest extends CustomTest
 {
 
-    protected function setUp()
-    {
-        $this->model = new RoleAccess();
-    }
-
     /**
      * @covers \FacturaScripts\Core\Model\RoleAccess::addPagesToRole()
      */
@@ -43,5 +39,10 @@ final class RoleAccessTest extends CustomTest
     {
         $pages = new Page();
         self::assertEmpty($this->model::addPagesToRole('admin', $pages->all()));
+    }
+
+    protected function setUp()
+    {
+        $this->model = new RoleAccess();
     }
 }

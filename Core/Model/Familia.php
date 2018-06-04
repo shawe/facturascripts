@@ -61,6 +61,54 @@ class Familia extends Base\ModelClass
     public $nivel;
 
     /**
+     * Returns the name of the column that is the primary key of the model.
+     *
+     * @return string
+     */
+    public static function primaryColumn(): string
+    {
+        return 'codfamilia';
+    }
+
+    /**
+     * Returns the name of the table that uses this model.
+     *
+     * @return string
+     */
+    public static function tableName(): string
+    {
+        return 'familias';
+    }
+
+    /**
+     * Returns True if there is no erros on properties values.
+     *
+     * @return bool
+     */
+    public function test(): bool
+    {
+        $status = parent::test();
+
+        $this->codfamilia = Utils::noHtml($this->codfamilia);
+        $this->descripcion = Utils::noHtml($this->descripcion);
+
+        if (empty($this->codfamilia) || \strlen($this->codfamilia) > 8) {
+            self::$miniLog->alert(self::$i18n->trans('family-code-valid-length'));
+            $status = false;
+        }
+        if (empty($this->descripcion) || \strlen($this->descripcion) > 100) {
+            self::$miniLog->alert(self::$i18n->trans('family-desc-not-valid'));
+            $status = false;
+        }
+        if ($this->madre === $this->codfamilia) {
+            self::$miniLog->alert(self::$i18n->trans('parent-family-cant-be-child'));
+            $status = false;
+        }
+
+        return $status;
+    }
+
+    /**
      * Returns the daughter families.
      *
      * @param string $codmadre
@@ -111,49 +159,6 @@ class Familia extends Base\ModelClass
         }
 
         return $famlist;
-    }
-
-    /**
-     * Returns the name of the column that is the primary key of the model.
-     *
-     * @return string
-     */
-    public static function primaryColumn(): string
-    {
-        return 'codfamilia';
-    }
-
-    /**
-     * Returns the name of the table that uses this model.
-     *
-     * @return string
-     */
-    public static function tableName(): string
-    {
-        return 'familias';
-    }
-
-    /**
-     * Returns True if there is no erros on properties values.
-     *
-     * @return bool
-     */
-    public function test(): bool
-    {
-        $this->codfamilia = Utils::noHtml($this->codfamilia);
-        $this->descripcion = Utils::noHtml($this->descripcion);
-
-        if (empty($this->codfamilia) || \strlen($this->codfamilia) > 8) {
-            self::$miniLog->alert(self::$i18n->trans('family-code-valid-length'));
-        } elseif (empty($this->descripcion) || \strlen($this->descripcion) > 100) {
-            self::$miniLog->alert(self::$i18n->trans('family-desc-not-valid'));
-        } elseif ($this->madre === $this->codfamilia) {
-            self::$miniLog->alert(self::$i18n->trans('parent-family-cant-be-child'));
-        } else {
-            $status = true;
-        }
-
-        return $status;
     }
 
     /**

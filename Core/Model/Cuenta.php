@@ -133,37 +133,6 @@ class Cuenta extends Base\ModelClass
     }
 
     /**
-     * Check and load the id of the parent account
-     *
-     * @return bool
-     */
-    private function testErrorInParentAccount(): bool
-    {
-        $where = [
-            new DataBaseWhere('codejercicio', $this->codejercicio),
-            new DataBaseWhere('codcuenta', $this->parent_codcuenta)
-        ];
-
-        $account = $this->all($where, ['codcuenta' => 'ASC'], 0, 1);
-        if (empty($account)) {
-            return true;
-        }
-
-        $this->parent_idcuenta = $account[0]->parent_idcuenta;
-        return false;
-    }
-
-    /**
-     * TODO: Uncomplete documentation
-     *
-     * @return bool
-     */
-    private function testErrorInAccount(): bool
-    {
-        return empty($this->codcuenta) || empty($this->descripcion) || empty($this->codejercicio);
-    }
-
-    /**
      * Returns True if there is no erros on properties values.
      *
      * @return bool
@@ -197,5 +166,36 @@ class Cuenta extends Base\ModelClass
     public function url(string $type = 'auto', string $list = 'List'): string
     {
         return parent::url($type, 'ListCuenta?active=List');
+    }
+
+    /**
+     * Check and load the id of the parent account
+     *
+     * @return bool
+     */
+    private function testErrorInParentAccount(): bool
+    {
+        $where = [
+            new DataBaseWhere('codejercicio', $this->codejercicio),
+            new DataBaseWhere('codcuenta', $this->parent_codcuenta)
+        ];
+
+        $account = $this->all($where, ['codcuenta' => 'ASC'], 0, 1);
+        if (empty($account)) {
+            return true;
+        }
+
+        $this->parent_idcuenta = $account[0]->parent_idcuenta;
+        return false;
+    }
+
+    /**
+     * TODO: Uncomplete documentation
+     *
+     * @return bool
+     */
+    private function testErrorInAccount(): bool
+    {
+        return empty($this->codcuenta) || empty($this->descripcion) || empty($this->codejercicio);
     }
 }

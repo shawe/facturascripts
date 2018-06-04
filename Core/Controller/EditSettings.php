@@ -39,7 +39,7 @@ class EditSettings extends ExtendedController\PanelController
      * Returns the configuration property value for a specified $field
      *
      * @param Settings $model
-     * @param string     $field
+     * @param string   $field
      *
      * @return mixed
      */
@@ -93,24 +93,6 @@ class EditSettings extends ExtendedController\PanelController
     }
 
     /**
-     * Return a list of all XML view files on XMLView folder.
-     *
-     * @return array
-     */
-    private function allSettingsXMLViews(): array
-    {
-        $names = [];
-        $files = array_diff(scandir(FS_FOLDER . '/Dinamic/XMLView', SCANDIR_SORT_ASCENDING), ['.', '..']);
-        foreach ($files as $fileName) {
-            if (0 === strpos($fileName, self::KEY_SETTINGS)) {
-                $names[] = substr($fileName, 0, -4);
-            }
-        }
-
-        return $names;
-    }
-
-    /**
      * Load views
      */
     protected function createViews()
@@ -150,6 +132,45 @@ class EditSettings extends ExtendedController\PanelController
     }
 
     /**
+     * Load view data
+     *
+     * @param string                      $viewName
+     * @param ExtendedController\EditView $view
+     */
+    protected function loadData($viewName, $view)
+    {
+        if (empty($view->getModel())) {
+            return;
+        }
+
+        $code = $this->getKeyFromViewName($viewName);
+        $view->loadData($code);
+
+        if ($view->model->name === null) {
+            $view->model->description = $view->model->name = strtolower(substr($viewName, 8));
+            $view->model->save();
+        }
+    }
+
+    /**
+     * Return a list of all XML view files on XMLView folder.
+     *
+     * @return array
+     */
+    private function allSettingsXMLViews(): array
+    {
+        $names = [];
+        $files = array_diff(scandir(FS_FOLDER . '/Dinamic/XMLView', SCANDIR_SORT_ASCENDING), ['.', '..']);
+        foreach ($files as $fileName) {
+            if (0 === strpos($fileName, self::KEY_SETTINGS)) {
+                $names[] = substr($fileName, 0, -4);
+            }
+        }
+
+        return $names;
+    }
+
+    /**
      * Exports data from views.
      */
     private function exportAction()
@@ -184,27 +205,6 @@ class EditSettings extends ExtendedController\PanelController
     private function getKeyFromViewName($viewName): string
     {
         return strtolower(substr($viewName, \strlen(self::KEY_SETTINGS)));
-    }
-
-    /**
-     * Load view data
-     *
-     * @param string                      $viewName
-     * @param ExtendedController\EditView $view
-     */
-    protected function loadData($viewName, $view)
-    {
-        if (empty($view->getModel())) {
-            return;
-        }
-
-        $code = $this->getKeyFromViewName($viewName);
-        $view->loadData($code);
-
-        if ($view->model->name === null) {
-            $view->model->description = $view->model->name = strtolower(substr($viewName, 8));
-            $view->model->save();
-        }
     }
 
     /**

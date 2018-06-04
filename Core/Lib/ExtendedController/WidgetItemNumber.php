@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base\NumberTools;
@@ -29,33 +30,29 @@ class WidgetItemNumber extends WidgetItem
 {
 
     /**
+     * Class that formats the display and provides tools to manage numeric values
+     *
+     * @var NumberTools
+     */
+    private static $numberTools;
+    /**
      * Number of decimals for numeric types
      *
      * @var int
      */
     public $decimal;
-
     /**
      * Maximum value
      *
      * @var string
      */
     public $max;
-
     /**
      * Minimum value
      *
      * @var string
      */
     public $min;
-
-    /**
-     * Class that formats the display and provides tools to manage numeric values
-     *
-     * @var NumberTools
-     */
-    private static $numberTools;
-
     /**
      * Increment/decrement value
      *

@@ -137,6 +137,57 @@ class EditAsiento extends ExtendedController\PanelController
     }
 
     /**
+     * Overwrite autocomplete function to macro concepts in accounting concept.
+     */
+    protected function autocompleteAction(): array
+    {
+        if ($this->request->get('source', '') === 'conceptos_partidas') {
+            return $this->replaceConcept(parent::autocompleteAction());
+        }
+
+        return parent::autocompleteAction();
+    }
+
+    /**
+     * @param $data
+     *
+     * @return array
+     */
+    protected function recalculateDocument(&$data): array
+    {
+        $result = [
+            'total' => 0.00,
+            'unbalance' => 0.00,
+            'lines' => [],
+            'subaccount' => [],
+            'vat' => []
+        ];
+
+        if (isset($data['lines'])) {
+            // Prepare lines data
+            $lines = $this->views['EditPartida']->processFormLines($data['lines']);
+
+            // Recalculate lines data and amounts
+            $totalCredit = $totalDebit = 0.00;
+            $result['lines'] = $this->recalculateLines($lines, $totalCredit, $totalDebit);
+            $this->calculateAmounts($result, $totalCredit, $totalDebit);
+
+            // If only change subaccount, search for subaccount data
+            if (count($data['changes']) === 1 && $data['changes'][0][1] === 'codsubcuenta') {
+                $index = $data['changes'][0][0];
+                $line = &$result['lines'][$index];
+                $result['subaccount'] = $this->getAccountData($data['document']['codejercicio'], $line['codsubcuenta']);
+
+                $result['vat'] = $this->recalculateVatRegister(
+                    $line, $data['document'], $result['subaccount']['codevat'], $result['unbalance']
+                );
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Load data and balances from subaccount
      *
      * @param string $exercise
@@ -366,45 +417,6 @@ class EditAsiento extends ExtendedController\PanelController
     /**
      * @param $data
      *
-     * @return array
-     */
-    protected function recalculateDocument(&$data): array
-    {
-        $result = [
-            'total' => 0.00,
-            'unbalance' => 0.00,
-            'lines' => [],
-            'subaccount' => [],
-            'vat' => []
-        ];
-
-        if (isset($data['lines'])) {
-            // Prepare lines data
-            $lines = $this->views['EditPartida']->processFormLines($data['lines']);
-
-            // Recalculate lines data and amounts
-            $totalCredit = $totalDebit = 0.00;
-            $result['lines'] = $this->recalculateLines($lines, $totalCredit, $totalDebit);
-            $this->calculateAmounts($result, $totalCredit, $totalDebit);
-
-            // If only change subaccount, search for subaccount data
-            if (count($data['changes']) === 1 && $data['changes'][0][1] === 'codsubcuenta') {
-                $index = $data['changes'][0][0];
-                $line = &$result['lines'][$index];
-                $result['subaccount'] = $this->getAccountData($data['document']['codejercicio'], $line['codsubcuenta']);
-
-                $result['vat'] = $this->recalculateVatRegister(
-                    $line, $data['document'], $result['subaccount']['codevat'], $result['unbalance']
-                );
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param $data
-     *
      * @return string
      */
     private function cloneDocument(&$data): string
@@ -450,18 +462,6 @@ class EditAsiento extends ExtendedController\PanelController
         }
 
         return $result;
-    }
-
-    /**
-     * Overwrite autocomplete function to macro concepts in accounting concept.
-     */
-    protected function autocompleteAction(): array
-    {
-        if ($this->request->get('source', '') === 'conceptos_partidas') {
-            return $this->replaceConcept(parent::autocompleteAction());
-        }
-
-        return parent::autocompleteAction();
     }
 
     /**

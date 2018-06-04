@@ -87,16 +87,6 @@ class Divisa extends Base\ModelClass
     }
 
     /**
-     * Returns True if is the default currency for the company.
-     *
-     * @return bool
-     */
-    public function isDefault(): bool
-    {
-        return $this->coddivisa === AppSettings::get('default', 'coddivisa');
-    }
-
-    /**
      * Returns the name of the column that is the primary key of the model.
      *
      * @return string
@@ -137,5 +127,15 @@ class Divisa extends Base\ModelClass
         }
 
         return false;
+    }
+
+    /**
+     * Returns True if is the default currency for the company.
+     *
+     * @return bool
+     */
+    public function isDefault(): bool
+    {
+        return $this->coddivisa === AppSettings::get('default', 'coddivisa');
     }
 }

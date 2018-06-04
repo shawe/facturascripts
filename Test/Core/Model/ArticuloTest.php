@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core\Model;
 
 use FacturaScripts\Core\Model\Articulo;
@@ -29,11 +30,6 @@ use FacturaScripts\Test\Core\CustomTest;
  */
 final class ArticuloTest extends CustomTest
 {
-
-    protected function setUp()
-    {
-        $this->model = new Articulo();
-    }
 
     /**
      * @covers \FacturaScripts\Core\Model\Articulo::setPvp()
@@ -49,5 +45,10 @@ final class ArticuloTest extends CustomTest
     public function testSetPhpIva()
     {
         $this->model->setPvpIva(121);
+    }
+
+    protected function setUp()
+    {
+        $this->model = new Articulo();
     }
 }

@@ -347,22 +347,6 @@ abstract class BusinessDocument extends ModelClass
     }
 
     /**
-     * Return the state setted to document.
-     *
-     * @return Model\EstadoDocumento
-     */
-    public function getState(): Model\EstadoDocumento
-    {
-        foreach (self::$estados as $state) {
-            if ($state->idestado === $this->idestado) {
-                return $state;
-            }
-        }
-
-        return new Model\EstadoDocumento();
-    }
-
-    /**
      * Returns the description of the column that is the model's primary key.
      *
      * @return string
@@ -395,28 +379,6 @@ abstract class BusinessDocument extends ModelClass
     }
 
     /**
-     * Assign the date and find an accounting exercise.
-     *
-     * @param string $date
-     * @param string $hour
-     *
-     * @return bool
-     */
-    public function setDate(string $date, string $hour): bool
-    {
-        $ejercicioModel = new Model\Ejercicio();
-        $ejercicio = $ejercicioModel::getByFecha($date);
-        if ($ejercicio) {
-            $this->codejercicio = $ejercicio->codejercicio;
-            $this->fecha = $date;
-            $this->hora = $hour;
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
      * Returns True if there is no errors on properties values.
      *
      * @return bool
@@ -443,6 +405,44 @@ abstract class BusinessDocument extends ModelClass
         }
 
         return parent::test();
+    }
+
+    /**
+     * Return the state setted to document.
+     *
+     * @return Model\EstadoDocumento
+     */
+    public function getState(): Model\EstadoDocumento
+    {
+        foreach (self::$estados as $state) {
+            if ($state->idestado === $this->idestado) {
+                return $state;
+            }
+        }
+
+        return new Model\EstadoDocumento();
+    }
+
+    /**
+     * Assign the date and find an accounting exercise.
+     *
+     * @param string $date
+     * @param string $hour
+     *
+     * @return bool
+     */
+    public function setDate(string $date, string $hour): bool
+    {
+        $ejercicioModel = new Model\Ejercicio();
+        $ejercicio = $ejercicioModel::getByFecha($date);
+        if ($ejercicio) {
+            $this->codejercicio = $ejercicio->codejercicio;
+            $this->fecha = $date;
+            $this->hora = $hour;
+            return true;
+        }
+
+        return false;
     }
 
     /**

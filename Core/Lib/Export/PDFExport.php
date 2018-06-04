@@ -50,35 +50,30 @@ class PDFExport implements ExportInterface
      * Default text size for footer and header.
      */
     const TEXT_SIZE_FH = 9;
-
-    /**
-     * Tools to work with currencies.
-     *
-     * @var Base\DivisaTools
-     */
-    private $divisaTools;
-
-    /**
-     * Translator object
-     *
-     * @var Base\Translator
-     */
-    private $i18n;
-
-    /**
-     * Class with number tools (to format numbers)
-     *
-     * @var Base\NumberTools
-     */
-    private $numberTools;
-
     /**
      * PDF object.
      *
      * @var \Cezpdf
      */
     protected $pdf;
-
+    /**
+     * Tools to work with currencies.
+     *
+     * @var Base\DivisaTools
+     */
+    private $divisaTools;
+    /**
+     * Translator object
+     *
+     * @var Base\Translator
+     */
+    private $i18n;
+    /**
+     * Class with number tools (to format numbers)
+     *
+     * @var Base\NumberTools
+     */
+    private $numberTools;
     /**
      * PDF table width.
      *
@@ -292,6 +287,66 @@ class PDFExport implements ExportInterface
     }
 
     /**
+     * Adds a new page.
+     *
+     * @param string $orientation
+     */
+    protected function newPage($orientation = 'portrait')
+    {
+        if ($this->pdf === null) {
+            $this->pdf = new \Cezpdf('a4', $orientation);
+            $this->pdf->addInfo('Creator', 'FacturaScripts');
+            $this->pdf->addInfo('Producer', 'FacturaScripts');
+            $this->pdf->tempPath = FS_FOLDER . '/MyFiles/Cache';
+
+            $this->tableWidth = $this->pdf->ez['pageWidth'] - self::CONTENT_X * 2;
+
+            $this->pdf->ezStartPageNumbers($this->pdf->ez['pageWidth'] / 2, self::FOOTER_Y, self::TEXT_SIZE_FH, 'left', '{PAGENUM} / {TOTALPAGENUM}');
+        } elseif ($this->pdf->y < 200) {
+            $this->pdf->ezNewPage();
+        } else {
+            $this->pdf->ezText(\PHP_EOL);
+        }
+
+        $this->insertHeader();
+        $this->insertFooter();
+    }
+
+    /**
+     * Insert header details.
+     */
+    protected function insertHeader()
+    {
+        $headerPos = $this->pdf->ez['pageHeight'] - 25;
+        $header = $this->pdf->openObject();
+        // Top Left
+        $this->pdf->addText(self::CONTENT_X, $headerPos, self::TEXT_SIZE_FH + 2, $this->getCompanyName());
+        // Top Center
+        //$this->pdf->addText($this->pdf->ez['pageWidth']/2, $headerPos, self::TEXT_SIZE_FH + 2, 'Top Center', 0, 'center');
+        // Top Right
+        //$this->pdf->addText($this->tableWidth + self::CONTENT_X, $headerPos, self::TEXT_SIZE_FH + 2, 'Top Right', 0, 'right');
+        $this->pdf->closeObject();
+        $this->pdf->addObject($header, 'all');
+    }
+
+    /**
+     * Insert footer details.
+     */
+    protected function insertFooter()
+    {
+        $footer = $this->pdf->openObject();
+        // Bottom Left
+        //$this->pdf->addText(self::CONTENT_X, self::FOOTER_Y, self::TEXT_SIZE_FH, 'Bottom Left');
+        // Bottom Center
+        //$this->pdf->addText($this->pdf->ez['pageWidth']/2, self::FOOTER_Y, self::TEXT_SIZE_FH, 'Bottom Center', 0, 'center');
+        // Bottom Right
+        $now = $this->i18n->trans('generated-at', ['%when%' => date('d-m-Y H:i')]);
+        $this->pdf->addText($this->tableWidth + self::CONTENT_X, self::FOOTER_Y, self::TEXT_SIZE_FH, $now, 0, 'right');
+        $this->pdf->closeObject();
+        $this->pdf->addObject($footer, 'all');
+    }
+
+    /**
      * Adds a new line to the PDF.
      */
     private function newLine()
@@ -319,32 +374,6 @@ class PDFExport implements ExportInterface
         if ($txt !== '') {
             $this->pdf->ezText($txt);
         }
-    }
-
-    /**
-     * Adds a new page.
-     *
-     * @param string $orientation
-     */
-    protected function newPage($orientation = 'portrait')
-    {
-        if ($this->pdf === null) {
-            $this->pdf = new \Cezpdf('a4', $orientation);
-            $this->pdf->addInfo('Creator', 'FacturaScripts');
-            $this->pdf->addInfo('Producer', 'FacturaScripts');
-            $this->pdf->tempPath = FS_FOLDER . '/MyFiles/Cache';
-
-            $this->tableWidth = $this->pdf->ez['pageWidth'] - self::CONTENT_X * 2;
-
-            $this->pdf->ezStartPageNumbers($this->pdf->ez['pageWidth'] / 2, self::FOOTER_Y, self::TEXT_SIZE_FH, 'left', '{PAGENUM} / {TOTALPAGENUM}');
-        } elseif ($this->pdf->y < 200) {
-            $this->pdf->ezNewPage();
-        } else {
-            $this->pdf->ezText(\PHP_EOL);
-        }
-
-        $this->insertHeader();
-        $this->insertFooter();
     }
 
     /**
@@ -492,40 +521,6 @@ class PDFExport implements ExportInterface
         }
 
         return $tableData;
-    }
-
-    /**
-     * Insert header details.
-     */
-    protected function insertHeader()
-    {
-        $headerPos = $this->pdf->ez['pageHeight'] - 25;
-        $header = $this->pdf->openObject();
-        // Top Left
-        $this->pdf->addText(self::CONTENT_X, $headerPos, self::TEXT_SIZE_FH + 2, $this->getCompanyName());
-        // Top Center
-        //$this->pdf->addText($this->pdf->ez['pageWidth']/2, $headerPos, self::TEXT_SIZE_FH + 2, 'Top Center', 0, 'center');
-        // Top Right
-        //$this->pdf->addText($this->tableWidth + self::CONTENT_X, $headerPos, self::TEXT_SIZE_FH + 2, 'Top Right', 0, 'right');
-        $this->pdf->closeObject();
-        $this->pdf->addObject($header, 'all');
-    }
-
-    /**
-     * Insert footer details.
-     */
-    protected function insertFooter()
-    {
-        $footer = $this->pdf->openObject();
-        // Bottom Left
-        //$this->pdf->addText(self::CONTENT_X, self::FOOTER_Y, self::TEXT_SIZE_FH, 'Bottom Left');
-        // Bottom Center
-        //$this->pdf->addText($this->pdf->ez['pageWidth']/2, self::FOOTER_Y, self::TEXT_SIZE_FH, 'Bottom Center', 0, 'center');
-        // Bottom Right
-        $now = $this->i18n->trans('generated-at', ['%when%' => date('d-m-Y H:i')]);
-        $this->pdf->addText($this->tableWidth + self::CONTENT_X, self::FOOTER_Y, self::TEXT_SIZE_FH, $now, 0, 'right');
-        $this->pdf->closeObject();
-        $this->pdf->addObject($footer, 'all');
     }
 
     /**

@@ -39,20 +39,18 @@ abstract class ListController extends BaseController
      * @var Base\NumberTools
      */
     public $numberTools;
-
-    /**
-     * First row to select from the database
-     *
-     * @var int
-     */
-    protected $offset;
-
     /**
      * This string contains the text sent as a query parameter, used to filter the model data.
      *
      * @var string
      */
     public $query;
+    /**
+     * First row to select from the database
+     *
+     * @var int
+     */
+    protected $offset;
 
     /**
      * Initializes all the objects and properties.
@@ -129,15 +127,15 @@ abstract class ListController extends BaseController
 
         // Operations with data, before execute action
         if (!$this->execPreviousAction($action)) {
-        return;
-    }
+            return;
+        }
 
         // Load data for every view
         foreach (array_keys($this->views) as $viewName) {
             $where = [];
             $orderKey = '';
 
-                // If processing the selected view, calculate order and filters
+            // If processing the selected view, calculate order and filters
             if ($this->active === $viewName) {
                 $orderKey = $this->request->get('order', '');
                 $where = $this->getWhere();
@@ -204,29 +202,6 @@ abstract class ListController extends BaseController
     }
 
     /**
-     * Adds a filter to a type of field to the ListView.
-     *
-     * @param string $viewName
-     * @param string $key   (Filter identifier)
-     * @param string $label (Human reader description)
-     * @param string $field (Field of the table to apply filter)
-     * @param string $type
-     */
-    private function addFilterFromType($viewName, $key, $label, $field, $type)
-    {
-        $config = [
-            'field' => $field,
-            'label' => $label,
-            'valueFrom' => $viewName === $this->active ? $this->request->get($key . '-from', '') : '',
-            'operatorFrom' => $this->request->get($key . '-from-operator', '>='),
-            'valueTo' => $viewName === $this->active ? $this->request->get($key . '-to', '') : '',
-            'operatorTo' => $this->request->get($key . '-to-operator', '<='),
-        ];
-
-        $this->views[$viewName]->addFilter($key, ListFilter::newStandardFilter($type, $config));
-    }
-
-    /**
      * Adds a numeric type filter to the ListView.
      *
      * @param string $indexView
@@ -241,7 +216,7 @@ abstract class ListController extends BaseController
 
     /**
      * Add a select type filter to a ListView.
-     * 
+     *
      * @param string $indexView
      * @param string $key    (Filter identifier)
      * @param string $label  (Human reader description)
@@ -389,69 +364,6 @@ abstract class ListController extends BaseController
     }
 
     /**
-     * Returns the offset value for the specified view.
-     *
-     * @param string $viewName
-     *
-     * @return int
-     */
-    private function getOffSet($viewName)
-    {
-        return ($viewName === $this->active) ? $this->offset : 0;
-    }
-
-    /**
-     * Returns a string with the parameters in the controller call url.
-     *
-     * @param string $viewName
-     *
-     * @return string
-     */
-    private function getParams($viewName)
-    {
-        $result = '';
-        if ($viewName === $this->active) {
-            $join = '?';
-            if (!empty($this->query)) {
-                $result = $join . 'query=' . $this->query;
-                $join = '&';
-            }
-
-            foreach ($this->views[$this->active]->getFilters() as $key => $filter) {
-                $result .= $filter->getParams($key, $join);
-                $join = '&';
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * Returns columns title for megaSearchAction function.
-     *
-     * @param ListView $view
-     * @param int      $maxColumns
-     *
-     * @return array
-     */
-    private function getTextColumns($view, $maxColumns)
-    {
-        $result = [];
-        foreach ($view->getColumns() as $col) {
-            if ($col->display === 'none' || !in_array($col->widget->type, ['text', 'money'], false)) {
-                continue;
-            }
-
-            $result[] = $col->widget->fieldName;
-            if (count($result) === $maxColumns) {
-                break;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
      * Establishes the WHERE clause according to the defined filters.
      *
      * @return DataBaseWhere[]
@@ -527,5 +439,91 @@ abstract class ListController extends BaseController
         }
 
         $this->response->setContent(json_encode($json));
+    }
+
+    /**
+     * Adds a filter to a type of field to the ListView.
+     *
+     * @param string $viewName
+     * @param string $key   (Filter identifier)
+     * @param string $label (Human reader description)
+     * @param string $field (Field of the table to apply filter)
+     * @param string $type
+     */
+    private function addFilterFromType($viewName, $key, $label, $field, $type)
+    {
+        $config = [
+            'field' => $field,
+            'label' => $label,
+            'valueFrom' => $viewName === $this->active ? $this->request->get($key . '-from', '') : '',
+            'operatorFrom' => $this->request->get($key . '-from-operator', '>='),
+            'valueTo' => $viewName === $this->active ? $this->request->get($key . '-to', '') : '',
+            'operatorTo' => $this->request->get($key . '-to-operator', '<='),
+        ];
+
+        $this->views[$viewName]->addFilter($key, ListFilter::newStandardFilter($type, $config));
+    }
+
+    /**
+     * Returns the offset value for the specified view.
+     *
+     * @param string $viewName
+     *
+     * @return int
+     */
+    private function getOffSet($viewName)
+    {
+        return ($viewName === $this->active) ? $this->offset : 0;
+    }
+
+    /**
+     * Returns a string with the parameters in the controller call url.
+     *
+     * @param string $viewName
+     *
+     * @return string
+     */
+    private function getParams($viewName)
+    {
+        $result = '';
+        if ($viewName === $this->active) {
+            $join = '?';
+            if (!empty($this->query)) {
+                $result = $join . 'query=' . $this->query;
+                $join = '&';
+            }
+
+            foreach ($this->views[$this->active]->getFilters() as $key => $filter) {
+                $result .= $filter->getParams($key, $join);
+                $join = '&';
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Returns columns title for megaSearchAction function.
+     *
+     * @param ListView $view
+     * @param int      $maxColumns
+     *
+     * @return array
+     */
+    private function getTextColumns($view, $maxColumns)
+    {
+        $result = [];
+        foreach ($view->getColumns() as $col) {
+            if ($col->display === 'none' || !in_array($col->widget->type, ['text', 'money'], false)) {
+                continue;
+            }
+
+            $result[] = $col->widget->fieldName;
+            if (count($result) === $maxColumns) {
+                break;
+            }
+        }
+
+        return $result;
     }
 }

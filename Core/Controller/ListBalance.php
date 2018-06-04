@@ -48,34 +48,6 @@ class ListBalance extends ExtendedController\ListController
     }
 
     /**
-     * Create and add view
-     *
-     * @param string $viewName
-     * @param string $viewTitle
-     */
-    private function addViewBalance($viewName, $viewTitle)
-    {
-        $this->addView($viewName, 'Balance', $viewTitle);
-        $fields = [
-            'codbalance',
-            'naturaleza',
-            'descripcion1',
-            'descripcion2',
-            'descripcion3',
-            'descripcion4',
-            'descripcion4ba'
-        ];
-        $this->addSearchFields($viewName, $fields);
-
-        $this->addOrderBy($viewName, 'codbalance', 'code');
-        $this->addOrderBy($viewName, 'descripcion1', 'description-1');
-        $this->addOrderBy($viewName, 'descripcion2', 'description-2');
-        $this->addOrderBy($viewName, 'descripcion3', 'description-3');
-        $this->addOrderBy($viewName, 'descripcion4', 'description-4');
-        $this->addOrderBy($viewName, 'descripcion4ba', 'description-4ba');
-    }
-
-    /**
      * Create views
      */
     protected function createViews()
@@ -113,5 +85,33 @@ class ListBalance extends ExtendedController\ListController
                 break;
         }
         parent::loadData($viewName, $where, $offset);
+    }
+
+    /**
+     * Create and add view
+     *
+     * @param string $viewName
+     * @param string $viewTitle
+     */
+    private function addViewBalance($viewName, $viewTitle)
+    {
+        $this->addView($viewName, 'Balance', $viewTitle);
+        $fields = [
+            'codbalance',
+            'naturaleza',
+            'descripcion1',
+            'descripcion2',
+            'descripcion3',
+            'descripcion4',
+            'descripcion4ba'
+        ];
+        $this->addSearchFields($viewName, $fields);
+
+        $this->addOrderBy($viewName, 'codbalance', 'code');
+        $this->addOrderBy($viewName, 'descripcion1', 'description-1');
+        $this->addOrderBy($viewName, 'descripcion2', 'description-2');
+        $this->addOrderBy($viewName, 'descripcion3', 'description-3');
+        $this->addOrderBy($viewName, 'descripcion4', 'description-4');
+        $this->addOrderBy($viewName, 'descripcion4ba', 'description-4ba');
     }
 }

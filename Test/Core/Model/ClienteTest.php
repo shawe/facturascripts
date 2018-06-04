@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core\Model;
 
 use FacturaScripts\Core\Model\Cliente;
@@ -29,11 +30,6 @@ use FacturaScripts\Test\Core\CustomTest;
  */
 final class ClienteTest extends CustomTest
 {
-
-    protected function setUp()
-    {
-        $this->model = new Cliente();
-    }
 
     /**
      * @covers \FacturaScripts\Core\Model\Cliente::primaryDescriptionColumn()
@@ -49,5 +45,10 @@ final class ClienteTest extends CustomTest
     public function testGetDirecciones()
     {
         $this->model->getDirecciones();
+    }
+
+    protected function setUp()
+    {
+        $this->model = new Cliente();
     }
 }

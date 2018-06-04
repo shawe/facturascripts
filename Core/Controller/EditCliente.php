@@ -72,22 +72,6 @@ class EditCliente extends ExtendedController\PanelController
     }
 
     /**
-     * Create and configure main view
-     */
-    private function addMainView()
-    {
-        $this->addEditView('EditCliente', 'Cliente', 'customer');
-
-        /// Load values option to Fiscal ID select input
-        $columnFiscalID = $this->views['EditCliente']->columnForName('fiscal-id');
-        $columnFiscalID->widget->setValuesFromArray(IDFiscal::all());
-
-        /// Load values option to VAT Type select input
-        $columnVATType = $this->views['EditCliente']->columnForName('vat-regime');
-        $columnVATType->widget->setValuesFromArray(RegimenIVA::all());
-    }
-
-    /**
      * Create views
      */
     protected function createViews()
@@ -154,5 +138,21 @@ class EditCliente extends ExtendedController\PanelController
                 $view->loadData('', $where, [], 0, $limit);
                 break;
         }
+    }
+
+    /**
+     * Create and configure main view
+     */
+    private function addMainView()
+    {
+        $this->addEditView('EditCliente', 'Cliente', 'customer');
+
+        /// Load values option to Fiscal ID select input
+        $columnFiscalID = $this->views['EditCliente']->columnForName('fiscal-id');
+        $columnFiscalID->widget->setValuesFromArray(IDFiscal::all());
+
+        /// Load values option to VAT Type select input
+        $columnVATType = $this->views['EditCliente']->columnForName('vat-regime');
+        $columnVATType->widget->setValuesFromArray(RegimenIVA::all());
     }
 }

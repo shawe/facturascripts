@@ -49,23 +49,6 @@ class EditApiKey extends ExtendedController\PanelController
     }
 
     /**
-     * Add the indicated resource list to the api key.
-     *
-     * @param int   $idApiKey
-     * @param array $apiAccess
-     * @param bool  $state
-     *
-     * @throws \Exception
-     */
-    private function addResourcesToApiKey($idApiKey, $apiAccess, $state = false)
-    {
-        // add Pages to Rol
-        if (!Model\ApiAccess::addResourcesToApiKey($idApiKey, $apiAccess, $state)) {
-            throw new \Exception($this->i18n->trans('cancel-process'));
-        }
-    }
-
-    /**
      * Load views.
      */
     protected function createViews()
@@ -96,11 +79,52 @@ class EditApiKey extends ExtendedController\PanelController
     }
 
     /**
+     * Load view data.
+     *
+     * @param string                      $viewName
+     * @param ExtendedController\EditView $view
+     */
+    protected function loadData($viewName, $view)
+    {
+        $order = [];
+        switch ($viewName) {
+            case 'EditApiKey':
+                $code = $this->request->get('code');
+                $view->loadData($code);
+                break;
+
+            case 'EditApiAccess':
+                $order['resource'] = 'ASC';
+                $idApiKey = $this->getViewModelValue('EditApiKey', 'id');
+                $where = [new DataBaseWhere('idapikey', $idApiKey)];
+                $view->loadData('', $where, $order, 0, 0);
+                break;
+        }
+    }
+
+    /**
      * Returns the model name
      */
     public function getModelClassName()
     {
         return 'ApiKey';
+    }
+
+    /**
+     * Add the indicated resource list to the api key.
+     *
+     * @param int   $idApiKey
+     * @param array $apiAccess
+     * @param bool  $state
+     *
+     * @throws \Exception
+     */
+    private function addResourcesToApiKey($idApiKey, $apiAccess, $state = false)
+    {
+        // add Pages to Rol
+        if (!Model\ApiAccess::addResourcesToApiKey($idApiKey, $apiAccess, $state)) {
+            throw new \Exception($this->i18n->trans('cancel-process'));
+        }
     }
 
     /**
@@ -153,29 +177,5 @@ class EditApiKey extends ExtendedController\PanelController
         sort($resources);
 
         return $resources;
-    }
-
-    /**
-     * Load view data.
-     *
-     * @param string                      $viewName
-     * @param ExtendedController\EditView $view
-     */
-    protected function loadData($viewName, $view)
-    {
-        $order = [];
-        switch ($viewName) {
-            case 'EditApiKey':
-                $code = $this->request->get('code');
-                $view->loadData($code);
-                break;
-
-            case 'EditApiAccess':
-                $order['resource'] = 'ASC';
-                $idApiKey = $this->getViewModelValue('EditApiKey', 'id');
-                $where = [new DataBaseWhere('idapikey', $idApiKey)];
-                $view->loadData('', $where, $order, 0, 0);
-                break;
-        }
     }
 }

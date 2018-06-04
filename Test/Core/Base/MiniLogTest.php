@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core\Base;
 
 use FacturaScripts\Core\Base\MiniLog;
@@ -31,15 +32,6 @@ class MiniLogTest extends TestCase
      * @var MiniLog
      */
     protected $object;
-
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
-    protected function setUp()
-    {
-        $this->object = new MiniLog();
-    }
 
     /**
      * @covers \FacturaScripts\Core\Base\MiniLog::clear()
@@ -213,5 +205,14 @@ class MiniLogTest extends TestCase
         $this->object->sql('sql');
         $this->object->clear();
         self::assertEmpty($this->object->read());
+    }
+
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     */
+    protected function setUp()
+    {
+        $this->object = new MiniLog();
     }
 }

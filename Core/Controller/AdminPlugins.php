@@ -66,6 +66,26 @@ class AdminPlugins extends Base\Controller
     }
 
     /**
+     * Runs the controller's private logic.
+     *
+     * @param Response                   $response
+     * @param User                       $user
+     * @param Base\ControllerPermissions $permissions
+     */
+    public function privateCore(&$response, $user, $permissions)
+    {
+        parent::privateCore($response, $user, $permissions);
+
+        /// For now, always deploy the contents of Dinamic, for testing purposes
+        $this->pluginManager = new Base\PluginManager();
+        $this->pluginManager->deploy(true, true);
+        $this->cache->clear();
+
+        $action = $this->request->get('action', '');
+        $this->execAction($action);
+    }
+
+    /**
      * Return installed plugins without hidden ones.
      *
      * @return array
@@ -85,26 +105,6 @@ class AdminPlugins extends Base\Controller
             }
         }
         return $installedPlugins;
-    }
-
-    /**
-     * Runs the controller's private logic.
-     *
-     * @param Response                   $response
-     * @param User                       $user
-     * @param Base\ControllerPermissions $permissions
-     */
-    public function privateCore(&$response, $user, $permissions)
-    {
-        parent::privateCore($response, $user, $permissions);
-
-        /// For now, always deploy the contents of Dinamic, for testing purposes
-        $this->pluginManager = new Base\PluginManager();
-        $this->pluginManager->deploy(true, true);
-        $this->cache->clear();
-
-        $action = $this->request->get('action', '');
-        $this->execAction($action);
     }
 
     /**

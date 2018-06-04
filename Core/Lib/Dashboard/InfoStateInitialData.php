@@ -54,7 +54,8 @@ class InfoStateInitialData
             [
                 'name' => 'total',
                 'sql' => 'count(*)',
-                'type' => 'int'],
+                'type' => 'int'
+            ],
             [
                 'name' => 'new',
                 'sql' => 'SUM(CASE WHEN EXTRACT(YEAR FROM fechaalta) = EXTRACT(YEAR FROM current_date) THEN 1 ELSE 0 END)',

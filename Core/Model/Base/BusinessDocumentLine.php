@@ -38,118 +38,102 @@ abstract class BusinessDocumentLine extends ModelClass
      * @var int
      */
     public $actualizastock;
-
-    /**
-     * Previous actualizastock value.
-     *
-     * @var int
-     */
-    private $actualizaStockAnt;
-
     /**
      * Quantity.
      *
      * @var float|int
      */
     public $cantidad;
-
-    /**
-     * Previous quantity value.
-     *
-     * @var float|int
-     */
-    private $cantidadAnt;
-
     /**
      * Code of the selected combination, in the case of articles with attributes.
      *
      * @var string
      */
     public $codcombinacion;
-
     /**
      * Code of the related tax.
      *
      * @var string
      */
     public $codimpuesto;
-
     /**
      * Description of the line.
      *
      * @var string
      */
     public $descripcion;
-
     /**
      * % of the related tax.
      *
      * @var float|int
      */
     public $iva;
-
     /**
      * % off.
      *
      * @var float|int
      */
     public $dtopor;
-
     /**
      * Primary key.
      *
      * @var int
      */
     public $idlinea;
-
     /**
      * % of IRPF of the line.
      *
      * @var float|int
      */
     public $irpf;
-
     /**
      * Position of the line in the document. The higher down.
      *
      * @var int
      */
     public $orden;
-
     /**
      * Net amount without discounts.
      *
      * @var float|int
      */
     public $pvpsindto;
-
     /**
      * Net amount of the line, without taxes.
      *
      * @var float|int
      */
     public $pvptotal;
-
     /**
      * Price of the item, one unit.
      *
      * @var float|int
      */
     public $pvpunitario;
-
     /**
      * % surcharge of line equivalence.
      *
      * @var float|int
      */
     public $recargo;
-
     /**
      * Reference of the article.
      *
      * @var string
      */
     public $referencia;
+    /**
+     * Previous actualizastock value.
+     *
+     * @var int
+     */
+    private $actualizaStockAnt;
+    /**
+     * Previous quantity value.
+     *
+     * @var float|int
+     */
+    private $cantidadAnt;
 
     /**
      * BusinessDocumentLine constructor.
@@ -222,6 +206,24 @@ abstract class BusinessDocumentLine extends ModelClass
     }
 
     /**
+     * Custom url method.
+     *
+     * @param string $type
+     * @param string $list
+     *
+     * @return string
+     */
+    public function url(string $type = 'auto', string $list = 'List'): string
+    {
+        $name = str_replace('Linea', '', $this->modelClassName());
+        if ($type === 'new') {
+            return 'Edit' . $name;
+        }
+
+        return parent::url($type, 'List' . $name . '?active=List');
+    }
+
+    /**
      * Updates stock according to line data and $codalmacen warehouse.
      *
      * @param string $codalmacen
@@ -254,25 +256,6 @@ abstract class BusinessDocumentLine extends ModelClass
         }
 
         return true;
-    }
-
-
-    /**
-     * Custom url method.
-     *
-     * @param string $type
-     * @param string $list
-     *
-     * @return string
-     */
-    public function url(string $type = 'auto', string $list = 'List'): string
-    {
-        $name = str_replace('Linea', '', $this->modelClassName());
-        if ($type === 'new') {
-            return 'Edit' . $name;
-        }
-
-        return parent::url($type, 'List' . $name . '?active=List');
     }
 
     /**

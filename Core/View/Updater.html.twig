@@ -25,34 +25,34 @@
             <div class="col-sm-12">
                 <table class="table table-hover">
                     <thead>
-                        <tr>
-                            <th scope="col">{{ i18n.trans('component') }}</th>
-                            <th scope="col">{{ i18n.trans('description') }}</th>
-                            <th scope="col" class="text-right">{{ i18n.trans('action') }}</th>
-                        </tr>
+                    <tr>
+                        <th scope="col">{{ i18n.trans('component') }}</th>
+                        <th scope="col">{{ i18n.trans('description') }}</th>
+                        <th scope="col" class="text-right">{{ i18n.trans('action') }}</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        {% for item in fsc.updaterItems %}
-                            <tr>
-                                <td>{{ item.id }}</td>
-                                <td>{{ item.description }}</td>
-                                <td class="text-right">
-                                    {% if item.downloaded %}
-                                        <a href="{{ fsc.url() }}?action=update&item={{ item.id }}" class="btn btn-sm btn-success">
-                                            <i class="fa fa-rocket fa-fw" aria-hidden="true"></i> {{ i18n.trans('update') }}
-                                        </a>
-                                    {% else %}
-                                        <a href="{{ fsc.url() }}?action=download&item={{ item.id }}" class="btn btn-sm btn-secondary">
-                                            <i class="fa fa-cloud-download fa-fw" aria-hidden="true"></i> {{ i18n.trans('download') }}
-                                        </a>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                        {% else %}
-                            <tr class="table-warning">
-                                <td colspan="3"><b>{{ i18n.trans('no-data') }}</b></td>
-                            </tr>
-                        {% endfor %}
+                    {% for item in fsc.updaterItems %}
+                        <tr>
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.description }}</td>
+                            <td class="text-right">
+                                {% if item.downloaded %}
+                                    <a href="{{ fsc.url() }}?action=update&item={{ item.id }}" class="btn btn-sm btn-success">
+                                        <i class="fa fa-rocket fa-fw" aria-hidden="true"></i> {{ i18n.trans('update') }}
+                                    </a>
+                                {% else %}
+                                    <a href="{{ fsc.url() }}?action=download&item={{ item.id }}" class="btn btn-sm btn-secondary">
+                                        <i class="fa fa-cloud-download fa-fw" aria-hidden="true"></i> {{ i18n.trans('download') }}
+                                    </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr class="table-warning">
+                            <td colspan="3"><b>{{ i18n.trans('no-data') }}</b></td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>

@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core\Base;
 
 use FacturaScripts\Core\Base\Cache;
@@ -31,16 +32,6 @@ class CacheTest extends TestCase
      * @var Cache
      */
     protected $object;
-
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
-    protected function setUp()
-    {
-        $this->object = new Cache();
-        $this->object->clear();
-    }
 
     /**
      * @covers \FacturaScripts\Core\Base\Cache::set()
@@ -80,5 +71,15 @@ class CacheTest extends TestCase
         $this->object->clear();
         self::assertEmpty($this->object->get('TEST_1'));
         self::assertNull($this->object->get('TEST_1'));
+    }
+
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     */
+    protected function setUp()
+    {
+        $this->object = new Cache();
+        $this->object->clear();
     }
 }

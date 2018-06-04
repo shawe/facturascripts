@@ -60,6 +60,15 @@ abstract class AccountingBase
     protected $dateTo;
 
     /**
+     * AccountingBase constructor.
+     */
+    public function __construct()
+    {
+        $this->dataBase = new DataBase();
+        $this->divisaTools = new DivisaTools();
+    }
+
+    /**
      * Generate the balance ammounts between two dates.
      */
     abstract public function generate(string $dateFrom, string $dateTo, array $params = []);
@@ -70,15 +79,6 @@ abstract class AccountingBase
      * @return array
      */
     abstract protected function getData(): array;
-
-    /**
-     * AccountingBase constructor.
-     */
-    public function __construct()
-    {
-        $this->dataBase = new DataBase();
-        $this->divisaTools = new DivisaTools();
-    }
 
     /**
      * Returns a new date.

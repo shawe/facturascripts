@@ -66,23 +66,6 @@ class CSVImport
     }
 
     /**
-     * Returns a value to SQL format.
-     *
-     * @param DataBase $dataBase
-     * @param string   $value
-     *
-     * @return string
-     */
-    private static function valueToSql(DataBase $dataBase, string $value): string
-    {
-        if ($value === 'false' || $value === 'true') {
-            return $value;
-        }
-
-        return $dataBase->var2str($value);
-    }
-
-    /**
      * Return the correct filepath for the table
      *
      * @param string $table
@@ -113,5 +96,22 @@ class CSVImport
         }
 
         return '';
+    }
+
+    /**
+     * Returns a value to SQL format.
+     *
+     * @param DataBase $dataBase
+     * @param string   $value
+     *
+     * @return string
+     */
+    private static function valueToSql(DataBase $dataBase, string $value): string
+    {
+        if ($value === 'false' || $value === 'true') {
+            return $value;
+        }
+
+        return $dataBase->var2str($value);
     }
 }

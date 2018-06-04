@@ -31,11 +31,6 @@ abstract class EditController extends PanelController
 {
 
     /**
-     * Returns the class name of the model to use in the editView.
-     */
-    abstract public function getModelClassName();
-
-    /**
      * Starts all the objects and properties.
      *
      * @param Base\Cache      $cache
@@ -49,6 +44,11 @@ abstract class EditController extends PanelController
         parent::__construct($cache, $i18n, $miniLog, $className, $uri);
         $this->setTabsPosition('bottom');
     }
+
+    /**
+     * Returns the class name of the model to use in the editView.
+     */
+    abstract public function getModelClassName();
 
     /**
      * Pointer to the data model

@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core\Model;
 
 use FacturaScripts\Core\Model\Atributo;
@@ -29,11 +30,6 @@ use FacturaScripts\Test\Core\CustomTest;
  */
 final class AtributoTest extends CustomTest
 {
-
-    protected function setUp()
-    {
-        $this->model = new Atributo();
-    }
 
     /**
      * @covers \FacturaScripts\Core\Model\Atributo::getByNombre()
@@ -49,5 +45,10 @@ final class AtributoTest extends CustomTest
     public function testValores()
     {
         $this->model->valores();
+    }
+
+    protected function setUp()
+    {
+        $this->model = new Atributo();
     }
 }

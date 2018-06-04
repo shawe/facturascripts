@@ -107,6 +107,35 @@ abstract class Product extends ModelClass
     }
 
     /**
+     * Returns the name of the column that describes the model, such as name, description...
+     *
+     * @return string
+     */
+    public function primaryDescriptionColumn(): string
+    {
+        return 'referencia';
+    }
+
+    /**
+     * Returns True if there is no errors on properties values.
+     *
+     * @return bool
+     */
+    public function test(): bool
+    {
+        $this->codbarras = Utils::noHtml($this->codbarras);
+        $this->descripcion = Utils::noHtml($this->descripcion);
+        $this->partnumber = Utils::noHtml($this->partnumber);
+        $this->referencia = Utils::noHtml($this->referencia);
+
+        if ($this->nostock) {
+            $this->stockfis = 0.0;
+        }
+
+        return parent::test();
+    }
+
+    /**
      * Returns the tax on the item.
      *
      * @return bool|Impuesto
@@ -152,16 +181,6 @@ abstract class Product extends ModelClass
     }
 
     /**
-     * Returns the name of the column that describes the model, such as name, description...
-     *
-     * @return string
-     */
-    public function primaryDescriptionColumn(): string
-    {
-        return 'referencia';
-    }
-
-    /**
      * Change the tax associated with the item.
      *
      * @param string $codimpuesto
@@ -180,24 +199,5 @@ abstract class Product extends ModelClass
                 self::$impuestos[$imp->codimpuesto] = $imp;
             }
         }
-    }
-
-    /**
-     * Returns True if there is no errors on properties values.
-     *
-     * @return bool
-     */
-    public function test(): bool
-    {
-        $this->codbarras = Utils::noHtml($this->codbarras);
-        $this->descripcion = Utils::noHtml($this->descripcion);
-        $this->partnumber = Utils::noHtml($this->partnumber);
-        $this->referencia = Utils::noHtml($this->referencia);
-
-        if ($this->nostock) {
-            $this->stockfis = 0.0;
-        }
-
-        return parent::test();
     }
 }

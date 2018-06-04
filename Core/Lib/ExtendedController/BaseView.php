@@ -32,19 +32,17 @@ abstract class BaseView
 {
 
     /**
-     * Total count of read rows.
-     *
-     * @var int
-     */
-    public $count;
-
-    /**
      * Contains the translator
      *
      * @var Base\Translator
      */
     protected static $i18n;
-
+    /**
+     * Total count of read rows.
+     *
+     * @var int
+     */
+    public $count;
     /**
      * Needed model to for the model method calls.
      * In the scope of EditController it contains the view data.
@@ -59,25 +57,18 @@ abstract class BaseView
      * @var string
      */
     public $newCode;
-
-    /**
-     * Columns and filters configuration
-     *
-     * @var Model\PageOption
-     */
-    protected $pageOption;
-
     /**
      * View title
      *
      * @var string
      */
     public $title;
-
     /**
-     * Method to export the view data.
+     * Columns and filters configuration
+     *
+     * @var Model\PageOption
      */
-    abstract public function export(&$exportManager);
+    protected $pageOption;
 
     /**
      * Construct and initialize the class
@@ -94,6 +85,11 @@ abstract class BaseView
         $this->model = class_exists($modelName) ? new $modelName() : null;
         $this->pageOption = new Model\PageOption();
     }
+
+    /**
+     * Method to export the view data.
+     */
+    abstract public function export(&$exportManager);
 
     /**
      * Clears the model and set new code for the PK.

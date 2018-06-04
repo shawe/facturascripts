@@ -45,13 +45,6 @@ abstract class BusinessDocumentController extends PanelController
     private $documentTools;
 
     /**
-     * Return the document class name.
-     *
-     * @return string
-     */
-    abstract protected function getModelClassName(): string;
-
-    /**
      * Starts all the objects and properties.
      *
      * @param Base\Cache      $cache
@@ -88,6 +81,13 @@ abstract class BusinessDocumentController extends PanelController
 
         return $values;
     }
+
+    /**
+     * Return the document class name.
+     *
+     * @return string
+     */
+    abstract protected function getModelClassName(): string;
 
     /**
      * Load views and document.
@@ -151,16 +151,6 @@ abstract class BusinessDocumentController extends PanelController
     }
 
     /**
-     * Return the name of the xml file with the column configuration por lines.
-     *
-     * @return string
-     */
-    protected function getLineXMLView(): string
-    {
-        return 'BusinessDocumentLine';
-    }
-
-    /**
      * Load view data procedure
      *
      * @param string               $viewName
@@ -172,6 +162,16 @@ abstract class BusinessDocumentController extends PanelController
         if ($viewName === 'Document' && !empty($iddoc)) {
             $view->loadData($iddoc);
         }
+    }
+
+    /**
+     * Return the name of the xml file with the column configuration por lines.
+     *
+     * @return string
+     */
+    protected function getLineXMLView(): string
+    {
+        return 'BusinessDocumentLine';
     }
 
     /**
@@ -234,7 +234,7 @@ abstract class BusinessDocumentController extends PanelController
      *
      * @return string
      */
-    protected function saveDocumentResult(BusinessDocumentView &$view, array &$data, array &$newLines): string
+    protected function saveDocumentResult(BusinessDocumentView $view, array &$data, array &$newLines): string
     {
         if (!$view->model->setDate($data['fecha'], $data['hora'])) {
             return 'ERROR: BAD DATE';
@@ -278,7 +278,7 @@ abstract class BusinessDocumentController extends PanelController
      *
      * @return string
      */
-    protected function saveLines(BusinessDocumentView &$view, array &$newLines): string
+    protected function saveLines(BusinessDocumentView $view, array &$newLines): string
     {
         $result = 'OK';
 
@@ -335,7 +335,7 @@ abstract class BusinessDocumentController extends PanelController
      *
      * @return string
      */
-    protected function setCustomer(BusinessDocumentView &$view, string $codcliente, string $newCliente = '', string $newCifnif = ''): string
+    protected function setCustomer(BusinessDocumentView $view, string $codcliente, string $newCliente = '', string $newCifnif = ''): string
     {
         if ($view->model->codcliente === $codcliente && !empty($view->model->codcliente)) {
             return 'OK';
@@ -366,7 +366,7 @@ abstract class BusinessDocumentController extends PanelController
      *
      * @return string
      */
-    protected function setSupplier(BusinessDocumentView &$view, string $codproveedor, string $newProveedor = '', string $newCifnif = ''): string
+    protected function setSupplier(BusinessDocumentView $view, string $codproveedor, string $newProveedor = '', string $newCifnif = ''): string
     {
         if ($view->model->codproveedor === $codproveedor && !empty($view->model->codproveedor)) {
             return 'OK';

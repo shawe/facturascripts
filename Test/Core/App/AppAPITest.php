@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core\App;
 
 use FacturaScripts\Core\App\AppAPI;
@@ -34,15 +35,6 @@ class AppAPITest extends TestCase
     protected $object;
 
     /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
-    protected function setUp()
-    {
-        $this->object = new AppAPI();
-    }
-
-    /**
      * @covers \FacturaScripts\Core\App\AppAPI::connect()
      */
     public function testConnect()
@@ -58,5 +50,14 @@ class AppAPITest extends TestCase
     {
         $mustRun = ('true' === AppSettings::get('default', 'enable_api', 'false'));
         self::assertEquals($this->object->run(), $mustRun);
+    }
+
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     */
+    protected function setUp()
+    {
+        $this->object = new AppAPI();
     }
 }

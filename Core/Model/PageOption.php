@@ -97,32 +97,6 @@ class PageOption extends Base\ModelClass
     }
 
     /**
-     * Get the settings for the driver and user
-     *
-     * @param string $name
-     * @param string $nick
-     */
-    public function getForUser(string $name, string $nick)
-    {
-        $viewName = explode('-', $name)[0];
-        $where = $this->getPageFilter($viewName, $nick);
-        $orderby = ['nick' => 'ASC'];
-
-        // Load data from database, if not exist install xmlview
-        if (!$this->loadFromCode('', $where, $orderby)) {
-            $this->name = $viewName;
-
-            if (!ExtendedController\VisualItemLoadEngine::installXML($viewName, $this)) {
-                self::$miniLog->critical(self::$i18n->trans('error-processing-xmlview', ['%fileName%' => 'XMLView\\' . $viewName . '.xml']));
-                return;
-            }
-        }
-
-        /// Apply values to dynamic Select widgets
-        ExtendedController\VisualItemLoadEngine::applyDynamicSelectValues($this);
-    }
-
-    /**
      * This function is called when creating the model table.
      * Returns the SQL that will be executed after the creation of the table,
      * useful to insert default values.
@@ -175,6 +149,56 @@ class PageOption extends Base\ModelClass
     }
 
     /**
+     * Insert the model data in the database.
+     *
+     * @param array $values
+     *
+     * @return bool
+     */
+    protected function saveInsert(array $values = []): bool
+    {
+        return parent::saveInsert($this->getEncodeValues());
+    }
+
+    /**
+     * Update the model data in the database.
+     *
+     * @param array $values
+     *
+     * @return bool
+     */
+    protected function saveUpdate(array $values = []): bool
+    {
+        return parent::saveUpdate($this->getEncodeValues());
+    }
+
+    /**
+     * Get the settings for the driver and user
+     *
+     * @param string $name
+     * @param string $nick
+     */
+    public function getForUser(string $name, string $nick)
+    {
+        $viewName = explode('-', $name)[0];
+        $where = $this->getPageFilter($viewName, $nick);
+        $orderby = ['nick' => 'ASC'];
+
+        // Load data from database, if not exist install xmlview
+        if (!$this->loadFromCode('', $where, $orderby)) {
+            $this->name = $viewName;
+
+            if (!ExtendedController\VisualItemLoadEngine::installXML($viewName, $this)) {
+                self::$miniLog->critical(self::$i18n->trans('error-processing-xmlview', ['%fileName%' => 'XMLView\\' . $viewName . '.xml']));
+                return;
+            }
+        }
+
+        /// Apply values to dynamic Select widgets
+        ExtendedController\VisualItemLoadEngine::applyDynamicSelectValues($this);
+    }
+
+    /**
      * Returns the values of the view configuration fields in JSON format
      *
      * @return array
@@ -205,29 +229,5 @@ class PageOption extends Base\ModelClass
             new DataBase\DataBaseWhere('nick', 'NULL', 'IS', 'OR'),
             new DataBase\DataBaseWhere('name', $name),
         ];
-    }
-
-    /**
-     * Insert the model data in the database.
-     *
-     * @param array $values
-     *
-     * @return bool
-     */
-    protected function saveInsert(array $values = []): bool
-    {
-        return parent::saveInsert($this->getEncodeValues());
-    }
-
-    /**
-     * Update the model data in the database.
-     *
-     * @param array $values
-     *
-     * @return bool
-     */
-    protected function saveUpdate(array $values = []): bool
-    {
-        return parent::saveUpdate($this->getEncodeValues());
     }
 }

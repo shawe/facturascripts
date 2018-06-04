@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core\Model;
 
 use FacturaScripts\Core\Model\Divisa;
@@ -30,16 +31,16 @@ use FacturaScripts\Test\Core\CustomTest;
 final class DivisaTest extends CustomTest
 {
 
-    protected function setUp()
-    {
-        $this->model = new Divisa();
-    }
-
     /**
      * @covers \FacturaScripts\Core\Model\Divisa::isDefault()
      */
     public function testIsDefault()
     {
         $this->model->isDefault();
+    }
+
+    protected function setUp()
+    {
+        $this->model = new Divisa();
     }
 }

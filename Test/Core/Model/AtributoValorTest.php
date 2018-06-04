@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core\Model;
 
 use FacturaScripts\Core\Model\AtributoValor;
@@ -30,16 +31,16 @@ use FacturaScripts\Test\Core\CustomTest;
 final class AtributoValorTest extends CustomTest
 {
 
-    protected function setUp()
-    {
-        $this->model = new AtributoValor();
-    }
-
     /**
      * @covers \FacturaScripts\Core\Model\AtributoValor::allFromAtributo()
      */
     public function testAllFromAtributo()
     {
         $this->model->allFromAtributo('a');
+    }
+
+    protected function setUp()
+    {
+        $this->model = new AtributoValor();
     }
 }

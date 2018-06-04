@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core\Lib;
 
 use FacturaScripts\Core\Lib\IPFilter;
@@ -31,16 +32,6 @@ class IPFilterTest extends TestCase
      * @var IPFilter
      */
     protected $object;
-
-    /**
-     * Sets up the fixture, for example, opens a network connection.
-     * This method is called before a test is executed.
-     */
-    protected function setUp()
-    {
-        $this->object = new IPFilter();
-        $this->object->clear();
-    }
 
     /**
      * @covers \FacturaScripts\Core\Lib\IPFilter::clear()
@@ -71,5 +62,15 @@ class IPFilterTest extends TestCase
         $this->object->setAttempt('192.168.1.1');
 
         self::assertTrue($this->object->isBanned('192.168.1.1'));
+    }
+
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     */
+    protected function setUp()
+    {
+        $this->object = new IPFilter();
+        $this->object->clear();
     }
 }

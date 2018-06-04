@@ -47,14 +47,6 @@ abstract class PanelController extends BaseController
     public $tabsPosition;
 
     /**
-     * Loads the data to display.
-     *
-     * @param string   $viewName
-     * @param BaseView $view
-     */
-    abstract protected function loadData($viewName, $view);
-
-    /**
      * Starts all the objects and properties.
      *
      * @param Base\Cache      $cache
@@ -187,6 +179,14 @@ abstract class PanelController extends BaseController
         $result = explode('\\', get_class($view));
         return end($result);
     }
+
+    /**
+     * Loads the data to display.
+     *
+     * @param string   $viewName
+     * @param BaseView $view
+     */
+    abstract protected function loadData($viewName, $view);
 
     /**
      * Adds a EditList type view to the controller

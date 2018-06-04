@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core\Model;
 
 use FacturaScripts\Core\Model\AlbaranProveedor;
@@ -27,11 +28,6 @@ use FacturaScripts\Test\Core\CustomTest;
  */
 final class AlbaranProveedorTest extends CustomTest
 {
-
-    protected function setUp()
-    {
-        $this->model = new AlbaranProveedor();
-    }
 
     /**
      * @covers \FacturaScripts\Core\Model\AlbaranProveedor::getLines()
@@ -47,5 +43,10 @@ final class AlbaranProveedorTest extends CustomTest
     public function testGetNewLine()
     {
         self::assertNotEmpty($this->model->getNewLine());
+    }
+
+    protected function setUp()
+    {
+        $this->model = new AlbaranProveedor();
     }
 }

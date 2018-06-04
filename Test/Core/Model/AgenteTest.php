@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core\Model;
 
 use FacturaScripts\Core\Model\Agente;
@@ -28,16 +29,16 @@ use FacturaScripts\Test\Core\CustomTest;
 final class AgenteTest extends CustomTest
 {
 
-    protected function setUp()
-    {
-        $this->model = new Agente();
-    }
-
     /**
      * @covers \FacturaScripts\Core\Model\Agente::primaryDescriptionColumn()
      */
     public function getPrimaryDescriptionColumn()
     {
         self::assertNotEmpty($this->model->primaryDescriptionColumn());
+    }
+
+    protected function setUp()
+    {
+        $this->model = new Agente();
     }
 }

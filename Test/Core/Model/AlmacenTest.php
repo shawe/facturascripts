@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core\Model;
 
 use FacturaScripts\Core\Model\Almacen;
@@ -27,11 +28,6 @@ use FacturaScripts\Test\Core\CustomTest;
  */
 final class AlmacenTest extends CustomTest
 {
-
-    protected function setUp()
-    {
-        $this->model = new Almacen();
-    }
 
     /**
      * @covers \FacturaScripts\Core\Model\Almacen::isDefault()
@@ -49,5 +45,10 @@ final class AlmacenTest extends CustomTest
         self::assertInternalType(
             'string', $this->model->primaryDescriptionColumn()
         );
+    }
+
+    protected function setUp()
+    {
+        $this->model = new Almacen();
     }
 }

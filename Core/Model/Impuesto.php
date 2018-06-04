@@ -72,16 +72,6 @@ class Impuesto extends Base\ModelClass
     }
 
     /**
-     * Returns True if is the default tax for the user.
-     *
-     * @return bool
-     */
-    public function isDefault(): bool
-    {
-        return $this->codimpuesto === AppSettings::get('default', 'codimpuesto');
-    }
-
-    /**
      * Returns the name of the column that is the primary key of the model.
      *
      * @return string
@@ -121,5 +111,15 @@ class Impuesto extends Base\ModelClass
         }
 
         return parent::test();
+    }
+
+    /**
+     * Returns True if is the default tax for the user.
+     *
+     * @return bool
+     */
+    public function isDefault(): bool
+    {
+        return $this->codimpuesto === AppSettings::get('default', 'codimpuesto');
     }
 }

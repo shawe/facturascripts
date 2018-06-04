@@ -149,16 +149,6 @@ class Contacto extends Base\Contact
     }
 
     /**
-     * Returns full name.
-     *
-     * @return string
-     */
-    public function fullName()
-    {
-        return $this->nombre . ' ' . $this->apellidos;
-    }
-
-    /**
      * Returns the name of the column that is the model's primary key.
      *
      * @return string
@@ -203,6 +193,16 @@ class Contacto extends Base\Contact
         $this->provincia = Utils::noHtml($this->provincia);
 
         return parent::test();
+    }
+
+    /**
+     * Returns full name.
+     *
+     * @return string
+     */
+    public function fullName()
+    {
+        return $this->nombre . ' ' . $this->apellidos;
     }
 
     /**

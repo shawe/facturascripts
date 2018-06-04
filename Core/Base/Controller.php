@@ -43,14 +43,84 @@ class Controller
      * @var array
      */
     public $assets;
-
+    /**
+     * Tools to work with currencies.
+     *
+     * @var DivisaTools
+     */
+    public $divisaTools;
+    /**
+     * Selected company.
+     *
+     * @var Model\Empresa|false
+     */
+    public $empresa;
+    /**
+     * Tools to work with numbers.
+     *
+     * @var NumberTools
+     */
+    public $numberTools;
+    /**
+     * User permissions on this controller.
+     *
+     * @var ControllerPermissions
+     */
+    public $permissions;
+    /**
+     * Request on which we can get data.
+     *
+     * @var Request
+     */
+    public $request;
+    /**
+     * Title of the page.
+     *
+     * @var string título de la página.
+     */
+    public $title;
+    /**
+     * Given uri, default is empty.
+     *
+     * @var string
+     */
+    public $uri;
+    /**
+     * User logged in.
+     *
+     * @var Model\User
+     */
+    public $user;
     /**
      * Cache access manager.
      *
      * @var Cache
      */
     protected $cache;
-
+    /**
+     * It provides direct access to the database.
+     *
+     * @var DataBase
+     */
+    protected $dataBase;
+    /**
+     * Translator engine.
+     *
+     * @var Translator
+     */
+    protected $i18n;
+    /**
+     * App log manager.
+     *
+     * @var MiniLog
+     */
+    protected $miniLog;
+    /**
+     * HTTP Response object.
+     *
+     * @var Response
+     */
+    protected $response;
     /**
      * Name of the class of the controller (although its in inheritance from this class,
      * the name of the final class we will have here)
@@ -58,97 +128,12 @@ class Controller
      * @var string __CLASS__
      */
     private $className;
-
-    /**
-     * It provides direct access to the database.
-     *
-     * @var DataBase
-     */
-    protected $dataBase;
-
-    /**
-     * Tools to work with currencies.
-     *
-     * @var DivisaTools
-     */
-    public $divisaTools;
-
-    /**
-     * Selected company.
-     *
-     * @var Model\Empresa|false
-     */
-    public $empresa;
-
-    /**
-     * Translator engine.
-     *
-     * @var Translator
-     */
-    protected $i18n;
-
-    /**
-     * App log manager.
-     *
-     * @var MiniLog
-     */
-    protected $miniLog;
-
-    /**
-     * Tools to work with numbers.
-     *
-     * @var NumberTools
-     */
-    public $numberTools;
-
-    /**
-     * User permissions on this controller.
-     *
-     * @var ControllerPermissions
-     */
-    public $permissions;
-
-    /**
-     * Request on which we can get data.
-     *
-     * @var Request
-     */
-    public $request;
-
-    /**
-     * HTTP Response object.
-     *
-     * @var Response
-     */
-    protected $response;
-
     /**
      * Name of the file for the template.
      *
      * @var string|false nombre_archivo.html.twig
      */
     private $template;
-
-    /**
-     * Title of the page.
-     *
-     * @var string título de la página.
-     */
-    public $title;
-
-    /**
-     * Given uri, default is empty.
-     *
-     * @var string
-     */
-    public $uri;
-
-    /**
-     * User logged in.
-     *
-     * @var Model\User
-     */
-    public $user;
 
     /**
      * Initialize all objects and properties.
@@ -173,16 +158,6 @@ class Controller
 
         $pageData = $this->getPageData();
         $this->title = empty($pageData) ? $this->className : $pageData['title'];
-    }
-
-    /**
-     * Return the name of the controller.
-     *
-     * @return string
-     */
-    protected function getClassName()
-    {
-        return $this->className;
     }
 
     /**
@@ -281,6 +256,16 @@ class Controller
      * @return string|false
      */
     public function url(): string
+    {
+        return $this->className;
+    }
+
+    /**
+     * Return the name of the controller.
+     *
+     * @return string
+     */
+    protected function getClassName()
     {
         return $this->className;
     }

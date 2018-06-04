@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace FacturaScripts\Test\Core\Model;
 
 use FacturaScripts\Core\Model\GrupoClientes;
@@ -30,17 +31,17 @@ use FacturaScripts\Test\Core\CustomTest;
 final class GrupoClientesTest extends CustomTest
 {
 
-    protected function setUp()
-    {
-        $this->model = new GrupoClientes();
-    }
-
     /**
      * @covers \FacturaScripts\Core\Model\GrupoClientes::primaryDescriptionColumn()
      */
     public function getPrimaryDescriptionColumn()
     {
         self::assertNotEmpty($this->model->primaryDescriptionColumn());
+    }
+
+    protected function setUp()
+    {
+        $this->model = new GrupoClientes();
     }
 
     /**
