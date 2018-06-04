@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Controller;
@@ -49,7 +49,8 @@ class ListProveedor extends ExtendedController\ListController
      */
     protected function createViews()
     {
-        $this->addView('ListProveedor', 'Proveedor');
+        /* Supplier */
+        $this->addView('ListProveedor', 'Proveedor', 'suppliers', 'fa-users');
         $this->addSearchFields('ListProveedor', ['nombre', 'razonsocial', 'codproveedor', 'email']);
 
         $this->addOrderBy('ListProveedor', 'codproveedor', 'code');
@@ -57,5 +58,12 @@ class ListProveedor extends ExtendedController\ListController
         $this->addOrderBy('ListProveedor', 'fecha', 'date');
 
         $this->addFilterCheckbox('ListProveedor', 'debaja', 'suspended', 'debaja');
+
+        /* addresses */
+        $this->addView('ListDireccionProveedor', 'DireccionProveedor', 'addresses', 'fa-road');
+        $this->addSearchFields('ListDireccionProveedor', ['codproveedor', 'descripcion', 'direccion', 'ciudad', 'provincia', 'codpostal']);
+        $this->addOrderBy('ListDireccionProveedor', 'codproveedor', 'supplier');
+        $this->addOrderBy('ListDireccionProveedor', 'descripcion', 'description');
+        $this->addOrderBy('ListDireccionProveedor', 'codpostal', 'postalcode');
     }
 }

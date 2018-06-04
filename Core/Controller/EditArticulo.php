@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Controller;
@@ -32,13 +32,29 @@ class EditArticulo extends ExtendedController\PanelController
 {
 
     /**
+     * Returns basic page attributes
+     *
+     * @return array
+     */
+    public function getPageData()
+    {
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'product';
+        $pageData['icon'] = 'fa-cube';
+        $pageData['menu'] = 'warehouse';
+        $pageData['showonmenu'] = false;
+
+        return $pageData;
+    }
+
+    /**
      * Load views
      */
     protected function createViews()
     {
-        $this->addEditView('Articulo', 'EditArticulo', 'products', 'fa-cubes');
-        $this->addEditListView('Stock', 'EditStock', 'stock', 'fa-tasks');
-        $this->addListView('ArticuloProveedor', 'ListArticuloProveedor', 'suppliers', 'fa-users');
+        $this->addEditView('EditArticulo', 'Articulo', 'products', 'fa-cubes');
+        $this->addEditListView('EditStock', 'Stock', 'stock', 'fa-tasks');
+        $this->addListView('ListArticuloProveedor', 'ArticuloProveedor', 'suppliers', 'fa-users');
 
         /// Disable column
         $this->views['ListArticuloProveedor']->disableColumn('reference', true);
@@ -47,17 +63,17 @@ class EditArticulo extends ExtendedController\PanelController
     /**
      * Load view data procedure
      *
-     * @param string                      $keyView
+     * @param string                      $viewName
      * @param ExtendedController\EditView $view
      */
-    protected function loadData($keyView, $view)
+    protected function loadData($viewName, $view)
     {
         if ($this->getViewModelValue('EditArticulo', 'secompra') === false) {
             unset($this->views['ListArticuloProveedor']);
         }
 
         $limit = FS_ITEM_LIMIT;
-        switch ($keyView) {
+        switch ($viewName) {
             case 'EditArticulo':
                 $code = $this->request->get('code');
                 $view->loadData($code);
@@ -66,28 +82,12 @@ class EditArticulo extends ExtendedController\PanelController
             /** @noinspection PhpMissingBreakStatementInspection */
             case 'EditStock':
                 $limit = 0;
-                // no break
-
+                /// no break
             case 'ListArticuloProveedor':
                 $referencia = $this->getViewModelValue('EditArticulo', 'referencia');
                 $where = [new DataBaseWhere('referencia', $referencia)];
-                $view->loadData(false, $where, [], 0, $limit);
+                $view->loadData('', $where, [], 0, $limit);
                 break;
         }
-    }
-
-    /**
-     * Returns basic page attributes
-     *
-     * @return array
-     */
-    public function getPageData(): array
-    {
-        $pageData = parent::getPageData();
-        $pageData['title'] = 'product';
-        $pageData['icon'] = 'fa-cube';
-        $pageData['showonmenu'] = false;
-
-        return $pageData;
     }
 }

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos Garcia Gomez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\App;
@@ -107,7 +107,7 @@ abstract class App
      *
      * @param string $uri
      */
-    public function __construct($uri = '/')
+    public function __construct(string $uri = '/')
     {
         $this->request = Request::createFromGlobals();
 
@@ -126,6 +126,9 @@ abstract class App
         $this->settings = new AppSettings();
         $this->uri = $uri;
 
+        /// timezone
+        date_default_timezone_set(FS_TIMEZONE);
+
         $this->miniLog->debug('URI: ' . $this->uri);
     }
 
@@ -138,7 +141,6 @@ abstract class App
     {
         if ($this->dataBase->connect()) {
             $this->settings->load();
-
             return true;
         }
 
@@ -146,10 +148,13 @@ abstract class App
     }
 
     /**
-     * Disconnects from the database.
+     * Save log and disconnects from the database.
+     *
+     * @param string $nick
      */
-    public function close()
+    public function close(string $nick = '')
     {
+        new Base\MiniLogSave($this->request->getClientIp(), $nick);
         $this->dataBase->close();
     }
 
@@ -175,7 +180,7 @@ abstract class App
      *
      * @return string
      */
-    protected function getUriParam($num): string
+    protected function getUriParam(string $num): string
     {
         $params = explode('/', substr($this->uri, 1));
         return $params[$num] ?? '';

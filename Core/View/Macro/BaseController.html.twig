@@ -17,11 +17,11 @@
      *
      * This program is distributed in the hope that it will be useful,
      * but WITHOUT ANY WARRANTY; without even the implied warranty of
-     * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
      * GNU Lesser General Public License for more details.
      *
      * You should have received a copy of the GNU Lesser General Public License
-     * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+     * along with this program. If not, see <http://www.gnu.org/licenses/>.
      *
     */
 #}
@@ -37,7 +37,7 @@
     {% set remove_title = context.i18n.trans('delete-record') %}
     {% set undo_title = context.i18n.trans('restore-data') %}
     {% set save_title = context.i18n.trans('save-data') %}
-    {% set keyValue = attribute(model, model.primaryColumn()) %}
+    {% set keyValue = context.fsc.getFieldValue(model, model.primaryColumn()) %}
     {% set formName = context.indexView ~ '-' ~ keyValue %}
 
     <form name="{{ formName }}" action="{{ context.fsc.getURL('edit') }}" method="post" enctype="multipart/form-data" class="form" role="form">
@@ -46,7 +46,7 @@
         {% for group in view.getColumns() %}
             <div class="form-row {% if needTitle %}align-items-center{% endif %}">
                 {% for column in group.columns %}
-                    {% set value = attribute(model, column.widget.fieldName) %}
+                    {% set value = context.fsc.getFieldValue(model, column.widget.fieldName) %}
                     {% if column.display == 'none' %}
                         <input type="hidden" name="{{ column.widget.fieldName }}" value="{{ value }}">
                     {% elseif column.level <= context.fsc.user.level %}
@@ -114,7 +114,7 @@
      */
 #}
 {% macro columnsForEditView(context, view, model, withForm, withButtons = TRUE) %}
-    {% set keyValue = attribute(model, model.primaryColumn()) %}
+    {% set keyValue = context.fsc.getFieldValue(model, model.primaryColumn()) %}
     {% set formName = (withForm == TRUE) ? context.indexView ~ '-' ~ keyValue : 'main_form' %}
 
     {% if withForm == TRUE %}
@@ -124,25 +124,25 @@
         <div class="row">
     {% endif %}
 
-    {% for group in view.getColumns() %}
-        <div class="{{ group.numColumns == 0 ? 'col' : 'col-md-' ~ group.numColumns }}">
-            <div class="form-row">
-                {% if group.title is not empty %}
-                    <legend>{{ group.getHeaderHTML(group.title)|raw }}</legend>
-                {% endif %}
-                {% for column in group.columns %}
-                    {% set value = attribute(model, column.widget.fieldName) %}
-                    {% if column.display == 'none' %}
-                        <input type="hidden" name="{{ column.widget.fieldName }}" value="{{ value }}">
-                    {% else %}
-                        {% if column.level <= context.fsc.user.level %}
-                            {{ column.getEditHTML(value, TRUE, formName)|raw }}
+            {% for group in view.getColumns() %}
+                <div class="{{ group.numColumns == 0 ? 'col' : 'col-md-' ~ group.numColumns }}">
+                    <div class="form-row">
+                        {% if group.title is not empty %}
+                            <legend>{{ group.getHeaderHTML(group.title)|raw }}</legend>
                         {% endif %}
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </div>
-    {% endfor %}
+                        {% for column in group.columns %}
+                            {% set value = context.fsc.getFieldValue(model, column.widget.fieldName) %}
+                            {% if column.display == 'none' %}
+                                <input type="hidden" name="{{ column.widget.fieldName }}" value="{{ value }}">
+                            {% else %}
+                                {% if column.level <= context.fsc.user.level %}
+                                    {{ column.getEditHTML(value, TRUE, formName)|raw }}
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
 
     {% if withForm == TRUE %}
         </div>
@@ -209,13 +209,13 @@
         </tr>
         </thead>
         <tbody class="tab{{ context.indexView }}">
-        {% for model in view.getCursor() %}
-            {# Set background status #}
-            {% set rowClass = 'table-light' %}
-            {% set rowStatus = view.getRow('status') %}
-            {% if rowStatus is not empty %}
-                {% set rowClass = rowStatus.getStatus( attribute(model, rowStatus.fieldName) ) %}
-            {% endif %}
+            {% for model in view.getCursor() %}
+                {# Set background status #}
+                {% set rowClass = 'table-light' %}
+                {% set rowStatus = view.getRow('status') %}
+                {% if rowStatus is not empty %}
+                    {% set rowClass = rowStatus.getStatus( model ) %}
+                {% endif %}
 
             {# checks model url #}
             {% set rowDataHref = view.getClickEvent(model) %}
@@ -264,7 +264,6 @@
 
     {% for group in view.getModals() %}
         {% set formName = context.indexView ~ '-' ~ group.name %}
-        {% set model = view.getModel() %}
 
         <div class="modal" id="{{ group.name }}" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -281,7 +280,7 @@
                         <div class="modal-body">
                             <div class="row">
                                 {% for column in group.columns %}
-                                    {% set value = attribute(model, column.widget.fieldName) %}
+                                    {% set value = context.fsc.getFieldValue(view.model, column.widget.fieldName) %}
                                     {% if column.display == 'none' %}
                                         <input type="hidden" name="{{ column.widget.fieldName }}" value="{{ value }}">
                                     {% else %}
@@ -312,7 +311,6 @@
      */
 #}
 {% macro rowActionsForEditView(context, view, formName) %}
-
     {% set actions = view.getRow('actions') %}
     {% if actions is not empty %}
         {% from 'Macro/Utils.html.twig' import popoverTitle as popoverTitle %}
@@ -351,6 +349,8 @@
                         <div class="card-body">
                             {% if panel.label is not empty %}
                                 <p><i>{{ context.i18n.trans(panel.label)|raw }}</i></p>
+                            {% elseif panel.html is not empty %}
+                                {% include panel.html ignore missing %}
                             {% endif %}
                             {% set buttons = cards.getButtons(panel.name) %}
                             {% if buttons|length > 0 %}

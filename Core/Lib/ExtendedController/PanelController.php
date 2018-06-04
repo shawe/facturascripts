@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -10,16 +10,17 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base;
+use FacturaScripts\Core\Lib\ExportManager;
 use FacturaScripts\Core\Model\CodeModel;
 use FacturaScripts\Core\Model\User;
 use FacturaScripts\Dinamic\Lib\ExportManager;
@@ -31,22 +32,10 @@ use Symfony\Component\HttpFoundation\Response;
  * @author Carlos García Gómez <carlos@facturascripts.com>
  * @author Artex Trading sa <jcuello@artextrading.com>
  */
-abstract class PanelController extends Base\Controller
+abstract class PanelController extends BaseController
 {
 
-    /**
-     * Indicates the active view
-     *
-     * @var string
-     */
-    public $active;
-
-    /**
-     * Export data object
-     *
-     * @var ExportManager
-     */
-    public $exportManager;
+    const DIR_MODEL = '\\FacturaScripts\\Dinamic\\Model\\';
 
     /**
      * Indicates if the main view has data or is empty.
@@ -56,17 +45,6 @@ abstract class PanelController extends Base\Controller
     public $hasData;
 
     /**
-     * List of configuration options for each of the views
-     * [
-     *   'keyView1' => ['icon' => 'fa-icon1', 'active' => TRUE],
-     *   'keyView2' => ['icon' => 'fa-icon2', 'active' => TRUE]
-     * ]
-     *
-     * @var array
-     */
-    public $settings;
-
-    /**
      * Tabs position in page: left, bottom.
      *
      * @var string
@@ -74,14 +52,15 @@ abstract class PanelController extends Base\Controller
     public $tabsPosition;
 
     /**
-     * List of views displayed by the controller
+     * Loads the data to display.
      *
-     * @var ListView[]|EditListView[]|EditView[]|GridView[]
+     * @param string   $viewName
+     * @param BaseView $view
      */
-    public $views;
+    abstract protected function loadData($viewName, $view);
 
     /**
-     * Starts all the objects and properties
+     * Starts all the objects and properties.
      *
      * @param Base\Cache      $cache
      * @param Base\Translator $i18n
@@ -93,13 +72,87 @@ abstract class PanelController extends Base\Controller
     {
         parent::__construct($cache, $i18n, $miniLog, $className, $uri);
 
-        $this->active = $this->request->get('active', '');
-        $this->exportManager = new ExportManager();
         $this->hasData = false;
-        $this->settings = [];
-        $this->views = [];
-
         $this->setTabsPosition('left');
+    }
+
+    /**
+     * Descriptive identifier for humans of the main data editing record.
+     *
+     * @return string
+     */
+    public function getPrimaryDescription()
+    {
+        $viewName = array_keys($this->views)[0];
+        return $this->views[$viewName]->model->primaryDescription();
+    }
+
+    /**
+     * Returns the url for a specified type.
+     *
+     * @param string $type
+     *
+     * @return string
+     */
+    public function getURL($type)
+    {
+        $view = array_values($this->views)[0];
+        return $view->getURL($type);
+    }
+
+    /**
+     * Return the value for a field in the model of the view.
+     *
+     * @param string $viewName
+     * @param string $fieldName
+     *
+     * @return mixed
+     */
+    public function getViewModelValue($viewName, $fieldName)
+    {
+        $model = $this->views[$viewName]->model;
+        return isset($model->{$fieldName}) ? $model->{$fieldName} : null;
+    }
+
+    /**
+     * Runs the controller's private logic.
+     *
+     * @param Response                   $response
+     * @param User                       $user
+     * @param Base\ControllerPermissions $permissions
+     */
+    public function privateCore(&$response, $user, $permissions)
+    {
+        parent::privateCore($response, $user, $permissions);
+
+        // Create the views to display
+        $this->createViews();
+
+        // Get any operations that have to be performed
+        $action = $this->request->get('action', '');
+
+        // Run operations on the data before reading it
+        if (!$this->execPreviousAction($action)) {
+            return;
+        }
+
+        // Load the model data for each view
+        $mainViewName = array_keys($this->views)[0];
+        foreach ($this->views as $viewName => $view) {
+            $this->loadData($viewName, $view);
+
+            // check if we are processing the main view
+            if ($viewName == $mainViewName) {
+                $this->hasData = $view->count > 0;
+                continue;
+            }
+
+            // check if the view should be active
+            $this->setSettings($viewName, 'active', $this->hasData);
+        }
+
+        // General operations with the loaded data
+        $this->execAfterAction($view, $action);
     }
 
     /**
@@ -128,287 +181,90 @@ abstract class PanelController extends Base\Controller
     }
 
     /**
-     * Runs the controller's private logic.
-     *
-     * @param Response                   $response
-     * @param User                       $user
-     * @param Base\ControllerPermissions $permissions
-     */
-    public function privateCore(&$response, $user, $permissions)
-    {
-        parent::privateCore($response, $user, $permissions);
-
-        // Create the views to display
-        $this->createViews();
-
-        // Get any operations that have to be performed
-        $view = empty($this->active) ? null : $this->views[$this->active];
-        $action = empty($view) ? '' : $this->request->get('action', '');
-
-        // Run operations on the data before reading it
-        if (!$this->execPreviousAction($view, $action)) {
-            return;
-        }
-
-        // Load the model data for each view
-        $mainView = array_keys($this->views)[0];
-        foreach ($this->views as $keyView => $dataView) {
-            $this->loadData($keyView, $dataView);
-
-            // check if we are processing the main view
-            if ($keyView == $mainView) {
-                $this->hasData = $dataView->count > 0;
-                continue;
-            }
-
-            // check if the view should be active
-            $this->settings[$keyView]['active'] = $this->checkActiveView($dataView, $this->hasData);
-        }
-
-        // General operations with the loaded data
-        $this->execAfterAction($view, $action);
-    }
-
-    /**
-     * Returns the configuration value for the indicated view
-     *
-     * @param string $keyView
-     * @param string $property
-     *
-     * @return mixed
-     */
-    public function getSettings($keyView, $property)
-    {
-        return $this->settings[$keyView][$property];
-    }
-
-    /**
-     * Return the value for a field in the model of the view.
-     *
-     * @param string $viewName
-     * @param string $fieldName
-     *
-     * @return mixed
-     */
-    public function getViewModelValue($viewName, $fieldName)
-    {
-        $model = $this->views[$viewName]->getModel();
-
-        return $model->{$fieldName} ?? null;
-    }
-
-    /**
-     * Returns the url for a specified type
-     *
-     * @param string $type
-     *
-     * @return string
-     */
-    public function getURL($type): string
-    {
-        $view = array_values($this->views)[0];
-        return $view->getURL($type);
-    }
-
-    /**
-     * Descriptive identifier for humans of the main data editing record
-     *
-     * @return string
-     */
-    public function getPrimaryDescription(): string
-    {
-        $viewName = array_keys($this->views)[0];
-        $model = $this->views[$viewName]->getModel();
-
-        return $model->primaryDescription();
-    }
-
-    /**
-     * Returns the view class
+     * Returns the view class.
      *
      * @param string $view
      *
      * @return string
      */
-    public function viewClass($view): string
+    public function viewClass($view)
     {
-        $result = explode('\\', \get_class($view));
-
+        $result = explode('\\', get_class($view));
         return end($result);
     }
 
     /**
-     * Inserts the views to display
-     */
-    abstract protected function createViews();
-
-    /**
-     * Loads the data to display
+     * Adds a EditList type view to the controller
      *
-     * @param string   $keyView
-     * @param BaseView $view
+     * @param string $modelName
+     * @param string $viewTitle
+     * @param string $viewIcon
      */
-    abstract protected function loadData($keyView, $view);
-
-    /**
-     * Run the actions that alter data before reading it
-     *
-     * @param BaseView $view
-     * @param string   $action
-     *
-     * @return bool
-     */
-    protected function execPreviousAction($view, $action): bool
+    protected function addEditListView($viewName, $modelName, $viewTitle, $viewIcon = 'fa-bars')
     {
-        $status = true;
-        switch ($action) {
-            case 'autocomplete':
-                $this->setTemplate(false);
-                $data = $this->requestGet(['source', 'field', 'title', 'term']);
-                $results = $this->autocompleteAction($data);
-                $this->response->setContent(json_encode($results));
-                $status = false;
-                break;
-
-            case 'save':
-                $data = $this->request->request->all();
-                $view->loadFromData($data);
-                $status = $this->editAction($view);
-                break;
-
-            case 'delete':
-                $status = $this->deleteAction($view);
-                break;
-
-            case 'save-document':
-                $keyView = $this->searchGridView();
-                if (!empty($keyView)) {
-                    $this->setTemplate(false);
-                    $data = $this->request->request->all();
-                    $result = $this->views[$keyView]->saveData($data);
-                    $this->response->setContent(json_encode($result, JSON_FORCE_OBJECT));
-                    $status = false;
-                }
-                break;
-        }
-
-        return $status;
+        $view = new EditListView($viewTitle, self::MODEL_NAMESPACE . $modelName, $viewName, $this->user->nick);
+        $this->addView($viewName, $view, $viewIcon);
     }
 
     /**
-     * Run the controller after actions
+     * Adds a Edit type view to the controller.
      *
-     * @param EditView $view
-     * @param string   $action
+     * @param string $viewName
+     * @param string $modelName
+     * @param string $viewTitle
+     * @param string $viewIcon
      */
-    protected function execAfterAction($view, $action)
+    protected function addEditView($viewName, $modelName, $viewTitle, $viewIcon = 'fa-list-alt')
     {
-        switch ($action) {
-            case 'export':
-                $this->setTemplate(false);
-                $this->exportManager->newDoc($this->request->get('option'));
-                foreach ($this->views as $selectedView) {
-                    $selectedView->export($this->exportManager);
-                }
-                $this->exportManager->show($this->response);
-                break;
+        $view = new EditView($viewTitle, self::MODEL_NAMESPACE . $modelName, $viewName, $this->user->nick);
+        $this->addView($viewName, $view, $viewIcon);
+    }
 
-            case 'insert':
-                $this->insertAction($view);
-                break;
+    /**
+     * Adds a Grid type view to the controller.
+     *
+     * @param $viewName
+     * @param $parentView
+     * @param $modelName
+     * @param $viewTitle
+     * @param string $viewIcon
+     */
+    protected function addGridView($viewName, $parentView, $modelName, $viewTitle, $viewIcon = 'fa-list')
+    {
+        $parent = $this->views[$parentView];
+        if (isset($parent)) {
+            $view = new GridView($parent, $viewTitle, self::MODEL_NAMESPACE . $modelName, $viewName, $this->user->nick);
+            $this->addView($viewName, $view, $viewIcon);
         }
     }
 
     /**
-     * Run the autocomplete action.
-     * Returns a JSON string for the searched values.
+     * Adds a HTML type view to the controller.
      *
-     * @param array $data
-     *
-     * @return CodeModel[]
+     * @param string $viewName
+     * @param string $fileName
+     * @param string $modelName
+     * @param string $viewTitle
+     * @param string $viewIcon
      */
-    protected function autocompleteAction($data): array
+    protected function addHtmlView($viewName, $fileName, $modelName, $viewTitle, $viewIcon = 'fa-html5')
     {
-        $results = [];
-        $codeModel = new CodeModel();
-        foreach ($codeModel::search($data['source'], $data['field'], $data['title'], $data['term']) as $value) {
-            $results[] = ['key' => $value->code, 'value' => $value->description];
-        }
-        return $results;
+        $view = new HtmlView($viewTitle, self::MODEL_NAMESPACE . $modelName, $fileName);
+        $this->addView($viewName, $view, $viewIcon);
     }
 
     /**
-     * Action to delete data
+     * Adds a List type view to the controller.
      *
-     * @param BaseView $view
-     *
-     * @return bool
+     * @param string $viewName
+     * @param string $modelName
+     * @param string $viewTitle
+     * @param string $viewIcon
      */
-    protected function deleteAction($view): bool
+    protected function addListView($viewName, $modelName, $viewTitle, $viewIcon = 'fa-bars')
     {
-        if (!$this->permissions->allowDelete) {
-            $this->miniLog->alert($this->i18n->trans('not-allowed-delete'));
-
-            return false;
-        }
-
-        $fieldKey = $view->getModel()->primaryColumn();
-        if ($view->delete($this->request->get($fieldKey))) {
-            $this->miniLog->notice($this->i18n->trans('record-deleted-correctly'));
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Run the data edits
-     *
-     * @param BaseView $view
-     *
-     * @return bool
-     */
-    protected function editAction($view): bool
-    {
-        if (!$this->permissions->allowUpdate) {
-            $this->miniLog->alert($this->i18n->trans('not-allowed-modify'));
-
-            return false;
-        }
-
-        if ($view->save()) {
-            $this->miniLog->notice($this->i18n->trans('record-updated-correctly'));
-
-            return true;
-        }
-
-        $this->miniLog->error($this->i18n->trans('record-save-error'));
-
-        return false;
-    }
-
-    /**
-     * Run the data insert action.
-     *
-     * @param EditView $view
-     */
-    protected function insertAction($view)
-    {
-        $view->setNewCode();
-    }
-
-    /**
-     * Check if the view should be active
-     *
-     * @param BaseView $view
-     * @param bool     $mainViewHasData
-     *
-     * @return bool
-     */
-    protected function checkActiveView($view, $mainViewHasData): bool
-    {
-        return $mainViewHasData;
+        $view = new ListView($viewTitle, self::MODEL_NAMESPACE . $modelName, $viewName, $this->user->nick);
+        $this->addView($viewName, $view, $viewIcon);
     }
 
     /**
@@ -429,92 +285,131 @@ abstract class PanelController extends Base\Controller
     }
 
     /**
-     * Adds a EditList type view to the controller
+     * Action to delete data
      *
-     * @param string $modelName
-     * @param string $viewName
-     * @param string $viewTitle
-     * @param string $viewIcon
+     * @return string
      */
-    protected function addEditListView($modelName, $viewName, $viewTitle, $viewIcon = 'fa-bars')
+    protected function deleteAction($view): bool
     {
-        $view = new EditListView($viewTitle, self::DIR_MODEL . $modelName, $viewName, $this->user->nick);
-        $this->addView($viewName, $view, $viewIcon);
+        $result = explode('\\', get_class($view));
+        return end($result);
     }
 
     /**
-     * Adds a List type view to the controller
+     * Adds a EditList type view to the controller.
      *
-     * @param string $modelName
-     * @param string $viewName
-     * @param string $viewTitle
-     * @param string $viewIcon
+     * @param BaseView $view
+     *
+     * @return bool
      */
-    protected function addListView($modelName, $viewName, $viewTitle, $viewIcon = 'fa-bars')
+    protected function editAction($view)
     {
-        $view = new ListView($viewTitle, self::DIR_MODEL . $modelName, $viewName, $this->user->nick);
-        $this->addView($viewName, $view, $viewIcon);
+        if (!$this->permissions->allowUpdate) {
+            $this->miniLog->alert($this->i18n->trans('not-allowed-modify'));
+
+            return false;
+        }
+
+        if ($view->save()) {
+            $this->miniLog->notice($this->i18n->trans('record-updated-correctly'));
+
+            return true;
+        }
+
+        $this->miniLog->error($this->i18n->trans('record-save-error'));
+
+        return false;
     }
 
     /**
-     * Adds a Edit type view to the controller
+     * Run the controller after actions.
      *
-     * @param string $modelName
-     * @param string $viewName
-     * @param string $viewTitle
-     * @param string $viewIcon
+     * @param string $action
      */
-    protected function addEditView($modelName, $viewName, $viewTitle, $viewIcon = 'fa-list-alt')
+    protected function execAfterAction($action)
     {
-        $view = new EditView($viewTitle, self::DIR_MODEL . $modelName, $viewName, $this->user->nick);
-        $this->addView($viewName, $view, $viewIcon);
-    }
+        switch ($action) {
+            case 'export':
+                $this->setTemplate(false);
+                $this->exportManager->newDoc($this->request->get('option', ''));
+                foreach ($this->views as $selectedView) {
+                    $selectedView->export($this->exportManager);
+                }
+                $this->exportManager->show($this->response);
+                break;
 
-    /**
-     * Adds a Grid type view to the controller
-     *
-     * @param        $parentView
-     * @param        $modelName
-     * @param        $viewName
-     * @param        $viewTitle
-     * @param string $viewIcon
-     */
-    protected function addGridView($parentView, $modelName, $viewName, $viewTitle, $viewIcon = 'fa-list')
-    {
-        $parent = $this->views[$parentView];
-        if (isset($parent)) {
-            $view = new GridView($parent, $viewTitle, self::DIR_MODEL . $modelName, $viewName, $this->user->nick);
-            $this->addView($viewName, $view, $viewIcon);
+            case 'insert':
+                $this->insertAction();
+                break;
         }
     }
 
     /**
-     * Adds a HTML type view to the controller
+     * Sets the tabs position, by default is setted to 'left', also supported 'bottom' and 'top'.
      *
-     * @param string $fileName
-     * @param string $modelName
-     * @param string $viewName
-     * @param string $viewTitle
-     * @param string $viewIcon
+     * @param string $position
      */
-    protected function addHtmlView($fileName, $modelName, $viewName, $viewTitle, $viewIcon = 'fa-html5')
+    protected function execPreviousAction($view, $action): bool
     {
-        $view = new HtmlView($viewTitle, self::DIR_MODEL . $modelName, $fileName);
-        $this->addView($viewName, $view, $viewIcon);
+        switch ($action) {
+            case 'autocomplete':
+                $this->setTemplate(false);
+                $results = $this->autocompleteAction();
+                $this->response->setContent(json_encode($results));
+                return false;
+
+            case 'save':
+                $this->editAction();
+                break;
+
+            case 'delete':
+            case 'delete-document':
+                $this->deleteAction();
+                break;
+
+            case 'save-document':
+                $viewName = $this->searchGridView();
+                if (!empty($viewName)) {
+                    $this->setTemplate(false);
+                    $data = $this->getFormData();
+                    $result = $this->views[$viewName]->saveData($data);
+                    $this->response->setContent(json_encode($result, JSON_FORCE_OBJECT));
+                    return false;
+                }
+                break;
+        }
+
+        return true;
     }
 
     /**
-     * Search on GridView.
+     * Run the data insert action.
+     */
+    protected function insertAction()
+    {
+        $this->views[$this->active]->clear();
+        foreach ($this->request->query->all() as $field => $value) {
+            if ($field !== 'action') {
+                $this->views[$this->active]->model->{$field} = $value;
+            }
+        }
+    }
+
+    /**
+     * Returns the view class
+     *
+     * @param string $view
      *
      * @return string
      */
     private function searchGridView(): string
     {
-        $result = '';
-        foreach ($this->views as $key => $value) {
-            $result = $key;
-            break;
+        foreach ($this->views as $viewName => $view) {
+            if ($view instanceof GridView) {
+                return $viewName;
+            }
         }
-        return $result;
+
+        return '';
     }
 }

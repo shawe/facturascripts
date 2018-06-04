@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  *
  * Initial description for the controller EditUser
@@ -34,8 +34,8 @@
                 </widget>
             </column>
             <column name="pagename" order="120">
-                <widget type="select" fieldname="pagename" required="true" onclick="EditWebPage">
-                    <values source="pages" fieldcode="name" fieldtitle="name" />
+                <widget type="select" fieldname="pagename" required="true">
+                    <values source="pages" fieldcode="name" fieldtitle="title" translate="true"></values>
                 </widget>
             </column>
             <column name="allow-update" order="130">
@@ -56,8 +56,8 @@
     <modals>
         <group name="add-rol-access" icon="fa-user-plus">
             <column name="select-menu" title="menu">
-                <widget type="select" fieldname="menu" onclick="EditWebPage">
-                    <values source="pages" fieldcode="menu" fieldtitle="menu" />
+                <widget type="select" fieldname="menu">
+                    <values source="pages" fieldcode="menu" fieldtitle="menu" translate="true"></values>
                 </widget>
             </column>
         </group>

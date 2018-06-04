@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Controller;
@@ -51,8 +51,12 @@ class ListAlbaranCliente extends ExtendedController\ListController
      */
     protected function createViews()
     {
+        // Delivery notes
         $this->addView('ListAlbaranCliente', 'AlbaranCliente');
         $this->addSearchFields('ListAlbaranCliente', ['codigo', 'numero2', 'nombrecliente', 'observaciones']);
+        $this->addOrderBy('ListAlbaranCliente', 'codigo', 'code');
+        $this->addOrderBy('ListAlbaranCliente', 'fecha', 'date', 2);
+        $this->addOrderBy('ListAlbaranCliente', 'total', 'amount');
 
         $this->addFilterDatePicker('ListAlbaranCliente', 'fecha', 'date', 'fecha');
         $this->addFilterNumber('ListAlbaranCliente', 'total', 'total', 'total');
@@ -72,8 +76,28 @@ class ListAlbaranCliente extends ExtendedController\ListController
 
         $this->addFilterAutocomplete('ListAlbaranCliente', 'codcliente', 'customer', 'codcliente', 'clientes', 'codcliente', 'nombre');
 
-        $this->addOrderBy('ListAlbaranCliente', 'codigo', 'code');
-        $this->addOrderBy('ListAlbaranCliente', 'fecha', 'date', 2);
-        $this->addOrderBy('ListAlbaranCliente', 'total', 'amount');
+        $this->addFilterCheckbox('ListAlbaranCliente', 'femail', 'email-not-sent', 'femail', false, null);
+
+        // Delivery notes lines
+        $this->createViewLines();
+    }
+
+    protected function createViewLines()
+    {
+        $this->addView('ListLineaAlbaranCliente', 'LineaAlbaranCliente', 'lines', 'fa-list');
+        $this->addSearchFields('ListLineaAlbaranCliente', ['referencia', 'descripcion']);
+        $this->addOrderBy('ListLineaAlbaranCliente', 'referencia', 'reference');
+        $this->addOrderBy('ListLineaAlbaranCliente', 'cantidad', 'quantity');
+        $this->addOrderBy('ListLineaAlbaranCliente', 'descripcion', 'description');
+        $this->addOrderBy('ListLineaAlbaranCliente', 'pvptotal', 'ammount');
+        $this->addOrderBy('ListLineaAlbaranCliente', 'idalbaran', 'delivery-note', 2);
+
+        $taxValues = $this->codeModel->all('impuestos', 'codimpuesto', 'descripcion');
+        $this->addFilterSelect('ListLineaAlbaranCliente', 'codimpuesto', 'tax', 'codimpuesto', $taxValues);
+
+        $this->addFilterNumber('ListLineaAlbaranCliente', 'cantidad', 'quantity', 'cantidad');
+        $this->addFilterNumber('ListLineaAlbaranCliente', 'dtopor', 'discount', 'dtopor');
+        $this->addFilterNumber('ListLineaAlbaranCliente', 'pvpunitario', 'pvp', 'pvpunitario');
+        $this->addFilterNumber('ListLineaAlbaranCliente', 'pvptotal', 'ammount', 'pvptotal');
     }
 }

@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Controller;
@@ -40,6 +40,7 @@ class ListApiKey extends ExtendedController\ListController
         $pageData['title'] = 'api-keys';
         $pageData['icon'] = 'fa-key';
         $pageData['menu'] = 'admin';
+        $pageData['submenu'] = 'control-panel';
 
         return $pageData;
     }
@@ -50,7 +51,7 @@ class ListApiKey extends ExtendedController\ListController
     protected function createViews()
     {
         $this->addView('ListApiKey', 'ApiKey');
-        $this->addSearchFields('ListApiKey', ['descripcion', 'apikey', 'nick']);
+        $this->addSearchFields('ListApiKey', ['description', 'apikey', 'nick']);
 
         $this->addOrderBy('ListApiKey', 'apikey', 'api-key');
         $this->addOrderBy('ListApiKey', 'descripcion', 'description');

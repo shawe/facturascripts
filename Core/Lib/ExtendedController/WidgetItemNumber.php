@@ -10,13 +10,12 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace FacturaScripts\Core\Lib\ExtendedController;
 
 use FacturaScripts\Core\Base\NumberTools;
@@ -30,25 +29,11 @@ class WidgetItemNumber extends WidgetItem
 {
 
     /**
-     * Class that formats the display and provides tools to manage numeric values
-     *
-     * @var NumberTools
-     */
-    private static $numberTools;
-
-    /**
      * Number of decimals for numeric types
      *
      * @var int
      */
     public $decimal;
-
-    /**
-     * Increment/decrement value
-     *
-     * @var string
-     */
-    public $step;
 
     /**
      * Maximum value
@@ -63,6 +48,20 @@ class WidgetItemNumber extends WidgetItem
      * @var string
      */
     public $min;
+
+    /**
+     * Class that formats the display and provides tools to manage numeric values
+     *
+     * @var NumberTools
+     */
+    private static $numberTools;
+
+    /**
+     * Increment/decrement value
+     *
+     * @var string
+     */
+    public $step;
 
     /**
      * WidgetItemNumber constructor.
@@ -89,26 +88,26 @@ class WidgetItemNumber extends WidgetItem
      *
      * @return string
      */
-    public function getEditHTML($value): string
+    public function getEditHTML($value)
     {
         return $this->standardEditHTMLWidget($value, $this->specialAttributes());
     }
 
-
     /**
-     * Loads the attributes structure from a XML file
+     * Generates the HTML code to display the data in the List controller
      *
-     * @param \SimpleXMLElement $column
+     * @param string $value
+     *
+     * @return string
      */
-    public function loadFromXML($column)
+    public function getListHTML($value)
     {
-        parent::loadFromXML($column);
+        if ($value === null || $value === '') {
+            return '-';
+        }
 
-        $widgetAtributes = $column->widget->attributes();
-        $this->decimal = (int) $widgetAtributes->decimal;
-        $this->step = (string) $widgetAtributes->step;
-        $this->min = (string) $widgetAtributes->min;
-        $this->max = (string) $widgetAtributes->max;
+        $style = $this->getTextOptionsHTML($value);
+        return '<span' . $style . '>' . self::$numberTools::format($value, $this->decimal) . '</span>';
     }
 
     /**
@@ -127,22 +126,19 @@ class WidgetItemNumber extends WidgetItem
     }
 
     /**
-     * Generates the HTML code to display the data in the List controller
+     * Loads the attributes structure from a XML file
      *
-     * @param string $value
-     *
-     * @return string
+     * @param \SimpleXMLElement $column
      */
-    public function getListHTML($value): string
+    public function loadFromXML($column)
     {
-        if ($value === null || $value === '') {
-            return '';
-        }
+        parent::loadFromXML($column);
 
-        $style = $this->getTextOptionsHTML($value);
-        $html = '<span' . $style . '>' . self::$numberTools::format($value, $this->decimal) . '</span>';
-
-        return $html;
+        $widgetAtributes = $column->widget->attributes();
+        $this->decimal = (int) $widgetAtributes->decimal;
+        $this->step = (string) $widgetAtributes->step;
+        $this->min = (string) $widgetAtributes->min;
+        $this->max = (string) $widgetAtributes->max;
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018    Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Model;
@@ -61,48 +61,30 @@ class Familia extends Base\ModelClass
     public $nivel;
 
     /**
-     * Returns the name of the table that uses this model.
+     * Returns the daughter families.
      *
-     * @return string
-     */
-    public static function tableName(): string
-    {
-        return 'familias';
-    }
-
-    /**
-     * Returns the name of the column that is the primary key of the model.
+     * @param string $codmadre
      *
-     * @return string
+     * @return self[]
      */
-    public static function primaryColumn(): string
+    public function hijas($codmadre = ''): array
     {
-        return 'codfamilia';
-    }
+        $famlist = [];
 
-    /**
-     * Returns True if there is no erros on properties values.
-     *
-     * @return bool
-     */
-    public function test(): bool
-    {
-        $status = false;
-
-        $this->codfamilia = Utils::noHtml($this->codfamilia);
-        $this->descripcion = Utils::noHtml($this->descripcion);
-
-        if (empty($this->codfamilia) || \strlen($this->codfamilia) > 8) {
-            self::$miniLog->alert(self::$i18n->trans('family-code-valid-length'));
-        } elseif (empty($this->descripcion) || \strlen($this->descripcion) > 100) {
-            self::$miniLog->alert(self::$i18n->trans('family-desc-not-valid'));
-        } elseif ($this->madre === $this->codfamilia) {
-            self::$miniLog->alert(self::$i18n->trans('parent-family-cant-be-child'));
-        } else {
-            $status = true;
+        if (!empty($codmadre)) {
+            $codmadre = $this->codfamilia;
         }
 
-        return $status;
+        $sql = 'SELECT * FROM ' . static::tableName()
+            . ' WHERE madre = ' . self::$dataBase->var2str($codmadre) . ' ORDER BY descripcion ASC;';
+        $data = self::$dataBase->select($sql);
+        if (!empty($data)) {
+            foreach ($data as $d) {
+                $famlist[] = new self($d);
+            }
+        }
+
+        return $famlist;
     }
 
     /**
@@ -132,30 +114,46 @@ class Familia extends Base\ModelClass
     }
 
     /**
-     * Returns the daughter families.
+     * Returns the name of the column that is the primary key of the model.
      *
-     * @param string|bool $codmadre
-     *
-     * @return self[]
+     * @return string
      */
-    public function hijas($codmadre = false): array
+    public static function primaryColumn(): string
     {
-        $famlist = [];
+        return 'codfamilia';
+    }
 
-        if (!empty($codmadre)) {
-            $codmadre = $this->codfamilia;
+    /**
+     * Returns the name of the table that uses this model.
+     *
+     * @return string
+     */
+    public static function tableName(): string
+    {
+        return 'familias';
+    }
+
+    /**
+     * Returns True if there is no erros on properties values.
+     *
+     * @return bool
+     */
+    public function test(): bool
+    {
+        $this->codfamilia = Utils::noHtml($this->codfamilia);
+        $this->descripcion = Utils::noHtml($this->descripcion);
+
+        if (empty($this->codfamilia) || \strlen($this->codfamilia) > 8) {
+            self::$miniLog->alert(self::$i18n->trans('family-code-valid-length'));
+        } elseif (empty($this->descripcion) || \strlen($this->descripcion) > 100) {
+            self::$miniLog->alert(self::$i18n->trans('family-desc-not-valid'));
+        } elseif ($this->madre === $this->codfamilia) {
+            self::$miniLog->alert(self::$i18n->trans('parent-family-cant-be-child'));
+        } else {
+            $status = true;
         }
 
-        $sql = 'SELECT * FROM ' . static::tableName()
-            . ' WHERE madre = ' . self::$dataBase->var2str($codmadre) . ' ORDER BY descripcion ASC;';
-        $data = self::$dataBase->select($sql);
-        if (!empty($data)) {
-            foreach ($data as $d) {
-                $famlist[] = new self($d);
-            }
-        }
-
-        return $famlist;
+        return $status;
     }
 
     /**

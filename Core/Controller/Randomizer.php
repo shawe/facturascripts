@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos Garcia Gomez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Controller;
@@ -46,7 +46,7 @@ class Randomizer extends Base\Controller
      *
      * @var array
      */
-    public $totalCounter;
+    public $totalCounter = [];
 
     /**
      * Runs the controller's private logic.
@@ -182,7 +182,7 @@ class Randomizer extends Base\Controller
         }
 
         if (false !== $app) {
-            $this->miniLog->info($this->i18n->trans($txt, ['%quantity%' => $app->generate()]));
+            $this->miniLog->notice($this->i18n->trans($txt, ['%quantity%' => $app->generate()]));
         }
     }
 
@@ -191,8 +191,6 @@ class Randomizer extends Base\Controller
      */
     private function getTotals()
     {
-        $this->totalCounter = [];
-
         $models = [
             'agentes' => self::DIR_MODEL . 'Agente',
             'albaranescli' => self::DIR_MODEL . 'AlbaranCliente',

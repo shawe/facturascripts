@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Controller;
@@ -48,6 +48,23 @@ class EditRole extends ExtendedController\PanelController
     }
 
     /**
+     * Add the indicated page list to the Role group
+     * and all users who are in that group
+     *
+     * @param string       $codrole
+     * @param Model\Page[] $pages
+     *
+     * @throws \Exception
+     */
+    private function addRoleAccess($codrole, $pages)
+    {
+        // add Pages to Rol
+        if (!Model\RoleAccess::addPagesToRole($codrole, $pages)) {
+            throw new \Exception(self::$i18n->trans('cancel-process'));
+        }
+    }
+
+    /**
      * Load views
      */
     protected function createViews()
@@ -62,42 +79,13 @@ class EditRole extends ExtendedController\PanelController
     }
 
     /**
-     * Load view data
-     *
-     * @param string                      $keyView
-     * @param ExtendedController\EditView $view
-     */
-    protected function loadData($keyView, $view)
-    {
-        $order = [];
-        switch ($keyView) {
-            case 'EditRole':
-                $code = $this->request->get('code');
-                $view->loadData($code);
-                break;
-
-            /** @noinspection PhpMissingBreakStatementInspection */
-            case 'EditRoleAccess':
-                $order['pagename'] = 'ASC';
-                // no break
-
-            case 'EditRoleUser':
-                $codrole = $this->getViewModelValue('EditRole', 'codrole');
-                $where = [new DataBaseWhere('codrole', $codrole)];
-                $view->loadData(false, $where, $order, 0, 0);
-                break;
-        }
-    }
-
-    /**
      * Run the actions that alter data before reading it
      *
-     * @param ExtendedController\BaseView $view
-     * @param string                      $action
+     * @param string   $action
      *
      * @return bool
      */
-    protected function execPreviousAction($view, $action): bool
+    protected function execPreviousAction($action): bool
     {
         switch ($action) {
             case 'add-rol-access':
@@ -119,24 +107,7 @@ class EditRole extends ExtendedController\PanelController
                 return true;
 
             default:
-                return parent::execPreviousAction($view, $action);
-        }
-    }
-
-    /**
-     * Add the indicated page list to the Role group
-     * and all users who are in that group
-     *
-     * @param string       $codrole
-     * @param Model\Page[] $pages
-     *
-     * @throws \Exception
-     */
-    private function addRoleAccess($codrole, $pages)
-    {
-        // add Pages to Rol
-        if (!Model\RoleAccess::addPagesToRole($codrole, $pages)) {
-            throw new \Exception($this->i18n->trans('cancel-process'));
+                return parent::execPreviousAction($action);
         }
     }
 
@@ -157,5 +128,31 @@ class EditRole extends ExtendedController\PanelController
         $where = [new DataBaseWhere('menu', $menu)];
 
         return $page->all($where);
+    }
+
+    /**
+     * Load view data
+     *
+     * @param string                      $viewName
+     * @param ExtendedController\EditView $view
+     */
+    protected function loadData($viewName, $view)
+    {
+        $order = [];
+        switch ($viewName) {
+            case 'EditRole':
+                $code = $this->request->get('code');
+                $view->loadData($code);
+                break;
+
+            case 'EditRoleAccess':
+                $order['pagename'] = 'ASC';
+            /// no break
+            case 'EditRoleUser':
+                $codrole = $this->getViewModelValue('EditRole', 'codrole');
+                $where = [new DataBaseWhere('codrole', $codrole)];
+                $view->loadData('', $where, $order, 0, 0);
+                break;
+        }
     }
 }

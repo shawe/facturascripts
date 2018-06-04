@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Controller;
@@ -52,17 +52,18 @@ class ListCuenta extends ExtendedController\ListController
     {
         /* Sub-Accounts */
         $this->addView('ListSubcuenta', 'Subcuenta', 'subaccounts', 'fa-th-list');
-        $this->addSearchFields('ListSubcuenta', ['codsubcuenta', 'descripcion', 'codejercicio']);
+        $this->addSearchFields('ListSubcuenta', ['codsubcuenta', 'descripcion', 'codejercicio', 'codcuentaesp']);
 
         $exerciseValues = $this->codeModel::all('ejercicios', 'codejercicio', 'nombre');
         $this->addFilterSelect('ListSubcuenta', 'codejercicio', 'exercise', 'codejercicio', $exerciseValues);
 
         $this->addOrderBy('ListSubcuenta', 'codejercicio desc, codsubcuenta', 'code');
         $this->addOrderBy('ListSubcuenta', 'codejercicio desc, descripcion', 'description');
+        $this->addOrderBy('ListSubcuenta', 'saldo', 'balance');
 
         /* Accounts */
         $this->addView('ListCuenta', 'Cuenta', 'accounts', 'fa-book');
-        $this->addSearchFields('ListCuenta', ['descripcion', 'codcuenta', 'codejercicio']);
+        $this->addSearchFields('ListCuenta', ['descripcion', 'codcuenta', 'codejercicio', 'codcuentaesp']);
 
         $this->addFilterSelect('ListCuenta', 'codejercicio', 'exercise', 'codejercicio', $exerciseValues);
 
@@ -71,6 +72,7 @@ class ListCuenta extends ExtendedController\ListController
 
         /* Special account */
         $this->addView('ListCuentaEspecial', 'CuentaEspecial', 'special-account', 'fa-newspaper-o');
+        $this->setSettings('ListCuentaEspecial', 'insert', false);
         $this->addSearchFields('ListCuentaEspecial', ['descripcion', 'codcuentaesp']);
 
         $this->addOrderBy('ListCuentaEspecial', 'descripcion', 'description');

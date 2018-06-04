@@ -11,13 +11,12 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace FacturaScripts\Core\Model;
 
 /**
@@ -27,6 +26,7 @@ namespace FacturaScripts\Core\Model;
  */
 class LineaPresupuestoCliente extends Base\SalesDocumentLine
 {
+
     use Base\ModelTrait;
 
     /**
@@ -35,6 +35,13 @@ class LineaPresupuestoCliente extends Base\SalesDocumentLine
      * @var integer
      */
     public $idpresupuesto;
+
+    public function install()
+    {
+        new PresupuestoCliente();
+
+        return parent::install();
+    }
 
     /**
      * Returns the name of the table that uses this model.

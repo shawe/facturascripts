@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos Garcia Gomez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -10,16 +10,15 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Base;
 
-use Exception;
 use ZipArchive;
 
 /**
@@ -77,6 +76,14 @@ class PluginManager
             self::$i18n = new Translator();
             self::$minilog = new MiniLog();
         }
+
+        if (!defined('FS_DISABLE_ADD_PLUGINS')) {
+            define('FS_DISABLE_ADD_PLUGINS', false);
+        }
+
+        if (!defined('FS_DISABLE_RM_PLUGINS')) {
+            define('FS_DISABLE_RM_PLUGINS', false);
+        }
     }
 
     /**
@@ -84,11 +91,16 @@ class PluginManager
      * with the autoloader, but following the priority system of FacturaScripts.
      *
      * @param bool $clean
+     * @param bool $initControllers
      */
-    public function deploy($clean = true)
+    public function deploy(bool $clean = true, bool $initControllers = false)
     {
         $pluginDeploy = new PluginDeploy();
         $pluginDeploy->deploy(self::PLUGIN_PATH, $this->enabledPlugins(), $clean);
+
+        if ($initControllers) {
+            $pluginDeploy->initControllers();
+        }
     }
 
     /**
@@ -96,17 +108,19 @@ class PluginManager
      *
      * @param string $pluginName
      */
-    public function disable($pluginName)
+    public function disable(string $pluginName)
     {
-        foreach (self::$enabledPlugins as $i => $value) {
-            if ($value['name'] === $pluginName) {
-                unset(self::$enabledPlugins[$i]);
-                $this->save();
-                $this->deploy();
-                $this->initControllers();
-                self::$minilog->info(self::$i18n->trans('plugin-disabled', ['%pluginName%' => $pluginName]));
-                break;
+        foreach (self::$enabledPlugins as $key => $value) {
+            if ($value['name'] !== $pluginName) {
+                continue;
             }
+
+            unset(self::$enabledPlugins[$key]);
+            $this->disableByDependecy($pluginName);
+            $this->save();
+            $this->deploy(true, true);
+            self::$minilog->notice(self::$i18n->trans('plugin-disabled', ['%pluginName%' => $pluginName]));
+            break;
         }
     }
 
@@ -115,24 +129,27 @@ class PluginManager
      *
      * @param string $pluginName
      */
-    public function enable($pluginName)
+    public function enable(string $pluginName)
     {
         /// is pluginName enabled?
-        foreach (self::$enabledPlugins as $i => $value) {
+        foreach (self::$enabledPlugins as $value) {
             if ($value['name'] === $pluginName) {
                 return;
             }
         }
 
         foreach ($this->installedPlugins() as $plugin) {
-            if ($plugin['name'] === $pluginName) {
+            if ($plugin['name'] !== $pluginName) {
+                continue;
+            }
+
+            if ($this->checkRequire($plugin['require'])) {
                 self::$enabledPlugins[] = $plugin;
                 $this->save();
-                $this->deploy(false);
-                $this->initControllers();
-                self::$minilog->info(self::$i18n->trans('plugin-enabled', ['%pluginName%' => $pluginName]));
-                break;
+                $this->deploy(false, true);
+                self::$minilog->notice(self::$i18n->trans('plugin-enabled', ['%pluginName%' => $pluginName]));
             }
+            break;
         }
     }
 
@@ -152,48 +169,6 @@ class PluginManager
     }
 
     /**
-     * Initialize the controllers dynamically.
-     */
-    public function initControllers()
-    {
-        $cache = new Cache();
-        $menuManager = new MenuManager();
-        $menuManager->init();
-        $pageNames = [];
-
-        $files = $this->scanFolder(FS_FOLDER . \DIRECTORY_SEPARATOR . 'Dinamic' . \DIRECTORY_SEPARATOR . 'Controller');
-        foreach ($files as $fileName) {
-            if (substr($fileName, -4) !== '.php') {
-                continue;
-            }
-
-            $controllerName = substr($fileName, 0, -4);
-            $controllerNamespace = 'FacturaScripts\\Dinamic\\Controller\\' . $controllerName;
-
-            if (!class_exists($controllerNamespace)) {
-                /// we force the loading of the file because at this point the autoloader will not find it
-                require FS_FOLDER . \DIRECTORY_SEPARATOR . 'Dinamic' . \DIRECTORY_SEPARATOR . 'Controller'
-                    . \DIRECTORY_SEPARATOR . $controllerName . '.php';
-            }
-
-            try {
-                $controller = new $controllerNamespace($cache, self::$i18n, self::$minilog, $controllerName);
-                if ($controller instanceof Controller) {
-                    $menuManager->selectPage($controller->getPageData());
-                }
-                $pageNames[] = $controllerName;
-            } catch (Exception $exc) {
-                self::$minilog->critical(
-                    self::$i18n->trans('cant-load-controller', ['%controllerName%' => $controllerName])
-                );
-            }
-        }
-
-        $menuManager->removeOld($pageNames);
-        $menuManager->reload();
-    }
-
-    /**
      * Install a new plugin if is compatible.
      *
      * @param string $zipPath
@@ -201,8 +176,12 @@ class PluginManager
      *
      * @return bool
      */
-    public function install($zipPath, $zipName = 'plugin.zip'): bool
+    public function install(string $zipPath, string $zipName = 'plugin.zip'): bool
     {
+        if (FS_DISABLE_ADD_PLUGINS) {
+            return false;
+        }
+
         $zipFile = new ZipArchive();
         $result = $zipFile->open($zipPath, ZipArchive::CHECKCONS);
         if (true !== $result) {
@@ -229,7 +208,7 @@ class PluginManager
 
         /// Removing previous version
         if (is_dir(self::PLUGIN_PATH . $info['name'])) {
-            $this->delTree(self::PLUGIN_PATH . $info['name']);
+            FileManager::delTree(self::PLUGIN_PATH . $info['name']);
         }
 
         /// Extract new version
@@ -241,7 +220,7 @@ class PluginManager
             rename(self::PLUGIN_PATH . $folderPluginZip[0], self::PLUGIN_PATH . $info['name']);
         }
 
-        self::$minilog->info(self::$i18n->trans('plugin-installed', ['%pluginName%' => $info['name']]));
+        self::$minilog->notice(self::$i18n->trans('plugin-installed', ['%pluginName%' => $info['name']]));
         return true;
     }
 
@@ -253,7 +232,8 @@ class PluginManager
     public function installedPlugins(): array
     {
         $plugins = [];
-        foreach ($this->scanFolder(self::PLUGIN_PATH) as $folder) {
+
+        foreach (FileManager::scanFolder(self::PLUGIN_PATH, false) as $folder) {
             $iniPath = self::PLUGIN_PATH . $folder . '/facturascripts.ini';
             $iniContent = file_exists($iniPath) ? file_get_contents($iniPath) : '';
             $plugins[] = $this->getPluginInfo($folder, $iniContent);
@@ -269,8 +249,12 @@ class PluginManager
      *
      * @return bool
      */
-    public function remove($pluginName): bool
+    public function remove(string $pluginName): bool
     {
+        if (FS_DISABLE_RM_PLUGINS) {
+            return false;
+        }
+
         /// can't remove enabled plugins
         if (\in_array($pluginName, self::$enabledPlugins, false)) {
             self::$minilog->error(self::$i18n->trans('plugin-enabled', ['%pluginName%' => $pluginName]));
@@ -279,29 +263,60 @@ class PluginManager
 
         $pluginPath = self::PLUGIN_PATH . $pluginName;
         if (is_dir($pluginPath) || is_file($pluginPath)) {
-            $this->delTree($pluginPath);
-            self::$minilog->info(self::$i18n->trans('plugin-deleted', ['%pluginName%' => $pluginName]));
+            FileManager::delTree($pluginPath);
+            self::$minilog->notice(self::$i18n->trans('plugin-deleted', ['%pluginName%' => $pluginName]));
             return true;
         }
 
-        self::$minilog->info(self::$i18n->trans('plugin-delete-error', ['%pluginName%' => $pluginName]));
+        self::$minilog->notice(self::$i18n->trans('plugin-delete-error', ['%pluginName%' => $pluginName]));
         return false;
     }
 
     /**
-     * Recursive delete directory.
+     * Check for plugins needed.
      *
-     * @param string $dir
+     * @param array $require
      *
      * @return bool
      */
-    private function delTree($dir): bool
+    private function checkRequire(array $require): bool
     {
-        $files = is_dir($dir) ? $this->scanFolder($dir) : [];
-        foreach ($files as $file) {
-            is_dir($dir . '/' . $file) ? $this->delTree("$dir/$file") : unlink("$dir/$file");
+        if (empty($require)) {
+            return true;
         }
-        return is_dir($dir) ? rmdir($dir) : unlink($dir);
+
+        foreach ($require as $req) {
+            $found = false;
+            foreach ($this->enabledPlugins() as $pluginName) {
+                if ($pluginName === $req) {
+                    $found = true;
+                    break;
+                }
+            }
+
+            if (!$found) {
+                self::$minilog->warning(self::$i18n->trans('plugin-needed', ['%pluginName%' => $req]));
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Disables plugins that depends on $pluginDisabled
+     *
+     * @param string $pluginDisabled
+     */
+    private function disableByDependecy(string $pluginDisabled)
+    {
+        foreach (self::$enabledPlugins as $key => $value) {
+            if (\in_array($pluginDisabled, $value['require'])) {
+                self::$minilog->info(self::$i18n->trans('plugin-disabled', ['%pluginName%' => $value['name']]));
+                unset(self::$enabledPlugins[$key]);
+                $this->disableByDependecy($value['name']);
+            }
+        }
     }
 
     /**
@@ -312,7 +327,7 @@ class PluginManager
      *
      * @return array
      */
-    private function getPluginInfo($pluginName, $iniContent): array
+    private function getPluginInfo(string $pluginName, string $iniContent): array
     {
         $info = [
             'compatible' => false,
@@ -373,17 +388,5 @@ class PluginManager
     {
         $content = json_encode(self::$enabledPlugins);
         return file_put_contents(self::PLUGIN_LIST_FILE, $content) !== false;
-    }
-
-    /**
-     * Returns an array with all files and folders.
-     *
-     * @param string $folderPath
-     *
-     * @return array
-     */
-    private function scanFolder($folderPath): array
-    {
-        return array_diff(scandir($folderPath, SCANDIR_SORT_ASCENDING), ['.', '..']);
     }
 }

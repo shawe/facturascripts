@@ -1,7 +1,8 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017    Francesc Pineda Segarra <francesc.pineda.segarra@gmail.com>
+ * Copyright (C) 2017       Francesc Pineda Segarra <francesc.pineda.segarra@gmail.com>
+ * Copyright (C) 2017-2018  Carlos Garcia Gomez     <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -10,149 +11,25 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace FacturaScripts\Test\Core\Model;
 
-use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Model\Agente;
-use PHPUnit\Framework\TestCase;
+use FacturaScripts\Test\Core\CustomTest;
 
 /**
  * @covers \Agente
  */
-final class AgenteTest extends TestCase
+final class AgenteTest extends CustomTest
 {
-    public function testNewAgente()
+
+    protected function setUp()
     {
-        $model = new Agente();
-
-        $this->assertInstanceOf(
-            Agente::class,
-            $model
-        );
-
-        $this->assertNull(
-            $model->codagente
-        );
-
-        $this->assertEquals(
-            '',
-            $model->nombre
-        );
-
-        $this->assertEquals(
-            '',
-            $model->apellidos
-        );
-
-        $this->assertEquals(
-            '',
-            $model->cifnif
-        );
-
-        $this->assertEquals(
-            0.00,
-            $model->porcomision
-        );
-
-        $this->assertEquals(
-            null,
-            $model->seg_social
-        );
-
-        $this->assertEquals(
-            null,
-            $model->banco
-        );
-
-        $this->assertEquals(
-            null,
-            $model->cargo
-        );
-
-        $this->assertEquals(
-            date('d-m-Y'),
-            $model->fechaalta
-        );
-
-        $this->assertEquals(
-            null,
-            $model->fechabaja
-        );
-
-        $this->assertEquals(
-            null,
-            $model->fechanacimiento
-        );
-
-        $this->assertInternalType(
-            'string',
-            $model->primaryDescription()
-        );
-
-        $this->assertTrue($model->test());
-    }
-
-    public function testTable()
-    {
-        $model = new Agente();
-
-        $this->assertInternalType(
-            'string',
-            $model::tableName()
-        );
-    }
-
-    public function testPrimaryColumn()
-    {
-        $model = new Agente();
-
-        $this->assertInternalType(
-            'string',
-            $model::primaryColumn()
-        );
-    }
-
-    public function testInstall()
-    {
-        $model = new Agente();
-
-        $this->assertInternalType(
-            'string',
-            $model->install()
-        );
-    }
-
-    public function testSave()
-    {
-        $dataBase = new DataBase();
-
-        $this->assertEquals(true, $dataBase->connect());
-
-        $model = new Agente();
-        $sql = $model->install();
-
-        if ($sql !== '') {
-            $result = $dataBase->exec($sql);
-            $this->assertFalse($result);
-        }
-    }
-
-    public function testAll()
-    {
-        $model = new Agente();
-        $list = $model->all();
-
-        if (!empty($list)) {
-            $this->assertInternalType('array', $list);
-        } else {
-            $this->assertSame([], $list);
-        }
+        $this->model = new Agente();
     }
 }

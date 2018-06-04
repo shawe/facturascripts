@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2014-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2014-2018 Carlos Garcia Gomez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -10,13 +10,12 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\Utils;
@@ -28,14 +27,8 @@ use FacturaScripts\Core\Base\Utils;
  */
 class BalanceCuentaA extends Base\ModelClass
 {
-    use Base\ModelTrait;
 
-    /**
-     * Primary key.
-     *
-     * @var int
-     */
-    public $id;
+    use Base\ModelTrait;
 
     /**
      * Balance code.
@@ -59,13 +52,43 @@ class BalanceCuentaA extends Base\ModelClass
     public $desccuenta;
 
     /**
-     * Returns the name of the table that uses this model.
+     * Primary key.
      *
+     * @var int
+     */
+    public $id;
+
+    /**
+     * Obtain all balances from the account by your balance code.
+     *
+     * @param string $cod
+     *
+     * @return self[]
+     */
+    public function allFromCodbalance($cod)
+    {
+        $balist = [];
+        $sql = 'SELECT * FROM ' . static::tableName()
+            . ' WHERE codbalance = ' . self::$dataBase->var2str($cod) . ' ORDER BY codcuenta ASC;';
+
+        $data = self::$dataBase->select($sql);
+        if (!empty($data)) {
+            foreach ($data as $b) {
+                $balist[] = new self($b);
+            }
+        }
+
+        return $balist;
+    }
+
+    /**
      * @return string
      */
-    public static function tableName(): string
+    public function install(): string
     {
-        return 'co_cuentascbba';
+        new Balance();
+
+        return parent::install();
     }
 
     /**
@@ -128,29 +151,6 @@ class BalanceCuentaA extends Base\ModelClass
     }
 
     /**
-     * Obtain all balances from the account by your balance code.
-     *
-     * @param string $cod
-     *
-     * @return self[]
-     */
-    public function allFromCodbalance($cod): array
-    {
-        $balist = [];
-        $sql = 'SELECT * FROM ' . static::tableName()
-            . ' WHERE codbalance = ' . self::$dataBase->var2str($cod) . ' ORDER BY codcuenta ASC;';
-
-        $data = self::$dataBase->select($sql);
-        if (!empty($data)) {
-            foreach ($data as $b) {
-                $balist[] = new self($b);
-            }
-        }
-
-        return $balist;
-    }
-
-    /**
      * Search all balances of the account by its balance code.
      *
      * @param string $cod
@@ -171,5 +171,15 @@ class BalanceCuentaA extends Base\ModelClass
         }
 
         return $balist;
+    }
+
+    /**
+     * Returns the name of the table that uses this model.
+     *
+     * @return string
+     */
+    public static function tableName(): string
+    {
+        return 'balancescuentasabreviadas';
     }
 }

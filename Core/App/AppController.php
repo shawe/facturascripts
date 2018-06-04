@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos Garcia Gomez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\App;
@@ -73,12 +73,18 @@ class AppController extends App
     private $pageName;
 
     /**
+     *
+     * @var User|false
+     */
+    private $user = false;
+
+    /**
      * Initializes the app.
      *
      * @param string $uri
      * @param string $pageName
      */
-    public function __construct($uri = '/', $pageName = '')
+    public function __construct(string $uri = '/', string $pageName = '')
     {
         parent::__construct($uri);
         $this->debugBar = new StandardDebugBar();
@@ -93,6 +99,12 @@ class AppController extends App
 
         $this->menuManager = new MenuManager();
         $this->pageName = $pageName;
+    }
+
+    public function close(string $nick = '')
+    {
+        $nick = (false !== $this->user) ? $this->user->nick : '';
+        parent::close($nick);
     }
 
     /**
@@ -112,11 +124,11 @@ class AppController extends App
             $this->userLogout();
             $this->renderHtml('Login/Login.html.twig');
         } else {
-            $user = $this->userAuth();
+            $this->user = $this->userAuth();
 
             /// returns the name of the controller to load
-            $pageName = $this->getPageName($user);
-            $this->loadController($pageName, $user);
+            $pageName = $this->getPageName();
+            $this->loadController($pageName);
 
             /// returns true for testing purpose
             return true;
@@ -132,12 +144,14 @@ class AppController extends App
      *
      * @return string
      */
-    private function getControllerFullName($pageName): string
+    private function getControllerFullName(string $pageName): string
     {
         $controllerName = "FacturaScripts\\Dinamic\\Controller\\{$pageName}";
         if (!class_exists($controllerName)) {
             $controllerName = "FacturaScripts\\Core\\Controller\\{$pageName}";
-            if (FS_DEBUG) {
+
+            /// This is important in development and unattended installations
+            if (FS_DEBUG || !file_exists(FS_FOLDER . DIRECTORY_SEPARATOR . 'Dinamic')) {
                 $this->pluginManager->deploy();
             }
         }
@@ -148,11 +162,9 @@ class AppController extends App
     /**
      * Returns the name of the default controller for the current user or for all users.
      *
-     * @param User|false $user
-     *
      * @return string
      */
-    private function getPageName($user): string
+    private function getPageName(): string
     {
         if ($this->pageName !== '') {
             return $this->pageName;
@@ -162,8 +174,8 @@ class AppController extends App
             return $this->getUriParam(0);
         }
 
-        if ($user && $user->homepage !== null && $user->homepage !== '') {
-            return $user->homepage;
+        if ($this->user && !empty($this->user->homepage)) {
+            return $this->user->homepage;
         }
 
         return $this->settings::get('default', 'homepage', 'Wizard');
@@ -172,10 +184,9 @@ class AppController extends App
     /**
      * Load and process the $pageName controller.
      *
-     * @param string     $pageName
-     * @param User|false $user
+     * @param string $pageName
      */
-    private function loadController($pageName, $user)
+    private function loadController(string $pageName)
     {
         if (FS_DEBUG) {
             $this->debugBar['time']->stopMeasure('init');
@@ -189,17 +200,17 @@ class AppController extends App
         /// If we found a controller, load it
         if (class_exists($controllerName)) {
             $this->miniLog->debug($this->i18n->trans('loading-controller', ['%controllerName%' => $controllerName]));
-            $this->menuManager->setUser($user);
-            $permissions = new ControllerPermissions($user, $pageName);
+            $this->menuManager->setUser($this->user);
+            $permissions = new ControllerPermissions($this->user, $pageName);
 
             try {
                 $this->controller = new $controllerName($this->cache, $this->i18n, $this->miniLog, $pageName, $this->uri);
-                if ($user === false) {
+                if ($this->user === false) {
                     $this->controller->publicCore($this->response);
                     $template = $this->controller->getTemplate();
                 } elseif ($permissions->allowAccess) {
                     $this->menuManager->selectPage($this->controller->getPageData());
-                    $this->controller->privateCore($this->response, $user, $permissions);
+                    $this->controller->privateCore($this->response, $this->user, $permissions);
                     $template = $this->controller->getTemplate();
                 } else {
                     $template = 'Error/AccessDenied.html.twig';
@@ -207,6 +218,7 @@ class AppController extends App
 
                 $httpStatus = Response::HTTP_OK;
             } catch (Exception $exc) {
+                $this->miniLog->critical($exc->getMessage());
                 $this->debugBar['exceptions']->addException($exc);
                 $httpStatus = Response::HTTP_INTERNAL_SERVER_ERROR;
                 $template = 'Error/ControllerError.html.twig';
@@ -231,7 +243,7 @@ class AppController extends App
      * @param string $template html file to use
      * @param string $controllerName
      */
-    private function renderHtml($template, $controllerName = '')
+    private function renderHtml(string $template, string $controllerName = '')
     {
         /// HTML template variables
         $templateVars = [
@@ -261,6 +273,7 @@ class AppController extends App
         try {
             $this->response->setContent($webRender->render($template, $templateVars));
         } catch (Exception $exc) {
+            $this->miniLog->critical($exc->getMessage());
             $this->debugBar['exceptions']->addException($exc);
             $this->response->setContent($webRender->render('Error/TemplateError.html.twig', $templateVars));
             $this->response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);

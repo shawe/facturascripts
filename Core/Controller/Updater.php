@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2018 Carlos Garcia Gomez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Controller;
@@ -22,6 +22,7 @@ namespace FacturaScripts\Core\Controller;
 use FacturaScripts\Core\Base\Controller;
 use FacturaScripts\Core\Base\ControllerPermissions;
 use FacturaScripts\Core\Base\DownloadTools;
+use FacturaScripts\Core\Base\FileManager;
 use FacturaScripts\Core\Base\PluginManager;
 use FacturaScripts\Core\Model\User;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,10 +36,9 @@ use ZipArchive;
 class Updater extends Controller
 {
 
-    /**
-     * Remote URL for update FacturaScripts Core
-     */
-    const UPDATE_CORE_URL = 'https://s3.eu-west-2.amazonaws.com/facturascripts/2018.zip';
+    const CORE_PROJECT_ID = 1;
+    const CORE_VERSION = 2018.003;
+    const UPDATE_CORE_URL = 'https://beta.facturascripts.com/DownloadBuild';
 
     /**
      * List of items to be updated.
@@ -64,6 +64,14 @@ class Updater extends Controller
     }
 
     /**
+     * @return float
+     */
+    public function getVersion()
+    {
+        return self::CORE_VERSION;
+    }
+
+    /**
      * Runs the controller's private logic.
      *
      * @param Response              $response
@@ -75,7 +83,7 @@ class Updater extends Controller
         parent::privateCore($response, $user, $permissions);
 
         /// Folders writables?
-        $folders = $this->notWritablefolders();
+        $folders = FileManager::notWritableFolders();
         if (!empty($folders)) {
             $this->miniLog->alert($this->i18n->trans('folder-not-writable'));
             foreach ($folders as $folder) {
@@ -84,31 +92,10 @@ class Updater extends Controller
             return;
         }
 
-        $this->updaterItems[] = [
-            'id' => 'CORE',
-            'description' => 'Core component',
-            'downloaded' => file_exists(FS_FOLDER . DIRECTORY_SEPARATOR . 'update-core.zip')
-        ];
+        $this->updaterItems = $this->getUpdateItems();
 
         $action = $this->request->get('action', '');
         $this->execAction($action);
-    }
-
-    /**
-     * Erase $dir folder and all its subfolders.
-     *
-     * @param string $dir
-     *
-     * @return bool
-     */
-    private function delTree(string $dir): bool
-    {
-        $files = array_diff(scandir($dir, SCANDIR_SORT_ASCENDING), ['.', '..']);
-        foreach ($files as $file) {
-            is_dir("$dir/$file") ? $this->delTree("$dir/$file") : unlink("$dir/$file");
-        }
-
-        return rmdir($dir);
     }
 
     /**
@@ -116,14 +103,22 @@ class Updater extends Controller
      */
     private function download()
     {
-        if (file_exists(FS_FOLDER . DIRECTORY_SEPARATOR . 'update-core.zip')) {
-            unlink(FS_FOLDER . DIRECTORY_SEPARATOR . 'update-core.zip');
-        }
+        $idItem = $this->request->get('item', '');
+        foreach ($this->updaterItems as $key => $item) {
+            if ($item['id'] != $idItem) {
+                continue;
+            }
 
-        $downloader = new DownloadTools();
-        if ($downloader->download(self::UPDATE_CORE_URL, FS_FOLDER . DIRECTORY_SEPARATOR . 'update-core.zip')) {
-            $this->miniLog->info('download-completed');
-            $this->updaterItems[0]['downloaded'] = true;
+            if (file_exists(FS_FOLDER . DIRECTORY_SEPARATOR . $item['filename'])) {
+                unlink(FS_FOLDER . DIRECTORY_SEPARATOR . $item['filename']);
+            }
+
+            $downloader = new DownloadTools();
+            if ($downloader->download($item['url'], FS_FOLDER . DIRECTORY_SEPARATOR . $item['filename'])) {
+                $this->miniLog->info('download-completed');
+                $this->updaterItems[$key]['downloaded'] = true;
+                $this->cache->clear();
+            }
         }
     }
 
@@ -142,129 +137,56 @@ class Updater extends Controller
             case 'update':
                 $this->update();
                 $pluginManager = new PluginManager();
-                $pluginManager->initControllers();
+                $pluginManager->deploy(true, true);
                 break;
         }
     }
 
     /**
-     * Returns an array with all subforder of $baseDir folder.
-     *
-     * @param string $baseDir
-     *
      * @return array
      */
-    private function foldersFrom(string $baseDir): array
+    private function getUpdateItems(): array
     {
-        $directories = [];
-        $files = array_diff(scandir($baseDir, SCANDIR_SORT_ASCENDING), ['.', '..']);
-        foreach ($files as $file) {
-            $dir = $baseDir . DIRECTORY_SEPARATOR . $file;
-            if (is_dir($dir)) {
-                $directories[] = $dir;
-                /**
-                 * FIXME: 'array_merge(...)' is used in a loop and is a resources greedy construction.
-                 * https://github.com/kalessil/phpinspectionsea/blob/master/docs/performance.md#slow-array-function-used-in-loop
-                 */
-                /** @noinspection SlowArrayOperationsInLoopInspection */
-                $directories = array_merge($directories, $this->foldersFrom($dir));
+        $cacheData = $this->cache->get('UPDATE_ITEMS');
+        if (is_array($cacheData)) {
+            return $cacheData;
+        }
+
+        $downloader = new DownloadTools();
+        $json = json_decode($downloader->getContents(self::UPDATE_CORE_URL), true);
+        if (empty($json)) {
+            return [];
+        }
+
+        $items = [];
+        foreach ($json as $projectData) {
+            if ($projectData['project'] === self::CORE_PROJECT_ID) {
+                $this->getUpdateItemsCore($items, $projectData);
             }
         }
 
-        return $directories;
+        $this->cache->set('UPDATE_ITEMS', $items);
+        return $items;
     }
 
     /**
-     * Returns an array with all not writable folders.
-     *
-     * @return array
+     * @param array $items
+     * @param array $projectData
      */
-    private function notWritablefolders(): array
+    private function getUpdateItemsCore(array &$items, array $projectData)
     {
-        $notWritable = [];
-        foreach ($this->foldersFrom(FS_FOLDER) as $dir) {
-            if (!is_writable($dir)) {
-                $notWritable[] = $dir;
+        foreach ($projectData['builds'] as $build) {
+            if ($build['stable'] && $build['version'] > self::CORE_VERSION) {
+                $items[] = [
+                    'id' => 'CORE',
+                    'description' => 'Core component v' . $build['version'],
+                    'downloaded' => file_exists(FS_FOLDER . DIRECTORY_SEPARATOR . 'update-core.zip'),
+                    'filename' => 'update-core.zip',
+                    'url' => self::UPDATE_CORE_URL . '/' . $projectData['project'] . '/' . $build['version']
+                ];
+                break;
             }
         }
-
-        if (count($notWritable) > 0) {
-            $this->showSolution();
-        }
-
-        return $notWritable;
-    }
-
-    /**
-     * Show command to solve this problem.
-     */
-    private function showSolution()
-    {
-        $correctOwner = \posix_getpwuid(\posix_geteuid())['name'];
-        $correctGroup = \posix_getgrgid(\posix_getgid())['name'];
-
-        $chmodDir = $this->getDefaultPerms(false);
-        $chmodFile = $this->getDefaultPerms(true);
-
-        $this->miniLog->critical(
-            'Can\'t be auto fixed. You need to execute from shell: ' . '<br/>' .
-            'find ' . \FS_FOLDER . ' -exec chown ' . $correctOwner . ':' . $correctGroup . ' {} \;' . '<br/>' .
-            'find ' . \FS_FOLDER . ' -type d -exec chmod ' . $chmodDir . ' {} \;' . '<br/>' .
-            'find ' . \FS_FOLDER . ' -type f -exec chmod ' . $chmodFile . ' {} \;'
-        );
-    }
-
-    /**
-     * Returns default permissions for file or folder.
-     * If not correctOwner or realFileOwner received, readed from execution.
-     *
-     * @param bool   $isFile
-     * @param string $correctOwner
-     * @param string $realFileOwner
-     *
-     * @return string
-     */
-    private function getDefaultPerms($isFile, $correctOwner = '', $realFileOwner = ''): string
-    {
-        if ($correctOwner === '') {
-            $correctOwner = \posix_getpwuid(\posix_geteuid())['name'];
-        }
-        if ($realFileOwner === '') {
-            $realFileOwner = \posix_getpwuid(\fileowner(\FS_FOLDER))['name'];
-        }
-
-        /// Needed in common hostings accounts
-        $string = $isFile ? '0644' : '0755';
-        if ($correctOwner !== $realFileOwner) {
-            /// Needed with Apache userdir and some virtualhost configurations
-            $string = $isFile ? '0664' : '0775';
-        }
-        return $string;
-    }
-    /**
-     * Copy all files and folders from $src to $dst
-     *
-     * @param string $src
-     * @param string $dst
-     */
-    private function recurseCopy(string $src, string $dst)
-    {
-        $dir = opendir($src);
-        if (!mkdir($dst) && !is_dir($dst)) {
-            throw new \RuntimeException(sprintf('Directory "%s" was not created', $dst));
-        }
-        while (false !== ($file = readdir($dir))) {
-            if ($file === '.' || $file === '..') {
-                continue;
-            }
-
-            if (is_dir($src . '/' . $file)) {
-                $this->recurseCopy($src . '/' . $file, $dst . '/' . $file);
-            } else {
-                copy($src . '/' . $file, $dst . '/' . $file);
-            }
-        }
-        closedir($dir);
     }
 
     /**
@@ -293,11 +215,11 @@ class Updater extends Controller
                 break;
             }
 
-            $this->delTree($dest);
-            $this->recurseCopy($origin, $dest);
+            FileManager::delTree($dest);
+            FileManager::recurseCopy($origin, $dest);
         }
 
-        $this->delTree(FS_FOLDER . DIRECTORY_SEPARATOR . 'facturascripts');
+        FileManager::delTree(FS_FOLDER . DIRECTORY_SEPARATOR . 'facturascripts');
         return true;
     }
 }

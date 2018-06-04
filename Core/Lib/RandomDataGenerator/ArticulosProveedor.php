@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
@@ -48,8 +48,11 @@ class ArticulosProveedor extends AbstractRandom
     {
         $this->shuffle($articulos, new Model\Articulo());
         $this->shuffle($proveedores, new Model\Proveedor());
+        if(empty($proveedores)) {
+            return 0;
+        }
+        
         $art = $this->model;
-
         for ($generated = 0; $generated < $num; ++$generated) {
             if (!isset($articulos[$generated])) {
                 break;

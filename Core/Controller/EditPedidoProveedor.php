@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Controller;
@@ -55,7 +55,7 @@ class EditPedidoProveedor extends ExtendedController\BusinessDocumentController
 
         $modelName = $this->getModelClassName();
         $viewName = 'Edit' . $modelName;
-        $this->addEditView($modelName, $viewName, 'detail', 'fa-edit');
+        $this->addEditView($viewName, $modelName, 'detail', 'fa-edit');
     }
 
     /**
@@ -71,16 +71,16 @@ class EditPedidoProveedor extends ExtendedController\BusinessDocumentController
     /**
      * Load data view procedure
      *
-     * @param string                                  $keyView
+     * @param string                                  $viewName
      * @param ExtendedController\BusinessDocumentView $view
      */
-    protected function loadData($keyView, $view)
+    protected function loadData($viewName, $view)
     {
-        if ($keyView === 'EditPedidoProveedor') {
+        if ($viewName === 'EditPedidoProveedor') {
             $idpedido = $this->getViewModelValue('Document', 'idpedido');
             $view->loadData($idpedido);
         }
 
-        parent::loadData($keyView, $view);
+        parent::loadData($viewName, $view);
     }
 }

@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\App;
@@ -52,9 +52,17 @@ class AppRouter
     }
 
     /**
+     * Clear the App routes.
+     */
+    public function clear()
+    {
+        $this->routes = [];
+    }
+
+    /**
      * Return the especific App controller for any kind of petition.
      *
-     * @return AppAPI|AppController|AppCron
+     * @return App
      */
     public function getApp()
     {
@@ -69,6 +77,14 @@ class AppRouter
 
         foreach ($this->routes as $key => $data) {
             if ($uri === $key) {
+                return new AppController($uri, $data['controller']);
+            }
+
+            if ('*' !== substr($key, -1)) {
+                continue;
+            }
+
+            if (0 === strncmp($uri, $key, strlen($key) - 1)) {
                 return new AppController($uri, $data['controller']);
             }
         }
@@ -105,13 +121,13 @@ class AppRouter
     }
 
     /**
-     * Set new route for a controller.
+     * Adds this route to the app routes.
      *
-     * @param        $newRoute
-     * @param        $controllerName
+     * @param string $newRoute
+     * @param string $controllerName
      * @param string $optionalId
      */
-    public function setRoute($newRoute, $controllerName, $optionalId = '')
+    public function setRoute(string $newRoute, string $controllerName, string $optionalId = '')
     {
         if (!empty($optionalId)) {
             /// if optionaId, then remove previous items with that data
@@ -137,7 +153,7 @@ class AppRouter
      *
      * @return string
      */
-    private function getMime($filePath): string
+    private function getMime(string $filePath): string
     {
         if (substr($filePath, -4) === '.css') {
             return 'text/css';

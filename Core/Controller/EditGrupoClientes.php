@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Controller;
@@ -33,12 +33,28 @@ class EditGrupoClientes extends ExtendedController\PanelController
 {
 
     /**
+     * Returns basic page attributes
+     *
+     * @return array
+     */
+    public function getPageData()
+    {
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'customer-group';
+        $pageData['menu'] = 'sales';
+        $pageData['icon'] = 'fa-folder-open';
+        $pageData['showonmenu'] = false;
+
+        return $pageData;
+    }
+
+    /**
      * Load views
      */
     protected function createViews()
     {
-        $this->addEditView('GrupoClientes', 'EditGrupoClientes', 'customer-group');
-        $this->addListView('Cliente', 'ListCliente', 'customers', 'fa-users');
+        $this->addEditView('EditGrupoClientes', 'GrupoClientes', 'customer-group');
+        $this->addListView('ListCliente', 'Cliente', 'customers', 'fa-users');
         $this->setTabsPosition('bottom');
 
         /// Disable columns
@@ -48,12 +64,12 @@ class EditGrupoClientes extends ExtendedController\PanelController
     /**
      * Procedure responsible for loading the data to be displayed.
      *
-     * @param string                      $keyView
+     * @param string                      $viewName
      * @param ExtendedController\EditView $view
      */
-    protected function loadData($keyView, $view)
+    protected function loadData($viewName, $view)
     {
-        switch ($keyView) {
+        switch ($viewName) {
             case 'EditGrupoClientes':
                 $code = $this->request->get('code');
                 $view->loadData($code);
@@ -62,24 +78,8 @@ class EditGrupoClientes extends ExtendedController\PanelController
             case 'ListCliente':
                 $codgrupo = $this->getViewModelValue('EditGrupoClientes', 'codgrupo');
                 $where = [new DataBaseWhere('codgrupo', $codgrupo)];
-                $view->loadData(false, $where);
+                $view->loadData('', $where);
                 break;
         }
-    }
-
-    /**
-     * Returns basic page attributes
-     *
-     * @return array
-     */
-    public function getPageData(): array
-    {
-        $pageData = parent::getPageData();
-        $pageData['title'] = 'customer-group';
-        $pageData['menu'] = 'sales';
-        $pageData['icon'] = 'fa-folder-open';
-        $pageData['showonmenu'] = false;
-
-        return $pageData;
     }
 }

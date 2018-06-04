@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Model;
@@ -51,13 +51,13 @@ class ContactoProveedor extends Base\ModelClass
     public $idcontacto;
 
     /**
-     * Returns the name of the table that uses this model.
-     *
      * @return string
      */
-    public static function tableName(): string
+    public function install(): string
     {
-        return 'contactosproveedores';
+        new Contacto();
+
+        return parent::install();
     }
 
     /**
@@ -68,5 +68,15 @@ class ContactoProveedor extends Base\ModelClass
     public static function primaryColumn(): string
     {
         return 'id';
+    }
+
+    /**
+     * Returns the name of the table that uses this model.
+     *
+     * @return string
+     */
+    public static function tableName(): string
+    {
+        return 'contactosproveedores';
     }
 }

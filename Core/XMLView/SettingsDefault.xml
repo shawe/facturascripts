@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  *
  * Initial description for the controller EditFabricante
@@ -94,9 +94,9 @@
             <column name="name" display="none" order="100">
                 <widget type="text" fieldname="name" readonly="true" required="true" />
             </column>
-            <column name="homepage" numcolumns="3" order="110">
-                <widget type="select" fieldname="homepage" onclick="EditWebPage">
-                    <values source="pages" fieldcode="name" fieldtitle="name" />
+            <column name="homepage" numcolumns="3" order="100">
+                <widget type="select" fieldname="homepage">
+                    <values source="pages" fieldcode="name" fieldtitle="name" translate="true"></values>
                 </widget>
             </column>
             <column name="item_limit" numcolumns="3" order="120">

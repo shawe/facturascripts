@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Model\Base;
@@ -208,11 +208,13 @@ abstract class SalesDocument extends BusinessDocument
      * Assign the customer to the document.
      *
      * @param Cliente[] $subjects
+     *
+     * @return bool
      */
     public function setSubject($subjects)
     {
         if (!isset($subjects[0]->codcliente)) {
-            return;
+            return false;
         }
 
         $this->codcliente = $subjects[0]->codcliente;
@@ -230,6 +232,8 @@ abstract class SalesDocument extends BusinessDocument
                 break;
             }
         }
+
+        return true;
     }
 
     /**
@@ -256,5 +260,24 @@ abstract class SalesDocument extends BusinessDocument
         $this->provinciaenv = Utils::noHtml($this->provinciaenv);
 
         return parent::test();
+    }
+
+    /**
+     * Updates subjects data in this document.
+     *
+     * @return bool
+     */
+    public function updateSubject()
+    {
+        if (empty($this->codcliente)) {
+            return false;
+        }
+
+        $cliente = new Cliente();
+        if (!$cliente->loadFromCode($this->codcliente)) {
+            return false;
+        }
+
+        return $this->setSubject([$cliente]);
     }
 }

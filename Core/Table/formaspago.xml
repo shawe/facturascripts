@@ -14,6 +14,7 @@
     <column>
         <name>descripcion</name>
         <type>character varying(100)</type>
+        <null>NO</null>
     </column>
     <column>
         <name>genrecibos</name>
@@ -36,7 +37,7 @@
     <column>
         <name>vencimiento</name>
         <type>character varying(20)</type>
-        <default>'+1month'::character varying</default>
+        <default>'+1 month'::character varying</default>
     </column>
     <constraint>
         <name>formaspago_pkey</name>

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Lib\ExtendedController;
@@ -80,13 +80,31 @@ class EditListView extends BaseView implements DataViewInterface
     }
 
     /**
-     * Returns the list of read data in the Model format
+     * Establishes the column's edit state
      *
-     * @return array|null
+     * @param string $columnName
+     * @param bool   $disabled
      */
-    public function getCursor()
+    public function disableColumn($columnName, $disabled)
     {
-        return $this->cursor;
+        $column = $this->columnForName($columnName);
+        if (!empty($column)) {
+            $column->widget->readOnly = $disabled;
+        }
+    }
+
+    /**
+     * Method to export the view data.
+     *
+     * @param ExportManager $exportManager
+     */
+    public function export(&$exportManager)
+    {
+        if ($this->count > 0) {
+            $exportManager->generateListModelPage(
+                $this->model, $this->where, $this->order, $this->offset, $this->getColumns(), $this->title
+            );
+        }
     }
 
     /**
@@ -101,17 +119,33 @@ class EditListView extends BaseView implements DataViewInterface
     }
 
     /**
-     * Establishes the column's edit state
+     * Returns the list of read data in the Model format
      *
-     * @param string $columnName
-     * @param bool   $disabled
+     * @return array|null
      */
-    public function disableColumn($columnName, $disabled)
+    public function getCursor()
     {
-        $column = $this->columnForName($columnName);
-        if (!empty($column)) {
-            $column->widget->readOnly = $disabled;
+        return $this->cursor;
+    }
+
+    /**
+     * Returns True if have less than 5 columns, else returns False.
+     */
+    public function isBasicEditList()
+    {
+        if (count($this->pageOption->columns) !== 1) {
+            return false;
         }
+
+        $maxColumns = 5;
+        $group = reset($this->pageOption->columns);
+        foreach ($group->columns as $col) {
+            if ($col->display !== 'none') {
+                --$maxColumns;
+            }
+        }
+
+        return $maxColumns > 0;
     }
 
     /**
@@ -135,47 +169,6 @@ class EditListView extends BaseView implements DataViewInterface
         // We save the values where and offset for the export
         $this->offset = $offset;
         $this->where = $where;
-    }
-
-    /**
-     * Method to export the view data
-     *
-     * @param ExportManager $exportManager
-     */
-    public function export(&$exportManager)
-    {
-        if ($this->count > 0) {
-            $exportManager->generateListModelPage(
-                $this->model,
-                $this->where,
-                $this->order,
-                $this->offset,
-                $this->getColumns(),
-                $this->title
-            );
-        }
-    }
-
-    /**
-     * Returns True if have less than 5 columns, else returns False.
-     */
-    public function isBasicEditList()
-    {
-        if (count($this->pageOption->columns) !== 1) {
-            return false;
-        }
-
-        $maxColumns = 5;
-        $group = reset($this->pageOption->columns);
-        if ($group instanceof GroupItem) {
-            foreach ($group->columns as $col) {
-                if ($col->display !== 'none') {
-                    --$maxColumns;
-                }
-            }
-        }
-
-        return $maxColumns > 0;
     }
 
     /**

@@ -6,7 +6,7 @@
      * in different formats.
      *
      * This file is part of FacturaScripts
-     * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+     * Copyright (C) 2017-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
      *
      * This program is free software: you can redistribute it and/or modify
      * it under the terms of the GNU Lesser General Public License as
@@ -15,7 +15,7 @@
      *
      * This program is distributed in the hope that it will be useful,
      * but WITHOUT ANY WARRANTY; without even the implied warranty of
-     * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
      * GNU Lesser General Public License for more details.
      *
      * You should have received a copy of the GNU Lesser General Public License
@@ -28,20 +28,21 @@
 
 {% block css %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('Dinamic/Assets/CSS/extendedcontroller.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('node_modules/sceditor/minified/themes/default.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('Dinamic/Assets/CSS/extendedcontroller.css') }}" />
+    <link rel="stylesheet" href="{{ asset('node_modules/summernote/dist/summernote-bs4.css') }}"/>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('node_modules/sceditor/minified/sceditor.min.js') }}"></script>
-    <script src="{{ asset('node_modules/sceditor/minified/formats/bbcode.js') }}"></script>
-    <script src="{{ asset('node_modules/sceditor/minified/formats/xhtml.js') }}"></script>
-    <script type="text/javascript">
-        var tabActive = '{{ fsc.active }}';
 
-        function deleteRecord(formName, action) {
-            action = action || "delete";
+    <script src="{{ asset('node_modules/summernote/dist/summernote-bs4.js') }}"></script>
+    <script src="Core/Assets/JS/PanelController.js"></script>
+    <script type="text/javascript">
+        tabActive = '{{ fsc.active }}';
+        settings = {{ fsc.getSettings(null, null)|json_encode|raw }};
+        url = '{{ fsc.getURL('new') }}';
+
+        function deleteRecord(formName, action = 'delete') {
             bootbox.confirm({
                 title: "{{ i18n.trans('confirm-delete')|raw }}",
                 message: "{{ i18n.trans('are-you-sure') }}",
@@ -52,52 +53,50 @@
                     },
                     confirm: {
                         label: "<i class='fa fa-check'></i> {{ i18n.trans('confirm') }}",
-                        className: "btn-danger"
+                        className: 'btn-danger'
                     }
                 },
                 callback: function (result) {
                     if (result) {
-                        execActionForm(formName, action);
+                        execActionForm(action, formName);
                     }
                 }
             });
         }
-
-        function execActionForm(formName, actionValue) {
-            var form = document.forms[formName];
-            form.action.value = actionValue;
-            form.submit();
-        }
-
         $(document).ready(function () {
-            $("#mainTabs").on("shown.bs.tab", function (e) {
-                tabActive = e.target.hash.substring(1);
-            });
             // autocomplete filters
-            $(".autocomplete").each(function () {
-                var field = $(this).attr("data-field");
+            $('.autocomplete').each(function () {
+                const source = $(this).attr('data-source');
+                const field = $(this).attr('data-field');
+                const title = $(this).attr('data-title');
+                const formName = $(this).closest('form').attr('name');
                 $(this).autocomplete({
-                    source: '{{ fsc.url() }}?action=autocomplete&source=' + $(this).attr("data-source")
-                            + "&field=" + field + "&title=" + $(this).attr("data-title"),
+                    source: function (request, response) {
+                        $.ajax({
+                            method: 'POST',
+                            url: '{{ fsc.url() }}',
+                            data: getAutocompleteData(formName, source, field, title, request.term),
+                            dataType: 'json',
+                            success: function (results) {
+                                const values = [];
+                                results.forEach(function (element) {
+                                    values.push({key: element.key, value: element.key + " | " + element.value});
+                                });
+                                response(values);
+                            },
+                            error: function (msg) {
+                                alert(msg.status + ' ' + msg.statusText);
+                            }
+                        });
+                    },
                     select: function (event, ui) {
-                        $("#" + field + "Autocomplete").val(ui.item.key);
+                        $('#' + field + 'Autocomplete').val(ui.item.key);
+                        ui.item.value = ui.item.value.split(' | ')[1];
                     }
                 });
             });
             // html widgets
-            $(".htmleditor").each(function (i, textarea) {
-                sceditor.create(textarea, {
-                    format: "xhtml",
-                    width: "100%"
-                });
-            });
-            // bbcode widgets
-            $(".bbcode").each(function (i, textarea) {
-                sceditor.create(textarea, {
-                    format: "bbcode",
-                    width: "100%"
-                });
-            });
+            $('.html-editor').summernote();
         });
     </script>
 {% endblock %}
@@ -106,10 +105,11 @@
     {{ parent() }}
 
     {# -- Calculate texts according to language -- #}
-    {% set go_back = i18n.trans('back') %}
+    {% set all = i18n.trans('all') %}
     {% set refresh_title = i18n.trans('refresh') %}
     {% set options = i18n.trans('options') %}
     {% set title = i18n.trans(fsc.getPageData()['title']) | capitalize %}
+    {% set new_record, new_record_title = i18n.trans('new'), i18n.trans('create-new-record') %}
 
     {# -- Calculate common values -- #}
     {% set list_url = fsc.getURL('list') %}
@@ -120,39 +120,46 @@
     {% from 'Macro/Utils.html.twig' import popoverTitle as popoverTitle %}
 
     {# -- Header Row -- #}
-    <div class="container-fluid">
+    <div class="container-fluid" style="margin-bottom: 10px;">
         <div class="row">
             <div class="col-6 d-print-none">
                 <div class="btn-group">
                     <a href="{{ list_url }}" class="btn btn-sm btn-outline-secondary">
                         <i class="fa fa-arrow-left" aria-hidden="true"></i>
-                        <span class="d-none d-md-inline-block">&nbsp;{{ go_back }} </span>
+                        <span class="d-none d-md-inline-block">&nbsp;{{ all }} </span>
                     </a>
                     <a href="{{ edit_url }}" class="btn btn-sm btn-outline-secondary" {{ popoverTitle(refresh_title, 'bottom') }}>
                         <i class="fa fa-refresh" aria-hidden="true"></i>
                     </a>
                 </div>
                 <div class="btn-group">
-                    <div class="dropdown">
-                        <a class="btn btn-sm btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a href="#" id="b_new_record" class="btn btn-sm btn-success" onclick="insertRecord();" {{ popoverTitle(new_record_title, 'bottom') }}>
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        <span class="d-none d-sm-inline-block">&nbsp;{{ new_record }}</span>
+                    </a>
+                    <div class="btn-group">
+                        <a href="EditPageOption?code={{ fsc.active }}&url={{ edit_url | url_encode }}" class="btn btn-sm btn-secondary">
                             <i class="fa fa-wrench" aria-hidden="true"></i>
                             <span class="d-none d-sm-inline-block">&nbsp;{{ options }}</span>
                         </a>
+                        <button type="button" class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
                         <div class="dropdown-menu">
                             {% for view in fsc.views %}
                                 {% if fsc.viewClass(view) != 'HtmlView' %}
-                                    <a class="dropdown-item" id="b_options" href="EditPageOption?code={{ view.getViewName() }}&url={{ edit_url | url_encode }}">
+                                    <a class="dropdown-item" href="EditPageOption?code={{ view.getViewName() }}&url={{ edit_url | url_encode }}">
                                         <i class="fa fa-wrench fa-fw" aria-hidden="true"></i> {{ view.title }}
                                     </a>
                                 {% endif %}
                             {% endfor %}
                         </div>
                     </div>
+                    {% if fsc.hasData %}
+                        {# -- Adds print and export options -- #}
+                        {{ exportData(fsc, i18n, 'edit') }}
+                    {% endif %}
                 </div>
-                {% if fsc.hasData %}
-                    {# -- Adds print and export options -- #}
-                    {{ exportData(fsc, i18n, 'edit') }}
-                {% endif %}
             </div>
             <div class="col-6 text-right">
                 <h2>
@@ -163,12 +170,15 @@
             </div>
         </div>
     </div>
-    <br/>
+    <div class="d-none">
+        <form action="#" method="post" name="insertForm">
+            <input type="hidden" name="action" value="insert"/>
+        </form>
+    </div>
 {% endblock %}
 
 {% block body %}
     {{ parent() }}
-
     {# -- Visual macros -- #}
     {% import 'Macro/BaseController.html.twig' as BaseController %}
 
@@ -183,6 +193,7 @@
                             {% set active = (indexView == fsc.active) ? ' active' : '' %}
                             {% set disable = fsc.getSettings(indexView, 'active') ? '' : ' disabled' %}
                             <a class="nav-link{{ active }}{{ disable }}" id="{{ indexView }}-tab" data-toggle="pill" href="#{{ indexView }}" role="tab" aria-controls="{{ indexView }}" aria-expanded="true">
+                                {% if view.count > 1 %}<span class='badge badge-secondary float-right'>{{ view.count }}</span>{% endif %}
                                 <i class="fa {{ fsc.getSettings(indexView, 'icon') }} fa-fw" aria-hidden="true"></i>
                                 &nbsp;{{ view.title }}
                             </a>
@@ -209,14 +220,17 @@
                                             <i class="fa fa-plus" aria-hidden="true"></i>
                                             <span class="d-none d-sm-inline-block">&nbsp;{{ i18n.trans('new') }}</span>
                                         </a>
+                                        <a href="{{ view.getURL('list') | raw }}" class="btn btn-sm btn-light float-right">
+                                            <span class="d-none d-sm-inline-block">{{ i18n.trans('all') }}&nbsp;</span>
+                                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                        </a>
                                         {{ BaseController.columnsForListView(_context, view) }}
                                     {% elseif viewType == 'EditView' %}
                                         {# Statistical buttons bar #}
                                         {{ BaseController.rowStatisticsForEditView(_context, view) }}
 
                                         {# Main Form #}
-                                        {% set model = view.getModel() %}
-                                        {{ BaseController.columnsForEditView(_context, view, model, TRUE) }}
+                                        {{ BaseController.columnsForEditView(_context, view, view.model, TRUE) }}
                                     {% elseif viewType == 'EditListView' %}
                                         {{ BaseController.columnsForEditListView(_context, view) }}
                                     {% elseif viewType == 'HtmlView' %}

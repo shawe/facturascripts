@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos Garcia Gomez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -10,27 +10,27 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\App;
 
-use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
-use FacturaScripts\Core\Model\Base\ModelClass;
+use FacturaScripts\Core\Base\FileManager;
+use FacturaScripts\Core\Model\ApiKey;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
  * AppAPI is the class used for API.
  *
  * @author Carlos García Gómez <carlos@facturascripts.com>
+ * @author Rafael San José Tovar (http://www.x-netdigital.com) <info@rsanjoseo.com>
  */
 class AppAPI extends App
 {
-
     /**
      * Runs the API.
      *
@@ -43,23 +43,22 @@ class AppAPI extends App
         $this->response->headers->set('Content-Type', 'application/json');
 
         if ($this->isDisabled()) {
-            $this->response->setStatusCode(Response::HTTP_NOT_FOUND);
-            $this->response->setContent(json_encode(['error' => 'API-DISABLED']));
-
+            $this->fatalError('API-DISABLED', Response::HTTP_NOT_FOUND);
             return false;
         }
 
         if (!$this->dataBase->connected()) {
-            $this->response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
-            $this->response->setContent(json_encode(['error' => 'DB-ERROR']));
-
+            $this->fatalError('DB-ERROR', Response::HTTP_INTERNAL_SERVER_ERROR);
             return false;
         }
 
         if ($this->isIPBanned()) {
-            $this->response->setStatusCode(Response::HTTP_FORBIDDEN);
-            $this->response->setContent(json_encode(['error' => 'IP-BANNED']));
+            $this->fatalError('IP-BANNED', Response::HTTP_FORBIDDEN);
+            return false;
+        }
 
+        if (!$this->checkAuthToken()) {
+            $this->fatalError('AUTH-TOKEN-INVALID', Response::HTTP_FORBIDDEN);
             return false;
         }
 
@@ -67,13 +66,103 @@ class AppAPI extends App
     }
 
     /**
+     * Returns true if the client is authenticated with the header token.
+     *
+     * @author Ángel Guzmán Maeso <angel@guzmanmaeso.com>
+     *
+     * @return boolean
+     */
+    private function checkAuthToken(): bool
+    {
+        $token = $this->request->headers->get('Token', '');
+        if (empty($token)) {
+            return false;
+        }
+
+        return (new ApiKey())->checkAuthToken($token);
+    }
+
+    /**
+     * Expose resource.
+     *
+     * @param array $map
+     * @throws \UnexpectedValueException
+     * @return void
+     */
+    private function exposeResources(&$map)
+    {
+        $json = ['resources' => []];
+
+        foreach (array_keys($map) as $key) {
+            $json['resources'][] = $key;
+        }
+
+        $this->response->setContent(json_encode($json));
+    }
+
+    /**
+     * Load resource map
+     *
+     * @return array
+     */
+    private function getResourcesMap(): array
+    {
+        $resources = [[]];
+        $folderAPI = FS_FOLDER . DIRECTORY_SEPARATOR . 'Dinamic' . DIRECTORY_SEPARATOR . 'Lib' . DIRECTORY_SEPARATOR . 'API';
+        foreach (FileManager::scanFolder($folderAPI) as $resource) {
+            if (substr($resource, -4) === '.php') {
+                $class = substr('FacturaScripts\\Dinamic\\Lib\\API\\' . $resource, 0, -4);
+                $APIClass = new $class($this->response, $this->request, $this->miniLog, $this->i18n, []);
+                $resources[] = $APIClass->getResources();
+                unset($APIClass);
+            }
+        }
+        $resources = array_merge(...$resources);
+        ksort($resources);
+
+        return $resources;
+    }
+
+    /**
      * Check if API is disabled
      *
      * @return mixed
      */
-    private function isDisabled()
+    private function isDisabled(): bool
     {
         return $this->settings::get('default', 'enable_api', false) !== 'true';
+    }
+
+    /**
+     * Selects the resource
+     *
+     * @return bool
+     */
+    private function selectResource(): bool
+    {
+        $resourceName = $this->getUriParam(2);
+        $map = $this->getResourcesMap();
+
+        // If no command, expose resources and exit
+        if ($resourceName === '') {
+            $this->exposeResources($map);
+
+            return true;
+        }
+
+        $param = 3;
+        $params = [];
+        while (($cad = $this->getUriParam($param)) !== '') {
+            $params[] = $cad;
+            $param++;
+        }
+
+        $APIClass = new $map[$resourceName]['API']($this->response, $this->request, $this->miniLog, $this->i18n, $params);
+        if (isset($APIClass)) {
+            return $APIClass->processResource($map[$resourceName]['Name'], $params);
+        }
+        $this->fatalError('database-error', Response::HTTP_INTERNAL_SERVER_ERROR);
+        return false;
     }
 
     /**
@@ -87,227 +176,20 @@ class AppAPI extends App
             return $this->selectResource();
         }
 
-        $this->response->setStatusCode(Response::HTTP_NOT_FOUND);
-        $this->response->setContent(json_encode(['error' => 'API-VERSION-NOT-FOUND']));
-
+        $this->fatalError('API-VERSION-NOT-FOUND', Response::HTTP_NOT_FOUND);
         return true;
     }
 
     /**
-     * Selects the resource
+     * Return an array with the error message, and the corresponding status.
      *
-     * @return bool
+     * @param string $text
+     * @param int $status
+     * @return void
      */
-    private function selectResource(): bool
+    protected function fatalError(string $text, int $status)
     {
-        $map = $this->getResourcesMap();
-
-        $resourceName = $this->getUriParam(2);
-        if ($resourceName === '') {
-            $this->exposeResources($map);
-
-            return true;
-        }
-
-        $modelName = 'FacturaScripts\\Dinamic\\Model\\' . $map[$resourceName];
-        $cod = $this->getUriParam(3);
-
-        if ($cod === '') {
-            return $this->processResource($modelName);
-        }
-
-        return $this->processResourceParam($modelName, $cod);
-    }
-
-    /**
-     * This method is equivalent to $this->request->get($key, $default),
-     * but always return an array, as expected for some parameters like operation, filter or sort.
-     *
-     * @param string $key
-     * @param string $default
-     *
-     * @return array
-     */
-    private function getRequestArray($key, $default = ''): array
-    {
-        $array = $this->request->get($key, $default);
-
-        return \is_array($array) ? $array : []; /// if is string has bad format
-    }
-
-    /**
-     * Returns the where clauses.
-     *
-     * @param array  $filter
-     * @param array  $operation
-     * @param string $defaultOperation
-     *
-     * @return DataBaseWhere[]
-     */
-    private function getWhereValues($filter, $operation, $defaultOperation = 'AND'): array
-    {
-        $where = [];
-        foreach ($filter as $key => $value) {
-            if (!isset($operation[$key])) {
-                $operation[$key] = $defaultOperation;
-            }
-            $where[] = new DataBaseWhere($key, $value, 'LIKE', $operation[$key]);
-        }
-
-        return $where;
-    }
-
-    /**
-     * Process the resource, allowing POST/PUT/DELETE/GET ALL actions
-     *
-     * @param string $modelName
-     *
-     * @return bool
-     */
-    private function processResource($modelName)
-    {
-        try {
-            $data = [];
-            $model = new $modelName();
-            if ($model instanceof ModelClass) {
-                $offset = (int) $this->request->get('offset', 0);
-                $limit = (int) $this->request->get('limit', 50);
-                $operation = $this->getRequestArray('operation');
-                $filter = $this->getRequestArray('filter');
-                $order = $this->getRequestArray('sort');
-                $where = $this->getWhereValues($filter, $operation);
-
-                switch ($this->request->getMethod()) {
-                    case 'POST':
-                        foreach ($this->request->request->all() as $key => $value) {
-                            $model->{$key} = $value;
-                        }
-                        if ($model->save()) {
-                            $data = (array) $model;
-                        } else {
-                            $this->response->setStatusCode(Response::HTTP_BAD_REQUEST);
-
-                            $data = [];
-                            foreach ($this->miniLog->read() as $msg) {
-                                $data['error'] = $msg;
-                            }
-                        }
-                        break;
-
-                    default:
-                        $data = $model->all($where, $order, $offset, $limit);
-                        break;
-                }
-            }
-
-            $this->response->setContent(json_encode($data));
-
-            return true;
-        } catch (\Exception $ex) {
-            $this->response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
-            $this->response->setContent(json_encode(['error' => 'API-ERROR']));
-
-            return false;
-        }
-    }
-
-    /**
-     * Process resource with parameters
-     *
-     * @param string $modelName
-     * @param string $cod
-     *
-     * @return bool
-     */
-    private function processResourceParam($modelName, $cod)
-    {
-        try {
-            $data = [];
-            $model = new $modelName();
-            if ($model instanceof ModelClass) {
-                switch ($this->request->getMethod()) {
-                    case 'PUT':
-                        $model = $model->get($cod);
-                        foreach ($this->request->request->all() as $key => $value) {
-                            $model->{$key} = $value;
-                        }
-                        if ($model->save()) {
-                            $data = $model;
-                        } else {
-                            $this->response->setStatusCode(Response::HTTP_BAD_REQUEST);
-
-                            $data = [];
-                            foreach ($this->miniLog->read() as $msg) {
-                                $data['error'] = $msg;
-                            }
-                        }
-                        break;
-
-                    case 'DELETE':
-                        $object = $model->get($cod);
-                        $data = $object->delete();
-                        break;
-
-                    default:
-                        $data = $model->get($cod);
-                        break;
-                }
-            }
-
-            $this->response->setContent(json_encode($data));
-
-            return true;
-        } catch (\Exception $ex) {
-            $this->response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
-            $this->response->setContent(json_encode(['error' => 'API-ERROR']));
-
-            return false;
-        }
-    }
-
-    /**
-     * Load resource map
-     *
-     * @return array
-     */
-    private function getResourcesMap(): array
-    {
-        $resources = [];
-        foreach (scandir(FS_FOLDER . '/Dinamic/Model', SCANDIR_SORT_ASCENDING) as $fName) {
-            if (substr($fName, -4) === '.php') {
-                $modelName = substr($fName, 0, -4);
-
-                /// Conversion to plural
-                if (substr($modelName, -1) === 's') {
-                    $plural = strtolower($modelName);
-                } elseif (substr($modelName, -3) === 'ser' || substr($modelName, -4) === 'tion') {
-                    $plural = strtolower($modelName) . 's';
-                } elseif (\in_array(substr($modelName, -1), ['a', 'e', 'i', 'o', 'u', 'k'], false)) {
-                    $plural = strtolower($modelName) . 's';
-                } else {
-                    $plural = strtolower($modelName) . 'es';
-                }
-
-                $resources[$plural] = $modelName;
-            }
-        }
-
-        return $resources;
-    }
-
-    /**
-     * Expose resource
-     *
-     * @param array $map
-     */
-    private function exposeResources(&$map)
-    {
-        $json = ['resources' => []];
-
-        foreach (array_keys($map) as $key) {
-            $json['resources'][] = $key;
-        }
-
-        $this->response->setContent(json_encode($json));
+        $this->response->setStatusCode($status);
+        $this->response->setContent(json_encode(['error' => $text]));
     }
 }

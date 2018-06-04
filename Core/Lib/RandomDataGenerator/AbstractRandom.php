@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
@@ -220,7 +220,7 @@ abstract class AbstractRandom
             'Pagado', 'Faltan piezas', 'No se corresponde con lo solicitado.',
             'Muy caro', 'Muy barato', 'Mala calidad',
             'La parte contratante de la primera parte será la parte contratante de la primera parte.',
-            'Esto "no funcion"', 'Tacaño', "Marina D'or"
+            'Esto "no funciona"', 'Tacaño', "Marina D'or"
         ];
 
         /// Add a lot of Blas as an option

@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  *
  * Initial description for the controller EditAlbaranProveedor
@@ -29,6 +29,9 @@
         <group name="data" numcolumns="12">
             <column name="code" display="none" order="100">
                 <widget type="text" fieldname="idalbaran" required="true" />
+            </column>
+            <column name="numsupplier" numcolumns="3" order="140">
+                <widget type="text" fieldname="numproveedor" />
             </column>
             <column name="date" title="date" numcolumns="2" order="110">
                 <widget type="datepicker" fieldname="fecha" required="true" />

@@ -10,23 +10,26 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace FacturaScripts\Core\Model;
+
+use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 
 /**
  * ApiKey model to manage the connection tokens through the api
  * that will be generated to synchronize different applications.
  *
  * @author Joe Nilson <joenilson at gmail.com>
+ * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class ApiKey extends Base\ModelClass
 {
+
     use Base\ModelTrait;
 
     /**
@@ -101,5 +104,24 @@ class ApiKey extends Base\ModelClass
         $this->description = '';
         $this->enabled = false;
         $this->creationdate = date('d-m-Y');
+    }
+
+    /**
+     * Checks the token provided as api key
+     *
+     * @param string $token The token to check as api key
+     *
+     * @author Ángel Guzmán Maeso <angel@guzmanmaeso.com>
+     *
+     * @return boolean
+     */
+    public function checkAuthToken(string $token)
+    {
+        // SELECT id FROM api_keys WHERE apikey='TOKEN' AND enabled=1
+        $where = [
+            new DataBaseWhere('apikey', $token),
+            new DataBaseWhere('enabled', true)
+        ];
+        return $this->loadFromCode('', $where);
     }
 }

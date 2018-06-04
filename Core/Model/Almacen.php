@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Model;
@@ -55,13 +55,13 @@ class Almacen extends Base\Address
     public $telefono;
 
     /**
-     * Returns the name of the table that uses this model.
+     * Returns True if is the default wharehouse for the company.
      *
-     * @return string
+     * @return bool
      */
-    public static function tableName(): string
+    public function isDefault()
     {
-        return 'almacenes';
+        return $this->codalmacen === AppSettings::get('default', 'codalmacen');
     }
 
     /**
@@ -85,17 +85,30 @@ class Almacen extends Base\Address
     }
 
     /**
+     * Returns the name of the table that uses this model.
+     *
+     * @return string
+     */
+    public static function tableName(): string
+    {
+        return 'almacenes';
+    }
+
+    /**
      * Returns True if there is no erros on properties values.
      *
      * @return bool
      */
     public function test(): bool
     {
-        parent::test();
         $this->nombre = Utils::noHtml($this->nombre);
         $this->telefono = Utils::noHtml($this->telefono);
 
-        return !empty($this->codalmacen);
+        if (empty($this->codalmacen)) {
+            return false;
+        }
+
+        return parent::test();
     }
 
     /**

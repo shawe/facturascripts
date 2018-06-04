@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Lib\Import;
@@ -37,7 +37,7 @@ class CSVImport
      *
      * @return string
      */
-    public static function importTableSQL($table): string
+    public static function importTableSQL(string $table): string
     {
         $filePath = static::getTableFilePath($table);
         if ($filePath === '') {
@@ -50,7 +50,7 @@ class CSVImport
 
         $sql = 'INSERT INTO ' . $table . ' (' . implode(', ', $csv->titles) . ') VALUES ';
         $sep = '';
-        foreach ($csv->data as $key => $row) {
+        foreach ($csv->data as $row) {
             $sql .= $sep . '(';
             $sep2 = '';
             foreach ($row as $value) {
@@ -61,42 +61,8 @@ class CSVImport
             $sql .= ')';
             $sep = ', ';
         }
-        $sql .= ';';
 
-        return $sql;
-    }
-
-    /**
-     * Return the correct filepath for the table
-     *
-     * @param string $table
-     *
-     * @return string
-     */
-    protected static function getTableFilePath($table): string
-    {
-        if (!\defined('FS_CODPAIS')) {
-            \define('FS_CODPAIS', 'ES');
-        }
-
-        $filePath = FS_FOLDER . '/Core/Data/Codpais/' . FS_CODPAIS . '/' . $table . '.csv';
-        if (file_exists($filePath)) {
-            return $filePath;
-        }
-
-        $lang = strtoupper(substr(FS_LANG, 0, 2));
-        $filePath = FS_FOLDER . '/Core/Data/Lang/' . $lang . '/' . $table . '.csv';
-        if (file_exists($filePath)) {
-            return $filePath;
-        }
-
-        /// If everything else fails
-        $filePath = FS_FOLDER . '/Core/Data/Lang/ES/' . $table . '.csv';
-        if (file_exists($filePath)) {
-            return $filePath;
-        }
-
-        return '';
+        return $sql . ';';
     }
 
     /**
@@ -114,5 +80,38 @@ class CSVImport
         }
 
         return $dataBase->var2str($value);
+    }
+
+    /**
+     * Return the correct filepath for the table
+     *
+     * @param string $table
+     *
+     * @return string
+     */
+    protected static function getTableFilePath(string $table): string
+    {
+        if (!\defined('FS_CODPAIS')) {
+            \define('FS_CODPAIS', 'ESP');
+        }
+
+        $filePath = FS_FOLDER . '/Dinamic/Data/Codpais/' . FS_CODPAIS . '/' . $table . '.csv';
+        if (file_exists($filePath)) {
+            return $filePath;
+        }
+
+        $lang = strtoupper(substr(FS_LANG, 0, 2));
+        $filePath = FS_FOLDER . '/Dinamic/Data/Lang/' . $lang . '/' . $table . '.csv';
+        if (file_exists($filePath)) {
+            return $filePath;
+        }
+
+        /// If everything else fails
+        $filePath = FS_FOLDER . '/Dinamic/Data/Lang/ES/' . $table . '.csv';
+        if (file_exists($filePath)) {
+            return $filePath;
+        }
+
+        return '';
     }
 }

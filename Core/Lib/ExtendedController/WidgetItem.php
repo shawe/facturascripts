@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Lib\ExtendedController;
@@ -99,6 +99,20 @@ abstract class WidgetItem implements VisualItemInterface
     public $type;
 
     /**
+     * Generates the html code to display the model data for Edit controller
+     *
+     * @param string $value
+     */
+    abstract public function getEditHTML($value);
+
+    /**
+     * Generates the html code to display the model data for List controller
+     *
+     * @param string $value
+     */
+    abstract public function getListHTML($value);
+
+    /**
      * WidgetItem constructor.
      */
     public function __construct()
@@ -112,63 +126,6 @@ abstract class WidgetItem implements VisualItemInterface
         $this->readOnly = false;
         $this->required = false;
     }
-
-    /**
-     * Class dynamic constructor. It creates a widget of the given type
-     *
-     * @param string $type
-     *
-     * @return WidgetItem
-     */
-    private static function widgetItemFromType($type): WidgetItem
-    {
-        switch ($type) {
-            case 'autocomplete':
-                return new WidgetItemAutocomplete();
-
-            case 'checkbox':
-                return new WidgetItemCheckBox();
-
-            case 'color':
-                return new WidgetItemColor();
-
-            case 'date':
-            case 'datepicker':
-                return new WidgetItemDateTime();
-
-            case 'filechooser':
-                return new WidgetItemFileChooser();
-
-            case 'money':
-                return new WidgetItemMoney();
-
-            case 'number':
-                return new WidgetItemNumber();
-
-            case 'radio':
-                return new WidgetItemRadio();
-
-            case 'select':
-                return new WidgetItemSelect();
-
-            default:
-                return new WidgetItemText($type);
-        }
-    }
-
-    /**
-     * Generates the html code to display the model data for Edit controller
-     *
-     * @param string $value
-     */
-    abstract public function getEditHTML($value);
-
-    /**
-     * Generates the html code to display the model data for List controller
-     *
-     * @param string $value
-     */
-    abstract public function getListHTML($value);
 
     /**
      * Array with list of personalization functions of the column
@@ -188,6 +145,19 @@ abstract class WidgetItem implements VisualItemInterface
     public function getHeaderHTML($value): string
     {
         return '<span title="' . $value . '"></span>';
+    }
+
+    /**
+     * Returns the HTML code to display a popover with the given text
+     *
+     * @param string $hint
+     *
+     * @return string
+     */
+    public function getHintHTML($hint): string
+    {
+        return empty($hint) ? '' : ' data-toggle="popover" data-placement="auto" data-trigger="hover" data-content="'
+            . $hint . '" ';
     }
 
     /**
@@ -260,16 +230,32 @@ abstract class WidgetItem implements VisualItemInterface
     }
 
     /**
-     * Returns the HTML code to display a popover with the given text
+     * Indicates if the conditions to apply an Option Text are met
      *
-     * @param string $hint
+     * @param string $optionValue
+     * @param string $valueItem
      *
-     * @return string
+     * @return bool
      */
-    public function getHintHTML($hint): string
+    private function canApplyOptions($optionValue, $valueItem): bool
     {
-        return empty($hint) ? '' : ' data-toggle="popover" data-placement="auto" data-trigger="hover" data-content="'
-            . $hint . '" ';
+        switch ($optionValue[0]) {
+            case '<':
+                $option = substr($optionValue, 1) ?: '';
+                $result = ((float) $valueItem < (float) $option);
+                break;
+
+            case '>':
+                $option = substr($optionValue, 1) ?: '';
+                $result = ((float) $valueItem > (float) $option);
+                break;
+
+            default:
+                $result = ($optionValue === $valueItem);
+                break;
+        }
+
+        return $result;
     }
 
     /**
@@ -400,35 +386,49 @@ abstract class WidgetItem implements VisualItemInterface
         $text2 = empty($text) ? $value : $text;
         $style = $this->getTextOptionsHTML($value);
         return empty($this->onClick) ? '<span' . $style . '>' . $text2 . '</span>' : '<a href="' . $this->onClick
-            . '?code=' . $value . '" ' . $style . '>' . $text2 . '</a>';
+            . '?code=' . $value . '" class="cancelClickable" ' . $style . '>' . $text2 . '</a>';
     }
 
     /**
-     * Indicates if the conditions to apply an Option Text are met
+     * Class dynamic constructor. It creates a widget of the given type
      *
-     * @param string $optionValue
-     * @param string $valueItem
+     * @param string $type
      *
-     * @return bool
+     * @return WidgetItem
      */
-    private function canApplyOptions($optionValue, $valueItem): bool
+    private static function widgetItemFromType($type): WidgetItem
     {
-        switch ($optionValue[0]) {
-            case '<':
-                $option = substr($optionValue, 1) ?: '';
-                $result = ((float) $valueItem < (float) $option);
-                break;
+        switch ($type) {
+            case 'autocomplete':
+                return new WidgetItemAutocomplete();
 
-            case '>':
-                $option = substr($optionValue, 1) ?: '';
-                $result = ((float) $valueItem > (float) $option);
-                break;
+            case 'checkbox':
+                return new WidgetItemCheckBox();
+
+            case 'color':
+                return new WidgetItemColor();
+
+            case 'date':
+            case 'datepicker':
+                return new WidgetItemDateTime();
+
+            case 'filechooser':
+                return new WidgetItemFileChooser();
+
+            case 'money':
+                return new WidgetItemMoney();
+
+            case 'number':
+                return new WidgetItemNumber();
+
+            case 'radio':
+                return new WidgetItemRadio();
+
+            case 'select':
+                return new WidgetItemSelect();
 
             default:
-                $result = ($optionValue === $valueItem);
-                break;
+                return new WidgetItemText($type);
         }
-
-        return $result;
     }
 }

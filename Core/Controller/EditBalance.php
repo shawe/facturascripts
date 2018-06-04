@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Controller;
@@ -31,24 +31,40 @@ class EditBalance extends ExtendedController\PanelController
 {
 
     /**
+     * Returns basic page attributes
+     *
+     * @return array
+     */
+    public function getPageData()
+    {
+        $pageData = parent::getPageData();
+        $pageData['title'] = 'balance';
+        $pageData['menu'] = 'accounting';
+        $pageData['icon'] = 'fa-clipboard';
+        $pageData['showonmenu'] = false;
+
+        return $pageData;
+    }
+
+    /**
      * Load views
      */
     protected function createViews()
     {
-        $this->addEditView('Balance', 'EditBalance', 'balance');
-        $this->addEditListView('BalanceCuenta', 'EditBalanceCuenta', 'balance-account');
-        $this->addEditListView('BalanceCuentaA', 'EditBalanceCuentaA', 'balance-account-abreviated');
+        $this->addEditView('EditBalance', 'Balance', 'balance');
+        $this->addEditListView('EditBalanceCuenta', 'BalanceCuenta', 'balance-account');
+        $this->addEditListView('EditBalanceCuentaA', 'BalanceCuentaA', 'balance-account-abreviated');
     }
 
     /**
      * Load view data procedure
      *
-     * @param string                      $keyView
+     * @param string                      $viewName
      * @param ExtendedController\EditView $view
      */
-    protected function loadData($keyView, $view)
+    protected function loadData($viewName, $view)
     {
-        switch ($keyView) {
+        switch ($viewName) {
             case 'EditBalance':
                 $code = $this->request->get('code');
                 $view->loadData($code);
@@ -58,24 +74,8 @@ class EditBalance extends ExtendedController\PanelController
             case 'EditBalanceCuentaA':
                 $codbalance = $this->getViewModelValue('EditBalance', 'codbalance');
                 $where = [new DataBaseWhere('codbalance', $codbalance)];
-                $view->loadData(false, $where, [], 0, 0);
+                $view->loadData('', $where, [], 0, 0);
                 break;
         }
-    }
-
-    /**
-     * Returns basic page attributes
-     *
-     * @return array
-     */
-    public function getPageData(): array
-    {
-        $pageData = parent::getPageData();
-        $pageData['title'] = 'balance';
-        $pageData['menu'] = 'accounting';
-        $pageData['icon'] = 'fa-clipboard';
-        $pageData['showonmenu'] = false;
-
-        return $pageData;
     }
 }

@@ -10,16 +10,17 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
+use FacturaScripts\Core\Base\DivisaTools;
 use FacturaScripts\Core\Lib\ExtendedController;
 use FacturaScripts\Core\Lib\IDFiscal;
 use FacturaScripts\Core\Lib\RegimenIVA;
@@ -30,6 +31,7 @@ use FacturaScripts\Core\Model;
  *
  * @author Nazca Networks <comercial@nazcanetworks.com>
  * @author Fco. Antonio Moreno Pérez <famphuelva@gmail.com>
+ * @author Carlos García Gómez <carlos@facturascripts.com>
  */
 class EditProveedor extends ExtendedController\PanelController
 {
@@ -41,15 +43,17 @@ class EditProveedor extends ExtendedController\PanelController
      *
      * @return string
      */
-    public function calcSupplierDeliveryNotes($view): string
+    public function calcSupplierDeliveryNotes($view)
     {
-        $where = [];
-        $where[] = new DataBaseWhere('codproveedor', $this->getViewModelValue('EditProveedor', 'codproveedor'));
-        $where[] = new DataBaseWhere('ptefactura', true);
+        $where = [
+            new DataBaseWhere('codproveedor', $view->model->codproveedor),
+            new DataBaseWhere('editable', true)
+        ];
 
         $totalModel = Model\TotalModel::all('albaranesprov', $where, ['total' => 'SUM(total)'], '')[0];
 
-        return $this->divisaTools::format($totalModel->totals['total'], 2);
+        $divisaTools = new DivisaTools();
+        return $divisaTools->format($totalModel->totals['total'], 2);
     }
 
     /**
@@ -59,69 +63,16 @@ class EditProveedor extends ExtendedController\PanelController
      *
      * @return string
      */
-    public function calcSupplierInvoicePending($view): string
+    public function calcSupplierInvoicePending($view)
     {
         $where = [];
-        $where[] = new DataBaseWhere('codproveedor', $this->getViewModelValue('EditProveedor', 'codproveedor'));
+        $where[] = new DataBaseWhere('codproveedor', $view->model->codproveedor);
         $where[] = new DataBaseWhere('estado', 'Pagado', '<>');
 
         $totalModel = Model\TotalModel::all('recibosprov', $where, ['total' => 'SUM(importe)'], '')[0];
 
-        return $this->divisaTools::format($totalModel->totals['total'], 2);
-    }
-
-    /**
-     * Create views
-     */
-    protected function createViews()
-    {
-        $this->addMainView();
-
-        $this->addEditListView('DireccionProveedor', 'EditDireccionProveedor', 'addresses', 'fa-road');
-        $this->addEditListView('CuentaBancoProveedor', 'EditCuentaBancoProveedor', 'bank-accounts', 'fa-university');
-        $this->addListView('ArticuloProveedor', 'ListArticuloProveedor', 'products', 'fa-cubes');
-        $this->addListView('FacturaProveedor', 'ListFacturaProveedor', 'invoices', 'fa-files-o');
-        $this->addListView('AlbaranProveedor', 'ListAlbaranProveedor', 'delivery-notes', 'fa-files-o');
-        $this->addListView('PedidoProveedor', 'ListPedidoProveedor', 'orders', 'fa-files-o');
-        $this->addListView('PresupuestoProveedor', 'ListPresupuestoProveedor', 'estimations', 'fa-files-o');
-
-        /// Disable columns
-        $this->views['ListArticuloProveedor']->disableColumn('supplier', true);
-        $this->views['ListFacturaProveedor']->disableColumn('supplier', true);
-        $this->views['ListAlbaranProveedor']->disableColumn('supplier', true);
-        $this->views['ListPedidoProveedor']->disableColumn('supplier', true);
-        $this->views['ListPresupuestoProveedor']->disableColumn('supplier', true);
-    }
-
-    /**
-     * Load view data
-     *
-     * @param string                      $keyView
-     * @param ExtendedController\EditView $view
-     */
-    protected function loadData($keyView, $view)
-    {
-        $limit = FS_ITEM_LIMIT;
-        switch ($keyView) {
-            case 'EditProveedor':
-                $code = $this->request->get('code');
-                $view->loadData($code);
-                break;
-
-            case 'EditDireccionProveedor':
-            case 'EditCuentaBancoProveedor':
-                $limit = 0;
-                // no break
-            case 'ListArticuloProveedor':
-            case 'ListFacturaProveedor':
-            case 'ListAlbaranProveedor':
-            case 'ListPedidoProveedor':
-            case 'ListPresupuestoProveedor':
-                $codproveedor = $this->getViewModelValue('EditProveedor', 'codproveedor');
-                $where = [new DataBaseWhere('codproveedor', $codproveedor)];
-                $view->loadData(false, $where, [], 0, $limit);
-                break;
-        }
+        $divisaTools = new DivisaTools();
+        return $divisaTools->format($totalModel->totals['total'], 2);
     }
 
     /**
@@ -129,7 +80,7 @@ class EditProveedor extends ExtendedController\PanelController
      *
      * @return array
      */
-    public function getPageData(): array
+    public function getPageData()
     {
         $pageData = parent::getPageData();
         $pageData['title'] = 'supplier';
@@ -145,7 +96,7 @@ class EditProveedor extends ExtendedController\PanelController
      */
     private function addMainView()
     {
-        $this->addEditView('Proveedor', 'EditProveedor', 'supplier');
+        $this->addEditView('EditProveedor', 'Proveedor', 'supplier');
 
         /// Load values option to Fiscal ID select input
         $columnFiscalID = $this->views['EditProveedor']->columnForName('fiscal-id');
@@ -154,5 +105,59 @@ class EditProveedor extends ExtendedController\PanelController
         /// Load values option to VAT Type select input
         $columnVATType = $this->views['EditProveedor']->columnForName('vat-regime');
         $columnVATType->widget->setValuesFromArray(RegimenIVA::all());
+    }
+
+    /**
+     * Create views
+     */
+    protected function createViews()
+    {
+        $this->addMainView();
+
+        $this->addEditListView('EditDireccionProveedor', 'DireccionProveedor', 'addresses', 'fa-road');
+        $this->addEditListView('EditCuentaBancoProveedor', 'CuentaBancoProveedor', 'bank-accounts', 'fa-university');
+        $this->addListView('ListArticuloProveedor', 'ArticuloProveedor', 'products', 'fa-cubes');
+        $this->addListView('ListFacturaProveedor', 'FacturaProveedor', 'invoices', 'fa-files-o');
+        $this->addListView('ListAlbaranProveedor', 'AlbaranProveedor', 'delivery-notes', 'fa-files-o');
+        $this->addListView('ListPedidoProveedor', 'PedidoProveedor', 'orders', 'fa-files-o');
+        $this->addListView('ListPresupuestoProveedor', 'PresupuestoProveedor', 'estimations', 'fa-files-o');
+
+        /// Disable columns
+        $this->views['ListArticuloProveedor']->disableColumn('supplier', true);
+        $this->views['ListFacturaProveedor']->disableColumn('supplier', true);
+        $this->views['ListAlbaranProveedor']->disableColumn('supplier', true);
+        $this->views['ListPedidoProveedor']->disableColumn('supplier', true);
+        $this->views['ListPresupuestoProveedor']->disableColumn('supplier', true);
+    }
+
+    /**
+     * Load view data
+     *
+     * @param string                      $viewName
+     * @param ExtendedController\EditView $view
+     */
+    protected function loadData($viewName, $view)
+    {
+        $limit = FS_ITEM_LIMIT;
+        switch ($viewName) {
+            case 'EditProveedor':
+                $code = $this->request->get('code');
+                $view->loadData($code);
+                break;
+
+            case 'EditDireccionProveedor':
+            case 'EditCuentaBancoProveedor':
+                $limit = 0;
+            /// no break
+            case 'ListArticuloProveedor':
+            case 'ListFacturaProveedor':
+            case 'ListAlbaranProveedor':
+            case 'ListPedidoProveedor':
+            case 'ListPresupuestoProveedor':
+                $codproveedor = $this->getViewModelValue('EditProveedor', 'codproveedor');
+                $where = [new DataBaseWhere('codproveedor', $codproveedor)];
+                $view->loadData('', $where, [], 0, $limit);
+                break;
+        }
     }
 }

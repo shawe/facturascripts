@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Lib\ExtendedController;
@@ -31,23 +31,24 @@ abstract class EditController extends PanelController
 {
 
     /**
-     * Starts all the objects and properties
+     * Returns the class name of the model to use in the editView.
+     */
+    abstract public function getModelClassName();
+
+    /**
+     * Starts all the objects and properties.
      *
      * @param Base\Cache      $cache
      * @param Base\Translator $i18n
      * @param Base\MiniLog    $miniLog
      * @param string          $className
+     * @param string          $uri
      */
-    public function __construct(&$cache, &$i18n, &$miniLog, $className)
+    public function __construct(&$cache, &$i18n, &$miniLog, $className, $uri = '')
     {
-        parent::__construct($cache, $i18n, $miniLog, $className);
+        parent::__construct($cache, $i18n, $miniLog, $className, $uri);
         $this->setTabsPosition('bottom');
     }
-
-    /**
-     * Returns the class name of the model to use in the editView.
-     */
-    abstract public function getModelClassName();
 
     /**
      * Pointer to the data model
@@ -62,6 +63,8 @@ abstract class EditController extends PanelController
 
     /**
      * Create the view to display
+     *
+     * @return EditView
      */
     protected function createViews()
     {
@@ -69,16 +72,17 @@ abstract class EditController extends PanelController
         $viewName = 'Edit' . $this->getModelClassName();
         $title = $this->getPageData()['title'];
         $viewIcon = $this->getPageData()['icon'];
-        $this->addEditView($modelName, $viewName, $title, $viewIcon);
+
+        $this->addEditView($viewName, $modelName, $title, $viewIcon);
     }
 
     /**
-     * Loads the data to display
+     * Loads the data to display.
      *
-     * @param string   $keyView
+     * @param string   $viewName
      * @param EditView $view
      */
-    protected function loadData($keyView, $view)
+    protected function loadData($viewName, $view)
     {
         $code = $this->request->get('code');
         $view->loadData($code);

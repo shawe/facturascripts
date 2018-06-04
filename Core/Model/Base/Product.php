@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018    Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Model\Base;
@@ -107,35 +107,6 @@ abstract class Product extends ModelClass
     }
 
     /**
-     * Returns the name of the column that describes the model, such as name, description...
-     *
-     * @return string
-     */
-    public function primaryDescriptionColumn(): string
-    {
-        return 'referencia';
-    }
-
-    /**
-     * Returns True if there is no errors on properties values.
-     *
-     * @return bool
-     */
-    public function test(): bool
-    {
-        $this->codbarras = Utils::noHtml($this->codbarras);
-        $this->descripcion = Utils::noHtml($this->descripcion);
-        $this->partnumber = Utils::noHtml($this->partnumber);
-        $this->referencia = Utils::noHtml($this->referencia);
-
-        if ($this->nostock) {
-            $this->stockfis = 0.0;
-        }
-
-        return true;
-    }
-
-    /**
      * Returns the tax on the item.
      *
      * @return bool|Impuesto
@@ -181,6 +152,16 @@ abstract class Product extends ModelClass
     }
 
     /**
+     * Returns the name of the column that describes the model, such as name, description...
+     *
+     * @return string
+     */
+    public function primaryDescriptionColumn(): string
+    {
+        return 'referencia';
+    }
+
+    /**
      * Change the tax associated with the item.
      *
      * @param string $codimpuesto
@@ -199,5 +180,24 @@ abstract class Product extends ModelClass
                 self::$impuestos[$imp->codimpuesto] = $imp;
             }
         }
+    }
+
+    /**
+     * Returns True if there is no errors on properties values.
+     *
+     * @return bool
+     */
+    public function test(): bool
+    {
+        $this->codbarras = Utils::noHtml($this->codbarras);
+        $this->descripcion = Utils::noHtml($this->descripcion);
+        $this->partnumber = Utils::noHtml($this->partnumber);
+        $this->referencia = Utils::noHtml($this->referencia);
+
+        if ($this->nostock) {
+            $this->stockfis = 0.0;
+        }
+
+        return parent::test();
     }
 }

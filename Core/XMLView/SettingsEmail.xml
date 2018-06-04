@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  *
  * Initial description for the controller EditFabricante
@@ -46,14 +46,14 @@
                 <widget type="number" fieldname="port" />
             </column>
             <column name="enc" title="encrypt" numcolumns="3" order="130">
-                <widget type="select" fieldname="enc">
+                <widget type="select" fieldname="enc" required="true">
                     <values title="SSL">ssl</values>
                     <values title="TLS">tls</values>
                     <values title="" />
                 </widget>
             </column>
             <column name="mailer" title="mailer" numcolumns="3" order="140">
-                <widget type="select" fieldname="mailer">
+                <widget type="select" fieldname="mailer" required="true">
                     <values title="Mail">mail</values>
                     <values title="SendMail">sendmail</values>
                     <values title="SMTP">smtp</values>

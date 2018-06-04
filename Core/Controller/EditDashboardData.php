@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Controller;
@@ -97,13 +97,13 @@ class EditDashboardData extends ExtendedController\EditController
     /**
      * Run the data edits
      *
-     * @param ExtendedController\BaseView $view
+     * @param BaseView $view
      *
      * @return bool
      */
-    protected function editAction($view): bool
+    protected function editAction(): bool
     {
-        $model = $view->getModel();
+        $model = $this->views[$this->active]->model;
         $properties = array_keys($this->getPropertiesFields());
         $fields = array_keys($model->properties);
         foreach ($fields as $key) {
@@ -112,7 +112,7 @@ class EditDashboardData extends ExtendedController\EditController
             }
         }
 
-        return parent::editAction($view);
+        return parent::editAction();
     }
 
     /**
@@ -123,7 +123,7 @@ class EditDashboardData extends ExtendedController\EditController
     private function getPropertiesFields()
     {
         $model = $this->getModel();
-        $component = 'FacturaScripts\\Core\\Lib\\Dashboard\\'
+        $component = 'FacturaScripts\\Dinamic\\Lib\\Dashboard\\'
             . $model->component
             . DashboardLib\BaseComponent::SUFIX_COMPONENTS;
 

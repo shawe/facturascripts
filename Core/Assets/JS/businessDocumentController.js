@@ -9,26 +9,26 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  * 
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-var autocompleteColumns = [];
-var documentLineData = [];
-var documentUrl = "";
-var hsTable = null;
+const autocompleteColumns = [];
+const documentLineData = [];
+const documentUrl = "";
+let hsTable = null;
 
 function beforeChange(changes, source) {
     // Check if the value has changed. Not Multiselection
     if (changes !== null && changes[0][2] !== changes[0][3]) {
-        for (var i = 0; i < autocompleteColumns.length; i++) {
+        for (const i = 0; i < autocompleteColumns.length; i++) {
             if (changes[0][1] === autocompleteColumns[i]) {
                 // aply for autocomplete columns
-                if (typeof changes[0][3] === "string") {
-                    changes[0][3] = changes[0][3].split(" - ", 1)[0];
+                if (typeof changes[0][3] === 'string') {
+                    changes[0][3] = changes[0][3].split(' | ', 1)[0];
                 }
             }
         }
@@ -36,7 +36,7 @@ function beforeChange(changes, source) {
 }
 
 function documentRecalculate() {
-    var data = {};
+    const data = {};
     $.each($("form[name=f_document_primary]").serializeArray(), function (key, value) {
         data[value.name] = value.value;
     });
@@ -52,9 +52,9 @@ function documentRecalculate() {
         success: function (results) {
             $("#doc_total").val(results.total);
 
-            var rowPos = 0;
+            let rowPos = 0;
             results.lines.forEach(function (element) {
-                var visualRow = hsTable.toVisualRow(rowPos);
+                const visualRow = hsTable.toVisualRow(rowPos);
                 documentLineData.rows[visualRow] = element;
                 rowPos++;
             });
@@ -69,10 +69,10 @@ function documentRecalculate() {
 }
 
 function documentSave() {
-    var saveButton = $("#btn-document-save");
+    const saveButton = $("#btn-document-save");
     saveButton.prop("disabled", true);
 
-    var data = {};
+    const data = {};
     $.each($("form[name=f_document_primary]").serializeArray(), function (key, value) {
         data[value.name] = value.value;
     });
@@ -97,8 +97,9 @@ function documentSave() {
 }
 
 function getGridData() {
-    var rowIndex, lines = [];
-    for (var i = 0, max = documentLineData.rows.length; i < max; i++) {
+    let rowIndex;
+    const lines = [];
+    for (const i = 0, max = documentLineData.rows.length; i < max; i++) {
         rowIndex = hsTable.toVisualRow(i);
         if (hsTable.isEmptyRow(rowIndex)) {
             continue;
@@ -110,11 +111,11 @@ function getGridData() {
 }
 
 function setAutocompletes(columns) {
-    for (var key = 0; key < columns.length; key++) {
+    for (const key = 0; key < columns.length; key++) {
         if (columns[key].type === "autocomplete") {
             autocompleteColumns.push(columns[key].data);
             columns[key].source = function (query, process) {
-                var ajaxData = {
+                const ajaxData = {
                     term: query,
                     action: "autocomplete",
                     source: columns[key].source["source"],
@@ -127,9 +128,9 @@ function setAutocompletes(columns) {
                     dataType: "json",
                     data: ajaxData,
                     success: function (response) {
-                        var values = [];
+                        const values = [];
                         response.forEach(function (element) {
-                            values.push(element.key + " - " + element.value);
+                            values.push(element.key + " | " + element.value);
                         });
                         process(values);
                     }
@@ -142,7 +143,7 @@ function setAutocompletes(columns) {
 }
 
 $(document).ready(function () {
-    var container = document.getElementById("document-lines");
+    const container = document.getElementById("document-lines");
     hsTable = new Handsontable(container, {
         data: documentLineData.rows,
         columns: setAutocompletes(documentLineData.columns),

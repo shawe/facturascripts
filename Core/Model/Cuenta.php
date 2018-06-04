@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2014-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2014-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Model;
@@ -64,6 +64,13 @@ class Cuenta extends Base\ModelClass
     public $descripcion;
 
     /**
+     * Identifier of the special account.
+     *
+     * @var string
+     */
+    public $codcuentaesp;
+
+    /**
      * Identifier of the parent account
      *
      * @var integer
@@ -97,6 +104,19 @@ class Cuenta extends Base\ModelClass
         return 'idcuenta';
     }
 
+    public function clear()
+    {
+        parent::clear();
+
+        // Search open exercise for current date
+        $exerciseModel = new Ejercicio();
+        $exercise = $exerciseModel->getByFecha(date('d-m-Y'), true, false);
+        if ($exercise !== false ) {
+            $this->codejercicio = $exercise->codejercicio;
+        }
+    }
+
+
     /**
      * This function is called when creating the model table. Returns the SQL
      * that will be executed after the creation of the table. Useful to insert values
@@ -110,31 +130,6 @@ class Cuenta extends Base\ModelClass
         new Ejercicio();
 
         return '';
-    }
-
-    /**
-     * Returns True if there is no erros on properties values.
-     *
-     * @return bool
-     */
-    public function test(): bool
-    {
-        $this->codcuenta = trim($this->codcuenta);
-        $this->descripcion = Utils::noHtml($this->descripcion);
-
-        if ($this->testErrorInAccount()) {
-            self::$miniLog->alert(self::$i18n->trans('account-data-missing'));
-            return false;
-        }
-
-        /// Check and load correct id parent account
-        $this->parent_idcuenta = null;
-        if (!empty($this->parent_codcuenta) && $this->testErrorInParentAccount()) {
-            self::$miniLog->alert(self::$i18n->trans('account-parent-error'));
-            return false;
-        }
-
-        return true;
     }
 
     /**
@@ -166,5 +161,41 @@ class Cuenta extends Base\ModelClass
     private function testErrorInAccount(): bool
     {
         return empty($this->codcuenta) || empty($this->descripcion) || empty($this->codejercicio);
+    }
+
+    /**
+     * Returns True if there is no erros on properties values.
+     *
+     * @return bool
+     */
+    public function test(): bool
+    {
+        $this->codcuenta = trim($this->codcuenta);
+        $this->descripcion = Utils::noHtml($this->descripcion);
+
+        if ($this->testErrorInAccount())  {
+            self::$miniLog->alert(self::$i18n->trans('account-data-missing'));
+            return false;
+        }
+
+        /// Check and load correct id parent account
+        $this->parent_idcuenta = null;
+        if (!empty($this->parent_codcuenta) && $this->testErrorInParentAccount()) {
+            self::$miniLog->alert(self::$i18n->trans('account-parent-error'));
+            return false;
+        }
+
+        return parent::test();
+    }
+
+    /**
+     * @param string $type
+     * @param string $list
+     *
+     * @return string
+     */
+    public function url(string $type = 'auto', string $list = 'List'): string
+    {
+        return parent::url($type, 'ListCuenta?active=List');
     }
 }

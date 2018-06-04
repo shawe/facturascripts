@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2017  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Controller;
@@ -33,50 +33,11 @@ class EditCuenta extends ExtendedController\PanelController
 {
 
     /**
-     * Load views
-     */
-    protected function createViews()
-    {
-        $this->addEditView('Cuenta', 'EditCuenta', 'account');
-        $this->addListView('Subcuenta', 'ListSubcuenta', 'subaccounts');
-        $this->addListView('Cuenta', 'ListCuenta', 'children-accounts');
-        $this->setTabsPosition('bottom');
-    }
-
-    /**
-     * Load view data procedure
-     *
-     * @param string                      $keyView
-     * @param ExtendedController\EditView $view
-     */
-    protected function loadData($keyView, $view)
-    {
-        switch ($keyView) {
-            case 'EditCuenta':
-                $code = $this->request->get('code');
-                $view->loadData($code);
-                break;
-
-            case 'ListSubcuenta':
-                $idcuenta = $this->getViewModelValue('EditCuenta', 'idcuenta');
-                $where = [new DataBaseWhere('idcuenta', $idcuenta)];
-                $view->loadData(false, $where);
-                break;
-
-            case 'ListCuenta':
-                $idcuenta = $this->getViewModelValue('EditCuenta', 'idcuenta');
-                $where = [new DataBaseWhere('parent_idcuenta', $idcuenta)];
-                $view->loadData(false, $where);
-                break;
-        }
-    }
-
-    /**
      * Returns basic page attributes
      *
      * @return array
      */
-    public function getPageData(): array
+    public function getPageData()
     {
         $pageData = parent::getPageData();
         $pageData['title'] = 'accounts';
@@ -85,5 +46,44 @@ class EditCuenta extends ExtendedController\PanelController
         $pageData['showonmenu'] = false;
 
         return $pageData;
+    }
+
+    /**
+     * Load views
+     */
+    protected function createViews()
+    {
+        $this->addEditView('EditCuenta', 'Cuenta', 'account');
+        $this->addListView('ListSubcuenta', 'Subcuenta', 'subaccounts');
+        $this->addListView('ListCuenta', 'Cuenta', 'children-accounts');
+        $this->setTabsPosition('bottom');
+    }
+
+    /**
+     * Load view data procedure
+     *
+     * @param string                      $viewName
+     * @param ExtendedController\EditView $view
+     */
+    protected function loadData($viewName, $view)
+    {
+        switch ($viewName) {
+            case 'EditCuenta':
+                $code = $this->request->get('code');
+                $view->loadData($code);
+                break;
+
+            case 'ListSubcuenta':
+                $idcuenta = $this->getViewModelValue('EditCuenta', 'idcuenta');
+                $where = [new DataBaseWhere('idcuenta', $idcuenta)];
+                $view->loadData('', $where);
+                break;
+
+            case 'ListCuenta':
+                $idcuenta = $this->getViewModelValue('EditCuenta', 'idcuenta');
+                $where = [new DataBaseWhere('parent_idcuenta', $idcuenta)];
+                $view->loadData('', $where);
+                break;
+        }
     }
 }

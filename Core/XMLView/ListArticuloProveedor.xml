@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  *
  *
  * Initial description for the controller ListArticulo
@@ -31,7 +31,9 @@
             <widget type="text" fieldname="referencia" icon="fa-barcode" required="true" />
         </column>
         <column name="supplier" order="120">
-            <widget type="text" fieldname="codproveedor" onclick="EditProveedor" />
+            <widget type="select" fieldname="codproveedor" onclick="EditProveedor">
+                <values source="proveedores" fieldcode="codproveedor" fieldtitle="nombre"></values>
+            </widget>
         </column>
         <column name="supplier-reference" order="130">
             <widget type="text" fieldname="refproveedor" icon="fa-barcode" required="true" />
@@ -54,7 +56,7 @@
         </column>
     </columns>
     <rows>
-        <row type="status" fieldname="stock">
+        <row type="status" fieldname="stockfis">
             <option color="table-danger">&lt;0</option>
             <option color="table-success">&gt;1</option>
             <option color="table-warning">&lt;1</option>

@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Lib\ExtendedController;
@@ -39,6 +39,35 @@ class WidgetItemText extends WidgetItem
     }
 
     /**
+     * Generates the HTML code to display and edit  the data in the Edit / EditList controller
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    public function getEditHTML($value): string
+    {
+        $specialAttributes = $this->specialAttributes();
+
+        switch ($this->type) {
+            case 'html':
+                $html = '<textarea name="' . $this->fieldName . '" class="html-editor" '
+                    . $specialAttributes . '>' . $value . '</textarea>';
+                break;
+
+            case 'textarea':
+                $html = '<textarea name="' . $this->fieldName . '" class="form-control" rows="3" '
+                    . $specialAttributes . '>' . $value . '</textarea>';
+                break;
+
+            default:
+                $html = $this->standardEditHTMLWidget($value, $specialAttributes);
+        }
+
+        return $html;
+    }
+
+    /**
      * Generates the HTML code to display the data in the List controller
      *
      * @param string $value
@@ -53,40 +82,6 @@ class WidgetItemText extends WidgetItem
         $txt = $this->getTextResume($value);
 
         return $this->standardListHTMLWidget($value, $txt);
-    }
-
-    /**
-     * Generates the HTML code to display and edit  the data in the Edit / EditList controller
-     *
-     * @param string $value
-     *
-     * @return string
-     */
-    public function getEditHTML($value): string
-    {
-        $specialAttributes = $this->specialAttributes();
-
-        switch ($this->type) {
-            case 'bbcode':
-                $html = '<textarea name="' . $this->fieldName . '" class="form-control bbcode" rows="10" '
-                    . $specialAttributes . '>' . $value . '</textarea>';
-                break;
-
-            case 'html':
-                $html = '<textarea name="' . $this->fieldName . '" class="form-control htmleditor" rows="10" '
-                    . $specialAttributes . '>' . $value . '</textarea>';
-                break;
-
-            case 'textarea':
-                $html = '<textarea name="' . $this->fieldName . '" class="form-control" rows="3" '
-                    . $specialAttributes . '>' . $value . '</textarea>';
-                break;
-
-            default:
-                $html = $this->standardEditHTMLWidget($value, $specialAttributes);
-        }
-
-        return $html;
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Model\Base;
@@ -40,11 +40,25 @@ abstract class BusinessDocumentLine extends ModelClass
     public $actualizastock;
 
     /**
+     * Previous actualizastock value.
+     *
+     * @var int
+     */
+    private $actualizaStockAnt;
+
+    /**
      * Quantity.
      *
      * @var float|int
      */
     public $cantidad;
+
+    /**
+     * Previous quantity value.
+     *
+     * @var float|int
+     */
+    private $cantidadAnt;
 
     /**
      * Code of the selected combination, in the case of articles with attributes.
@@ -138,20 +152,6 @@ abstract class BusinessDocumentLine extends ModelClass
     public $referencia;
 
     /**
-     * Previous actualizastock value.
-     *
-     * @var int
-     */
-    private $actualizaStockAnt;
-
-    /**
-     * Previous quantity value.
-     *
-     * @var float|int
-     */
-    private $cantidadAnt;
-
-    /**
      * BusinessDocumentLine constructor.
      *
      * @param array $data
@@ -183,7 +183,7 @@ abstract class BusinessDocumentLine extends ModelClass
     }
 
     /**
-     * Remove the model data from the database.
+     * Removed this row from the database table.
      *
      * @return bool
      */
@@ -218,11 +218,11 @@ abstract class BusinessDocumentLine extends ModelClass
         $this->pvpsindto = $this->pvpunitario * $this->cantidad;
         $this->pvptotal = $this->pvpsindto * (100 - $this->dtopor) / 100;
 
-        return true;
+        return parent::test();
     }
 
     /**
-     * Update stock from warehouse.
+     * Updates stock according to line data and $codalmacen warehouse.
      *
      * @param string $codalmacen
      *
@@ -256,8 +256,27 @@ abstract class BusinessDocumentLine extends ModelClass
         return true;
     }
 
+
     /**
-     * TODO: Uncomplete documentation.
+     * Custom url method.
+     *
+     * @param string $type
+     * @param string $list
+     *
+     * @return string
+     */
+    public function url(string $type = 'auto', string $list = 'List')
+    {
+        $name = str_replace('Linea', '', $this->modelClassName());
+        if ($type === 'new') {
+            return 'Edit' . $name;
+        }
+
+        return parent::url($type, 'List' . $name . '?active=List');
+    }
+
+    /**
+     * Apply stock modifications according to $mode.
      *
      * @param int   $mode
      * @param float $quantity

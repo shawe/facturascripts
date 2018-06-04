@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -10,17 +10,16 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Model\Base;
 
 use FacturaScripts\Core\App\AppSettings;
-use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Base\Utils;
 use FacturaScripts\Core\Lib\BusinessDocumentGenerator;
 use FacturaScripts\Dinamic\Model;
@@ -130,7 +129,6 @@ abstract class BusinessDocument extends ModelClass
      * @var int
      */
     public $idestado;
-
     /**
      * % IRPF retention of the document. It is obtained from the series.
      * Each line can have a different%.
@@ -138,14 +136,12 @@ abstract class BusinessDocument extends ModelClass
      * @var float|int
      */
     public $irpf;
-
     /**
      * Sum of the pvptotal of lines. Total of the document before taxes.
      *
      * @var float|int
      */
     public $neto;
-
     /**
      * Number of the document.
      * Unique within the series + exercise.
@@ -153,35 +149,30 @@ abstract class BusinessDocument extends ModelClass
      * @var string
      */
     public $numero;
-
     /**
      * Notes of the document.
      *
      * @var string
      */
     public $observaciones;
-
     /**
      * Rate of conversion to Euros of the selected currency.
      *
      * @var float|int
      */
     public $tasaconv;
-
     /**
      * Total sum of the document, with taxes.
      *
      * @var float|int
      */
     public $total;
-
     /**
      * Sum of the VAT of the lines.
      *
      * @var float|int
      */
     public $totaliva;
-
     /**
      * Total expressed in euros, if it were not the currency of the document.
      * totaleuros = total / tasaconv
@@ -190,21 +181,18 @@ abstract class BusinessDocument extends ModelClass
      * @var float|int
      */
     public $totaleuros;
-
     /**
      * Total sum of the IRPF withholdings of the lines.
      *
      * @var float|int
      */
     public $totalirpf;
-
     /**
      * Total sum of the equivalence surcharge of the lines.
      *
      * @var float|int
      */
     public $totalrecargo;
-
     /**
      * Previous document status id.
      *
@@ -254,6 +242,11 @@ abstract class BusinessDocument extends ModelClass
      * @return mixed
      */
     abstract public function setSubject($subjects);
+
+    /**
+     * Updates subjects data in this document.
+     */
+    abstract public function updateSubject();
 
     /**
      * Reset the values of all model properties.
@@ -336,13 +329,13 @@ abstract class BusinessDocument extends ModelClass
      * meet the above conditions.
      * Returns True if the record exists and False otherwise.
      *
-     * @param string                   $cod
+     * @param string          $cod
      * @param DataBaseWhere[] $where
-     * @param array                    $orderBy
+     * @param array           $orderBy
      *
      * @return bool
      */
-    public function loadFromCode($cod, $where = null, array $orderBy = []): bool
+    public function loadFromCode($cod, array $where = [], array $orderBy = []): bool
     {
         if (parent::loadFromCode($cod, $where, $orderBy)) {
             $this->idestadoAnt = $this->idestado;
@@ -350,6 +343,22 @@ abstract class BusinessDocument extends ModelClass
         }
 
         return false;
+    }
+
+    /**
+     * Return the state setted to document.
+     *
+     * @return Model\EstadoDocumento
+     */
+    public function getState(): Model\EstadoDocumento
+    {
+        foreach (self::$estados as $state) {
+            if ($state->idestado === $this->idestado) {
+                return $state;
+            }
+        }
+
+        return new Model\EstadoDocumento();
     }
 
     /**
@@ -369,13 +378,38 @@ abstract class BusinessDocument extends ModelClass
      */
     public function save(): bool
     {
+        if (is_null($this->codigo)) {
+            $this->newCodigo();
+        }
+
         if ($this->test()) {
             if ($this->exists()) {
                 return $this->checkState() ? $this->saveUpdate() : false;
             }
 
-            $this->newCodigo();
             return $this->saveInsert();
+        }
+
+        return false;
+    }
+
+    /**
+     * Assign the date and find an accounting exercise.
+     *
+     * @param string $date
+     * @param string $hour
+     *
+     * @return bool
+     */
+    public function setDate(string $date, string $hour): bool
+    {
+        $ejercicioModel = new Model\Ejercicio();
+        $ejercicio = $ejercicioModel->getByFecha($date);
+        if ($ejercicio) {
+            $this->codejercicio = $ejercicio->codejercicio;
+            $this->fecha = $date;
+            $this->hora = $hour;
+            return true;
         }
 
         return false;
@@ -407,40 +441,7 @@ abstract class BusinessDocument extends ModelClass
             $this->editable = $estadoDoc->editable;
         }
 
-        return true;
-    }
-
-    /**
-     * Return the state setted to document.
-     *
-     * @return Model\EstadoDocumento
-     */
-    public function getState(): Model\EstadoDocumento
-    {
-        foreach (self::$estados as $state) {
-            if ($state->idestado === $this->idestado) {
-                return $state;
-            }
-        }
-
-        return new Model\EstadoDocumento();
-    }
-
-    /**
-     * Assign the date and find an accounting exercise.
-     *
-     * @param string $date
-     * @param string $hour
-     */
-    public function setDate(string $date, string $hour)
-    {
-        $ejercicioModel = new Model\Ejercicio();
-        $ejercicio = $ejercicioModel->getByFecha($date);
-        if ($ejercicio) {
-            $this->codejercicio = $ejercicio->codejercicio;
-            $this->fecha = $date;
-            $this->hora = $hour;
-        }
+        return parent::test();
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  carlos@facturascripts.com
+ * Copyright (C) 2017-2018 Carlos Garcia Gomez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Lib\ExtendedController;
@@ -33,7 +33,6 @@ class WidgetItemCheckBox extends WidgetItem
     public function __construct()
     {
         parent::__construct();
-
         $this->type = 'checkbox';
     }
 
@@ -68,15 +67,12 @@ class WidgetItemCheckBox extends WidgetItem
      */
     public function getListHTML($value): string
     {
-        if ($value === null || $value === '') {
-            return '';
+        $checked = is_bool($value) ? $value : !is_null($value);
+        if ($checked) {
+            return '<i class="fa fa-check" aria-hidden="true" ' . $this->getTextOptionsHTML($checked) . '></i>';
         }
 
-        $checked = \in_array($value, ['t', '1'], false);
-        $icon = $checked ? 'fa-check' : 'fa-minus';
-        $style = $this->getTextOptionsHTML($checked);
-
-        return '<i class="fa ' . $icon . '" aria-hidden="true" ' . $style . '></i>';
+        return '-';
     }
 
     /**

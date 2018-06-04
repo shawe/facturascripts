@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Controller;
@@ -54,9 +54,9 @@ class EditEjercicio extends ExtendedController\PanelController
      */
     protected function createViews()
     {
-        $this->addEditView('Ejercicio', 'EditEjercicio', 'exercise');
-        $this->addListView('Cuenta', 'ListCuenta', 'accounts', 'fa-book');
-        $this->addListView('Subcuenta', 'ListSubcuenta', 'subaccount');
+        $this->addEditView('EditEjercicio', 'Ejercicio', 'exercise');
+        $this->addListView('ListCuenta', 'Cuenta', 'accounts', 'fa-book');
+        $this->addListView('ListSubcuenta', 'Subcuenta', 'subaccount');
 
         /// Disable columns
         $this->views['ListCuenta']->disableColumn('fiscal-exercise', true);
@@ -66,15 +66,15 @@ class EditEjercicio extends ExtendedController\PanelController
     /**
      * Load view data procedure
      *
-     * @param string                      $keyView
+     * @param string                      $viewName
      * @param ExtendedController\EditView $view
      */
-    protected function loadData($keyView, $view)
+    protected function loadData($viewName, $view)
     {
         $codejercicio = $this->getViewModelValue('EditEjercicio', 'codejercicio');
         $where = [new DataBaseWhere('codejercicio', $codejercicio)];
 
-        switch ($keyView) {
+        switch ($viewName) {
             case 'EditEjercicio':
                 $code = $this->request->get('code');
                 $view->loadData($code);
@@ -93,10 +93,9 @@ class EditEjercicio extends ExtendedController\PanelController
     /**
      * Run the controller after actions
      *
-     * @param ExtendedController\EditView $view
-     * @param string                      $action
+     * @param string $action
      */
-    protected function execAfterAction($view, $action)
+    protected function execAfterAction($action)
     {
         switch ($action) {
             case 'import-accounting':
@@ -104,7 +103,7 @@ class EditEjercicio extends ExtendedController\PanelController
                 break;
 
             default:
-                parent::execAfterAction($view, $action);
+                parent::execAfterAction($action);
         }
     }
 
@@ -123,7 +122,6 @@ class EditEjercicio extends ExtendedController\PanelController
 
             return false;
         }
-
         switch ($uploadFile->getMimeType()) {
             case 'application/xml':
             case 'text/xml':
@@ -131,6 +129,7 @@ class EditEjercicio extends ExtendedController\PanelController
                 break;
 
             case 'text/csv':
+            case 'text/plain':
                 $accountingPlanImport->importCSV($uploadFile->getPathname(), $codejercicio);
                 break;
 

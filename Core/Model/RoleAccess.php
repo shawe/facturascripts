@@ -1,8 +1,8 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2016       Joe Nilson             <joenilson at gmail.com>
- * Copyright (C) 2017-2018  Carlos García Gómez    <carlos@facturascripts.com>
+ * Copyright (C) 2016       Joe Nilson          <joenilson at gmail.com>
+ * Copyright (C) 2017-2018  Carlos García Gómez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -11,13 +11,12 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace FacturaScripts\Core\Model;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -30,28 +29,8 @@ use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
  */
 class RoleAccess extends Base\ModelClass
 {
+
     use Base\ModelTrait;
-
-    /**
-     * Identifier.
-     *
-     * @var int
-     */
-    public $id;
-
-    /**
-     * Role code.
-     *
-     * @var string
-     */
-    public $codrole;
-
-    /**
-     * Name of the page.
-     *
-     * @var string
-     */
-    public $pagename;
 
     /**
      * Permission to delete.
@@ -68,24 +47,25 @@ class RoleAccess extends Base\ModelClass
     public $allowupdate;
 
     /**
-     * Returns the name of the table that uses this model.
+     * Role code.
      *
-     * @return string
+     * @var string
      */
-    public static function tableName(): string
-    {
-        return 'roles_access';
-    }
+    public $codrole;
 
     /**
-     * Returns the name of the column that is the model's primary key.
+     * Identifier.
      *
-     * @return string
+     * @var int
      */
-    public static function primaryColumn(): string
-    {
-        return 'id';
-    }
+    public $id;
+
+    /**
+     * Name of the page.
+     *
+     * @var string
+     */
+    public $pagename;
 
     /**
      * Add the indicated page list to the Role group
@@ -116,5 +96,36 @@ class RoleAccess extends Base\ModelClass
         }
 
         return true;
+    }
+
+    /**
+     * @return string
+     */
+    public function install(): string
+    {
+        new Role();
+        new User();
+
+        return parent::install();
+    }
+
+    /**
+     * Returns the name of the column that is the model's primary key.
+     *
+     * @return string
+     */
+    public static function primaryColumn(): string
+    {
+        return 'id';
+    }
+
+    /**
+     * Returns the name of the table that uses this model.
+     *
+     * @return string
+     */
+    public static function tableName(): string
+    {
+        return 'roles_access';
     }
 }

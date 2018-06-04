@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Model;
@@ -131,13 +131,31 @@ class Contacto extends Base\Contact
     public $provincia;
 
     /**
+     * TRUE if contact is verified.
+     *
+     * @var bool
+     */
+    public $verificado;
+
+    /**
      * Reset the values of all model properties.
      */
     public function clear()
     {
         parent::clear();
-        $this->admitemarketing = true;
+        $this->admitemarketing = false;
         $this->codpais = AppSettings::get('default', 'codpais');
+        $this->verificado = false;
+    }
+
+    /**
+     * Returns full name.
+     *
+     * @return string
+     */
+    public function fullName()
+    {
+        return $this->nombre . ' ' . $this->apellidos;
     }
 
     /**
@@ -177,7 +195,6 @@ class Contacto extends Base\Contact
      */
     public function test(): bool
     {
-        parent::test();
         $this->apellidos = Utils::noHtml($this->apellidos);
         $this->cargo = Utils::noHtml($this->cargo);
         $this->ciudad = Utils::noHtml($this->ciudad);
@@ -185,7 +202,7 @@ class Contacto extends Base\Contact
         $this->empresa = Utils::noHtml($this->empresa);
         $this->provincia = Utils::noHtml($this->provincia);
 
-        return true;
+        return parent::test();
     }
 
     /**

@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Base;
@@ -45,6 +45,28 @@ class Controller
     public $assets;
 
     /**
+     * Cache access manager.
+     *
+     * @var Cache
+     */
+    protected $cache;
+
+    /**
+     * Name of the class of the controller (although its in inheritance from this class,
+     * the name of the final class we will have here)
+     *
+     * @var string __CLASS__
+     */
+    private $className;
+
+    /**
+     * It provides direct access to the database.
+     *
+     * @var DataBase
+     */
+    protected $dataBase;
+
+    /**
      * Tools to work with currencies.
      *
      * @var DivisaTools
@@ -57,6 +79,20 @@ class Controller
      * @var Model\Empresa|false
      */
     public $empresa;
+
+    /**
+     * Translator engine.
+     *
+     * @var Translator
+     */
+    protected $i18n;
+
+    /**
+     * App log manager.
+     *
+     * @var MiniLog
+     */
+    protected $miniLog;
 
     /**
      * Tools to work with numbers.
@@ -80,6 +116,20 @@ class Controller
     public $request;
 
     /**
+     * HTTP Response object.
+     *
+     * @var Response
+     */
+    protected $response;
+
+    /**
+     * Name of the file for the template.
+     *
+     * @var string|false nombre_archivo.html.twig
+     */
+    private $template;
+
+    /**
      * Title of the page.
      *
      * @var string título de la página.
@@ -101,56 +151,6 @@ class Controller
     public $user;
 
     /**
-     * Cache access manager.
-     *
-     * @var Cache
-     */
-    protected $cache;
-
-    /**
-     * It provides direct access to the database.
-     *
-     * @var DataBase
-     */
-    protected $dataBase;
-
-    /**
-     * Translator engine.
-     *
-     * @var Translator
-     */
-    protected $i18n;
-
-    /**
-     * App log manager.
-     *
-     * @var MiniLog
-     */
-    protected $miniLog;
-
-    /**
-     * HTTP Response object.
-     *
-     * @var Response
-     */
-    protected $response;
-
-    /**
-     * Name of the class of the controller (although its in inheritance from this class,
-     * the name of the final class we will have here)
-     *
-     * @var string __CLASS__
-     */
-    private $className;
-
-    /**
-     * Name of the file for the template.
-     *
-     * @var string|false nombre_archivo.html.twig
-     */
-    private $template;
-
-    /**
      * Initialize all objects and properties.
      *
      * @param Cache      $cache
@@ -165,10 +165,8 @@ class Controller
         $this->cache = &$cache;
         $this->className = $className;
         $this->dataBase = new DataBase();
-        $this->divisaTools = new DivisaTools();
         $this->i18n = &$i18n;
         $this->miniLog = &$miniLog;
-        $this->numberTools = new NumberTools();
         $this->request = Request::createFromGlobals();
         $this->template = $this->className . '.html.twig';
         $this->uri = $uri;
@@ -178,33 +176,13 @@ class Controller
     }
 
     /**
-     * Return the template to use for this controller.
+     * Return the name of the controller.
      *
-     * @return string|false
+     * @return string
      */
-    public function getTemplate()
+    protected function getClassName()
     {
-        return $this->template;
-    }
-
-    /**
-     * Set the template to use for this controller.
-     *
-     * @param string|false $template
-     *
-     * @return bool
-     */
-    public function setTemplate($template): bool
-    {
-        if ($template === false) {
-            $this->template = false;
-
-            return true;
-        }
-
-        $this->template = $template . '.html.twig';
-
-        return true;
+        return $this->className;
     }
 
     /**
@@ -226,24 +204,13 @@ class Controller
     }
 
     /**
-     * Return the URL of the actual controller.
+     * Return the template to use for this controller.
      *
-     * @return string
+     * @return string|false
      */
-    public function url(): string
+    public function getTemplate()
     {
-        return $this->className;
-    }
-
-    /**
-     * Execute the public part of the controller.
-     *
-     * @param Response $response
-     */
-    public function publicCore(&$response)
-    {
-        $this->response = &$response;
-        $this->template = 'Login/Login.html.twig';
+        return $this->template;
     }
 
     /**
@@ -278,28 +245,43 @@ class Controller
     }
 
     /**
-     * Return the name of the controller.
+     * Execute the public part of the controller.
      *
-     * @return string
+     * @param Response $response
      */
-    protected function getClassName(): string
+    public function publicCore(&$response)
     {
-        return $this->className;
+        $this->response = &$response;
+        $this->template = 'Login/Login.html.twig';
     }
 
     /**
-     * Return array with parameters values
+     * Set the template to use for this controller.
      *
-     * @param array $keys
+     * @param string|false $template
      *
-     * @return array
+     * @return bool
      */
-    protected function requestGet($keys): array
+    public function setTemplate($template)
     {
-        $result = [];
-        foreach ($keys as $value) {
-            $result[$value] = $this->request->get($value);
+        if ($template === false) {
+            $this->template = false;
+
+            return true;
         }
-        return $result;
+
+        $this->template = $template . '.html.twig';
+
+        return true;
+    }
+
+    /**
+     * Return the URL of the actual controller.
+     *
+     * @return string|false
+     */
+    public function url(): string
+    {
+        return $this->className;
     }
 }

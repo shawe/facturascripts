@@ -10,13 +10,12 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 namespace FacturaScripts\Core\Model;
 
 /**
@@ -26,7 +25,22 @@ namespace FacturaScripts\Core\Model;
  */
 class LineaTransferenciaStock extends Base\ModelClass
 {
+
     use Base\ModelTrait;
+
+    /**
+     * Quantity.
+     *
+     * @var float|int
+     */
+    public $cantidad;
+
+    /**
+     * Description of the transfer.
+     *
+     * @var string
+     */
+    public $descripcion;
 
     /**
      * Primary key. Integer.
@@ -50,46 +64,12 @@ class LineaTransferenciaStock extends Base\ModelClass
     public $referencia;
 
     /**
-     * Quantity.
-     *
-     * @var float|int
-     */
-    public $cantidad;
-
-    /**
-     * Description of the transfer.
-     *
-     * @var string
-     */
-    public $descripcion;
-
-    /**
-     * Returns the name of the table that uses this model.
-     *
-     * @return string
-     */
-    public static function tableName(): string
-    {
-        return 'lineastranstocks';
-    }
-
-    /**
-     * Returns the name of the column that is the model's primary key.
-     *
-     * @return string
-     */
-    public static function primaryColumn(): string
-    {
-        return 'idlinea';
-    }
-
-    /**
      * Reset the values of all model properties.
      */
     public function clear()
     {
         parent::clear();
-        $this->cantidad = 0;
+        $this->cantidad = 0.0;
     }
 
     /**
@@ -105,5 +85,25 @@ class LineaTransferenciaStock extends Base\ModelClass
         new TransferenciaStock();
 
         return '';
+    }
+
+    /**
+     * Returns the name of the column that is the model's primary key.
+     *
+     * @return string
+     */
+    public static function primaryColumn(): string
+    {
+        return 'idlinea';
+    }
+
+    /**
+     * Returns the name of the table that uses this model.
+     *
+     * @return string
+     */
+    public static function tableName(): string
+    {
+        return 'lineastranstocks';
     }
 }

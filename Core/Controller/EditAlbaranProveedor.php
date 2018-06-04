@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Controller;
@@ -55,7 +55,7 @@ class EditAlbaranProveedor extends ExtendedController\BusinessDocumentController
 
         $modelName = $this->getModelClassName();
         $viewName = 'Edit' . $modelName;
-        $this->addEditView($modelName, $viewName, 'detail');
+        $this->addEditView($viewName, $modelName, 'detail');
     }
 
     /**
@@ -74,13 +74,13 @@ class EditAlbaranProveedor extends ExtendedController\BusinessDocumentController
      * @param string                                  $keyView
      * @param ExtendedController\BusinessDocumentView $view
      */
-    protected function loadData($keyView, $view)
+    protected function loadData($viewName, $view)
     {
-        if ($keyView === 'EditAlbaranProveedor') {
+        if ($viewName === 'EditAlbaranProveedor') {
             $idalbaran = $this->getViewModelValue('Document', 'idalbaran');
             $view->loadData($idalbaran);
         }
 
-        parent::loadData($keyView, $view);
+        parent::loadData($viewName, $view);
     }
 }

@@ -9,19 +9,24 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-var documentUrl = location.href;
-var documentLineData = [];
+/*
+ * @author Artex Trading sa <jcuello@artextrading.com>
+ */
+
+const documentUrl = location.href;
+const documentLineData = [];
 // TODO: convert to POO
-var gridObject = null;
-var autocompleteColumns = [];
-var eventManager = {};
+let gridObject = null;
+const autocompleteColumns = [];
+const eventManager = {};
+const cellSelected = { row: null, column: null };
 
 /**
  * Generate a single source function for autocomplete columns
@@ -30,26 +35,28 @@ var eventManager = {};
  * @returns {Function}
  */
 function assignSource(data) {
-    var source = data.source.slice(0);
-    var field = data.field.slice(0);
-    var title = data.title.slice(0);
+    const source = data.source.slice(0);
+    const field = data.field.slice(0);
+    const title = data.title.slice(0);
 
     return function (query, process) {
-        query = query.split(" -- ", 1)[0];
+        query = query.split(' | ', 1)[0];
+        const ajaxData = {
+            term: query,
+            action: 'autocomplete',
+            source: source,
+            field: field,
+            title: title
+        };
         $.ajax({
+            type: "POST",
             url: data.url,
-            dataType: "json",
-            data: {
-                term: query,
-                action: "autocomplete",
-                source: source,
-                field: field,
-                title: title
-            },
+            dataType: 'json',
+            data: ajaxData,
             success: function (response) {
-                var values = [];
+                const values = [];
                 response.forEach(function (element) {
-                    values.push(element.key + " -- " + element.value);
+                    values.push(element.key + " | " + element.value);
                 });
                 process(values);
             }
@@ -57,11 +64,15 @@ function assignSource(data) {
     };
 }
 
-/* Configure source data for autocomplete columns */
+/**
+ * Configure source data for autocomplete columns
+ *
+ * @param {Object} columns
+ */
 function configureAutocompleteColumns(columns) {
-    var column = null;
-    var keys = Object.keys(columns);
-    for (var i = 0, max = keys.length; i < max; i++) {
+    let column = null;
+    const keys = Object.keys(columns);
+    for (let i = 0, max = keys.length; i < max; i++) {
         column = columns[keys[i]];
         if (column["type"] === "autocomplete") {
             // Add column to list of columns to control
@@ -84,8 +95,9 @@ function configureAutocompleteColumns(columns) {
  */
 function getGridData(fieldOrder) {
     fieldOrder = fieldOrder || null;
-    var rowIndex, lines = [];
-    for (var i = 0, max = documentLineData.rows.length; i < max; i++) {
+    let rowIndex;
+    const lines = [];
+    for (let i = 0, max = documentLineData.rows.length; i < max; i++) {
         rowIndex = gridObject.toVisualRow(i);
         if (gridObject.isEmptyRow(rowIndex)) {
             continue;
@@ -100,20 +112,20 @@ function getGridData(fieldOrder) {
 
 /* Return column value */
 function getGridFieldData(row, fieldName) {
-    var physicalRow = gridObject.toPhysicalRow(row);
+    const physicalRow = gridObject.toPhysicalRow(row);
     return documentLineData["rows"][physicalRow][fieldName];
 }
 
 /* Return row values */
 function getGridRowValues(row) {
-    var physicalRow = gridObject.toPhysicalRow(row);
+    const physicalRow = gridObject.toPhysicalRow(row);
     return documentLineData["rows"][physicalRow];
 }
 
 /* Set row value */
 function setGridRowValues(row, values) {
-    var physicalRow = gridObject.toPhysicalRow(row);
-    for (var i = 0, max = values.length; i < max; i++) {
+    const physicalRow = gridObject.toPhysicalRow(row);
+    for (let i = 0, max = values.length; i < max; i++) {
         documentLineData["rows"][physicalRow][values[i].field] = values[i].value;
     }
     gridObject.render();
@@ -121,7 +133,7 @@ function setGridRowValues(row, values) {
 
 /* Return field name for a column */
 function getGridColumnName(col) {
-    var physicalColumn = gridObject.toPhysicalColumn(col);
+    const physicalColumn = gridObject.toPhysicalColumn(col);
     return documentLineData["columns"][physicalColumn]["data"];
 }
 
@@ -137,13 +149,19 @@ function deselectCell() {
 
 /* Return actual row selected */
 function getRowSelected() {
-    var selected = gridObject.getSelected();
+    const selected = gridObject.getSelected();
+    if (selected === undefined) {
+        return cellSelected.row;
+    }
     return selected.length > 0 ? gridObject.getSelected()[0][0] : null;
 }
 
 /* Return actual column selected */
 function getColumnSelected() {
-    var selected = gridObject.getSelected();
+    const selected = gridObject.getSelected();
+    if (selected === undefined) {
+        return cellSelected.column;
+    }
     return selected.length > 0 ? gridObject.getSelected()[0][1] : null;
 }
 
@@ -152,9 +170,8 @@ function getColumnSelected() {
  */
 function addEvent(name, fn) {
     switch (name) {
-        case "afterSelection":
-        case "beforeChange":
-        case "enterMoves":
+        case 'afterSelection':
+        case 'beforeChange':
             eventManager[name] = fn;
             break;
 
@@ -166,13 +183,17 @@ function addEvent(name, fn) {
 
 function eventAfterSelection(row1, col1, row2, col2, preventScrolling) {
     // Check if editing
-    var editor = gridObject.getActiveEditor();
+    const editor = gridObject.getActiveEditor();
     if (editor && editor.isOpened()) {
         return;
     }
 
+    // save selected cell
+    cellSelected.row = row1;
+    cellSelected.column = col1;
+
     // Call to children event
-    var events = Object.keys(eventManager);
+    const events = Object.keys(eventManager);
     if (events.includes("afterSelection")) {
         eventManager["afterSelection"](row1, col1, row2, col2, preventScrolling);
     }
@@ -180,11 +201,11 @@ function eventAfterSelection(row1, col1, row2, col2, preventScrolling) {
 
 function eventBeforeChange(changes, source) {
     // Aply correction to autocomplete columns
-    var isAutoComplete = false;
+    let isAutoComplete = false;
     if (autocompleteColumns.length > 0) {
-        for (var i = 0, max = changes.length; i < max; i++) {
+        for (let i = 0, max = changes.length; i < max; i++) {
             if (autocompleteColumns.includes(changes[i][1])) {
-                var values = changes[i][3].split(" -- ");
+                const values = changes[i][3].split(' | ');
                 changes[i][3] = values[0];
                 isAutoComplete = (values.length > 1);
             }
@@ -192,37 +213,13 @@ function eventBeforeChange(changes, source) {
     }
 
     // Call to children event
-    var events = Object.keys(eventManager);
+    const events = Object.keys(eventManager);
     if (events.includes("beforeChange")) {
         eventManager["beforeChange"](changes, source, isAutoComplete);
     }
 }
 
-function eventEnterMoves() {
-    var result = {row: 0, col: 1};
-    var selected = gridObject.getSelected()[0];
-    var jump = true;
-
-    // Call to children event
-    var events = Object.keys(eventManager);
-    if (events.includes("enterMoves")) {
-        var fieldName = getGridColumnName(selected[1]);
-        // parameters to children: (move, fieldName)
-        jump = eventManager["enterMoves"](result, fieldName);
-    }
-
-    // if there is a column jump, we control that you do not exceed the number of existing columns
-    if (jump) {
-        if ((selected[1] + result.col) >= gridObject.countCols()) {
-            selectCell(selected[0] + 1, 0);
-            result = {row: 0, col: 0};
-        }
-        return result;
-    }
-    return {row: 0, col: 0};      // no jump
-}
-
-/**
+/*
  * User Interface Events
  */
 /**
@@ -232,41 +229,35 @@ function eventEnterMoves() {
  * @returns {Boolean}
  */
 function saveDocument(mainFormName) {
-    var submitButton = document.getElementById("save-document");
+    const submitButton = document.getElementById("save-document");
     submitButton.disabled = true;
     try {
-        var data = {
+        const data = {
             action: "save-document",
-            lines: getGridData("orden"),
+            lines: getGridData('order'),
             document: {}
         };
-
-        var mainForm = $("form[name='" + mainFormName + "']");
-        $.each(mainForm.serializeArray(), function (key, value) {
-            switch (value.name) {
-                case "action":
-                    break;
-
-                case "active":
-                    data[value.name] = value.value;
-                    break;
-
-                default:
-                    data.document[value.name] = value.value;
-                    break;
-            }
+        const mainForm = $("form[name=" + mainFormName + "]");
+        $.each(mainForm.serializeArray(), function(key, value) {
+            data.document[value.name] = value.value;
         });
 
-        $.post(
-            documentUrl,
-            data,
-            function (results) {
+        $.ajax({
+            type: "POST",
+            url: documentUrl,
+            dataType: "json",
+            data: data,
+            success: function (results) {
                 if (results.error) {
                     alert(results.message);
-                    return;
+                    return false;
                 }
-                location.reload();
-            });
+                location.assign(results.url);
+            },
+            error: function (xhr, status, error) {
+                alert(xhr.responseText);
+            }
+        });
     } finally {
         // noinspection UnreachableCodeJS
         submitButton.disabled = false;
@@ -280,7 +271,7 @@ function saveDocument(mainFormName) {
  */
 $(document).ready(function () {
     // Grid Data
-    var container = document.getElementById("document-lines");
+    const container = document.getElementById("document-lines");
     if (container) {
         // Prepare autocomplete columns
         configureAutocompleteColumns(documentLineData["columns"]);
@@ -292,17 +283,16 @@ $(document).ready(function () {
             rowHeaders: true,
             colHeaders: documentLineData.headers,
             stretchH: "all",
-            autoWrapRow: false,
+            autoWrapRow: true,
             contextMenu: false,
             manualRowResize: true,
             manualColumnResize: true,
             manualRowMove: true,
             manualColumnMove: false,
+            filters: true,
             minSpareRows: 1,
             minRows: 7,
-            enterMoves: function () {
-                return eventEnterMoves();
-            }
+            enterMoves: {row: 0, col: 1}
         });
 
         Handsontable.hooks.add("afterSelection", eventAfterSelection);

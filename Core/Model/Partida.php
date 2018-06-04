@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos Garcia Gomez  <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Model;
@@ -246,6 +246,40 @@ class Partida extends Base\ModelClass
     }
 
     /**
+     * Load de ID for subaccount
+     *
+     * @param string $code
+     * @param string $exercise
+     *
+     * @return int|null
+     */
+    private function getIdSubAccount($code, $exercise)
+    {
+        if (empty($code) || empty($exercise)) {
+            return null;
+        }
+
+        $where = [
+            new DataBaseWhere('codejercicio', $exercise),
+            new DataBaseWhere('codsubcuenta', $code)
+        ];
+
+        $account = new Subcuenta();
+        $account->loadFromCode('', $where);
+        return $account->idsubcuenta;
+    }
+
+    /**
+     * Check if exists error in accounting entry
+     *
+     * @return bool
+     */
+    private function testErrorInData(): bool
+    {
+        return empty($this->idasiento) || empty($this->codsubcuenta) || empty($this->debe + $this->haber);
+    }
+
+    /**
      * Returns True if there is no erros on properties values.
      *
      * @return bool
@@ -293,6 +327,108 @@ class Partida extends Base\ModelClass
         $this->documento = Utils::noHtml($this->documento);
         $this->cifnif = Utils::noHtml($this->cifnif);
 
+        return parent::test();
+    }
+
+    /**
+     * Get accounting date
+     *
+     * @return string
+     */
+    private function getAccountingDate(): string
+    {
+        $accounting = new Asiento();
+        $accounting->loadFromCode($this->idasiento);
+        return $accounting->fecha;
+    }
+
+    /**
+     * Insert the model data in the database.
+     *
+     * @param array $values
+     *
+     * @return bool
+     */
+    protected function saveInsert(array $values = [])
+    {
+        $date = $this->getAccountingDate();
+        $account = new Subcuenta();
+        $account->idsubcuenta = $this->idsubcuenta;
+
+        $inTransaction = self::$dataBase->inTransaction();
+        try {
+            if ($inTransaction === false) {
+                self::$dataBase->beginTransaction();
+            }
+
+            /// main insert
+            if (!parent::saveInsert($values)) {
+                return false;
+            }
+
+            /// update account balance
+            if (!$account->updateBalance($date, $this->debe, $this->haber)) {
+                return false;
+            }
+
+            /// save transaction
+            if ($inTransaction === false) {
+                self::$dataBase->commit();
+            }
+        } catch (\Exception $e) {
+            self::$miniLog->error($e->getMessage());
+            return false;
+        } finally {
+            if (!$inTransaction && self::$dataBase->inTransaction()) {
+                self::$dataBase->rollback();
+                return false;
+            }
+        }
+        return true;
+    }
+
+    protected function saveUpdate(array $values = [])
+    {
+        // Search for the difference in the amounts
+        $entry = new Partida();
+        $entry->loadFromCode($this->idpartida);
+        $debit = (isset($values['debe']) ? $values['debe'] : $this->debe) - $entry->debe;
+        $credit = (isset($values['haber']) ? $values['haber'] : $this->haber) - $entry->haber;
+
+        // Get data to update balance
+        $date = $this->getAccountingDate();
+        $account = new Subcuenta();
+        $account->idsubcuenta = $this->idsubcuenta;
+
+        $inTransaction = self::$dataBase->inTransaction();
+        try {
+            if ($inTransaction === false) {
+                self::$dataBase->beginTransaction();
+            }
+
+            /// main update
+            if (!parent::saveUpdate($values)) {
+                return false;
+            }
+
+            /// update account balance
+            if (!$account->updateBalance($date, $debit, $credit)) {
+                return false;
+            }
+
+            /// save transaction
+            if ($inTransaction === false) {
+                self::$dataBase->commit();
+            }
+        } catch (\Exception $e) {
+            self::$miniLog->error($e->getMessage());
+            return false;
+        } finally {
+            if (!$inTransaction && self::$dataBase->inTransaction()) {
+                self::$dataBase->rollback();
+                return false;
+            }
+        }
         return true;
     }
 
@@ -303,10 +439,19 @@ class Partida extends Base\ModelClass
      */
     public function delete(): bool
     {
+        $date = $this->getAccountingDate();
+        $account = new Subcuenta();
+        $account->idsubcuenta = $this->idsubcuenta;
+
         $inTransaction = self::$dataBase->inTransaction();
         try {
             if ($inTransaction === false) {
                 self::$dataBase->beginTransaction();
+            }
+
+            /// update account balance
+            if (!$account->updateBalance($date, ($this->debe * -1), ($this->haber * -1))) {
+                return false;
             }
 
             /// main delete
@@ -314,18 +459,12 @@ class Partida extends Base\ModelClass
                 return false;
             }
 
-            /// update account balance
-            if (!empty($this->idasiento)) {
-                $accounting = new Asiento();
-                $accounting->loadFromCode($this->idasiento);
-
-                $account = new Subcuenta();
-                $account->idsubcuenta = $this->idsubcuenta;
-                $account->updateBalance($accounting->fecha, $this->debe * -1, $this->haber * -1);
+            /// save transaction
+            if ($inTransaction === false) {
+                self::$dataBase->commit();
             }
         } catch (\Exception $e) {
             self::$miniLog->error($e->getMessage());
-            self::$dataBase->rollback();
             return false;
         } finally {
             if (!$inTransaction && self::$dataBase->inTransaction()) {
@@ -335,39 +474,5 @@ class Partida extends Base\ModelClass
             }
         }
         return true;
-    }
-
-    /**
-     * Load de ID for subaccount
-     *
-     * @param string $code
-     * @param string $exercise
-     *
-     * @return int|null
-     */
-    private function getIdSubAccount($code, $exercise)
-    {
-        if (empty($code) || empty($exercise)) {
-            return null;
-        }
-
-        $where = [
-            new DataBaseWhere('codejercicio', $exercise),
-            new DataBaseWhere('codsubcuenta', $code)
-        ];
-
-        $account = new Subcuenta();
-        $account->loadFromCode('', $where);
-        return $account->idsubcuenta;
-    }
-
-    /**
-     * Check if exists error in accounting entry
-     *
-     * @return bool
-     */
-    private function testErrorInData(): bool
-    {
-        return empty($this->idasiento) || empty($this->codsubcuenta) || empty($this->debe + $this->haber);
     }
 }

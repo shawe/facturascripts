@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Lib\RandomDataGenerator;
@@ -81,48 +81,16 @@ class Articulos extends AbstractRandom
         $art = $this->model;
         for ($generated = 0; $generated < $num; ++$generated) {
             $art->clear();
-            $art->descripcion = $this->descripcion();
-            $art->codimpuesto = $this->impuestos[0]->codimpuesto;
-            $art->setPvpIva($this->precio(1, 49, 699));
-            $art->costemedio = $art->preciocoste = $this->cantidad(0, $art->pvp, $art->pvp + 1);
+            $this->setArticuloData($art);
 
-            switch (random_int(0, 2)) {
-                case 0:
-                    $art->referencia = $art->newCode();
-                    break;
-
-                case 1:
-                    $aux = explode(':', $art->descripcion);
-                    if (!empty($aux)) {
-                        $art->referencia = $this->txt2codigo($aux[0], 18);
-                    } else {
-                        $art->referencia = $art->newCode();
-                    }
-                    break;
-
-                default:
-                    $art->referencia = $this->randomString(10);
+            if ($art->exists()) {
+                continue;
             }
-
-            if (random_int(0, 9) > 0) {
-                $art->codfabricante = $this->getOneItem($this->fabricantes)->codfabricante;
-                $art->codfamilia = $this->getOneItem($this->familias)->codfamilia;
-            } else {
-                $art->codfabricante = null;
-                $art->codfamilia = null;
-            }
-
-            $art->publico = (random_int(0, 3) === 0);
-            $art->bloqueado = (random_int(0, 9) === 0);
-            $art->nostock = (random_int(0, 9) === 0);
-            $art->secompra = (random_int(0, 9) !== 0);
-            $art->sevende = (random_int(0, 9) !== 0);
-
             if (!$art->save()) {
                 break;
             }
 
-            if (random_int(0, 2) === 0) {
+            if (random_int(0, 2) == 0) {
                 $this->sumStock($art, random_int(0, 1000));
             } else {
                 $this->sumStock($art, random_int(0, 20));
@@ -130,6 +98,47 @@ class Articulos extends AbstractRandom
         }
 
         return $generated;
+    }
+
+    /**
+     * TODO: Undocumented function.
+     *
+     * @param Model\Articulo $art
+     */
+    private function setArticuloData(Model\Articulo &$art)
+    {
+        $art->descripcion = $this->descripcion();
+        $art->codimpuesto = $this->impuestos[0]->codimpuesto;
+        $art->setPvpIva($this->precio(1, 49, 699));
+        $art->costemedio = $art->preciocoste = $this->cantidad(0, $art->pvp, $art->pvp + 1);
+
+        switch (random_int(0, 2)) {
+            case 0:
+                $art->referencia = $art->newCode();
+                break;
+
+            case 1:
+                $aux = explode(':', $art->descripcion);
+                $art->referencia = empty($aux) ? $art->newCode() : $this->txt2codigo($aux[0], 25);
+                break;
+
+            default:
+                $art->referencia = $this->randomString(10);
+        }
+
+        if (random_int(0, 9) > 0) {
+            $art->codfabricante = $this->getOneItem($this->fabricantes)->codfabricante;
+            $art->codfamilia = $this->getOneItem($this->familias)->codfamilia;
+        } else {
+            $art->codfabricante = null;
+            $art->codfamilia = null;
+        }
+
+        $art->publico = (random_int(0, 3) === 0);
+        $art->bloqueado = (random_int(0, 9) === 0);
+        $art->nostock = (random_int(0, 9) === 0);
+        $art->secompra = (random_int(0, 9) !== 0);
+        $art->sevende = (random_int(0, 9) !== 0);
     }
 
     /**

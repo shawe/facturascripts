@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2013-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2013-2018 Carlos Garcia Gomez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Model\Base;
@@ -142,12 +142,11 @@ abstract class ModelClass extends ModelCore
      *
      * @return self|bool
      */
-    public function get(string $cod)
+    public function get($cod)
     {
         $data = $this->getRecord($cod);
         if (!empty($data)) {
             $class = $this->modelName();
-
             return new $class($data[0]);
         }
 
@@ -168,17 +167,15 @@ abstract class ModelClass extends ModelCore
      *
      * @return bool
      */
-    public function loadFromCode($cod, $where = null, array $orderBy = []): bool
+    public function loadFromCode($cod, array $where = [], array $orderBy = []): bool
     {
         $data = $this->getRecord($cod, $where, $orderBy);
         if (empty($data)) {
             $this->clear();
-
             return false;
         }
 
         $this->loadFromData($data[0]);
-
         return true;
     }
 
@@ -186,31 +183,28 @@ abstract class ModelClass extends ModelCore
      * Returns the following code for the reported field or the primary key of the model.
      *
      * @param string $field
+     * @param array  $where
      *
      * @return int
      */
-    public function newCode(string $field = ''): int
+    public function newCode(string $field = '', array $where = []): int
     {
-        $sqlWhere = '';
+        /// if not field value take PK Field
         if (empty($field)) {
-            /// Primary key is integer?
-            foreach ($this->getModelFields() as $tableField => $fieldData) {
-                if ($tableField === $this->primaryColumn() && \in_array($fieldData['type'], ['integer', 'int', 'serial'], false)) {
-                    $field = $this->primaryColumn();
-                    break;
-                }
-            }
+            $field = $this->primaryColumn();
         }
+        /// get fields list
+        $modelFields = $this->getModelFields();
 
-        if (empty($field)) {
-            /// Set Cast to Integer of PK Field
-            $field = self::$dataBase->sql2Int($this->primaryColumn());
-
+        /// Set Cast to Integer if field it's not
+        if (!in_array($modelFields[$field]['type'], ['integer', 'int', 'serial'])) {
             /// Set Where to Integers values only
-            $where = [new DataBase\DataBaseWhere($this->primaryColumn(), '^-?[0-9]+$', 'REGEXP')];
-            $sqlWhere = DataBase\DataBaseWhere::getSQLWhere($where);
+            $where[] = new DataBase\DataBaseWhere($field, '^-?[0-9]+$', 'REGEXP');
+            $field = self::$dataBase->sql2Int($field);
         }
 
+        /// Search for new code value
+        $sqlWhere = DataBase\DataBaseWhere::getSQLWhere($where);
         $sql = 'SELECT MAX(' . $field . ') as cod FROM ' . static::tableName() . $sqlWhere . ';';
         $cod = self::$dataBase->select($sql);
         if (empty($cod)) {
@@ -238,11 +232,7 @@ abstract class ModelClass extends ModelCore
     public function primaryDescription(): string
     {
         $field = $this->primaryDescriptionColumn();
-        if (isset($this->{$field})) {
-            return $this->{$field};
-        }
-
-        return (string) $this->primaryColumnValue();
+        return isset($this->{$field}) ? $this->{$field} : (string) $this->primaryColumnValue();
     }
 
     /**
@@ -271,6 +261,21 @@ abstract class ModelClass extends ModelCore
      */
     public function test(): bool
     {
+        $fields = $this->getModelFields();
+        if (empty($fields)) {
+            return false;
+        }
+
+        foreach ($fields as $key => $value) {
+            if ($key == $this->primaryColumn()) {
+                continue;
+            }
+            if (null === $value['default'] && $value['is_nullable'] === 'NO' && $this->{$key} === null) {
+                self::$miniLog->alert(self::$i18n->trans('field-can-not-be-null', ['%fieldName%' => $key, '%tableName%' => static::tableName()]));
+                return false;
+            }
+        }
+
         return true;
     }
 
@@ -286,26 +291,18 @@ abstract class ModelClass extends ModelCore
     {
         $value = $this->primaryColumnValue();
         $model = $this->modelClassName();
-        $result = '';
         switch ($type) {
-            case 'list':
-                $result .= $list . $model;
-                break;
-
             case 'edit':
-                $result .= 'Edit' . $model . '?code=' . $value;
-                break;
+                return is_null($value) ? 'Edit' . $model : 'Edit' . $model . '?code=' . $value;
+
+            case 'list':
+                return $list . $model;
 
             case 'new':
-                $result .= 'Edit' . $model;
-                break;
-
-            default:
-                $result .= empty($value) ? $list . $model : 'Edit' . $model . '?code=' . $value;
-                break;
+                return 'Edit' . $model;
         }
 
-        return $result;
+        return empty($value) ? $list . $model : 'Edit' . $model . '?code=' . $value;;
     }
 
     /**
@@ -365,7 +362,6 @@ abstract class ModelClass extends ModelCore
         }
 
         $sql .= ' WHERE ' . static::primaryColumn() . ' = ' . self::$dataBase->var2str($this->primaryColumnValue()) . ';';
-
         return self::$dataBase->exec($sql);
     }
 
@@ -376,7 +372,7 @@ abstract class ModelClass extends ModelCore
      *
      * @return string
      */
-    private function getOrderBy(array $order): string
+    private function getOrderBy(array $order)
     {
         $result = '';
         $coma = ' ORDER BY ';
@@ -394,16 +390,15 @@ abstract class ModelClass extends ModelCore
      * Read the record whose primary column corresponds to the value $cod
      * or the first that meets the indicated condition
      *
-     * @param string     $cod
-     * @param array|null $where
-     * @param array      $orderBy
+     * @param string                   $cod
+     * @param DataBase\DataBaseWhere[] $where
+     * @param array                    $orderBy
      *
-     * @return self
+     * @return array
      */
-    private function getRecord($cod, $where = null, array $orderBy = []): array
+    private function getRecord($cod, array $where = [], array $orderBy = []): array
     {
         $sqlWhere = empty($where) ? ' WHERE ' . static::primaryColumn() . ' = ' . self::$dataBase->var2str($cod) : DataBase\DataBaseWhere::getSQLWhere($where);
-
         $sql = 'SELECT * FROM ' . static::tableName() . $sqlWhere . $this->getOrderBy($orderBy);
 
         return self::$dataBase->selectLimit($sql, 1);

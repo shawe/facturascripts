@@ -1,7 +1,7 @@
 <?php
 /**
  * This file is part of FacturaScripts
- * Copyright (C) 2017-2018  Carlos Garcia Gomez  <carlos@facturascripts.com>
+ * Copyright (C) 2017-2018 Carlos Garcia Gomez <carlos@facturascripts.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Lib\ExtendedController;
@@ -141,20 +141,17 @@ class ListView extends BaseView implements DataViewInterface
     /**
      * Adds a field to the Order By list
      *
-     * @param string $field
+     * @param array  $fields
      * @param string $label
      * @param int    $default (0 = None, 1 = ASC, 2 = DESC)
      */
-    public function addOrderBy($field, $label = '', $default = 0)
+    public function addOrderBy($fields, $label, $default = 0)
     {
-        $key1 = strtolower($field) . '_asc';
-        $key2 = strtolower($field) . '_desc';
-        if (empty($label)) {
-            $label = $field;
-        }
+        $key1 = strtolower(implode('|', $fields)) . '_asc';
+        $key2 = strtolower(implode('|', $fields)) . '_desc';
 
-        $this->orderBy[$key1] = ['icon' => self::ICON_ASC, 'label' => static::$i18n->trans($label)];
-        $this->orderBy[$key2] = ['icon' => self::ICON_DESC, 'label' => static::$i18n->trans($label)];
+        $this->orderBy[$key1] = ['icon' => self::ICON_ASC, 'fields' => $fields, 'label' => static::$i18n->trans($label)];
+        $this->orderBy[$key2] = ['icon' => self::ICON_DESC, 'fields' => $fields, 'label' => static::$i18n->trans($label)];
 
         switch ($default) {
             case 1:
@@ -163,9 +160,6 @@ class ListView extends BaseView implements DataViewInterface
 
             case 2:
                 $this->setSelectedOrderBy($key2);
-                break;
-
-            default:
                 break;
         }
     }
@@ -178,12 +172,9 @@ class ListView extends BaseView implements DataViewInterface
     public function addSearchIn($fields)
     {
         if (\is_array($fields)) {
-            /**
-             * FIXME: Perhaps array_merge/array_replace can be used instead.
-             * Feel free to disable the inspection if '+' is intended.
-             * https://github.com/kalessil/phpinspectionsea/blob/master/docs/probable-bugs.md#addition-operator-applied-to-arrays
-             * $this->searchIn = array_merge($this->searchIn, $fields);
-             */
+            // TODO: Error: Perhaps array_merge/array_replace can be used instead.
+            // Feel free to disable the inspection if '+' is intended.
+            //$this->searchIn = array_merge($this->searchIn, $fields);
             /** @noinspection AdditionOperationOnArraysInspection */
             $this->searchIn += $fields;
         }
@@ -204,7 +195,7 @@ class ListView extends BaseView implements DataViewInterface
     }
 
     /**
-     * Method to export the view data
+     * Method to export the view data.
      *
      * @param ExportManager $exportManager
      */
@@ -212,14 +203,27 @@ class ListView extends BaseView implements DataViewInterface
     {
         if ($this->count > 0) {
             $exportManager->generateListModelPage(
-                $this->model,
-                $this->where,
-                $this->order,
-                $this->offset,
-                $this->getColumns(),
-                $this->title
+                $this->model, $this->where, $this->order, $this->offset, $this->getColumns(), $this->title
             );
         }
+    }
+
+    /**
+     * Returns the link text for a given model
+     *
+     * @param $data
+     *
+     * @return string
+     */
+    public function getClickEvent($data)
+    {
+        foreach ($this->getColumns() as $col) {
+            if ($col->widget->onClick !== null && $col->widget->onClick !== '') {
+                return $col->widget->onClick . '?code=' . $data->{$col->widget->fieldName};
+            }
+        }
+
+        return '';
     }
 
     /**
@@ -237,48 +241,6 @@ class ListView extends BaseView implements DataViewInterface
 
         $key = $keys[0];
         return $this->pageOption->columns[$key]->columns;
-    }
-
-    /**
-     * Load the data in the cursor property, according to the where filter specified.
-     *
-     * @param mixed           $code
-     * @param DataBaseWhere[] $where
-     * @param array           $order
-     * @param int             $offset
-     * @param int             $limit
-     */
-    public function loadData($code = false, array $where = [], array $order = [], $offset = 0, $limit = FS_ITEM_LIMIT)
-    {
-        $this->order = empty($order) ? $this->getSQLOrderBy($this->selectedOrderBy) : $order;
-        $this->count = $this->model->count($where);
-        /// needed when megasearch force data reload
-        $this->cursor = [];
-        if ($this->count > 0) {
-            $this->cursor = $this->model->all($where, $this->order, $offset, $limit);
-        }
-
-        /// store values where & offset for exportation
-        $this->offset = $offset;
-        $this->where = $where;
-    }
-
-    /**
-     * Returns the link text for a given model
-     *
-     * @param mixed $data
-     *
-     * @return string
-     */
-    public function getClickEvent($data): string
-    {
-        foreach ($this->getColumns() as $col) {
-            if ($col->widget->onClick !== null && $col->widget->onClick !== '') {
-                return $col->widget->onClick . '?code=' . $data->{$col->widget->fieldName};
-            }
-        }
-
-        return '';
     }
 
     /**
@@ -328,18 +290,69 @@ class ListView extends BaseView implements DataViewInterface
      *
      * @return array
      */
-    public function getSQLOrderBy($orderKey = ''): array
+    public function getSQLOrderBy($orderKey = '')
     {
-        if (empty($this->orderBy)) {
-            return [];
+        $result = [];
+        if (!empty($this->orderBy)) {
+            if ($orderKey === '') {
+                $orderKey = array_keys($this->orderBy)[0];
+            }
+
+            $direction = (substr($orderKey, -5) == '_desc') ? 'DESC' : 'ASC';
+            foreach ($this->orderBy[$orderKey]['fields'] as $field) {
+                $result[$field] = $direction;
+            }
+        }
+        return $result;
+    }
+
+    public function getURL(string $type)
+    {
+        if (empty($this->where)) {
+            return parent::getURL($type);
         }
 
-        if ($orderKey === '') {
-            $orderKey = array_keys($this->orderBy)[0];
+        $extra = '';
+        foreach (DataBaseWhere::getFieldsFilter($this->where) as $field => $value) {
+            $extra .= ('' === $extra) ? '?' : '&';
+            $extra .= $field . '=' . $value;
         }
 
-        $orderBy = explode('_', $orderKey);
-        return [$orderBy[0] => $orderBy[1]];
+        switch ($type) {
+            case 'list':
+                return parent::getURL($type) . $extra;
+
+            case 'new':
+                $extra .= ('' === $extra) ? '?action=insert' : '&action=insert';
+                return parent::getURL($type) . $extra;
+
+            default:
+                return parent::getURL($type);
+        }
+    }
+
+    /**
+     * Load the data in the cursor property, according to the where filter specified.
+     *
+     * @param mixed           $code
+     * @param DataBaseWhere[] $where
+     * @param array           $order
+     * @param int             $offset
+     * @param int             $limit
+     */
+    public function loadData($code = false, array $where = [], array $order = [], $offset = 0, $limit = FS_ITEM_LIMIT)
+    {
+        $this->order = empty($order) ? $this->getSQLOrderBy($this->selectedOrderBy) : $order;
+        $this->count = is_null($this->model) ? 0 : $this->model->count($where);
+        /// needed when megasearch force data reload
+        $this->cursor = [];
+        if ($this->count > 0) {
+            $this->cursor = $this->model->all($where, $this->order, $offset, $limit);
+        }
+
+        /// store values where & offset for exportation
+        $this->offset = $offset;
+        $this->where = $where;
     }
 
     /**

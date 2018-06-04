@@ -10,11 +10,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace FacturaScripts\Core\Lib\Accounting;
@@ -51,10 +51,11 @@ class BalanceAmmounts extends AccountingBase
      *
      * @param string $dateFrom
      * @param string $dateTo
+     * @param array  $params
      *
      * @return array
      */
-    public function generate($dateFrom, $dateTo): array
+    public function generate(string $dateFrom, string $dateTo, array $params = []): array
     {
         $this->dateFrom = $dateFrom;
         $this->dateTo = $dateTo;
@@ -80,6 +81,10 @@ class BalanceAmmounts extends AccountingBase
      */
     protected function getData(): array
     {
+        if (!$this->dataBase->tableExists('partidas')) {
+            return [];
+        }
+
         $sql = 'SELECT partida.idsubcuenta, partida.codsubcuenta, SUM(partida.debe) AS debe, SUM(partida.haber) AS haber'
             . ' FROM partidas as partida, asientos as asiento'
             . ' WHERE asiento.idasiento = partida.idasiento'
