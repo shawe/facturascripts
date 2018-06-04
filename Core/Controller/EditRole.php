@@ -82,7 +82,7 @@ class EditRole extends ExtendedController\PanelController
                 try {
                     $this->addRoleAccess($codrole, $pages);
                     $this->dataBase->commit();
-                } catch (\Exception $e) {
+                } catch (\RuntimeException $e) {
                     $this->dataBase->rollback();
                     $this->miniLog->notice($e->getMessage());
                 }
@@ -127,7 +127,7 @@ class EditRole extends ExtendedController\PanelController
      * @param string       $codrole
      * @param Model\Page[] $pages
      *
-     * @throws \Exception
+     * @throws \RuntimeException
      */
     private function addRoleAccess($codrole, $pages): void
     {

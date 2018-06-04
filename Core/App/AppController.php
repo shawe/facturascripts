@@ -21,7 +21,6 @@ namespace FacturaScripts\Core\App;
 
 use DebugBar\DebugBarException;
 use DebugBar\StandardDebugBar;
-use Exception;
 use FacturaScripts\Core\Base\Controller;
 use FacturaScripts\Core\Base\ControllerPermissions;
 use FacturaScripts\Core\Base\DebugBar\DataBaseCollector;
@@ -219,7 +218,7 @@ class AppController extends App
                 }
 
                 $httpStatus = Response::HTTP_OK;
-            } catch (Exception $exc) {
+            } catch (\RuntimeException $exc) {
                 $this->miniLog->critical($exc->getMessage());
                 $this->debugBar['exceptions']->addException($exc);
                 $httpStatus = Response::HTTP_INTERNAL_SERVER_ERROR;
@@ -274,7 +273,7 @@ class AppController extends App
 
         try {
             $this->response->setContent($webRender->render($template, $templateVars));
-        } catch (Exception $exc) {
+        } catch (\RuntimeException $exc) {
             $this->miniLog->critical($exc->getMessage());
             $this->debugBar['exceptions']->addException($exc);
             $this->response->setContent($webRender->render('Error/TemplateError.html.twig', $templateVars));

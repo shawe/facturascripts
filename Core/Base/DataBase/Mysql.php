@@ -19,7 +19,6 @@
 
 namespace FacturaScripts\Core\Base\DataBase;
 
-use Exception;
 use FacturaScripts\Core\Base\Translator;
 use mysqli;
 
@@ -234,7 +233,7 @@ class Mysql implements DataBaseEngine
                 }
                 $aux->free();
             }
-        } catch (Exception $e) {
+        } catch (\RuntimeException $e) {
             $this->lastErrorMsg = $e->getMessage();
             $result = [];
         }
@@ -260,7 +259,7 @@ class Mysql implements DataBaseEngine
                 } while ($more);
             }
             $result = ($link->errno === 0);
-        } catch (Exception $e) {
+        } catch (\RuntimeException $e) {
             $this->lastErrorMsg = $e->getMessage();
             $result = false;
         }

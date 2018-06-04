@@ -117,7 +117,7 @@ class EditApiKey extends ExtendedController\PanelController
      * @param array $apiAccess
      * @param bool  $state
      *
-     * @throws \Exception
+     * @throws \RuntimeException
      */
     private function addResourcesToApiKey($idApiKey, $apiAccess, $state = false): void
     {
@@ -146,7 +146,7 @@ class EditApiKey extends ExtendedController\PanelController
         try {
             $this->addResourcesToApiKey((int) $idApiKey, $resources, $state);
             $this->dataBase->commit();
-        } catch (\Exception $e) {
+        } catch (\RuntimeException $e) {
             $this->dataBase->rollback();
             $this->miniLog->notice($e->getMessage());
         }

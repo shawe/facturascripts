@@ -23,7 +23,6 @@ use FacturaScripts\Core\Base;
 use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Dinamic\Model\Base\ModelClass;
 use FacturaScripts\Dinamic\Lib\ExportManager;
-use RuntimeException;
 
 /**
  * Description of GridView
@@ -134,7 +133,7 @@ class GridView extends BaseView
             // load master document data and test it's ok
             $parentPK = $this->parentmodel::primaryColumn();
             if (!$this->loadDocumentDataFromArray($parentPK, $data['document'])) {
-                throw new RuntimeException(self::$i18n->trans('parent-document-test-error'));
+                throw new \RuntimeException(self::$i18n->trans('parent-document-test-error'));
             }
 
             // load detail document data (old)
@@ -146,7 +145,7 @@ class GridView extends BaseView
 
             // delete old lines not used
             if (!$this->deleteLinesOld($linesOld, $data['lines'])) {
-                throw new RuntimeException(self::$i18n->trans('lines-delete-error'));
+                throw new \RuntimeException(self::$i18n->trans('lines-delete-error'));
             }
 
             // Proccess detail document data (new)
@@ -157,14 +156,14 @@ class GridView extends BaseView
                     $this->model->{$parentPK} = $parentValue;
                 }
                 if (!$this->model->save()) {
-                    throw new RuntimeException(self::$i18n->trans('lines-save-error'));
+                    throw new \RuntimeException(self::$i18n->trans('lines-save-error'));
                 }
                 $this->parentModel->accumulateAmounts($newLine);
             }
 
             // save master document
             if (!$this->parentModel->save()) {
-                throw new RuntimeException(self::$i18n->trans('parent-document-save-error'));
+                throw new \RuntimeException(self::$i18n->trans('parent-document-save-error'));
             }
 
             // confirm save data into database
@@ -172,7 +171,7 @@ class GridView extends BaseView
 
             // URL for refresh data
             $result['url'] = $this->parentView->getURL('edit') . '&action=save-ok';
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $result['error'] = true;
             $result['message'] = $e->getMessage();
         } finally {

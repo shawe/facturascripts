@@ -157,7 +157,7 @@ class APIModel extends APIResourceClass
             }
 
             return parent::processResource($name);
-        } catch (\Exception $ex) {
+        } catch (\RuntimeException $ex) {
             $this->setError('api-error', null, Response::HTTP_INTERNAL_SERVER_ERROR);
             return false;
         }

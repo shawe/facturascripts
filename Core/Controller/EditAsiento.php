@@ -24,7 +24,6 @@ use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Base\DivisaTools;
 use FacturaScripts\Dinamic\Lib\ExtendedController;
 use FacturaScripts\Dinamic\Model;
-use RuntimeException;
 
 /**
  * Controller to edit a single item from the Asiento model
@@ -442,20 +441,20 @@ class EditAsiento extends ExtendedController\PanelController
             $accounting->fecha = date('d-m-Y');
             $accounting->numero = $accounting->newCode('numero');
             if (!$accounting->save()) {
-                throw new RuntimeException($this->i18n->trans('clone-document-error'));
+                throw new \RuntimeException($this->i18n->trans('clone-document-error'));
             }
 
             foreach ($entries as $line) {
                 $line->idpartida = null;
                 $line->idasiento = $accounting->idasiento;
                 if (!$line->save()) {
-                    throw new RuntimeException($this->i18n->trans('clone-line-document-error'));
+                    throw new \RuntimeException($this->i18n->trans('clone-line-document-error'));
                 }
             }
             // confirm data
             $dataBase->commit();
             $result = $accounting->url('type') . '&action=save-ok';
-        } catch (RuntimeException $e) {
+        } catch (\RuntimeException $e) {
             $this->miniLog->alert($e->getMessage());
             $result = '';
         } finally {

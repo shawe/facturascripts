@@ -65,7 +65,7 @@ interface DataBaseSQL
     /**
      * Generates the SQL to establish the given restrictions.
      *
-     * @param array $xmlCons
+     * @param \SimpleXMLElement $xmlCons
      */
     public function sqlTableConstraints($xmlCons);
 
@@ -90,8 +90,8 @@ interface DataBaseSQL
     /**
      * SQL statement to add a given table column
      *
-     * @param string $tableName
-     * @param array  $colData
+     * @param string            $tableName
+     * @param \SimpleXMLElement $colData
      */
     public function sqlAlterAddColumn($tableName, $colData);
 
@@ -99,7 +99,7 @@ interface DataBaseSQL
      * SQL statement to alter a given table column's definition
      *
      * @param string $tableName
-     * @param array  $colData
+     * @param \SimpleXMLElement $colData
      */
     public function sqlAlterModifyColumn($tableName, $colData);
 
@@ -107,7 +107,7 @@ interface DataBaseSQL
      * SQL statement to alter a given table column's default value
      *
      * @param string $tableName
-     * @param array  $colData
+     * @param \SimpleXMLElement $colData
      */
     public function sqlAlterConstraintDefault($tableName, $colData);
 
@@ -115,7 +115,7 @@ interface DataBaseSQL
      * SQL statement to alter a given table column's null constraint
      *
      * @param string $tableName
-     * @param array  $colData
+     * @param \SimpleXMLElement $colData
      */
     public function sqlAlterConstraintNull($tableName, $colData);
 
@@ -123,7 +123,7 @@ interface DataBaseSQL
      * SQL statement to delete a given table column's constraint
      *
      * @param string $tableName
-     * @param array  $colData
+     * @param \SimpleXMLElement $colData
      */
     public function sqlDropConstraint($tableName, $colData);
 

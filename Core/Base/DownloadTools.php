@@ -19,8 +19,6 @@
 
 namespace FacturaScripts\Core\Base;
 
-use Exception;
-
 /**
  * Description of DownloadTools
  *
@@ -93,7 +91,7 @@ class DownloadTools
             if ($data && $data !== 'ERROR' && file_put_contents($fileName, $data) !== false) {
                 return true;
             }
-        } catch (Exception $exc) {
+        } catch (\RuntimeException $exc) {
             /// nothing to do
         }
 

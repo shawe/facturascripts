@@ -19,7 +19,6 @@
 
 namespace FacturaScripts\Core\Base\DataBase;
 
-use Exception;
 use FacturaScripts\Core\Base\Translator;
 
 /**
@@ -384,7 +383,7 @@ class Postgresql implements DataBaseEngine
                 }
                 pg_free_result($aux);
             }
-        } catch (Exception $e) {
+        } catch (\RuntimeException $e) {
             $this->lastErrorMsg = $e->getMessage();
             $result = $selectRows ? [] : false;
         }

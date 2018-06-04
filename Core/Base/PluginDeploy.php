@@ -123,7 +123,7 @@ class PluginDeploy
                 $controller = new $controllerNamespace($cache, $this->i18n, $this->minilog, $controllerName);
                 $menuManager->selectPage($controller->getPageData());
                 $pageNames[] = $controllerName;
-            } catch (\Exception $exc) {
+            } catch (\RuntimeException $exc) {
                 $this->minilog->critical($this->i18n->trans('cant-load-controller', ['%controllerName%' => $controllerName]));
             }
         }

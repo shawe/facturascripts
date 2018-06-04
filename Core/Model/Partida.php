@@ -329,7 +329,7 @@ class Partida extends Base\ModelClass
             if ($inTransaction === false) {
                 self::$dataBase->commit();
             }
-        } catch (\Exception $e) {
+        } catch (\RuntimeException $e) {
             self::$miniLog->error($e->getMessage());
             return false;
         } finally {
@@ -379,7 +379,7 @@ class Partida extends Base\ModelClass
             if ($inTransaction === false) {
                 self::$dataBase->commit();
             }
-        } catch (\Exception $e) {
+        } catch (\RuntimeException $e) {
             self::$miniLog->error($e->getMessage());
             return false;
         } finally {
@@ -422,7 +422,7 @@ class Partida extends Base\ModelClass
             if ($inTransaction === false) {
                 self::$dataBase->commit();
             }
-        } catch (\Exception $e) {
+        } catch (\RuntimeException $e) {
             self::$miniLog->error($e->getMessage());
             return false;
         } finally {

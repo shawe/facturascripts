@@ -54,9 +54,9 @@ abstract class EditController extends PanelController
     /**
      * Pointer to the data model
      *
-     * @return ModelClass
+     * @return mixed
      */
-    public function getModel(): ModelClass
+    public function getModel()
     {
         $viewKey = array_keys($this->views)[0];
         return $this->views[$viewKey]->model;
